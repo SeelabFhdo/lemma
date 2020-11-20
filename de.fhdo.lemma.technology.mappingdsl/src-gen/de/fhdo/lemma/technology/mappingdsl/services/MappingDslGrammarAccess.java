@@ -2546,6 +2546,12 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getQualifiedNameWithAtLeastOneLevelAccess().getRule();
 	}
 	
+	//terminal NUMBER_WITH_TRAILING_PERIOD:
+	//	INT '.';
+	public TerminalRule getNUMBER_WITH_TRAILING_PERIODRule() {
+		return gaServiceDsl.getNUMBER_WITH_TRAILING_PERIODRule();
+	}
+	
 	//// Rule to consume any character
 	//Anything:
 	//	(
@@ -2577,7 +2583,7 @@ public class MappingDslGrammarAccess extends AbstractGrammarElementFinder {
 	//	// as regular grammar tokens in the Anything string.
 	//	'internal' | 'architecture' | 'public' | 'endpoints' | 'microservice' | 'required' |
 	//	'typedef' | 'noimpl' | 'interface' | 'param' | 'refers' | 'fault' | 'functional' |
-	//	'utility' | BOOLEAN | BIG_DECIMAL | ID | super::STRING | ANY_OTHER)+;
+	//	'utility' | BOOLEAN | NUMBER_WITH_TRAILING_PERIOD | BIG_DECIMAL | ID | super::STRING | ANY_OTHER)+;
 	public ServiceDslGrammarAccess.AnythingElements getAnythingAccess() {
 		return gaServiceDsl.getAnythingAccess();
 	}

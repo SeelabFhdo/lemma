@@ -1809,10 +1809,11 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cFunctionalKeyword_113 = (Keyword)cAlternatives.eContents().get(113);
 		private final Keyword cUtilityKeyword_114 = (Keyword)cAlternatives.eContents().get(114);
 		private final RuleCall cBOOLEANTerminalRuleCall_115 = (RuleCall)cAlternatives.eContents().get(115);
-		private final RuleCall cBIG_DECIMALTerminalRuleCall_116 = (RuleCall)cAlternatives.eContents().get(116);
-		private final RuleCall cIDTerminalRuleCall_117 = (RuleCall)cAlternatives.eContents().get(117);
-		private final RuleCall cSTRINGTerminalRuleCall_118 = (RuleCall)cAlternatives.eContents().get(118);
-		private final RuleCall cANY_OTHERTerminalRuleCall_119 = (RuleCall)cAlternatives.eContents().get(119);
+		private final RuleCall cNUMBER_WITH_TRAILING_PERIODTerminalRuleCall_116 = (RuleCall)cAlternatives.eContents().get(116);
+		private final RuleCall cBIG_DECIMALTerminalRuleCall_117 = (RuleCall)cAlternatives.eContents().get(117);
+		private final RuleCall cIDTerminalRuleCall_118 = (RuleCall)cAlternatives.eContents().get(118);
+		private final RuleCall cSTRINGTerminalRuleCall_119 = (RuleCall)cAlternatives.eContents().get(119);
+		private final RuleCall cANY_OTHERTerminalRuleCall_120 = (RuleCall)cAlternatives.eContents().get(120);
 		
 		//// Rule to consume any character
 		//Anything:
@@ -1845,7 +1846,7 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		//	// as regular grammar tokens in the Anything string.
 		//	'internal' | 'architecture' | 'public' | 'endpoints' | 'microservice' | 'required' |
 		//	'typedef' | 'noimpl' | 'interface' | 'param' | 'refers' | 'fault' | 'functional' |
-		//	'utility' | BOOLEAN | BIG_DECIMAL | ID | STRING | ANY_OTHER)+;
+		//	'utility' | BOOLEAN | NUMBER_WITH_TRAILING_PERIOD | BIG_DECIMAL | ID | STRING | ANY_OTHER)+;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//( // All keyword characters of the Service, Technology, and Data DSLs (the Service DSL
@@ -1867,7 +1868,8 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		//'procedure' | 'boolean' | 'byte' | 'char' | 'date' | 'double' | 'float' | 'int' | 'long' | 'short' | 'string' | // All keywords of the Service DSL. If we don't specify them here, they will be recognized
 		//// as regular grammar tokens in the Anything string.
 		//'internal' | 'architecture' | 'public' | 'endpoints' | 'microservice' | 'required' | 'typedef' | 'noimpl' | 'interface'
-		//| 'param' | 'refers' | 'fault' | 'functional' | 'utility' | BOOLEAN | BIG_DECIMAL | ID | STRING | ANY_OTHER)+
+		//| 'param' | 'refers' | 'fault' | 'functional' | 'utility' | BOOLEAN | NUMBER_WITH_TRAILING_PERIOD | BIG_DECIMAL | ID |
+		//STRING | ANY_OTHER)+
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//// All keyword characters of the Service, Technology, and Data DSLs (the Service DSL
@@ -2239,17 +2241,20 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		//BOOLEAN
 		public RuleCall getBOOLEANTerminalRuleCall_115() { return cBOOLEANTerminalRuleCall_115; }
 		
+		//NUMBER_WITH_TRAILING_PERIOD
+		public RuleCall getNUMBER_WITH_TRAILING_PERIODTerminalRuleCall_116() { return cNUMBER_WITH_TRAILING_PERIODTerminalRuleCall_116; }
+		
 		//BIG_DECIMAL
-		public RuleCall getBIG_DECIMALTerminalRuleCall_116() { return cBIG_DECIMALTerminalRuleCall_116; }
+		public RuleCall getBIG_DECIMALTerminalRuleCall_117() { return cBIG_DECIMALTerminalRuleCall_117; }
 		
 		//ID
-		public RuleCall getIDTerminalRuleCall_117() { return cIDTerminalRuleCall_117; }
+		public RuleCall getIDTerminalRuleCall_118() { return cIDTerminalRuleCall_118; }
 		
 		//STRING
-		public RuleCall getSTRINGTerminalRuleCall_118() { return cSTRINGTerminalRuleCall_118; }
+		public RuleCall getSTRINGTerminalRuleCall_119() { return cSTRINGTerminalRuleCall_119; }
 		
 		//ANY_OTHER
-		public RuleCall getANY_OTHERTerminalRuleCall_119() { return cANY_OTHERTerminalRuleCall_119; }
+		public RuleCall getANY_OTHERTerminalRuleCall_120() { return cANY_OTHERTerminalRuleCall_120; }
 	}
 	
 	public class ImportTypeElements extends AbstractEnumRuleElementFinder {
@@ -2381,6 +2386,7 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	private final PropertyValueAssignmentElements pPropertyValueAssignment;
 	private final MicroserviceTypeElements eMicroserviceType;
 	private final QualifiedNameWithAtLeastOneLevelElements pQualifiedNameWithAtLeastOneLevel;
+	private final TerminalRule tNUMBER_WITH_TRAILING_PERIOD;
 	private final AnythingElements pAnything;
 	private final TerminalRule tSTRING;
 	
@@ -2424,6 +2430,7 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		this.pPropertyValueAssignment = new PropertyValueAssignmentElements();
 		this.eMicroserviceType = new MicroserviceTypeElements();
 		this.pQualifiedNameWithAtLeastOneLevel = new QualifiedNameWithAtLeastOneLevelElements();
+		this.tNUMBER_WITH_TRAILING_PERIOD = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.ServiceDsl.NUMBER_WITH_TRAILING_PERIOD");
 		this.pAnything = new AnythingElements();
 		this.tSTRING = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.ServiceDsl.STRING");
 	}
@@ -2745,6 +2752,12 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getQualifiedNameWithAtLeastOneLevelAccess().getRule();
 	}
 	
+	//terminal NUMBER_WITH_TRAILING_PERIOD:
+	//	INT '.';
+	public TerminalRule getNUMBER_WITH_TRAILING_PERIODRule() {
+		return tNUMBER_WITH_TRAILING_PERIOD;
+	}
+	
 	//// Rule to consume any character
 	//Anything:
 	//	(
@@ -2776,7 +2789,7 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	//	// as regular grammar tokens in the Anything string.
 	//	'internal' | 'architecture' | 'public' | 'endpoints' | 'microservice' | 'required' |
 	//	'typedef' | 'noimpl' | 'interface' | 'param' | 'refers' | 'fault' | 'functional' |
-	//	'utility' | BOOLEAN | BIG_DECIMAL | ID | STRING | ANY_OTHER)+;
+	//	'utility' | BOOLEAN | NUMBER_WITH_TRAILING_PERIOD | BIG_DECIMAL | ID | STRING | ANY_OTHER)+;
 	public AnythingElements getAnythingAccess() {
 		return pAnything;
 	}

@@ -22,10 +22,12 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalMappingDslParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_BOOLEAN", "RULE_BIG_DECIMAL", "RULE_ANY_OTHER", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "'type'", "'{'", "'aspects'", "'}'", "'::'", "'protocols'", "'endpoints'", "'interface'", "'operation'", "'parameters'", "'referred'", "'primitive'", "':'", "';'", "'complex'", "'->'", "'.'", "'op'", "'return'", "'('", "')'", "','", "'import'", "'from'", "'as'", "'@'", "'({'", "'})'", "'microservice'", "'version'", "'required'", "'microservices'", "'interfaces'", "'operations'", "'technology'", "'typedef'", "'='", "'noimpl'", "'---'", "'@param'", "'@required'", "'refers'", "'fault'", "'?'", "'<'", "'>'", "'-'", "'--'", "'/'", "'types'", "'compatibility'", "'matrix'", "'service'", "'deployment'", "'technologies'", "'infrastructure'", "'data'", "'formats'", "'default'", "'with'", "'format'", "'in'", "'out'", "'inout'", "'sync'", "'async'", "'based'", "'on'", "'list'", "'structure'", "'<-'", "'<->'", "'environments'", "'properties'", "'mandatory'", "'singleval'", "'fields'", "'exchange_pattern'", "'communication_type'", "'protocol'", "'data_format'", "'aspect'", "'for'", "'containers'", "'selector'", "'datatypes'", "'context'", "'aggregate'", "'applicationService'", "'domainEvent'", "'domainService'", "'entity'", "'factory'", "'infrastructureService'", "'repository'", "'specification'", "'valueObject'", "'extends'", "'identifier'", "'neverEmpty'", "'part'", "'hide'", "'immutable'", "'enum'", "'closure'", "'sideEffectFree'", "'validator'", "'function'", "'procedure'", "'boolean'", "'byte'", "'char'", "'date'", "'double'", "'float'", "'int'", "'long'", "'short'", "'string'", "'internal'", "'architecture'", "'public'", "'param'", "'functional'", "'utility'", "'unspecified'", "'domainOperations'", "'domainParameters'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_BOOLEAN", "RULE_NUMBER_WITH_TRAILING_PERIOD", "RULE_BIG_DECIMAL", "RULE_ANY_OTHER", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "'type'", "'{'", "'aspects'", "'}'", "'::'", "'protocols'", "'endpoints'", "'interface'", "'operation'", "'parameters'", "'referred'", "'primitive'", "':'", "';'", "'complex'", "'->'", "'.'", "'op'", "'return'", "'('", "')'", "','", "'import'", "'from'", "'as'", "'@'", "'({'", "'})'", "'microservice'", "'version'", "'required'", "'microservices'", "'interfaces'", "'operations'", "'technology'", "'typedef'", "'='", "'noimpl'", "'---'", "'@param'", "'@required'", "'refers'", "'fault'", "'?'", "'<'", "'>'", "'-'", "'--'", "'/'", "'types'", "'compatibility'", "'matrix'", "'service'", "'deployment'", "'technologies'", "'infrastructure'", "'data'", "'formats'", "'default'", "'with'", "'format'", "'in'", "'out'", "'inout'", "'sync'", "'async'", "'based'", "'on'", "'list'", "'structure'", "'<-'", "'<->'", "'environments'", "'properties'", "'mandatory'", "'singleval'", "'fields'", "'exchange_pattern'", "'communication_type'", "'protocol'", "'data_format'", "'aspect'", "'for'", "'containers'", "'selector'", "'datatypes'", "'context'", "'aggregate'", "'applicationService'", "'domainEvent'", "'domainService'", "'entity'", "'factory'", "'infrastructureService'", "'repository'", "'specification'", "'valueObject'", "'extends'", "'identifier'", "'neverEmpty'", "'part'", "'hide'", "'immutable'", "'enum'", "'closure'", "'sideEffectFree'", "'validator'", "'function'", "'procedure'", "'boolean'", "'byte'", "'char'", "'date'", "'double'", "'float'", "'int'", "'long'", "'short'", "'string'", "'internal'", "'architecture'", "'public'", "'param'", "'functional'", "'utility'", "'unspecified'", "'domainOperations'", "'domainParameters'"
     };
     public static final int T__50=50;
     public static final int T__140=140;
+    public static final int T__141=141;
+    public static final int RULE_NUMBER_WITH_TRAILING_PERIOD=7;
     public static final int T__59=59;
     public static final int T__55=55;
     public static final int T__56=56;
@@ -48,9 +50,9 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
     public static final int RULE_ID=4;
     public static final int T__131=131;
     public static final int T__130=130;
-    public static final int RULE_INT=9;
+    public static final int RULE_INT=10;
     public static final int T__66=66;
-    public static final int RULE_ML_COMMENT=10;
+    public static final int RULE_ML_COMMENT=11;
     public static final int T__67=67;
     public static final int T__129=129;
     public static final int T__68=68;
@@ -98,7 +100,6 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
     public static final int T__17=17;
     public static final int T__18=18;
     public static final int T__99=99;
-    public static final int T__13=13;
     public static final int T__14=14;
     public static final int T__95=95;
     public static final int T__96=96;
@@ -123,7 +124,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
     public static final int T__123=123;
     public static final int T__120=120;
     public static final int RULE_STRING=5;
-    public static final int RULE_SL_COMMENT=11;
+    public static final int RULE_SL_COMMENT=12;
     public static final int T__77=77;
     public static final int T__119=119;
     public static final int T__78=78;
@@ -134,7 +135,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
     public static final int EOF=-1;
     public static final int T__74=74;
     public static final int T__114=114;
-    public static final int RULE_BIG_DECIMAL=7;
+    public static final int RULE_BIG_DECIMAL=8;
     public static final int T__75=75;
     public static final int T__117=117;
     public static final int T__76=76;
@@ -147,8 +148,8 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
     public static final int T__113=113;
     public static final int T__83=83;
     public static final int T__112=112;
-    public static final int RULE_WS=12;
-    public static final int RULE_ANY_OTHER=8;
+    public static final int RULE_WS=13;
+    public static final int RULE_ANY_OTHER=9;
     public static final int T__88=88;
     public static final int T__108=108;
     public static final int T__89=89;
@@ -267,7 +268,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 int alt1=2;
                 int LA1_0 = input.LA(1);
 
-                if ( (LA1_0==35) ) {
+                if ( (LA1_0==36) ) {
                     alt1=1;
                 }
 
@@ -363,7 +364,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 int alt3=2;
                 int LA3_0 = input.LA(1);
 
-                if ( (LA3_0==RULE_ID||LA3_0==38) ) {
+                if ( (LA3_0==RULE_ID||LA3_0==39) ) {
                     alt3=1;
                 }
 
@@ -502,7 +503,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 int alt4=2;
                 int LA4_0 = input.LA(1);
 
-                if ( (LA4_0==38) ) {
+                if ( (LA4_0==39) ) {
                     alt4=1;
                 }
 
@@ -545,7 +546,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            otherlv_1=(Token)match(input,13,FOLLOW_7); 
+            otherlv_1=(Token)match(input,14,FOLLOW_7); 
 
             			newLeafNode(otherlv_1, grammarAccess.getComplexTypeMappingAccess().getTypeKeyword_1());
             		
@@ -580,7 +581,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_3=(Token)match(input,14,FOLLOW_9); 
+            otherlv_3=(Token)match(input,15,FOLLOW_9); 
 
             			newLeafNode(otherlv_3, grammarAccess.getComplexTypeMappingAccess().getLeftCurlyBracketKeyword_3());
             		
@@ -588,18 +589,18 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt6=2;
             int LA6_0 = input.LA(1);
 
-            if ( (LA6_0==15) ) {
+            if ( (LA6_0==16) ) {
                 alt6=1;
             }
             switch (alt6) {
                 case 1 :
                     // InternalMappingDsl.g:203:4: otherlv_4= 'aspects' otherlv_5= '{' ( (lv_aspects_6_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_7= '}'
                     {
-                    otherlv_4=(Token)match(input,15,FOLLOW_8); 
+                    otherlv_4=(Token)match(input,16,FOLLOW_8); 
 
                     				newLeafNode(otherlv_4, grammarAccess.getComplexTypeMappingAccess().getAspectsKeyword_4_0());
                     			
-                    otherlv_5=(Token)match(input,14,FOLLOW_7); 
+                    otherlv_5=(Token)match(input,15,FOLLOW_7); 
 
                     				newLeafNode(otherlv_5, grammarAccess.getComplexTypeMappingAccess().getLeftCurlyBracketKeyword_4_1());
                     			
@@ -657,7 +658,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         cnt5++;
                     } while (true);
 
-                    otherlv_7=(Token)match(input,16,FOLLOW_11); 
+                    otherlv_7=(Token)match(input,17,FOLLOW_11); 
 
                     				newLeafNode(otherlv_7, grammarAccess.getComplexTypeMappingAccess().getRightCurlyBracketKeyword_4_3());
                     			
@@ -673,7 +674,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 int alt7=2;
                 int LA7_0 = input.LA(1);
 
-                if ( (LA7_0==RULE_ID||LA7_0==29) ) {
+                if ( (LA7_0==RULE_ID||LA7_0==30) ) {
                     alt7=1;
                 }
 
@@ -722,7 +723,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 int alt8=2;
                 int LA8_0 = input.LA(1);
 
-                if ( (LA8_0==30) ) {
+                if ( (LA8_0==31) ) {
                     alt8=1;
                 }
 
@@ -765,7 +766,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            otherlv_10=(Token)match(input,16,FOLLOW_2); 
+            otherlv_10=(Token)match(input,17,FOLLOW_2); 
 
             			newLeafNode(otherlv_10, grammarAccess.getComplexTypeMappingAccess().getRightCurlyBracketKeyword_7());
             		
@@ -868,7 +869,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,17,FOLLOW_7); 
+            otherlv_1=(Token)match(input,18,FOLLOW_7); 
 
             			newLeafNode(otherlv_1, grammarAccess.getImportedComplexTypeToMapAccess().getColonColonKeyword_1());
             		
@@ -893,7 +894,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_3=(Token)match(input,17,FOLLOW_7); 
+            otherlv_3=(Token)match(input,18,FOLLOW_7); 
 
             			newLeafNode(otherlv_3, grammarAccess.getImportedComplexTypeToMapAccess().getColonColonKeyword_3());
             		
@@ -1032,7 +1033,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 int alt9=2;
                 int LA9_0 = input.LA(1);
 
-                if ( (LA9_0==38) ) {
+                if ( (LA9_0==39) ) {
                     alt9=1;
                 }
 
@@ -1106,7 +1107,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,14,FOLLOW_15); 
+            otherlv_2=(Token)match(input,15,FOLLOW_15); 
 
             			newLeafNode(otherlv_2, grammarAccess.getMicroserviceMappingAccess().getLeftCurlyBracketKeyword_2());
             		
@@ -1114,18 +1115,18 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt11=2;
             int LA11_0 = input.LA(1);
 
-            if ( (LA11_0==18) ) {
+            if ( (LA11_0==19) ) {
                 alt11=1;
             }
             switch (alt11) {
                 case 1 :
                     // InternalMappingDsl.g:408:4: otherlv_3= 'protocols' otherlv_4= '{' ( (lv_protocols_5_0= ruleTechnologySpecificProtocolSpecification ) )+ otherlv_6= '}'
                     {
-                    otherlv_3=(Token)match(input,18,FOLLOW_8); 
+                    otherlv_3=(Token)match(input,19,FOLLOW_8); 
 
                     				newLeafNode(otherlv_3, grammarAccess.getMicroserviceMappingAccess().getProtocolsKeyword_3_0());
                     			
-                    otherlv_4=(Token)match(input,14,FOLLOW_16); 
+                    otherlv_4=(Token)match(input,15,FOLLOW_16); 
 
                     				newLeafNode(otherlv_4, grammarAccess.getMicroserviceMappingAccess().getLeftCurlyBracketKeyword_3_1());
                     			
@@ -1136,7 +1137,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         int alt10=2;
                         int LA10_0 = input.LA(1);
 
-                        if ( ((LA10_0>=77 && LA10_0<=78)) ) {
+                        if ( ((LA10_0>=78 && LA10_0<=79)) ) {
                             alt10=1;
                         }
 
@@ -1183,7 +1184,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         cnt10++;
                     } while (true);
 
-                    otherlv_6=(Token)match(input,16,FOLLOW_18); 
+                    otherlv_6=(Token)match(input,17,FOLLOW_18); 
 
                     				newLeafNode(otherlv_6, grammarAccess.getMicroserviceMappingAccess().getRightCurlyBracketKeyword_3_3());
                     			
@@ -1197,18 +1198,18 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt13=2;
             int LA13_0 = input.LA(1);
 
-            if ( (LA13_0==19) ) {
+            if ( (LA13_0==20) ) {
                 alt13=1;
             }
             switch (alt13) {
                 case 1 :
                     // InternalMappingDsl.g:441:4: otherlv_7= 'endpoints' otherlv_8= '{' ( (lv_endpoints_9_0= ruleTechnologySpecificEndpoint ) )+ otherlv_10= '}'
                     {
-                    otherlv_7=(Token)match(input,19,FOLLOW_8); 
+                    otherlv_7=(Token)match(input,20,FOLLOW_8); 
 
                     				newLeafNode(otherlv_7, grammarAccess.getMicroserviceMappingAccess().getEndpointsKeyword_4_0());
                     			
-                    otherlv_8=(Token)match(input,14,FOLLOW_7); 
+                    otherlv_8=(Token)match(input,15,FOLLOW_7); 
 
                     				newLeafNode(otherlv_8, grammarAccess.getMicroserviceMappingAccess().getLeftCurlyBracketKeyword_4_1());
                     			
@@ -1266,7 +1267,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         cnt12++;
                     } while (true);
 
-                    otherlv_10=(Token)match(input,16,FOLLOW_19); 
+                    otherlv_10=(Token)match(input,17,FOLLOW_19); 
 
                     				newLeafNode(otherlv_10, grammarAccess.getMicroserviceMappingAccess().getRightCurlyBracketKeyword_4_3());
                     			
@@ -1280,18 +1281,18 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt15=2;
             int LA15_0 = input.LA(1);
 
-            if ( (LA15_0==15) ) {
+            if ( (LA15_0==16) ) {
                 alt15=1;
             }
             switch (alt15) {
                 case 1 :
                     // InternalMappingDsl.g:474:4: otherlv_11= 'aspects' otherlv_12= '{' ( (lv_aspects_13_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_14= '}'
                     {
-                    otherlv_11=(Token)match(input,15,FOLLOW_8); 
+                    otherlv_11=(Token)match(input,16,FOLLOW_8); 
 
                     				newLeafNode(otherlv_11, grammarAccess.getMicroserviceMappingAccess().getAspectsKeyword_5_0());
                     			
-                    otherlv_12=(Token)match(input,14,FOLLOW_7); 
+                    otherlv_12=(Token)match(input,15,FOLLOW_7); 
 
                     				newLeafNode(otherlv_12, grammarAccess.getMicroserviceMappingAccess().getLeftCurlyBracketKeyword_5_1());
                     			
@@ -1349,7 +1350,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         cnt14++;
                     } while (true);
 
-                    otherlv_14=(Token)match(input,16,FOLLOW_20); 
+                    otherlv_14=(Token)match(input,17,FOLLOW_20); 
 
                     				newLeafNode(otherlv_14, grammarAccess.getMicroserviceMappingAccess().getRightCurlyBracketKeyword_5_3());
                     			
@@ -1365,7 +1366,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 int alt16=2;
                 int LA16_0 = input.LA(1);
 
-                if ( (LA16_0==20) ) {
+                if ( (LA16_0==21) ) {
                     alt16=1;
                 }
 
@@ -1414,7 +1415,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 int alt17=2;
                 int LA17_0 = input.LA(1);
 
-                if ( (LA17_0==23) ) {
+                if ( (LA17_0==24) ) {
                     alt17=1;
                 }
 
@@ -1463,7 +1464,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 int alt18=2;
                 int LA18_0 = input.LA(1);
 
-                if ( (LA18_0==21) ) {
+                if ( (LA18_0==22) ) {
                     alt18=1;
                 }
 
@@ -1506,7 +1507,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            otherlv_18=(Token)match(input,16,FOLLOW_2); 
+            otherlv_18=(Token)match(input,17,FOLLOW_2); 
 
             			newLeafNode(otherlv_18, grammarAccess.getMicroserviceMappingAccess().getRightCurlyBracketKeyword_9());
             		
@@ -1602,7 +1603,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             // InternalMappingDsl.g:585:2: (otherlv_0= 'interface' ( ( ruleQualifiedName ) ) otherlv_2= '{' (otherlv_3= 'protocols' otherlv_4= '{' ( (lv_protocols_5_0= ruleTechnologySpecificProtocolSpecification ) )+ otherlv_6= '}' )? (otherlv_7= 'endpoints' otherlv_8= '{' ( (lv_endpoints_9_0= ruleTechnologySpecificEndpoint ) )+ otherlv_10= '}' )? (otherlv_11= 'aspects' otherlv_12= '{' ( (lv_aspects_13_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_14= '}' )? otherlv_15= '}' )
             // InternalMappingDsl.g:586:3: otherlv_0= 'interface' ( ( ruleQualifiedName ) ) otherlv_2= '{' (otherlv_3= 'protocols' otherlv_4= '{' ( (lv_protocols_5_0= ruleTechnologySpecificProtocolSpecification ) )+ otherlv_6= '}' )? (otherlv_7= 'endpoints' otherlv_8= '{' ( (lv_endpoints_9_0= ruleTechnologySpecificEndpoint ) )+ otherlv_10= '}' )? (otherlv_11= 'aspects' otherlv_12= '{' ( (lv_aspects_13_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_14= '}' )? otherlv_15= '}'
             {
-            otherlv_0=(Token)match(input,20,FOLLOW_7); 
+            otherlv_0=(Token)match(input,21,FOLLOW_7); 
 
             			newLeafNode(otherlv_0, grammarAccess.getInterfaceMappingAccess().getInterfaceKeyword_0());
             		
@@ -1634,7 +1635,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,14,FOLLOW_23); 
+            otherlv_2=(Token)match(input,15,FOLLOW_23); 
 
             			newLeafNode(otherlv_2, grammarAccess.getInterfaceMappingAccess().getLeftCurlyBracketKeyword_2());
             		
@@ -1642,18 +1643,18 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt20=2;
             int LA20_0 = input.LA(1);
 
-            if ( (LA20_0==18) ) {
+            if ( (LA20_0==19) ) {
                 alt20=1;
             }
             switch (alt20) {
                 case 1 :
                     // InternalMappingDsl.g:611:4: otherlv_3= 'protocols' otherlv_4= '{' ( (lv_protocols_5_0= ruleTechnologySpecificProtocolSpecification ) )+ otherlv_6= '}'
                     {
-                    otherlv_3=(Token)match(input,18,FOLLOW_8); 
+                    otherlv_3=(Token)match(input,19,FOLLOW_8); 
 
                     				newLeafNode(otherlv_3, grammarAccess.getInterfaceMappingAccess().getProtocolsKeyword_3_0());
                     			
-                    otherlv_4=(Token)match(input,14,FOLLOW_16); 
+                    otherlv_4=(Token)match(input,15,FOLLOW_16); 
 
                     				newLeafNode(otherlv_4, grammarAccess.getInterfaceMappingAccess().getLeftCurlyBracketKeyword_3_1());
                     			
@@ -1664,7 +1665,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         int alt19=2;
                         int LA19_0 = input.LA(1);
 
-                        if ( ((LA19_0>=77 && LA19_0<=78)) ) {
+                        if ( ((LA19_0>=78 && LA19_0<=79)) ) {
                             alt19=1;
                         }
 
@@ -1711,7 +1712,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         cnt19++;
                     } while (true);
 
-                    otherlv_6=(Token)match(input,16,FOLLOW_24); 
+                    otherlv_6=(Token)match(input,17,FOLLOW_24); 
 
                     				newLeafNode(otherlv_6, grammarAccess.getInterfaceMappingAccess().getRightCurlyBracketKeyword_3_3());
                     			
@@ -1725,18 +1726,18 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt22=2;
             int LA22_0 = input.LA(1);
 
-            if ( (LA22_0==19) ) {
+            if ( (LA22_0==20) ) {
                 alt22=1;
             }
             switch (alt22) {
                 case 1 :
                     // InternalMappingDsl.g:644:4: otherlv_7= 'endpoints' otherlv_8= '{' ( (lv_endpoints_9_0= ruleTechnologySpecificEndpoint ) )+ otherlv_10= '}'
                     {
-                    otherlv_7=(Token)match(input,19,FOLLOW_8); 
+                    otherlv_7=(Token)match(input,20,FOLLOW_8); 
 
                     				newLeafNode(otherlv_7, grammarAccess.getInterfaceMappingAccess().getEndpointsKeyword_4_0());
                     			
-                    otherlv_8=(Token)match(input,14,FOLLOW_7); 
+                    otherlv_8=(Token)match(input,15,FOLLOW_7); 
 
                     				newLeafNode(otherlv_8, grammarAccess.getInterfaceMappingAccess().getLeftCurlyBracketKeyword_4_1());
                     			
@@ -1794,7 +1795,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         cnt21++;
                     } while (true);
 
-                    otherlv_10=(Token)match(input,16,FOLLOW_25); 
+                    otherlv_10=(Token)match(input,17,FOLLOW_25); 
 
                     				newLeafNode(otherlv_10, grammarAccess.getInterfaceMappingAccess().getRightCurlyBracketKeyword_4_3());
                     			
@@ -1808,18 +1809,18 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt24=2;
             int LA24_0 = input.LA(1);
 
-            if ( (LA24_0==15) ) {
+            if ( (LA24_0==16) ) {
                 alt24=1;
             }
             switch (alt24) {
                 case 1 :
                     // InternalMappingDsl.g:677:4: otherlv_11= 'aspects' otherlv_12= '{' ( (lv_aspects_13_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_14= '}'
                     {
-                    otherlv_11=(Token)match(input,15,FOLLOW_8); 
+                    otherlv_11=(Token)match(input,16,FOLLOW_8); 
 
                     				newLeafNode(otherlv_11, grammarAccess.getInterfaceMappingAccess().getAspectsKeyword_5_0());
                     			
-                    otherlv_12=(Token)match(input,14,FOLLOW_7); 
+                    otherlv_12=(Token)match(input,15,FOLLOW_7); 
 
                     				newLeafNode(otherlv_12, grammarAccess.getInterfaceMappingAccess().getLeftCurlyBracketKeyword_5_1());
                     			
@@ -1877,7 +1878,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         cnt23++;
                     } while (true);
 
-                    otherlv_14=(Token)match(input,16,FOLLOW_26); 
+                    otherlv_14=(Token)match(input,17,FOLLOW_26); 
 
                     				newLeafNode(otherlv_14, grammarAccess.getInterfaceMappingAccess().getRightCurlyBracketKeyword_5_3());
                     			
@@ -1887,7 +1888,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_15=(Token)match(input,16,FOLLOW_2); 
+            otherlv_15=(Token)match(input,17,FOLLOW_2); 
 
             			newLeafNode(otherlv_15, grammarAccess.getInterfaceMappingAccess().getRightCurlyBracketKeyword_6());
             		
@@ -1990,7 +1991,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             // InternalMappingDsl.g:731:2: (otherlv_0= 'operation' ( ( ruleQualifiedName ) ) otherlv_2= '{' (otherlv_3= 'protocols' otherlv_4= '{' ( (lv_protocols_5_0= ruleTechnologySpecificProtocolSpecification ) )+ otherlv_6= '}' )? (otherlv_7= 'endpoints' otherlv_8= '{' ( (lv_endpoints_9_0= ruleTechnologySpecificEndpoint ) )+ otherlv_10= '}' )? (otherlv_11= 'aspects' otherlv_12= '{' ( (lv_aspects_13_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_14= '}' )? (otherlv_15= 'parameters' otherlv_16= '{' ( ( (lv_parameterMappings_17_1= rulePrimitiveParameterMapping | lv_parameterMappings_17_2= ruleComplexParameterMapping ) ) )+ otherlv_18= '}' )? otherlv_19= '}' )
             // InternalMappingDsl.g:732:3: otherlv_0= 'operation' ( ( ruleQualifiedName ) ) otherlv_2= '{' (otherlv_3= 'protocols' otherlv_4= '{' ( (lv_protocols_5_0= ruleTechnologySpecificProtocolSpecification ) )+ otherlv_6= '}' )? (otherlv_7= 'endpoints' otherlv_8= '{' ( (lv_endpoints_9_0= ruleTechnologySpecificEndpoint ) )+ otherlv_10= '}' )? (otherlv_11= 'aspects' otherlv_12= '{' ( (lv_aspects_13_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_14= '}' )? (otherlv_15= 'parameters' otherlv_16= '{' ( ( (lv_parameterMappings_17_1= rulePrimitiveParameterMapping | lv_parameterMappings_17_2= ruleComplexParameterMapping ) ) )+ otherlv_18= '}' )? otherlv_19= '}'
             {
-            otherlv_0=(Token)match(input,21,FOLLOW_7); 
+            otherlv_0=(Token)match(input,22,FOLLOW_7); 
 
             			newLeafNode(otherlv_0, grammarAccess.getOperationMappingAccess().getOperationKeyword_0());
             		
@@ -2022,7 +2023,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,14,FOLLOW_27); 
+            otherlv_2=(Token)match(input,15,FOLLOW_27); 
 
             			newLeafNode(otherlv_2, grammarAccess.getOperationMappingAccess().getLeftCurlyBracketKeyword_2());
             		
@@ -2030,18 +2031,18 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt26=2;
             int LA26_0 = input.LA(1);
 
-            if ( (LA26_0==18) ) {
+            if ( (LA26_0==19) ) {
                 alt26=1;
             }
             switch (alt26) {
                 case 1 :
                     // InternalMappingDsl.g:757:4: otherlv_3= 'protocols' otherlv_4= '{' ( (lv_protocols_5_0= ruleTechnologySpecificProtocolSpecification ) )+ otherlv_6= '}'
                     {
-                    otherlv_3=(Token)match(input,18,FOLLOW_8); 
+                    otherlv_3=(Token)match(input,19,FOLLOW_8); 
 
                     				newLeafNode(otherlv_3, grammarAccess.getOperationMappingAccess().getProtocolsKeyword_3_0());
                     			
-                    otherlv_4=(Token)match(input,14,FOLLOW_16); 
+                    otherlv_4=(Token)match(input,15,FOLLOW_16); 
 
                     				newLeafNode(otherlv_4, grammarAccess.getOperationMappingAccess().getLeftCurlyBracketKeyword_3_1());
                     			
@@ -2052,7 +2053,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         int alt25=2;
                         int LA25_0 = input.LA(1);
 
-                        if ( ((LA25_0>=77 && LA25_0<=78)) ) {
+                        if ( ((LA25_0>=78 && LA25_0<=79)) ) {
                             alt25=1;
                         }
 
@@ -2099,7 +2100,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         cnt25++;
                     } while (true);
 
-                    otherlv_6=(Token)match(input,16,FOLLOW_28); 
+                    otherlv_6=(Token)match(input,17,FOLLOW_28); 
 
                     				newLeafNode(otherlv_6, grammarAccess.getOperationMappingAccess().getRightCurlyBracketKeyword_3_3());
                     			
@@ -2113,18 +2114,18 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt28=2;
             int LA28_0 = input.LA(1);
 
-            if ( (LA28_0==19) ) {
+            if ( (LA28_0==20) ) {
                 alt28=1;
             }
             switch (alt28) {
                 case 1 :
                     // InternalMappingDsl.g:790:4: otherlv_7= 'endpoints' otherlv_8= '{' ( (lv_endpoints_9_0= ruleTechnologySpecificEndpoint ) )+ otherlv_10= '}'
                     {
-                    otherlv_7=(Token)match(input,19,FOLLOW_8); 
+                    otherlv_7=(Token)match(input,20,FOLLOW_8); 
 
                     				newLeafNode(otherlv_7, grammarAccess.getOperationMappingAccess().getEndpointsKeyword_4_0());
                     			
-                    otherlv_8=(Token)match(input,14,FOLLOW_7); 
+                    otherlv_8=(Token)match(input,15,FOLLOW_7); 
 
                     				newLeafNode(otherlv_8, grammarAccess.getOperationMappingAccess().getLeftCurlyBracketKeyword_4_1());
                     			
@@ -2182,7 +2183,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         cnt27++;
                     } while (true);
 
-                    otherlv_10=(Token)match(input,16,FOLLOW_29); 
+                    otherlv_10=(Token)match(input,17,FOLLOW_29); 
 
                     				newLeafNode(otherlv_10, grammarAccess.getOperationMappingAccess().getRightCurlyBracketKeyword_4_3());
                     			
@@ -2196,18 +2197,18 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt30=2;
             int LA30_0 = input.LA(1);
 
-            if ( (LA30_0==15) ) {
+            if ( (LA30_0==16) ) {
                 alt30=1;
             }
             switch (alt30) {
                 case 1 :
                     // InternalMappingDsl.g:823:4: otherlv_11= 'aspects' otherlv_12= '{' ( (lv_aspects_13_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_14= '}'
                     {
-                    otherlv_11=(Token)match(input,15,FOLLOW_8); 
+                    otherlv_11=(Token)match(input,16,FOLLOW_8); 
 
                     				newLeafNode(otherlv_11, grammarAccess.getOperationMappingAccess().getAspectsKeyword_5_0());
                     			
-                    otherlv_12=(Token)match(input,14,FOLLOW_7); 
+                    otherlv_12=(Token)match(input,15,FOLLOW_7); 
 
                     				newLeafNode(otherlv_12, grammarAccess.getOperationMappingAccess().getLeftCurlyBracketKeyword_5_1());
                     			
@@ -2265,7 +2266,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         cnt29++;
                     } while (true);
 
-                    otherlv_14=(Token)match(input,16,FOLLOW_30); 
+                    otherlv_14=(Token)match(input,17,FOLLOW_30); 
 
                     				newLeafNode(otherlv_14, grammarAccess.getOperationMappingAccess().getRightCurlyBracketKeyword_5_3());
                     			
@@ -2279,18 +2280,18 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt33=2;
             int LA33_0 = input.LA(1);
 
-            if ( (LA33_0==22) ) {
+            if ( (LA33_0==23) ) {
                 alt33=1;
             }
             switch (alt33) {
                 case 1 :
                     // InternalMappingDsl.g:856:4: otherlv_15= 'parameters' otherlv_16= '{' ( ( (lv_parameterMappings_17_1= rulePrimitiveParameterMapping | lv_parameterMappings_17_2= ruleComplexParameterMapping ) ) )+ otherlv_18= '}'
                     {
-                    otherlv_15=(Token)match(input,22,FOLLOW_8); 
+                    otherlv_15=(Token)match(input,23,FOLLOW_8); 
 
                     				newLeafNode(otherlv_15, grammarAccess.getOperationMappingAccess().getParametersKeyword_6_0());
                     			
-                    otherlv_16=(Token)match(input,14,FOLLOW_31); 
+                    otherlv_16=(Token)match(input,15,FOLLOW_31); 
 
                     				newLeafNode(otherlv_16, grammarAccess.getOperationMappingAccess().getLeftCurlyBracketKeyword_6_1());
                     			
@@ -2301,7 +2302,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         int alt32=2;
                         int LA32_0 = input.LA(1);
 
-                        if ( (LA32_0==24||LA32_0==27) ) {
+                        if ( (LA32_0==25||LA32_0==28) ) {
                             alt32=1;
                         }
 
@@ -2317,10 +2318,10 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     	    int alt31=2;
                     	    int LA31_0 = input.LA(1);
 
-                    	    if ( (LA31_0==24) ) {
+                    	    if ( (LA31_0==25) ) {
                     	        alt31=1;
                     	    }
-                    	    else if ( (LA31_0==27) ) {
+                    	    else if ( (LA31_0==28) ) {
                     	        alt31=2;
                     	    }
                     	    else {
@@ -2399,7 +2400,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         cnt32++;
                     } while (true);
 
-                    otherlv_18=(Token)match(input,16,FOLLOW_26); 
+                    otherlv_18=(Token)match(input,17,FOLLOW_26); 
 
                     				newLeafNode(otherlv_18, grammarAccess.getOperationMappingAccess().getRightCurlyBracketKeyword_6_3());
                     			
@@ -2409,7 +2410,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_19=(Token)match(input,16,FOLLOW_2); 
+            otherlv_19=(Token)match(input,17,FOLLOW_2); 
 
             			newLeafNode(otherlv_19, grammarAccess.getOperationMappingAccess().getRightCurlyBracketKeyword_7());
             		
@@ -2506,11 +2507,11 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             // InternalMappingDsl.g:928:2: (otherlv_0= 'referred' otherlv_1= 'operation' ( ( ruleQualifiedName ) ) otherlv_3= '{' (otherlv_4= 'protocols' otherlv_5= '{' ( (lv_protocols_6_0= ruleTechnologySpecificProtocolSpecification ) )+ otherlv_7= '}' )? (otherlv_8= 'endpoints' otherlv_9= '{' ( (lv_endpoints_10_0= ruleTechnologySpecificEndpoint ) )+ otherlv_11= '}' )? (otherlv_12= 'aspects' otherlv_13= '{' ( (lv_aspects_14_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_15= '}' )? otherlv_16= '}' )
             // InternalMappingDsl.g:929:3: otherlv_0= 'referred' otherlv_1= 'operation' ( ( ruleQualifiedName ) ) otherlv_3= '{' (otherlv_4= 'protocols' otherlv_5= '{' ( (lv_protocols_6_0= ruleTechnologySpecificProtocolSpecification ) )+ otherlv_7= '}' )? (otherlv_8= 'endpoints' otherlv_9= '{' ( (lv_endpoints_10_0= ruleTechnologySpecificEndpoint ) )+ otherlv_11= '}' )? (otherlv_12= 'aspects' otherlv_13= '{' ( (lv_aspects_14_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_15= '}' )? otherlv_16= '}'
             {
-            otherlv_0=(Token)match(input,23,FOLLOW_33); 
+            otherlv_0=(Token)match(input,24,FOLLOW_33); 
 
             			newLeafNode(otherlv_0, grammarAccess.getReferredOperationMappingAccess().getReferredKeyword_0());
             		
-            otherlv_1=(Token)match(input,21,FOLLOW_7); 
+            otherlv_1=(Token)match(input,22,FOLLOW_7); 
 
             			newLeafNode(otherlv_1, grammarAccess.getReferredOperationMappingAccess().getOperationKeyword_1());
             		
@@ -2542,7 +2543,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_3=(Token)match(input,14,FOLLOW_23); 
+            otherlv_3=(Token)match(input,15,FOLLOW_23); 
 
             			newLeafNode(otherlv_3, grammarAccess.getReferredOperationMappingAccess().getLeftCurlyBracketKeyword_3());
             		
@@ -2550,18 +2551,18 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt35=2;
             int LA35_0 = input.LA(1);
 
-            if ( (LA35_0==18) ) {
+            if ( (LA35_0==19) ) {
                 alt35=1;
             }
             switch (alt35) {
                 case 1 :
                     // InternalMappingDsl.g:958:4: otherlv_4= 'protocols' otherlv_5= '{' ( (lv_protocols_6_0= ruleTechnologySpecificProtocolSpecification ) )+ otherlv_7= '}'
                     {
-                    otherlv_4=(Token)match(input,18,FOLLOW_8); 
+                    otherlv_4=(Token)match(input,19,FOLLOW_8); 
 
                     				newLeafNode(otherlv_4, grammarAccess.getReferredOperationMappingAccess().getProtocolsKeyword_4_0());
                     			
-                    otherlv_5=(Token)match(input,14,FOLLOW_16); 
+                    otherlv_5=(Token)match(input,15,FOLLOW_16); 
 
                     				newLeafNode(otherlv_5, grammarAccess.getReferredOperationMappingAccess().getLeftCurlyBracketKeyword_4_1());
                     			
@@ -2572,7 +2573,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         int alt34=2;
                         int LA34_0 = input.LA(1);
 
-                        if ( ((LA34_0>=77 && LA34_0<=78)) ) {
+                        if ( ((LA34_0>=78 && LA34_0<=79)) ) {
                             alt34=1;
                         }
 
@@ -2619,7 +2620,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         cnt34++;
                     } while (true);
 
-                    otherlv_7=(Token)match(input,16,FOLLOW_24); 
+                    otherlv_7=(Token)match(input,17,FOLLOW_24); 
 
                     				newLeafNode(otherlv_7, grammarAccess.getReferredOperationMappingAccess().getRightCurlyBracketKeyword_4_3());
                     			
@@ -2633,18 +2634,18 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt37=2;
             int LA37_0 = input.LA(1);
 
-            if ( (LA37_0==19) ) {
+            if ( (LA37_0==20) ) {
                 alt37=1;
             }
             switch (alt37) {
                 case 1 :
                     // InternalMappingDsl.g:991:4: otherlv_8= 'endpoints' otherlv_9= '{' ( (lv_endpoints_10_0= ruleTechnologySpecificEndpoint ) )+ otherlv_11= '}'
                     {
-                    otherlv_8=(Token)match(input,19,FOLLOW_8); 
+                    otherlv_8=(Token)match(input,20,FOLLOW_8); 
 
                     				newLeafNode(otherlv_8, grammarAccess.getReferredOperationMappingAccess().getEndpointsKeyword_5_0());
                     			
-                    otherlv_9=(Token)match(input,14,FOLLOW_7); 
+                    otherlv_9=(Token)match(input,15,FOLLOW_7); 
 
                     				newLeafNode(otherlv_9, grammarAccess.getReferredOperationMappingAccess().getLeftCurlyBracketKeyword_5_1());
                     			
@@ -2702,7 +2703,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         cnt36++;
                     } while (true);
 
-                    otherlv_11=(Token)match(input,16,FOLLOW_25); 
+                    otherlv_11=(Token)match(input,17,FOLLOW_25); 
 
                     				newLeafNode(otherlv_11, grammarAccess.getReferredOperationMappingAccess().getRightCurlyBracketKeyword_5_3());
                     			
@@ -2716,18 +2717,18 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt39=2;
             int LA39_0 = input.LA(1);
 
-            if ( (LA39_0==15) ) {
+            if ( (LA39_0==16) ) {
                 alt39=1;
             }
             switch (alt39) {
                 case 1 :
                     // InternalMappingDsl.g:1024:4: otherlv_12= 'aspects' otherlv_13= '{' ( (lv_aspects_14_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_15= '}'
                     {
-                    otherlv_12=(Token)match(input,15,FOLLOW_8); 
+                    otherlv_12=(Token)match(input,16,FOLLOW_8); 
 
                     				newLeafNode(otherlv_12, grammarAccess.getReferredOperationMappingAccess().getAspectsKeyword_6_0());
                     			
-                    otherlv_13=(Token)match(input,14,FOLLOW_7); 
+                    otherlv_13=(Token)match(input,15,FOLLOW_7); 
 
                     				newLeafNode(otherlv_13, grammarAccess.getReferredOperationMappingAccess().getLeftCurlyBracketKeyword_6_1());
                     			
@@ -2785,7 +2786,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         cnt38++;
                     } while (true);
 
-                    otherlv_15=(Token)match(input,16,FOLLOW_26); 
+                    otherlv_15=(Token)match(input,17,FOLLOW_26); 
 
                     				newLeafNode(otherlv_15, grammarAccess.getReferredOperationMappingAccess().getRightCurlyBracketKeyword_6_3());
                     			
@@ -2795,7 +2796,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_16=(Token)match(input,16,FOLLOW_2); 
+            otherlv_16=(Token)match(input,17,FOLLOW_2); 
 
             			newLeafNode(otherlv_16, grammarAccess.getReferredOperationMappingAccess().getRightCurlyBracketKeyword_7());
             		
@@ -2886,7 +2887,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             // InternalMappingDsl.g:1078:2: (otherlv_0= 'primitive' ( (otherlv_1= RULE_ID ) ) (otherlv_2= ':' ( (otherlv_3= RULE_ID ) ) otherlv_4= '::' ( ( ruleQualifiedName ) ) )? ( (otherlv_6= '{' otherlv_7= 'aspects' otherlv_8= '{' ( (lv_aspects_9_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_10= '}' otherlv_11= '}' ) | otherlv_12= ';' ) )
             // InternalMappingDsl.g:1079:3: otherlv_0= 'primitive' ( (otherlv_1= RULE_ID ) ) (otherlv_2= ':' ( (otherlv_3= RULE_ID ) ) otherlv_4= '::' ( ( ruleQualifiedName ) ) )? ( (otherlv_6= '{' otherlv_7= 'aspects' otherlv_8= '{' ( (lv_aspects_9_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_10= '}' otherlv_11= '}' ) | otherlv_12= ';' )
             {
-            otherlv_0=(Token)match(input,24,FOLLOW_7); 
+            otherlv_0=(Token)match(input,25,FOLLOW_7); 
 
             			newLeafNode(otherlv_0, grammarAccess.getPrimitiveParameterMappingAccess().getPrimitiveKeyword_0());
             		
@@ -2915,14 +2916,14 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt40=2;
             int LA40_0 = input.LA(1);
 
-            if ( (LA40_0==25) ) {
+            if ( (LA40_0==26) ) {
                 alt40=1;
             }
             switch (alt40) {
                 case 1 :
                     // InternalMappingDsl.g:1097:4: otherlv_2= ':' ( (otherlv_3= RULE_ID ) ) otherlv_4= '::' ( ( ruleQualifiedName ) )
                     {
-                    otherlv_2=(Token)match(input,25,FOLLOW_7); 
+                    otherlv_2=(Token)match(input,26,FOLLOW_7); 
 
                     				newLeafNode(otherlv_2, grammarAccess.getPrimitiveParameterMappingAccess().getColonKeyword_2_0());
                     			
@@ -2947,7 +2948,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_4=(Token)match(input,17,FOLLOW_7); 
+                    otherlv_4=(Token)match(input,18,FOLLOW_7); 
 
                     				newLeafNode(otherlv_4, grammarAccess.getPrimitiveParameterMappingAccess().getColonColonKeyword_2_2());
                     			
@@ -2989,10 +2990,10 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt42=2;
             int LA42_0 = input.LA(1);
 
-            if ( (LA42_0==14) ) {
+            if ( (LA42_0==15) ) {
                 alt42=1;
             }
-            else if ( (LA42_0==26) ) {
+            else if ( (LA42_0==27) ) {
                 alt42=2;
             }
             else {
@@ -3008,15 +3009,15 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     // InternalMappingDsl.g:1136:4: (otherlv_6= '{' otherlv_7= 'aspects' otherlv_8= '{' ( (lv_aspects_9_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_10= '}' otherlv_11= '}' )
                     // InternalMappingDsl.g:1137:5: otherlv_6= '{' otherlv_7= 'aspects' otherlv_8= '{' ( (lv_aspects_9_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_10= '}' otherlv_11= '}'
                     {
-                    otherlv_6=(Token)match(input,14,FOLLOW_36); 
+                    otherlv_6=(Token)match(input,15,FOLLOW_36); 
 
                     					newLeafNode(otherlv_6, grammarAccess.getPrimitiveParameterMappingAccess().getLeftCurlyBracketKeyword_3_0_0());
                     				
-                    otherlv_7=(Token)match(input,15,FOLLOW_8); 
+                    otherlv_7=(Token)match(input,16,FOLLOW_8); 
 
                     					newLeafNode(otherlv_7, grammarAccess.getPrimitiveParameterMappingAccess().getAspectsKeyword_3_0_1());
                     				
-                    otherlv_8=(Token)match(input,14,FOLLOW_7); 
+                    otherlv_8=(Token)match(input,15,FOLLOW_7); 
 
                     					newLeafNode(otherlv_8, grammarAccess.getPrimitiveParameterMappingAccess().getLeftCurlyBracketKeyword_3_0_2());
                     				
@@ -3074,11 +3075,11 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         cnt41++;
                     } while (true);
 
-                    otherlv_10=(Token)match(input,16,FOLLOW_26); 
+                    otherlv_10=(Token)match(input,17,FOLLOW_26); 
 
                     					newLeafNode(otherlv_10, grammarAccess.getPrimitiveParameterMappingAccess().getRightCurlyBracketKeyword_3_0_4());
                     				
-                    otherlv_11=(Token)match(input,16,FOLLOW_2); 
+                    otherlv_11=(Token)match(input,17,FOLLOW_2); 
 
                     					newLeafNode(otherlv_11, grammarAccess.getPrimitiveParameterMappingAccess().getRightCurlyBracketKeyword_3_0_5());
                     				
@@ -3091,7 +3092,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 case 2 :
                     // InternalMappingDsl.g:1178:4: otherlv_12= ';'
                     {
-                    otherlv_12=(Token)match(input,26,FOLLOW_2); 
+                    otherlv_12=(Token)match(input,27,FOLLOW_2); 
 
                     				newLeafNode(otherlv_12, grammarAccess.getPrimitiveParameterMappingAccess().getSemicolonKeyword_3_1());
                     			
@@ -3198,7 +3199,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             // InternalMappingDsl.g:1201:2: (otherlv_0= 'complex' ( (otherlv_1= RULE_ID ) ) ( ( (otherlv_2= ':' ( (otherlv_3= RULE_ID ) ) otherlv_4= '::' ( ( ruleQualifiedName ) ) )? ( (otherlv_6= '{' otherlv_7= 'aspects' otherlv_8= '{' ( (lv_aspects_9_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_10= '}' otherlv_11= '}' ) | otherlv_12= ';' ) ) | (otherlv_13= '->' otherlv_14= '{' (otherlv_15= 'aspects' otherlv_16= '{' ( (lv_aspects_17_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_18= '}' )? ( (lv_fieldMappings_19_0= ruleTechnologySpecificFieldMapping ) )+ otherlv_20= '}' ) ) )
             // InternalMappingDsl.g:1202:3: otherlv_0= 'complex' ( (otherlv_1= RULE_ID ) ) ( ( (otherlv_2= ':' ( (otherlv_3= RULE_ID ) ) otherlv_4= '::' ( ( ruleQualifiedName ) ) )? ( (otherlv_6= '{' otherlv_7= 'aspects' otherlv_8= '{' ( (lv_aspects_9_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_10= '}' otherlv_11= '}' ) | otherlv_12= ';' ) ) | (otherlv_13= '->' otherlv_14= '{' (otherlv_15= 'aspects' otherlv_16= '{' ( (lv_aspects_17_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_18= '}' )? ( (lv_fieldMappings_19_0= ruleTechnologySpecificFieldMapping ) )+ otherlv_20= '}' ) )
             {
-            otherlv_0=(Token)match(input,27,FOLLOW_7); 
+            otherlv_0=(Token)match(input,28,FOLLOW_7); 
 
             			newLeafNode(otherlv_0, grammarAccess.getComplexParameterMappingAccess().getComplexKeyword_0());
             		
@@ -3227,10 +3228,10 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt49=2;
             int LA49_0 = input.LA(1);
 
-            if ( (LA49_0==14||(LA49_0>=25 && LA49_0<=26)) ) {
+            if ( (LA49_0==15||(LA49_0>=26 && LA49_0<=27)) ) {
                 alt49=1;
             }
-            else if ( (LA49_0==28) ) {
+            else if ( (LA49_0==29) ) {
                 alt49=2;
             }
             else {
@@ -3250,14 +3251,14 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     int alt43=2;
                     int LA43_0 = input.LA(1);
 
-                    if ( (LA43_0==25) ) {
+                    if ( (LA43_0==26) ) {
                         alt43=1;
                     }
                     switch (alt43) {
                         case 1 :
                             // InternalMappingDsl.g:1222:6: otherlv_2= ':' ( (otherlv_3= RULE_ID ) ) otherlv_4= '::' ( ( ruleQualifiedName ) )
                             {
-                            otherlv_2=(Token)match(input,25,FOLLOW_7); 
+                            otherlv_2=(Token)match(input,26,FOLLOW_7); 
 
                             						newLeafNode(otherlv_2, grammarAccess.getComplexParameterMappingAccess().getColonKeyword_2_0_0_0());
                             					
@@ -3282,7 +3283,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                             }
 
-                            otherlv_4=(Token)match(input,17,FOLLOW_7); 
+                            otherlv_4=(Token)match(input,18,FOLLOW_7); 
 
                             						newLeafNode(otherlv_4, grammarAccess.getComplexParameterMappingAccess().getColonColonKeyword_2_0_0_2());
                             					
@@ -3324,10 +3325,10 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     int alt45=2;
                     int LA45_0 = input.LA(1);
 
-                    if ( (LA45_0==14) ) {
+                    if ( (LA45_0==15) ) {
                         alt45=1;
                     }
-                    else if ( (LA45_0==26) ) {
+                    else if ( (LA45_0==27) ) {
                         alt45=2;
                     }
                     else {
@@ -3343,15 +3344,15 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                             // InternalMappingDsl.g:1261:6: (otherlv_6= '{' otherlv_7= 'aspects' otherlv_8= '{' ( (lv_aspects_9_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_10= '}' otherlv_11= '}' )
                             // InternalMappingDsl.g:1262:7: otherlv_6= '{' otherlv_7= 'aspects' otherlv_8= '{' ( (lv_aspects_9_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_10= '}' otherlv_11= '}'
                             {
-                            otherlv_6=(Token)match(input,14,FOLLOW_36); 
+                            otherlv_6=(Token)match(input,15,FOLLOW_36); 
 
                             							newLeafNode(otherlv_6, grammarAccess.getComplexParameterMappingAccess().getLeftCurlyBracketKeyword_2_0_1_0_0());
                             						
-                            otherlv_7=(Token)match(input,15,FOLLOW_8); 
+                            otherlv_7=(Token)match(input,16,FOLLOW_8); 
 
                             							newLeafNode(otherlv_7, grammarAccess.getComplexParameterMappingAccess().getAspectsKeyword_2_0_1_0_1());
                             						
-                            otherlv_8=(Token)match(input,14,FOLLOW_7); 
+                            otherlv_8=(Token)match(input,15,FOLLOW_7); 
 
                             							newLeafNode(otherlv_8, grammarAccess.getComplexParameterMappingAccess().getLeftCurlyBracketKeyword_2_0_1_0_2());
                             						
@@ -3409,11 +3410,11 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                                 cnt44++;
                             } while (true);
 
-                            otherlv_10=(Token)match(input,16,FOLLOW_26); 
+                            otherlv_10=(Token)match(input,17,FOLLOW_26); 
 
                             							newLeafNode(otherlv_10, grammarAccess.getComplexParameterMappingAccess().getRightCurlyBracketKeyword_2_0_1_0_4());
                             						
-                            otherlv_11=(Token)match(input,16,FOLLOW_2); 
+                            otherlv_11=(Token)match(input,17,FOLLOW_2); 
 
                             							newLeafNode(otherlv_11, grammarAccess.getComplexParameterMappingAccess().getRightCurlyBracketKeyword_2_0_1_0_5());
                             						
@@ -3426,7 +3427,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         case 2 :
                             // InternalMappingDsl.g:1303:6: otherlv_12= ';'
                             {
-                            otherlv_12=(Token)match(input,26,FOLLOW_2); 
+                            otherlv_12=(Token)match(input,27,FOLLOW_2); 
 
                             						newLeafNode(otherlv_12, grammarAccess.getComplexParameterMappingAccess().getSemicolonKeyword_2_0_1_1());
                             					
@@ -3448,11 +3449,11 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     // InternalMappingDsl.g:1310:4: (otherlv_13= '->' otherlv_14= '{' (otherlv_15= 'aspects' otherlv_16= '{' ( (lv_aspects_17_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_18= '}' )? ( (lv_fieldMappings_19_0= ruleTechnologySpecificFieldMapping ) )+ otherlv_20= '}' )
                     // InternalMappingDsl.g:1311:5: otherlv_13= '->' otherlv_14= '{' (otherlv_15= 'aspects' otherlv_16= '{' ( (lv_aspects_17_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_18= '}' )? ( (lv_fieldMappings_19_0= ruleTechnologySpecificFieldMapping ) )+ otherlv_20= '}'
                     {
-                    otherlv_13=(Token)match(input,28,FOLLOW_8); 
+                    otherlv_13=(Token)match(input,29,FOLLOW_8); 
 
                     					newLeafNode(otherlv_13, grammarAccess.getComplexParameterMappingAccess().getHyphenMinusGreaterThanSignKeyword_2_1_0());
                     				
-                    otherlv_14=(Token)match(input,14,FOLLOW_38); 
+                    otherlv_14=(Token)match(input,15,FOLLOW_38); 
 
                     					newLeafNode(otherlv_14, grammarAccess.getComplexParameterMappingAccess().getLeftCurlyBracketKeyword_2_1_1());
                     				
@@ -3460,18 +3461,18 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     int alt47=2;
                     int LA47_0 = input.LA(1);
 
-                    if ( (LA47_0==15) ) {
+                    if ( (LA47_0==16) ) {
                         alt47=1;
                     }
                     switch (alt47) {
                         case 1 :
                             // InternalMappingDsl.g:1320:6: otherlv_15= 'aspects' otherlv_16= '{' ( (lv_aspects_17_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_18= '}'
                             {
-                            otherlv_15=(Token)match(input,15,FOLLOW_8); 
+                            otherlv_15=(Token)match(input,16,FOLLOW_8); 
 
                             						newLeafNode(otherlv_15, grammarAccess.getComplexParameterMappingAccess().getAspectsKeyword_2_1_2_0());
                             					
-                            otherlv_16=(Token)match(input,14,FOLLOW_7); 
+                            otherlv_16=(Token)match(input,15,FOLLOW_7); 
 
                             						newLeafNode(otherlv_16, grammarAccess.getComplexParameterMappingAccess().getLeftCurlyBracketKeyword_2_1_2_1());
                             					
@@ -3529,7 +3530,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                                 cnt46++;
                             } while (true);
 
-                            otherlv_18=(Token)match(input,16,FOLLOW_39); 
+                            otherlv_18=(Token)match(input,17,FOLLOW_39); 
 
                             						newLeafNode(otherlv_18, grammarAccess.getComplexParameterMappingAccess().getRightCurlyBracketKeyword_2_1_2_3());
                             					
@@ -3546,7 +3547,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         int alt48=2;
                         int LA48_0 = input.LA(1);
 
-                        if ( (LA48_0==RULE_ID||LA48_0==29) ) {
+                        if ( (LA48_0==RULE_ID||LA48_0==30) ) {
                             alt48=1;
                         }
 
@@ -3593,7 +3594,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         cnt48++;
                     } while (true);
 
-                    otherlv_20=(Token)match(input,16,FOLLOW_2); 
+                    otherlv_20=(Token)match(input,17,FOLLOW_2); 
 
                     					newLeafNode(otherlv_20, grammarAccess.getComplexParameterMappingAccess().getRightCurlyBracketKeyword_2_1_4());
                     				
@@ -3702,7 +3703,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt54=2;
             int LA54_0 = input.LA(1);
 
-            if ( (LA54_0==29) ) {
+            if ( (LA54_0==30) ) {
                 alt54=1;
             }
             else if ( (LA54_0==RULE_ID) ) {
@@ -3721,7 +3722,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     // InternalMappingDsl.g:1396:3: (otherlv_0= '.' ( (otherlv_1= RULE_ID ) ) otherlv_2= '{' otherlv_3= 'aspects' otherlv_4= '{' ( (lv_aspects_5_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_6= '}' otherlv_7= '}' )
                     // InternalMappingDsl.g:1397:4: otherlv_0= '.' ( (otherlv_1= RULE_ID ) ) otherlv_2= '{' otherlv_3= 'aspects' otherlv_4= '{' ( (lv_aspects_5_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_6= '}' otherlv_7= '}'
                     {
-                    otherlv_0=(Token)match(input,29,FOLLOW_7); 
+                    otherlv_0=(Token)match(input,30,FOLLOW_7); 
 
                     				newLeafNode(otherlv_0, grammarAccess.getTechnologySpecificFieldMappingAccess().getFullStopKeyword_0_0());
                     			
@@ -3746,15 +3747,15 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_2=(Token)match(input,14,FOLLOW_36); 
+                    otherlv_2=(Token)match(input,15,FOLLOW_36); 
 
                     				newLeafNode(otherlv_2, grammarAccess.getTechnologySpecificFieldMappingAccess().getLeftCurlyBracketKeyword_0_2());
                     			
-                    otherlv_3=(Token)match(input,15,FOLLOW_8); 
+                    otherlv_3=(Token)match(input,16,FOLLOW_8); 
 
                     				newLeafNode(otherlv_3, grammarAccess.getTechnologySpecificFieldMappingAccess().getAspectsKeyword_0_3());
                     			
-                    otherlv_4=(Token)match(input,14,FOLLOW_7); 
+                    otherlv_4=(Token)match(input,15,FOLLOW_7); 
 
                     				newLeafNode(otherlv_4, grammarAccess.getTechnologySpecificFieldMappingAccess().getLeftCurlyBracketKeyword_0_4());
                     			
@@ -3812,11 +3813,11 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         cnt50++;
                     } while (true);
 
-                    otherlv_6=(Token)match(input,16,FOLLOW_26); 
+                    otherlv_6=(Token)match(input,17,FOLLOW_26); 
 
                     				newLeafNode(otherlv_6, grammarAccess.getTechnologySpecificFieldMappingAccess().getRightCurlyBracketKeyword_0_6());
                     			
-                    otherlv_7=(Token)match(input,16,FOLLOW_2); 
+                    otherlv_7=(Token)match(input,17,FOLLOW_2); 
 
                     				newLeafNode(otherlv_7, grammarAccess.getTechnologySpecificFieldMappingAccess().getRightCurlyBracketKeyword_0_7());
                     			
@@ -3857,14 +3858,14 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     int alt51=2;
                     int LA51_0 = input.LA(1);
 
-                    if ( (LA51_0==25) ) {
+                    if ( (LA51_0==26) ) {
                         alt51=1;
                     }
                     switch (alt51) {
                         case 1 :
                             // InternalMappingDsl.g:1470:5: otherlv_9= ':' ( (otherlv_10= RULE_ID ) ) otherlv_11= '::' ( ( ruleQualifiedName ) )
                             {
-                            otherlv_9=(Token)match(input,25,FOLLOW_7); 
+                            otherlv_9=(Token)match(input,26,FOLLOW_7); 
 
                             					newLeafNode(otherlv_9, grammarAccess.getTechnologySpecificFieldMappingAccess().getColonKeyword_1_1_0());
                             				
@@ -3889,7 +3890,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                             }
 
-                            otherlv_11=(Token)match(input,17,FOLLOW_7); 
+                            otherlv_11=(Token)match(input,18,FOLLOW_7); 
 
                             					newLeafNode(otherlv_11, grammarAccess.getTechnologySpecificFieldMappingAccess().getColonColonKeyword_1_1_2());
                             				
@@ -3931,10 +3932,10 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     int alt53=2;
                     int LA53_0 = input.LA(1);
 
-                    if ( (LA53_0==14) ) {
+                    if ( (LA53_0==15) ) {
                         alt53=1;
                     }
-                    else if ( (LA53_0==26) ) {
+                    else if ( (LA53_0==27) ) {
                         alt53=2;
                     }
                     else {
@@ -3950,15 +3951,15 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                             // InternalMappingDsl.g:1509:5: (otherlv_13= '{' otherlv_14= 'aspects' otherlv_15= '{' ( (lv_aspects_16_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_17= '}' otherlv_18= '}' )
                             // InternalMappingDsl.g:1510:6: otherlv_13= '{' otherlv_14= 'aspects' otherlv_15= '{' ( (lv_aspects_16_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_17= '}' otherlv_18= '}'
                             {
-                            otherlv_13=(Token)match(input,14,FOLLOW_36); 
+                            otherlv_13=(Token)match(input,15,FOLLOW_36); 
 
                             						newLeafNode(otherlv_13, grammarAccess.getTechnologySpecificFieldMappingAccess().getLeftCurlyBracketKeyword_1_2_0_0());
                             					
-                            otherlv_14=(Token)match(input,15,FOLLOW_8); 
+                            otherlv_14=(Token)match(input,16,FOLLOW_8); 
 
                             						newLeafNode(otherlv_14, grammarAccess.getTechnologySpecificFieldMappingAccess().getAspectsKeyword_1_2_0_1());
                             					
-                            otherlv_15=(Token)match(input,14,FOLLOW_7); 
+                            otherlv_15=(Token)match(input,15,FOLLOW_7); 
 
                             						newLeafNode(otherlv_15, grammarAccess.getTechnologySpecificFieldMappingAccess().getLeftCurlyBracketKeyword_1_2_0_2());
                             					
@@ -4016,11 +4017,11 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                                 cnt52++;
                             } while (true);
 
-                            otherlv_17=(Token)match(input,16,FOLLOW_26); 
+                            otherlv_17=(Token)match(input,17,FOLLOW_26); 
 
                             						newLeafNode(otherlv_17, grammarAccess.getTechnologySpecificFieldMappingAccess().getRightCurlyBracketKeyword_1_2_0_4());
                             					
-                            otherlv_18=(Token)match(input,16,FOLLOW_2); 
+                            otherlv_18=(Token)match(input,17,FOLLOW_2); 
 
                             						newLeafNode(otherlv_18, grammarAccess.getTechnologySpecificFieldMappingAccess().getRightCurlyBracketKeyword_1_2_0_5());
                             					
@@ -4033,7 +4034,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         case 2 :
                             // InternalMappingDsl.g:1551:5: otherlv_19= ';'
                             {
-                            otherlv_19=(Token)match(input,26,FOLLOW_2); 
+                            otherlv_19=(Token)match(input,27,FOLLOW_2); 
 
                             					newLeafNode(otherlv_19, grammarAccess.getTechnologySpecificFieldMappingAccess().getSemicolonKeyword_1_2_1());
                             				
@@ -4142,7 +4143,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             // InternalMappingDsl.g:1575:2: (otherlv_0= 'op' ( (otherlv_1= RULE_ID ) ) ( (otherlv_2= '{' (otherlv_3= 'aspects' otherlv_4= '{' ( (lv_aspects_5_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_6= '}' )? (otherlv_7= 'return' otherlv_8= 'type' ( (lv_returnTypeMapping_9_0= ruleDataOperationReturnTypeMapping ) ) )? (otherlv_10= 'parameters' otherlv_11= '{' ( (lv_parameterMappings_12_0= ruleDataOperationParameterMapping ) )+ otherlv_13= '}' )? otherlv_14= '}' ) | otherlv_15= ';' ) )
             // InternalMappingDsl.g:1576:3: otherlv_0= 'op' ( (otherlv_1= RULE_ID ) ) ( (otherlv_2= '{' (otherlv_3= 'aspects' otherlv_4= '{' ( (lv_aspects_5_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_6= '}' )? (otherlv_7= 'return' otherlv_8= 'type' ( (lv_returnTypeMapping_9_0= ruleDataOperationReturnTypeMapping ) ) )? (otherlv_10= 'parameters' otherlv_11= '{' ( (lv_parameterMappings_12_0= ruleDataOperationParameterMapping ) )+ otherlv_13= '}' )? otherlv_14= '}' ) | otherlv_15= ';' )
             {
-            otherlv_0=(Token)match(input,30,FOLLOW_7); 
+            otherlv_0=(Token)match(input,31,FOLLOW_7); 
 
             			newLeafNode(otherlv_0, grammarAccess.getDataOperationMappingAccess().getOpKeyword_0());
             		
@@ -4171,10 +4172,10 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt60=2;
             int LA60_0 = input.LA(1);
 
-            if ( (LA60_0==14) ) {
+            if ( (LA60_0==15) ) {
                 alt60=1;
             }
-            else if ( (LA60_0==26) ) {
+            else if ( (LA60_0==27) ) {
                 alt60=2;
             }
             else {
@@ -4190,7 +4191,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     // InternalMappingDsl.g:1594:4: (otherlv_2= '{' (otherlv_3= 'aspects' otherlv_4= '{' ( (lv_aspects_5_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_6= '}' )? (otherlv_7= 'return' otherlv_8= 'type' ( (lv_returnTypeMapping_9_0= ruleDataOperationReturnTypeMapping ) ) )? (otherlv_10= 'parameters' otherlv_11= '{' ( (lv_parameterMappings_12_0= ruleDataOperationParameterMapping ) )+ otherlv_13= '}' )? otherlv_14= '}' )
                     // InternalMappingDsl.g:1595:5: otherlv_2= '{' (otherlv_3= 'aspects' otherlv_4= '{' ( (lv_aspects_5_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_6= '}' )? (otherlv_7= 'return' otherlv_8= 'type' ( (lv_returnTypeMapping_9_0= ruleDataOperationReturnTypeMapping ) ) )? (otherlv_10= 'parameters' otherlv_11= '{' ( (lv_parameterMappings_12_0= ruleDataOperationParameterMapping ) )+ otherlv_13= '}' )? otherlv_14= '}'
                     {
-                    otherlv_2=(Token)match(input,14,FOLLOW_41); 
+                    otherlv_2=(Token)match(input,15,FOLLOW_41); 
 
                     					newLeafNode(otherlv_2, grammarAccess.getDataOperationMappingAccess().getLeftCurlyBracketKeyword_2_0_0());
                     				
@@ -4198,18 +4199,18 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     int alt56=2;
                     int LA56_0 = input.LA(1);
 
-                    if ( (LA56_0==15) ) {
+                    if ( (LA56_0==16) ) {
                         alt56=1;
                     }
                     switch (alt56) {
                         case 1 :
                             // InternalMappingDsl.g:1600:6: otherlv_3= 'aspects' otherlv_4= '{' ( (lv_aspects_5_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_6= '}'
                             {
-                            otherlv_3=(Token)match(input,15,FOLLOW_8); 
+                            otherlv_3=(Token)match(input,16,FOLLOW_8); 
 
                             						newLeafNode(otherlv_3, grammarAccess.getDataOperationMappingAccess().getAspectsKeyword_2_0_1_0());
                             					
-                            otherlv_4=(Token)match(input,14,FOLLOW_7); 
+                            otherlv_4=(Token)match(input,15,FOLLOW_7); 
 
                             						newLeafNode(otherlv_4, grammarAccess.getDataOperationMappingAccess().getLeftCurlyBracketKeyword_2_0_1_1());
                             					
@@ -4267,7 +4268,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                                 cnt55++;
                             } while (true);
 
-                            otherlv_6=(Token)match(input,16,FOLLOW_42); 
+                            otherlv_6=(Token)match(input,17,FOLLOW_42); 
 
                             						newLeafNode(otherlv_6, grammarAccess.getDataOperationMappingAccess().getRightCurlyBracketKeyword_2_0_1_3());
                             					
@@ -4281,18 +4282,18 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     int alt57=2;
                     int LA57_0 = input.LA(1);
 
-                    if ( (LA57_0==31) ) {
+                    if ( (LA57_0==32) ) {
                         alt57=1;
                     }
                     switch (alt57) {
                         case 1 :
                             // InternalMappingDsl.g:1633:6: otherlv_7= 'return' otherlv_8= 'type' ( (lv_returnTypeMapping_9_0= ruleDataOperationReturnTypeMapping ) )
                             {
-                            otherlv_7=(Token)match(input,31,FOLLOW_43); 
+                            otherlv_7=(Token)match(input,32,FOLLOW_43); 
 
                             						newLeafNode(otherlv_7, grammarAccess.getDataOperationMappingAccess().getReturnKeyword_2_0_2_0());
                             					
-                            otherlv_8=(Token)match(input,13,FOLLOW_34); 
+                            otherlv_8=(Token)match(input,14,FOLLOW_34); 
 
                             						newLeafNode(otherlv_8, grammarAccess.getDataOperationMappingAccess().getTypeKeyword_2_0_2_1());
                             					
@@ -4337,18 +4338,18 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     int alt59=2;
                     int LA59_0 = input.LA(1);
 
-                    if ( (LA59_0==22) ) {
+                    if ( (LA59_0==23) ) {
                         alt59=1;
                     }
                     switch (alt59) {
                         case 1 :
                             // InternalMappingDsl.g:1662:6: otherlv_10= 'parameters' otherlv_11= '{' ( (lv_parameterMappings_12_0= ruleDataOperationParameterMapping ) )+ otherlv_13= '}'
                             {
-                            otherlv_10=(Token)match(input,22,FOLLOW_8); 
+                            otherlv_10=(Token)match(input,23,FOLLOW_8); 
 
                             						newLeafNode(otherlv_10, grammarAccess.getDataOperationMappingAccess().getParametersKeyword_2_0_3_0());
                             					
-                            otherlv_11=(Token)match(input,14,FOLLOW_7); 
+                            otherlv_11=(Token)match(input,15,FOLLOW_7); 
 
                             						newLeafNode(otherlv_11, grammarAccess.getDataOperationMappingAccess().getLeftCurlyBracketKeyword_2_0_3_1());
                             					
@@ -4406,7 +4407,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                                 cnt58++;
                             } while (true);
 
-                            otherlv_13=(Token)match(input,16,FOLLOW_26); 
+                            otherlv_13=(Token)match(input,17,FOLLOW_26); 
 
                             						newLeafNode(otherlv_13, grammarAccess.getDataOperationMappingAccess().getRightCurlyBracketKeyword_2_0_3_3());
                             					
@@ -4416,7 +4417,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_14=(Token)match(input,16,FOLLOW_2); 
+                    otherlv_14=(Token)match(input,17,FOLLOW_2); 
 
                     					newLeafNode(otherlv_14, grammarAccess.getDataOperationMappingAccess().getRightCurlyBracketKeyword_2_0_4());
                     				
@@ -4429,7 +4430,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 case 2 :
                     // InternalMappingDsl.g:1700:4: otherlv_15= ';'
                     {
-                    otherlv_15=(Token)match(input,26,FOLLOW_2); 
+                    otherlv_15=(Token)match(input,27,FOLLOW_2); 
 
                     				newLeafNode(otherlv_15, grammarAccess.getDataOperationMappingAccess().getSemicolonKeyword_2_1());
                     			
@@ -4539,14 +4540,14 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt61=2;
             int LA61_0 = input.LA(1);
 
-            if ( (LA61_0==25) ) {
+            if ( (LA61_0==26) ) {
                 alt61=1;
             }
             switch (alt61) {
                 case 1 :
                     // InternalMappingDsl.g:1732:4: otherlv_1= ':' ( (otherlv_2= RULE_ID ) ) otherlv_3= '::' ( ( ruleQualifiedName ) )
                     {
-                    otherlv_1=(Token)match(input,25,FOLLOW_7); 
+                    otherlv_1=(Token)match(input,26,FOLLOW_7); 
 
                     				newLeafNode(otherlv_1, grammarAccess.getDataOperationReturnTypeMappingAccess().getColonKeyword_1_0());
                     			
@@ -4571,7 +4572,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_3=(Token)match(input,17,FOLLOW_7); 
+                    otherlv_3=(Token)match(input,18,FOLLOW_7); 
 
                     				newLeafNode(otherlv_3, grammarAccess.getDataOperationReturnTypeMappingAccess().getColonColonKeyword_1_2());
                     			
@@ -4613,10 +4614,10 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt63=2;
             int LA63_0 = input.LA(1);
 
-            if ( (LA63_0==14) ) {
+            if ( (LA63_0==15) ) {
                 alt63=1;
             }
-            else if ( (LA63_0==26) ) {
+            else if ( (LA63_0==27) ) {
                 alt63=2;
             }
             else {
@@ -4632,15 +4633,15 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     // InternalMappingDsl.g:1771:4: (otherlv_5= '{' otherlv_6= 'aspects' otherlv_7= '{' ( (lv_aspects_8_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_9= '}' otherlv_10= '}' )
                     // InternalMappingDsl.g:1772:5: otherlv_5= '{' otherlv_6= 'aspects' otherlv_7= '{' ( (lv_aspects_8_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_9= '}' otherlv_10= '}'
                     {
-                    otherlv_5=(Token)match(input,14,FOLLOW_36); 
+                    otherlv_5=(Token)match(input,15,FOLLOW_36); 
 
                     					newLeafNode(otherlv_5, grammarAccess.getDataOperationReturnTypeMappingAccess().getLeftCurlyBracketKeyword_2_0_0());
                     				
-                    otherlv_6=(Token)match(input,15,FOLLOW_8); 
+                    otherlv_6=(Token)match(input,16,FOLLOW_8); 
 
                     					newLeafNode(otherlv_6, grammarAccess.getDataOperationReturnTypeMappingAccess().getAspectsKeyword_2_0_1());
                     				
-                    otherlv_7=(Token)match(input,14,FOLLOW_7); 
+                    otherlv_7=(Token)match(input,15,FOLLOW_7); 
 
                     					newLeafNode(otherlv_7, grammarAccess.getDataOperationReturnTypeMappingAccess().getLeftCurlyBracketKeyword_2_0_2());
                     				
@@ -4698,11 +4699,11 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         cnt62++;
                     } while (true);
 
-                    otherlv_9=(Token)match(input,16,FOLLOW_26); 
+                    otherlv_9=(Token)match(input,17,FOLLOW_26); 
 
                     					newLeafNode(otherlv_9, grammarAccess.getDataOperationReturnTypeMappingAccess().getRightCurlyBracketKeyword_2_0_4());
                     				
-                    otherlv_10=(Token)match(input,16,FOLLOW_2); 
+                    otherlv_10=(Token)match(input,17,FOLLOW_2); 
 
                     					newLeafNode(otherlv_10, grammarAccess.getDataOperationReturnTypeMappingAccess().getRightCurlyBracketKeyword_2_0_5());
                     				
@@ -4715,7 +4716,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 case 2 :
                     // InternalMappingDsl.g:1813:4: otherlv_11= ';'
                     {
-                    otherlv_11=(Token)match(input,26,FOLLOW_2); 
+                    otherlv_11=(Token)match(input,27,FOLLOW_2); 
 
                     				newLeafNode(otherlv_11, grammarAccess.getDataOperationReturnTypeMappingAccess().getSemicolonKeyword_2_1());
                     			
@@ -4836,14 +4837,14 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt64=2;
             int LA64_0 = input.LA(1);
 
-            if ( (LA64_0==25) ) {
+            if ( (LA64_0==26) ) {
                 alt64=1;
             }
             switch (alt64) {
                 case 1 :
                     // InternalMappingDsl.g:1851:4: otherlv_1= ':' ( (otherlv_2= RULE_ID ) ) otherlv_3= '::' ( ( ruleQualifiedName ) )
                     {
-                    otherlv_1=(Token)match(input,25,FOLLOW_7); 
+                    otherlv_1=(Token)match(input,26,FOLLOW_7); 
 
                     				newLeafNode(otherlv_1, grammarAccess.getDataOperationParameterMappingAccess().getColonKeyword_1_0());
                     			
@@ -4868,7 +4869,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_3=(Token)match(input,17,FOLLOW_7); 
+                    otherlv_3=(Token)match(input,18,FOLLOW_7); 
 
                     				newLeafNode(otherlv_3, grammarAccess.getDataOperationParameterMappingAccess().getColonColonKeyword_1_2());
                     			
@@ -4910,10 +4911,10 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt66=2;
             int LA66_0 = input.LA(1);
 
-            if ( (LA66_0==14) ) {
+            if ( (LA66_0==15) ) {
                 alt66=1;
             }
-            else if ( (LA66_0==26) ) {
+            else if ( (LA66_0==27) ) {
                 alt66=2;
             }
             else {
@@ -4929,15 +4930,15 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     // InternalMappingDsl.g:1890:4: (otherlv_5= '{' otherlv_6= 'aspects' otherlv_7= '{' ( (lv_aspects_8_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_9= '}' otherlv_10= '}' )
                     // InternalMappingDsl.g:1891:5: otherlv_5= '{' otherlv_6= 'aspects' otherlv_7= '{' ( (lv_aspects_8_0= ruleTechnologySpecificImportedServiceAspect ) )+ otherlv_9= '}' otherlv_10= '}'
                     {
-                    otherlv_5=(Token)match(input,14,FOLLOW_36); 
+                    otherlv_5=(Token)match(input,15,FOLLOW_36); 
 
                     					newLeafNode(otherlv_5, grammarAccess.getDataOperationParameterMappingAccess().getLeftCurlyBracketKeyword_2_0_0());
                     				
-                    otherlv_6=(Token)match(input,15,FOLLOW_8); 
+                    otherlv_6=(Token)match(input,16,FOLLOW_8); 
 
                     					newLeafNode(otherlv_6, grammarAccess.getDataOperationParameterMappingAccess().getAspectsKeyword_2_0_1());
                     				
-                    otherlv_7=(Token)match(input,14,FOLLOW_7); 
+                    otherlv_7=(Token)match(input,15,FOLLOW_7); 
 
                     					newLeafNode(otherlv_7, grammarAccess.getDataOperationParameterMappingAccess().getLeftCurlyBracketKeyword_2_0_2());
                     				
@@ -4995,11 +4996,11 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         cnt65++;
                     } while (true);
 
-                    otherlv_9=(Token)match(input,16,FOLLOW_26); 
+                    otherlv_9=(Token)match(input,17,FOLLOW_26); 
 
                     					newLeafNode(otherlv_9, grammarAccess.getDataOperationParameterMappingAccess().getRightCurlyBracketKeyword_2_0_4());
                     				
-                    otherlv_10=(Token)match(input,16,FOLLOW_2); 
+                    otherlv_10=(Token)match(input,17,FOLLOW_2); 
 
                     					newLeafNode(otherlv_10, grammarAccess.getDataOperationParameterMappingAccess().getRightCurlyBracketKeyword_2_0_5());
                     				
@@ -5012,7 +5013,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 case 2 :
                     // InternalMappingDsl.g:1932:4: otherlv_11= ';'
                     {
-                    otherlv_11=(Token)match(input,26,FOLLOW_2); 
+                    otherlv_11=(Token)match(input,27,FOLLOW_2); 
 
                     				newLeafNode(otherlv_11, grammarAccess.getDataOperationParameterMappingAccess().getSemicolonKeyword_2_1());
                     			
@@ -5119,7 +5120,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,17,FOLLOW_7); 
+            otherlv_1=(Token)match(input,18,FOLLOW_7); 
 
             			newLeafNode(otherlv_1, grammarAccess.getImportedMicroserviceAccess().getColonColonKeyword_1());
             		
@@ -5261,7 +5262,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,25,FOLLOW_7); 
+            otherlv_1=(Token)match(input,26,FOLLOW_7); 
 
             			newLeafNode(otherlv_1, grammarAccess.getTechnologySpecificProtocolSpecificationAccess().getColonKeyword_1());
             		
@@ -5396,7 +5397,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,17,FOLLOW_7); 
+            otherlv_1=(Token)match(input,18,FOLLOW_7); 
 
             			newLeafNode(otherlv_1, grammarAccess.getTechnologySpecificProtocolAccess().getColonColonKeyword_1());
             		
@@ -5432,14 +5433,14 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt67=2;
             int LA67_0 = input.LA(1);
 
-            if ( (LA67_0==32) ) {
+            if ( (LA67_0==33) ) {
                 alt67=1;
             }
             switch (alt67) {
                 case 1 :
                     // InternalMappingDsl.g:2103:4: otherlv_3= '(' ( (otherlv_4= RULE_STRING ) ) otherlv_5= ')'
                     {
-                    otherlv_3=(Token)match(input,32,FOLLOW_46); 
+                    otherlv_3=(Token)match(input,33,FOLLOW_46); 
 
                     				newLeafNode(otherlv_3, grammarAccess.getTechnologySpecificProtocolAccess().getLeftParenthesisKeyword_3_0());
                     			
@@ -5464,7 +5465,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_5=(Token)match(input,33,FOLLOW_2); 
+                    otherlv_5=(Token)match(input,34,FOLLOW_2); 
 
                     				newLeafNode(otherlv_5, grammarAccess.getTechnologySpecificProtocolAccess().getRightParenthesisKeyword_3_2());
                     			
@@ -5595,7 +5596,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 int alt68=2;
                 int LA68_0 = input.LA(1);
 
-                if ( (LA68_0==34) ) {
+                if ( (LA68_0==35) ) {
                     alt68=1;
                 }
 
@@ -5604,7 +5605,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 1 :
             	    // InternalMappingDsl.g:2164:4: otherlv_1= ',' ( (lv_technologySpecificProtocols_2_0= ruleTechnologySpecificProtocol ) )
             	    {
-            	    otherlv_1=(Token)match(input,34,FOLLOW_7); 
+            	    otherlv_1=(Token)match(input,35,FOLLOW_7); 
 
             	    				newLeafNode(otherlv_1, grammarAccess.getTechnologySpecificEndpointAccess().getCommaKeyword_1_0());
             	    			
@@ -5648,7 +5649,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            otherlv_3=(Token)match(input,25,FOLLOW_46); 
+            otherlv_3=(Token)match(input,26,FOLLOW_46); 
 
             			newLeafNode(otherlv_3, grammarAccess.getTechnologySpecificEndpointAccess().getColonKeyword_2());
             		
@@ -5684,7 +5685,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 int alt69=2;
                 int LA69_0 = input.LA(1);
 
-                if ( (LA69_0==34) ) {
+                if ( (LA69_0==35) ) {
                     alt69=1;
                 }
 
@@ -5693,7 +5694,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 1 :
             	    // InternalMappingDsl.g:2211:4: otherlv_5= ',' ( (lv_addresses_6_0= RULE_STRING ) )
             	    {
-            	    otherlv_5=(Token)match(input,34,FOLLOW_46); 
+            	    otherlv_5=(Token)match(input,35,FOLLOW_46); 
 
             	    				newLeafNode(otherlv_5, grammarAccess.getTechnologySpecificEndpointAccess().getCommaKeyword_4_0());
             	    			
@@ -5732,7 +5733,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            otherlv_7=(Token)match(input,26,FOLLOW_2); 
+            otherlv_7=(Token)match(input,27,FOLLOW_2); 
 
             			newLeafNode(otherlv_7, grammarAccess.getTechnologySpecificEndpointAccess().getSemicolonKeyword_5());
             		
@@ -5843,7 +5844,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,17,FOLLOW_7); 
+            otherlv_1=(Token)match(input,18,FOLLOW_7); 
 
             			newLeafNode(otherlv_1, grammarAccess.getTechnologySpecificImportedServiceAspectAccess().getColonColonKeyword_1());
             		
@@ -5879,14 +5880,14 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt72=2;
             int LA72_0 = input.LA(1);
 
-            if ( (LA72_0==32) ) {
+            if ( (LA72_0==33) ) {
                 alt72=1;
             }
             switch (alt72) {
                 case 1 :
                     // InternalMappingDsl.g:2291:4: otherlv_3= '(' ( ( (lv_singlePropertyValue_4_0= rulePrimitiveValue ) ) | ( ( (lv_values_5_0= rulePropertyValueAssignment ) ) (otherlv_6= ',' ( (lv_values_7_0= rulePropertyValueAssignment ) ) )* ) ) otherlv_8= ')'
                     {
-                    otherlv_3=(Token)match(input,32,FOLLOW_51); 
+                    otherlv_3=(Token)match(input,33,FOLLOW_51); 
 
                     				newLeafNode(otherlv_3, grammarAccess.getTechnologySpecificImportedServiceAspectAccess().getLeftParenthesisKeyword_3_0());
                     			
@@ -5894,7 +5895,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     int alt71=2;
                     int LA71_0 = input.LA(1);
 
-                    if ( ((LA71_0>=RULE_STRING && LA71_0<=RULE_BIG_DECIMAL)) ) {
+                    if ( ((LA71_0>=RULE_STRING && LA71_0<=RULE_BOOLEAN)||LA71_0==RULE_BIG_DECIMAL) ) {
                         alt71=1;
                     }
                     else if ( (LA71_0==RULE_ID) ) {
@@ -5987,7 +5988,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                                 int alt70=2;
                                 int LA70_0 = input.LA(1);
 
-                                if ( (LA70_0==34) ) {
+                                if ( (LA70_0==35) ) {
                                     alt70=1;
                                 }
 
@@ -5996,7 +5997,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                             	case 1 :
                             	    // InternalMappingDsl.g:2337:7: otherlv_6= ',' ( (lv_values_7_0= rulePropertyValueAssignment ) )
                             	    {
-                            	    otherlv_6=(Token)match(input,34,FOLLOW_51); 
+                            	    otherlv_6=(Token)match(input,35,FOLLOW_51); 
 
                             	    							newLeafNode(otherlv_6, grammarAccess.getTechnologySpecificImportedServiceAspectAccess().getCommaKeyword_3_1_1_1_0());
                             	    						
@@ -6049,7 +6050,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_8=(Token)match(input,33,FOLLOW_53); 
+                    otherlv_8=(Token)match(input,34,FOLLOW_53); 
 
                     				newLeafNode(otherlv_8, grammarAccess.getTechnologySpecificImportedServiceAspectAccess().getRightParenthesisKeyword_3_2());
                     			
@@ -6059,7 +6060,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_9=(Token)match(input,26,FOLLOW_2); 
+            otherlv_9=(Token)match(input,27,FOLLOW_2); 
 
             			newLeafNode(otherlv_9, grammarAccess.getTechnologySpecificImportedServiceAspectAccess().getSemicolonKeyword_4());
             		
@@ -6144,7 +6145,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             // InternalMappingDsl.g:2390:2: (otherlv_0= 'import' ( (lv_importType_1_0= ruleImportType ) ) otherlv_2= 'from' ( (lv_importURI_3_0= RULE_STRING ) ) otherlv_4= 'as' ( (lv_name_5_0= RULE_ID ) ) )
             // InternalMappingDsl.g:2391:3: otherlv_0= 'import' ( (lv_importType_1_0= ruleImportType ) ) otherlv_2= 'from' ( (lv_importURI_3_0= RULE_STRING ) ) otherlv_4= 'as' ( (lv_name_5_0= RULE_ID ) )
             {
-            otherlv_0=(Token)match(input,35,FOLLOW_54); 
+            otherlv_0=(Token)match(input,36,FOLLOW_54); 
 
             			newLeafNode(otherlv_0, grammarAccess.getImportAccess().getImportKeyword_0());
             		
@@ -6179,7 +6180,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,36,FOLLOW_46); 
+            otherlv_2=(Token)match(input,37,FOLLOW_46); 
 
             			newLeafNode(otherlv_2, grammarAccess.getImportAccess().getFromKeyword_2());
             		
@@ -6209,7 +6210,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_4=(Token)match(input,37,FOLLOW_7); 
+            otherlv_4=(Token)match(input,38,FOLLOW_7); 
 
             			newLeafNode(otherlv_4, grammarAccess.getImportAccess().getAsKeyword_4());
             		
@@ -6379,10 +6380,10 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 int alt73=2;
                 int LA73_0 = input.LA(1);
 
-                if ( (LA73_0==38) ) {
+                if ( (LA73_0==39) ) {
                     int LA73_1 = input.LA(2);
 
-                    if ( (LA73_1==47) ) {
+                    if ( (LA73_1==48) ) {
                         alt73=1;
                     }
 
@@ -6432,10 +6433,10 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt75=2;
             int LA75_0 = input.LA(1);
 
-            if ( (LA75_0==38) ) {
+            if ( (LA75_0==39) ) {
                 int LA75_1 = input.LA(2);
 
-                if ( ((LA75_1>=77 && LA75_1<=78)) ) {
+                if ( ((LA75_1>=78 && LA75_1<=79)) ) {
                     alt75=1;
                 }
             }
@@ -6478,10 +6479,10 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     int alt74=2;
                     int LA74_0 = input.LA(1);
 
-                    if ( (LA74_0==38) ) {
+                    if ( (LA74_0==39) ) {
                         int LA74_1 = input.LA(2);
 
-                        if ( ((LA74_1>=77 && LA74_1<=78)) ) {
+                        if ( ((LA74_1>=78 && LA74_1<=79)) ) {
                             alt74=1;
                         }
                     }
@@ -6530,13 +6531,13 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt77=2;
             int LA77_0 = input.LA(1);
 
-            if ( (LA77_0==38) ) {
+            if ( (LA77_0==39) ) {
                 int LA77_1 = input.LA(2);
 
-                if ( (LA77_1==19) ) {
+                if ( (LA77_1==20) ) {
                     int LA77_3 = input.LA(3);
 
-                    if ( (LA77_3==32) ) {
+                    if ( (LA77_3==33) ) {
                         alt77=1;
                     }
                 }
@@ -6545,15 +6546,15 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 case 1 :
                     // InternalMappingDsl.g:2537:4: otherlv_3= '@' otherlv_4= 'endpoints' otherlv_5= '(' ( (lv_endpoints_6_0= ruleEndpoint ) )+ otherlv_7= ')'
                     {
-                    otherlv_3=(Token)match(input,38,FOLLOW_58); 
+                    otherlv_3=(Token)match(input,39,FOLLOW_58); 
 
                     				newLeafNode(otherlv_3, grammarAccess.getMicroserviceAccess().getCommercialAtKeyword_2_0());
                     			
-                    otherlv_4=(Token)match(input,19,FOLLOW_59); 
+                    otherlv_4=(Token)match(input,20,FOLLOW_59); 
 
                     				newLeafNode(otherlv_4, grammarAccess.getMicroserviceAccess().getEndpointsKeyword_2_1());
                     			
-                    otherlv_5=(Token)match(input,32,FOLLOW_7); 
+                    otherlv_5=(Token)match(input,33,FOLLOW_7); 
 
                     				newLeafNode(otherlv_5, grammarAccess.getMicroserviceAccess().getLeftParenthesisKeyword_2_2());
                     			
@@ -6611,7 +6612,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         cnt76++;
                     } while (true);
 
-                    otherlv_7=(Token)match(input,33,FOLLOW_57); 
+                    otherlv_7=(Token)match(input,34,FOLLOW_57); 
 
                     				newLeafNode(otherlv_7, grammarAccess.getMicroserviceAccess().getRightParenthesisKeyword_2_4());
                     			
@@ -6625,10 +6626,10 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt79=2;
             int LA79_0 = input.LA(1);
 
-            if ( (LA79_0==38) ) {
+            if ( (LA79_0==39) ) {
                 int LA79_1 = input.LA(2);
 
-                if ( (LA79_1==19) ) {
+                if ( (LA79_1==20) ) {
                     alt79=1;
                 }
             }
@@ -6636,15 +6637,15 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 case 1 :
                     // InternalMappingDsl.g:2574:4: otherlv_8= '@' otherlv_9= 'endpoints' otherlv_10= '({' ( (lv_endpoints_11_0= ruleEndpoint ) )+ otherlv_12= '})'
                     {
-                    otherlv_8=(Token)match(input,38,FOLLOW_58); 
+                    otherlv_8=(Token)match(input,39,FOLLOW_58); 
 
                     				newLeafNode(otherlv_8, grammarAccess.getMicroserviceAccess().getCommercialAtKeyword_3_0());
                     			
-                    otherlv_9=(Token)match(input,19,FOLLOW_61); 
+                    otherlv_9=(Token)match(input,20,FOLLOW_61); 
 
                     				newLeafNode(otherlv_9, grammarAccess.getMicroserviceAccess().getEndpointsKeyword_3_1());
                     			
-                    otherlv_10=(Token)match(input,39,FOLLOW_7); 
+                    otherlv_10=(Token)match(input,40,FOLLOW_7); 
 
                     				newLeafNode(otherlv_10, grammarAccess.getMicroserviceAccess().getLeftParenthesisLeftCurlyBracketKeyword_3_2());
                     			
@@ -6702,7 +6703,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         cnt78++;
                     } while (true);
 
-                    otherlv_12=(Token)match(input,40,FOLLOW_57); 
+                    otherlv_12=(Token)match(input,41,FOLLOW_57); 
 
                     				newLeafNode(otherlv_12, grammarAccess.getMicroserviceAccess().getRightCurlyBracketRightParenthesisKeyword_3_4());
                     			
@@ -6718,7 +6719,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 int alt80=2;
                 int LA80_0 = input.LA(1);
 
-                if ( (LA80_0==38) ) {
+                if ( (LA80_0==39) ) {
                     alt80=1;
                 }
 
@@ -6765,7 +6766,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt81=2;
             int LA81_0 = input.LA(1);
 
-            if ( ((LA81_0>=132 && LA81_0<=134)) ) {
+            if ( ((LA81_0>=133 && LA81_0<=135)) ) {
                 alt81=1;
             }
             switch (alt81) {
@@ -6834,7 +6835,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_16=(Token)match(input,41,FOLLOW_7); 
+            otherlv_16=(Token)match(input,42,FOLLOW_7); 
 
             			newLeafNode(otherlv_16, grammarAccess.getMicroserviceAccess().getMicroserviceKeyword_7());
             		
@@ -6873,14 +6874,14 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt82=2;
             int LA82_0 = input.LA(1);
 
-            if ( (LA82_0==42) ) {
+            if ( (LA82_0==43) ) {
                 alt82=1;
             }
             switch (alt82) {
                 case 1 :
                     // InternalMappingDsl.g:2691:4: otherlv_18= 'version' ( (lv_version_19_0= RULE_ID ) )
                     {
-                    otherlv_18=(Token)match(input,42,FOLLOW_7); 
+                    otherlv_18=(Token)match(input,43,FOLLOW_7); 
 
                     				newLeafNode(otherlv_18, grammarAccess.getMicroserviceAccess().getVersionKeyword_9_0());
                     			
@@ -6916,7 +6917,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_20=(Token)match(input,14,FOLLOW_65); 
+            otherlv_20=(Token)match(input,15,FOLLOW_65); 
 
             			newLeafNode(otherlv_20, grammarAccess.getMicroserviceAccess().getLeftCurlyBracketKeyword_10());
             		
@@ -6924,10 +6925,10 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt84=2;
             int LA84_0 = input.LA(1);
 
-            if ( (LA84_0==43) ) {
+            if ( (LA84_0==44) ) {
                 int LA84_1 = input.LA(2);
 
-                if ( (LA84_1==44) ) {
+                if ( (LA84_1==45) ) {
                     alt84=1;
                 }
             }
@@ -6935,15 +6936,15 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 case 1 :
                     // InternalMappingDsl.g:2719:4: otherlv_21= 'required' otherlv_22= 'microservices' otherlv_23= '{' ( (lv_requiredMicroservices_24_0= rulePossiblyImportedMicroservice ) ) (otherlv_25= ',' ( (lv_requiredMicroservices_26_0= rulePossiblyImportedMicroservice ) ) )* otherlv_27= '}'
                     {
-                    otherlv_21=(Token)match(input,43,FOLLOW_66); 
+                    otherlv_21=(Token)match(input,44,FOLLOW_66); 
 
                     				newLeafNode(otherlv_21, grammarAccess.getMicroserviceAccess().getRequiredKeyword_11_0());
                     			
-                    otherlv_22=(Token)match(input,44,FOLLOW_8); 
+                    otherlv_22=(Token)match(input,45,FOLLOW_8); 
 
                     				newLeafNode(otherlv_22, grammarAccess.getMicroserviceAccess().getMicroservicesKeyword_11_1());
                     			
-                    otherlv_23=(Token)match(input,14,FOLLOW_7); 
+                    otherlv_23=(Token)match(input,15,FOLLOW_7); 
 
                     				newLeafNode(otherlv_23, grammarAccess.getMicroserviceAccess().getLeftCurlyBracketKeyword_11_2());
                     			
@@ -6984,7 +6985,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         int alt83=2;
                         int LA83_0 = input.LA(1);
 
-                        if ( (LA83_0==34) ) {
+                        if ( (LA83_0==35) ) {
                             alt83=1;
                         }
 
@@ -6993,7 +6994,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     	case 1 :
                     	    // InternalMappingDsl.g:2751:5: otherlv_25= ',' ( (lv_requiredMicroservices_26_0= rulePossiblyImportedMicroservice ) )
                     	    {
-                    	    otherlv_25=(Token)match(input,34,FOLLOW_7); 
+                    	    otherlv_25=(Token)match(input,35,FOLLOW_7); 
 
                     	    					newLeafNode(otherlv_25, grammarAccess.getMicroserviceAccess().getCommaKeyword_11_4_0());
                     	    				
@@ -7037,7 +7038,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         }
                     } while (true);
 
-                    otherlv_27=(Token)match(input,16,FOLLOW_65); 
+                    otherlv_27=(Token)match(input,17,FOLLOW_65); 
 
                     				newLeafNode(otherlv_27, grammarAccess.getMicroserviceAccess().getRightCurlyBracketKeyword_11_5());
                     			
@@ -7051,10 +7052,10 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt86=2;
             int LA86_0 = input.LA(1);
 
-            if ( (LA86_0==43) ) {
+            if ( (LA86_0==44) ) {
                 int LA86_1 = input.LA(2);
 
-                if ( (LA86_1==45) ) {
+                if ( (LA86_1==46) ) {
                     alt86=1;
                 }
             }
@@ -7062,15 +7063,15 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 case 1 :
                     // InternalMappingDsl.g:2781:4: otherlv_28= 'required' otherlv_29= 'interfaces' otherlv_30= '{' ( (lv_requiredInterfaces_31_0= rulePossiblyImportedInterface ) ) (otherlv_32= ',' ( (lv_requiredInterfaces_33_0= rulePossiblyImportedInterface ) ) )* otherlv_34= '}'
                     {
-                    otherlv_28=(Token)match(input,43,FOLLOW_68); 
+                    otherlv_28=(Token)match(input,44,FOLLOW_68); 
 
                     				newLeafNode(otherlv_28, grammarAccess.getMicroserviceAccess().getRequiredKeyword_12_0());
                     			
-                    otherlv_29=(Token)match(input,45,FOLLOW_8); 
+                    otherlv_29=(Token)match(input,46,FOLLOW_8); 
 
                     				newLeafNode(otherlv_29, grammarAccess.getMicroserviceAccess().getInterfacesKeyword_12_1());
                     			
-                    otherlv_30=(Token)match(input,14,FOLLOW_7); 
+                    otherlv_30=(Token)match(input,15,FOLLOW_7); 
 
                     				newLeafNode(otherlv_30, grammarAccess.getMicroserviceAccess().getLeftCurlyBracketKeyword_12_2());
                     			
@@ -7111,7 +7112,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         int alt85=2;
                         int LA85_0 = input.LA(1);
 
-                        if ( (LA85_0==34) ) {
+                        if ( (LA85_0==35) ) {
                             alt85=1;
                         }
 
@@ -7120,7 +7121,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     	case 1 :
                     	    // InternalMappingDsl.g:2813:5: otherlv_32= ',' ( (lv_requiredInterfaces_33_0= rulePossiblyImportedInterface ) )
                     	    {
-                    	    otherlv_32=(Token)match(input,34,FOLLOW_7); 
+                    	    otherlv_32=(Token)match(input,35,FOLLOW_7); 
 
                     	    					newLeafNode(otherlv_32, grammarAccess.getMicroserviceAccess().getCommaKeyword_12_4_0());
                     	    				
@@ -7164,7 +7165,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         }
                     } while (true);
 
-                    otherlv_34=(Token)match(input,16,FOLLOW_65); 
+                    otherlv_34=(Token)match(input,17,FOLLOW_65); 
 
                     				newLeafNode(otherlv_34, grammarAccess.getMicroserviceAccess().getRightCurlyBracketKeyword_12_5());
                     			
@@ -7178,22 +7179,22 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt88=2;
             int LA88_0 = input.LA(1);
 
-            if ( (LA88_0==43) ) {
+            if ( (LA88_0==44) ) {
                 alt88=1;
             }
             switch (alt88) {
                 case 1 :
                     // InternalMappingDsl.g:2843:4: otherlv_35= 'required' otherlv_36= 'operations' otherlv_37= '{' ( (lv_requiredOperations_38_0= rulePossiblyImportedOperation ) ) (otherlv_39= ',' ( (lv_requiredOperations_40_0= rulePossiblyImportedOperation ) ) )* otherlv_41= '}'
                     {
-                    otherlv_35=(Token)match(input,43,FOLLOW_69); 
+                    otherlv_35=(Token)match(input,44,FOLLOW_69); 
 
                     				newLeafNode(otherlv_35, grammarAccess.getMicroserviceAccess().getRequiredKeyword_13_0());
                     			
-                    otherlv_36=(Token)match(input,46,FOLLOW_8); 
+                    otherlv_36=(Token)match(input,47,FOLLOW_8); 
 
                     				newLeafNode(otherlv_36, grammarAccess.getMicroserviceAccess().getOperationsKeyword_13_1());
                     			
-                    otherlv_37=(Token)match(input,14,FOLLOW_7); 
+                    otherlv_37=(Token)match(input,15,FOLLOW_7); 
 
                     				newLeafNode(otherlv_37, grammarAccess.getMicroserviceAccess().getLeftCurlyBracketKeyword_13_2());
                     			
@@ -7234,7 +7235,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         int alt87=2;
                         int LA87_0 = input.LA(1);
 
-                        if ( (LA87_0==34) ) {
+                        if ( (LA87_0==35) ) {
                             alt87=1;
                         }
 
@@ -7243,7 +7244,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     	case 1 :
                     	    // InternalMappingDsl.g:2875:5: otherlv_39= ',' ( (lv_requiredOperations_40_0= rulePossiblyImportedOperation ) )
                     	    {
-                    	    otherlv_39=(Token)match(input,34,FOLLOW_7); 
+                    	    otherlv_39=(Token)match(input,35,FOLLOW_7); 
 
                     	    					newLeafNode(otherlv_39, grammarAccess.getMicroserviceAccess().getCommaKeyword_13_4_0());
                     	    				
@@ -7287,7 +7288,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         }
                     } while (true);
 
-                    otherlv_41=(Token)match(input,16,FOLLOW_65); 
+                    otherlv_41=(Token)match(input,17,FOLLOW_65); 
 
                     				newLeafNode(otherlv_41, grammarAccess.getMicroserviceAccess().getRightCurlyBracketKeyword_13_5());
                     			
@@ -7304,7 +7305,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 int alt89=2;
                 int LA89_0 = input.LA(1);
 
-                if ( (LA89_0==20||LA89_0==38||LA89_0==50||(LA89_0>=132 && LA89_0<=134)) ) {
+                if ( (LA89_0==21||LA89_0==39||LA89_0==51||(LA89_0>=133 && LA89_0<=135)) ) {
                     alt89=1;
                 }
 
@@ -7351,7 +7352,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 cnt89++;
             } while (true);
 
-            otherlv_43=(Token)match(input,16,FOLLOW_2); 
+            otherlv_43=(Token)match(input,17,FOLLOW_2); 
 
             			newLeafNode(otherlv_43, grammarAccess.getMicroserviceAccess().getRightCurlyBracketKeyword_15());
             		
@@ -7438,15 +7439,15 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             // InternalMappingDsl.g:2945:2: (otherlv_0= '@' otherlv_1= 'technology' otherlv_2= '(' ( (otherlv_3= RULE_ID ) ) (otherlv_4= ',' otherlv_5= 'typedef' otherlv_6= '=' ( (lv_isTypeDefinitionTechnology_7_0= RULE_BOOLEAN ) ) )? otherlv_8= ')' )
             // InternalMappingDsl.g:2946:3: otherlv_0= '@' otherlv_1= 'technology' otherlv_2= '(' ( (otherlv_3= RULE_ID ) ) (otherlv_4= ',' otherlv_5= 'typedef' otherlv_6= '=' ( (lv_isTypeDefinitionTechnology_7_0= RULE_BOOLEAN ) ) )? otherlv_8= ')'
             {
-            otherlv_0=(Token)match(input,38,FOLLOW_71); 
+            otherlv_0=(Token)match(input,39,FOLLOW_71); 
 
             			newLeafNode(otherlv_0, grammarAccess.getTechnologyReferenceAccess().getCommercialAtKeyword_0());
             		
-            otherlv_1=(Token)match(input,47,FOLLOW_59); 
+            otherlv_1=(Token)match(input,48,FOLLOW_59); 
 
             			newLeafNode(otherlv_1, grammarAccess.getTechnologyReferenceAccess().getTechnologyKeyword_1());
             		
-            otherlv_2=(Token)match(input,32,FOLLOW_7); 
+            otherlv_2=(Token)match(input,33,FOLLOW_7); 
 
             			newLeafNode(otherlv_2, grammarAccess.getTechnologyReferenceAccess().getLeftParenthesisKeyword_2());
             		
@@ -7475,22 +7476,22 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt90=2;
             int LA90_0 = input.LA(1);
 
-            if ( (LA90_0==34) ) {
+            if ( (LA90_0==35) ) {
                 alt90=1;
             }
             switch (alt90) {
                 case 1 :
                     // InternalMappingDsl.g:2972:4: otherlv_4= ',' otherlv_5= 'typedef' otherlv_6= '=' ( (lv_isTypeDefinitionTechnology_7_0= RULE_BOOLEAN ) )
                     {
-                    otherlv_4=(Token)match(input,34,FOLLOW_72); 
+                    otherlv_4=(Token)match(input,35,FOLLOW_72); 
 
                     				newLeafNode(otherlv_4, grammarAccess.getTechnologyReferenceAccess().getCommaKeyword_4_0());
                     			
-                    otherlv_5=(Token)match(input,48,FOLLOW_73); 
+                    otherlv_5=(Token)match(input,49,FOLLOW_73); 
 
                     				newLeafNode(otherlv_5, grammarAccess.getTechnologyReferenceAccess().getTypedefKeyword_4_1());
                     			
-                    otherlv_6=(Token)match(input,49,FOLLOW_74); 
+                    otherlv_6=(Token)match(input,50,FOLLOW_74); 
 
                     				newLeafNode(otherlv_6, grammarAccess.getTechnologyReferenceAccess().getEqualsSignKeyword_4_2());
                     			
@@ -7526,7 +7527,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_8=(Token)match(input,33,FOLLOW_2); 
+            otherlv_8=(Token)match(input,34,FOLLOW_2); 
 
             			newLeafNode(otherlv_8, grammarAccess.getTechnologyReferenceAccess().getRightParenthesisKeyword_5());
             		
@@ -7613,7 +7614,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             if ( (LA91_0==RULE_ID) ) {
                 int LA91_1 = input.LA(2);
 
-                if ( (LA91_1==17) ) {
+                if ( (LA91_1==18) ) {
                     alt91=1;
                 }
             }
@@ -7642,7 +7643,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_1=(Token)match(input,17,FOLLOW_7); 
+                    otherlv_1=(Token)match(input,18,FOLLOW_7); 
 
                     				newLeafNode(otherlv_1, grammarAccess.getPossiblyImportedMicroserviceAccess().getColonColonKeyword_0_1());
                     			
@@ -7763,7 +7764,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             if ( (LA92_0==RULE_ID) ) {
                 int LA92_1 = input.LA(2);
 
-                if ( (LA92_1==17) ) {
+                if ( (LA92_1==18) ) {
                     alt92=1;
                 }
             }
@@ -7792,7 +7793,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_1=(Token)match(input,17,FOLLOW_7); 
+                    otherlv_1=(Token)match(input,18,FOLLOW_7); 
 
                     				newLeafNode(otherlv_1, grammarAccess.getPossiblyImportedInterfaceAccess().getColonColonKeyword_0_1());
                     			
@@ -7913,7 +7914,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             if ( (LA93_0==RULE_ID) ) {
                 int LA93_1 = input.LA(2);
 
-                if ( (LA93_1==17) ) {
+                if ( (LA93_1==18) ) {
                     alt93=1;
                 }
             }
@@ -7942,7 +7943,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_1=(Token)match(input,17,FOLLOW_7); 
+                    otherlv_1=(Token)match(input,18,FOLLOW_7); 
 
                     				newLeafNode(otherlv_1, grammarAccess.getPossiblyImportedOperationAccess().getColonColonKeyword_0_1());
                     			
@@ -8089,10 +8090,10 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt95=2;
             int LA95_0 = input.LA(1);
 
-            if ( (LA95_0==38) ) {
+            if ( (LA95_0==39) ) {
                 int LA95_1 = input.LA(2);
 
-                if ( ((LA95_1>=77 && LA95_1<=78)) ) {
+                if ( ((LA95_1>=78 && LA95_1<=79)) ) {
                     alt95=1;
                 }
             }
@@ -8135,10 +8136,10 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     int alt94=2;
                     int LA94_0 = input.LA(1);
 
-                    if ( (LA94_0==38) ) {
+                    if ( (LA94_0==39) ) {
                         int LA94_1 = input.LA(2);
 
-                        if ( ((LA94_1>=77 && LA94_1<=78)) ) {
+                        if ( ((LA94_1>=78 && LA94_1<=79)) ) {
                             alt94=1;
                         }
                     }
@@ -8187,13 +8188,13 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt97=2;
             int LA97_0 = input.LA(1);
 
-            if ( (LA97_0==38) ) {
+            if ( (LA97_0==39) ) {
                 int LA97_1 = input.LA(2);
 
-                if ( (LA97_1==19) ) {
+                if ( (LA97_1==20) ) {
                     int LA97_3 = input.LA(3);
 
-                    if ( (LA97_3==32) ) {
+                    if ( (LA97_3==33) ) {
                         alt97=1;
                     }
                 }
@@ -8202,15 +8203,15 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 case 1 :
                     // InternalMappingDsl.g:3229:4: otherlv_2= '@' otherlv_3= 'endpoints' otherlv_4= '(' ( (lv_endpoints_5_0= ruleEndpoint ) )+ otherlv_6= ')'
                     {
-                    otherlv_2=(Token)match(input,38,FOLLOW_58); 
+                    otherlv_2=(Token)match(input,39,FOLLOW_58); 
 
                     				newLeafNode(otherlv_2, grammarAccess.getInterfaceAccess().getCommercialAtKeyword_1_0());
                     			
-                    otherlv_3=(Token)match(input,19,FOLLOW_59); 
+                    otherlv_3=(Token)match(input,20,FOLLOW_59); 
 
                     				newLeafNode(otherlv_3, grammarAccess.getInterfaceAccess().getEndpointsKeyword_1_1());
                     			
-                    otherlv_4=(Token)match(input,32,FOLLOW_7); 
+                    otherlv_4=(Token)match(input,33,FOLLOW_7); 
 
                     				newLeafNode(otherlv_4, grammarAccess.getInterfaceAccess().getLeftParenthesisKeyword_1_2());
                     			
@@ -8268,7 +8269,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         cnt96++;
                     } while (true);
 
-                    otherlv_6=(Token)match(input,33,FOLLOW_75); 
+                    otherlv_6=(Token)match(input,34,FOLLOW_75); 
 
                     				newLeafNode(otherlv_6, grammarAccess.getInterfaceAccess().getRightParenthesisKeyword_1_4());
                     			
@@ -8282,10 +8283,10 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt99=2;
             int LA99_0 = input.LA(1);
 
-            if ( (LA99_0==38) ) {
+            if ( (LA99_0==39) ) {
                 int LA99_1 = input.LA(2);
 
-                if ( (LA99_1==19) ) {
+                if ( (LA99_1==20) ) {
                     alt99=1;
                 }
             }
@@ -8293,15 +8294,15 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 case 1 :
                     // InternalMappingDsl.g:3266:4: otherlv_7= '@' otherlv_8= 'endpoints' otherlv_9= '({' ( (lv_endpoints_10_0= ruleEndpoint ) )+ otherlv_11= '})'
                     {
-                    otherlv_7=(Token)match(input,38,FOLLOW_58); 
+                    otherlv_7=(Token)match(input,39,FOLLOW_58); 
 
                     				newLeafNode(otherlv_7, grammarAccess.getInterfaceAccess().getCommercialAtKeyword_2_0());
                     			
-                    otherlv_8=(Token)match(input,19,FOLLOW_61); 
+                    otherlv_8=(Token)match(input,20,FOLLOW_61); 
 
                     				newLeafNode(otherlv_8, grammarAccess.getInterfaceAccess().getEndpointsKeyword_2_1());
                     			
-                    otherlv_9=(Token)match(input,39,FOLLOW_7); 
+                    otherlv_9=(Token)match(input,40,FOLLOW_7); 
 
                     				newLeafNode(otherlv_9, grammarAccess.getInterfaceAccess().getLeftParenthesisLeftCurlyBracketKeyword_2_2());
                     			
@@ -8359,7 +8360,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         cnt98++;
                     } while (true);
 
-                    otherlv_11=(Token)match(input,40,FOLLOW_75); 
+                    otherlv_11=(Token)match(input,41,FOLLOW_75); 
 
                     				newLeafNode(otherlv_11, grammarAccess.getInterfaceAccess().getRightCurlyBracketRightParenthesisKeyword_2_4());
                     			
@@ -8375,7 +8376,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 int alt100=2;
                 int LA100_0 = input.LA(1);
 
-                if ( (LA100_0==38) ) {
+                if ( (LA100_0==39) ) {
                     alt100=1;
                 }
 
@@ -8422,7 +8423,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt101=2;
             int LA101_0 = input.LA(1);
 
-            if ( (LA101_0==50) ) {
+            if ( (LA101_0==51) ) {
                 alt101=1;
             }
             switch (alt101) {
@@ -8432,7 +8433,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     // InternalMappingDsl.g:3322:4: (lv_notImplemented_13_0= 'noimpl' )
                     // InternalMappingDsl.g:3323:5: lv_notImplemented_13_0= 'noimpl'
                     {
-                    lv_notImplemented_13_0=(Token)match(input,50,FOLLOW_76); 
+                    lv_notImplemented_13_0=(Token)match(input,51,FOLLOW_76); 
 
                     					newLeafNode(lv_notImplemented_13_0, grammarAccess.getInterfaceAccess().getNotImplementedNoimplKeyword_4_0());
                     				
@@ -8455,7 +8456,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt102=2;
             int LA102_0 = input.LA(1);
 
-            if ( ((LA102_0>=132 && LA102_0<=134)) ) {
+            if ( ((LA102_0>=133 && LA102_0<=135)) ) {
                 alt102=1;
             }
             switch (alt102) {
@@ -8493,7 +8494,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_15=(Token)match(input,20,FOLLOW_7); 
+            otherlv_15=(Token)match(input,21,FOLLOW_7); 
 
             			newLeafNode(otherlv_15, grammarAccess.getInterfaceAccess().getInterfaceKeyword_6());
             		
@@ -8527,14 +8528,14 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt103=2;
             int LA103_0 = input.LA(1);
 
-            if ( (LA103_0==42) ) {
+            if ( (LA103_0==43) ) {
                 alt103=1;
             }
             switch (alt103) {
                 case 1 :
                     // InternalMappingDsl.g:3377:4: otherlv_17= 'version' ( (lv_version_18_0= RULE_ID ) )
                     {
-                    otherlv_17=(Token)match(input,42,FOLLOW_7); 
+                    otherlv_17=(Token)match(input,43,FOLLOW_7); 
 
                     				newLeafNode(otherlv_17, grammarAccess.getInterfaceAccess().getVersionKeyword_8_0());
                     			
@@ -8570,7 +8571,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_19=(Token)match(input,14,FOLLOW_78); 
+            otherlv_19=(Token)match(input,15,FOLLOW_78); 
 
             			newLeafNode(otherlv_19, grammarAccess.getInterfaceAccess().getLeftCurlyBracketKeyword_9());
             		
@@ -8623,7 +8624,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 int alt105=2;
                 int LA105_0 = input.LA(1);
 
-                if ( (LA105_0==RULE_ID||LA105_0==38||(LA105_0>=50 && LA105_0<=51)||(LA105_0>=132 && LA105_0<=134)) ) {
+                if ( (LA105_0==RULE_ID||LA105_0==39||(LA105_0>=51 && LA105_0<=52)||(LA105_0>=133 && LA105_0<=135)) ) {
                     alt105=1;
                 }
 
@@ -8666,7 +8667,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            otherlv_22=(Token)match(input,16,FOLLOW_2); 
+            otherlv_22=(Token)match(input,17,FOLLOW_2); 
 
             			newLeafNode(otherlv_22, grammarAccess.getInterfaceAccess().getRightCurlyBracketKeyword_12());
             		
@@ -8750,7 +8751,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             // InternalMappingDsl.g:3464:2: (otherlv_0= '---' ( (lv_comment_1_0= ruleAnything ) ) ( (lv_parameterComments_2_0= ruleApiParameterComment ) )* otherlv_3= '---' )
             // InternalMappingDsl.g:3465:3: otherlv_0= '---' ( (lv_comment_1_0= ruleAnything ) ) ( (lv_parameterComments_2_0= ruleApiParameterComment ) )* otherlv_3= '---'
             {
-            otherlv_0=(Token)match(input,51,FOLLOW_80); 
+            otherlv_0=(Token)match(input,52,FOLLOW_80); 
 
             			newLeafNode(otherlv_0, grammarAccess.getApiOperationCommentAccess().getHyphenMinusHyphenMinusHyphenMinusKeyword_0());
             		
@@ -8791,7 +8792,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 int alt106=2;
                 int LA106_0 = input.LA(1);
 
-                if ( ((LA106_0>=52 && LA106_0<=53)) ) {
+                if ( ((LA106_0>=53 && LA106_0<=54)) ) {
                     alt106=1;
                 }
 
@@ -8834,7 +8835,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            otherlv_3=(Token)match(input,51,FOLLOW_2); 
+            otherlv_3=(Token)match(input,52,FOLLOW_2); 
 
             			newLeafNode(otherlv_3, grammarAccess.getApiOperationCommentAccess().getHyphenMinusHyphenMinusHyphenMinusKeyword_3());
             		
@@ -8921,10 +8922,10 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt107=2;
             int LA107_0 = input.LA(1);
 
-            if ( (LA107_0==52) ) {
+            if ( (LA107_0==53) ) {
                 alt107=1;
             }
-            else if ( (LA107_0==53) ) {
+            else if ( (LA107_0==54) ) {
                 alt107=2;
             }
             else {
@@ -8937,7 +8938,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 case 1 :
                     // InternalMappingDsl.g:3531:4: otherlv_0= '@param'
                     {
-                    otherlv_0=(Token)match(input,52,FOLLOW_7); 
+                    otherlv_0=(Token)match(input,53,FOLLOW_7); 
 
                     				newLeafNode(otherlv_0, grammarAccess.getApiParameterCommentAccess().getParamKeyword_0_0());
                     			
@@ -8953,7 +8954,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     // InternalMappingDsl.g:3537:5: (lv_required_1_0= '@required' )
                     // InternalMappingDsl.g:3538:6: lv_required_1_0= '@required'
                     {
-                    lv_required_1_0=(Token)match(input,53,FOLLOW_7); 
+                    lv_required_1_0=(Token)match(input,54,FOLLOW_7); 
 
                     						newLeafNode(lv_required_1_0, grammarAccess.getApiParameterCommentAccess().getRequiredRequiredKeyword_0_1_0());
                     					
@@ -9137,7 +9138,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt108=2;
             int LA108_0 = input.LA(1);
 
-            if ( (LA108_0==51) ) {
+            if ( (LA108_0==52) ) {
                 alt108=1;
             }
             switch (alt108) {
@@ -9179,10 +9180,10 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt110=2;
             int LA110_0 = input.LA(1);
 
-            if ( (LA110_0==38) ) {
+            if ( (LA110_0==39) ) {
                 int LA110_1 = input.LA(2);
 
-                if ( ((LA110_1>=77 && LA110_1<=78)) ) {
+                if ( ((LA110_1>=78 && LA110_1<=79)) ) {
                     alt110=1;
                 }
             }
@@ -9225,10 +9226,10 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     int alt109=2;
                     int LA109_0 = input.LA(1);
 
-                    if ( (LA109_0==38) ) {
+                    if ( (LA109_0==39) ) {
                         int LA109_1 = input.LA(2);
 
-                        if ( ((LA109_1>=77 && LA109_1<=78)) ) {
+                        if ( ((LA109_1>=78 && LA109_1<=79)) ) {
                             alt109=1;
                         }
                     }
@@ -9277,13 +9278,13 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt112=2;
             int LA112_0 = input.LA(1);
 
-            if ( (LA112_0==38) ) {
+            if ( (LA112_0==39) ) {
                 int LA112_1 = input.LA(2);
 
-                if ( (LA112_1==19) ) {
+                if ( (LA112_1==20) ) {
                     int LA112_3 = input.LA(3);
 
-                    if ( (LA112_3==32) ) {
+                    if ( (LA112_3==33) ) {
                         alt112=1;
                     }
                 }
@@ -9292,15 +9293,15 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 case 1 :
                     // InternalMappingDsl.g:3662:4: otherlv_3= '@' otherlv_4= 'endpoints' otherlv_5= '(' ( (lv_endpoints_6_0= ruleEndpoint ) )+ otherlv_7= ')'
                     {
-                    otherlv_3=(Token)match(input,38,FOLLOW_58); 
+                    otherlv_3=(Token)match(input,39,FOLLOW_58); 
 
                     				newLeafNode(otherlv_3, grammarAccess.getOperationAccess().getCommercialAtKeyword_2_0());
                     			
-                    otherlv_4=(Token)match(input,19,FOLLOW_59); 
+                    otherlv_4=(Token)match(input,20,FOLLOW_59); 
 
                     				newLeafNode(otherlv_4, grammarAccess.getOperationAccess().getEndpointsKeyword_2_1());
                     			
-                    otherlv_5=(Token)match(input,32,FOLLOW_7); 
+                    otherlv_5=(Token)match(input,33,FOLLOW_7); 
 
                     				newLeafNode(otherlv_5, grammarAccess.getOperationAccess().getLeftParenthesisKeyword_2_2());
                     			
@@ -9358,7 +9359,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         cnt111++;
                     } while (true);
 
-                    otherlv_7=(Token)match(input,33,FOLLOW_82); 
+                    otherlv_7=(Token)match(input,34,FOLLOW_82); 
 
                     				newLeafNode(otherlv_7, grammarAccess.getOperationAccess().getRightParenthesisKeyword_2_4());
                     			
@@ -9372,10 +9373,10 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt114=2;
             int LA114_0 = input.LA(1);
 
-            if ( (LA114_0==38) ) {
+            if ( (LA114_0==39) ) {
                 int LA114_1 = input.LA(2);
 
-                if ( (LA114_1==19) ) {
+                if ( (LA114_1==20) ) {
                     alt114=1;
                 }
             }
@@ -9383,15 +9384,15 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 case 1 :
                     // InternalMappingDsl.g:3699:4: otherlv_8= '@' otherlv_9= 'endpoints' otherlv_10= '({' ( (lv_endpoints_11_0= ruleEndpoint ) )+ otherlv_12= '})'
                     {
-                    otherlv_8=(Token)match(input,38,FOLLOW_58); 
+                    otherlv_8=(Token)match(input,39,FOLLOW_58); 
 
                     				newLeafNode(otherlv_8, grammarAccess.getOperationAccess().getCommercialAtKeyword_3_0());
                     			
-                    otherlv_9=(Token)match(input,19,FOLLOW_61); 
+                    otherlv_9=(Token)match(input,20,FOLLOW_61); 
 
                     				newLeafNode(otherlv_9, grammarAccess.getOperationAccess().getEndpointsKeyword_3_1());
                     			
-                    otherlv_10=(Token)match(input,39,FOLLOW_7); 
+                    otherlv_10=(Token)match(input,40,FOLLOW_7); 
 
                     				newLeafNode(otherlv_10, grammarAccess.getOperationAccess().getLeftParenthesisLeftCurlyBracketKeyword_3_2());
                     			
@@ -9449,7 +9450,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         cnt113++;
                     } while (true);
 
-                    otherlv_12=(Token)match(input,40,FOLLOW_82); 
+                    otherlv_12=(Token)match(input,41,FOLLOW_82); 
 
                     				newLeafNode(otherlv_12, grammarAccess.getOperationAccess().getRightCurlyBracketRightParenthesisKeyword_3_4());
                     			
@@ -9465,7 +9466,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 int alt115=2;
                 int LA115_0 = input.LA(1);
 
-                if ( (LA115_0==38) ) {
+                if ( (LA115_0==39) ) {
                     alt115=1;
                 }
 
@@ -9512,7 +9513,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt116=2;
             int LA116_0 = input.LA(1);
 
-            if ( (LA116_0==50) ) {
+            if ( (LA116_0==51) ) {
                 alt116=1;
             }
             switch (alt116) {
@@ -9522,7 +9523,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     // InternalMappingDsl.g:3755:4: (lv_notImplemented_14_0= 'noimpl' )
                     // InternalMappingDsl.g:3756:5: lv_notImplemented_14_0= 'noimpl'
                     {
-                    lv_notImplemented_14_0=(Token)match(input,50,FOLLOW_83); 
+                    lv_notImplemented_14_0=(Token)match(input,51,FOLLOW_83); 
 
                     					newLeafNode(lv_notImplemented_14_0, grammarAccess.getOperationAccess().getNotImplementedNoimplKeyword_5_0());
                     				
@@ -9545,7 +9546,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt117=2;
             int LA117_0 = input.LA(1);
 
-            if ( ((LA117_0>=132 && LA117_0<=134)) ) {
+            if ( ((LA117_0>=133 && LA117_0<=135)) ) {
                 alt117=1;
             }
             switch (alt117) {
@@ -9609,7 +9610,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_17=(Token)match(input,32,FOLLOW_84); 
+            otherlv_17=(Token)match(input,33,FOLLOW_84); 
 
             			newLeafNode(otherlv_17, grammarAccess.getOperationAccess().getLeftParenthesisKeyword_8());
             		
@@ -9617,7 +9618,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt118=2;
             int LA118_0 = input.LA(1);
 
-            if ( (LA118_0==38||(LA118_0>=77 && LA118_0<=78)) ) {
+            if ( (LA118_0==39||(LA118_0>=78 && LA118_0<=79)) ) {
                 alt118=1;
             }
             switch (alt118) {
@@ -9661,7 +9662,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 int alt119=2;
                 int LA119_0 = input.LA(1);
 
-                if ( (LA119_0==34) ) {
+                if ( (LA119_0==35) ) {
                     alt119=1;
                 }
 
@@ -9670,7 +9671,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 1 :
             	    // InternalMappingDsl.g:3829:4: otherlv_19= ',' ( (lv_parameters_20_0= ruleParameter ) )
             	    {
-            	    otherlv_19=(Token)match(input,34,FOLLOW_85); 
+            	    otherlv_19=(Token)match(input,35,FOLLOW_85); 
 
             	    				newLeafNode(otherlv_19, grammarAccess.getOperationAccess().getCommaKeyword_10_0());
             	    			
@@ -9714,11 +9715,11 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            otherlv_21=(Token)match(input,33,FOLLOW_53); 
+            otherlv_21=(Token)match(input,34,FOLLOW_53); 
 
             			newLeafNode(otherlv_21, grammarAccess.getOperationAccess().getRightParenthesisKeyword_11());
             		
-            otherlv_22=(Token)match(input,26,FOLLOW_2); 
+            otherlv_22=(Token)match(input,27,FOLLOW_2); 
 
             			newLeafNode(otherlv_22, grammarAccess.getOperationAccess().getSemicolonKeyword_12());
             		
@@ -9820,10 +9821,10 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt121=2;
             int LA121_0 = input.LA(1);
 
-            if ( (LA121_0==38) ) {
+            if ( (LA121_0==39) ) {
                 int LA121_1 = input.LA(2);
 
-                if ( ((LA121_1>=77 && LA121_1<=78)) ) {
+                if ( ((LA121_1>=78 && LA121_1<=79)) ) {
                     alt121=1;
                 }
             }
@@ -9866,10 +9867,10 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     int alt120=2;
                     int LA120_0 = input.LA(1);
 
-                    if ( (LA120_0==38) ) {
+                    if ( (LA120_0==39) ) {
                         int LA120_1 = input.LA(2);
 
-                        if ( ((LA120_1>=77 && LA120_1<=78)) ) {
+                        if ( ((LA120_1>=78 && LA120_1<=79)) ) {
                             alt120=1;
                         }
                     }
@@ -9918,13 +9919,13 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt123=2;
             int LA123_0 = input.LA(1);
 
-            if ( (LA123_0==38) ) {
+            if ( (LA123_0==39) ) {
                 int LA123_1 = input.LA(2);
 
-                if ( (LA123_1==19) ) {
+                if ( (LA123_1==20) ) {
                     int LA123_3 = input.LA(3);
 
-                    if ( (LA123_3==32) ) {
+                    if ( (LA123_3==33) ) {
                         alt123=1;
                     }
                 }
@@ -9933,15 +9934,15 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 case 1 :
                     // InternalMappingDsl.g:3921:4: otherlv_2= '@' otherlv_3= 'endpoints' otherlv_4= '(' ( (lv_endpoints_5_0= ruleEndpoint ) )+ otherlv_6= ')'
                     {
-                    otherlv_2=(Token)match(input,38,FOLLOW_58); 
+                    otherlv_2=(Token)match(input,39,FOLLOW_58); 
 
                     				newLeafNode(otherlv_2, grammarAccess.getReferredOperationAccess().getCommercialAtKeyword_1_0());
                     			
-                    otherlv_3=(Token)match(input,19,FOLLOW_59); 
+                    otherlv_3=(Token)match(input,20,FOLLOW_59); 
 
                     				newLeafNode(otherlv_3, grammarAccess.getReferredOperationAccess().getEndpointsKeyword_1_1());
                     			
-                    otherlv_4=(Token)match(input,32,FOLLOW_7); 
+                    otherlv_4=(Token)match(input,33,FOLLOW_7); 
 
                     				newLeafNode(otherlv_4, grammarAccess.getReferredOperationAccess().getLeftParenthesisKeyword_1_2());
                     			
@@ -9999,7 +10000,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         cnt122++;
                     } while (true);
 
-                    otherlv_6=(Token)match(input,33,FOLLOW_86); 
+                    otherlv_6=(Token)match(input,34,FOLLOW_86); 
 
                     				newLeafNode(otherlv_6, grammarAccess.getReferredOperationAccess().getRightParenthesisKeyword_1_4());
                     			
@@ -10013,10 +10014,10 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt125=2;
             int LA125_0 = input.LA(1);
 
-            if ( (LA125_0==38) ) {
+            if ( (LA125_0==39) ) {
                 int LA125_1 = input.LA(2);
 
-                if ( (LA125_1==19) ) {
+                if ( (LA125_1==20) ) {
                     alt125=1;
                 }
             }
@@ -10024,15 +10025,15 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 case 1 :
                     // InternalMappingDsl.g:3958:4: otherlv_7= '@' otherlv_8= 'endpoints' otherlv_9= '({' ( (lv_endpoints_10_0= ruleEndpoint ) )+ otherlv_11= '})'
                     {
-                    otherlv_7=(Token)match(input,38,FOLLOW_58); 
+                    otherlv_7=(Token)match(input,39,FOLLOW_58); 
 
                     				newLeafNode(otherlv_7, grammarAccess.getReferredOperationAccess().getCommercialAtKeyword_2_0());
                     			
-                    otherlv_8=(Token)match(input,19,FOLLOW_61); 
+                    otherlv_8=(Token)match(input,20,FOLLOW_61); 
 
                     				newLeafNode(otherlv_8, grammarAccess.getReferredOperationAccess().getEndpointsKeyword_2_1());
                     			
-                    otherlv_9=(Token)match(input,39,FOLLOW_7); 
+                    otherlv_9=(Token)match(input,40,FOLLOW_7); 
 
                     				newLeafNode(otherlv_9, grammarAccess.getReferredOperationAccess().getLeftParenthesisLeftCurlyBracketKeyword_2_2());
                     			
@@ -10090,7 +10091,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         cnt124++;
                     } while (true);
 
-                    otherlv_11=(Token)match(input,40,FOLLOW_86); 
+                    otherlv_11=(Token)match(input,41,FOLLOW_86); 
 
                     				newLeafNode(otherlv_11, grammarAccess.getReferredOperationAccess().getRightCurlyBracketRightParenthesisKeyword_2_4());
                     			
@@ -10106,7 +10107,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 int alt126=2;
                 int LA126_0 = input.LA(1);
 
-                if ( (LA126_0==38) ) {
+                if ( (LA126_0==39) ) {
                     alt126=1;
                 }
 
@@ -10149,7 +10150,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            otherlv_13=(Token)match(input,54,FOLLOW_7); 
+            otherlv_13=(Token)match(input,55,FOLLOW_7); 
 
             			newLeafNode(otherlv_13, grammarAccess.getReferredOperationAccess().getRefersKeyword_4());
             		
@@ -10181,7 +10182,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_15=(Token)match(input,26,FOLLOW_2); 
+            otherlv_15=(Token)match(input,27,FOLLOW_2); 
 
             			newLeafNode(otherlv_15, grammarAccess.getReferredOperationAccess().getSemicolonKeyword_6());
             		
@@ -10282,7 +10283,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 int alt127=2;
                 int LA127_0 = input.LA(1);
 
-                if ( (LA127_0==38) ) {
+                if ( (LA127_0==39) ) {
                     alt127=1;
                 }
 
@@ -10360,7 +10361,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt128=2;
             int LA128_0 = input.LA(1);
 
-            if ( ((LA128_0>=74 && LA128_0<=76)) ) {
+            if ( ((LA128_0>=75 && LA128_0<=77)) ) {
                 alt128=1;
             }
             switch (alt128) {
@@ -10402,7 +10403,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt129=2;
             int LA129_0 = input.LA(1);
 
-            if ( (LA129_0==55) ) {
+            if ( (LA129_0==56) ) {
                 alt129=1;
             }
             switch (alt129) {
@@ -10412,7 +10413,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     // InternalMappingDsl.g:4114:4: (lv_communicatesFault_3_0= 'fault' )
                     // InternalMappingDsl.g:4115:5: lv_communicatesFault_3_0= 'fault'
                     {
-                    lv_communicatesFault_3_0=(Token)match(input,55,FOLLOW_7); 
+                    lv_communicatesFault_3_0=(Token)match(input,56,FOLLOW_7); 
 
                     					newLeafNode(lv_communicatesFault_3_0, grammarAccess.getParameterAccess().getCommunicatesFaultFaultKeyword_3_0());
                     				
@@ -10461,7 +10462,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt130=2;
             int LA130_0 = input.LA(1);
 
-            if ( (LA130_0==56) ) {
+            if ( (LA130_0==57) ) {
                 alt130=1;
             }
             switch (alt130) {
@@ -10471,7 +10472,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     // InternalMappingDsl.g:4146:4: (lv_optional_5_0= '?' )
                     // InternalMappingDsl.g:4147:5: lv_optional_5_0= '?'
                     {
-                    lv_optional_5_0=(Token)match(input,56,FOLLOW_44); 
+                    lv_optional_5_0=(Token)match(input,57,FOLLOW_44); 
 
                     					newLeafNode(lv_optional_5_0, grammarAccess.getParameterAccess().getOptionalQuestionMarkKeyword_5_0());
                     				
@@ -10490,7 +10491,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_6=(Token)match(input,25,FOLLOW_90); 
+            otherlv_6=(Token)match(input,26,FOLLOW_90); 
 
             			newLeafNode(otherlv_6, grammarAccess.getParameterAccess().getColonKeyword_6());
             		
@@ -10498,7 +10499,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt131=2;
             int LA131_0 = input.LA(1);
 
-            if ( ((LA131_0>=122 && LA131_0<=131)||LA131_0==138) ) {
+            if ( ((LA131_0>=123 && LA131_0<=132)||LA131_0==139) ) {
                 alt131=1;
             }
             else if ( (LA131_0==RULE_ID) ) {
@@ -10592,14 +10593,14 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt132=2;
             int LA132_0 = input.LA(1);
 
-            if ( (LA132_0==49) ) {
+            if ( (LA132_0==50) ) {
                 alt132=1;
             }
             switch (alt132) {
                 case 1 :
                     // InternalMappingDsl.g:4205:4: otherlv_9= '=' ( (lv_initializedByOperation_10_0= rulePossiblyImportedOperation ) )
                     {
-                    otherlv_9=(Token)match(input,49,FOLLOW_7); 
+                    otherlv_9=(Token)match(input,50,FOLLOW_7); 
 
                     				newLeafNode(otherlv_9, grammarAccess.getParameterAccess().getEqualsSignKeyword_8_0());
                     			
@@ -10737,7 +10738,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,17,FOLLOW_7); 
+            otherlv_1=(Token)match(input,18,FOLLOW_7); 
 
             			newLeafNode(otherlv_1, grammarAccess.getImportedTypeAccess().getColonColonKeyword_1());
             		
@@ -10850,7 +10851,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             // InternalMappingDsl.g:4299:2: (otherlv_0= '@' ( (lv_communicationType_1_0= ruleCommunicationType ) ) otherlv_2= '(' ( (lv_protocol_3_0= ruleImportedProtocolAndDataFormat ) ) otherlv_4= ')' )
             // InternalMappingDsl.g:4300:3: otherlv_0= '@' ( (lv_communicationType_1_0= ruleCommunicationType ) ) otherlv_2= '(' ( (lv_protocol_3_0= ruleImportedProtocolAndDataFormat ) ) otherlv_4= ')'
             {
-            otherlv_0=(Token)match(input,38,FOLLOW_16); 
+            otherlv_0=(Token)match(input,39,FOLLOW_16); 
 
             			newLeafNode(otherlv_0, grammarAccess.getProtocolSpecificationAccess().getCommercialAtKeyword_0());
             		
@@ -10885,7 +10886,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,32,FOLLOW_7); 
+            otherlv_2=(Token)match(input,33,FOLLOW_7); 
 
             			newLeafNode(otherlv_2, grammarAccess.getProtocolSpecificationAccess().getLeftParenthesisKeyword_2());
             		
@@ -10920,7 +10921,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_4=(Token)match(input,33,FOLLOW_2); 
+            otherlv_4=(Token)match(input,34,FOLLOW_2); 
 
             			newLeafNode(otherlv_4, grammarAccess.getProtocolSpecificationAccess().getRightParenthesisKeyword_4());
             		
@@ -11024,7 +11025,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,17,FOLLOW_7); 
+            otherlv_1=(Token)match(input,18,FOLLOW_7); 
 
             			newLeafNode(otherlv_1, grammarAccess.getImportedProtocolAndDataFormatAccess().getColonColonKeyword_1());
             		
@@ -11060,14 +11061,14 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt133=2;
             int LA133_0 = input.LA(1);
 
-            if ( (LA133_0==32) ) {
+            if ( (LA133_0==33) ) {
                 alt133=1;
             }
             switch (alt133) {
                 case 1 :
                     // InternalMappingDsl.g:4403:4: otherlv_3= '(' ( (otherlv_4= RULE_STRING ) ) otherlv_5= ')'
                     {
-                    otherlv_3=(Token)match(input,32,FOLLOW_46); 
+                    otherlv_3=(Token)match(input,33,FOLLOW_46); 
 
                     				newLeafNode(otherlv_3, grammarAccess.getImportedProtocolAndDataFormatAccess().getLeftParenthesisKeyword_3_0());
                     			
@@ -11092,7 +11093,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_5=(Token)match(input,33,FOLLOW_2); 
+                    otherlv_5=(Token)match(input,34,FOLLOW_2); 
 
                     				newLeafNode(otherlv_5, grammarAccess.getImportedProtocolAndDataFormatAccess().getRightParenthesisKeyword_3_2());
                     			
@@ -11223,7 +11224,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 int alt134=2;
                 int LA134_0 = input.LA(1);
 
-                if ( (LA134_0==34) ) {
+                if ( (LA134_0==35) ) {
                     alt134=1;
                 }
 
@@ -11232,7 +11233,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 1 :
             	    // InternalMappingDsl.g:4464:4: otherlv_1= ',' ( (lv_protocols_2_0= ruleImportedProtocolAndDataFormat ) )
             	    {
-            	    otherlv_1=(Token)match(input,34,FOLLOW_7); 
+            	    otherlv_1=(Token)match(input,35,FOLLOW_7); 
 
             	    				newLeafNode(otherlv_1, grammarAccess.getEndpointAccess().getCommaKeyword_1_0());
             	    			
@@ -11276,7 +11277,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            otherlv_3=(Token)match(input,25,FOLLOW_46); 
+            otherlv_3=(Token)match(input,26,FOLLOW_46); 
 
             			newLeafNode(otherlv_3, grammarAccess.getEndpointAccess().getColonKeyword_2());
             		
@@ -11312,7 +11313,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 int alt135=2;
                 int LA135_0 = input.LA(1);
 
-                if ( (LA135_0==34) ) {
+                if ( (LA135_0==35) ) {
                     alt135=1;
                 }
 
@@ -11321,7 +11322,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 1 :
             	    // InternalMappingDsl.g:4511:4: otherlv_5= ',' ( (lv_addresses_6_0= RULE_STRING ) )
             	    {
-            	    otherlv_5=(Token)match(input,34,FOLLOW_46); 
+            	    otherlv_5=(Token)match(input,35,FOLLOW_46); 
 
             	    				newLeafNode(otherlv_5, grammarAccess.getEndpointAccess().getCommaKeyword_4_0());
             	    			
@@ -11360,7 +11361,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            otherlv_7=(Token)match(input,26,FOLLOW_2); 
+            otherlv_7=(Token)match(input,27,FOLLOW_2); 
 
             			newLeafNode(otherlv_7, grammarAccess.getEndpointAccess().getSemicolonKeyword_5());
             		
@@ -11450,7 +11451,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             // InternalMappingDsl.g:4556:2: (otherlv_0= '@' ( (otherlv_1= RULE_ID ) ) otherlv_2= '::' ( ( ruleQualifiedName ) ) (otherlv_4= '(' ( ( (lv_singlePropertyValue_5_0= rulePrimitiveValue ) ) | ( ( (lv_values_6_0= rulePropertyValueAssignment ) ) (otherlv_7= ',' ( (lv_values_8_0= rulePropertyValueAssignment ) ) )* ) ) otherlv_9= ')' )? )
             // InternalMappingDsl.g:4557:3: otherlv_0= '@' ( (otherlv_1= RULE_ID ) ) otherlv_2= '::' ( ( ruleQualifiedName ) ) (otherlv_4= '(' ( ( (lv_singlePropertyValue_5_0= rulePrimitiveValue ) ) | ( ( (lv_values_6_0= rulePropertyValueAssignment ) ) (otherlv_7= ',' ( (lv_values_8_0= rulePropertyValueAssignment ) ) )* ) ) otherlv_9= ')' )?
             {
-            otherlv_0=(Token)match(input,38,FOLLOW_7); 
+            otherlv_0=(Token)match(input,39,FOLLOW_7); 
 
             			newLeafNode(otherlv_0, grammarAccess.getImportedServiceAspectAccess().getCommercialAtKeyword_0());
             		
@@ -11475,7 +11476,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,17,FOLLOW_7); 
+            otherlv_2=(Token)match(input,18,FOLLOW_7); 
 
             			newLeafNode(otherlv_2, grammarAccess.getImportedServiceAspectAccess().getColonColonKeyword_2());
             		
@@ -11511,14 +11512,14 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             int alt138=2;
             int LA138_0 = input.LA(1);
 
-            if ( (LA138_0==32) ) {
+            if ( (LA138_0==33) ) {
                 alt138=1;
             }
             switch (alt138) {
                 case 1 :
                     // InternalMappingDsl.g:4595:4: otherlv_4= '(' ( ( (lv_singlePropertyValue_5_0= rulePrimitiveValue ) ) | ( ( (lv_values_6_0= rulePropertyValueAssignment ) ) (otherlv_7= ',' ( (lv_values_8_0= rulePropertyValueAssignment ) ) )* ) ) otherlv_9= ')'
                     {
-                    otherlv_4=(Token)match(input,32,FOLLOW_51); 
+                    otherlv_4=(Token)match(input,33,FOLLOW_51); 
 
                     				newLeafNode(otherlv_4, grammarAccess.getImportedServiceAspectAccess().getLeftParenthesisKeyword_4_0());
                     			
@@ -11526,7 +11527,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     int alt137=2;
                     int LA137_0 = input.LA(1);
 
-                    if ( ((LA137_0>=RULE_STRING && LA137_0<=RULE_BIG_DECIMAL)) ) {
+                    if ( ((LA137_0>=RULE_STRING && LA137_0<=RULE_BOOLEAN)||LA137_0==RULE_BIG_DECIMAL) ) {
                         alt137=1;
                     }
                     else if ( (LA137_0==RULE_ID) ) {
@@ -11619,7 +11620,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                                 int alt136=2;
                                 int LA136_0 = input.LA(1);
 
-                                if ( (LA136_0==34) ) {
+                                if ( (LA136_0==35) ) {
                                     alt136=1;
                                 }
 
@@ -11628,7 +11629,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                             	case 1 :
                             	    // InternalMappingDsl.g:4641:7: otherlv_7= ',' ( (lv_values_8_0= rulePropertyValueAssignment ) )
                             	    {
-                            	    otherlv_7=(Token)match(input,34,FOLLOW_51); 
+                            	    otherlv_7=(Token)match(input,35,FOLLOW_51); 
 
                             	    							newLeafNode(otherlv_7, grammarAccess.getImportedServiceAspectAccess().getCommaKeyword_4_1_1_1_0());
                             	    						
@@ -11681,7 +11682,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_9=(Token)match(input,33,FOLLOW_2); 
+                    otherlv_9=(Token)match(input,34,FOLLOW_2); 
 
                     				newLeafNode(otherlv_9, grammarAccess.getImportedServiceAspectAccess().getRightParenthesisKeyword_4_2());
                     			
@@ -11778,10 +11779,10 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             if ( (LA139_0==RULE_ID) ) {
                 int LA139_1 = input.LA(2);
 
-                if ( (LA139_1==49) ) {
+                if ( (LA139_1==50) ) {
                     alt139=1;
                 }
-                else if ( (LA139_1==32) ) {
+                else if ( (LA139_1==33) ) {
                     alt139=2;
                 }
                 else {
@@ -11825,7 +11826,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_1=(Token)match(input,49,FOLLOW_92); 
+                    otherlv_1=(Token)match(input,50,FOLLOW_92); 
 
                     				newLeafNode(otherlv_1, grammarAccess.getPropertyValueAssignmentAccess().getEqualsSignKeyword_0_1());
                     			
@@ -11893,7 +11894,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_4=(Token)match(input,32,FOLLOW_92); 
+                    otherlv_4=(Token)match(input,33,FOLLOW_92); 
 
                     				newLeafNode(otherlv_4, grammarAccess.getPropertyValueAssignmentAccess().getLeftParenthesisKeyword_1_1());
                     			
@@ -11928,7 +11929,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_6=(Token)match(input,33,FOLLOW_2); 
+                    otherlv_6=(Token)match(input,34,FOLLOW_2); 
 
                     				newLeafNode(otherlv_6, grammarAccess.getPropertyValueAssignmentAccess().getRightParenthesisKeyword_1_3());
                     			
@@ -12023,7 +12024,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             			newLeafNode(this_ID_0, grammarAccess.getQualifiedNameWithAtLeastOneLevelAccess().getIDTerminalRuleCall_0());
             		
-            kw=(Token)match(input,29,FOLLOW_7); 
+            kw=(Token)match(input,30,FOLLOW_7); 
 
             			current.merge(kw);
             			newLeafNode(kw, grammarAccess.getQualifiedNameWithAtLeastOneLevelAccess().getFullStopKeyword_1());
@@ -12101,601 +12102,602 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAnything"
-    // InternalMappingDsl.g:4824:1: ruleAnything returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= '{' | kw= '}' | kw= '<' | kw= '>' | kw= ',' | kw= '(' | kw= ')' | kw= '::' | kw= '.' | kw= '-' | kw= '--' | kw= '/' | kw= '?' | kw= ':' | kw= '@' | kw= '=' | kw= ';' | kw= 'technology' | kw= 'types' | kw= 'compatibility' | kw= 'matrix' | kw= 'protocols' | kw= 'service' | kw= 'aspects' | kw= 'deployment' | kw= 'technologies' | kw= 'infrastructure' | kw= 'operation' | kw= 'import' | kw= 'from' | kw= 'as' | kw= 'data' | kw= 'formats' | kw= 'default' | kw= 'with' | kw= 'format' | kw= 'in' | kw= 'out' | kw= 'inout' | kw= 'sync' | kw= 'async' | kw= 'primitive' | kw= 'type' | kw= 'based' | kw= 'on' | kw= 'list' | kw= 'structure' | kw= '->' | kw= '<-' | kw= '<->' | kw= 'environments' | kw= 'properties' | kw= 'mandatory' | kw= 'singleval' | kw= 'microservices' | kw= 'interfaces' | kw= 'operations' | kw= 'parameters' | kw= 'fields' | kw= 'exchange_pattern' | kw= 'communication_type' | kw= 'protocol' | kw= 'data_format' | kw= 'aspect' | kw= 'for' | kw= 'containers' | (kw= 'selector' kw= 'datatypes' ) | kw= 'version' | kw= 'context' | kw= 'aggregate' | kw= 'applicationService' | kw= 'domainEvent' | kw= 'domainService' | kw= 'entity' | kw= 'factory' | kw= 'infrastructureService' | kw= 'repository' | kw= 'specification' | kw= 'valueObject' | kw= 'extends' | kw= 'identifier' | kw= 'neverEmpty' | kw= 'part' | kw= 'hide' | kw= 'immutable' | kw= 'enum' | kw= 'closure' | kw= 'sideEffectFree' | kw= 'validator' | kw= 'function' | kw= 'procedure' | kw= 'boolean' | kw= 'byte' | kw= 'char' | kw= 'date' | kw= 'double' | kw= 'float' | kw= 'int' | kw= 'long' | kw= 'short' | kw= 'string' | kw= 'internal' | kw= 'architecture' | kw= 'public' | kw= 'endpoints' | kw= 'microservice' | kw= 'required' | kw= 'typedef' | kw= 'noimpl' | kw= 'interface' | kw= 'param' | kw= 'refers' | kw= 'fault' | kw= 'functional' | kw= 'utility' | this_BOOLEAN_116= RULE_BOOLEAN | this_BIG_DECIMAL_117= RULE_BIG_DECIMAL | this_ID_118= RULE_ID | this_STRING_119= RULE_STRING | this_ANY_OTHER_120= RULE_ANY_OTHER )+ ;
+    // InternalMappingDsl.g:4824:1: ruleAnything returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= '{' | kw= '}' | kw= '<' | kw= '>' | kw= ',' | kw= '(' | kw= ')' | kw= '::' | kw= '.' | kw= '-' | kw= '--' | kw= '/' | kw= '?' | kw= ':' | kw= '@' | kw= '=' | kw= ';' | kw= 'technology' | kw= 'types' | kw= 'compatibility' | kw= 'matrix' | kw= 'protocols' | kw= 'service' | kw= 'aspects' | kw= 'deployment' | kw= 'technologies' | kw= 'infrastructure' | kw= 'operation' | kw= 'import' | kw= 'from' | kw= 'as' | kw= 'data' | kw= 'formats' | kw= 'default' | kw= 'with' | kw= 'format' | kw= 'in' | kw= 'out' | kw= 'inout' | kw= 'sync' | kw= 'async' | kw= 'primitive' | kw= 'type' | kw= 'based' | kw= 'on' | kw= 'list' | kw= 'structure' | kw= '->' | kw= '<-' | kw= '<->' | kw= 'environments' | kw= 'properties' | kw= 'mandatory' | kw= 'singleval' | kw= 'microservices' | kw= 'interfaces' | kw= 'operations' | kw= 'parameters' | kw= 'fields' | kw= 'exchange_pattern' | kw= 'communication_type' | kw= 'protocol' | kw= 'data_format' | kw= 'aspect' | kw= 'for' | kw= 'containers' | (kw= 'selector' kw= 'datatypes' ) | kw= 'version' | kw= 'context' | kw= 'aggregate' | kw= 'applicationService' | kw= 'domainEvent' | kw= 'domainService' | kw= 'entity' | kw= 'factory' | kw= 'infrastructureService' | kw= 'repository' | kw= 'specification' | kw= 'valueObject' | kw= 'extends' | kw= 'identifier' | kw= 'neverEmpty' | kw= 'part' | kw= 'hide' | kw= 'immutable' | kw= 'enum' | kw= 'closure' | kw= 'sideEffectFree' | kw= 'validator' | kw= 'function' | kw= 'procedure' | kw= 'boolean' | kw= 'byte' | kw= 'char' | kw= 'date' | kw= 'double' | kw= 'float' | kw= 'int' | kw= 'long' | kw= 'short' | kw= 'string' | kw= 'internal' | kw= 'architecture' | kw= 'public' | kw= 'endpoints' | kw= 'microservice' | kw= 'required' | kw= 'typedef' | kw= 'noimpl' | kw= 'interface' | kw= 'param' | kw= 'refers' | kw= 'fault' | kw= 'functional' | kw= 'utility' | this_BOOLEAN_116= RULE_BOOLEAN | this_NUMBER_WITH_TRAILING_PERIOD_117= RULE_NUMBER_WITH_TRAILING_PERIOD | this_BIG_DECIMAL_118= RULE_BIG_DECIMAL | this_ID_119= RULE_ID | this_STRING_120= RULE_STRING | this_ANY_OTHER_121= RULE_ANY_OTHER )+ ;
     public final AntlrDatatypeRuleToken ruleAnything() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
         Token kw=null;
         Token this_BOOLEAN_116=null;
-        Token this_BIG_DECIMAL_117=null;
-        Token this_ID_118=null;
-        Token this_STRING_119=null;
-        Token this_ANY_OTHER_120=null;
+        Token this_NUMBER_WITH_TRAILING_PERIOD_117=null;
+        Token this_BIG_DECIMAL_118=null;
+        Token this_ID_119=null;
+        Token this_STRING_120=null;
+        Token this_ANY_OTHER_121=null;
 
 
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:4830:2: ( (kw= '{' | kw= '}' | kw= '<' | kw= '>' | kw= ',' | kw= '(' | kw= ')' | kw= '::' | kw= '.' | kw= '-' | kw= '--' | kw= '/' | kw= '?' | kw= ':' | kw= '@' | kw= '=' | kw= ';' | kw= 'technology' | kw= 'types' | kw= 'compatibility' | kw= 'matrix' | kw= 'protocols' | kw= 'service' | kw= 'aspects' | kw= 'deployment' | kw= 'technologies' | kw= 'infrastructure' | kw= 'operation' | kw= 'import' | kw= 'from' | kw= 'as' | kw= 'data' | kw= 'formats' | kw= 'default' | kw= 'with' | kw= 'format' | kw= 'in' | kw= 'out' | kw= 'inout' | kw= 'sync' | kw= 'async' | kw= 'primitive' | kw= 'type' | kw= 'based' | kw= 'on' | kw= 'list' | kw= 'structure' | kw= '->' | kw= '<-' | kw= '<->' | kw= 'environments' | kw= 'properties' | kw= 'mandatory' | kw= 'singleval' | kw= 'microservices' | kw= 'interfaces' | kw= 'operations' | kw= 'parameters' | kw= 'fields' | kw= 'exchange_pattern' | kw= 'communication_type' | kw= 'protocol' | kw= 'data_format' | kw= 'aspect' | kw= 'for' | kw= 'containers' | (kw= 'selector' kw= 'datatypes' ) | kw= 'version' | kw= 'context' | kw= 'aggregate' | kw= 'applicationService' | kw= 'domainEvent' | kw= 'domainService' | kw= 'entity' | kw= 'factory' | kw= 'infrastructureService' | kw= 'repository' | kw= 'specification' | kw= 'valueObject' | kw= 'extends' | kw= 'identifier' | kw= 'neverEmpty' | kw= 'part' | kw= 'hide' | kw= 'immutable' | kw= 'enum' | kw= 'closure' | kw= 'sideEffectFree' | kw= 'validator' | kw= 'function' | kw= 'procedure' | kw= 'boolean' | kw= 'byte' | kw= 'char' | kw= 'date' | kw= 'double' | kw= 'float' | kw= 'int' | kw= 'long' | kw= 'short' | kw= 'string' | kw= 'internal' | kw= 'architecture' | kw= 'public' | kw= 'endpoints' | kw= 'microservice' | kw= 'required' | kw= 'typedef' | kw= 'noimpl' | kw= 'interface' | kw= 'param' | kw= 'refers' | kw= 'fault' | kw= 'functional' | kw= 'utility' | this_BOOLEAN_116= RULE_BOOLEAN | this_BIG_DECIMAL_117= RULE_BIG_DECIMAL | this_ID_118= RULE_ID | this_STRING_119= RULE_STRING | this_ANY_OTHER_120= RULE_ANY_OTHER )+ )
-            // InternalMappingDsl.g:4831:2: (kw= '{' | kw= '}' | kw= '<' | kw= '>' | kw= ',' | kw= '(' | kw= ')' | kw= '::' | kw= '.' | kw= '-' | kw= '--' | kw= '/' | kw= '?' | kw= ':' | kw= '@' | kw= '=' | kw= ';' | kw= 'technology' | kw= 'types' | kw= 'compatibility' | kw= 'matrix' | kw= 'protocols' | kw= 'service' | kw= 'aspects' | kw= 'deployment' | kw= 'technologies' | kw= 'infrastructure' | kw= 'operation' | kw= 'import' | kw= 'from' | kw= 'as' | kw= 'data' | kw= 'formats' | kw= 'default' | kw= 'with' | kw= 'format' | kw= 'in' | kw= 'out' | kw= 'inout' | kw= 'sync' | kw= 'async' | kw= 'primitive' | kw= 'type' | kw= 'based' | kw= 'on' | kw= 'list' | kw= 'structure' | kw= '->' | kw= '<-' | kw= '<->' | kw= 'environments' | kw= 'properties' | kw= 'mandatory' | kw= 'singleval' | kw= 'microservices' | kw= 'interfaces' | kw= 'operations' | kw= 'parameters' | kw= 'fields' | kw= 'exchange_pattern' | kw= 'communication_type' | kw= 'protocol' | kw= 'data_format' | kw= 'aspect' | kw= 'for' | kw= 'containers' | (kw= 'selector' kw= 'datatypes' ) | kw= 'version' | kw= 'context' | kw= 'aggregate' | kw= 'applicationService' | kw= 'domainEvent' | kw= 'domainService' | kw= 'entity' | kw= 'factory' | kw= 'infrastructureService' | kw= 'repository' | kw= 'specification' | kw= 'valueObject' | kw= 'extends' | kw= 'identifier' | kw= 'neverEmpty' | kw= 'part' | kw= 'hide' | kw= 'immutable' | kw= 'enum' | kw= 'closure' | kw= 'sideEffectFree' | kw= 'validator' | kw= 'function' | kw= 'procedure' | kw= 'boolean' | kw= 'byte' | kw= 'char' | kw= 'date' | kw= 'double' | kw= 'float' | kw= 'int' | kw= 'long' | kw= 'short' | kw= 'string' | kw= 'internal' | kw= 'architecture' | kw= 'public' | kw= 'endpoints' | kw= 'microservice' | kw= 'required' | kw= 'typedef' | kw= 'noimpl' | kw= 'interface' | kw= 'param' | kw= 'refers' | kw= 'fault' | kw= 'functional' | kw= 'utility' | this_BOOLEAN_116= RULE_BOOLEAN | this_BIG_DECIMAL_117= RULE_BIG_DECIMAL | this_ID_118= RULE_ID | this_STRING_119= RULE_STRING | this_ANY_OTHER_120= RULE_ANY_OTHER )+
+            // InternalMappingDsl.g:4830:2: ( (kw= '{' | kw= '}' | kw= '<' | kw= '>' | kw= ',' | kw= '(' | kw= ')' | kw= '::' | kw= '.' | kw= '-' | kw= '--' | kw= '/' | kw= '?' | kw= ':' | kw= '@' | kw= '=' | kw= ';' | kw= 'technology' | kw= 'types' | kw= 'compatibility' | kw= 'matrix' | kw= 'protocols' | kw= 'service' | kw= 'aspects' | kw= 'deployment' | kw= 'technologies' | kw= 'infrastructure' | kw= 'operation' | kw= 'import' | kw= 'from' | kw= 'as' | kw= 'data' | kw= 'formats' | kw= 'default' | kw= 'with' | kw= 'format' | kw= 'in' | kw= 'out' | kw= 'inout' | kw= 'sync' | kw= 'async' | kw= 'primitive' | kw= 'type' | kw= 'based' | kw= 'on' | kw= 'list' | kw= 'structure' | kw= '->' | kw= '<-' | kw= '<->' | kw= 'environments' | kw= 'properties' | kw= 'mandatory' | kw= 'singleval' | kw= 'microservices' | kw= 'interfaces' | kw= 'operations' | kw= 'parameters' | kw= 'fields' | kw= 'exchange_pattern' | kw= 'communication_type' | kw= 'protocol' | kw= 'data_format' | kw= 'aspect' | kw= 'for' | kw= 'containers' | (kw= 'selector' kw= 'datatypes' ) | kw= 'version' | kw= 'context' | kw= 'aggregate' | kw= 'applicationService' | kw= 'domainEvent' | kw= 'domainService' | kw= 'entity' | kw= 'factory' | kw= 'infrastructureService' | kw= 'repository' | kw= 'specification' | kw= 'valueObject' | kw= 'extends' | kw= 'identifier' | kw= 'neverEmpty' | kw= 'part' | kw= 'hide' | kw= 'immutable' | kw= 'enum' | kw= 'closure' | kw= 'sideEffectFree' | kw= 'validator' | kw= 'function' | kw= 'procedure' | kw= 'boolean' | kw= 'byte' | kw= 'char' | kw= 'date' | kw= 'double' | kw= 'float' | kw= 'int' | kw= 'long' | kw= 'short' | kw= 'string' | kw= 'internal' | kw= 'architecture' | kw= 'public' | kw= 'endpoints' | kw= 'microservice' | kw= 'required' | kw= 'typedef' | kw= 'noimpl' | kw= 'interface' | kw= 'param' | kw= 'refers' | kw= 'fault' | kw= 'functional' | kw= 'utility' | this_BOOLEAN_116= RULE_BOOLEAN | this_NUMBER_WITH_TRAILING_PERIOD_117= RULE_NUMBER_WITH_TRAILING_PERIOD | this_BIG_DECIMAL_118= RULE_BIG_DECIMAL | this_ID_119= RULE_ID | this_STRING_120= RULE_STRING | this_ANY_OTHER_121= RULE_ANY_OTHER )+ )
+            // InternalMappingDsl.g:4831:2: (kw= '{' | kw= '}' | kw= '<' | kw= '>' | kw= ',' | kw= '(' | kw= ')' | kw= '::' | kw= '.' | kw= '-' | kw= '--' | kw= '/' | kw= '?' | kw= ':' | kw= '@' | kw= '=' | kw= ';' | kw= 'technology' | kw= 'types' | kw= 'compatibility' | kw= 'matrix' | kw= 'protocols' | kw= 'service' | kw= 'aspects' | kw= 'deployment' | kw= 'technologies' | kw= 'infrastructure' | kw= 'operation' | kw= 'import' | kw= 'from' | kw= 'as' | kw= 'data' | kw= 'formats' | kw= 'default' | kw= 'with' | kw= 'format' | kw= 'in' | kw= 'out' | kw= 'inout' | kw= 'sync' | kw= 'async' | kw= 'primitive' | kw= 'type' | kw= 'based' | kw= 'on' | kw= 'list' | kw= 'structure' | kw= '->' | kw= '<-' | kw= '<->' | kw= 'environments' | kw= 'properties' | kw= 'mandatory' | kw= 'singleval' | kw= 'microservices' | kw= 'interfaces' | kw= 'operations' | kw= 'parameters' | kw= 'fields' | kw= 'exchange_pattern' | kw= 'communication_type' | kw= 'protocol' | kw= 'data_format' | kw= 'aspect' | kw= 'for' | kw= 'containers' | (kw= 'selector' kw= 'datatypes' ) | kw= 'version' | kw= 'context' | kw= 'aggregate' | kw= 'applicationService' | kw= 'domainEvent' | kw= 'domainService' | kw= 'entity' | kw= 'factory' | kw= 'infrastructureService' | kw= 'repository' | kw= 'specification' | kw= 'valueObject' | kw= 'extends' | kw= 'identifier' | kw= 'neverEmpty' | kw= 'part' | kw= 'hide' | kw= 'immutable' | kw= 'enum' | kw= 'closure' | kw= 'sideEffectFree' | kw= 'validator' | kw= 'function' | kw= 'procedure' | kw= 'boolean' | kw= 'byte' | kw= 'char' | kw= 'date' | kw= 'double' | kw= 'float' | kw= 'int' | kw= 'long' | kw= 'short' | kw= 'string' | kw= 'internal' | kw= 'architecture' | kw= 'public' | kw= 'endpoints' | kw= 'microservice' | kw= 'required' | kw= 'typedef' | kw= 'noimpl' | kw= 'interface' | kw= 'param' | kw= 'refers' | kw= 'fault' | kw= 'functional' | kw= 'utility' | this_BOOLEAN_116= RULE_BOOLEAN | this_NUMBER_WITH_TRAILING_PERIOD_117= RULE_NUMBER_WITH_TRAILING_PERIOD | this_BIG_DECIMAL_118= RULE_BIG_DECIMAL | this_ID_119= RULE_ID | this_STRING_120= RULE_STRING | this_ANY_OTHER_121= RULE_ANY_OTHER )+
             {
-            // InternalMappingDsl.g:4831:2: (kw= '{' | kw= '}' | kw= '<' | kw= '>' | kw= ',' | kw= '(' | kw= ')' | kw= '::' | kw= '.' | kw= '-' | kw= '--' | kw= '/' | kw= '?' | kw= ':' | kw= '@' | kw= '=' | kw= ';' | kw= 'technology' | kw= 'types' | kw= 'compatibility' | kw= 'matrix' | kw= 'protocols' | kw= 'service' | kw= 'aspects' | kw= 'deployment' | kw= 'technologies' | kw= 'infrastructure' | kw= 'operation' | kw= 'import' | kw= 'from' | kw= 'as' | kw= 'data' | kw= 'formats' | kw= 'default' | kw= 'with' | kw= 'format' | kw= 'in' | kw= 'out' | kw= 'inout' | kw= 'sync' | kw= 'async' | kw= 'primitive' | kw= 'type' | kw= 'based' | kw= 'on' | kw= 'list' | kw= 'structure' | kw= '->' | kw= '<-' | kw= '<->' | kw= 'environments' | kw= 'properties' | kw= 'mandatory' | kw= 'singleval' | kw= 'microservices' | kw= 'interfaces' | kw= 'operations' | kw= 'parameters' | kw= 'fields' | kw= 'exchange_pattern' | kw= 'communication_type' | kw= 'protocol' | kw= 'data_format' | kw= 'aspect' | kw= 'for' | kw= 'containers' | (kw= 'selector' kw= 'datatypes' ) | kw= 'version' | kw= 'context' | kw= 'aggregate' | kw= 'applicationService' | kw= 'domainEvent' | kw= 'domainService' | kw= 'entity' | kw= 'factory' | kw= 'infrastructureService' | kw= 'repository' | kw= 'specification' | kw= 'valueObject' | kw= 'extends' | kw= 'identifier' | kw= 'neverEmpty' | kw= 'part' | kw= 'hide' | kw= 'immutable' | kw= 'enum' | kw= 'closure' | kw= 'sideEffectFree' | kw= 'validator' | kw= 'function' | kw= 'procedure' | kw= 'boolean' | kw= 'byte' | kw= 'char' | kw= 'date' | kw= 'double' | kw= 'float' | kw= 'int' | kw= 'long' | kw= 'short' | kw= 'string' | kw= 'internal' | kw= 'architecture' | kw= 'public' | kw= 'endpoints' | kw= 'microservice' | kw= 'required' | kw= 'typedef' | kw= 'noimpl' | kw= 'interface' | kw= 'param' | kw= 'refers' | kw= 'fault' | kw= 'functional' | kw= 'utility' | this_BOOLEAN_116= RULE_BOOLEAN | this_BIG_DECIMAL_117= RULE_BIG_DECIMAL | this_ID_118= RULE_ID | this_STRING_119= RULE_STRING | this_ANY_OTHER_120= RULE_ANY_OTHER )+
+            // InternalMappingDsl.g:4831:2: (kw= '{' | kw= '}' | kw= '<' | kw= '>' | kw= ',' | kw= '(' | kw= ')' | kw= '::' | kw= '.' | kw= '-' | kw= '--' | kw= '/' | kw= '?' | kw= ':' | kw= '@' | kw= '=' | kw= ';' | kw= 'technology' | kw= 'types' | kw= 'compatibility' | kw= 'matrix' | kw= 'protocols' | kw= 'service' | kw= 'aspects' | kw= 'deployment' | kw= 'technologies' | kw= 'infrastructure' | kw= 'operation' | kw= 'import' | kw= 'from' | kw= 'as' | kw= 'data' | kw= 'formats' | kw= 'default' | kw= 'with' | kw= 'format' | kw= 'in' | kw= 'out' | kw= 'inout' | kw= 'sync' | kw= 'async' | kw= 'primitive' | kw= 'type' | kw= 'based' | kw= 'on' | kw= 'list' | kw= 'structure' | kw= '->' | kw= '<-' | kw= '<->' | kw= 'environments' | kw= 'properties' | kw= 'mandatory' | kw= 'singleval' | kw= 'microservices' | kw= 'interfaces' | kw= 'operations' | kw= 'parameters' | kw= 'fields' | kw= 'exchange_pattern' | kw= 'communication_type' | kw= 'protocol' | kw= 'data_format' | kw= 'aspect' | kw= 'for' | kw= 'containers' | (kw= 'selector' kw= 'datatypes' ) | kw= 'version' | kw= 'context' | kw= 'aggregate' | kw= 'applicationService' | kw= 'domainEvent' | kw= 'domainService' | kw= 'entity' | kw= 'factory' | kw= 'infrastructureService' | kw= 'repository' | kw= 'specification' | kw= 'valueObject' | kw= 'extends' | kw= 'identifier' | kw= 'neverEmpty' | kw= 'part' | kw= 'hide' | kw= 'immutable' | kw= 'enum' | kw= 'closure' | kw= 'sideEffectFree' | kw= 'validator' | kw= 'function' | kw= 'procedure' | kw= 'boolean' | kw= 'byte' | kw= 'char' | kw= 'date' | kw= 'double' | kw= 'float' | kw= 'int' | kw= 'long' | kw= 'short' | kw= 'string' | kw= 'internal' | kw= 'architecture' | kw= 'public' | kw= 'endpoints' | kw= 'microservice' | kw= 'required' | kw= 'typedef' | kw= 'noimpl' | kw= 'interface' | kw= 'param' | kw= 'refers' | kw= 'fault' | kw= 'functional' | kw= 'utility' | this_BOOLEAN_116= RULE_BOOLEAN | this_NUMBER_WITH_TRAILING_PERIOD_117= RULE_NUMBER_WITH_TRAILING_PERIOD | this_BIG_DECIMAL_118= RULE_BIG_DECIMAL | this_ID_119= RULE_ID | this_STRING_120= RULE_STRING | this_ANY_OTHER_121= RULE_ANY_OTHER )+
             int cnt140=0;
             loop140:
             do {
-                int alt140=121;
+                int alt140=122;
                 switch ( input.LA(1) ) {
-                case 14:
+                case 15:
                     {
                     alt140=1;
                     }
                     break;
-                case 16:
+                case 17:
                     {
                     alt140=2;
                     }
                     break;
-                case 57:
+                case 58:
                     {
                     alt140=3;
                     }
                     break;
-                case 58:
+                case 59:
                     {
                     alt140=4;
                     }
                     break;
-                case 34:
+                case 35:
                     {
                     alt140=5;
                     }
                     break;
-                case 32:
+                case 33:
                     {
                     alt140=6;
                     }
                     break;
-                case 33:
+                case 34:
                     {
                     alt140=7;
                     }
                     break;
-                case 17:
+                case 18:
                     {
                     alt140=8;
                     }
                     break;
-                case 29:
+                case 30:
                     {
                     alt140=9;
                     }
                     break;
-                case 59:
+                case 60:
                     {
                     alt140=10;
                     }
                     break;
-                case 60:
+                case 61:
                     {
                     alt140=11;
                     }
                     break;
-                case 61:
+                case 62:
                     {
                     alt140=12;
                     }
                     break;
-                case 56:
+                case 57:
                     {
                     alt140=13;
                     }
                     break;
-                case 25:
+                case 26:
                     {
                     alt140=14;
                     }
                     break;
-                case 38:
+                case 39:
                     {
                     alt140=15;
                     }
                     break;
-                case 49:
+                case 50:
                     {
                     alt140=16;
                     }
                     break;
-                case 26:
+                case 27:
                     {
                     alt140=17;
                     }
                     break;
-                case 47:
+                case 48:
                     {
                     alt140=18;
                     }
                     break;
-                case 62:
+                case 63:
                     {
                     alt140=19;
                     }
                     break;
-                case 63:
+                case 64:
                     {
                     alt140=20;
                     }
                     break;
-                case 64:
+                case 65:
                     {
                     alt140=21;
                     }
                     break;
-                case 18:
+                case 19:
                     {
                     alt140=22;
                     }
                     break;
-                case 65:
+                case 66:
                     {
                     alt140=23;
                     }
                     break;
-                case 15:
+                case 16:
                     {
                     alt140=24;
                     }
                     break;
-                case 66:
+                case 67:
                     {
                     alt140=25;
                     }
                     break;
-                case 67:
+                case 68:
                     {
                     alt140=26;
                     }
                     break;
-                case 68:
+                case 69:
                     {
                     alt140=27;
                     }
                     break;
-                case 21:
+                case 22:
                     {
                     alt140=28;
                     }
                     break;
-                case 35:
+                case 36:
                     {
                     alt140=29;
                     }
                     break;
-                case 36:
+                case 37:
                     {
                     alt140=30;
                     }
                     break;
-                case 37:
+                case 38:
                     {
                     alt140=31;
                     }
                     break;
-                case 69:
+                case 70:
                     {
                     alt140=32;
                     }
                     break;
-                case 70:
+                case 71:
                     {
                     alt140=33;
                     }
                     break;
-                case 71:
+                case 72:
                     {
                     alt140=34;
                     }
                     break;
-                case 72:
+                case 73:
                     {
                     alt140=35;
                     }
                     break;
-                case 73:
+                case 74:
                     {
                     alt140=36;
                     }
                     break;
-                case 74:
+                case 75:
                     {
                     alt140=37;
                     }
                     break;
-                case 75:
+                case 76:
                     {
                     alt140=38;
                     }
                     break;
-                case 76:
+                case 77:
                     {
                     alt140=39;
                     }
                     break;
-                case 77:
+                case 78:
                     {
                     alt140=40;
                     }
                     break;
-                case 78:
+                case 79:
                     {
                     alt140=41;
                     }
                     break;
-                case 24:
+                case 25:
                     {
                     alt140=42;
                     }
                     break;
-                case 13:
+                case 14:
                     {
                     alt140=43;
                     }
                     break;
-                case 79:
+                case 80:
                     {
                     alt140=44;
                     }
                     break;
-                case 80:
+                case 81:
                     {
                     alt140=45;
                     }
                     break;
-                case 81:
+                case 82:
                     {
                     alt140=46;
                     }
                     break;
-                case 82:
+                case 83:
                     {
                     alt140=47;
                     }
                     break;
-                case 28:
+                case 29:
                     {
                     alt140=48;
                     }
                     break;
-                case 83:
+                case 84:
                     {
                     alt140=49;
                     }
                     break;
-                case 84:
+                case 85:
                     {
                     alt140=50;
                     }
                     break;
-                case 85:
+                case 86:
                     {
                     alt140=51;
                     }
                     break;
-                case 86:
+                case 87:
                     {
                     alt140=52;
                     }
                     break;
-                case 87:
+                case 88:
                     {
                     alt140=53;
                     }
                     break;
-                case 88:
+                case 89:
                     {
                     alt140=54;
                     }
                     break;
-                case 44:
+                case 45:
                     {
                     alt140=55;
                     }
                     break;
-                case 45:
+                case 46:
                     {
                     alt140=56;
                     }
                     break;
-                case 46:
+                case 47:
                     {
                     alt140=57;
                     }
                     break;
-                case 22:
+                case 23:
                     {
                     alt140=58;
                     }
                     break;
-                case 89:
+                case 90:
                     {
                     alt140=59;
                     }
                     break;
-                case 90:
+                case 91:
                     {
                     alt140=60;
                     }
                     break;
-                case 91:
+                case 92:
                     {
                     alt140=61;
                     }
                     break;
-                case 92:
+                case 93:
                     {
                     alt140=62;
                     }
                     break;
-                case 93:
+                case 94:
                     {
                     alt140=63;
                     }
                     break;
-                case 94:
+                case 95:
                     {
                     alt140=64;
                     }
                     break;
-                case 95:
+                case 96:
                     {
                     alt140=65;
                     }
                     break;
-                case 96:
+                case 97:
                     {
                     alt140=66;
                     }
                     break;
-                case 97:
+                case 98:
                     {
                     alt140=67;
                     }
                     break;
-                case 42:
+                case 43:
                     {
                     alt140=68;
                     }
                     break;
-                case 99:
+                case 100:
                     {
                     alt140=69;
                     }
                     break;
-                case 100:
+                case 101:
                     {
                     alt140=70;
                     }
                     break;
-                case 101:
+                case 102:
                     {
                     alt140=71;
                     }
                     break;
-                case 102:
+                case 103:
                     {
                     alt140=72;
                     }
                     break;
-                case 103:
+                case 104:
                     {
                     alt140=73;
                     }
                     break;
-                case 104:
+                case 105:
                     {
                     alt140=74;
                     }
                     break;
-                case 105:
+                case 106:
                     {
                     alt140=75;
                     }
                     break;
-                case 106:
+                case 107:
                     {
                     alt140=76;
                     }
                     break;
-                case 107:
+                case 108:
                     {
                     alt140=77;
                     }
                     break;
-                case 108:
+                case 109:
                     {
                     alt140=78;
                     }
                     break;
-                case 109:
+                case 110:
                     {
                     alt140=79;
                     }
                     break;
-                case 110:
+                case 111:
                     {
                     alt140=80;
                     }
                     break;
-                case 111:
+                case 112:
                     {
                     alt140=81;
                     }
                     break;
-                case 112:
+                case 113:
                     {
                     alt140=82;
                     }
                     break;
-                case 113:
+                case 114:
                     {
                     alt140=83;
                     }
                     break;
-                case 114:
+                case 115:
                     {
                     alt140=84;
                     }
                     break;
-                case 115:
+                case 116:
                     {
                     alt140=85;
                     }
                     break;
-                case 116:
+                case 117:
                     {
                     alt140=86;
                     }
                     break;
-                case 117:
+                case 118:
                     {
                     alt140=87;
                     }
                     break;
-                case 118:
+                case 119:
                     {
                     alt140=88;
                     }
                     break;
-                case 119:
+                case 120:
                     {
                     alt140=89;
                     }
                     break;
-                case 120:
+                case 121:
                     {
                     alt140=90;
                     }
                     break;
-                case 121:
+                case 122:
                     {
                     alt140=91;
                     }
                     break;
-                case 122:
+                case 123:
                     {
                     alt140=92;
                     }
                     break;
-                case 123:
+                case 124:
                     {
                     alt140=93;
                     }
                     break;
-                case 124:
+                case 125:
                     {
                     alt140=94;
                     }
                     break;
-                case 125:
+                case 126:
                     {
                     alt140=95;
                     }
                     break;
-                case 126:
+                case 127:
                     {
                     alt140=96;
                     }
                     break;
-                case 127:
+                case 128:
                     {
                     alt140=97;
                     }
                     break;
-                case 128:
+                case 129:
                     {
                     alt140=98;
                     }
                     break;
-                case 129:
+                case 130:
                     {
                     alt140=99;
                     }
                     break;
-                case 130:
+                case 131:
                     {
                     alt140=100;
                     }
                     break;
-                case 131:
+                case 132:
                     {
                     alt140=101;
                     }
                     break;
-                case 132:
+                case 133:
                     {
                     alt140=102;
                     }
                     break;
-                case 133:
+                case 134:
                     {
                     alt140=103;
                     }
                     break;
-                case 134:
+                case 135:
                     {
                     alt140=104;
                     }
                     break;
-                case 19:
+                case 20:
                     {
                     alt140=105;
                     }
                     break;
-                case 41:
+                case 42:
                     {
                     alt140=106;
                     }
                     break;
-                case 43:
+                case 44:
                     {
                     alt140=107;
                     }
                     break;
-                case 48:
+                case 49:
                     {
                     alt140=108;
                     }
                     break;
-                case 50:
+                case 51:
                     {
                     alt140=109;
                     }
                     break;
-                case 20:
+                case 21:
                     {
                     alt140=110;
                     }
                     break;
-                case 135:
+                case 136:
                     {
                     alt140=111;
                     }
                     break;
-                case 54:
+                case 55:
                     {
                     alt140=112;
                     }
                     break;
-                case 55:
+                case 56:
                     {
                     alt140=113;
                     }
                     break;
-                case 136:
+                case 137:
                     {
                     alt140=114;
                     }
                     break;
-                case 137:
+                case 138:
                     {
                     alt140=115;
                     }
@@ -12705,24 +12707,29 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     alt140=116;
                     }
                     break;
-                case RULE_BIG_DECIMAL:
+                case RULE_NUMBER_WITH_TRAILING_PERIOD:
                     {
                     alt140=117;
                     }
                     break;
-                case RULE_ID:
+                case RULE_BIG_DECIMAL:
                     {
                     alt140=118;
                     }
                     break;
-                case RULE_STRING:
+                case RULE_ID:
                     {
                     alt140=119;
                     }
                     break;
-                case RULE_ANY_OTHER:
+                case RULE_STRING:
                     {
                     alt140=120;
+                    }
+                    break;
+                case RULE_ANY_OTHER:
+                    {
+                    alt140=121;
                     }
                     break;
 
@@ -12732,7 +12739,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 1 :
             	    // InternalMappingDsl.g:4832:3: kw= '{'
             	    {
-            	    kw=(Token)match(input,14,FOLLOW_94); 
+            	    kw=(Token)match(input,15,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getLeftCurlyBracketKeyword_0());
@@ -12743,7 +12750,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 2 :
             	    // InternalMappingDsl.g:4838:3: kw= '}'
             	    {
-            	    kw=(Token)match(input,16,FOLLOW_94); 
+            	    kw=(Token)match(input,17,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getRightCurlyBracketKeyword_1());
@@ -12754,7 +12761,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 3 :
             	    // InternalMappingDsl.g:4844:3: kw= '<'
             	    {
-            	    kw=(Token)match(input,57,FOLLOW_94); 
+            	    kw=(Token)match(input,58,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getLessThanSignKeyword_2());
@@ -12765,7 +12772,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 4 :
             	    // InternalMappingDsl.g:4850:3: kw= '>'
             	    {
-            	    kw=(Token)match(input,58,FOLLOW_94); 
+            	    kw=(Token)match(input,59,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getGreaterThanSignKeyword_3());
@@ -12776,7 +12783,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 5 :
             	    // InternalMappingDsl.g:4856:3: kw= ','
             	    {
-            	    kw=(Token)match(input,34,FOLLOW_94); 
+            	    kw=(Token)match(input,35,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getCommaKeyword_4());
@@ -12787,7 +12794,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 6 :
             	    // InternalMappingDsl.g:4862:3: kw= '('
             	    {
-            	    kw=(Token)match(input,32,FOLLOW_94); 
+            	    kw=(Token)match(input,33,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getLeftParenthesisKeyword_5());
@@ -12798,7 +12805,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 7 :
             	    // InternalMappingDsl.g:4868:3: kw= ')'
             	    {
-            	    kw=(Token)match(input,33,FOLLOW_94); 
+            	    kw=(Token)match(input,34,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getRightParenthesisKeyword_6());
@@ -12809,7 +12816,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 8 :
             	    // InternalMappingDsl.g:4874:3: kw= '::'
             	    {
-            	    kw=(Token)match(input,17,FOLLOW_94); 
+            	    kw=(Token)match(input,18,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getColonColonKeyword_7());
@@ -12820,7 +12827,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 9 :
             	    // InternalMappingDsl.g:4880:3: kw= '.'
             	    {
-            	    kw=(Token)match(input,29,FOLLOW_94); 
+            	    kw=(Token)match(input,30,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getFullStopKeyword_8());
@@ -12831,7 +12838,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 10 :
             	    // InternalMappingDsl.g:4886:3: kw= '-'
             	    {
-            	    kw=(Token)match(input,59,FOLLOW_94); 
+            	    kw=(Token)match(input,60,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getHyphenMinusKeyword_9());
@@ -12842,7 +12849,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 11 :
             	    // InternalMappingDsl.g:4892:3: kw= '--'
             	    {
-            	    kw=(Token)match(input,60,FOLLOW_94); 
+            	    kw=(Token)match(input,61,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getHyphenMinusHyphenMinusKeyword_10());
@@ -12853,7 +12860,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 12 :
             	    // InternalMappingDsl.g:4898:3: kw= '/'
             	    {
-            	    kw=(Token)match(input,61,FOLLOW_94); 
+            	    kw=(Token)match(input,62,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getSolidusKeyword_11());
@@ -12864,7 +12871,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 13 :
             	    // InternalMappingDsl.g:4904:3: kw= '?'
             	    {
-            	    kw=(Token)match(input,56,FOLLOW_94); 
+            	    kw=(Token)match(input,57,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getQuestionMarkKeyword_12());
@@ -12875,7 +12882,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 14 :
             	    // InternalMappingDsl.g:4910:3: kw= ':'
             	    {
-            	    kw=(Token)match(input,25,FOLLOW_94); 
+            	    kw=(Token)match(input,26,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getColonKeyword_13());
@@ -12886,7 +12893,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 15 :
             	    // InternalMappingDsl.g:4916:3: kw= '@'
             	    {
-            	    kw=(Token)match(input,38,FOLLOW_94); 
+            	    kw=(Token)match(input,39,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getCommercialAtKeyword_14());
@@ -12897,7 +12904,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 16 :
             	    // InternalMappingDsl.g:4922:3: kw= '='
             	    {
-            	    kw=(Token)match(input,49,FOLLOW_94); 
+            	    kw=(Token)match(input,50,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getEqualsSignKeyword_15());
@@ -12908,7 +12915,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 17 :
             	    // InternalMappingDsl.g:4928:3: kw= ';'
             	    {
-            	    kw=(Token)match(input,26,FOLLOW_94); 
+            	    kw=(Token)match(input,27,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getSemicolonKeyword_16());
@@ -12919,7 +12926,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 18 :
             	    // InternalMappingDsl.g:4934:3: kw= 'technology'
             	    {
-            	    kw=(Token)match(input,47,FOLLOW_94); 
+            	    kw=(Token)match(input,48,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getTechnologyKeyword_17());
@@ -12930,7 +12937,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 19 :
             	    // InternalMappingDsl.g:4940:3: kw= 'types'
             	    {
-            	    kw=(Token)match(input,62,FOLLOW_94); 
+            	    kw=(Token)match(input,63,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getTypesKeyword_18());
@@ -12941,7 +12948,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 20 :
             	    // InternalMappingDsl.g:4946:3: kw= 'compatibility'
             	    {
-            	    kw=(Token)match(input,63,FOLLOW_94); 
+            	    kw=(Token)match(input,64,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getCompatibilityKeyword_19());
@@ -12952,7 +12959,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 21 :
             	    // InternalMappingDsl.g:4952:3: kw= 'matrix'
             	    {
-            	    kw=(Token)match(input,64,FOLLOW_94); 
+            	    kw=(Token)match(input,65,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getMatrixKeyword_20());
@@ -12963,7 +12970,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 22 :
             	    // InternalMappingDsl.g:4958:3: kw= 'protocols'
             	    {
-            	    kw=(Token)match(input,18,FOLLOW_94); 
+            	    kw=(Token)match(input,19,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getProtocolsKeyword_21());
@@ -12974,7 +12981,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 23 :
             	    // InternalMappingDsl.g:4964:3: kw= 'service'
             	    {
-            	    kw=(Token)match(input,65,FOLLOW_94); 
+            	    kw=(Token)match(input,66,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getServiceKeyword_22());
@@ -12985,7 +12992,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 24 :
             	    // InternalMappingDsl.g:4970:3: kw= 'aspects'
             	    {
-            	    kw=(Token)match(input,15,FOLLOW_94); 
+            	    kw=(Token)match(input,16,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getAspectsKeyword_23());
@@ -12996,7 +13003,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 25 :
             	    // InternalMappingDsl.g:4976:3: kw= 'deployment'
             	    {
-            	    kw=(Token)match(input,66,FOLLOW_94); 
+            	    kw=(Token)match(input,67,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getDeploymentKeyword_24());
@@ -13007,7 +13014,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 26 :
             	    // InternalMappingDsl.g:4982:3: kw= 'technologies'
             	    {
-            	    kw=(Token)match(input,67,FOLLOW_94); 
+            	    kw=(Token)match(input,68,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getTechnologiesKeyword_25());
@@ -13018,7 +13025,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 27 :
             	    // InternalMappingDsl.g:4988:3: kw= 'infrastructure'
             	    {
-            	    kw=(Token)match(input,68,FOLLOW_94); 
+            	    kw=(Token)match(input,69,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getInfrastructureKeyword_26());
@@ -13029,7 +13036,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 28 :
             	    // InternalMappingDsl.g:4994:3: kw= 'operation'
             	    {
-            	    kw=(Token)match(input,21,FOLLOW_94); 
+            	    kw=(Token)match(input,22,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getOperationKeyword_27());
@@ -13040,7 +13047,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 29 :
             	    // InternalMappingDsl.g:5000:3: kw= 'import'
             	    {
-            	    kw=(Token)match(input,35,FOLLOW_94); 
+            	    kw=(Token)match(input,36,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getImportKeyword_28());
@@ -13051,7 +13058,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 30 :
             	    // InternalMappingDsl.g:5006:3: kw= 'from'
             	    {
-            	    kw=(Token)match(input,36,FOLLOW_94); 
+            	    kw=(Token)match(input,37,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getFromKeyword_29());
@@ -13062,7 +13069,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 31 :
             	    // InternalMappingDsl.g:5012:3: kw= 'as'
             	    {
-            	    kw=(Token)match(input,37,FOLLOW_94); 
+            	    kw=(Token)match(input,38,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getAsKeyword_30());
@@ -13073,7 +13080,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 32 :
             	    // InternalMappingDsl.g:5018:3: kw= 'data'
             	    {
-            	    kw=(Token)match(input,69,FOLLOW_94); 
+            	    kw=(Token)match(input,70,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getDataKeyword_31());
@@ -13084,7 +13091,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 33 :
             	    // InternalMappingDsl.g:5024:3: kw= 'formats'
             	    {
-            	    kw=(Token)match(input,70,FOLLOW_94); 
+            	    kw=(Token)match(input,71,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getFormatsKeyword_32());
@@ -13095,7 +13102,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 34 :
             	    // InternalMappingDsl.g:5030:3: kw= 'default'
             	    {
-            	    kw=(Token)match(input,71,FOLLOW_94); 
+            	    kw=(Token)match(input,72,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getDefaultKeyword_33());
@@ -13106,7 +13113,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 35 :
             	    // InternalMappingDsl.g:5036:3: kw= 'with'
             	    {
-            	    kw=(Token)match(input,72,FOLLOW_94); 
+            	    kw=(Token)match(input,73,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getWithKeyword_34());
@@ -13117,7 +13124,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 36 :
             	    // InternalMappingDsl.g:5042:3: kw= 'format'
             	    {
-            	    kw=(Token)match(input,73,FOLLOW_94); 
+            	    kw=(Token)match(input,74,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getFormatKeyword_35());
@@ -13128,7 +13135,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 37 :
             	    // InternalMappingDsl.g:5048:3: kw= 'in'
             	    {
-            	    kw=(Token)match(input,74,FOLLOW_94); 
+            	    kw=(Token)match(input,75,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getInKeyword_36());
@@ -13139,7 +13146,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 38 :
             	    // InternalMappingDsl.g:5054:3: kw= 'out'
             	    {
-            	    kw=(Token)match(input,75,FOLLOW_94); 
+            	    kw=(Token)match(input,76,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getOutKeyword_37());
@@ -13150,7 +13157,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 39 :
             	    // InternalMappingDsl.g:5060:3: kw= 'inout'
             	    {
-            	    kw=(Token)match(input,76,FOLLOW_94); 
+            	    kw=(Token)match(input,77,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getInoutKeyword_38());
@@ -13161,7 +13168,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 40 :
             	    // InternalMappingDsl.g:5066:3: kw= 'sync'
             	    {
-            	    kw=(Token)match(input,77,FOLLOW_94); 
+            	    kw=(Token)match(input,78,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getSyncKeyword_39());
@@ -13172,7 +13179,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 41 :
             	    // InternalMappingDsl.g:5072:3: kw= 'async'
             	    {
-            	    kw=(Token)match(input,78,FOLLOW_94); 
+            	    kw=(Token)match(input,79,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getAsyncKeyword_40());
@@ -13183,7 +13190,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 42 :
             	    // InternalMappingDsl.g:5078:3: kw= 'primitive'
             	    {
-            	    kw=(Token)match(input,24,FOLLOW_94); 
+            	    kw=(Token)match(input,25,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getPrimitiveKeyword_41());
@@ -13194,7 +13201,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 43 :
             	    // InternalMappingDsl.g:5084:3: kw= 'type'
             	    {
-            	    kw=(Token)match(input,13,FOLLOW_94); 
+            	    kw=(Token)match(input,14,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getTypeKeyword_42());
@@ -13205,7 +13212,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 44 :
             	    // InternalMappingDsl.g:5090:3: kw= 'based'
             	    {
-            	    kw=(Token)match(input,79,FOLLOW_94); 
+            	    kw=(Token)match(input,80,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getBasedKeyword_43());
@@ -13216,7 +13223,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 45 :
             	    // InternalMappingDsl.g:5096:3: kw= 'on'
             	    {
-            	    kw=(Token)match(input,80,FOLLOW_94); 
+            	    kw=(Token)match(input,81,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getOnKeyword_44());
@@ -13227,7 +13234,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 46 :
             	    // InternalMappingDsl.g:5102:3: kw= 'list'
             	    {
-            	    kw=(Token)match(input,81,FOLLOW_94); 
+            	    kw=(Token)match(input,82,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getListKeyword_45());
@@ -13238,7 +13245,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 47 :
             	    // InternalMappingDsl.g:5108:3: kw= 'structure'
             	    {
-            	    kw=(Token)match(input,82,FOLLOW_94); 
+            	    kw=(Token)match(input,83,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getStructureKeyword_46());
@@ -13249,7 +13256,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 48 :
             	    // InternalMappingDsl.g:5114:3: kw= '->'
             	    {
-            	    kw=(Token)match(input,28,FOLLOW_94); 
+            	    kw=(Token)match(input,29,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getHyphenMinusGreaterThanSignKeyword_47());
@@ -13260,7 +13267,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 49 :
             	    // InternalMappingDsl.g:5120:3: kw= '<-'
             	    {
-            	    kw=(Token)match(input,83,FOLLOW_94); 
+            	    kw=(Token)match(input,84,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getLessThanSignHyphenMinusKeyword_48());
@@ -13271,7 +13278,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 50 :
             	    // InternalMappingDsl.g:5126:3: kw= '<->'
             	    {
-            	    kw=(Token)match(input,84,FOLLOW_94); 
+            	    kw=(Token)match(input,85,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getLessThanSignHyphenMinusGreaterThanSignKeyword_49());
@@ -13282,7 +13289,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 51 :
             	    // InternalMappingDsl.g:5132:3: kw= 'environments'
             	    {
-            	    kw=(Token)match(input,85,FOLLOW_94); 
+            	    kw=(Token)match(input,86,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getEnvironmentsKeyword_50());
@@ -13293,7 +13300,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 52 :
             	    // InternalMappingDsl.g:5138:3: kw= 'properties'
             	    {
-            	    kw=(Token)match(input,86,FOLLOW_94); 
+            	    kw=(Token)match(input,87,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getPropertiesKeyword_51());
@@ -13304,7 +13311,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 53 :
             	    // InternalMappingDsl.g:5144:3: kw= 'mandatory'
             	    {
-            	    kw=(Token)match(input,87,FOLLOW_94); 
+            	    kw=(Token)match(input,88,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getMandatoryKeyword_52());
@@ -13315,7 +13322,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 54 :
             	    // InternalMappingDsl.g:5150:3: kw= 'singleval'
             	    {
-            	    kw=(Token)match(input,88,FOLLOW_94); 
+            	    kw=(Token)match(input,89,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getSinglevalKeyword_53());
@@ -13326,7 +13333,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 55 :
             	    // InternalMappingDsl.g:5156:3: kw= 'microservices'
             	    {
-            	    kw=(Token)match(input,44,FOLLOW_94); 
+            	    kw=(Token)match(input,45,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getMicroservicesKeyword_54());
@@ -13337,7 +13344,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 56 :
             	    // InternalMappingDsl.g:5162:3: kw= 'interfaces'
             	    {
-            	    kw=(Token)match(input,45,FOLLOW_94); 
+            	    kw=(Token)match(input,46,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getInterfacesKeyword_55());
@@ -13348,7 +13355,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 57 :
             	    // InternalMappingDsl.g:5168:3: kw= 'operations'
             	    {
-            	    kw=(Token)match(input,46,FOLLOW_94); 
+            	    kw=(Token)match(input,47,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getOperationsKeyword_56());
@@ -13359,7 +13366,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 58 :
             	    // InternalMappingDsl.g:5174:3: kw= 'parameters'
             	    {
-            	    kw=(Token)match(input,22,FOLLOW_94); 
+            	    kw=(Token)match(input,23,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getParametersKeyword_57());
@@ -13370,7 +13377,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 59 :
             	    // InternalMappingDsl.g:5180:3: kw= 'fields'
             	    {
-            	    kw=(Token)match(input,89,FOLLOW_94); 
+            	    kw=(Token)match(input,90,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getFieldsKeyword_58());
@@ -13381,7 +13388,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 60 :
             	    // InternalMappingDsl.g:5186:3: kw= 'exchange_pattern'
             	    {
-            	    kw=(Token)match(input,90,FOLLOW_94); 
+            	    kw=(Token)match(input,91,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getExchange_patternKeyword_59());
@@ -13392,7 +13399,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 61 :
             	    // InternalMappingDsl.g:5192:3: kw= 'communication_type'
             	    {
-            	    kw=(Token)match(input,91,FOLLOW_94); 
+            	    kw=(Token)match(input,92,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getCommunication_typeKeyword_60());
@@ -13403,7 +13410,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 62 :
             	    // InternalMappingDsl.g:5198:3: kw= 'protocol'
             	    {
-            	    kw=(Token)match(input,92,FOLLOW_94); 
+            	    kw=(Token)match(input,93,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getProtocolKeyword_61());
@@ -13414,7 +13421,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 63 :
             	    // InternalMappingDsl.g:5204:3: kw= 'data_format'
             	    {
-            	    kw=(Token)match(input,93,FOLLOW_94); 
+            	    kw=(Token)match(input,94,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getData_formatKeyword_62());
@@ -13425,7 +13432,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 64 :
             	    // InternalMappingDsl.g:5210:3: kw= 'aspect'
             	    {
-            	    kw=(Token)match(input,94,FOLLOW_94); 
+            	    kw=(Token)match(input,95,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getAspectKeyword_63());
@@ -13436,7 +13443,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 65 :
             	    // InternalMappingDsl.g:5216:3: kw= 'for'
             	    {
-            	    kw=(Token)match(input,95,FOLLOW_94); 
+            	    kw=(Token)match(input,96,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getForKeyword_64());
@@ -13447,7 +13454,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 66 :
             	    // InternalMappingDsl.g:5222:3: kw= 'containers'
             	    {
-            	    kw=(Token)match(input,96,FOLLOW_94); 
+            	    kw=(Token)match(input,97,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getContainersKeyword_65());
@@ -13461,12 +13468,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	    // InternalMappingDsl.g:5228:3: (kw= 'selector' kw= 'datatypes' )
             	    // InternalMappingDsl.g:5229:4: kw= 'selector' kw= 'datatypes'
             	    {
-            	    kw=(Token)match(input,97,FOLLOW_95); 
+            	    kw=(Token)match(input,98,FOLLOW_95); 
 
             	    				current.merge(kw);
             	    				newLeafNode(kw, grammarAccess.getAnythingAccess().getSelectorKeyword_66_0());
             	    			
-            	    kw=(Token)match(input,98,FOLLOW_94); 
+            	    kw=(Token)match(input,99,FOLLOW_94); 
 
             	    				current.merge(kw);
             	    				newLeafNode(kw, grammarAccess.getAnythingAccess().getDatatypesKeyword_66_1());
@@ -13480,7 +13487,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 68 :
             	    // InternalMappingDsl.g:5241:3: kw= 'version'
             	    {
-            	    kw=(Token)match(input,42,FOLLOW_94); 
+            	    kw=(Token)match(input,43,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getVersionKeyword_67());
@@ -13491,7 +13498,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 69 :
             	    // InternalMappingDsl.g:5247:3: kw= 'context'
             	    {
-            	    kw=(Token)match(input,99,FOLLOW_94); 
+            	    kw=(Token)match(input,100,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getContextKeyword_68());
@@ -13502,7 +13509,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 70 :
             	    // InternalMappingDsl.g:5253:3: kw= 'aggregate'
             	    {
-            	    kw=(Token)match(input,100,FOLLOW_94); 
+            	    kw=(Token)match(input,101,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getAggregateKeyword_69());
@@ -13513,7 +13520,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 71 :
             	    // InternalMappingDsl.g:5259:3: kw= 'applicationService'
             	    {
-            	    kw=(Token)match(input,101,FOLLOW_94); 
+            	    kw=(Token)match(input,102,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getApplicationServiceKeyword_70());
@@ -13524,7 +13531,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 72 :
             	    // InternalMappingDsl.g:5265:3: kw= 'domainEvent'
             	    {
-            	    kw=(Token)match(input,102,FOLLOW_94); 
+            	    kw=(Token)match(input,103,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getDomainEventKeyword_71());
@@ -13535,7 +13542,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 73 :
             	    // InternalMappingDsl.g:5271:3: kw= 'domainService'
             	    {
-            	    kw=(Token)match(input,103,FOLLOW_94); 
+            	    kw=(Token)match(input,104,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getDomainServiceKeyword_72());
@@ -13546,7 +13553,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 74 :
             	    // InternalMappingDsl.g:5277:3: kw= 'entity'
             	    {
-            	    kw=(Token)match(input,104,FOLLOW_94); 
+            	    kw=(Token)match(input,105,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getEntityKeyword_73());
@@ -13557,7 +13564,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 75 :
             	    // InternalMappingDsl.g:5283:3: kw= 'factory'
             	    {
-            	    kw=(Token)match(input,105,FOLLOW_94); 
+            	    kw=(Token)match(input,106,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getFactoryKeyword_74());
@@ -13568,7 +13575,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 76 :
             	    // InternalMappingDsl.g:5289:3: kw= 'infrastructureService'
             	    {
-            	    kw=(Token)match(input,106,FOLLOW_94); 
+            	    kw=(Token)match(input,107,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getInfrastructureServiceKeyword_75());
@@ -13579,7 +13586,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 77 :
             	    // InternalMappingDsl.g:5295:3: kw= 'repository'
             	    {
-            	    kw=(Token)match(input,107,FOLLOW_94); 
+            	    kw=(Token)match(input,108,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getRepositoryKeyword_76());
@@ -13590,7 +13597,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 78 :
             	    // InternalMappingDsl.g:5301:3: kw= 'specification'
             	    {
-            	    kw=(Token)match(input,108,FOLLOW_94); 
+            	    kw=(Token)match(input,109,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getSpecificationKeyword_77());
@@ -13601,7 +13608,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 79 :
             	    // InternalMappingDsl.g:5307:3: kw= 'valueObject'
             	    {
-            	    kw=(Token)match(input,109,FOLLOW_94); 
+            	    kw=(Token)match(input,110,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getValueObjectKeyword_78());
@@ -13612,7 +13619,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 80 :
             	    // InternalMappingDsl.g:5313:3: kw= 'extends'
             	    {
-            	    kw=(Token)match(input,110,FOLLOW_94); 
+            	    kw=(Token)match(input,111,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getExtendsKeyword_79());
@@ -13623,7 +13630,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 81 :
             	    // InternalMappingDsl.g:5319:3: kw= 'identifier'
             	    {
-            	    kw=(Token)match(input,111,FOLLOW_94); 
+            	    kw=(Token)match(input,112,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getIdentifierKeyword_80());
@@ -13634,7 +13641,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 82 :
             	    // InternalMappingDsl.g:5325:3: kw= 'neverEmpty'
             	    {
-            	    kw=(Token)match(input,112,FOLLOW_94); 
+            	    kw=(Token)match(input,113,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getNeverEmptyKeyword_81());
@@ -13645,7 +13652,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 83 :
             	    // InternalMappingDsl.g:5331:3: kw= 'part'
             	    {
-            	    kw=(Token)match(input,113,FOLLOW_94); 
+            	    kw=(Token)match(input,114,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getPartKeyword_82());
@@ -13656,7 +13663,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 84 :
             	    // InternalMappingDsl.g:5337:3: kw= 'hide'
             	    {
-            	    kw=(Token)match(input,114,FOLLOW_94); 
+            	    kw=(Token)match(input,115,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getHideKeyword_83());
@@ -13667,7 +13674,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 85 :
             	    // InternalMappingDsl.g:5343:3: kw= 'immutable'
             	    {
-            	    kw=(Token)match(input,115,FOLLOW_94); 
+            	    kw=(Token)match(input,116,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getImmutableKeyword_84());
@@ -13678,7 +13685,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 86 :
             	    // InternalMappingDsl.g:5349:3: kw= 'enum'
             	    {
-            	    kw=(Token)match(input,116,FOLLOW_94); 
+            	    kw=(Token)match(input,117,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getEnumKeyword_85());
@@ -13689,7 +13696,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 87 :
             	    // InternalMappingDsl.g:5355:3: kw= 'closure'
             	    {
-            	    kw=(Token)match(input,117,FOLLOW_94); 
+            	    kw=(Token)match(input,118,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getClosureKeyword_86());
@@ -13700,7 +13707,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 88 :
             	    // InternalMappingDsl.g:5361:3: kw= 'sideEffectFree'
             	    {
-            	    kw=(Token)match(input,118,FOLLOW_94); 
+            	    kw=(Token)match(input,119,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getSideEffectFreeKeyword_87());
@@ -13711,7 +13718,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 89 :
             	    // InternalMappingDsl.g:5367:3: kw= 'validator'
             	    {
-            	    kw=(Token)match(input,119,FOLLOW_94); 
+            	    kw=(Token)match(input,120,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getValidatorKeyword_88());
@@ -13722,7 +13729,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 90 :
             	    // InternalMappingDsl.g:5373:3: kw= 'function'
             	    {
-            	    kw=(Token)match(input,120,FOLLOW_94); 
+            	    kw=(Token)match(input,121,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getFunctionKeyword_89());
@@ -13733,7 +13740,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 91 :
             	    // InternalMappingDsl.g:5379:3: kw= 'procedure'
             	    {
-            	    kw=(Token)match(input,121,FOLLOW_94); 
+            	    kw=(Token)match(input,122,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getProcedureKeyword_90());
@@ -13744,7 +13751,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 92 :
             	    // InternalMappingDsl.g:5385:3: kw= 'boolean'
             	    {
-            	    kw=(Token)match(input,122,FOLLOW_94); 
+            	    kw=(Token)match(input,123,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getBooleanKeyword_91());
@@ -13755,7 +13762,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 93 :
             	    // InternalMappingDsl.g:5391:3: kw= 'byte'
             	    {
-            	    kw=(Token)match(input,123,FOLLOW_94); 
+            	    kw=(Token)match(input,124,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getByteKeyword_92());
@@ -13766,7 +13773,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 94 :
             	    // InternalMappingDsl.g:5397:3: kw= 'char'
             	    {
-            	    kw=(Token)match(input,124,FOLLOW_94); 
+            	    kw=(Token)match(input,125,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getCharKeyword_93());
@@ -13777,7 +13784,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 95 :
             	    // InternalMappingDsl.g:5403:3: kw= 'date'
             	    {
-            	    kw=(Token)match(input,125,FOLLOW_94); 
+            	    kw=(Token)match(input,126,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getDateKeyword_94());
@@ -13788,7 +13795,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 96 :
             	    // InternalMappingDsl.g:5409:3: kw= 'double'
             	    {
-            	    kw=(Token)match(input,126,FOLLOW_94); 
+            	    kw=(Token)match(input,127,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getDoubleKeyword_95());
@@ -13799,7 +13806,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 97 :
             	    // InternalMappingDsl.g:5415:3: kw= 'float'
             	    {
-            	    kw=(Token)match(input,127,FOLLOW_94); 
+            	    kw=(Token)match(input,128,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getFloatKeyword_96());
@@ -13810,7 +13817,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 98 :
             	    // InternalMappingDsl.g:5421:3: kw= 'int'
             	    {
-            	    kw=(Token)match(input,128,FOLLOW_94); 
+            	    kw=(Token)match(input,129,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getIntKeyword_97());
@@ -13821,7 +13828,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 99 :
             	    // InternalMappingDsl.g:5427:3: kw= 'long'
             	    {
-            	    kw=(Token)match(input,129,FOLLOW_94); 
+            	    kw=(Token)match(input,130,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getLongKeyword_98());
@@ -13832,7 +13839,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 100 :
             	    // InternalMappingDsl.g:5433:3: kw= 'short'
             	    {
-            	    kw=(Token)match(input,130,FOLLOW_94); 
+            	    kw=(Token)match(input,131,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getShortKeyword_99());
@@ -13843,7 +13850,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 101 :
             	    // InternalMappingDsl.g:5439:3: kw= 'string'
             	    {
-            	    kw=(Token)match(input,131,FOLLOW_94); 
+            	    kw=(Token)match(input,132,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getStringKeyword_100());
@@ -13854,7 +13861,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 102 :
             	    // InternalMappingDsl.g:5445:3: kw= 'internal'
             	    {
-            	    kw=(Token)match(input,132,FOLLOW_94); 
+            	    kw=(Token)match(input,133,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getInternalKeyword_101());
@@ -13865,7 +13872,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 103 :
             	    // InternalMappingDsl.g:5451:3: kw= 'architecture'
             	    {
-            	    kw=(Token)match(input,133,FOLLOW_94); 
+            	    kw=(Token)match(input,134,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getArchitectureKeyword_102());
@@ -13876,7 +13883,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 104 :
             	    // InternalMappingDsl.g:5457:3: kw= 'public'
             	    {
-            	    kw=(Token)match(input,134,FOLLOW_94); 
+            	    kw=(Token)match(input,135,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getPublicKeyword_103());
@@ -13887,7 +13894,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 105 :
             	    // InternalMappingDsl.g:5463:3: kw= 'endpoints'
             	    {
-            	    kw=(Token)match(input,19,FOLLOW_94); 
+            	    kw=(Token)match(input,20,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getEndpointsKeyword_104());
@@ -13898,7 +13905,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 106 :
             	    // InternalMappingDsl.g:5469:3: kw= 'microservice'
             	    {
-            	    kw=(Token)match(input,41,FOLLOW_94); 
+            	    kw=(Token)match(input,42,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getMicroserviceKeyword_105());
@@ -13909,7 +13916,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 107 :
             	    // InternalMappingDsl.g:5475:3: kw= 'required'
             	    {
-            	    kw=(Token)match(input,43,FOLLOW_94); 
+            	    kw=(Token)match(input,44,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getRequiredKeyword_106());
@@ -13920,7 +13927,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 108 :
             	    // InternalMappingDsl.g:5481:3: kw= 'typedef'
             	    {
-            	    kw=(Token)match(input,48,FOLLOW_94); 
+            	    kw=(Token)match(input,49,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getTypedefKeyword_107());
@@ -13931,7 +13938,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 109 :
             	    // InternalMappingDsl.g:5487:3: kw= 'noimpl'
             	    {
-            	    kw=(Token)match(input,50,FOLLOW_94); 
+            	    kw=(Token)match(input,51,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getNoimplKeyword_108());
@@ -13942,7 +13949,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 110 :
             	    // InternalMappingDsl.g:5493:3: kw= 'interface'
             	    {
-            	    kw=(Token)match(input,20,FOLLOW_94); 
+            	    kw=(Token)match(input,21,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getInterfaceKeyword_109());
@@ -13953,7 +13960,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 111 :
             	    // InternalMappingDsl.g:5499:3: kw= 'param'
             	    {
-            	    kw=(Token)match(input,135,FOLLOW_94); 
+            	    kw=(Token)match(input,136,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getParamKeyword_110());
@@ -13964,7 +13971,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 112 :
             	    // InternalMappingDsl.g:5505:3: kw= 'refers'
             	    {
-            	    kw=(Token)match(input,54,FOLLOW_94); 
+            	    kw=(Token)match(input,55,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getRefersKeyword_111());
@@ -13975,7 +13982,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 113 :
             	    // InternalMappingDsl.g:5511:3: kw= 'fault'
             	    {
-            	    kw=(Token)match(input,55,FOLLOW_94); 
+            	    kw=(Token)match(input,56,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getFaultKeyword_112());
@@ -13986,7 +13993,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 114 :
             	    // InternalMappingDsl.g:5517:3: kw= 'functional'
             	    {
-            	    kw=(Token)match(input,136,FOLLOW_94); 
+            	    kw=(Token)match(input,137,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getFunctionalKeyword_113());
@@ -13997,7 +14004,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	case 115 :
             	    // InternalMappingDsl.g:5523:3: kw= 'utility'
             	    {
-            	    kw=(Token)match(input,137,FOLLOW_94); 
+            	    kw=(Token)match(input,138,FOLLOW_94); 
 
             	    			current.merge(kw);
             	    			newLeafNode(kw, grammarAccess.getAnythingAccess().getUtilityKeyword_114());
@@ -14019,53 +14026,66 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             	    }
             	    break;
             	case 117 :
-            	    // InternalMappingDsl.g:5537:3: this_BIG_DECIMAL_117= RULE_BIG_DECIMAL
+            	    // InternalMappingDsl.g:5537:3: this_NUMBER_WITH_TRAILING_PERIOD_117= RULE_NUMBER_WITH_TRAILING_PERIOD
             	    {
-            	    this_BIG_DECIMAL_117=(Token)match(input,RULE_BIG_DECIMAL,FOLLOW_94); 
+            	    this_NUMBER_WITH_TRAILING_PERIOD_117=(Token)match(input,RULE_NUMBER_WITH_TRAILING_PERIOD,FOLLOW_94); 
 
-            	    			current.merge(this_BIG_DECIMAL_117);
+            	    			current.merge(this_NUMBER_WITH_TRAILING_PERIOD_117);
             	    		
 
-            	    			newLeafNode(this_BIG_DECIMAL_117, grammarAccess.getAnythingAccess().getBIG_DECIMALTerminalRuleCall_116());
+            	    			newLeafNode(this_NUMBER_WITH_TRAILING_PERIOD_117, grammarAccess.getAnythingAccess().getNUMBER_WITH_TRAILING_PERIODTerminalRuleCall_116());
             	    		
 
             	    }
             	    break;
             	case 118 :
-            	    // InternalMappingDsl.g:5545:3: this_ID_118= RULE_ID
+            	    // InternalMappingDsl.g:5545:3: this_BIG_DECIMAL_118= RULE_BIG_DECIMAL
             	    {
-            	    this_ID_118=(Token)match(input,RULE_ID,FOLLOW_94); 
+            	    this_BIG_DECIMAL_118=(Token)match(input,RULE_BIG_DECIMAL,FOLLOW_94); 
 
-            	    			current.merge(this_ID_118);
+            	    			current.merge(this_BIG_DECIMAL_118);
             	    		
 
-            	    			newLeafNode(this_ID_118, grammarAccess.getAnythingAccess().getIDTerminalRuleCall_117());
+            	    			newLeafNode(this_BIG_DECIMAL_118, grammarAccess.getAnythingAccess().getBIG_DECIMALTerminalRuleCall_117());
             	    		
 
             	    }
             	    break;
             	case 119 :
-            	    // InternalMappingDsl.g:5553:3: this_STRING_119= RULE_STRING
+            	    // InternalMappingDsl.g:5553:3: this_ID_119= RULE_ID
             	    {
-            	    this_STRING_119=(Token)match(input,RULE_STRING,FOLLOW_94); 
+            	    this_ID_119=(Token)match(input,RULE_ID,FOLLOW_94); 
 
-            	    			current.merge(this_STRING_119);
+            	    			current.merge(this_ID_119);
             	    		
 
-            	    			newLeafNode(this_STRING_119, grammarAccess.getAnythingAccess().getSTRINGTerminalRuleCall_118());
+            	    			newLeafNode(this_ID_119, grammarAccess.getAnythingAccess().getIDTerminalRuleCall_118());
             	    		
 
             	    }
             	    break;
             	case 120 :
-            	    // InternalMappingDsl.g:5561:3: this_ANY_OTHER_120= RULE_ANY_OTHER
+            	    // InternalMappingDsl.g:5561:3: this_STRING_120= RULE_STRING
             	    {
-            	    this_ANY_OTHER_120=(Token)match(input,RULE_ANY_OTHER,FOLLOW_94); 
+            	    this_STRING_120=(Token)match(input,RULE_STRING,FOLLOW_94); 
 
-            	    			current.merge(this_ANY_OTHER_120);
+            	    			current.merge(this_STRING_120);
             	    		
 
-            	    			newLeafNode(this_ANY_OTHER_120, grammarAccess.getAnythingAccess().getANY_OTHERTerminalRuleCall_119());
+            	    			newLeafNode(this_STRING_120, grammarAccess.getAnythingAccess().getSTRINGTerminalRuleCall_119());
+            	    		
+
+            	    }
+            	    break;
+            	case 121 :
+            	    // InternalMappingDsl.g:5569:3: this_ANY_OTHER_121= RULE_ANY_OTHER
+            	    {
+            	    this_ANY_OTHER_121=(Token)match(input,RULE_ANY_OTHER,FOLLOW_94); 
+
+            	    			current.merge(this_ANY_OTHER_121);
+            	    		
+
+            	    			newLeafNode(this_ANY_OTHER_121, grammarAccess.getAnythingAccess().getANY_OTHERTerminalRuleCall_120());
             	    		
 
             	    }
@@ -14100,7 +14120,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleTechnologyImport"
-    // InternalMappingDsl.g:5572:1: entryRuleTechnologyImport returns [EObject current=null] : iv_ruleTechnologyImport= ruleTechnologyImport EOF ;
+    // InternalMappingDsl.g:5580:1: entryRuleTechnologyImport returns [EObject current=null] : iv_ruleTechnologyImport= ruleTechnologyImport EOF ;
     public final EObject entryRuleTechnologyImport() throws RecognitionException {
         EObject current = null;
 
@@ -14108,8 +14128,8 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalMappingDsl.g:5572:57: (iv_ruleTechnologyImport= ruleTechnologyImport EOF )
-            // InternalMappingDsl.g:5573:2: iv_ruleTechnologyImport= ruleTechnologyImport EOF
+            // InternalMappingDsl.g:5580:57: (iv_ruleTechnologyImport= ruleTechnologyImport EOF )
+            // InternalMappingDsl.g:5581:2: iv_ruleTechnologyImport= ruleTechnologyImport EOF
             {
              newCompositeNode(grammarAccess.getTechnologyImportRule()); 
             pushFollow(FOLLOW_1);
@@ -14136,7 +14156,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTechnologyImport"
-    // InternalMappingDsl.g:5579:1: ruleTechnologyImport returns [EObject current=null] : (otherlv_0= 'import' otherlv_1= 'technology' otherlv_2= 'from' ( (lv_importURI_3_0= RULE_STRING ) ) otherlv_4= 'as' ( (lv_name_5_0= RULE_ID ) ) ) ;
+    // InternalMappingDsl.g:5587:1: ruleTechnologyImport returns [EObject current=null] : (otherlv_0= 'import' otherlv_1= 'technology' otherlv_2= 'from' ( (lv_importURI_3_0= RULE_STRING ) ) otherlv_4= 'as' ( (lv_name_5_0= RULE_ID ) ) ) ;
     public final EObject ruleTechnologyImport() throws RecognitionException {
         EObject current = null;
 
@@ -14151,29 +14171,29 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:5585:2: ( (otherlv_0= 'import' otherlv_1= 'technology' otherlv_2= 'from' ( (lv_importURI_3_0= RULE_STRING ) ) otherlv_4= 'as' ( (lv_name_5_0= RULE_ID ) ) ) )
-            // InternalMappingDsl.g:5586:2: (otherlv_0= 'import' otherlv_1= 'technology' otherlv_2= 'from' ( (lv_importURI_3_0= RULE_STRING ) ) otherlv_4= 'as' ( (lv_name_5_0= RULE_ID ) ) )
+            // InternalMappingDsl.g:5593:2: ( (otherlv_0= 'import' otherlv_1= 'technology' otherlv_2= 'from' ( (lv_importURI_3_0= RULE_STRING ) ) otherlv_4= 'as' ( (lv_name_5_0= RULE_ID ) ) ) )
+            // InternalMappingDsl.g:5594:2: (otherlv_0= 'import' otherlv_1= 'technology' otherlv_2= 'from' ( (lv_importURI_3_0= RULE_STRING ) ) otherlv_4= 'as' ( (lv_name_5_0= RULE_ID ) ) )
             {
-            // InternalMappingDsl.g:5586:2: (otherlv_0= 'import' otherlv_1= 'technology' otherlv_2= 'from' ( (lv_importURI_3_0= RULE_STRING ) ) otherlv_4= 'as' ( (lv_name_5_0= RULE_ID ) ) )
-            // InternalMappingDsl.g:5587:3: otherlv_0= 'import' otherlv_1= 'technology' otherlv_2= 'from' ( (lv_importURI_3_0= RULE_STRING ) ) otherlv_4= 'as' ( (lv_name_5_0= RULE_ID ) )
+            // InternalMappingDsl.g:5594:2: (otherlv_0= 'import' otherlv_1= 'technology' otherlv_2= 'from' ( (lv_importURI_3_0= RULE_STRING ) ) otherlv_4= 'as' ( (lv_name_5_0= RULE_ID ) ) )
+            // InternalMappingDsl.g:5595:3: otherlv_0= 'import' otherlv_1= 'technology' otherlv_2= 'from' ( (lv_importURI_3_0= RULE_STRING ) ) otherlv_4= 'as' ( (lv_name_5_0= RULE_ID ) )
             {
-            otherlv_0=(Token)match(input,35,FOLLOW_71); 
+            otherlv_0=(Token)match(input,36,FOLLOW_71); 
 
             			newLeafNode(otherlv_0, grammarAccess.getTechnologyImportAccess().getImportKeyword_0());
             		
-            otherlv_1=(Token)match(input,47,FOLLOW_55); 
+            otherlv_1=(Token)match(input,48,FOLLOW_55); 
 
             			newLeafNode(otherlv_1, grammarAccess.getTechnologyImportAccess().getTechnologyKeyword_1());
             		
-            otherlv_2=(Token)match(input,36,FOLLOW_46); 
+            otherlv_2=(Token)match(input,37,FOLLOW_46); 
 
             			newLeafNode(otherlv_2, grammarAccess.getTechnologyImportAccess().getFromKeyword_2());
             		
-            // InternalMappingDsl.g:5599:3: ( (lv_importURI_3_0= RULE_STRING ) )
-            // InternalMappingDsl.g:5600:4: (lv_importURI_3_0= RULE_STRING )
+            // InternalMappingDsl.g:5607:3: ( (lv_importURI_3_0= RULE_STRING ) )
+            // InternalMappingDsl.g:5608:4: (lv_importURI_3_0= RULE_STRING )
             {
-            // InternalMappingDsl.g:5600:4: (lv_importURI_3_0= RULE_STRING )
-            // InternalMappingDsl.g:5601:5: lv_importURI_3_0= RULE_STRING
+            // InternalMappingDsl.g:5608:4: (lv_importURI_3_0= RULE_STRING )
+            // InternalMappingDsl.g:5609:5: lv_importURI_3_0= RULE_STRING
             {
             lv_importURI_3_0=(Token)match(input,RULE_STRING,FOLLOW_56); 
 
@@ -14195,15 +14215,15 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_4=(Token)match(input,37,FOLLOW_7); 
+            otherlv_4=(Token)match(input,38,FOLLOW_7); 
 
             			newLeafNode(otherlv_4, grammarAccess.getTechnologyImportAccess().getAsKeyword_4());
             		
-            // InternalMappingDsl.g:5621:3: ( (lv_name_5_0= RULE_ID ) )
-            // InternalMappingDsl.g:5622:4: (lv_name_5_0= RULE_ID )
+            // InternalMappingDsl.g:5629:3: ( (lv_name_5_0= RULE_ID ) )
+            // InternalMappingDsl.g:5630:4: (lv_name_5_0= RULE_ID )
             {
-            // InternalMappingDsl.g:5622:4: (lv_name_5_0= RULE_ID )
-            // InternalMappingDsl.g:5623:5: lv_name_5_0= RULE_ID
+            // InternalMappingDsl.g:5630:4: (lv_name_5_0= RULE_ID )
+            // InternalMappingDsl.g:5631:5: lv_name_5_0= RULE_ID
             {
             lv_name_5_0=(Token)match(input,RULE_ID,FOLLOW_2); 
 
@@ -14248,7 +14268,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleProtocol"
-    // InternalMappingDsl.g:5643:1: entryRuleProtocol returns [EObject current=null] : iv_ruleProtocol= ruleProtocol EOF ;
+    // InternalMappingDsl.g:5651:1: entryRuleProtocol returns [EObject current=null] : iv_ruleProtocol= ruleProtocol EOF ;
     public final EObject entryRuleProtocol() throws RecognitionException {
         EObject current = null;
 
@@ -14256,8 +14276,8 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalMappingDsl.g:5643:49: (iv_ruleProtocol= ruleProtocol EOF )
-            // InternalMappingDsl.g:5644:2: iv_ruleProtocol= ruleProtocol EOF
+            // InternalMappingDsl.g:5651:49: (iv_ruleProtocol= ruleProtocol EOF )
+            // InternalMappingDsl.g:5652:2: iv_ruleProtocol= ruleProtocol EOF
             {
              newCompositeNode(grammarAccess.getProtocolRule()); 
             pushFollow(FOLLOW_1);
@@ -14284,7 +14304,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleProtocol"
-    // InternalMappingDsl.g:5650:1: ruleProtocol returns [EObject current=null] : ( ( (lv_communicationType_0_0= ruleCommunicationType ) ) ( (lv_name_1_0= RULE_ID ) ) otherlv_2= 'data' otherlv_3= 'formats' ( (lv_dataFormats_4_0= ruleDataFormat ) ) (otherlv_5= ',' ( (lv_dataFormats_6_0= ruleDataFormat ) ) )* ( ( (lv_default_7_0= 'default' ) ) otherlv_8= 'with' otherlv_9= 'format' ( (otherlv_10= RULE_STRING ) ) )? otherlv_11= ';' ) ;
+    // InternalMappingDsl.g:5658:1: ruleProtocol returns [EObject current=null] : ( ( (lv_communicationType_0_0= ruleCommunicationType ) ) ( (lv_name_1_0= RULE_ID ) ) otherlv_2= 'data' otherlv_3= 'formats' ( (lv_dataFormats_4_0= ruleDataFormat ) ) (otherlv_5= ',' ( (lv_dataFormats_6_0= ruleDataFormat ) ) )* ( ( (lv_default_7_0= 'default' ) ) otherlv_8= 'with' otherlv_9= 'format' ( (otherlv_10= RULE_STRING ) ) )? otherlv_11= ';' ) ;
     public final EObject ruleProtocol() throws RecognitionException {
         EObject current = null;
 
@@ -14308,17 +14328,17 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:5656:2: ( ( ( (lv_communicationType_0_0= ruleCommunicationType ) ) ( (lv_name_1_0= RULE_ID ) ) otherlv_2= 'data' otherlv_3= 'formats' ( (lv_dataFormats_4_0= ruleDataFormat ) ) (otherlv_5= ',' ( (lv_dataFormats_6_0= ruleDataFormat ) ) )* ( ( (lv_default_7_0= 'default' ) ) otherlv_8= 'with' otherlv_9= 'format' ( (otherlv_10= RULE_STRING ) ) )? otherlv_11= ';' ) )
-            // InternalMappingDsl.g:5657:2: ( ( (lv_communicationType_0_0= ruleCommunicationType ) ) ( (lv_name_1_0= RULE_ID ) ) otherlv_2= 'data' otherlv_3= 'formats' ( (lv_dataFormats_4_0= ruleDataFormat ) ) (otherlv_5= ',' ( (lv_dataFormats_6_0= ruleDataFormat ) ) )* ( ( (lv_default_7_0= 'default' ) ) otherlv_8= 'with' otherlv_9= 'format' ( (otherlv_10= RULE_STRING ) ) )? otherlv_11= ';' )
+            // InternalMappingDsl.g:5664:2: ( ( ( (lv_communicationType_0_0= ruleCommunicationType ) ) ( (lv_name_1_0= RULE_ID ) ) otherlv_2= 'data' otherlv_3= 'formats' ( (lv_dataFormats_4_0= ruleDataFormat ) ) (otherlv_5= ',' ( (lv_dataFormats_6_0= ruleDataFormat ) ) )* ( ( (lv_default_7_0= 'default' ) ) otherlv_8= 'with' otherlv_9= 'format' ( (otherlv_10= RULE_STRING ) ) )? otherlv_11= ';' ) )
+            // InternalMappingDsl.g:5665:2: ( ( (lv_communicationType_0_0= ruleCommunicationType ) ) ( (lv_name_1_0= RULE_ID ) ) otherlv_2= 'data' otherlv_3= 'formats' ( (lv_dataFormats_4_0= ruleDataFormat ) ) (otherlv_5= ',' ( (lv_dataFormats_6_0= ruleDataFormat ) ) )* ( ( (lv_default_7_0= 'default' ) ) otherlv_8= 'with' otherlv_9= 'format' ( (otherlv_10= RULE_STRING ) ) )? otherlv_11= ';' )
             {
-            // InternalMappingDsl.g:5657:2: ( ( (lv_communicationType_0_0= ruleCommunicationType ) ) ( (lv_name_1_0= RULE_ID ) ) otherlv_2= 'data' otherlv_3= 'formats' ( (lv_dataFormats_4_0= ruleDataFormat ) ) (otherlv_5= ',' ( (lv_dataFormats_6_0= ruleDataFormat ) ) )* ( ( (lv_default_7_0= 'default' ) ) otherlv_8= 'with' otherlv_9= 'format' ( (otherlv_10= RULE_STRING ) ) )? otherlv_11= ';' )
-            // InternalMappingDsl.g:5658:3: ( (lv_communicationType_0_0= ruleCommunicationType ) ) ( (lv_name_1_0= RULE_ID ) ) otherlv_2= 'data' otherlv_3= 'formats' ( (lv_dataFormats_4_0= ruleDataFormat ) ) (otherlv_5= ',' ( (lv_dataFormats_6_0= ruleDataFormat ) ) )* ( ( (lv_default_7_0= 'default' ) ) otherlv_8= 'with' otherlv_9= 'format' ( (otherlv_10= RULE_STRING ) ) )? otherlv_11= ';'
+            // InternalMappingDsl.g:5665:2: ( ( (lv_communicationType_0_0= ruleCommunicationType ) ) ( (lv_name_1_0= RULE_ID ) ) otherlv_2= 'data' otherlv_3= 'formats' ( (lv_dataFormats_4_0= ruleDataFormat ) ) (otherlv_5= ',' ( (lv_dataFormats_6_0= ruleDataFormat ) ) )* ( ( (lv_default_7_0= 'default' ) ) otherlv_8= 'with' otherlv_9= 'format' ( (otherlv_10= RULE_STRING ) ) )? otherlv_11= ';' )
+            // InternalMappingDsl.g:5666:3: ( (lv_communicationType_0_0= ruleCommunicationType ) ) ( (lv_name_1_0= RULE_ID ) ) otherlv_2= 'data' otherlv_3= 'formats' ( (lv_dataFormats_4_0= ruleDataFormat ) ) (otherlv_5= ',' ( (lv_dataFormats_6_0= ruleDataFormat ) ) )* ( ( (lv_default_7_0= 'default' ) ) otherlv_8= 'with' otherlv_9= 'format' ( (otherlv_10= RULE_STRING ) ) )? otherlv_11= ';'
             {
-            // InternalMappingDsl.g:5658:3: ( (lv_communicationType_0_0= ruleCommunicationType ) )
-            // InternalMappingDsl.g:5659:4: (lv_communicationType_0_0= ruleCommunicationType )
+            // InternalMappingDsl.g:5666:3: ( (lv_communicationType_0_0= ruleCommunicationType ) )
+            // InternalMappingDsl.g:5667:4: (lv_communicationType_0_0= ruleCommunicationType )
             {
-            // InternalMappingDsl.g:5659:4: (lv_communicationType_0_0= ruleCommunicationType )
-            // InternalMappingDsl.g:5660:5: lv_communicationType_0_0= ruleCommunicationType
+            // InternalMappingDsl.g:5667:4: (lv_communicationType_0_0= ruleCommunicationType )
+            // InternalMappingDsl.g:5668:5: lv_communicationType_0_0= ruleCommunicationType
             {
 
             					newCompositeNode(grammarAccess.getProtocolAccess().getCommunicationTypeCommunicationTypeEnumRuleCall_0_0());
@@ -14345,11 +14365,11 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalMappingDsl.g:5677:3: ( (lv_name_1_0= RULE_ID ) )
-            // InternalMappingDsl.g:5678:4: (lv_name_1_0= RULE_ID )
+            // InternalMappingDsl.g:5685:3: ( (lv_name_1_0= RULE_ID ) )
+            // InternalMappingDsl.g:5686:4: (lv_name_1_0= RULE_ID )
             {
-            // InternalMappingDsl.g:5678:4: (lv_name_1_0= RULE_ID )
-            // InternalMappingDsl.g:5679:5: lv_name_1_0= RULE_ID
+            // InternalMappingDsl.g:5686:4: (lv_name_1_0= RULE_ID )
+            // InternalMappingDsl.g:5687:5: lv_name_1_0= RULE_ID
             {
             lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_96); 
 
@@ -14371,19 +14391,19 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,69,FOLLOW_97); 
+            otherlv_2=(Token)match(input,70,FOLLOW_97); 
 
             			newLeafNode(otherlv_2, grammarAccess.getProtocolAccess().getDataKeyword_2());
             		
-            otherlv_3=(Token)match(input,70,FOLLOW_46); 
+            otherlv_3=(Token)match(input,71,FOLLOW_46); 
 
             			newLeafNode(otherlv_3, grammarAccess.getProtocolAccess().getFormatsKeyword_3());
             		
-            // InternalMappingDsl.g:5703:3: ( (lv_dataFormats_4_0= ruleDataFormat ) )
-            // InternalMappingDsl.g:5704:4: (lv_dataFormats_4_0= ruleDataFormat )
+            // InternalMappingDsl.g:5711:3: ( (lv_dataFormats_4_0= ruleDataFormat ) )
+            // InternalMappingDsl.g:5712:4: (lv_dataFormats_4_0= ruleDataFormat )
             {
-            // InternalMappingDsl.g:5704:4: (lv_dataFormats_4_0= ruleDataFormat )
-            // InternalMappingDsl.g:5705:5: lv_dataFormats_4_0= ruleDataFormat
+            // InternalMappingDsl.g:5712:4: (lv_dataFormats_4_0= ruleDataFormat )
+            // InternalMappingDsl.g:5713:5: lv_dataFormats_4_0= ruleDataFormat
             {
 
             					newCompositeNode(grammarAccess.getProtocolAccess().getDataFormatsDataFormatParserRuleCall_4_0());
@@ -14410,30 +14430,30 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalMappingDsl.g:5722:3: (otherlv_5= ',' ( (lv_dataFormats_6_0= ruleDataFormat ) ) )*
+            // InternalMappingDsl.g:5730:3: (otherlv_5= ',' ( (lv_dataFormats_6_0= ruleDataFormat ) ) )*
             loop141:
             do {
                 int alt141=2;
                 int LA141_0 = input.LA(1);
 
-                if ( (LA141_0==34) ) {
+                if ( (LA141_0==35) ) {
                     alt141=1;
                 }
 
 
                 switch (alt141) {
             	case 1 :
-            	    // InternalMappingDsl.g:5723:4: otherlv_5= ',' ( (lv_dataFormats_6_0= ruleDataFormat ) )
+            	    // InternalMappingDsl.g:5731:4: otherlv_5= ',' ( (lv_dataFormats_6_0= ruleDataFormat ) )
             	    {
-            	    otherlv_5=(Token)match(input,34,FOLLOW_46); 
+            	    otherlv_5=(Token)match(input,35,FOLLOW_46); 
 
             	    				newLeafNode(otherlv_5, grammarAccess.getProtocolAccess().getCommaKeyword_5_0());
             	    			
-            	    // InternalMappingDsl.g:5727:4: ( (lv_dataFormats_6_0= ruleDataFormat ) )
-            	    // InternalMappingDsl.g:5728:5: (lv_dataFormats_6_0= ruleDataFormat )
+            	    // InternalMappingDsl.g:5735:4: ( (lv_dataFormats_6_0= ruleDataFormat ) )
+            	    // InternalMappingDsl.g:5736:5: (lv_dataFormats_6_0= ruleDataFormat )
             	    {
-            	    // InternalMappingDsl.g:5728:5: (lv_dataFormats_6_0= ruleDataFormat )
-            	    // InternalMappingDsl.g:5729:6: lv_dataFormats_6_0= ruleDataFormat
+            	    // InternalMappingDsl.g:5736:5: (lv_dataFormats_6_0= ruleDataFormat )
+            	    // InternalMappingDsl.g:5737:6: lv_dataFormats_6_0= ruleDataFormat
             	    {
 
             	    						newCompositeNode(grammarAccess.getProtocolAccess().getDataFormatsDataFormatParserRuleCall_5_1_0());
@@ -14469,24 +14489,24 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // InternalMappingDsl.g:5747:3: ( ( (lv_default_7_0= 'default' ) ) otherlv_8= 'with' otherlv_9= 'format' ( (otherlv_10= RULE_STRING ) ) )?
+            // InternalMappingDsl.g:5755:3: ( ( (lv_default_7_0= 'default' ) ) otherlv_8= 'with' otherlv_9= 'format' ( (otherlv_10= RULE_STRING ) ) )?
             int alt142=2;
             int LA142_0 = input.LA(1);
 
-            if ( (LA142_0==71) ) {
+            if ( (LA142_0==72) ) {
                 alt142=1;
             }
             switch (alt142) {
                 case 1 :
-                    // InternalMappingDsl.g:5748:4: ( (lv_default_7_0= 'default' ) ) otherlv_8= 'with' otherlv_9= 'format' ( (otherlv_10= RULE_STRING ) )
+                    // InternalMappingDsl.g:5756:4: ( (lv_default_7_0= 'default' ) ) otherlv_8= 'with' otherlv_9= 'format' ( (otherlv_10= RULE_STRING ) )
                     {
-                    // InternalMappingDsl.g:5748:4: ( (lv_default_7_0= 'default' ) )
-                    // InternalMappingDsl.g:5749:5: (lv_default_7_0= 'default' )
+                    // InternalMappingDsl.g:5756:4: ( (lv_default_7_0= 'default' ) )
+                    // InternalMappingDsl.g:5757:5: (lv_default_7_0= 'default' )
                     {
-                    // InternalMappingDsl.g:5749:5: (lv_default_7_0= 'default' )
-                    // InternalMappingDsl.g:5750:6: lv_default_7_0= 'default'
+                    // InternalMappingDsl.g:5757:5: (lv_default_7_0= 'default' )
+                    // InternalMappingDsl.g:5758:6: lv_default_7_0= 'default'
                     {
-                    lv_default_7_0=(Token)match(input,71,FOLLOW_99); 
+                    lv_default_7_0=(Token)match(input,72,FOLLOW_99); 
 
                     						newLeafNode(lv_default_7_0, grammarAccess.getProtocolAccess().getDefaultDefaultKeyword_6_0_0());
                     					
@@ -14502,19 +14522,19 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_8=(Token)match(input,72,FOLLOW_100); 
+                    otherlv_8=(Token)match(input,73,FOLLOW_100); 
 
                     				newLeafNode(otherlv_8, grammarAccess.getProtocolAccess().getWithKeyword_6_1());
                     			
-                    otherlv_9=(Token)match(input,73,FOLLOW_46); 
+                    otherlv_9=(Token)match(input,74,FOLLOW_46); 
 
                     				newLeafNode(otherlv_9, grammarAccess.getProtocolAccess().getFormatKeyword_6_2());
                     			
-                    // InternalMappingDsl.g:5770:4: ( (otherlv_10= RULE_STRING ) )
-                    // InternalMappingDsl.g:5771:5: (otherlv_10= RULE_STRING )
+                    // InternalMappingDsl.g:5778:4: ( (otherlv_10= RULE_STRING ) )
+                    // InternalMappingDsl.g:5779:5: (otherlv_10= RULE_STRING )
                     {
-                    // InternalMappingDsl.g:5771:5: (otherlv_10= RULE_STRING )
-                    // InternalMappingDsl.g:5772:6: otherlv_10= RULE_STRING
+                    // InternalMappingDsl.g:5779:5: (otherlv_10= RULE_STRING )
+                    // InternalMappingDsl.g:5780:6: otherlv_10= RULE_STRING
                     {
 
                     						if (current==null) {
@@ -14537,7 +14557,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_11=(Token)match(input,26,FOLLOW_2); 
+            otherlv_11=(Token)match(input,27,FOLLOW_2); 
 
             			newLeafNode(otherlv_11, grammarAccess.getProtocolAccess().getSemicolonKeyword_7());
             		
@@ -14564,7 +14584,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleDataFormat"
-    // InternalMappingDsl.g:5792:1: entryRuleDataFormat returns [EObject current=null] : iv_ruleDataFormat= ruleDataFormat EOF ;
+    // InternalMappingDsl.g:5800:1: entryRuleDataFormat returns [EObject current=null] : iv_ruleDataFormat= ruleDataFormat EOF ;
     public final EObject entryRuleDataFormat() throws RecognitionException {
         EObject current = null;
 
@@ -14572,8 +14592,8 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalMappingDsl.g:5792:51: (iv_ruleDataFormat= ruleDataFormat EOF )
-            // InternalMappingDsl.g:5793:2: iv_ruleDataFormat= ruleDataFormat EOF
+            // InternalMappingDsl.g:5800:51: (iv_ruleDataFormat= ruleDataFormat EOF )
+            // InternalMappingDsl.g:5801:2: iv_ruleDataFormat= ruleDataFormat EOF
             {
              newCompositeNode(grammarAccess.getDataFormatRule()); 
             pushFollow(FOLLOW_1);
@@ -14600,7 +14620,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDataFormat"
-    // InternalMappingDsl.g:5799:1: ruleDataFormat returns [EObject current=null] : ( (lv_formatName_0_0= RULE_STRING ) ) ;
+    // InternalMappingDsl.g:5807:1: ruleDataFormat returns [EObject current=null] : ( (lv_formatName_0_0= RULE_STRING ) ) ;
     public final EObject ruleDataFormat() throws RecognitionException {
         EObject current = null;
 
@@ -14610,14 +14630,14 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:5805:2: ( ( (lv_formatName_0_0= RULE_STRING ) ) )
-            // InternalMappingDsl.g:5806:2: ( (lv_formatName_0_0= RULE_STRING ) )
+            // InternalMappingDsl.g:5813:2: ( ( (lv_formatName_0_0= RULE_STRING ) ) )
+            // InternalMappingDsl.g:5814:2: ( (lv_formatName_0_0= RULE_STRING ) )
             {
-            // InternalMappingDsl.g:5806:2: ( (lv_formatName_0_0= RULE_STRING ) )
-            // InternalMappingDsl.g:5807:3: (lv_formatName_0_0= RULE_STRING )
+            // InternalMappingDsl.g:5814:2: ( (lv_formatName_0_0= RULE_STRING ) )
+            // InternalMappingDsl.g:5815:3: (lv_formatName_0_0= RULE_STRING )
             {
-            // InternalMappingDsl.g:5807:3: (lv_formatName_0_0= RULE_STRING )
-            // InternalMappingDsl.g:5808:4: lv_formatName_0_0= RULE_STRING
+            // InternalMappingDsl.g:5815:3: (lv_formatName_0_0= RULE_STRING )
+            // InternalMappingDsl.g:5816:4: lv_formatName_0_0= RULE_STRING
             {
             lv_formatName_0_0=(Token)match(input,RULE_STRING,FOLLOW_2); 
 
@@ -14659,7 +14679,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleTechnologySpecificPrimitiveType"
-    // InternalMappingDsl.g:5827:1: entryRuleTechnologySpecificPrimitiveType returns [EObject current=null] : iv_ruleTechnologySpecificPrimitiveType= ruleTechnologySpecificPrimitiveType EOF ;
+    // InternalMappingDsl.g:5835:1: entryRuleTechnologySpecificPrimitiveType returns [EObject current=null] : iv_ruleTechnologySpecificPrimitiveType= ruleTechnologySpecificPrimitiveType EOF ;
     public final EObject entryRuleTechnologySpecificPrimitiveType() throws RecognitionException {
         EObject current = null;
 
@@ -14667,8 +14687,8 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalMappingDsl.g:5827:72: (iv_ruleTechnologySpecificPrimitiveType= ruleTechnologySpecificPrimitiveType EOF )
-            // InternalMappingDsl.g:5828:2: iv_ruleTechnologySpecificPrimitiveType= ruleTechnologySpecificPrimitiveType EOF
+            // InternalMappingDsl.g:5835:72: (iv_ruleTechnologySpecificPrimitiveType= ruleTechnologySpecificPrimitiveType EOF )
+            // InternalMappingDsl.g:5836:2: iv_ruleTechnologySpecificPrimitiveType= ruleTechnologySpecificPrimitiveType EOF
             {
              newCompositeNode(grammarAccess.getTechnologySpecificPrimitiveTypeRule()); 
             pushFollow(FOLLOW_1);
@@ -14695,7 +14715,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTechnologySpecificPrimitiveType"
-    // InternalMappingDsl.g:5834:1: ruleTechnologySpecificPrimitiveType returns [EObject current=null] : (otherlv_0= 'primitive' otherlv_1= 'type' ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= 'based' otherlv_4= 'on' ( (lv_basicBuiltinPrimitiveTypes_5_0= rulePrimitiveType ) ) (otherlv_6= ',' ( (lv_basicBuiltinPrimitiveTypes_7_0= rulePrimitiveType ) ) )* ( (lv_default_8_0= 'default' ) )? )? otherlv_9= ';' ) ;
+    // InternalMappingDsl.g:5842:1: ruleTechnologySpecificPrimitiveType returns [EObject current=null] : (otherlv_0= 'primitive' otherlv_1= 'type' ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= 'based' otherlv_4= 'on' ( (lv_basicBuiltinPrimitiveTypes_5_0= rulePrimitiveType ) ) (otherlv_6= ',' ( (lv_basicBuiltinPrimitiveTypes_7_0= rulePrimitiveType ) ) )* ( (lv_default_8_0= 'default' ) )? )? otherlv_9= ';' ) ;
     public final EObject ruleTechnologySpecificPrimitiveType() throws RecognitionException {
         EObject current = null;
 
@@ -14716,25 +14736,25 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:5840:2: ( (otherlv_0= 'primitive' otherlv_1= 'type' ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= 'based' otherlv_4= 'on' ( (lv_basicBuiltinPrimitiveTypes_5_0= rulePrimitiveType ) ) (otherlv_6= ',' ( (lv_basicBuiltinPrimitiveTypes_7_0= rulePrimitiveType ) ) )* ( (lv_default_8_0= 'default' ) )? )? otherlv_9= ';' ) )
-            // InternalMappingDsl.g:5841:2: (otherlv_0= 'primitive' otherlv_1= 'type' ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= 'based' otherlv_4= 'on' ( (lv_basicBuiltinPrimitiveTypes_5_0= rulePrimitiveType ) ) (otherlv_6= ',' ( (lv_basicBuiltinPrimitiveTypes_7_0= rulePrimitiveType ) ) )* ( (lv_default_8_0= 'default' ) )? )? otherlv_9= ';' )
+            // InternalMappingDsl.g:5848:2: ( (otherlv_0= 'primitive' otherlv_1= 'type' ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= 'based' otherlv_4= 'on' ( (lv_basicBuiltinPrimitiveTypes_5_0= rulePrimitiveType ) ) (otherlv_6= ',' ( (lv_basicBuiltinPrimitiveTypes_7_0= rulePrimitiveType ) ) )* ( (lv_default_8_0= 'default' ) )? )? otherlv_9= ';' ) )
+            // InternalMappingDsl.g:5849:2: (otherlv_0= 'primitive' otherlv_1= 'type' ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= 'based' otherlv_4= 'on' ( (lv_basicBuiltinPrimitiveTypes_5_0= rulePrimitiveType ) ) (otherlv_6= ',' ( (lv_basicBuiltinPrimitiveTypes_7_0= rulePrimitiveType ) ) )* ( (lv_default_8_0= 'default' ) )? )? otherlv_9= ';' )
             {
-            // InternalMappingDsl.g:5841:2: (otherlv_0= 'primitive' otherlv_1= 'type' ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= 'based' otherlv_4= 'on' ( (lv_basicBuiltinPrimitiveTypes_5_0= rulePrimitiveType ) ) (otherlv_6= ',' ( (lv_basicBuiltinPrimitiveTypes_7_0= rulePrimitiveType ) ) )* ( (lv_default_8_0= 'default' ) )? )? otherlv_9= ';' )
-            // InternalMappingDsl.g:5842:3: otherlv_0= 'primitive' otherlv_1= 'type' ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= 'based' otherlv_4= 'on' ( (lv_basicBuiltinPrimitiveTypes_5_0= rulePrimitiveType ) ) (otherlv_6= ',' ( (lv_basicBuiltinPrimitiveTypes_7_0= rulePrimitiveType ) ) )* ( (lv_default_8_0= 'default' ) )? )? otherlv_9= ';'
+            // InternalMappingDsl.g:5849:2: (otherlv_0= 'primitive' otherlv_1= 'type' ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= 'based' otherlv_4= 'on' ( (lv_basicBuiltinPrimitiveTypes_5_0= rulePrimitiveType ) ) (otherlv_6= ',' ( (lv_basicBuiltinPrimitiveTypes_7_0= rulePrimitiveType ) ) )* ( (lv_default_8_0= 'default' ) )? )? otherlv_9= ';' )
+            // InternalMappingDsl.g:5850:3: otherlv_0= 'primitive' otherlv_1= 'type' ( (lv_name_2_0= RULE_ID ) ) (otherlv_3= 'based' otherlv_4= 'on' ( (lv_basicBuiltinPrimitiveTypes_5_0= rulePrimitiveType ) ) (otherlv_6= ',' ( (lv_basicBuiltinPrimitiveTypes_7_0= rulePrimitiveType ) ) )* ( (lv_default_8_0= 'default' ) )? )? otherlv_9= ';'
             {
-            otherlv_0=(Token)match(input,24,FOLLOW_43); 
+            otherlv_0=(Token)match(input,25,FOLLOW_43); 
 
             			newLeafNode(otherlv_0, grammarAccess.getTechnologySpecificPrimitiveTypeAccess().getPrimitiveKeyword_0());
             		
-            otherlv_1=(Token)match(input,13,FOLLOW_7); 
+            otherlv_1=(Token)match(input,14,FOLLOW_7); 
 
             			newLeafNode(otherlv_1, grammarAccess.getTechnologySpecificPrimitiveTypeAccess().getTypeKeyword_1());
             		
-            // InternalMappingDsl.g:5850:3: ( (lv_name_2_0= RULE_ID ) )
-            // InternalMappingDsl.g:5851:4: (lv_name_2_0= RULE_ID )
+            // InternalMappingDsl.g:5858:3: ( (lv_name_2_0= RULE_ID ) )
+            // InternalMappingDsl.g:5859:4: (lv_name_2_0= RULE_ID )
             {
-            // InternalMappingDsl.g:5851:4: (lv_name_2_0= RULE_ID )
-            // InternalMappingDsl.g:5852:5: lv_name_2_0= RULE_ID
+            // InternalMappingDsl.g:5859:4: (lv_name_2_0= RULE_ID )
+            // InternalMappingDsl.g:5860:5: lv_name_2_0= RULE_ID
             {
             lv_name_2_0=(Token)match(input,RULE_ID,FOLLOW_101); 
 
@@ -14756,30 +14776,30 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalMappingDsl.g:5868:3: (otherlv_3= 'based' otherlv_4= 'on' ( (lv_basicBuiltinPrimitiveTypes_5_0= rulePrimitiveType ) ) (otherlv_6= ',' ( (lv_basicBuiltinPrimitiveTypes_7_0= rulePrimitiveType ) ) )* ( (lv_default_8_0= 'default' ) )? )?
+            // InternalMappingDsl.g:5876:3: (otherlv_3= 'based' otherlv_4= 'on' ( (lv_basicBuiltinPrimitiveTypes_5_0= rulePrimitiveType ) ) (otherlv_6= ',' ( (lv_basicBuiltinPrimitiveTypes_7_0= rulePrimitiveType ) ) )* ( (lv_default_8_0= 'default' ) )? )?
             int alt145=2;
             int LA145_0 = input.LA(1);
 
-            if ( (LA145_0==79) ) {
+            if ( (LA145_0==80) ) {
                 alt145=1;
             }
             switch (alt145) {
                 case 1 :
-                    // InternalMappingDsl.g:5869:4: otherlv_3= 'based' otherlv_4= 'on' ( (lv_basicBuiltinPrimitiveTypes_5_0= rulePrimitiveType ) ) (otherlv_6= ',' ( (lv_basicBuiltinPrimitiveTypes_7_0= rulePrimitiveType ) ) )* ( (lv_default_8_0= 'default' ) )?
+                    // InternalMappingDsl.g:5877:4: otherlv_3= 'based' otherlv_4= 'on' ( (lv_basicBuiltinPrimitiveTypes_5_0= rulePrimitiveType ) ) (otherlv_6= ',' ( (lv_basicBuiltinPrimitiveTypes_7_0= rulePrimitiveType ) ) )* ( (lv_default_8_0= 'default' ) )?
                     {
-                    otherlv_3=(Token)match(input,79,FOLLOW_102); 
+                    otherlv_3=(Token)match(input,80,FOLLOW_102); 
 
                     				newLeafNode(otherlv_3, grammarAccess.getTechnologySpecificPrimitiveTypeAccess().getBasedKeyword_3_0());
                     			
-                    otherlv_4=(Token)match(input,80,FOLLOW_103); 
+                    otherlv_4=(Token)match(input,81,FOLLOW_103); 
 
                     				newLeafNode(otherlv_4, grammarAccess.getTechnologySpecificPrimitiveTypeAccess().getOnKeyword_3_1());
                     			
-                    // InternalMappingDsl.g:5877:4: ( (lv_basicBuiltinPrimitiveTypes_5_0= rulePrimitiveType ) )
-                    // InternalMappingDsl.g:5878:5: (lv_basicBuiltinPrimitiveTypes_5_0= rulePrimitiveType )
+                    // InternalMappingDsl.g:5885:4: ( (lv_basicBuiltinPrimitiveTypes_5_0= rulePrimitiveType ) )
+                    // InternalMappingDsl.g:5886:5: (lv_basicBuiltinPrimitiveTypes_5_0= rulePrimitiveType )
                     {
-                    // InternalMappingDsl.g:5878:5: (lv_basicBuiltinPrimitiveTypes_5_0= rulePrimitiveType )
-                    // InternalMappingDsl.g:5879:6: lv_basicBuiltinPrimitiveTypes_5_0= rulePrimitiveType
+                    // InternalMappingDsl.g:5886:5: (lv_basicBuiltinPrimitiveTypes_5_0= rulePrimitiveType )
+                    // InternalMappingDsl.g:5887:6: lv_basicBuiltinPrimitiveTypes_5_0= rulePrimitiveType
                     {
 
                     						newCompositeNode(grammarAccess.getTechnologySpecificPrimitiveTypeAccess().getBasicBuiltinPrimitiveTypesPrimitiveTypeParserRuleCall_3_2_0());
@@ -14806,30 +14826,30 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalMappingDsl.g:5896:4: (otherlv_6= ',' ( (lv_basicBuiltinPrimitiveTypes_7_0= rulePrimitiveType ) ) )*
+                    // InternalMappingDsl.g:5904:4: (otherlv_6= ',' ( (lv_basicBuiltinPrimitiveTypes_7_0= rulePrimitiveType ) ) )*
                     loop143:
                     do {
                         int alt143=2;
                         int LA143_0 = input.LA(1);
 
-                        if ( (LA143_0==34) ) {
+                        if ( (LA143_0==35) ) {
                             alt143=1;
                         }
 
 
                         switch (alt143) {
                     	case 1 :
-                    	    // InternalMappingDsl.g:5897:5: otherlv_6= ',' ( (lv_basicBuiltinPrimitiveTypes_7_0= rulePrimitiveType ) )
+                    	    // InternalMappingDsl.g:5905:5: otherlv_6= ',' ( (lv_basicBuiltinPrimitiveTypes_7_0= rulePrimitiveType ) )
                     	    {
-                    	    otherlv_6=(Token)match(input,34,FOLLOW_103); 
+                    	    otherlv_6=(Token)match(input,35,FOLLOW_103); 
 
                     	    					newLeafNode(otherlv_6, grammarAccess.getTechnologySpecificPrimitiveTypeAccess().getCommaKeyword_3_3_0());
                     	    				
-                    	    // InternalMappingDsl.g:5901:5: ( (lv_basicBuiltinPrimitiveTypes_7_0= rulePrimitiveType ) )
-                    	    // InternalMappingDsl.g:5902:6: (lv_basicBuiltinPrimitiveTypes_7_0= rulePrimitiveType )
+                    	    // InternalMappingDsl.g:5909:5: ( (lv_basicBuiltinPrimitiveTypes_7_0= rulePrimitiveType ) )
+                    	    // InternalMappingDsl.g:5910:6: (lv_basicBuiltinPrimitiveTypes_7_0= rulePrimitiveType )
                     	    {
-                    	    // InternalMappingDsl.g:5902:6: (lv_basicBuiltinPrimitiveTypes_7_0= rulePrimitiveType )
-                    	    // InternalMappingDsl.g:5903:7: lv_basicBuiltinPrimitiveTypes_7_0= rulePrimitiveType
+                    	    // InternalMappingDsl.g:5910:6: (lv_basicBuiltinPrimitiveTypes_7_0= rulePrimitiveType )
+                    	    // InternalMappingDsl.g:5911:7: lv_basicBuiltinPrimitiveTypes_7_0= rulePrimitiveType
                     	    {
 
                     	    							newCompositeNode(grammarAccess.getTechnologySpecificPrimitiveTypeAccess().getBasicBuiltinPrimitiveTypesPrimitiveTypeParserRuleCall_3_3_1_0());
@@ -14865,21 +14885,21 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         }
                     } while (true);
 
-                    // InternalMappingDsl.g:5921:4: ( (lv_default_8_0= 'default' ) )?
+                    // InternalMappingDsl.g:5929:4: ( (lv_default_8_0= 'default' ) )?
                     int alt144=2;
                     int LA144_0 = input.LA(1);
 
-                    if ( (LA144_0==71) ) {
+                    if ( (LA144_0==72) ) {
                         alt144=1;
                     }
                     switch (alt144) {
                         case 1 :
-                            // InternalMappingDsl.g:5922:5: (lv_default_8_0= 'default' )
+                            // InternalMappingDsl.g:5930:5: (lv_default_8_0= 'default' )
                             {
-                            // InternalMappingDsl.g:5922:5: (lv_default_8_0= 'default' )
-                            // InternalMappingDsl.g:5923:6: lv_default_8_0= 'default'
+                            // InternalMappingDsl.g:5930:5: (lv_default_8_0= 'default' )
+                            // InternalMappingDsl.g:5931:6: lv_default_8_0= 'default'
                             {
-                            lv_default_8_0=(Token)match(input,71,FOLLOW_53); 
+                            lv_default_8_0=(Token)match(input,72,FOLLOW_53); 
 
                             						newLeafNode(lv_default_8_0, grammarAccess.getTechnologySpecificPrimitiveTypeAccess().getDefaultDefaultKeyword_3_4_0());
                             					
@@ -14904,7 +14924,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_9=(Token)match(input,26,FOLLOW_2); 
+            otherlv_9=(Token)match(input,27,FOLLOW_2); 
 
             			newLeafNode(otherlv_9, grammarAccess.getTechnologySpecificPrimitiveTypeAccess().getSemicolonKeyword_4());
             		
@@ -14931,7 +14951,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleTechnologySpecificListType"
-    // InternalMappingDsl.g:5944:1: entryRuleTechnologySpecificListType returns [EObject current=null] : iv_ruleTechnologySpecificListType= ruleTechnologySpecificListType EOF ;
+    // InternalMappingDsl.g:5952:1: entryRuleTechnologySpecificListType returns [EObject current=null] : iv_ruleTechnologySpecificListType= ruleTechnologySpecificListType EOF ;
     public final EObject entryRuleTechnologySpecificListType() throws RecognitionException {
         EObject current = null;
 
@@ -14939,8 +14959,8 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalMappingDsl.g:5944:67: (iv_ruleTechnologySpecificListType= ruleTechnologySpecificListType EOF )
-            // InternalMappingDsl.g:5945:2: iv_ruleTechnologySpecificListType= ruleTechnologySpecificListType EOF
+            // InternalMappingDsl.g:5952:67: (iv_ruleTechnologySpecificListType= ruleTechnologySpecificListType EOF )
+            // InternalMappingDsl.g:5953:2: iv_ruleTechnologySpecificListType= ruleTechnologySpecificListType EOF
             {
              newCompositeNode(grammarAccess.getTechnologySpecificListTypeRule()); 
             pushFollow(FOLLOW_1);
@@ -14967,7 +14987,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTechnologySpecificListType"
-    // InternalMappingDsl.g:5951:1: ruleTechnologySpecificListType returns [EObject current=null] : (otherlv_0= 'list' otherlv_1= 'type' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ';' ) ;
+    // InternalMappingDsl.g:5959:1: ruleTechnologySpecificListType returns [EObject current=null] : (otherlv_0= 'list' otherlv_1= 'type' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ';' ) ;
     public final EObject ruleTechnologySpecificListType() throws RecognitionException {
         EObject current = null;
 
@@ -14980,25 +15000,25 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:5957:2: ( (otherlv_0= 'list' otherlv_1= 'type' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ';' ) )
-            // InternalMappingDsl.g:5958:2: (otherlv_0= 'list' otherlv_1= 'type' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ';' )
+            // InternalMappingDsl.g:5965:2: ( (otherlv_0= 'list' otherlv_1= 'type' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ';' ) )
+            // InternalMappingDsl.g:5966:2: (otherlv_0= 'list' otherlv_1= 'type' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ';' )
             {
-            // InternalMappingDsl.g:5958:2: (otherlv_0= 'list' otherlv_1= 'type' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ';' )
-            // InternalMappingDsl.g:5959:3: otherlv_0= 'list' otherlv_1= 'type' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ';'
+            // InternalMappingDsl.g:5966:2: (otherlv_0= 'list' otherlv_1= 'type' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ';' )
+            // InternalMappingDsl.g:5967:3: otherlv_0= 'list' otherlv_1= 'type' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ';'
             {
-            otherlv_0=(Token)match(input,81,FOLLOW_43); 
+            otherlv_0=(Token)match(input,82,FOLLOW_43); 
 
             			newLeafNode(otherlv_0, grammarAccess.getTechnologySpecificListTypeAccess().getListKeyword_0());
             		
-            otherlv_1=(Token)match(input,13,FOLLOW_7); 
+            otherlv_1=(Token)match(input,14,FOLLOW_7); 
 
             			newLeafNode(otherlv_1, grammarAccess.getTechnologySpecificListTypeAccess().getTypeKeyword_1());
             		
-            // InternalMappingDsl.g:5967:3: ( (lv_name_2_0= RULE_ID ) )
-            // InternalMappingDsl.g:5968:4: (lv_name_2_0= RULE_ID )
+            // InternalMappingDsl.g:5975:3: ( (lv_name_2_0= RULE_ID ) )
+            // InternalMappingDsl.g:5976:4: (lv_name_2_0= RULE_ID )
             {
-            // InternalMappingDsl.g:5968:4: (lv_name_2_0= RULE_ID )
-            // InternalMappingDsl.g:5969:5: lv_name_2_0= RULE_ID
+            // InternalMappingDsl.g:5976:4: (lv_name_2_0= RULE_ID )
+            // InternalMappingDsl.g:5977:5: lv_name_2_0= RULE_ID
             {
             lv_name_2_0=(Token)match(input,RULE_ID,FOLLOW_53); 
 
@@ -15020,7 +15040,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_3=(Token)match(input,26,FOLLOW_2); 
+            otherlv_3=(Token)match(input,27,FOLLOW_2); 
 
             			newLeafNode(otherlv_3, grammarAccess.getTechnologySpecificListTypeAccess().getSemicolonKeyword_3());
             		
@@ -15047,7 +15067,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleTechnologySpecificDataStructure"
-    // InternalMappingDsl.g:5993:1: entryRuleTechnologySpecificDataStructure returns [EObject current=null] : iv_ruleTechnologySpecificDataStructure= ruleTechnologySpecificDataStructure EOF ;
+    // InternalMappingDsl.g:6001:1: entryRuleTechnologySpecificDataStructure returns [EObject current=null] : iv_ruleTechnologySpecificDataStructure= ruleTechnologySpecificDataStructure EOF ;
     public final EObject entryRuleTechnologySpecificDataStructure() throws RecognitionException {
         EObject current = null;
 
@@ -15055,8 +15075,8 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalMappingDsl.g:5993:72: (iv_ruleTechnologySpecificDataStructure= ruleTechnologySpecificDataStructure EOF )
-            // InternalMappingDsl.g:5994:2: iv_ruleTechnologySpecificDataStructure= ruleTechnologySpecificDataStructure EOF
+            // InternalMappingDsl.g:6001:72: (iv_ruleTechnologySpecificDataStructure= ruleTechnologySpecificDataStructure EOF )
+            // InternalMappingDsl.g:6002:2: iv_ruleTechnologySpecificDataStructure= ruleTechnologySpecificDataStructure EOF
             {
              newCompositeNode(grammarAccess.getTechnologySpecificDataStructureRule()); 
             pushFollow(FOLLOW_1);
@@ -15083,7 +15103,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTechnologySpecificDataStructure"
-    // InternalMappingDsl.g:6000:1: ruleTechnologySpecificDataStructure returns [EObject current=null] : (otherlv_0= 'structure' otherlv_1= 'type' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ';' ) ;
+    // InternalMappingDsl.g:6008:1: ruleTechnologySpecificDataStructure returns [EObject current=null] : (otherlv_0= 'structure' otherlv_1= 'type' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ';' ) ;
     public final EObject ruleTechnologySpecificDataStructure() throws RecognitionException {
         EObject current = null;
 
@@ -15096,25 +15116,25 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:6006:2: ( (otherlv_0= 'structure' otherlv_1= 'type' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ';' ) )
-            // InternalMappingDsl.g:6007:2: (otherlv_0= 'structure' otherlv_1= 'type' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ';' )
+            // InternalMappingDsl.g:6014:2: ( (otherlv_0= 'structure' otherlv_1= 'type' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ';' ) )
+            // InternalMappingDsl.g:6015:2: (otherlv_0= 'structure' otherlv_1= 'type' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ';' )
             {
-            // InternalMappingDsl.g:6007:2: (otherlv_0= 'structure' otherlv_1= 'type' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ';' )
-            // InternalMappingDsl.g:6008:3: otherlv_0= 'structure' otherlv_1= 'type' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ';'
+            // InternalMappingDsl.g:6015:2: (otherlv_0= 'structure' otherlv_1= 'type' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ';' )
+            // InternalMappingDsl.g:6016:3: otherlv_0= 'structure' otherlv_1= 'type' ( (lv_name_2_0= RULE_ID ) ) otherlv_3= ';'
             {
-            otherlv_0=(Token)match(input,82,FOLLOW_43); 
+            otherlv_0=(Token)match(input,83,FOLLOW_43); 
 
             			newLeafNode(otherlv_0, grammarAccess.getTechnologySpecificDataStructureAccess().getStructureKeyword_0());
             		
-            otherlv_1=(Token)match(input,13,FOLLOW_7); 
+            otherlv_1=(Token)match(input,14,FOLLOW_7); 
 
             			newLeafNode(otherlv_1, grammarAccess.getTechnologySpecificDataStructureAccess().getTypeKeyword_1());
             		
-            // InternalMappingDsl.g:6016:3: ( (lv_name_2_0= RULE_ID ) )
-            // InternalMappingDsl.g:6017:4: (lv_name_2_0= RULE_ID )
+            // InternalMappingDsl.g:6024:3: ( (lv_name_2_0= RULE_ID ) )
+            // InternalMappingDsl.g:6025:4: (lv_name_2_0= RULE_ID )
             {
-            // InternalMappingDsl.g:6017:4: (lv_name_2_0= RULE_ID )
-            // InternalMappingDsl.g:6018:5: lv_name_2_0= RULE_ID
+            // InternalMappingDsl.g:6025:4: (lv_name_2_0= RULE_ID )
+            // InternalMappingDsl.g:6026:5: lv_name_2_0= RULE_ID
             {
             lv_name_2_0=(Token)match(input,RULE_ID,FOLLOW_53); 
 
@@ -15136,7 +15156,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_3=(Token)match(input,26,FOLLOW_2); 
+            otherlv_3=(Token)match(input,27,FOLLOW_2); 
 
             			newLeafNode(otherlv_3, grammarAccess.getTechnologySpecificDataStructureAccess().getSemicolonKeyword_3());
             		
@@ -15163,7 +15183,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRulePossiblyImportedTechnologySpecificType"
-    // InternalMappingDsl.g:6042:1: entryRulePossiblyImportedTechnologySpecificType returns [EObject current=null] : iv_rulePossiblyImportedTechnologySpecificType= rulePossiblyImportedTechnologySpecificType EOF ;
+    // InternalMappingDsl.g:6050:1: entryRulePossiblyImportedTechnologySpecificType returns [EObject current=null] : iv_rulePossiblyImportedTechnologySpecificType= rulePossiblyImportedTechnologySpecificType EOF ;
     public final EObject entryRulePossiblyImportedTechnologySpecificType() throws RecognitionException {
         EObject current = null;
 
@@ -15171,8 +15191,8 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalMappingDsl.g:6042:79: (iv_rulePossiblyImportedTechnologySpecificType= rulePossiblyImportedTechnologySpecificType EOF )
-            // InternalMappingDsl.g:6043:2: iv_rulePossiblyImportedTechnologySpecificType= rulePossiblyImportedTechnologySpecificType EOF
+            // InternalMappingDsl.g:6050:79: (iv_rulePossiblyImportedTechnologySpecificType= rulePossiblyImportedTechnologySpecificType EOF )
+            // InternalMappingDsl.g:6051:2: iv_rulePossiblyImportedTechnologySpecificType= rulePossiblyImportedTechnologySpecificType EOF
             {
              newCompositeNode(grammarAccess.getPossiblyImportedTechnologySpecificTypeRule()); 
             pushFollow(FOLLOW_1);
@@ -15199,7 +15219,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePossiblyImportedTechnologySpecificType"
-    // InternalMappingDsl.g:6049:1: rulePossiblyImportedTechnologySpecificType returns [EObject current=null] : ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( ( ruleQualifiedName ) ) ) ;
+    // InternalMappingDsl.g:6057:1: rulePossiblyImportedTechnologySpecificType returns [EObject current=null] : ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( ( ruleQualifiedName ) ) ) ;
     public final EObject rulePossiblyImportedTechnologySpecificType() throws RecognitionException {
         EObject current = null;
 
@@ -15210,32 +15230,32 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:6055:2: ( ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( ( ruleQualifiedName ) ) ) )
-            // InternalMappingDsl.g:6056:2: ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( ( ruleQualifiedName ) ) )
+            // InternalMappingDsl.g:6063:2: ( ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( ( ruleQualifiedName ) ) ) )
+            // InternalMappingDsl.g:6064:2: ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( ( ruleQualifiedName ) ) )
             {
-            // InternalMappingDsl.g:6056:2: ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( ( ruleQualifiedName ) ) )
-            // InternalMappingDsl.g:6057:3: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( ( ruleQualifiedName ) )
+            // InternalMappingDsl.g:6064:2: ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( ( ruleQualifiedName ) ) )
+            // InternalMappingDsl.g:6065:3: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )? ( ( ruleQualifiedName ) )
             {
-            // InternalMappingDsl.g:6057:3: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )?
+            // InternalMappingDsl.g:6065:3: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' )?
             int alt146=2;
             int LA146_0 = input.LA(1);
 
             if ( (LA146_0==RULE_ID) ) {
                 int LA146_1 = input.LA(2);
 
-                if ( (LA146_1==17) ) {
+                if ( (LA146_1==18) ) {
                     alt146=1;
                 }
             }
             switch (alt146) {
                 case 1 :
-                    // InternalMappingDsl.g:6058:4: ( (otherlv_0= RULE_ID ) ) otherlv_1= '::'
+                    // InternalMappingDsl.g:6066:4: ( (otherlv_0= RULE_ID ) ) otherlv_1= '::'
                     {
-                    // InternalMappingDsl.g:6058:4: ( (otherlv_0= RULE_ID ) )
-                    // InternalMappingDsl.g:6059:5: (otherlv_0= RULE_ID )
+                    // InternalMappingDsl.g:6066:4: ( (otherlv_0= RULE_ID ) )
+                    // InternalMappingDsl.g:6067:5: (otherlv_0= RULE_ID )
                     {
-                    // InternalMappingDsl.g:6059:5: (otherlv_0= RULE_ID )
-                    // InternalMappingDsl.g:6060:6: otherlv_0= RULE_ID
+                    // InternalMappingDsl.g:6067:5: (otherlv_0= RULE_ID )
+                    // InternalMappingDsl.g:6068:6: otherlv_0= RULE_ID
                     {
 
                     						if (current==null) {
@@ -15252,7 +15272,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_1=(Token)match(input,17,FOLLOW_7); 
+                    otherlv_1=(Token)match(input,18,FOLLOW_7); 
 
                     				newLeafNode(otherlv_1, grammarAccess.getPossiblyImportedTechnologySpecificTypeAccess().getColonColonKeyword_0_1());
                     			
@@ -15262,11 +15282,11 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalMappingDsl.g:6076:3: ( ( ruleQualifiedName ) )
-            // InternalMappingDsl.g:6077:4: ( ruleQualifiedName )
+            // InternalMappingDsl.g:6084:3: ( ( ruleQualifiedName ) )
+            // InternalMappingDsl.g:6085:4: ( ruleQualifiedName )
             {
-            // InternalMappingDsl.g:6077:4: ( ruleQualifiedName )
-            // InternalMappingDsl.g:6078:5: ruleQualifiedName
+            // InternalMappingDsl.g:6085:4: ( ruleQualifiedName )
+            // InternalMappingDsl.g:6086:5: ruleQualifiedName
             {
 
             					if (current==null) {
@@ -15313,7 +15333,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleCompatibilityMatrixEntry"
-    // InternalMappingDsl.g:6096:1: entryRuleCompatibilityMatrixEntry returns [EObject current=null] : iv_ruleCompatibilityMatrixEntry= ruleCompatibilityMatrixEntry EOF ;
+    // InternalMappingDsl.g:6104:1: entryRuleCompatibilityMatrixEntry returns [EObject current=null] : iv_ruleCompatibilityMatrixEntry= ruleCompatibilityMatrixEntry EOF ;
     public final EObject entryRuleCompatibilityMatrixEntry() throws RecognitionException {
         EObject current = null;
 
@@ -15321,8 +15341,8 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalMappingDsl.g:6096:65: (iv_ruleCompatibilityMatrixEntry= ruleCompatibilityMatrixEntry EOF )
-            // InternalMappingDsl.g:6097:2: iv_ruleCompatibilityMatrixEntry= ruleCompatibilityMatrixEntry EOF
+            // InternalMappingDsl.g:6104:65: (iv_ruleCompatibilityMatrixEntry= ruleCompatibilityMatrixEntry EOF )
+            // InternalMappingDsl.g:6105:2: iv_ruleCompatibilityMatrixEntry= ruleCompatibilityMatrixEntry EOF
             {
              newCompositeNode(grammarAccess.getCompatibilityMatrixEntryRule()); 
             pushFollow(FOLLOW_1);
@@ -15349,7 +15369,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCompatibilityMatrixEntry"
-    // InternalMappingDsl.g:6103:1: ruleCompatibilityMatrixEntry returns [EObject current=null] : ( ( (lv_compatibleTypes_0_0= rulePossiblyImportedTechnologySpecificType ) ) (otherlv_1= ',' ( (lv_compatibleTypes_2_0= rulePossiblyImportedTechnologySpecificType ) ) )* ( (lv_direction_3_0= ruleCompatibilityDirection ) ) ( (lv_mappingType_4_0= rulePossiblyImportedTechnologySpecificType ) ) otherlv_5= ';' ) ;
+    // InternalMappingDsl.g:6111:1: ruleCompatibilityMatrixEntry returns [EObject current=null] : ( ( (lv_compatibleTypes_0_0= rulePossiblyImportedTechnologySpecificType ) ) (otherlv_1= ',' ( (lv_compatibleTypes_2_0= rulePossiblyImportedTechnologySpecificType ) ) )* ( (lv_direction_3_0= ruleCompatibilityDirection ) ) ( (lv_mappingType_4_0= rulePossiblyImportedTechnologySpecificType ) ) otherlv_5= ';' ) ;
     public final EObject ruleCompatibilityMatrixEntry() throws RecognitionException {
         EObject current = null;
 
@@ -15368,17 +15388,17 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:6109:2: ( ( ( (lv_compatibleTypes_0_0= rulePossiblyImportedTechnologySpecificType ) ) (otherlv_1= ',' ( (lv_compatibleTypes_2_0= rulePossiblyImportedTechnologySpecificType ) ) )* ( (lv_direction_3_0= ruleCompatibilityDirection ) ) ( (lv_mappingType_4_0= rulePossiblyImportedTechnologySpecificType ) ) otherlv_5= ';' ) )
-            // InternalMappingDsl.g:6110:2: ( ( (lv_compatibleTypes_0_0= rulePossiblyImportedTechnologySpecificType ) ) (otherlv_1= ',' ( (lv_compatibleTypes_2_0= rulePossiblyImportedTechnologySpecificType ) ) )* ( (lv_direction_3_0= ruleCompatibilityDirection ) ) ( (lv_mappingType_4_0= rulePossiblyImportedTechnologySpecificType ) ) otherlv_5= ';' )
+            // InternalMappingDsl.g:6117:2: ( ( ( (lv_compatibleTypes_0_0= rulePossiblyImportedTechnologySpecificType ) ) (otherlv_1= ',' ( (lv_compatibleTypes_2_0= rulePossiblyImportedTechnologySpecificType ) ) )* ( (lv_direction_3_0= ruleCompatibilityDirection ) ) ( (lv_mappingType_4_0= rulePossiblyImportedTechnologySpecificType ) ) otherlv_5= ';' ) )
+            // InternalMappingDsl.g:6118:2: ( ( (lv_compatibleTypes_0_0= rulePossiblyImportedTechnologySpecificType ) ) (otherlv_1= ',' ( (lv_compatibleTypes_2_0= rulePossiblyImportedTechnologySpecificType ) ) )* ( (lv_direction_3_0= ruleCompatibilityDirection ) ) ( (lv_mappingType_4_0= rulePossiblyImportedTechnologySpecificType ) ) otherlv_5= ';' )
             {
-            // InternalMappingDsl.g:6110:2: ( ( (lv_compatibleTypes_0_0= rulePossiblyImportedTechnologySpecificType ) ) (otherlv_1= ',' ( (lv_compatibleTypes_2_0= rulePossiblyImportedTechnologySpecificType ) ) )* ( (lv_direction_3_0= ruleCompatibilityDirection ) ) ( (lv_mappingType_4_0= rulePossiblyImportedTechnologySpecificType ) ) otherlv_5= ';' )
-            // InternalMappingDsl.g:6111:3: ( (lv_compatibleTypes_0_0= rulePossiblyImportedTechnologySpecificType ) ) (otherlv_1= ',' ( (lv_compatibleTypes_2_0= rulePossiblyImportedTechnologySpecificType ) ) )* ( (lv_direction_3_0= ruleCompatibilityDirection ) ) ( (lv_mappingType_4_0= rulePossiblyImportedTechnologySpecificType ) ) otherlv_5= ';'
+            // InternalMappingDsl.g:6118:2: ( ( (lv_compatibleTypes_0_0= rulePossiblyImportedTechnologySpecificType ) ) (otherlv_1= ',' ( (lv_compatibleTypes_2_0= rulePossiblyImportedTechnologySpecificType ) ) )* ( (lv_direction_3_0= ruleCompatibilityDirection ) ) ( (lv_mappingType_4_0= rulePossiblyImportedTechnologySpecificType ) ) otherlv_5= ';' )
+            // InternalMappingDsl.g:6119:3: ( (lv_compatibleTypes_0_0= rulePossiblyImportedTechnologySpecificType ) ) (otherlv_1= ',' ( (lv_compatibleTypes_2_0= rulePossiblyImportedTechnologySpecificType ) ) )* ( (lv_direction_3_0= ruleCompatibilityDirection ) ) ( (lv_mappingType_4_0= rulePossiblyImportedTechnologySpecificType ) ) otherlv_5= ';'
             {
-            // InternalMappingDsl.g:6111:3: ( (lv_compatibleTypes_0_0= rulePossiblyImportedTechnologySpecificType ) )
-            // InternalMappingDsl.g:6112:4: (lv_compatibleTypes_0_0= rulePossiblyImportedTechnologySpecificType )
+            // InternalMappingDsl.g:6119:3: ( (lv_compatibleTypes_0_0= rulePossiblyImportedTechnologySpecificType ) )
+            // InternalMappingDsl.g:6120:4: (lv_compatibleTypes_0_0= rulePossiblyImportedTechnologySpecificType )
             {
-            // InternalMappingDsl.g:6112:4: (lv_compatibleTypes_0_0= rulePossiblyImportedTechnologySpecificType )
-            // InternalMappingDsl.g:6113:5: lv_compatibleTypes_0_0= rulePossiblyImportedTechnologySpecificType
+            // InternalMappingDsl.g:6120:4: (lv_compatibleTypes_0_0= rulePossiblyImportedTechnologySpecificType )
+            // InternalMappingDsl.g:6121:5: lv_compatibleTypes_0_0= rulePossiblyImportedTechnologySpecificType
             {
 
             					newCompositeNode(grammarAccess.getCompatibilityMatrixEntryAccess().getCompatibleTypesPossiblyImportedTechnologySpecificTypeParserRuleCall_0_0());
@@ -15405,30 +15425,30 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalMappingDsl.g:6130:3: (otherlv_1= ',' ( (lv_compatibleTypes_2_0= rulePossiblyImportedTechnologySpecificType ) ) )*
+            // InternalMappingDsl.g:6138:3: (otherlv_1= ',' ( (lv_compatibleTypes_2_0= rulePossiblyImportedTechnologySpecificType ) ) )*
             loop147:
             do {
                 int alt147=2;
                 int LA147_0 = input.LA(1);
 
-                if ( (LA147_0==34) ) {
+                if ( (LA147_0==35) ) {
                     alt147=1;
                 }
 
 
                 switch (alt147) {
             	case 1 :
-            	    // InternalMappingDsl.g:6131:4: otherlv_1= ',' ( (lv_compatibleTypes_2_0= rulePossiblyImportedTechnologySpecificType ) )
+            	    // InternalMappingDsl.g:6139:4: otherlv_1= ',' ( (lv_compatibleTypes_2_0= rulePossiblyImportedTechnologySpecificType ) )
             	    {
-            	    otherlv_1=(Token)match(input,34,FOLLOW_7); 
+            	    otherlv_1=(Token)match(input,35,FOLLOW_7); 
 
             	    				newLeafNode(otherlv_1, grammarAccess.getCompatibilityMatrixEntryAccess().getCommaKeyword_1_0());
             	    			
-            	    // InternalMappingDsl.g:6135:4: ( (lv_compatibleTypes_2_0= rulePossiblyImportedTechnologySpecificType ) )
-            	    // InternalMappingDsl.g:6136:5: (lv_compatibleTypes_2_0= rulePossiblyImportedTechnologySpecificType )
+            	    // InternalMappingDsl.g:6143:4: ( (lv_compatibleTypes_2_0= rulePossiblyImportedTechnologySpecificType ) )
+            	    // InternalMappingDsl.g:6144:5: (lv_compatibleTypes_2_0= rulePossiblyImportedTechnologySpecificType )
             	    {
-            	    // InternalMappingDsl.g:6136:5: (lv_compatibleTypes_2_0= rulePossiblyImportedTechnologySpecificType )
-            	    // InternalMappingDsl.g:6137:6: lv_compatibleTypes_2_0= rulePossiblyImportedTechnologySpecificType
+            	    // InternalMappingDsl.g:6144:5: (lv_compatibleTypes_2_0= rulePossiblyImportedTechnologySpecificType )
+            	    // InternalMappingDsl.g:6145:6: lv_compatibleTypes_2_0= rulePossiblyImportedTechnologySpecificType
             	    {
 
             	    						newCompositeNode(grammarAccess.getCompatibilityMatrixEntryAccess().getCompatibleTypesPossiblyImportedTechnologySpecificTypeParserRuleCall_1_1_0());
@@ -15464,11 +15484,11 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // InternalMappingDsl.g:6155:3: ( (lv_direction_3_0= ruleCompatibilityDirection ) )
-            // InternalMappingDsl.g:6156:4: (lv_direction_3_0= ruleCompatibilityDirection )
+            // InternalMappingDsl.g:6163:3: ( (lv_direction_3_0= ruleCompatibilityDirection ) )
+            // InternalMappingDsl.g:6164:4: (lv_direction_3_0= ruleCompatibilityDirection )
             {
-            // InternalMappingDsl.g:6156:4: (lv_direction_3_0= ruleCompatibilityDirection )
-            // InternalMappingDsl.g:6157:5: lv_direction_3_0= ruleCompatibilityDirection
+            // InternalMappingDsl.g:6164:4: (lv_direction_3_0= ruleCompatibilityDirection )
+            // InternalMappingDsl.g:6165:5: lv_direction_3_0= ruleCompatibilityDirection
             {
 
             					newCompositeNode(grammarAccess.getCompatibilityMatrixEntryAccess().getDirectionCompatibilityDirectionEnumRuleCall_2_0());
@@ -15495,11 +15515,11 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalMappingDsl.g:6174:3: ( (lv_mappingType_4_0= rulePossiblyImportedTechnologySpecificType ) )
-            // InternalMappingDsl.g:6175:4: (lv_mappingType_4_0= rulePossiblyImportedTechnologySpecificType )
+            // InternalMappingDsl.g:6182:3: ( (lv_mappingType_4_0= rulePossiblyImportedTechnologySpecificType ) )
+            // InternalMappingDsl.g:6183:4: (lv_mappingType_4_0= rulePossiblyImportedTechnologySpecificType )
             {
-            // InternalMappingDsl.g:6175:4: (lv_mappingType_4_0= rulePossiblyImportedTechnologySpecificType )
-            // InternalMappingDsl.g:6176:5: lv_mappingType_4_0= rulePossiblyImportedTechnologySpecificType
+            // InternalMappingDsl.g:6183:4: (lv_mappingType_4_0= rulePossiblyImportedTechnologySpecificType )
+            // InternalMappingDsl.g:6184:5: lv_mappingType_4_0= rulePossiblyImportedTechnologySpecificType
             {
 
             					newCompositeNode(grammarAccess.getCompatibilityMatrixEntryAccess().getMappingTypePossiblyImportedTechnologySpecificTypeParserRuleCall_3_0());
@@ -15526,7 +15546,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_5=(Token)match(input,26,FOLLOW_2); 
+            otherlv_5=(Token)match(input,27,FOLLOW_2); 
 
             			newLeafNode(otherlv_5, grammarAccess.getCompatibilityMatrixEntryAccess().getSemicolonKeyword_4());
             		
@@ -15553,7 +15573,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleDeploymentTechnology"
-    // InternalMappingDsl.g:6201:1: entryRuleDeploymentTechnology returns [EObject current=null] : iv_ruleDeploymentTechnology= ruleDeploymentTechnology EOF ;
+    // InternalMappingDsl.g:6209:1: entryRuleDeploymentTechnology returns [EObject current=null] : iv_ruleDeploymentTechnology= ruleDeploymentTechnology EOF ;
     public final EObject entryRuleDeploymentTechnology() throws RecognitionException {
         EObject current = null;
 
@@ -15561,8 +15581,8 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalMappingDsl.g:6201:61: (iv_ruleDeploymentTechnology= ruleDeploymentTechnology EOF )
-            // InternalMappingDsl.g:6202:2: iv_ruleDeploymentTechnology= ruleDeploymentTechnology EOF
+            // InternalMappingDsl.g:6209:61: (iv_ruleDeploymentTechnology= ruleDeploymentTechnology EOF )
+            // InternalMappingDsl.g:6210:2: iv_ruleDeploymentTechnology= ruleDeploymentTechnology EOF
             {
              newCompositeNode(grammarAccess.getDeploymentTechnologyRule()); 
             pushFollow(FOLLOW_1);
@@ -15589,7 +15609,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDeploymentTechnology"
-    // InternalMappingDsl.g:6208:1: ruleDeploymentTechnology returns [EObject current=null] : ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '{' otherlv_2= 'operation' otherlv_3= 'environments' otherlv_4= '=' ( (lv_operationEnvironments_5_0= ruleOperationEnvironment ) ) (otherlv_6= ',' ( (lv_operationEnvironments_7_0= ruleOperationEnvironment ) ) )* otherlv_8= ';' (otherlv_9= 'service' otherlv_10= 'properties' otherlv_11= '{' ( (lv_serviceProperties_12_0= ruleTechnologySpecificProperty ) )+ otherlv_13= '}' )? otherlv_14= '}' ) ;
+    // InternalMappingDsl.g:6216:1: ruleDeploymentTechnology returns [EObject current=null] : ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '{' otherlv_2= 'operation' otherlv_3= 'environments' otherlv_4= '=' ( (lv_operationEnvironments_5_0= ruleOperationEnvironment ) ) (otherlv_6= ',' ( (lv_operationEnvironments_7_0= ruleOperationEnvironment ) ) )* otherlv_8= ';' (otherlv_9= 'service' otherlv_10= 'properties' otherlv_11= '{' ( (lv_serviceProperties_12_0= ruleTechnologySpecificProperty ) )+ otherlv_13= '}' )? otherlv_14= '}' ) ;
     public final EObject ruleDeploymentTechnology() throws RecognitionException {
         EObject current = null;
 
@@ -15616,17 +15636,17 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:6214:2: ( ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '{' otherlv_2= 'operation' otherlv_3= 'environments' otherlv_4= '=' ( (lv_operationEnvironments_5_0= ruleOperationEnvironment ) ) (otherlv_6= ',' ( (lv_operationEnvironments_7_0= ruleOperationEnvironment ) ) )* otherlv_8= ';' (otherlv_9= 'service' otherlv_10= 'properties' otherlv_11= '{' ( (lv_serviceProperties_12_0= ruleTechnologySpecificProperty ) )+ otherlv_13= '}' )? otherlv_14= '}' ) )
-            // InternalMappingDsl.g:6215:2: ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '{' otherlv_2= 'operation' otherlv_3= 'environments' otherlv_4= '=' ( (lv_operationEnvironments_5_0= ruleOperationEnvironment ) ) (otherlv_6= ',' ( (lv_operationEnvironments_7_0= ruleOperationEnvironment ) ) )* otherlv_8= ';' (otherlv_9= 'service' otherlv_10= 'properties' otherlv_11= '{' ( (lv_serviceProperties_12_0= ruleTechnologySpecificProperty ) )+ otherlv_13= '}' )? otherlv_14= '}' )
+            // InternalMappingDsl.g:6222:2: ( ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '{' otherlv_2= 'operation' otherlv_3= 'environments' otherlv_4= '=' ( (lv_operationEnvironments_5_0= ruleOperationEnvironment ) ) (otherlv_6= ',' ( (lv_operationEnvironments_7_0= ruleOperationEnvironment ) ) )* otherlv_8= ';' (otherlv_9= 'service' otherlv_10= 'properties' otherlv_11= '{' ( (lv_serviceProperties_12_0= ruleTechnologySpecificProperty ) )+ otherlv_13= '}' )? otherlv_14= '}' ) )
+            // InternalMappingDsl.g:6223:2: ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '{' otherlv_2= 'operation' otherlv_3= 'environments' otherlv_4= '=' ( (lv_operationEnvironments_5_0= ruleOperationEnvironment ) ) (otherlv_6= ',' ( (lv_operationEnvironments_7_0= ruleOperationEnvironment ) ) )* otherlv_8= ';' (otherlv_9= 'service' otherlv_10= 'properties' otherlv_11= '{' ( (lv_serviceProperties_12_0= ruleTechnologySpecificProperty ) )+ otherlv_13= '}' )? otherlv_14= '}' )
             {
-            // InternalMappingDsl.g:6215:2: ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '{' otherlv_2= 'operation' otherlv_3= 'environments' otherlv_4= '=' ( (lv_operationEnvironments_5_0= ruleOperationEnvironment ) ) (otherlv_6= ',' ( (lv_operationEnvironments_7_0= ruleOperationEnvironment ) ) )* otherlv_8= ';' (otherlv_9= 'service' otherlv_10= 'properties' otherlv_11= '{' ( (lv_serviceProperties_12_0= ruleTechnologySpecificProperty ) )+ otherlv_13= '}' )? otherlv_14= '}' )
-            // InternalMappingDsl.g:6216:3: ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '{' otherlv_2= 'operation' otherlv_3= 'environments' otherlv_4= '=' ( (lv_operationEnvironments_5_0= ruleOperationEnvironment ) ) (otherlv_6= ',' ( (lv_operationEnvironments_7_0= ruleOperationEnvironment ) ) )* otherlv_8= ';' (otherlv_9= 'service' otherlv_10= 'properties' otherlv_11= '{' ( (lv_serviceProperties_12_0= ruleTechnologySpecificProperty ) )+ otherlv_13= '}' )? otherlv_14= '}'
+            // InternalMappingDsl.g:6223:2: ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '{' otherlv_2= 'operation' otherlv_3= 'environments' otherlv_4= '=' ( (lv_operationEnvironments_5_0= ruleOperationEnvironment ) ) (otherlv_6= ',' ( (lv_operationEnvironments_7_0= ruleOperationEnvironment ) ) )* otherlv_8= ';' (otherlv_9= 'service' otherlv_10= 'properties' otherlv_11= '{' ( (lv_serviceProperties_12_0= ruleTechnologySpecificProperty ) )+ otherlv_13= '}' )? otherlv_14= '}' )
+            // InternalMappingDsl.g:6224:3: ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '{' otherlv_2= 'operation' otherlv_3= 'environments' otherlv_4= '=' ( (lv_operationEnvironments_5_0= ruleOperationEnvironment ) ) (otherlv_6= ',' ( (lv_operationEnvironments_7_0= ruleOperationEnvironment ) ) )* otherlv_8= ';' (otherlv_9= 'service' otherlv_10= 'properties' otherlv_11= '{' ( (lv_serviceProperties_12_0= ruleTechnologySpecificProperty ) )+ otherlv_13= '}' )? otherlv_14= '}'
             {
-            // InternalMappingDsl.g:6216:3: ( (lv_name_0_0= RULE_ID ) )
-            // InternalMappingDsl.g:6217:4: (lv_name_0_0= RULE_ID )
+            // InternalMappingDsl.g:6224:3: ( (lv_name_0_0= RULE_ID ) )
+            // InternalMappingDsl.g:6225:4: (lv_name_0_0= RULE_ID )
             {
-            // InternalMappingDsl.g:6217:4: (lv_name_0_0= RULE_ID )
-            // InternalMappingDsl.g:6218:5: lv_name_0_0= RULE_ID
+            // InternalMappingDsl.g:6225:4: (lv_name_0_0= RULE_ID )
+            // InternalMappingDsl.g:6226:5: lv_name_0_0= RULE_ID
             {
             lv_name_0_0=(Token)match(input,RULE_ID,FOLLOW_8); 
 
@@ -15648,27 +15668,27 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,14,FOLLOW_33); 
+            otherlv_1=(Token)match(input,15,FOLLOW_33); 
 
             			newLeafNode(otherlv_1, grammarAccess.getDeploymentTechnologyAccess().getLeftCurlyBracketKeyword_1());
             		
-            otherlv_2=(Token)match(input,21,FOLLOW_105); 
+            otherlv_2=(Token)match(input,22,FOLLOW_105); 
 
             			newLeafNode(otherlv_2, grammarAccess.getDeploymentTechnologyAccess().getOperationKeyword_2());
             		
-            otherlv_3=(Token)match(input,85,FOLLOW_73); 
+            otherlv_3=(Token)match(input,86,FOLLOW_73); 
 
             			newLeafNode(otherlv_3, grammarAccess.getDeploymentTechnologyAccess().getEnvironmentsKeyword_3());
             		
-            otherlv_4=(Token)match(input,49,FOLLOW_46); 
+            otherlv_4=(Token)match(input,50,FOLLOW_46); 
 
             			newLeafNode(otherlv_4, grammarAccess.getDeploymentTechnologyAccess().getEqualsSignKeyword_4());
             		
-            // InternalMappingDsl.g:6250:3: ( (lv_operationEnvironments_5_0= ruleOperationEnvironment ) )
-            // InternalMappingDsl.g:6251:4: (lv_operationEnvironments_5_0= ruleOperationEnvironment )
+            // InternalMappingDsl.g:6258:3: ( (lv_operationEnvironments_5_0= ruleOperationEnvironment ) )
+            // InternalMappingDsl.g:6259:4: (lv_operationEnvironments_5_0= ruleOperationEnvironment )
             {
-            // InternalMappingDsl.g:6251:4: (lv_operationEnvironments_5_0= ruleOperationEnvironment )
-            // InternalMappingDsl.g:6252:5: lv_operationEnvironments_5_0= ruleOperationEnvironment
+            // InternalMappingDsl.g:6259:4: (lv_operationEnvironments_5_0= ruleOperationEnvironment )
+            // InternalMappingDsl.g:6260:5: lv_operationEnvironments_5_0= ruleOperationEnvironment
             {
 
             					newCompositeNode(grammarAccess.getDeploymentTechnologyAccess().getOperationEnvironmentsOperationEnvironmentParserRuleCall_5_0());
@@ -15695,30 +15715,30 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalMappingDsl.g:6269:3: (otherlv_6= ',' ( (lv_operationEnvironments_7_0= ruleOperationEnvironment ) ) )*
+            // InternalMappingDsl.g:6277:3: (otherlv_6= ',' ( (lv_operationEnvironments_7_0= ruleOperationEnvironment ) ) )*
             loop148:
             do {
                 int alt148=2;
                 int LA148_0 = input.LA(1);
 
-                if ( (LA148_0==34) ) {
+                if ( (LA148_0==35) ) {
                     alt148=1;
                 }
 
 
                 switch (alt148) {
             	case 1 :
-            	    // InternalMappingDsl.g:6270:4: otherlv_6= ',' ( (lv_operationEnvironments_7_0= ruleOperationEnvironment ) )
+            	    // InternalMappingDsl.g:6278:4: otherlv_6= ',' ( (lv_operationEnvironments_7_0= ruleOperationEnvironment ) )
             	    {
-            	    otherlv_6=(Token)match(input,34,FOLLOW_46); 
+            	    otherlv_6=(Token)match(input,35,FOLLOW_46); 
 
             	    				newLeafNode(otherlv_6, grammarAccess.getDeploymentTechnologyAccess().getCommaKeyword_6_0());
             	    			
-            	    // InternalMappingDsl.g:6274:4: ( (lv_operationEnvironments_7_0= ruleOperationEnvironment ) )
-            	    // InternalMappingDsl.g:6275:5: (lv_operationEnvironments_7_0= ruleOperationEnvironment )
+            	    // InternalMappingDsl.g:6282:4: ( (lv_operationEnvironments_7_0= ruleOperationEnvironment ) )
+            	    // InternalMappingDsl.g:6283:5: (lv_operationEnvironments_7_0= ruleOperationEnvironment )
             	    {
-            	    // InternalMappingDsl.g:6275:5: (lv_operationEnvironments_7_0= ruleOperationEnvironment )
-            	    // InternalMappingDsl.g:6276:6: lv_operationEnvironments_7_0= ruleOperationEnvironment
+            	    // InternalMappingDsl.g:6283:5: (lv_operationEnvironments_7_0= ruleOperationEnvironment )
+            	    // InternalMappingDsl.g:6284:6: lv_operationEnvironments_7_0= ruleOperationEnvironment
             	    {
 
             	    						newCompositeNode(grammarAccess.getDeploymentTechnologyAccess().getOperationEnvironmentsOperationEnvironmentParserRuleCall_6_1_0());
@@ -15754,51 +15774,51 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            otherlv_8=(Token)match(input,26,FOLLOW_106); 
+            otherlv_8=(Token)match(input,27,FOLLOW_106); 
 
             			newLeafNode(otherlv_8, grammarAccess.getDeploymentTechnologyAccess().getSemicolonKeyword_7());
             		
-            // InternalMappingDsl.g:6298:3: (otherlv_9= 'service' otherlv_10= 'properties' otherlv_11= '{' ( (lv_serviceProperties_12_0= ruleTechnologySpecificProperty ) )+ otherlv_13= '}' )?
+            // InternalMappingDsl.g:6306:3: (otherlv_9= 'service' otherlv_10= 'properties' otherlv_11= '{' ( (lv_serviceProperties_12_0= ruleTechnologySpecificProperty ) )+ otherlv_13= '}' )?
             int alt150=2;
             int LA150_0 = input.LA(1);
 
-            if ( (LA150_0==65) ) {
+            if ( (LA150_0==66) ) {
                 alt150=1;
             }
             switch (alt150) {
                 case 1 :
-                    // InternalMappingDsl.g:6299:4: otherlv_9= 'service' otherlv_10= 'properties' otherlv_11= '{' ( (lv_serviceProperties_12_0= ruleTechnologySpecificProperty ) )+ otherlv_13= '}'
+                    // InternalMappingDsl.g:6307:4: otherlv_9= 'service' otherlv_10= 'properties' otherlv_11= '{' ( (lv_serviceProperties_12_0= ruleTechnologySpecificProperty ) )+ otherlv_13= '}'
                     {
-                    otherlv_9=(Token)match(input,65,FOLLOW_107); 
+                    otherlv_9=(Token)match(input,66,FOLLOW_107); 
 
                     				newLeafNode(otherlv_9, grammarAccess.getDeploymentTechnologyAccess().getServiceKeyword_8_0());
                     			
-                    otherlv_10=(Token)match(input,86,FOLLOW_8); 
+                    otherlv_10=(Token)match(input,87,FOLLOW_8); 
 
                     				newLeafNode(otherlv_10, grammarAccess.getDeploymentTechnologyAccess().getPropertiesKeyword_8_1());
                     			
-                    otherlv_11=(Token)match(input,14,FOLLOW_103); 
+                    otherlv_11=(Token)match(input,15,FOLLOW_103); 
 
                     				newLeafNode(otherlv_11, grammarAccess.getDeploymentTechnologyAccess().getLeftCurlyBracketKeyword_8_2());
                     			
-                    // InternalMappingDsl.g:6311:4: ( (lv_serviceProperties_12_0= ruleTechnologySpecificProperty ) )+
+                    // InternalMappingDsl.g:6319:4: ( (lv_serviceProperties_12_0= ruleTechnologySpecificProperty ) )+
                     int cnt149=0;
                     loop149:
                     do {
                         int alt149=2;
                         int LA149_0 = input.LA(1);
 
-                        if ( ((LA149_0>=122 && LA149_0<=131)||LA149_0==138) ) {
+                        if ( ((LA149_0>=123 && LA149_0<=132)||LA149_0==139) ) {
                             alt149=1;
                         }
 
 
                         switch (alt149) {
                     	case 1 :
-                    	    // InternalMappingDsl.g:6312:5: (lv_serviceProperties_12_0= ruleTechnologySpecificProperty )
+                    	    // InternalMappingDsl.g:6320:5: (lv_serviceProperties_12_0= ruleTechnologySpecificProperty )
                     	    {
-                    	    // InternalMappingDsl.g:6312:5: (lv_serviceProperties_12_0= ruleTechnologySpecificProperty )
-                    	    // InternalMappingDsl.g:6313:6: lv_serviceProperties_12_0= ruleTechnologySpecificProperty
+                    	    // InternalMappingDsl.g:6320:5: (lv_serviceProperties_12_0= ruleTechnologySpecificProperty )
+                    	    // InternalMappingDsl.g:6321:6: lv_serviceProperties_12_0= ruleTechnologySpecificProperty
                     	    {
 
                     	    						newCompositeNode(grammarAccess.getDeploymentTechnologyAccess().getServicePropertiesTechnologySpecificPropertyParserRuleCall_8_3_0());
@@ -15835,7 +15855,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         cnt149++;
                     } while (true);
 
-                    otherlv_13=(Token)match(input,16,FOLLOW_26); 
+                    otherlv_13=(Token)match(input,17,FOLLOW_26); 
 
                     				newLeafNode(otherlv_13, grammarAccess.getDeploymentTechnologyAccess().getRightCurlyBracketKeyword_8_4());
                     			
@@ -15845,7 +15865,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_14=(Token)match(input,16,FOLLOW_2); 
+            otherlv_14=(Token)match(input,17,FOLLOW_2); 
 
             			newLeafNode(otherlv_14, grammarAccess.getDeploymentTechnologyAccess().getRightCurlyBracketKeyword_9());
             		
@@ -15872,7 +15892,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleInfrastructureTechnology"
-    // InternalMappingDsl.g:6343:1: entryRuleInfrastructureTechnology returns [EObject current=null] : iv_ruleInfrastructureTechnology= ruleInfrastructureTechnology EOF ;
+    // InternalMappingDsl.g:6351:1: entryRuleInfrastructureTechnology returns [EObject current=null] : iv_ruleInfrastructureTechnology= ruleInfrastructureTechnology EOF ;
     public final EObject entryRuleInfrastructureTechnology() throws RecognitionException {
         EObject current = null;
 
@@ -15880,8 +15900,8 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalMappingDsl.g:6343:65: (iv_ruleInfrastructureTechnology= ruleInfrastructureTechnology EOF )
-            // InternalMappingDsl.g:6344:2: iv_ruleInfrastructureTechnology= ruleInfrastructureTechnology EOF
+            // InternalMappingDsl.g:6351:65: (iv_ruleInfrastructureTechnology= ruleInfrastructureTechnology EOF )
+            // InternalMappingDsl.g:6352:2: iv_ruleInfrastructureTechnology= ruleInfrastructureTechnology EOF
             {
              newCompositeNode(grammarAccess.getInfrastructureTechnologyRule()); 
             pushFollow(FOLLOW_1);
@@ -15908,7 +15928,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleInfrastructureTechnology"
-    // InternalMappingDsl.g:6350:1: ruleInfrastructureTechnology returns [EObject current=null] : ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '{' otherlv_2= 'operation' otherlv_3= 'environments' otherlv_4= '=' ( (lv_operationEnvironments_5_0= ruleOperationEnvironment ) ) (otherlv_6= ',' ( (lv_operationEnvironments_7_0= ruleOperationEnvironment ) ) )* otherlv_8= ';' (otherlv_9= 'service' otherlv_10= 'properties' otherlv_11= '{' ( (lv_serviceProperties_12_0= ruleTechnologySpecificProperty ) )+ otherlv_13= '}' )? otherlv_14= '}' ) ;
+    // InternalMappingDsl.g:6358:1: ruleInfrastructureTechnology returns [EObject current=null] : ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '{' otherlv_2= 'operation' otherlv_3= 'environments' otherlv_4= '=' ( (lv_operationEnvironments_5_0= ruleOperationEnvironment ) ) (otherlv_6= ',' ( (lv_operationEnvironments_7_0= ruleOperationEnvironment ) ) )* otherlv_8= ';' (otherlv_9= 'service' otherlv_10= 'properties' otherlv_11= '{' ( (lv_serviceProperties_12_0= ruleTechnologySpecificProperty ) )+ otherlv_13= '}' )? otherlv_14= '}' ) ;
     public final EObject ruleInfrastructureTechnology() throws RecognitionException {
         EObject current = null;
 
@@ -15935,17 +15955,17 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:6356:2: ( ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '{' otherlv_2= 'operation' otherlv_3= 'environments' otherlv_4= '=' ( (lv_operationEnvironments_5_0= ruleOperationEnvironment ) ) (otherlv_6= ',' ( (lv_operationEnvironments_7_0= ruleOperationEnvironment ) ) )* otherlv_8= ';' (otherlv_9= 'service' otherlv_10= 'properties' otherlv_11= '{' ( (lv_serviceProperties_12_0= ruleTechnologySpecificProperty ) )+ otherlv_13= '}' )? otherlv_14= '}' ) )
-            // InternalMappingDsl.g:6357:2: ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '{' otherlv_2= 'operation' otherlv_3= 'environments' otherlv_4= '=' ( (lv_operationEnvironments_5_0= ruleOperationEnvironment ) ) (otherlv_6= ',' ( (lv_operationEnvironments_7_0= ruleOperationEnvironment ) ) )* otherlv_8= ';' (otherlv_9= 'service' otherlv_10= 'properties' otherlv_11= '{' ( (lv_serviceProperties_12_0= ruleTechnologySpecificProperty ) )+ otherlv_13= '}' )? otherlv_14= '}' )
+            // InternalMappingDsl.g:6364:2: ( ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '{' otherlv_2= 'operation' otherlv_3= 'environments' otherlv_4= '=' ( (lv_operationEnvironments_5_0= ruleOperationEnvironment ) ) (otherlv_6= ',' ( (lv_operationEnvironments_7_0= ruleOperationEnvironment ) ) )* otherlv_8= ';' (otherlv_9= 'service' otherlv_10= 'properties' otherlv_11= '{' ( (lv_serviceProperties_12_0= ruleTechnologySpecificProperty ) )+ otherlv_13= '}' )? otherlv_14= '}' ) )
+            // InternalMappingDsl.g:6365:2: ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '{' otherlv_2= 'operation' otherlv_3= 'environments' otherlv_4= '=' ( (lv_operationEnvironments_5_0= ruleOperationEnvironment ) ) (otherlv_6= ',' ( (lv_operationEnvironments_7_0= ruleOperationEnvironment ) ) )* otherlv_8= ';' (otherlv_9= 'service' otherlv_10= 'properties' otherlv_11= '{' ( (lv_serviceProperties_12_0= ruleTechnologySpecificProperty ) )+ otherlv_13= '}' )? otherlv_14= '}' )
             {
-            // InternalMappingDsl.g:6357:2: ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '{' otherlv_2= 'operation' otherlv_3= 'environments' otherlv_4= '=' ( (lv_operationEnvironments_5_0= ruleOperationEnvironment ) ) (otherlv_6= ',' ( (lv_operationEnvironments_7_0= ruleOperationEnvironment ) ) )* otherlv_8= ';' (otherlv_9= 'service' otherlv_10= 'properties' otherlv_11= '{' ( (lv_serviceProperties_12_0= ruleTechnologySpecificProperty ) )+ otherlv_13= '}' )? otherlv_14= '}' )
-            // InternalMappingDsl.g:6358:3: ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '{' otherlv_2= 'operation' otherlv_3= 'environments' otherlv_4= '=' ( (lv_operationEnvironments_5_0= ruleOperationEnvironment ) ) (otherlv_6= ',' ( (lv_operationEnvironments_7_0= ruleOperationEnvironment ) ) )* otherlv_8= ';' (otherlv_9= 'service' otherlv_10= 'properties' otherlv_11= '{' ( (lv_serviceProperties_12_0= ruleTechnologySpecificProperty ) )+ otherlv_13= '}' )? otherlv_14= '}'
+            // InternalMappingDsl.g:6365:2: ( ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '{' otherlv_2= 'operation' otherlv_3= 'environments' otherlv_4= '=' ( (lv_operationEnvironments_5_0= ruleOperationEnvironment ) ) (otherlv_6= ',' ( (lv_operationEnvironments_7_0= ruleOperationEnvironment ) ) )* otherlv_8= ';' (otherlv_9= 'service' otherlv_10= 'properties' otherlv_11= '{' ( (lv_serviceProperties_12_0= ruleTechnologySpecificProperty ) )+ otherlv_13= '}' )? otherlv_14= '}' )
+            // InternalMappingDsl.g:6366:3: ( (lv_name_0_0= RULE_ID ) ) otherlv_1= '{' otherlv_2= 'operation' otherlv_3= 'environments' otherlv_4= '=' ( (lv_operationEnvironments_5_0= ruleOperationEnvironment ) ) (otherlv_6= ',' ( (lv_operationEnvironments_7_0= ruleOperationEnvironment ) ) )* otherlv_8= ';' (otherlv_9= 'service' otherlv_10= 'properties' otherlv_11= '{' ( (lv_serviceProperties_12_0= ruleTechnologySpecificProperty ) )+ otherlv_13= '}' )? otherlv_14= '}'
             {
-            // InternalMappingDsl.g:6358:3: ( (lv_name_0_0= RULE_ID ) )
-            // InternalMappingDsl.g:6359:4: (lv_name_0_0= RULE_ID )
+            // InternalMappingDsl.g:6366:3: ( (lv_name_0_0= RULE_ID ) )
+            // InternalMappingDsl.g:6367:4: (lv_name_0_0= RULE_ID )
             {
-            // InternalMappingDsl.g:6359:4: (lv_name_0_0= RULE_ID )
-            // InternalMappingDsl.g:6360:5: lv_name_0_0= RULE_ID
+            // InternalMappingDsl.g:6367:4: (lv_name_0_0= RULE_ID )
+            // InternalMappingDsl.g:6368:5: lv_name_0_0= RULE_ID
             {
             lv_name_0_0=(Token)match(input,RULE_ID,FOLLOW_8); 
 
@@ -15967,27 +15987,27 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,14,FOLLOW_33); 
+            otherlv_1=(Token)match(input,15,FOLLOW_33); 
 
             			newLeafNode(otherlv_1, grammarAccess.getInfrastructureTechnologyAccess().getLeftCurlyBracketKeyword_1());
             		
-            otherlv_2=(Token)match(input,21,FOLLOW_105); 
+            otherlv_2=(Token)match(input,22,FOLLOW_105); 
 
             			newLeafNode(otherlv_2, grammarAccess.getInfrastructureTechnologyAccess().getOperationKeyword_2());
             		
-            otherlv_3=(Token)match(input,85,FOLLOW_73); 
+            otherlv_3=(Token)match(input,86,FOLLOW_73); 
 
             			newLeafNode(otherlv_3, grammarAccess.getInfrastructureTechnologyAccess().getEnvironmentsKeyword_3());
             		
-            otherlv_4=(Token)match(input,49,FOLLOW_46); 
+            otherlv_4=(Token)match(input,50,FOLLOW_46); 
 
             			newLeafNode(otherlv_4, grammarAccess.getInfrastructureTechnologyAccess().getEqualsSignKeyword_4());
             		
-            // InternalMappingDsl.g:6392:3: ( (lv_operationEnvironments_5_0= ruleOperationEnvironment ) )
-            // InternalMappingDsl.g:6393:4: (lv_operationEnvironments_5_0= ruleOperationEnvironment )
+            // InternalMappingDsl.g:6400:3: ( (lv_operationEnvironments_5_0= ruleOperationEnvironment ) )
+            // InternalMappingDsl.g:6401:4: (lv_operationEnvironments_5_0= ruleOperationEnvironment )
             {
-            // InternalMappingDsl.g:6393:4: (lv_operationEnvironments_5_0= ruleOperationEnvironment )
-            // InternalMappingDsl.g:6394:5: lv_operationEnvironments_5_0= ruleOperationEnvironment
+            // InternalMappingDsl.g:6401:4: (lv_operationEnvironments_5_0= ruleOperationEnvironment )
+            // InternalMappingDsl.g:6402:5: lv_operationEnvironments_5_0= ruleOperationEnvironment
             {
 
             					newCompositeNode(grammarAccess.getInfrastructureTechnologyAccess().getOperationEnvironmentsOperationEnvironmentParserRuleCall_5_0());
@@ -16014,30 +16034,30 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalMappingDsl.g:6411:3: (otherlv_6= ',' ( (lv_operationEnvironments_7_0= ruleOperationEnvironment ) ) )*
+            // InternalMappingDsl.g:6419:3: (otherlv_6= ',' ( (lv_operationEnvironments_7_0= ruleOperationEnvironment ) ) )*
             loop151:
             do {
                 int alt151=2;
                 int LA151_0 = input.LA(1);
 
-                if ( (LA151_0==34) ) {
+                if ( (LA151_0==35) ) {
                     alt151=1;
                 }
 
 
                 switch (alt151) {
             	case 1 :
-            	    // InternalMappingDsl.g:6412:4: otherlv_6= ',' ( (lv_operationEnvironments_7_0= ruleOperationEnvironment ) )
+            	    // InternalMappingDsl.g:6420:4: otherlv_6= ',' ( (lv_operationEnvironments_7_0= ruleOperationEnvironment ) )
             	    {
-            	    otherlv_6=(Token)match(input,34,FOLLOW_46); 
+            	    otherlv_6=(Token)match(input,35,FOLLOW_46); 
 
             	    				newLeafNode(otherlv_6, grammarAccess.getInfrastructureTechnologyAccess().getCommaKeyword_6_0());
             	    			
-            	    // InternalMappingDsl.g:6416:4: ( (lv_operationEnvironments_7_0= ruleOperationEnvironment ) )
-            	    // InternalMappingDsl.g:6417:5: (lv_operationEnvironments_7_0= ruleOperationEnvironment )
+            	    // InternalMappingDsl.g:6424:4: ( (lv_operationEnvironments_7_0= ruleOperationEnvironment ) )
+            	    // InternalMappingDsl.g:6425:5: (lv_operationEnvironments_7_0= ruleOperationEnvironment )
             	    {
-            	    // InternalMappingDsl.g:6417:5: (lv_operationEnvironments_7_0= ruleOperationEnvironment )
-            	    // InternalMappingDsl.g:6418:6: lv_operationEnvironments_7_0= ruleOperationEnvironment
+            	    // InternalMappingDsl.g:6425:5: (lv_operationEnvironments_7_0= ruleOperationEnvironment )
+            	    // InternalMappingDsl.g:6426:6: lv_operationEnvironments_7_0= ruleOperationEnvironment
             	    {
 
             	    						newCompositeNode(grammarAccess.getInfrastructureTechnologyAccess().getOperationEnvironmentsOperationEnvironmentParserRuleCall_6_1_0());
@@ -16073,51 +16093,51 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            otherlv_8=(Token)match(input,26,FOLLOW_106); 
+            otherlv_8=(Token)match(input,27,FOLLOW_106); 
 
             			newLeafNode(otherlv_8, grammarAccess.getInfrastructureTechnologyAccess().getSemicolonKeyword_7());
             		
-            // InternalMappingDsl.g:6440:3: (otherlv_9= 'service' otherlv_10= 'properties' otherlv_11= '{' ( (lv_serviceProperties_12_0= ruleTechnologySpecificProperty ) )+ otherlv_13= '}' )?
+            // InternalMappingDsl.g:6448:3: (otherlv_9= 'service' otherlv_10= 'properties' otherlv_11= '{' ( (lv_serviceProperties_12_0= ruleTechnologySpecificProperty ) )+ otherlv_13= '}' )?
             int alt153=2;
             int LA153_0 = input.LA(1);
 
-            if ( (LA153_0==65) ) {
+            if ( (LA153_0==66) ) {
                 alt153=1;
             }
             switch (alt153) {
                 case 1 :
-                    // InternalMappingDsl.g:6441:4: otherlv_9= 'service' otherlv_10= 'properties' otherlv_11= '{' ( (lv_serviceProperties_12_0= ruleTechnologySpecificProperty ) )+ otherlv_13= '}'
+                    // InternalMappingDsl.g:6449:4: otherlv_9= 'service' otherlv_10= 'properties' otherlv_11= '{' ( (lv_serviceProperties_12_0= ruleTechnologySpecificProperty ) )+ otherlv_13= '}'
                     {
-                    otherlv_9=(Token)match(input,65,FOLLOW_107); 
+                    otherlv_9=(Token)match(input,66,FOLLOW_107); 
 
                     				newLeafNode(otherlv_9, grammarAccess.getInfrastructureTechnologyAccess().getServiceKeyword_8_0());
                     			
-                    otherlv_10=(Token)match(input,86,FOLLOW_8); 
+                    otherlv_10=(Token)match(input,87,FOLLOW_8); 
 
                     				newLeafNode(otherlv_10, grammarAccess.getInfrastructureTechnologyAccess().getPropertiesKeyword_8_1());
                     			
-                    otherlv_11=(Token)match(input,14,FOLLOW_103); 
+                    otherlv_11=(Token)match(input,15,FOLLOW_103); 
 
                     				newLeafNode(otherlv_11, grammarAccess.getInfrastructureTechnologyAccess().getLeftCurlyBracketKeyword_8_2());
                     			
-                    // InternalMappingDsl.g:6453:4: ( (lv_serviceProperties_12_0= ruleTechnologySpecificProperty ) )+
+                    // InternalMappingDsl.g:6461:4: ( (lv_serviceProperties_12_0= ruleTechnologySpecificProperty ) )+
                     int cnt152=0;
                     loop152:
                     do {
                         int alt152=2;
                         int LA152_0 = input.LA(1);
 
-                        if ( ((LA152_0>=122 && LA152_0<=131)||LA152_0==138) ) {
+                        if ( ((LA152_0>=123 && LA152_0<=132)||LA152_0==139) ) {
                             alt152=1;
                         }
 
 
                         switch (alt152) {
                     	case 1 :
-                    	    // InternalMappingDsl.g:6454:5: (lv_serviceProperties_12_0= ruleTechnologySpecificProperty )
+                    	    // InternalMappingDsl.g:6462:5: (lv_serviceProperties_12_0= ruleTechnologySpecificProperty )
                     	    {
-                    	    // InternalMappingDsl.g:6454:5: (lv_serviceProperties_12_0= ruleTechnologySpecificProperty )
-                    	    // InternalMappingDsl.g:6455:6: lv_serviceProperties_12_0= ruleTechnologySpecificProperty
+                    	    // InternalMappingDsl.g:6462:5: (lv_serviceProperties_12_0= ruleTechnologySpecificProperty )
+                    	    // InternalMappingDsl.g:6463:6: lv_serviceProperties_12_0= ruleTechnologySpecificProperty
                     	    {
 
                     	    						newCompositeNode(grammarAccess.getInfrastructureTechnologyAccess().getServicePropertiesTechnologySpecificPropertyParserRuleCall_8_3_0());
@@ -16154,7 +16174,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         cnt152++;
                     } while (true);
 
-                    otherlv_13=(Token)match(input,16,FOLLOW_26); 
+                    otherlv_13=(Token)match(input,17,FOLLOW_26); 
 
                     				newLeafNode(otherlv_13, grammarAccess.getInfrastructureTechnologyAccess().getRightCurlyBracketKeyword_8_4());
                     			
@@ -16164,7 +16184,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_14=(Token)match(input,16,FOLLOW_2); 
+            otherlv_14=(Token)match(input,17,FOLLOW_2); 
 
             			newLeafNode(otherlv_14, grammarAccess.getInfrastructureTechnologyAccess().getRightCurlyBracketKeyword_9());
             		
@@ -16191,7 +16211,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleOperationEnvironment"
-    // InternalMappingDsl.g:6485:1: entryRuleOperationEnvironment returns [EObject current=null] : iv_ruleOperationEnvironment= ruleOperationEnvironment EOF ;
+    // InternalMappingDsl.g:6493:1: entryRuleOperationEnvironment returns [EObject current=null] : iv_ruleOperationEnvironment= ruleOperationEnvironment EOF ;
     public final EObject entryRuleOperationEnvironment() throws RecognitionException {
         EObject current = null;
 
@@ -16199,8 +16219,8 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalMappingDsl.g:6485:61: (iv_ruleOperationEnvironment= ruleOperationEnvironment EOF )
-            // InternalMappingDsl.g:6486:2: iv_ruleOperationEnvironment= ruleOperationEnvironment EOF
+            // InternalMappingDsl.g:6493:61: (iv_ruleOperationEnvironment= ruleOperationEnvironment EOF )
+            // InternalMappingDsl.g:6494:2: iv_ruleOperationEnvironment= ruleOperationEnvironment EOF
             {
              newCompositeNode(grammarAccess.getOperationEnvironmentRule()); 
             pushFollow(FOLLOW_1);
@@ -16227,7 +16247,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleOperationEnvironment"
-    // InternalMappingDsl.g:6492:1: ruleOperationEnvironment returns [EObject current=null] : ( ( (lv_environmentName_0_0= RULE_STRING ) ) ( (lv_default_1_0= 'default' ) )? ) ;
+    // InternalMappingDsl.g:6500:1: ruleOperationEnvironment returns [EObject current=null] : ( ( (lv_environmentName_0_0= RULE_STRING ) ) ( (lv_default_1_0= 'default' ) )? ) ;
     public final EObject ruleOperationEnvironment() throws RecognitionException {
         EObject current = null;
 
@@ -16238,17 +16258,17 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:6498:2: ( ( ( (lv_environmentName_0_0= RULE_STRING ) ) ( (lv_default_1_0= 'default' ) )? ) )
-            // InternalMappingDsl.g:6499:2: ( ( (lv_environmentName_0_0= RULE_STRING ) ) ( (lv_default_1_0= 'default' ) )? )
+            // InternalMappingDsl.g:6506:2: ( ( ( (lv_environmentName_0_0= RULE_STRING ) ) ( (lv_default_1_0= 'default' ) )? ) )
+            // InternalMappingDsl.g:6507:2: ( ( (lv_environmentName_0_0= RULE_STRING ) ) ( (lv_default_1_0= 'default' ) )? )
             {
-            // InternalMappingDsl.g:6499:2: ( ( (lv_environmentName_0_0= RULE_STRING ) ) ( (lv_default_1_0= 'default' ) )? )
-            // InternalMappingDsl.g:6500:3: ( (lv_environmentName_0_0= RULE_STRING ) ) ( (lv_default_1_0= 'default' ) )?
+            // InternalMappingDsl.g:6507:2: ( ( (lv_environmentName_0_0= RULE_STRING ) ) ( (lv_default_1_0= 'default' ) )? )
+            // InternalMappingDsl.g:6508:3: ( (lv_environmentName_0_0= RULE_STRING ) ) ( (lv_default_1_0= 'default' ) )?
             {
-            // InternalMappingDsl.g:6500:3: ( (lv_environmentName_0_0= RULE_STRING ) )
-            // InternalMappingDsl.g:6501:4: (lv_environmentName_0_0= RULE_STRING )
+            // InternalMappingDsl.g:6508:3: ( (lv_environmentName_0_0= RULE_STRING ) )
+            // InternalMappingDsl.g:6509:4: (lv_environmentName_0_0= RULE_STRING )
             {
-            // InternalMappingDsl.g:6501:4: (lv_environmentName_0_0= RULE_STRING )
-            // InternalMappingDsl.g:6502:5: lv_environmentName_0_0= RULE_STRING
+            // InternalMappingDsl.g:6509:4: (lv_environmentName_0_0= RULE_STRING )
+            // InternalMappingDsl.g:6510:5: lv_environmentName_0_0= RULE_STRING
             {
             lv_environmentName_0_0=(Token)match(input,RULE_STRING,FOLLOW_109); 
 
@@ -16270,21 +16290,21 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalMappingDsl.g:6518:3: ( (lv_default_1_0= 'default' ) )?
+            // InternalMappingDsl.g:6526:3: ( (lv_default_1_0= 'default' ) )?
             int alt154=2;
             int LA154_0 = input.LA(1);
 
-            if ( (LA154_0==71) ) {
+            if ( (LA154_0==72) ) {
                 alt154=1;
             }
             switch (alt154) {
                 case 1 :
-                    // InternalMappingDsl.g:6519:4: (lv_default_1_0= 'default' )
+                    // InternalMappingDsl.g:6527:4: (lv_default_1_0= 'default' )
                     {
-                    // InternalMappingDsl.g:6519:4: (lv_default_1_0= 'default' )
-                    // InternalMappingDsl.g:6520:5: lv_default_1_0= 'default'
+                    // InternalMappingDsl.g:6527:4: (lv_default_1_0= 'default' )
+                    // InternalMappingDsl.g:6528:5: lv_default_1_0= 'default'
                     {
-                    lv_default_1_0=(Token)match(input,71,FOLLOW_2); 
+                    lv_default_1_0=(Token)match(input,72,FOLLOW_2); 
 
                     					newLeafNode(lv_default_1_0, grammarAccess.getOperationEnvironmentAccess().getDefaultDefaultKeyword_1_0());
                     				
@@ -16326,7 +16346,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleTechnologySpecificProperty"
-    // InternalMappingDsl.g:6536:1: entryRuleTechnologySpecificProperty returns [EObject current=null] : iv_ruleTechnologySpecificProperty= ruleTechnologySpecificProperty EOF ;
+    // InternalMappingDsl.g:6544:1: entryRuleTechnologySpecificProperty returns [EObject current=null] : iv_ruleTechnologySpecificProperty= ruleTechnologySpecificProperty EOF ;
     public final EObject entryRuleTechnologySpecificProperty() throws RecognitionException {
         EObject current = null;
 
@@ -16334,8 +16354,8 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalMappingDsl.g:6536:67: (iv_ruleTechnologySpecificProperty= ruleTechnologySpecificProperty EOF )
-            // InternalMappingDsl.g:6537:2: iv_ruleTechnologySpecificProperty= ruleTechnologySpecificProperty EOF
+            // InternalMappingDsl.g:6544:67: (iv_ruleTechnologySpecificProperty= ruleTechnologySpecificProperty EOF )
+            // InternalMappingDsl.g:6545:2: iv_ruleTechnologySpecificProperty= ruleTechnologySpecificProperty EOF
             {
              newCompositeNode(grammarAccess.getTechnologySpecificPropertyRule()); 
             pushFollow(FOLLOW_1);
@@ -16362,7 +16382,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTechnologySpecificProperty"
-    // InternalMappingDsl.g:6543:1: ruleTechnologySpecificProperty returns [EObject current=null] : ( ( (lv_type_0_0= rulePrimitiveType ) ) ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '=' ( (lv_defaultValue_3_0= rulePrimitiveValue ) ) )? (otherlv_4= '<' ( (lv_features_5_0= rulePropertyFeature ) ) (otherlv_6= ',' ( (lv_features_7_0= rulePropertyFeature ) ) )* otherlv_8= '>' )? otherlv_9= ';' ) ;
+    // InternalMappingDsl.g:6551:1: ruleTechnologySpecificProperty returns [EObject current=null] : ( ( (lv_type_0_0= rulePrimitiveType ) ) ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '=' ( (lv_defaultValue_3_0= rulePrimitiveValue ) ) )? (otherlv_4= '<' ( (lv_features_5_0= rulePropertyFeature ) ) (otherlv_6= ',' ( (lv_features_7_0= rulePropertyFeature ) ) )* otherlv_8= '>' )? otherlv_9= ';' ) ;
     public final EObject ruleTechnologySpecificProperty() throws RecognitionException {
         EObject current = null;
 
@@ -16385,17 +16405,17 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:6549:2: ( ( ( (lv_type_0_0= rulePrimitiveType ) ) ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '=' ( (lv_defaultValue_3_0= rulePrimitiveValue ) ) )? (otherlv_4= '<' ( (lv_features_5_0= rulePropertyFeature ) ) (otherlv_6= ',' ( (lv_features_7_0= rulePropertyFeature ) ) )* otherlv_8= '>' )? otherlv_9= ';' ) )
-            // InternalMappingDsl.g:6550:2: ( ( (lv_type_0_0= rulePrimitiveType ) ) ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '=' ( (lv_defaultValue_3_0= rulePrimitiveValue ) ) )? (otherlv_4= '<' ( (lv_features_5_0= rulePropertyFeature ) ) (otherlv_6= ',' ( (lv_features_7_0= rulePropertyFeature ) ) )* otherlv_8= '>' )? otherlv_9= ';' )
+            // InternalMappingDsl.g:6557:2: ( ( ( (lv_type_0_0= rulePrimitiveType ) ) ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '=' ( (lv_defaultValue_3_0= rulePrimitiveValue ) ) )? (otherlv_4= '<' ( (lv_features_5_0= rulePropertyFeature ) ) (otherlv_6= ',' ( (lv_features_7_0= rulePropertyFeature ) ) )* otherlv_8= '>' )? otherlv_9= ';' ) )
+            // InternalMappingDsl.g:6558:2: ( ( (lv_type_0_0= rulePrimitiveType ) ) ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '=' ( (lv_defaultValue_3_0= rulePrimitiveValue ) ) )? (otherlv_4= '<' ( (lv_features_5_0= rulePropertyFeature ) ) (otherlv_6= ',' ( (lv_features_7_0= rulePropertyFeature ) ) )* otherlv_8= '>' )? otherlv_9= ';' )
             {
-            // InternalMappingDsl.g:6550:2: ( ( (lv_type_0_0= rulePrimitiveType ) ) ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '=' ( (lv_defaultValue_3_0= rulePrimitiveValue ) ) )? (otherlv_4= '<' ( (lv_features_5_0= rulePropertyFeature ) ) (otherlv_6= ',' ( (lv_features_7_0= rulePropertyFeature ) ) )* otherlv_8= '>' )? otherlv_9= ';' )
-            // InternalMappingDsl.g:6551:3: ( (lv_type_0_0= rulePrimitiveType ) ) ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '=' ( (lv_defaultValue_3_0= rulePrimitiveValue ) ) )? (otherlv_4= '<' ( (lv_features_5_0= rulePropertyFeature ) ) (otherlv_6= ',' ( (lv_features_7_0= rulePropertyFeature ) ) )* otherlv_8= '>' )? otherlv_9= ';'
+            // InternalMappingDsl.g:6558:2: ( ( (lv_type_0_0= rulePrimitiveType ) ) ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '=' ( (lv_defaultValue_3_0= rulePrimitiveValue ) ) )? (otherlv_4= '<' ( (lv_features_5_0= rulePropertyFeature ) ) (otherlv_6= ',' ( (lv_features_7_0= rulePropertyFeature ) ) )* otherlv_8= '>' )? otherlv_9= ';' )
+            // InternalMappingDsl.g:6559:3: ( (lv_type_0_0= rulePrimitiveType ) ) ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '=' ( (lv_defaultValue_3_0= rulePrimitiveValue ) ) )? (otherlv_4= '<' ( (lv_features_5_0= rulePropertyFeature ) ) (otherlv_6= ',' ( (lv_features_7_0= rulePropertyFeature ) ) )* otherlv_8= '>' )? otherlv_9= ';'
             {
-            // InternalMappingDsl.g:6551:3: ( (lv_type_0_0= rulePrimitiveType ) )
-            // InternalMappingDsl.g:6552:4: (lv_type_0_0= rulePrimitiveType )
+            // InternalMappingDsl.g:6559:3: ( (lv_type_0_0= rulePrimitiveType ) )
+            // InternalMappingDsl.g:6560:4: (lv_type_0_0= rulePrimitiveType )
             {
-            // InternalMappingDsl.g:6552:4: (lv_type_0_0= rulePrimitiveType )
-            // InternalMappingDsl.g:6553:5: lv_type_0_0= rulePrimitiveType
+            // InternalMappingDsl.g:6560:4: (lv_type_0_0= rulePrimitiveType )
+            // InternalMappingDsl.g:6561:5: lv_type_0_0= rulePrimitiveType
             {
 
             					newCompositeNode(grammarAccess.getTechnologySpecificPropertyAccess().getTypePrimitiveTypeParserRuleCall_0_0());
@@ -16422,11 +16442,11 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalMappingDsl.g:6570:3: ( (lv_name_1_0= RULE_ID ) )
-            // InternalMappingDsl.g:6571:4: (lv_name_1_0= RULE_ID )
+            // InternalMappingDsl.g:6578:3: ( (lv_name_1_0= RULE_ID ) )
+            // InternalMappingDsl.g:6579:4: (lv_name_1_0= RULE_ID )
             {
-            // InternalMappingDsl.g:6571:4: (lv_name_1_0= RULE_ID )
-            // InternalMappingDsl.g:6572:5: lv_name_1_0= RULE_ID
+            // InternalMappingDsl.g:6579:4: (lv_name_1_0= RULE_ID )
+            // InternalMappingDsl.g:6580:5: lv_name_1_0= RULE_ID
             {
             lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_110); 
 
@@ -16448,26 +16468,26 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalMappingDsl.g:6588:3: (otherlv_2= '=' ( (lv_defaultValue_3_0= rulePrimitiveValue ) ) )?
+            // InternalMappingDsl.g:6596:3: (otherlv_2= '=' ( (lv_defaultValue_3_0= rulePrimitiveValue ) ) )?
             int alt155=2;
             int LA155_0 = input.LA(1);
 
-            if ( (LA155_0==49) ) {
+            if ( (LA155_0==50) ) {
                 alt155=1;
             }
             switch (alt155) {
                 case 1 :
-                    // InternalMappingDsl.g:6589:4: otherlv_2= '=' ( (lv_defaultValue_3_0= rulePrimitiveValue ) )
+                    // InternalMappingDsl.g:6597:4: otherlv_2= '=' ( (lv_defaultValue_3_0= rulePrimitiveValue ) )
                     {
-                    otherlv_2=(Token)match(input,49,FOLLOW_92); 
+                    otherlv_2=(Token)match(input,50,FOLLOW_92); 
 
                     				newLeafNode(otherlv_2, grammarAccess.getTechnologySpecificPropertyAccess().getEqualsSignKeyword_2_0());
                     			
-                    // InternalMappingDsl.g:6593:4: ( (lv_defaultValue_3_0= rulePrimitiveValue ) )
-                    // InternalMappingDsl.g:6594:5: (lv_defaultValue_3_0= rulePrimitiveValue )
+                    // InternalMappingDsl.g:6601:4: ( (lv_defaultValue_3_0= rulePrimitiveValue ) )
+                    // InternalMappingDsl.g:6602:5: (lv_defaultValue_3_0= rulePrimitiveValue )
                     {
-                    // InternalMappingDsl.g:6594:5: (lv_defaultValue_3_0= rulePrimitiveValue )
-                    // InternalMappingDsl.g:6595:6: lv_defaultValue_3_0= rulePrimitiveValue
+                    // InternalMappingDsl.g:6602:5: (lv_defaultValue_3_0= rulePrimitiveValue )
+                    // InternalMappingDsl.g:6603:6: lv_defaultValue_3_0= rulePrimitiveValue
                     {
 
                     						newCompositeNode(grammarAccess.getTechnologySpecificPropertyAccess().getDefaultValuePrimitiveValueParserRuleCall_2_1_0());
@@ -16500,26 +16520,26 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalMappingDsl.g:6613:3: (otherlv_4= '<' ( (lv_features_5_0= rulePropertyFeature ) ) (otherlv_6= ',' ( (lv_features_7_0= rulePropertyFeature ) ) )* otherlv_8= '>' )?
+            // InternalMappingDsl.g:6621:3: (otherlv_4= '<' ( (lv_features_5_0= rulePropertyFeature ) ) (otherlv_6= ',' ( (lv_features_7_0= rulePropertyFeature ) ) )* otherlv_8= '>' )?
             int alt157=2;
             int LA157_0 = input.LA(1);
 
-            if ( (LA157_0==57) ) {
+            if ( (LA157_0==58) ) {
                 alt157=1;
             }
             switch (alt157) {
                 case 1 :
-                    // InternalMappingDsl.g:6614:4: otherlv_4= '<' ( (lv_features_5_0= rulePropertyFeature ) ) (otherlv_6= ',' ( (lv_features_7_0= rulePropertyFeature ) ) )* otherlv_8= '>'
+                    // InternalMappingDsl.g:6622:4: otherlv_4= '<' ( (lv_features_5_0= rulePropertyFeature ) ) (otherlv_6= ',' ( (lv_features_7_0= rulePropertyFeature ) ) )* otherlv_8= '>'
                     {
-                    otherlv_4=(Token)match(input,57,FOLLOW_112); 
+                    otherlv_4=(Token)match(input,58,FOLLOW_112); 
 
                     				newLeafNode(otherlv_4, grammarAccess.getTechnologySpecificPropertyAccess().getLessThanSignKeyword_3_0());
                     			
-                    // InternalMappingDsl.g:6618:4: ( (lv_features_5_0= rulePropertyFeature ) )
-                    // InternalMappingDsl.g:6619:5: (lv_features_5_0= rulePropertyFeature )
+                    // InternalMappingDsl.g:6626:4: ( (lv_features_5_0= rulePropertyFeature ) )
+                    // InternalMappingDsl.g:6627:5: (lv_features_5_0= rulePropertyFeature )
                     {
-                    // InternalMappingDsl.g:6619:5: (lv_features_5_0= rulePropertyFeature )
-                    // InternalMappingDsl.g:6620:6: lv_features_5_0= rulePropertyFeature
+                    // InternalMappingDsl.g:6627:5: (lv_features_5_0= rulePropertyFeature )
+                    // InternalMappingDsl.g:6628:6: lv_features_5_0= rulePropertyFeature
                     {
 
                     						newCompositeNode(grammarAccess.getTechnologySpecificPropertyAccess().getFeaturesPropertyFeatureEnumRuleCall_3_1_0());
@@ -16546,30 +16566,30 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalMappingDsl.g:6637:4: (otherlv_6= ',' ( (lv_features_7_0= rulePropertyFeature ) ) )*
+                    // InternalMappingDsl.g:6645:4: (otherlv_6= ',' ( (lv_features_7_0= rulePropertyFeature ) ) )*
                     loop156:
                     do {
                         int alt156=2;
                         int LA156_0 = input.LA(1);
 
-                        if ( (LA156_0==34) ) {
+                        if ( (LA156_0==35) ) {
                             alt156=1;
                         }
 
 
                         switch (alt156) {
                     	case 1 :
-                    	    // InternalMappingDsl.g:6638:5: otherlv_6= ',' ( (lv_features_7_0= rulePropertyFeature ) )
+                    	    // InternalMappingDsl.g:6646:5: otherlv_6= ',' ( (lv_features_7_0= rulePropertyFeature ) )
                     	    {
-                    	    otherlv_6=(Token)match(input,34,FOLLOW_112); 
+                    	    otherlv_6=(Token)match(input,35,FOLLOW_112); 
 
                     	    					newLeafNode(otherlv_6, grammarAccess.getTechnologySpecificPropertyAccess().getCommaKeyword_3_2_0());
                     	    				
-                    	    // InternalMappingDsl.g:6642:5: ( (lv_features_7_0= rulePropertyFeature ) )
-                    	    // InternalMappingDsl.g:6643:6: (lv_features_7_0= rulePropertyFeature )
+                    	    // InternalMappingDsl.g:6650:5: ( (lv_features_7_0= rulePropertyFeature ) )
+                    	    // InternalMappingDsl.g:6651:6: (lv_features_7_0= rulePropertyFeature )
                     	    {
-                    	    // InternalMappingDsl.g:6643:6: (lv_features_7_0= rulePropertyFeature )
-                    	    // InternalMappingDsl.g:6644:7: lv_features_7_0= rulePropertyFeature
+                    	    // InternalMappingDsl.g:6651:6: (lv_features_7_0= rulePropertyFeature )
+                    	    // InternalMappingDsl.g:6652:7: lv_features_7_0= rulePropertyFeature
                     	    {
 
                     	    							newCompositeNode(grammarAccess.getTechnologySpecificPropertyAccess().getFeaturesPropertyFeatureEnumRuleCall_3_2_1_0());
@@ -16605,7 +16625,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         }
                     } while (true);
 
-                    otherlv_8=(Token)match(input,58,FOLLOW_53); 
+                    otherlv_8=(Token)match(input,59,FOLLOW_53); 
 
                     				newLeafNode(otherlv_8, grammarAccess.getTechnologySpecificPropertyAccess().getGreaterThanSignKeyword_3_3());
                     			
@@ -16615,7 +16635,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_9=(Token)match(input,26,FOLLOW_2); 
+            otherlv_9=(Token)match(input,27,FOLLOW_2); 
 
             			newLeafNode(otherlv_9, grammarAccess.getTechnologySpecificPropertyAccess().getSemicolonKeyword_4());
             		
@@ -16642,7 +16662,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleServiceAspectPointcut"
-    // InternalMappingDsl.g:6675:1: entryRuleServiceAspectPointcut returns [EObject current=null] : iv_ruleServiceAspectPointcut= ruleServiceAspectPointcut EOF ;
+    // InternalMappingDsl.g:6683:1: entryRuleServiceAspectPointcut returns [EObject current=null] : iv_ruleServiceAspectPointcut= ruleServiceAspectPointcut EOF ;
     public final EObject entryRuleServiceAspectPointcut() throws RecognitionException {
         EObject current = null;
 
@@ -16650,8 +16670,8 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalMappingDsl.g:6675:62: (iv_ruleServiceAspectPointcut= ruleServiceAspectPointcut EOF )
-            // InternalMappingDsl.g:6676:2: iv_ruleServiceAspectPointcut= ruleServiceAspectPointcut EOF
+            // InternalMappingDsl.g:6683:62: (iv_ruleServiceAspectPointcut= ruleServiceAspectPointcut EOF )
+            // InternalMappingDsl.g:6684:2: iv_ruleServiceAspectPointcut= ruleServiceAspectPointcut EOF
             {
              newCompositeNode(grammarAccess.getServiceAspectPointcutRule()); 
             pushFollow(FOLLOW_1);
@@ -16678,7 +16698,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleServiceAspectPointcut"
-    // InternalMappingDsl.g:6682:1: ruleServiceAspectPointcut returns [EObject current=null] : ( ( ( (lv_forExchangePattern_0_0= 'exchange_pattern' ) ) otherlv_1= '=' ( (lv_exchangePattern_2_0= ruleExchangePattern ) ) ) | ( ( (lv_forCommunicationType_3_0= 'communication_type' ) ) otherlv_4= '=' ( (lv_communicationType_5_0= ruleCommunicationType ) ) ) | ( ( (lv_forProtocol_6_0= 'protocol' ) ) otherlv_7= '=' ( (otherlv_8= RULE_ID ) ) ) | ( ( (lv_forDataFormat_9_0= 'data_format' ) ) otherlv_10= '=' ( (otherlv_11= RULE_STRING ) ) ) ) ;
+    // InternalMappingDsl.g:6690:1: ruleServiceAspectPointcut returns [EObject current=null] : ( ( ( (lv_forExchangePattern_0_0= 'exchange_pattern' ) ) otherlv_1= '=' ( (lv_exchangePattern_2_0= ruleExchangePattern ) ) ) | ( ( (lv_forCommunicationType_3_0= 'communication_type' ) ) otherlv_4= '=' ( (lv_communicationType_5_0= ruleCommunicationType ) ) ) | ( ( (lv_forProtocol_6_0= 'protocol' ) ) otherlv_7= '=' ( (otherlv_8= RULE_ID ) ) ) | ( ( (lv_forDataFormat_9_0= 'data_format' ) ) otherlv_10= '=' ( (otherlv_11= RULE_STRING ) ) ) ) ;
     public final EObject ruleServiceAspectPointcut() throws RecognitionException {
         EObject current = null;
 
@@ -16701,28 +16721,28 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:6688:2: ( ( ( ( (lv_forExchangePattern_0_0= 'exchange_pattern' ) ) otherlv_1= '=' ( (lv_exchangePattern_2_0= ruleExchangePattern ) ) ) | ( ( (lv_forCommunicationType_3_0= 'communication_type' ) ) otherlv_4= '=' ( (lv_communicationType_5_0= ruleCommunicationType ) ) ) | ( ( (lv_forProtocol_6_0= 'protocol' ) ) otherlv_7= '=' ( (otherlv_8= RULE_ID ) ) ) | ( ( (lv_forDataFormat_9_0= 'data_format' ) ) otherlv_10= '=' ( (otherlv_11= RULE_STRING ) ) ) ) )
-            // InternalMappingDsl.g:6689:2: ( ( ( (lv_forExchangePattern_0_0= 'exchange_pattern' ) ) otherlv_1= '=' ( (lv_exchangePattern_2_0= ruleExchangePattern ) ) ) | ( ( (lv_forCommunicationType_3_0= 'communication_type' ) ) otherlv_4= '=' ( (lv_communicationType_5_0= ruleCommunicationType ) ) ) | ( ( (lv_forProtocol_6_0= 'protocol' ) ) otherlv_7= '=' ( (otherlv_8= RULE_ID ) ) ) | ( ( (lv_forDataFormat_9_0= 'data_format' ) ) otherlv_10= '=' ( (otherlv_11= RULE_STRING ) ) ) )
+            // InternalMappingDsl.g:6696:2: ( ( ( ( (lv_forExchangePattern_0_0= 'exchange_pattern' ) ) otherlv_1= '=' ( (lv_exchangePattern_2_0= ruleExchangePattern ) ) ) | ( ( (lv_forCommunicationType_3_0= 'communication_type' ) ) otherlv_4= '=' ( (lv_communicationType_5_0= ruleCommunicationType ) ) ) | ( ( (lv_forProtocol_6_0= 'protocol' ) ) otherlv_7= '=' ( (otherlv_8= RULE_ID ) ) ) | ( ( (lv_forDataFormat_9_0= 'data_format' ) ) otherlv_10= '=' ( (otherlv_11= RULE_STRING ) ) ) ) )
+            // InternalMappingDsl.g:6697:2: ( ( ( (lv_forExchangePattern_0_0= 'exchange_pattern' ) ) otherlv_1= '=' ( (lv_exchangePattern_2_0= ruleExchangePattern ) ) ) | ( ( (lv_forCommunicationType_3_0= 'communication_type' ) ) otherlv_4= '=' ( (lv_communicationType_5_0= ruleCommunicationType ) ) ) | ( ( (lv_forProtocol_6_0= 'protocol' ) ) otherlv_7= '=' ( (otherlv_8= RULE_ID ) ) ) | ( ( (lv_forDataFormat_9_0= 'data_format' ) ) otherlv_10= '=' ( (otherlv_11= RULE_STRING ) ) ) )
             {
-            // InternalMappingDsl.g:6689:2: ( ( ( (lv_forExchangePattern_0_0= 'exchange_pattern' ) ) otherlv_1= '=' ( (lv_exchangePattern_2_0= ruleExchangePattern ) ) ) | ( ( (lv_forCommunicationType_3_0= 'communication_type' ) ) otherlv_4= '=' ( (lv_communicationType_5_0= ruleCommunicationType ) ) ) | ( ( (lv_forProtocol_6_0= 'protocol' ) ) otherlv_7= '=' ( (otherlv_8= RULE_ID ) ) ) | ( ( (lv_forDataFormat_9_0= 'data_format' ) ) otherlv_10= '=' ( (otherlv_11= RULE_STRING ) ) ) )
+            // InternalMappingDsl.g:6697:2: ( ( ( (lv_forExchangePattern_0_0= 'exchange_pattern' ) ) otherlv_1= '=' ( (lv_exchangePattern_2_0= ruleExchangePattern ) ) ) | ( ( (lv_forCommunicationType_3_0= 'communication_type' ) ) otherlv_4= '=' ( (lv_communicationType_5_0= ruleCommunicationType ) ) ) | ( ( (lv_forProtocol_6_0= 'protocol' ) ) otherlv_7= '=' ( (otherlv_8= RULE_ID ) ) ) | ( ( (lv_forDataFormat_9_0= 'data_format' ) ) otherlv_10= '=' ( (otherlv_11= RULE_STRING ) ) ) )
             int alt158=4;
             switch ( input.LA(1) ) {
-            case 90:
+            case 91:
                 {
                 alt158=1;
                 }
                 break;
-            case 91:
+            case 92:
                 {
                 alt158=2;
                 }
                 break;
-            case 92:
+            case 93:
                 {
                 alt158=3;
                 }
                 break;
-            case 93:
+            case 94:
                 {
                 alt158=4;
                 }
@@ -16736,18 +16756,18 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             switch (alt158) {
                 case 1 :
-                    // InternalMappingDsl.g:6690:3: ( ( (lv_forExchangePattern_0_0= 'exchange_pattern' ) ) otherlv_1= '=' ( (lv_exchangePattern_2_0= ruleExchangePattern ) ) )
+                    // InternalMappingDsl.g:6698:3: ( ( (lv_forExchangePattern_0_0= 'exchange_pattern' ) ) otherlv_1= '=' ( (lv_exchangePattern_2_0= ruleExchangePattern ) ) )
                     {
-                    // InternalMappingDsl.g:6690:3: ( ( (lv_forExchangePattern_0_0= 'exchange_pattern' ) ) otherlv_1= '=' ( (lv_exchangePattern_2_0= ruleExchangePattern ) ) )
-                    // InternalMappingDsl.g:6691:4: ( (lv_forExchangePattern_0_0= 'exchange_pattern' ) ) otherlv_1= '=' ( (lv_exchangePattern_2_0= ruleExchangePattern ) )
+                    // InternalMappingDsl.g:6698:3: ( ( (lv_forExchangePattern_0_0= 'exchange_pattern' ) ) otherlv_1= '=' ( (lv_exchangePattern_2_0= ruleExchangePattern ) ) )
+                    // InternalMappingDsl.g:6699:4: ( (lv_forExchangePattern_0_0= 'exchange_pattern' ) ) otherlv_1= '=' ( (lv_exchangePattern_2_0= ruleExchangePattern ) )
                     {
-                    // InternalMappingDsl.g:6691:4: ( (lv_forExchangePattern_0_0= 'exchange_pattern' ) )
-                    // InternalMappingDsl.g:6692:5: (lv_forExchangePattern_0_0= 'exchange_pattern' )
+                    // InternalMappingDsl.g:6699:4: ( (lv_forExchangePattern_0_0= 'exchange_pattern' ) )
+                    // InternalMappingDsl.g:6700:5: (lv_forExchangePattern_0_0= 'exchange_pattern' )
                     {
-                    // InternalMappingDsl.g:6692:5: (lv_forExchangePattern_0_0= 'exchange_pattern' )
-                    // InternalMappingDsl.g:6693:6: lv_forExchangePattern_0_0= 'exchange_pattern'
+                    // InternalMappingDsl.g:6700:5: (lv_forExchangePattern_0_0= 'exchange_pattern' )
+                    // InternalMappingDsl.g:6701:6: lv_forExchangePattern_0_0= 'exchange_pattern'
                     {
-                    lv_forExchangePattern_0_0=(Token)match(input,90,FOLLOW_73); 
+                    lv_forExchangePattern_0_0=(Token)match(input,91,FOLLOW_73); 
 
                     						newLeafNode(lv_forExchangePattern_0_0, grammarAccess.getServiceAspectPointcutAccess().getForExchangePatternExchange_patternKeyword_0_0_0());
                     					
@@ -16763,15 +16783,15 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_1=(Token)match(input,49,FOLLOW_114); 
+                    otherlv_1=(Token)match(input,50,FOLLOW_114); 
 
                     				newLeafNode(otherlv_1, grammarAccess.getServiceAspectPointcutAccess().getEqualsSignKeyword_0_1());
                     			
-                    // InternalMappingDsl.g:6709:4: ( (lv_exchangePattern_2_0= ruleExchangePattern ) )
-                    // InternalMappingDsl.g:6710:5: (lv_exchangePattern_2_0= ruleExchangePattern )
+                    // InternalMappingDsl.g:6717:4: ( (lv_exchangePattern_2_0= ruleExchangePattern ) )
+                    // InternalMappingDsl.g:6718:5: (lv_exchangePattern_2_0= ruleExchangePattern )
                     {
-                    // InternalMappingDsl.g:6710:5: (lv_exchangePattern_2_0= ruleExchangePattern )
-                    // InternalMappingDsl.g:6711:6: lv_exchangePattern_2_0= ruleExchangePattern
+                    // InternalMappingDsl.g:6718:5: (lv_exchangePattern_2_0= ruleExchangePattern )
+                    // InternalMappingDsl.g:6719:6: lv_exchangePattern_2_0= ruleExchangePattern
                     {
 
                     						newCompositeNode(grammarAccess.getServiceAspectPointcutAccess().getExchangePatternExchangePatternEnumRuleCall_0_2_0());
@@ -16805,18 +16825,18 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalMappingDsl.g:6730:3: ( ( (lv_forCommunicationType_3_0= 'communication_type' ) ) otherlv_4= '=' ( (lv_communicationType_5_0= ruleCommunicationType ) ) )
+                    // InternalMappingDsl.g:6738:3: ( ( (lv_forCommunicationType_3_0= 'communication_type' ) ) otherlv_4= '=' ( (lv_communicationType_5_0= ruleCommunicationType ) ) )
                     {
-                    // InternalMappingDsl.g:6730:3: ( ( (lv_forCommunicationType_3_0= 'communication_type' ) ) otherlv_4= '=' ( (lv_communicationType_5_0= ruleCommunicationType ) ) )
-                    // InternalMappingDsl.g:6731:4: ( (lv_forCommunicationType_3_0= 'communication_type' ) ) otherlv_4= '=' ( (lv_communicationType_5_0= ruleCommunicationType ) )
+                    // InternalMappingDsl.g:6738:3: ( ( (lv_forCommunicationType_3_0= 'communication_type' ) ) otherlv_4= '=' ( (lv_communicationType_5_0= ruleCommunicationType ) ) )
+                    // InternalMappingDsl.g:6739:4: ( (lv_forCommunicationType_3_0= 'communication_type' ) ) otherlv_4= '=' ( (lv_communicationType_5_0= ruleCommunicationType ) )
                     {
-                    // InternalMappingDsl.g:6731:4: ( (lv_forCommunicationType_3_0= 'communication_type' ) )
-                    // InternalMappingDsl.g:6732:5: (lv_forCommunicationType_3_0= 'communication_type' )
+                    // InternalMappingDsl.g:6739:4: ( (lv_forCommunicationType_3_0= 'communication_type' ) )
+                    // InternalMappingDsl.g:6740:5: (lv_forCommunicationType_3_0= 'communication_type' )
                     {
-                    // InternalMappingDsl.g:6732:5: (lv_forCommunicationType_3_0= 'communication_type' )
-                    // InternalMappingDsl.g:6733:6: lv_forCommunicationType_3_0= 'communication_type'
+                    // InternalMappingDsl.g:6740:5: (lv_forCommunicationType_3_0= 'communication_type' )
+                    // InternalMappingDsl.g:6741:6: lv_forCommunicationType_3_0= 'communication_type'
                     {
-                    lv_forCommunicationType_3_0=(Token)match(input,91,FOLLOW_73); 
+                    lv_forCommunicationType_3_0=(Token)match(input,92,FOLLOW_73); 
 
                     						newLeafNode(lv_forCommunicationType_3_0, grammarAccess.getServiceAspectPointcutAccess().getForCommunicationTypeCommunication_typeKeyword_1_0_0());
                     					
@@ -16832,15 +16852,15 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_4=(Token)match(input,49,FOLLOW_16); 
+                    otherlv_4=(Token)match(input,50,FOLLOW_16); 
 
                     				newLeafNode(otherlv_4, grammarAccess.getServiceAspectPointcutAccess().getEqualsSignKeyword_1_1());
                     			
-                    // InternalMappingDsl.g:6749:4: ( (lv_communicationType_5_0= ruleCommunicationType ) )
-                    // InternalMappingDsl.g:6750:5: (lv_communicationType_5_0= ruleCommunicationType )
+                    // InternalMappingDsl.g:6757:4: ( (lv_communicationType_5_0= ruleCommunicationType ) )
+                    // InternalMappingDsl.g:6758:5: (lv_communicationType_5_0= ruleCommunicationType )
                     {
-                    // InternalMappingDsl.g:6750:5: (lv_communicationType_5_0= ruleCommunicationType )
-                    // InternalMappingDsl.g:6751:6: lv_communicationType_5_0= ruleCommunicationType
+                    // InternalMappingDsl.g:6758:5: (lv_communicationType_5_0= ruleCommunicationType )
+                    // InternalMappingDsl.g:6759:6: lv_communicationType_5_0= ruleCommunicationType
                     {
 
                     						newCompositeNode(grammarAccess.getServiceAspectPointcutAccess().getCommunicationTypeCommunicationTypeEnumRuleCall_1_2_0());
@@ -16874,18 +16894,18 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalMappingDsl.g:6770:3: ( ( (lv_forProtocol_6_0= 'protocol' ) ) otherlv_7= '=' ( (otherlv_8= RULE_ID ) ) )
+                    // InternalMappingDsl.g:6778:3: ( ( (lv_forProtocol_6_0= 'protocol' ) ) otherlv_7= '=' ( (otherlv_8= RULE_ID ) ) )
                     {
-                    // InternalMappingDsl.g:6770:3: ( ( (lv_forProtocol_6_0= 'protocol' ) ) otherlv_7= '=' ( (otherlv_8= RULE_ID ) ) )
-                    // InternalMappingDsl.g:6771:4: ( (lv_forProtocol_6_0= 'protocol' ) ) otherlv_7= '=' ( (otherlv_8= RULE_ID ) )
+                    // InternalMappingDsl.g:6778:3: ( ( (lv_forProtocol_6_0= 'protocol' ) ) otherlv_7= '=' ( (otherlv_8= RULE_ID ) ) )
+                    // InternalMappingDsl.g:6779:4: ( (lv_forProtocol_6_0= 'protocol' ) ) otherlv_7= '=' ( (otherlv_8= RULE_ID ) )
                     {
-                    // InternalMappingDsl.g:6771:4: ( (lv_forProtocol_6_0= 'protocol' ) )
-                    // InternalMappingDsl.g:6772:5: (lv_forProtocol_6_0= 'protocol' )
+                    // InternalMappingDsl.g:6779:4: ( (lv_forProtocol_6_0= 'protocol' ) )
+                    // InternalMappingDsl.g:6780:5: (lv_forProtocol_6_0= 'protocol' )
                     {
-                    // InternalMappingDsl.g:6772:5: (lv_forProtocol_6_0= 'protocol' )
-                    // InternalMappingDsl.g:6773:6: lv_forProtocol_6_0= 'protocol'
+                    // InternalMappingDsl.g:6780:5: (lv_forProtocol_6_0= 'protocol' )
+                    // InternalMappingDsl.g:6781:6: lv_forProtocol_6_0= 'protocol'
                     {
-                    lv_forProtocol_6_0=(Token)match(input,92,FOLLOW_73); 
+                    lv_forProtocol_6_0=(Token)match(input,93,FOLLOW_73); 
 
                     						newLeafNode(lv_forProtocol_6_0, grammarAccess.getServiceAspectPointcutAccess().getForProtocolProtocolKeyword_2_0_0());
                     					
@@ -16901,15 +16921,15 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_7=(Token)match(input,49,FOLLOW_7); 
+                    otherlv_7=(Token)match(input,50,FOLLOW_7); 
 
                     				newLeafNode(otherlv_7, grammarAccess.getServiceAspectPointcutAccess().getEqualsSignKeyword_2_1());
                     			
-                    // InternalMappingDsl.g:6789:4: ( (otherlv_8= RULE_ID ) )
-                    // InternalMappingDsl.g:6790:5: (otherlv_8= RULE_ID )
+                    // InternalMappingDsl.g:6797:4: ( (otherlv_8= RULE_ID ) )
+                    // InternalMappingDsl.g:6798:5: (otherlv_8= RULE_ID )
                     {
-                    // InternalMappingDsl.g:6790:5: (otherlv_8= RULE_ID )
-                    // InternalMappingDsl.g:6791:6: otherlv_8= RULE_ID
+                    // InternalMappingDsl.g:6798:5: (otherlv_8= RULE_ID )
+                    // InternalMappingDsl.g:6799:6: otherlv_8= RULE_ID
                     {
 
                     						if (current==null) {
@@ -16933,18 +16953,18 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalMappingDsl.g:6804:3: ( ( (lv_forDataFormat_9_0= 'data_format' ) ) otherlv_10= '=' ( (otherlv_11= RULE_STRING ) ) )
+                    // InternalMappingDsl.g:6812:3: ( ( (lv_forDataFormat_9_0= 'data_format' ) ) otherlv_10= '=' ( (otherlv_11= RULE_STRING ) ) )
                     {
-                    // InternalMappingDsl.g:6804:3: ( ( (lv_forDataFormat_9_0= 'data_format' ) ) otherlv_10= '=' ( (otherlv_11= RULE_STRING ) ) )
-                    // InternalMappingDsl.g:6805:4: ( (lv_forDataFormat_9_0= 'data_format' ) ) otherlv_10= '=' ( (otherlv_11= RULE_STRING ) )
+                    // InternalMappingDsl.g:6812:3: ( ( (lv_forDataFormat_9_0= 'data_format' ) ) otherlv_10= '=' ( (otherlv_11= RULE_STRING ) ) )
+                    // InternalMappingDsl.g:6813:4: ( (lv_forDataFormat_9_0= 'data_format' ) ) otherlv_10= '=' ( (otherlv_11= RULE_STRING ) )
                     {
-                    // InternalMappingDsl.g:6805:4: ( (lv_forDataFormat_9_0= 'data_format' ) )
-                    // InternalMappingDsl.g:6806:5: (lv_forDataFormat_9_0= 'data_format' )
+                    // InternalMappingDsl.g:6813:4: ( (lv_forDataFormat_9_0= 'data_format' ) )
+                    // InternalMappingDsl.g:6814:5: (lv_forDataFormat_9_0= 'data_format' )
                     {
-                    // InternalMappingDsl.g:6806:5: (lv_forDataFormat_9_0= 'data_format' )
-                    // InternalMappingDsl.g:6807:6: lv_forDataFormat_9_0= 'data_format'
+                    // InternalMappingDsl.g:6814:5: (lv_forDataFormat_9_0= 'data_format' )
+                    // InternalMappingDsl.g:6815:6: lv_forDataFormat_9_0= 'data_format'
                     {
-                    lv_forDataFormat_9_0=(Token)match(input,93,FOLLOW_73); 
+                    lv_forDataFormat_9_0=(Token)match(input,94,FOLLOW_73); 
 
                     						newLeafNode(lv_forDataFormat_9_0, grammarAccess.getServiceAspectPointcutAccess().getForDataFormatData_formatKeyword_3_0_0());
                     					
@@ -16960,15 +16980,15 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_10=(Token)match(input,49,FOLLOW_46); 
+                    otherlv_10=(Token)match(input,50,FOLLOW_46); 
 
                     				newLeafNode(otherlv_10, grammarAccess.getServiceAspectPointcutAccess().getEqualsSignKeyword_3_1());
                     			
-                    // InternalMappingDsl.g:6823:4: ( (otherlv_11= RULE_STRING ) )
-                    // InternalMappingDsl.g:6824:5: (otherlv_11= RULE_STRING )
+                    // InternalMappingDsl.g:6831:4: ( (otherlv_11= RULE_STRING ) )
+                    // InternalMappingDsl.g:6832:5: (otherlv_11= RULE_STRING )
                     {
-                    // InternalMappingDsl.g:6824:5: (otherlv_11= RULE_STRING )
-                    // InternalMappingDsl.g:6825:6: otherlv_11= RULE_STRING
+                    // InternalMappingDsl.g:6832:5: (otherlv_11= RULE_STRING )
+                    // InternalMappingDsl.g:6833:6: otherlv_11= RULE_STRING
                     {
 
                     						if (current==null) {
@@ -17014,7 +17034,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleServiceAspectPointcutSelector"
-    // InternalMappingDsl.g:6841:1: entryRuleServiceAspectPointcutSelector returns [EObject current=null] : iv_ruleServiceAspectPointcutSelector= ruleServiceAspectPointcutSelector EOF ;
+    // InternalMappingDsl.g:6849:1: entryRuleServiceAspectPointcutSelector returns [EObject current=null] : iv_ruleServiceAspectPointcutSelector= ruleServiceAspectPointcutSelector EOF ;
     public final EObject entryRuleServiceAspectPointcutSelector() throws RecognitionException {
         EObject current = null;
 
@@ -17022,8 +17042,8 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalMappingDsl.g:6841:70: (iv_ruleServiceAspectPointcutSelector= ruleServiceAspectPointcutSelector EOF )
-            // InternalMappingDsl.g:6842:2: iv_ruleServiceAspectPointcutSelector= ruleServiceAspectPointcutSelector EOF
+            // InternalMappingDsl.g:6849:70: (iv_ruleServiceAspectPointcutSelector= ruleServiceAspectPointcutSelector EOF )
+            // InternalMappingDsl.g:6850:2: iv_ruleServiceAspectPointcutSelector= ruleServiceAspectPointcutSelector EOF
             {
              newCompositeNode(grammarAccess.getServiceAspectPointcutSelectorRule()); 
             pushFollow(FOLLOW_1);
@@ -17050,7 +17070,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleServiceAspectPointcutSelector"
-    // InternalMappingDsl.g:6848:1: ruleServiceAspectPointcutSelector returns [EObject current=null] : (otherlv_0= 'selector' otherlv_1= '(' ( (lv_pointcuts_2_0= ruleServiceAspectPointcut ) ) (otherlv_3= ',' ( (lv_pointcuts_4_0= ruleServiceAspectPointcut ) ) )* otherlv_5= ')' otherlv_6= ';' ) ;
+    // InternalMappingDsl.g:6856:1: ruleServiceAspectPointcutSelector returns [EObject current=null] : (otherlv_0= 'selector' otherlv_1= '(' ( (lv_pointcuts_2_0= ruleServiceAspectPointcut ) ) (otherlv_3= ',' ( (lv_pointcuts_4_0= ruleServiceAspectPointcut ) ) )* otherlv_5= ')' otherlv_6= ';' ) ;
     public final EObject ruleServiceAspectPointcutSelector() throws RecognitionException {
         EObject current = null;
 
@@ -17068,25 +17088,25 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:6854:2: ( (otherlv_0= 'selector' otherlv_1= '(' ( (lv_pointcuts_2_0= ruleServiceAspectPointcut ) ) (otherlv_3= ',' ( (lv_pointcuts_4_0= ruleServiceAspectPointcut ) ) )* otherlv_5= ')' otherlv_6= ';' ) )
-            // InternalMappingDsl.g:6855:2: (otherlv_0= 'selector' otherlv_1= '(' ( (lv_pointcuts_2_0= ruleServiceAspectPointcut ) ) (otherlv_3= ',' ( (lv_pointcuts_4_0= ruleServiceAspectPointcut ) ) )* otherlv_5= ')' otherlv_6= ';' )
+            // InternalMappingDsl.g:6862:2: ( (otherlv_0= 'selector' otherlv_1= '(' ( (lv_pointcuts_2_0= ruleServiceAspectPointcut ) ) (otherlv_3= ',' ( (lv_pointcuts_4_0= ruleServiceAspectPointcut ) ) )* otherlv_5= ')' otherlv_6= ';' ) )
+            // InternalMappingDsl.g:6863:2: (otherlv_0= 'selector' otherlv_1= '(' ( (lv_pointcuts_2_0= ruleServiceAspectPointcut ) ) (otherlv_3= ',' ( (lv_pointcuts_4_0= ruleServiceAspectPointcut ) ) )* otherlv_5= ')' otherlv_6= ';' )
             {
-            // InternalMappingDsl.g:6855:2: (otherlv_0= 'selector' otherlv_1= '(' ( (lv_pointcuts_2_0= ruleServiceAspectPointcut ) ) (otherlv_3= ',' ( (lv_pointcuts_4_0= ruleServiceAspectPointcut ) ) )* otherlv_5= ')' otherlv_6= ';' )
-            // InternalMappingDsl.g:6856:3: otherlv_0= 'selector' otherlv_1= '(' ( (lv_pointcuts_2_0= ruleServiceAspectPointcut ) ) (otherlv_3= ',' ( (lv_pointcuts_4_0= ruleServiceAspectPointcut ) ) )* otherlv_5= ')' otherlv_6= ';'
+            // InternalMappingDsl.g:6863:2: (otherlv_0= 'selector' otherlv_1= '(' ( (lv_pointcuts_2_0= ruleServiceAspectPointcut ) ) (otherlv_3= ',' ( (lv_pointcuts_4_0= ruleServiceAspectPointcut ) ) )* otherlv_5= ')' otherlv_6= ';' )
+            // InternalMappingDsl.g:6864:3: otherlv_0= 'selector' otherlv_1= '(' ( (lv_pointcuts_2_0= ruleServiceAspectPointcut ) ) (otherlv_3= ',' ( (lv_pointcuts_4_0= ruleServiceAspectPointcut ) ) )* otherlv_5= ')' otherlv_6= ';'
             {
-            otherlv_0=(Token)match(input,97,FOLLOW_59); 
+            otherlv_0=(Token)match(input,98,FOLLOW_59); 
 
             			newLeafNode(otherlv_0, grammarAccess.getServiceAspectPointcutSelectorAccess().getSelectorKeyword_0());
             		
-            otherlv_1=(Token)match(input,32,FOLLOW_115); 
+            otherlv_1=(Token)match(input,33,FOLLOW_115); 
 
             			newLeafNode(otherlv_1, grammarAccess.getServiceAspectPointcutSelectorAccess().getLeftParenthesisKeyword_1());
             		
-            // InternalMappingDsl.g:6864:3: ( (lv_pointcuts_2_0= ruleServiceAspectPointcut ) )
-            // InternalMappingDsl.g:6865:4: (lv_pointcuts_2_0= ruleServiceAspectPointcut )
+            // InternalMappingDsl.g:6872:3: ( (lv_pointcuts_2_0= ruleServiceAspectPointcut ) )
+            // InternalMappingDsl.g:6873:4: (lv_pointcuts_2_0= ruleServiceAspectPointcut )
             {
-            // InternalMappingDsl.g:6865:4: (lv_pointcuts_2_0= ruleServiceAspectPointcut )
-            // InternalMappingDsl.g:6866:5: lv_pointcuts_2_0= ruleServiceAspectPointcut
+            // InternalMappingDsl.g:6873:4: (lv_pointcuts_2_0= ruleServiceAspectPointcut )
+            // InternalMappingDsl.g:6874:5: lv_pointcuts_2_0= ruleServiceAspectPointcut
             {
 
             					newCompositeNode(grammarAccess.getServiceAspectPointcutSelectorAccess().getPointcutsServiceAspectPointcutParserRuleCall_2_0());
@@ -17113,30 +17133,30 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalMappingDsl.g:6883:3: (otherlv_3= ',' ( (lv_pointcuts_4_0= ruleServiceAspectPointcut ) ) )*
+            // InternalMappingDsl.g:6891:3: (otherlv_3= ',' ( (lv_pointcuts_4_0= ruleServiceAspectPointcut ) ) )*
             loop159:
             do {
                 int alt159=2;
                 int LA159_0 = input.LA(1);
 
-                if ( (LA159_0==34) ) {
+                if ( (LA159_0==35) ) {
                     alt159=1;
                 }
 
 
                 switch (alt159) {
             	case 1 :
-            	    // InternalMappingDsl.g:6884:4: otherlv_3= ',' ( (lv_pointcuts_4_0= ruleServiceAspectPointcut ) )
+            	    // InternalMappingDsl.g:6892:4: otherlv_3= ',' ( (lv_pointcuts_4_0= ruleServiceAspectPointcut ) )
             	    {
-            	    otherlv_3=(Token)match(input,34,FOLLOW_115); 
+            	    otherlv_3=(Token)match(input,35,FOLLOW_115); 
 
             	    				newLeafNode(otherlv_3, grammarAccess.getServiceAspectPointcutSelectorAccess().getCommaKeyword_3_0());
             	    			
-            	    // InternalMappingDsl.g:6888:4: ( (lv_pointcuts_4_0= ruleServiceAspectPointcut ) )
-            	    // InternalMappingDsl.g:6889:5: (lv_pointcuts_4_0= ruleServiceAspectPointcut )
+            	    // InternalMappingDsl.g:6896:4: ( (lv_pointcuts_4_0= ruleServiceAspectPointcut ) )
+            	    // InternalMappingDsl.g:6897:5: (lv_pointcuts_4_0= ruleServiceAspectPointcut )
             	    {
-            	    // InternalMappingDsl.g:6889:5: (lv_pointcuts_4_0= ruleServiceAspectPointcut )
-            	    // InternalMappingDsl.g:6890:6: lv_pointcuts_4_0= ruleServiceAspectPointcut
+            	    // InternalMappingDsl.g:6897:5: (lv_pointcuts_4_0= ruleServiceAspectPointcut )
+            	    // InternalMappingDsl.g:6898:6: lv_pointcuts_4_0= ruleServiceAspectPointcut
             	    {
 
             	    						newCompositeNode(grammarAccess.getServiceAspectPointcutSelectorAccess().getPointcutsServiceAspectPointcutParserRuleCall_3_1_0());
@@ -17172,11 +17192,11 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            otherlv_5=(Token)match(input,33,FOLLOW_53); 
+            otherlv_5=(Token)match(input,34,FOLLOW_53); 
 
             			newLeafNode(otherlv_5, grammarAccess.getServiceAspectPointcutSelectorAccess().getRightParenthesisKeyword_4());
             		
-            otherlv_6=(Token)match(input,26,FOLLOW_2); 
+            otherlv_6=(Token)match(input,27,FOLLOW_2); 
 
             			newLeafNode(otherlv_6, grammarAccess.getServiceAspectPointcutSelectorAccess().getSemicolonKeyword_5());
             		
@@ -17203,7 +17223,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleServiceAspect"
-    // InternalMappingDsl.g:6920:1: entryRuleServiceAspect returns [EObject current=null] : iv_ruleServiceAspect= ruleServiceAspect EOF ;
+    // InternalMappingDsl.g:6928:1: entryRuleServiceAspect returns [EObject current=null] : iv_ruleServiceAspect= ruleServiceAspect EOF ;
     public final EObject entryRuleServiceAspect() throws RecognitionException {
         EObject current = null;
 
@@ -17211,8 +17231,8 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalMappingDsl.g:6920:54: (iv_ruleServiceAspect= ruleServiceAspect EOF )
-            // InternalMappingDsl.g:6921:2: iv_ruleServiceAspect= ruleServiceAspect EOF
+            // InternalMappingDsl.g:6928:54: (iv_ruleServiceAspect= ruleServiceAspect EOF )
+            // InternalMappingDsl.g:6929:2: iv_ruleServiceAspect= ruleServiceAspect EOF
             {
              newCompositeNode(grammarAccess.getServiceAspectRule()); 
             pushFollow(FOLLOW_1);
@@ -17239,7 +17259,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleServiceAspect"
-    // InternalMappingDsl.g:6927:1: ruleServiceAspect returns [EObject current=null] : (otherlv_0= 'aspect' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleAspectFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleAspectFeature ) ) )* otherlv_6= '>' )? otherlv_7= 'for' ( (lv_joinPoints_8_0= ruleServiceJoinPointType ) ) (otherlv_9= ',' ( (lv_joinPoints_10_0= ruleServiceJoinPointType ) ) )* ( (otherlv_11= '{' ( (lv_pointcutSelectors_12_0= ruleServiceAspectPointcutSelector ) )* ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )* otherlv_14= '}' ) | otherlv_15= ';' ) ) ;
+    // InternalMappingDsl.g:6935:1: ruleServiceAspect returns [EObject current=null] : (otherlv_0= 'aspect' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleAspectFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleAspectFeature ) ) )* otherlv_6= '>' )? otherlv_7= 'for' ( (lv_joinPoints_8_0= ruleServiceJoinPointType ) ) (otherlv_9= ',' ( (lv_joinPoints_10_0= ruleServiceJoinPointType ) ) )* ( (otherlv_11= '{' ( (lv_pointcutSelectors_12_0= ruleServiceAspectPointcutSelector ) )* ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )* otherlv_14= '}' ) | otherlv_15= ';' ) ) ;
     public final EObject ruleServiceAspect() throws RecognitionException {
         EObject current = null;
 
@@ -17270,21 +17290,21 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:6933:2: ( (otherlv_0= 'aspect' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleAspectFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleAspectFeature ) ) )* otherlv_6= '>' )? otherlv_7= 'for' ( (lv_joinPoints_8_0= ruleServiceJoinPointType ) ) (otherlv_9= ',' ( (lv_joinPoints_10_0= ruleServiceJoinPointType ) ) )* ( (otherlv_11= '{' ( (lv_pointcutSelectors_12_0= ruleServiceAspectPointcutSelector ) )* ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )* otherlv_14= '}' ) | otherlv_15= ';' ) ) )
-            // InternalMappingDsl.g:6934:2: (otherlv_0= 'aspect' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleAspectFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleAspectFeature ) ) )* otherlv_6= '>' )? otherlv_7= 'for' ( (lv_joinPoints_8_0= ruleServiceJoinPointType ) ) (otherlv_9= ',' ( (lv_joinPoints_10_0= ruleServiceJoinPointType ) ) )* ( (otherlv_11= '{' ( (lv_pointcutSelectors_12_0= ruleServiceAspectPointcutSelector ) )* ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )* otherlv_14= '}' ) | otherlv_15= ';' ) )
+            // InternalMappingDsl.g:6941:2: ( (otherlv_0= 'aspect' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleAspectFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleAspectFeature ) ) )* otherlv_6= '>' )? otherlv_7= 'for' ( (lv_joinPoints_8_0= ruleServiceJoinPointType ) ) (otherlv_9= ',' ( (lv_joinPoints_10_0= ruleServiceJoinPointType ) ) )* ( (otherlv_11= '{' ( (lv_pointcutSelectors_12_0= ruleServiceAspectPointcutSelector ) )* ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )* otherlv_14= '}' ) | otherlv_15= ';' ) ) )
+            // InternalMappingDsl.g:6942:2: (otherlv_0= 'aspect' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleAspectFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleAspectFeature ) ) )* otherlv_6= '>' )? otherlv_7= 'for' ( (lv_joinPoints_8_0= ruleServiceJoinPointType ) ) (otherlv_9= ',' ( (lv_joinPoints_10_0= ruleServiceJoinPointType ) ) )* ( (otherlv_11= '{' ( (lv_pointcutSelectors_12_0= ruleServiceAspectPointcutSelector ) )* ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )* otherlv_14= '}' ) | otherlv_15= ';' ) )
             {
-            // InternalMappingDsl.g:6934:2: (otherlv_0= 'aspect' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleAspectFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleAspectFeature ) ) )* otherlv_6= '>' )? otherlv_7= 'for' ( (lv_joinPoints_8_0= ruleServiceJoinPointType ) ) (otherlv_9= ',' ( (lv_joinPoints_10_0= ruleServiceJoinPointType ) ) )* ( (otherlv_11= '{' ( (lv_pointcutSelectors_12_0= ruleServiceAspectPointcutSelector ) )* ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )* otherlv_14= '}' ) | otherlv_15= ';' ) )
-            // InternalMappingDsl.g:6935:3: otherlv_0= 'aspect' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleAspectFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleAspectFeature ) ) )* otherlv_6= '>' )? otherlv_7= 'for' ( (lv_joinPoints_8_0= ruleServiceJoinPointType ) ) (otherlv_9= ',' ( (lv_joinPoints_10_0= ruleServiceJoinPointType ) ) )* ( (otherlv_11= '{' ( (lv_pointcutSelectors_12_0= ruleServiceAspectPointcutSelector ) )* ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )* otherlv_14= '}' ) | otherlv_15= ';' )
+            // InternalMappingDsl.g:6942:2: (otherlv_0= 'aspect' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleAspectFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleAspectFeature ) ) )* otherlv_6= '>' )? otherlv_7= 'for' ( (lv_joinPoints_8_0= ruleServiceJoinPointType ) ) (otherlv_9= ',' ( (lv_joinPoints_10_0= ruleServiceJoinPointType ) ) )* ( (otherlv_11= '{' ( (lv_pointcutSelectors_12_0= ruleServiceAspectPointcutSelector ) )* ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )* otherlv_14= '}' ) | otherlv_15= ';' ) )
+            // InternalMappingDsl.g:6943:3: otherlv_0= 'aspect' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleAspectFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleAspectFeature ) ) )* otherlv_6= '>' )? otherlv_7= 'for' ( (lv_joinPoints_8_0= ruleServiceJoinPointType ) ) (otherlv_9= ',' ( (lv_joinPoints_10_0= ruleServiceJoinPointType ) ) )* ( (otherlv_11= '{' ( (lv_pointcutSelectors_12_0= ruleServiceAspectPointcutSelector ) )* ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )* otherlv_14= '}' ) | otherlv_15= ';' )
             {
-            otherlv_0=(Token)match(input,94,FOLLOW_7); 
+            otherlv_0=(Token)match(input,95,FOLLOW_7); 
 
             			newLeafNode(otherlv_0, grammarAccess.getServiceAspectAccess().getAspectKeyword_0());
             		
-            // InternalMappingDsl.g:6939:3: ( (lv_name_1_0= RULE_ID ) )
-            // InternalMappingDsl.g:6940:4: (lv_name_1_0= RULE_ID )
+            // InternalMappingDsl.g:6947:3: ( (lv_name_1_0= RULE_ID ) )
+            // InternalMappingDsl.g:6948:4: (lv_name_1_0= RULE_ID )
             {
-            // InternalMappingDsl.g:6940:4: (lv_name_1_0= RULE_ID )
-            // InternalMappingDsl.g:6941:5: lv_name_1_0= RULE_ID
+            // InternalMappingDsl.g:6948:4: (lv_name_1_0= RULE_ID )
+            // InternalMappingDsl.g:6949:5: lv_name_1_0= RULE_ID
             {
             lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_116); 
 
@@ -17306,26 +17326,26 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalMappingDsl.g:6957:3: (otherlv_2= '<' ( (lv_features_3_0= ruleAspectFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleAspectFeature ) ) )* otherlv_6= '>' )?
+            // InternalMappingDsl.g:6965:3: (otherlv_2= '<' ( (lv_features_3_0= ruleAspectFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleAspectFeature ) ) )* otherlv_6= '>' )?
             int alt161=2;
             int LA161_0 = input.LA(1);
 
-            if ( (LA161_0==57) ) {
+            if ( (LA161_0==58) ) {
                 alt161=1;
             }
             switch (alt161) {
                 case 1 :
-                    // InternalMappingDsl.g:6958:4: otherlv_2= '<' ( (lv_features_3_0= ruleAspectFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleAspectFeature ) ) )* otherlv_6= '>'
+                    // InternalMappingDsl.g:6966:4: otherlv_2= '<' ( (lv_features_3_0= ruleAspectFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleAspectFeature ) ) )* otherlv_6= '>'
                     {
-                    otherlv_2=(Token)match(input,57,FOLLOW_117); 
+                    otherlv_2=(Token)match(input,58,FOLLOW_117); 
 
                     				newLeafNode(otherlv_2, grammarAccess.getServiceAspectAccess().getLessThanSignKeyword_2_0());
                     			
-                    // InternalMappingDsl.g:6962:4: ( (lv_features_3_0= ruleAspectFeature ) )
-                    // InternalMappingDsl.g:6963:5: (lv_features_3_0= ruleAspectFeature )
+                    // InternalMappingDsl.g:6970:4: ( (lv_features_3_0= ruleAspectFeature ) )
+                    // InternalMappingDsl.g:6971:5: (lv_features_3_0= ruleAspectFeature )
                     {
-                    // InternalMappingDsl.g:6963:5: (lv_features_3_0= ruleAspectFeature )
-                    // InternalMappingDsl.g:6964:6: lv_features_3_0= ruleAspectFeature
+                    // InternalMappingDsl.g:6971:5: (lv_features_3_0= ruleAspectFeature )
+                    // InternalMappingDsl.g:6972:6: lv_features_3_0= ruleAspectFeature
                     {
 
                     						newCompositeNode(grammarAccess.getServiceAspectAccess().getFeaturesAspectFeatureEnumRuleCall_2_1_0());
@@ -17352,30 +17372,30 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalMappingDsl.g:6981:4: (otherlv_4= ',' ( (lv_features_5_0= ruleAspectFeature ) ) )*
+                    // InternalMappingDsl.g:6989:4: (otherlv_4= ',' ( (lv_features_5_0= ruleAspectFeature ) ) )*
                     loop160:
                     do {
                         int alt160=2;
                         int LA160_0 = input.LA(1);
 
-                        if ( (LA160_0==34) ) {
+                        if ( (LA160_0==35) ) {
                             alt160=1;
                         }
 
 
                         switch (alt160) {
                     	case 1 :
-                    	    // InternalMappingDsl.g:6982:5: otherlv_4= ',' ( (lv_features_5_0= ruleAspectFeature ) )
+                    	    // InternalMappingDsl.g:6990:5: otherlv_4= ',' ( (lv_features_5_0= ruleAspectFeature ) )
                     	    {
-                    	    otherlv_4=(Token)match(input,34,FOLLOW_117); 
+                    	    otherlv_4=(Token)match(input,35,FOLLOW_117); 
 
                     	    					newLeafNode(otherlv_4, grammarAccess.getServiceAspectAccess().getCommaKeyword_2_2_0());
                     	    				
-                    	    // InternalMappingDsl.g:6986:5: ( (lv_features_5_0= ruleAspectFeature ) )
-                    	    // InternalMappingDsl.g:6987:6: (lv_features_5_0= ruleAspectFeature )
+                    	    // InternalMappingDsl.g:6994:5: ( (lv_features_5_0= ruleAspectFeature ) )
+                    	    // InternalMappingDsl.g:6995:6: (lv_features_5_0= ruleAspectFeature )
                     	    {
-                    	    // InternalMappingDsl.g:6987:6: (lv_features_5_0= ruleAspectFeature )
-                    	    // InternalMappingDsl.g:6988:7: lv_features_5_0= ruleAspectFeature
+                    	    // InternalMappingDsl.g:6995:6: (lv_features_5_0= ruleAspectFeature )
+                    	    // InternalMappingDsl.g:6996:7: lv_features_5_0= ruleAspectFeature
                     	    {
 
                     	    							newCompositeNode(grammarAccess.getServiceAspectAccess().getFeaturesAspectFeatureEnumRuleCall_2_2_1_0());
@@ -17411,7 +17431,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         }
                     } while (true);
 
-                    otherlv_6=(Token)match(input,58,FOLLOW_118); 
+                    otherlv_6=(Token)match(input,59,FOLLOW_118); 
 
                     				newLeafNode(otherlv_6, grammarAccess.getServiceAspectAccess().getGreaterThanSignKeyword_2_3());
                     			
@@ -17421,15 +17441,15 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_7=(Token)match(input,95,FOLLOW_119); 
+            otherlv_7=(Token)match(input,96,FOLLOW_119); 
 
             			newLeafNode(otherlv_7, grammarAccess.getServiceAspectAccess().getForKeyword_3());
             		
-            // InternalMappingDsl.g:7015:3: ( (lv_joinPoints_8_0= ruleServiceJoinPointType ) )
-            // InternalMappingDsl.g:7016:4: (lv_joinPoints_8_0= ruleServiceJoinPointType )
+            // InternalMappingDsl.g:7023:3: ( (lv_joinPoints_8_0= ruleServiceJoinPointType ) )
+            // InternalMappingDsl.g:7024:4: (lv_joinPoints_8_0= ruleServiceJoinPointType )
             {
-            // InternalMappingDsl.g:7016:4: (lv_joinPoints_8_0= ruleServiceJoinPointType )
-            // InternalMappingDsl.g:7017:5: lv_joinPoints_8_0= ruleServiceJoinPointType
+            // InternalMappingDsl.g:7024:4: (lv_joinPoints_8_0= ruleServiceJoinPointType )
+            // InternalMappingDsl.g:7025:5: lv_joinPoints_8_0= ruleServiceJoinPointType
             {
 
             					newCompositeNode(grammarAccess.getServiceAspectAccess().getJoinPointsServiceJoinPointTypeEnumRuleCall_4_0());
@@ -17456,30 +17476,30 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalMappingDsl.g:7034:3: (otherlv_9= ',' ( (lv_joinPoints_10_0= ruleServiceJoinPointType ) ) )*
+            // InternalMappingDsl.g:7042:3: (otherlv_9= ',' ( (lv_joinPoints_10_0= ruleServiceJoinPointType ) ) )*
             loop162:
             do {
                 int alt162=2;
                 int LA162_0 = input.LA(1);
 
-                if ( (LA162_0==34) ) {
+                if ( (LA162_0==35) ) {
                     alt162=1;
                 }
 
 
                 switch (alt162) {
             	case 1 :
-            	    // InternalMappingDsl.g:7035:4: otherlv_9= ',' ( (lv_joinPoints_10_0= ruleServiceJoinPointType ) )
+            	    // InternalMappingDsl.g:7043:4: otherlv_9= ',' ( (lv_joinPoints_10_0= ruleServiceJoinPointType ) )
             	    {
-            	    otherlv_9=(Token)match(input,34,FOLLOW_119); 
+            	    otherlv_9=(Token)match(input,35,FOLLOW_119); 
 
             	    				newLeafNode(otherlv_9, grammarAccess.getServiceAspectAccess().getCommaKeyword_5_0());
             	    			
-            	    // InternalMappingDsl.g:7039:4: ( (lv_joinPoints_10_0= ruleServiceJoinPointType ) )
-            	    // InternalMappingDsl.g:7040:5: (lv_joinPoints_10_0= ruleServiceJoinPointType )
+            	    // InternalMappingDsl.g:7047:4: ( (lv_joinPoints_10_0= ruleServiceJoinPointType ) )
+            	    // InternalMappingDsl.g:7048:5: (lv_joinPoints_10_0= ruleServiceJoinPointType )
             	    {
-            	    // InternalMappingDsl.g:7040:5: (lv_joinPoints_10_0= ruleServiceJoinPointType )
-            	    // InternalMappingDsl.g:7041:6: lv_joinPoints_10_0= ruleServiceJoinPointType
+            	    // InternalMappingDsl.g:7048:5: (lv_joinPoints_10_0= ruleServiceJoinPointType )
+            	    // InternalMappingDsl.g:7049:6: lv_joinPoints_10_0= ruleServiceJoinPointType
             	    {
 
             	    						newCompositeNode(grammarAccess.getServiceAspectAccess().getJoinPointsServiceJoinPointTypeEnumRuleCall_5_1_0());
@@ -17515,14 +17535,14 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // InternalMappingDsl.g:7059:3: ( (otherlv_11= '{' ( (lv_pointcutSelectors_12_0= ruleServiceAspectPointcutSelector ) )* ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )* otherlv_14= '}' ) | otherlv_15= ';' )
+            // InternalMappingDsl.g:7067:3: ( (otherlv_11= '{' ( (lv_pointcutSelectors_12_0= ruleServiceAspectPointcutSelector ) )* ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )* otherlv_14= '}' ) | otherlv_15= ';' )
             int alt165=2;
             int LA165_0 = input.LA(1);
 
-            if ( (LA165_0==14) ) {
+            if ( (LA165_0==15) ) {
                 alt165=1;
             }
-            else if ( (LA165_0==26) ) {
+            else if ( (LA165_0==27) ) {
                 alt165=2;
             }
             else {
@@ -17533,32 +17553,32 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             }
             switch (alt165) {
                 case 1 :
-                    // InternalMappingDsl.g:7060:4: (otherlv_11= '{' ( (lv_pointcutSelectors_12_0= ruleServiceAspectPointcutSelector ) )* ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )* otherlv_14= '}' )
+                    // InternalMappingDsl.g:7068:4: (otherlv_11= '{' ( (lv_pointcutSelectors_12_0= ruleServiceAspectPointcutSelector ) )* ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )* otherlv_14= '}' )
                     {
-                    // InternalMappingDsl.g:7060:4: (otherlv_11= '{' ( (lv_pointcutSelectors_12_0= ruleServiceAspectPointcutSelector ) )* ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )* otherlv_14= '}' )
-                    // InternalMappingDsl.g:7061:5: otherlv_11= '{' ( (lv_pointcutSelectors_12_0= ruleServiceAspectPointcutSelector ) )* ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )* otherlv_14= '}'
+                    // InternalMappingDsl.g:7068:4: (otherlv_11= '{' ( (lv_pointcutSelectors_12_0= ruleServiceAspectPointcutSelector ) )* ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )* otherlv_14= '}' )
+                    // InternalMappingDsl.g:7069:5: otherlv_11= '{' ( (lv_pointcutSelectors_12_0= ruleServiceAspectPointcutSelector ) )* ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )* otherlv_14= '}'
                     {
-                    otherlv_11=(Token)match(input,14,FOLLOW_121); 
+                    otherlv_11=(Token)match(input,15,FOLLOW_121); 
 
                     					newLeafNode(otherlv_11, grammarAccess.getServiceAspectAccess().getLeftCurlyBracketKeyword_6_0_0());
                     				
-                    // InternalMappingDsl.g:7065:5: ( (lv_pointcutSelectors_12_0= ruleServiceAspectPointcutSelector ) )*
+                    // InternalMappingDsl.g:7073:5: ( (lv_pointcutSelectors_12_0= ruleServiceAspectPointcutSelector ) )*
                     loop163:
                     do {
                         int alt163=2;
                         int LA163_0 = input.LA(1);
 
-                        if ( (LA163_0==97) ) {
+                        if ( (LA163_0==98) ) {
                             alt163=1;
                         }
 
 
                         switch (alt163) {
                     	case 1 :
-                    	    // InternalMappingDsl.g:7066:6: (lv_pointcutSelectors_12_0= ruleServiceAspectPointcutSelector )
+                    	    // InternalMappingDsl.g:7074:6: (lv_pointcutSelectors_12_0= ruleServiceAspectPointcutSelector )
                     	    {
-                    	    // InternalMappingDsl.g:7066:6: (lv_pointcutSelectors_12_0= ruleServiceAspectPointcutSelector )
-                    	    // InternalMappingDsl.g:7067:7: lv_pointcutSelectors_12_0= ruleServiceAspectPointcutSelector
+                    	    // InternalMappingDsl.g:7074:6: (lv_pointcutSelectors_12_0= ruleServiceAspectPointcutSelector )
+                    	    // InternalMappingDsl.g:7075:7: lv_pointcutSelectors_12_0= ruleServiceAspectPointcutSelector
                     	    {
 
                     	    							newCompositeNode(grammarAccess.getServiceAspectAccess().getPointcutSelectorsServiceAspectPointcutSelectorParserRuleCall_6_0_1_0());
@@ -17591,23 +17611,23 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         }
                     } while (true);
 
-                    // InternalMappingDsl.g:7084:5: ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )*
+                    // InternalMappingDsl.g:7092:5: ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )*
                     loop164:
                     do {
                         int alt164=2;
                         int LA164_0 = input.LA(1);
 
-                        if ( ((LA164_0>=122 && LA164_0<=131)||LA164_0==138) ) {
+                        if ( ((LA164_0>=123 && LA164_0<=132)||LA164_0==139) ) {
                             alt164=1;
                         }
 
 
                         switch (alt164) {
                     	case 1 :
-                    	    // InternalMappingDsl.g:7085:6: (lv_properties_13_0= ruleTechnologySpecificProperty )
+                    	    // InternalMappingDsl.g:7093:6: (lv_properties_13_0= ruleTechnologySpecificProperty )
                     	    {
-                    	    // InternalMappingDsl.g:7085:6: (lv_properties_13_0= ruleTechnologySpecificProperty )
-                    	    // InternalMappingDsl.g:7086:7: lv_properties_13_0= ruleTechnologySpecificProperty
+                    	    // InternalMappingDsl.g:7093:6: (lv_properties_13_0= ruleTechnologySpecificProperty )
+                    	    // InternalMappingDsl.g:7094:7: lv_properties_13_0= ruleTechnologySpecificProperty
                     	    {
 
                     	    							newCompositeNode(grammarAccess.getServiceAspectAccess().getPropertiesTechnologySpecificPropertyParserRuleCall_6_0_2_0());
@@ -17640,7 +17660,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         }
                     } while (true);
 
-                    otherlv_14=(Token)match(input,16,FOLLOW_2); 
+                    otherlv_14=(Token)match(input,17,FOLLOW_2); 
 
                     					newLeafNode(otherlv_14, grammarAccess.getServiceAspectAccess().getRightCurlyBracketKeyword_6_0_3());
                     				
@@ -17651,9 +17671,9 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalMappingDsl.g:7109:4: otherlv_15= ';'
+                    // InternalMappingDsl.g:7117:4: otherlv_15= ';'
                     {
-                    otherlv_15=(Token)match(input,26,FOLLOW_2); 
+                    otherlv_15=(Token)match(input,27,FOLLOW_2); 
 
                     				newLeafNode(otherlv_15, grammarAccess.getServiceAspectAccess().getSemicolonKeyword_6_1());
                     			
@@ -17686,7 +17706,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleOperationAspectPointcut"
-    // InternalMappingDsl.g:7118:1: entryRuleOperationAspectPointcut returns [EObject current=null] : iv_ruleOperationAspectPointcut= ruleOperationAspectPointcut EOF ;
+    // InternalMappingDsl.g:7126:1: entryRuleOperationAspectPointcut returns [EObject current=null] : iv_ruleOperationAspectPointcut= ruleOperationAspectPointcut EOF ;
     public final EObject entryRuleOperationAspectPointcut() throws RecognitionException {
         EObject current = null;
 
@@ -17694,8 +17714,8 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalMappingDsl.g:7118:64: (iv_ruleOperationAspectPointcut= ruleOperationAspectPointcut EOF )
-            // InternalMappingDsl.g:7119:2: iv_ruleOperationAspectPointcut= ruleOperationAspectPointcut EOF
+            // InternalMappingDsl.g:7126:64: (iv_ruleOperationAspectPointcut= ruleOperationAspectPointcut EOF )
+            // InternalMappingDsl.g:7127:2: iv_ruleOperationAspectPointcut= ruleOperationAspectPointcut EOF
             {
              newCompositeNode(grammarAccess.getOperationAspectPointcutRule()); 
             pushFollow(FOLLOW_1);
@@ -17722,7 +17742,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleOperationAspectPointcut"
-    // InternalMappingDsl.g:7125:1: ruleOperationAspectPointcut returns [EObject current=null] : ( ( (lv_forTechnology_0_0= 'technology' ) ) otherlv_1= '=' ( (otherlv_2= RULE_ID ) ) ) ;
+    // InternalMappingDsl.g:7133:1: ruleOperationAspectPointcut returns [EObject current=null] : ( ( (lv_forTechnology_0_0= 'technology' ) ) otherlv_1= '=' ( (otherlv_2= RULE_ID ) ) ) ;
     public final EObject ruleOperationAspectPointcut() throws RecognitionException {
         EObject current = null;
 
@@ -17734,19 +17754,19 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:7131:2: ( ( ( (lv_forTechnology_0_0= 'technology' ) ) otherlv_1= '=' ( (otherlv_2= RULE_ID ) ) ) )
-            // InternalMappingDsl.g:7132:2: ( ( (lv_forTechnology_0_0= 'technology' ) ) otherlv_1= '=' ( (otherlv_2= RULE_ID ) ) )
+            // InternalMappingDsl.g:7139:2: ( ( ( (lv_forTechnology_0_0= 'technology' ) ) otherlv_1= '=' ( (otherlv_2= RULE_ID ) ) ) )
+            // InternalMappingDsl.g:7140:2: ( ( (lv_forTechnology_0_0= 'technology' ) ) otherlv_1= '=' ( (otherlv_2= RULE_ID ) ) )
             {
-            // InternalMappingDsl.g:7132:2: ( ( (lv_forTechnology_0_0= 'technology' ) ) otherlv_1= '=' ( (otherlv_2= RULE_ID ) ) )
-            // InternalMappingDsl.g:7133:3: ( (lv_forTechnology_0_0= 'technology' ) ) otherlv_1= '=' ( (otherlv_2= RULE_ID ) )
+            // InternalMappingDsl.g:7140:2: ( ( (lv_forTechnology_0_0= 'technology' ) ) otherlv_1= '=' ( (otherlv_2= RULE_ID ) ) )
+            // InternalMappingDsl.g:7141:3: ( (lv_forTechnology_0_0= 'technology' ) ) otherlv_1= '=' ( (otherlv_2= RULE_ID ) )
             {
-            // InternalMappingDsl.g:7133:3: ( (lv_forTechnology_0_0= 'technology' ) )
-            // InternalMappingDsl.g:7134:4: (lv_forTechnology_0_0= 'technology' )
+            // InternalMappingDsl.g:7141:3: ( (lv_forTechnology_0_0= 'technology' ) )
+            // InternalMappingDsl.g:7142:4: (lv_forTechnology_0_0= 'technology' )
             {
-            // InternalMappingDsl.g:7134:4: (lv_forTechnology_0_0= 'technology' )
-            // InternalMappingDsl.g:7135:5: lv_forTechnology_0_0= 'technology'
+            // InternalMappingDsl.g:7142:4: (lv_forTechnology_0_0= 'technology' )
+            // InternalMappingDsl.g:7143:5: lv_forTechnology_0_0= 'technology'
             {
-            lv_forTechnology_0_0=(Token)match(input,47,FOLLOW_73); 
+            lv_forTechnology_0_0=(Token)match(input,48,FOLLOW_73); 
 
             					newLeafNode(lv_forTechnology_0_0, grammarAccess.getOperationAspectPointcutAccess().getForTechnologyTechnologyKeyword_0_0());
             				
@@ -17762,15 +17782,15 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,49,FOLLOW_7); 
+            otherlv_1=(Token)match(input,50,FOLLOW_7); 
 
             			newLeafNode(otherlv_1, grammarAccess.getOperationAspectPointcutAccess().getEqualsSignKeyword_1());
             		
-            // InternalMappingDsl.g:7151:3: ( (otherlv_2= RULE_ID ) )
-            // InternalMappingDsl.g:7152:4: (otherlv_2= RULE_ID )
+            // InternalMappingDsl.g:7159:3: ( (otherlv_2= RULE_ID ) )
+            // InternalMappingDsl.g:7160:4: (otherlv_2= RULE_ID )
             {
-            // InternalMappingDsl.g:7152:4: (otherlv_2= RULE_ID )
-            // InternalMappingDsl.g:7153:5: otherlv_2= RULE_ID
+            // InternalMappingDsl.g:7160:4: (otherlv_2= RULE_ID )
+            // InternalMappingDsl.g:7161:5: otherlv_2= RULE_ID
             {
 
             					if (current==null) {
@@ -17810,7 +17830,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleOperationAspectPointcutSelector"
-    // InternalMappingDsl.g:7168:1: entryRuleOperationAspectPointcutSelector returns [EObject current=null] : iv_ruleOperationAspectPointcutSelector= ruleOperationAspectPointcutSelector EOF ;
+    // InternalMappingDsl.g:7176:1: entryRuleOperationAspectPointcutSelector returns [EObject current=null] : iv_ruleOperationAspectPointcutSelector= ruleOperationAspectPointcutSelector EOF ;
     public final EObject entryRuleOperationAspectPointcutSelector() throws RecognitionException {
         EObject current = null;
 
@@ -17818,8 +17838,8 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalMappingDsl.g:7168:72: (iv_ruleOperationAspectPointcutSelector= ruleOperationAspectPointcutSelector EOF )
-            // InternalMappingDsl.g:7169:2: iv_ruleOperationAspectPointcutSelector= ruleOperationAspectPointcutSelector EOF
+            // InternalMappingDsl.g:7176:72: (iv_ruleOperationAspectPointcutSelector= ruleOperationAspectPointcutSelector EOF )
+            // InternalMappingDsl.g:7177:2: iv_ruleOperationAspectPointcutSelector= ruleOperationAspectPointcutSelector EOF
             {
              newCompositeNode(grammarAccess.getOperationAspectPointcutSelectorRule()); 
             pushFollow(FOLLOW_1);
@@ -17846,7 +17866,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleOperationAspectPointcutSelector"
-    // InternalMappingDsl.g:7175:1: ruleOperationAspectPointcutSelector returns [EObject current=null] : (otherlv_0= 'selector' otherlv_1= '(' ( (lv_pointcuts_2_0= ruleOperationAspectPointcut ) ) (otherlv_3= ',' ( (lv_pointcuts_4_0= ruleOperationAspectPointcut ) ) )* otherlv_5= ')' otherlv_6= ';' ) ;
+    // InternalMappingDsl.g:7183:1: ruleOperationAspectPointcutSelector returns [EObject current=null] : (otherlv_0= 'selector' otherlv_1= '(' ( (lv_pointcuts_2_0= ruleOperationAspectPointcut ) ) (otherlv_3= ',' ( (lv_pointcuts_4_0= ruleOperationAspectPointcut ) ) )* otherlv_5= ')' otherlv_6= ';' ) ;
     public final EObject ruleOperationAspectPointcutSelector() throws RecognitionException {
         EObject current = null;
 
@@ -17864,25 +17884,25 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:7181:2: ( (otherlv_0= 'selector' otherlv_1= '(' ( (lv_pointcuts_2_0= ruleOperationAspectPointcut ) ) (otherlv_3= ',' ( (lv_pointcuts_4_0= ruleOperationAspectPointcut ) ) )* otherlv_5= ')' otherlv_6= ';' ) )
-            // InternalMappingDsl.g:7182:2: (otherlv_0= 'selector' otherlv_1= '(' ( (lv_pointcuts_2_0= ruleOperationAspectPointcut ) ) (otherlv_3= ',' ( (lv_pointcuts_4_0= ruleOperationAspectPointcut ) ) )* otherlv_5= ')' otherlv_6= ';' )
+            // InternalMappingDsl.g:7189:2: ( (otherlv_0= 'selector' otherlv_1= '(' ( (lv_pointcuts_2_0= ruleOperationAspectPointcut ) ) (otherlv_3= ',' ( (lv_pointcuts_4_0= ruleOperationAspectPointcut ) ) )* otherlv_5= ')' otherlv_6= ';' ) )
+            // InternalMappingDsl.g:7190:2: (otherlv_0= 'selector' otherlv_1= '(' ( (lv_pointcuts_2_0= ruleOperationAspectPointcut ) ) (otherlv_3= ',' ( (lv_pointcuts_4_0= ruleOperationAspectPointcut ) ) )* otherlv_5= ')' otherlv_6= ';' )
             {
-            // InternalMappingDsl.g:7182:2: (otherlv_0= 'selector' otherlv_1= '(' ( (lv_pointcuts_2_0= ruleOperationAspectPointcut ) ) (otherlv_3= ',' ( (lv_pointcuts_4_0= ruleOperationAspectPointcut ) ) )* otherlv_5= ')' otherlv_6= ';' )
-            // InternalMappingDsl.g:7183:3: otherlv_0= 'selector' otherlv_1= '(' ( (lv_pointcuts_2_0= ruleOperationAspectPointcut ) ) (otherlv_3= ',' ( (lv_pointcuts_4_0= ruleOperationAspectPointcut ) ) )* otherlv_5= ')' otherlv_6= ';'
+            // InternalMappingDsl.g:7190:2: (otherlv_0= 'selector' otherlv_1= '(' ( (lv_pointcuts_2_0= ruleOperationAspectPointcut ) ) (otherlv_3= ',' ( (lv_pointcuts_4_0= ruleOperationAspectPointcut ) ) )* otherlv_5= ')' otherlv_6= ';' )
+            // InternalMappingDsl.g:7191:3: otherlv_0= 'selector' otherlv_1= '(' ( (lv_pointcuts_2_0= ruleOperationAspectPointcut ) ) (otherlv_3= ',' ( (lv_pointcuts_4_0= ruleOperationAspectPointcut ) ) )* otherlv_5= ')' otherlv_6= ';'
             {
-            otherlv_0=(Token)match(input,97,FOLLOW_59); 
+            otherlv_0=(Token)match(input,98,FOLLOW_59); 
 
             			newLeafNode(otherlv_0, grammarAccess.getOperationAspectPointcutSelectorAccess().getSelectorKeyword_0());
             		
-            otherlv_1=(Token)match(input,32,FOLLOW_71); 
+            otherlv_1=(Token)match(input,33,FOLLOW_71); 
 
             			newLeafNode(otherlv_1, grammarAccess.getOperationAspectPointcutSelectorAccess().getLeftParenthesisKeyword_1());
             		
-            // InternalMappingDsl.g:7191:3: ( (lv_pointcuts_2_0= ruleOperationAspectPointcut ) )
-            // InternalMappingDsl.g:7192:4: (lv_pointcuts_2_0= ruleOperationAspectPointcut )
+            // InternalMappingDsl.g:7199:3: ( (lv_pointcuts_2_0= ruleOperationAspectPointcut ) )
+            // InternalMappingDsl.g:7200:4: (lv_pointcuts_2_0= ruleOperationAspectPointcut )
             {
-            // InternalMappingDsl.g:7192:4: (lv_pointcuts_2_0= ruleOperationAspectPointcut )
-            // InternalMappingDsl.g:7193:5: lv_pointcuts_2_0= ruleOperationAspectPointcut
+            // InternalMappingDsl.g:7200:4: (lv_pointcuts_2_0= ruleOperationAspectPointcut )
+            // InternalMappingDsl.g:7201:5: lv_pointcuts_2_0= ruleOperationAspectPointcut
             {
 
             					newCompositeNode(grammarAccess.getOperationAspectPointcutSelectorAccess().getPointcutsOperationAspectPointcutParserRuleCall_2_0());
@@ -17909,30 +17929,30 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalMappingDsl.g:7210:3: (otherlv_3= ',' ( (lv_pointcuts_4_0= ruleOperationAspectPointcut ) ) )*
+            // InternalMappingDsl.g:7218:3: (otherlv_3= ',' ( (lv_pointcuts_4_0= ruleOperationAspectPointcut ) ) )*
             loop166:
             do {
                 int alt166=2;
                 int LA166_0 = input.LA(1);
 
-                if ( (LA166_0==34) ) {
+                if ( (LA166_0==35) ) {
                     alt166=1;
                 }
 
 
                 switch (alt166) {
             	case 1 :
-            	    // InternalMappingDsl.g:7211:4: otherlv_3= ',' ( (lv_pointcuts_4_0= ruleOperationAspectPointcut ) )
+            	    // InternalMappingDsl.g:7219:4: otherlv_3= ',' ( (lv_pointcuts_4_0= ruleOperationAspectPointcut ) )
             	    {
-            	    otherlv_3=(Token)match(input,34,FOLLOW_71); 
+            	    otherlv_3=(Token)match(input,35,FOLLOW_71); 
 
             	    				newLeafNode(otherlv_3, grammarAccess.getOperationAspectPointcutSelectorAccess().getCommaKeyword_3_0());
             	    			
-            	    // InternalMappingDsl.g:7215:4: ( (lv_pointcuts_4_0= ruleOperationAspectPointcut ) )
-            	    // InternalMappingDsl.g:7216:5: (lv_pointcuts_4_0= ruleOperationAspectPointcut )
+            	    // InternalMappingDsl.g:7223:4: ( (lv_pointcuts_4_0= ruleOperationAspectPointcut ) )
+            	    // InternalMappingDsl.g:7224:5: (lv_pointcuts_4_0= ruleOperationAspectPointcut )
             	    {
-            	    // InternalMappingDsl.g:7216:5: (lv_pointcuts_4_0= ruleOperationAspectPointcut )
-            	    // InternalMappingDsl.g:7217:6: lv_pointcuts_4_0= ruleOperationAspectPointcut
+            	    // InternalMappingDsl.g:7224:5: (lv_pointcuts_4_0= ruleOperationAspectPointcut )
+            	    // InternalMappingDsl.g:7225:6: lv_pointcuts_4_0= ruleOperationAspectPointcut
             	    {
 
             	    						newCompositeNode(grammarAccess.getOperationAspectPointcutSelectorAccess().getPointcutsOperationAspectPointcutParserRuleCall_3_1_0());
@@ -17968,11 +17988,11 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            otherlv_5=(Token)match(input,33,FOLLOW_53); 
+            otherlv_5=(Token)match(input,34,FOLLOW_53); 
 
             			newLeafNode(otherlv_5, grammarAccess.getOperationAspectPointcutSelectorAccess().getRightParenthesisKeyword_4());
             		
-            otherlv_6=(Token)match(input,26,FOLLOW_2); 
+            otherlv_6=(Token)match(input,27,FOLLOW_2); 
 
             			newLeafNode(otherlv_6, grammarAccess.getOperationAspectPointcutSelectorAccess().getSemicolonKeyword_5());
             		
@@ -17999,7 +18019,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleOperationAspect"
-    // InternalMappingDsl.g:7247:1: entryRuleOperationAspect returns [EObject current=null] : iv_ruleOperationAspect= ruleOperationAspect EOF ;
+    // InternalMappingDsl.g:7255:1: entryRuleOperationAspect returns [EObject current=null] : iv_ruleOperationAspect= ruleOperationAspect EOF ;
     public final EObject entryRuleOperationAspect() throws RecognitionException {
         EObject current = null;
 
@@ -18007,8 +18027,8 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalMappingDsl.g:7247:56: (iv_ruleOperationAspect= ruleOperationAspect EOF )
-            // InternalMappingDsl.g:7248:2: iv_ruleOperationAspect= ruleOperationAspect EOF
+            // InternalMappingDsl.g:7255:56: (iv_ruleOperationAspect= ruleOperationAspect EOF )
+            // InternalMappingDsl.g:7256:2: iv_ruleOperationAspect= ruleOperationAspect EOF
             {
              newCompositeNode(grammarAccess.getOperationAspectRule()); 
             pushFollow(FOLLOW_1);
@@ -18035,7 +18055,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleOperationAspect"
-    // InternalMappingDsl.g:7254:1: ruleOperationAspect returns [EObject current=null] : (otherlv_0= 'aspect' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleAspectFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleAspectFeature ) ) )* otherlv_6= '>' )? otherlv_7= 'for' ( (lv_joinPoints_8_0= ruleOperationJoinPointType ) ) (otherlv_9= ',' ( (lv_joinPoints_10_0= ruleOperationJoinPointType ) ) )* ( (otherlv_11= '{' ( (lv_pointcutSelectors_12_0= ruleOperationAspectPointcutSelector ) )* ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )* otherlv_14= '}' ) | otherlv_15= ';' ) ) ;
+    // InternalMappingDsl.g:7262:1: ruleOperationAspect returns [EObject current=null] : (otherlv_0= 'aspect' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleAspectFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleAspectFeature ) ) )* otherlv_6= '>' )? otherlv_7= 'for' ( (lv_joinPoints_8_0= ruleOperationJoinPointType ) ) (otherlv_9= ',' ( (lv_joinPoints_10_0= ruleOperationJoinPointType ) ) )* ( (otherlv_11= '{' ( (lv_pointcutSelectors_12_0= ruleOperationAspectPointcutSelector ) )* ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )* otherlv_14= '}' ) | otherlv_15= ';' ) ) ;
     public final EObject ruleOperationAspect() throws RecognitionException {
         EObject current = null;
 
@@ -18066,21 +18086,21 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:7260:2: ( (otherlv_0= 'aspect' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleAspectFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleAspectFeature ) ) )* otherlv_6= '>' )? otherlv_7= 'for' ( (lv_joinPoints_8_0= ruleOperationJoinPointType ) ) (otherlv_9= ',' ( (lv_joinPoints_10_0= ruleOperationJoinPointType ) ) )* ( (otherlv_11= '{' ( (lv_pointcutSelectors_12_0= ruleOperationAspectPointcutSelector ) )* ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )* otherlv_14= '}' ) | otherlv_15= ';' ) ) )
-            // InternalMappingDsl.g:7261:2: (otherlv_0= 'aspect' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleAspectFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleAspectFeature ) ) )* otherlv_6= '>' )? otherlv_7= 'for' ( (lv_joinPoints_8_0= ruleOperationJoinPointType ) ) (otherlv_9= ',' ( (lv_joinPoints_10_0= ruleOperationJoinPointType ) ) )* ( (otherlv_11= '{' ( (lv_pointcutSelectors_12_0= ruleOperationAspectPointcutSelector ) )* ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )* otherlv_14= '}' ) | otherlv_15= ';' ) )
+            // InternalMappingDsl.g:7268:2: ( (otherlv_0= 'aspect' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleAspectFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleAspectFeature ) ) )* otherlv_6= '>' )? otherlv_7= 'for' ( (lv_joinPoints_8_0= ruleOperationJoinPointType ) ) (otherlv_9= ',' ( (lv_joinPoints_10_0= ruleOperationJoinPointType ) ) )* ( (otherlv_11= '{' ( (lv_pointcutSelectors_12_0= ruleOperationAspectPointcutSelector ) )* ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )* otherlv_14= '}' ) | otherlv_15= ';' ) ) )
+            // InternalMappingDsl.g:7269:2: (otherlv_0= 'aspect' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleAspectFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleAspectFeature ) ) )* otherlv_6= '>' )? otherlv_7= 'for' ( (lv_joinPoints_8_0= ruleOperationJoinPointType ) ) (otherlv_9= ',' ( (lv_joinPoints_10_0= ruleOperationJoinPointType ) ) )* ( (otherlv_11= '{' ( (lv_pointcutSelectors_12_0= ruleOperationAspectPointcutSelector ) )* ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )* otherlv_14= '}' ) | otherlv_15= ';' ) )
             {
-            // InternalMappingDsl.g:7261:2: (otherlv_0= 'aspect' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleAspectFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleAspectFeature ) ) )* otherlv_6= '>' )? otherlv_7= 'for' ( (lv_joinPoints_8_0= ruleOperationJoinPointType ) ) (otherlv_9= ',' ( (lv_joinPoints_10_0= ruleOperationJoinPointType ) ) )* ( (otherlv_11= '{' ( (lv_pointcutSelectors_12_0= ruleOperationAspectPointcutSelector ) )* ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )* otherlv_14= '}' ) | otherlv_15= ';' ) )
-            // InternalMappingDsl.g:7262:3: otherlv_0= 'aspect' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleAspectFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleAspectFeature ) ) )* otherlv_6= '>' )? otherlv_7= 'for' ( (lv_joinPoints_8_0= ruleOperationJoinPointType ) ) (otherlv_9= ',' ( (lv_joinPoints_10_0= ruleOperationJoinPointType ) ) )* ( (otherlv_11= '{' ( (lv_pointcutSelectors_12_0= ruleOperationAspectPointcutSelector ) )* ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )* otherlv_14= '}' ) | otherlv_15= ';' )
+            // InternalMappingDsl.g:7269:2: (otherlv_0= 'aspect' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleAspectFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleAspectFeature ) ) )* otherlv_6= '>' )? otherlv_7= 'for' ( (lv_joinPoints_8_0= ruleOperationJoinPointType ) ) (otherlv_9= ',' ( (lv_joinPoints_10_0= ruleOperationJoinPointType ) ) )* ( (otherlv_11= '{' ( (lv_pointcutSelectors_12_0= ruleOperationAspectPointcutSelector ) )* ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )* otherlv_14= '}' ) | otherlv_15= ';' ) )
+            // InternalMappingDsl.g:7270:3: otherlv_0= 'aspect' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleAspectFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleAspectFeature ) ) )* otherlv_6= '>' )? otherlv_7= 'for' ( (lv_joinPoints_8_0= ruleOperationJoinPointType ) ) (otherlv_9= ',' ( (lv_joinPoints_10_0= ruleOperationJoinPointType ) ) )* ( (otherlv_11= '{' ( (lv_pointcutSelectors_12_0= ruleOperationAspectPointcutSelector ) )* ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )* otherlv_14= '}' ) | otherlv_15= ';' )
             {
-            otherlv_0=(Token)match(input,94,FOLLOW_7); 
+            otherlv_0=(Token)match(input,95,FOLLOW_7); 
 
             			newLeafNode(otherlv_0, grammarAccess.getOperationAspectAccess().getAspectKeyword_0());
             		
-            // InternalMappingDsl.g:7266:3: ( (lv_name_1_0= RULE_ID ) )
-            // InternalMappingDsl.g:7267:4: (lv_name_1_0= RULE_ID )
+            // InternalMappingDsl.g:7274:3: ( (lv_name_1_0= RULE_ID ) )
+            // InternalMappingDsl.g:7275:4: (lv_name_1_0= RULE_ID )
             {
-            // InternalMappingDsl.g:7267:4: (lv_name_1_0= RULE_ID )
-            // InternalMappingDsl.g:7268:5: lv_name_1_0= RULE_ID
+            // InternalMappingDsl.g:7275:4: (lv_name_1_0= RULE_ID )
+            // InternalMappingDsl.g:7276:5: lv_name_1_0= RULE_ID
             {
             lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_116); 
 
@@ -18102,26 +18122,26 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalMappingDsl.g:7284:3: (otherlv_2= '<' ( (lv_features_3_0= ruleAspectFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleAspectFeature ) ) )* otherlv_6= '>' )?
+            // InternalMappingDsl.g:7292:3: (otherlv_2= '<' ( (lv_features_3_0= ruleAspectFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleAspectFeature ) ) )* otherlv_6= '>' )?
             int alt168=2;
             int LA168_0 = input.LA(1);
 
-            if ( (LA168_0==57) ) {
+            if ( (LA168_0==58) ) {
                 alt168=1;
             }
             switch (alt168) {
                 case 1 :
-                    // InternalMappingDsl.g:7285:4: otherlv_2= '<' ( (lv_features_3_0= ruleAspectFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleAspectFeature ) ) )* otherlv_6= '>'
+                    // InternalMappingDsl.g:7293:4: otherlv_2= '<' ( (lv_features_3_0= ruleAspectFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleAspectFeature ) ) )* otherlv_6= '>'
                     {
-                    otherlv_2=(Token)match(input,57,FOLLOW_117); 
+                    otherlv_2=(Token)match(input,58,FOLLOW_117); 
 
                     				newLeafNode(otherlv_2, grammarAccess.getOperationAspectAccess().getLessThanSignKeyword_2_0());
                     			
-                    // InternalMappingDsl.g:7289:4: ( (lv_features_3_0= ruleAspectFeature ) )
-                    // InternalMappingDsl.g:7290:5: (lv_features_3_0= ruleAspectFeature )
+                    // InternalMappingDsl.g:7297:4: ( (lv_features_3_0= ruleAspectFeature ) )
+                    // InternalMappingDsl.g:7298:5: (lv_features_3_0= ruleAspectFeature )
                     {
-                    // InternalMappingDsl.g:7290:5: (lv_features_3_0= ruleAspectFeature )
-                    // InternalMappingDsl.g:7291:6: lv_features_3_0= ruleAspectFeature
+                    // InternalMappingDsl.g:7298:5: (lv_features_3_0= ruleAspectFeature )
+                    // InternalMappingDsl.g:7299:6: lv_features_3_0= ruleAspectFeature
                     {
 
                     						newCompositeNode(grammarAccess.getOperationAspectAccess().getFeaturesAspectFeatureEnumRuleCall_2_1_0());
@@ -18148,30 +18168,30 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalMappingDsl.g:7308:4: (otherlv_4= ',' ( (lv_features_5_0= ruleAspectFeature ) ) )*
+                    // InternalMappingDsl.g:7316:4: (otherlv_4= ',' ( (lv_features_5_0= ruleAspectFeature ) ) )*
                     loop167:
                     do {
                         int alt167=2;
                         int LA167_0 = input.LA(1);
 
-                        if ( (LA167_0==34) ) {
+                        if ( (LA167_0==35) ) {
                             alt167=1;
                         }
 
 
                         switch (alt167) {
                     	case 1 :
-                    	    // InternalMappingDsl.g:7309:5: otherlv_4= ',' ( (lv_features_5_0= ruleAspectFeature ) )
+                    	    // InternalMappingDsl.g:7317:5: otherlv_4= ',' ( (lv_features_5_0= ruleAspectFeature ) )
                     	    {
-                    	    otherlv_4=(Token)match(input,34,FOLLOW_117); 
+                    	    otherlv_4=(Token)match(input,35,FOLLOW_117); 
 
                     	    					newLeafNode(otherlv_4, grammarAccess.getOperationAspectAccess().getCommaKeyword_2_2_0());
                     	    				
-                    	    // InternalMappingDsl.g:7313:5: ( (lv_features_5_0= ruleAspectFeature ) )
-                    	    // InternalMappingDsl.g:7314:6: (lv_features_5_0= ruleAspectFeature )
+                    	    // InternalMappingDsl.g:7321:5: ( (lv_features_5_0= ruleAspectFeature ) )
+                    	    // InternalMappingDsl.g:7322:6: (lv_features_5_0= ruleAspectFeature )
                     	    {
-                    	    // InternalMappingDsl.g:7314:6: (lv_features_5_0= ruleAspectFeature )
-                    	    // InternalMappingDsl.g:7315:7: lv_features_5_0= ruleAspectFeature
+                    	    // InternalMappingDsl.g:7322:6: (lv_features_5_0= ruleAspectFeature )
+                    	    // InternalMappingDsl.g:7323:7: lv_features_5_0= ruleAspectFeature
                     	    {
 
                     	    							newCompositeNode(grammarAccess.getOperationAspectAccess().getFeaturesAspectFeatureEnumRuleCall_2_2_1_0());
@@ -18207,7 +18227,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         }
                     } while (true);
 
-                    otherlv_6=(Token)match(input,58,FOLLOW_118); 
+                    otherlv_6=(Token)match(input,59,FOLLOW_118); 
 
                     				newLeafNode(otherlv_6, grammarAccess.getOperationAspectAccess().getGreaterThanSignKeyword_2_3());
                     			
@@ -18217,15 +18237,15 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_7=(Token)match(input,95,FOLLOW_122); 
+            otherlv_7=(Token)match(input,96,FOLLOW_122); 
 
             			newLeafNode(otherlv_7, grammarAccess.getOperationAspectAccess().getForKeyword_3());
             		
-            // InternalMappingDsl.g:7342:3: ( (lv_joinPoints_8_0= ruleOperationJoinPointType ) )
-            // InternalMappingDsl.g:7343:4: (lv_joinPoints_8_0= ruleOperationJoinPointType )
+            // InternalMappingDsl.g:7350:3: ( (lv_joinPoints_8_0= ruleOperationJoinPointType ) )
+            // InternalMappingDsl.g:7351:4: (lv_joinPoints_8_0= ruleOperationJoinPointType )
             {
-            // InternalMappingDsl.g:7343:4: (lv_joinPoints_8_0= ruleOperationJoinPointType )
-            // InternalMappingDsl.g:7344:5: lv_joinPoints_8_0= ruleOperationJoinPointType
+            // InternalMappingDsl.g:7351:4: (lv_joinPoints_8_0= ruleOperationJoinPointType )
+            // InternalMappingDsl.g:7352:5: lv_joinPoints_8_0= ruleOperationJoinPointType
             {
 
             					newCompositeNode(grammarAccess.getOperationAspectAccess().getJoinPointsOperationJoinPointTypeEnumRuleCall_4_0());
@@ -18252,30 +18272,30 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalMappingDsl.g:7361:3: (otherlv_9= ',' ( (lv_joinPoints_10_0= ruleOperationJoinPointType ) ) )*
+            // InternalMappingDsl.g:7369:3: (otherlv_9= ',' ( (lv_joinPoints_10_0= ruleOperationJoinPointType ) ) )*
             loop169:
             do {
                 int alt169=2;
                 int LA169_0 = input.LA(1);
 
-                if ( (LA169_0==34) ) {
+                if ( (LA169_0==35) ) {
                     alt169=1;
                 }
 
 
                 switch (alt169) {
             	case 1 :
-            	    // InternalMappingDsl.g:7362:4: otherlv_9= ',' ( (lv_joinPoints_10_0= ruleOperationJoinPointType ) )
+            	    // InternalMappingDsl.g:7370:4: otherlv_9= ',' ( (lv_joinPoints_10_0= ruleOperationJoinPointType ) )
             	    {
-            	    otherlv_9=(Token)match(input,34,FOLLOW_122); 
+            	    otherlv_9=(Token)match(input,35,FOLLOW_122); 
 
             	    				newLeafNode(otherlv_9, grammarAccess.getOperationAspectAccess().getCommaKeyword_5_0());
             	    			
-            	    // InternalMappingDsl.g:7366:4: ( (lv_joinPoints_10_0= ruleOperationJoinPointType ) )
-            	    // InternalMappingDsl.g:7367:5: (lv_joinPoints_10_0= ruleOperationJoinPointType )
+            	    // InternalMappingDsl.g:7374:4: ( (lv_joinPoints_10_0= ruleOperationJoinPointType ) )
+            	    // InternalMappingDsl.g:7375:5: (lv_joinPoints_10_0= ruleOperationJoinPointType )
             	    {
-            	    // InternalMappingDsl.g:7367:5: (lv_joinPoints_10_0= ruleOperationJoinPointType )
-            	    // InternalMappingDsl.g:7368:6: lv_joinPoints_10_0= ruleOperationJoinPointType
+            	    // InternalMappingDsl.g:7375:5: (lv_joinPoints_10_0= ruleOperationJoinPointType )
+            	    // InternalMappingDsl.g:7376:6: lv_joinPoints_10_0= ruleOperationJoinPointType
             	    {
 
             	    						newCompositeNode(grammarAccess.getOperationAspectAccess().getJoinPointsOperationJoinPointTypeEnumRuleCall_5_1_0());
@@ -18311,14 +18331,14 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // InternalMappingDsl.g:7386:3: ( (otherlv_11= '{' ( (lv_pointcutSelectors_12_0= ruleOperationAspectPointcutSelector ) )* ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )* otherlv_14= '}' ) | otherlv_15= ';' )
+            // InternalMappingDsl.g:7394:3: ( (otherlv_11= '{' ( (lv_pointcutSelectors_12_0= ruleOperationAspectPointcutSelector ) )* ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )* otherlv_14= '}' ) | otherlv_15= ';' )
             int alt172=2;
             int LA172_0 = input.LA(1);
 
-            if ( (LA172_0==14) ) {
+            if ( (LA172_0==15) ) {
                 alt172=1;
             }
-            else if ( (LA172_0==26) ) {
+            else if ( (LA172_0==27) ) {
                 alt172=2;
             }
             else {
@@ -18329,32 +18349,32 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             }
             switch (alt172) {
                 case 1 :
-                    // InternalMappingDsl.g:7387:4: (otherlv_11= '{' ( (lv_pointcutSelectors_12_0= ruleOperationAspectPointcutSelector ) )* ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )* otherlv_14= '}' )
+                    // InternalMappingDsl.g:7395:4: (otherlv_11= '{' ( (lv_pointcutSelectors_12_0= ruleOperationAspectPointcutSelector ) )* ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )* otherlv_14= '}' )
                     {
-                    // InternalMappingDsl.g:7387:4: (otherlv_11= '{' ( (lv_pointcutSelectors_12_0= ruleOperationAspectPointcutSelector ) )* ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )* otherlv_14= '}' )
-                    // InternalMappingDsl.g:7388:5: otherlv_11= '{' ( (lv_pointcutSelectors_12_0= ruleOperationAspectPointcutSelector ) )* ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )* otherlv_14= '}'
+                    // InternalMappingDsl.g:7395:4: (otherlv_11= '{' ( (lv_pointcutSelectors_12_0= ruleOperationAspectPointcutSelector ) )* ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )* otherlv_14= '}' )
+                    // InternalMappingDsl.g:7396:5: otherlv_11= '{' ( (lv_pointcutSelectors_12_0= ruleOperationAspectPointcutSelector ) )* ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )* otherlv_14= '}'
                     {
-                    otherlv_11=(Token)match(input,14,FOLLOW_121); 
+                    otherlv_11=(Token)match(input,15,FOLLOW_121); 
 
                     					newLeafNode(otherlv_11, grammarAccess.getOperationAspectAccess().getLeftCurlyBracketKeyword_6_0_0());
                     				
-                    // InternalMappingDsl.g:7392:5: ( (lv_pointcutSelectors_12_0= ruleOperationAspectPointcutSelector ) )*
+                    // InternalMappingDsl.g:7400:5: ( (lv_pointcutSelectors_12_0= ruleOperationAspectPointcutSelector ) )*
                     loop170:
                     do {
                         int alt170=2;
                         int LA170_0 = input.LA(1);
 
-                        if ( (LA170_0==97) ) {
+                        if ( (LA170_0==98) ) {
                             alt170=1;
                         }
 
 
                         switch (alt170) {
                     	case 1 :
-                    	    // InternalMappingDsl.g:7393:6: (lv_pointcutSelectors_12_0= ruleOperationAspectPointcutSelector )
+                    	    // InternalMappingDsl.g:7401:6: (lv_pointcutSelectors_12_0= ruleOperationAspectPointcutSelector )
                     	    {
-                    	    // InternalMappingDsl.g:7393:6: (lv_pointcutSelectors_12_0= ruleOperationAspectPointcutSelector )
-                    	    // InternalMappingDsl.g:7394:7: lv_pointcutSelectors_12_0= ruleOperationAspectPointcutSelector
+                    	    // InternalMappingDsl.g:7401:6: (lv_pointcutSelectors_12_0= ruleOperationAspectPointcutSelector )
+                    	    // InternalMappingDsl.g:7402:7: lv_pointcutSelectors_12_0= ruleOperationAspectPointcutSelector
                     	    {
 
                     	    							newCompositeNode(grammarAccess.getOperationAspectAccess().getPointcutSelectorsOperationAspectPointcutSelectorParserRuleCall_6_0_1_0());
@@ -18387,23 +18407,23 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         }
                     } while (true);
 
-                    // InternalMappingDsl.g:7411:5: ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )*
+                    // InternalMappingDsl.g:7419:5: ( (lv_properties_13_0= ruleTechnologySpecificProperty ) )*
                     loop171:
                     do {
                         int alt171=2;
                         int LA171_0 = input.LA(1);
 
-                        if ( ((LA171_0>=122 && LA171_0<=131)||LA171_0==138) ) {
+                        if ( ((LA171_0>=123 && LA171_0<=132)||LA171_0==139) ) {
                             alt171=1;
                         }
 
 
                         switch (alt171) {
                     	case 1 :
-                    	    // InternalMappingDsl.g:7412:6: (lv_properties_13_0= ruleTechnologySpecificProperty )
+                    	    // InternalMappingDsl.g:7420:6: (lv_properties_13_0= ruleTechnologySpecificProperty )
                     	    {
-                    	    // InternalMappingDsl.g:7412:6: (lv_properties_13_0= ruleTechnologySpecificProperty )
-                    	    // InternalMappingDsl.g:7413:7: lv_properties_13_0= ruleTechnologySpecificProperty
+                    	    // InternalMappingDsl.g:7420:6: (lv_properties_13_0= ruleTechnologySpecificProperty )
+                    	    // InternalMappingDsl.g:7421:7: lv_properties_13_0= ruleTechnologySpecificProperty
                     	    {
 
                     	    							newCompositeNode(grammarAccess.getOperationAspectAccess().getPropertiesTechnologySpecificPropertyParserRuleCall_6_0_2_0());
@@ -18436,7 +18456,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         }
                     } while (true);
 
-                    otherlv_14=(Token)match(input,16,FOLLOW_2); 
+                    otherlv_14=(Token)match(input,17,FOLLOW_2); 
 
                     					newLeafNode(otherlv_14, grammarAccess.getOperationAspectAccess().getRightCurlyBracketKeyword_6_0_3());
                     				
@@ -18447,9 +18467,9 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalMappingDsl.g:7436:4: otherlv_15= ';'
+                    // InternalMappingDsl.g:7444:4: otherlv_15= ';'
                     {
-                    otherlv_15=(Token)match(input,26,FOLLOW_2); 
+                    otherlv_15=(Token)match(input,27,FOLLOW_2); 
 
                     				newLeafNode(otherlv_15, grammarAccess.getOperationAspectAccess().getSemicolonKeyword_6_1());
                     			
@@ -18482,7 +18502,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleComplexTypeImport"
-    // InternalMappingDsl.g:7445:1: entryRuleComplexTypeImport returns [EObject current=null] : iv_ruleComplexTypeImport= ruleComplexTypeImport EOF ;
+    // InternalMappingDsl.g:7453:1: entryRuleComplexTypeImport returns [EObject current=null] : iv_ruleComplexTypeImport= ruleComplexTypeImport EOF ;
     public final EObject entryRuleComplexTypeImport() throws RecognitionException {
         EObject current = null;
 
@@ -18490,8 +18510,8 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalMappingDsl.g:7445:58: (iv_ruleComplexTypeImport= ruleComplexTypeImport EOF )
-            // InternalMappingDsl.g:7446:2: iv_ruleComplexTypeImport= ruleComplexTypeImport EOF
+            // InternalMappingDsl.g:7453:58: (iv_ruleComplexTypeImport= ruleComplexTypeImport EOF )
+            // InternalMappingDsl.g:7454:2: iv_ruleComplexTypeImport= ruleComplexTypeImport EOF
             {
              newCompositeNode(grammarAccess.getComplexTypeImportRule()); 
             pushFollow(FOLLOW_1);
@@ -18518,7 +18538,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleComplexTypeImport"
-    // InternalMappingDsl.g:7452:1: ruleComplexTypeImport returns [EObject current=null] : (otherlv_0= 'import' otherlv_1= 'datatypes' otherlv_2= 'from' ( (lv_importURI_3_0= RULE_STRING ) ) otherlv_4= 'as' ( (lv_name_5_0= RULE_ID ) ) ) ;
+    // InternalMappingDsl.g:7460:1: ruleComplexTypeImport returns [EObject current=null] : (otherlv_0= 'import' otherlv_1= 'datatypes' otherlv_2= 'from' ( (lv_importURI_3_0= RULE_STRING ) ) otherlv_4= 'as' ( (lv_name_5_0= RULE_ID ) ) ) ;
     public final EObject ruleComplexTypeImport() throws RecognitionException {
         EObject current = null;
 
@@ -18533,29 +18553,29 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:7458:2: ( (otherlv_0= 'import' otherlv_1= 'datatypes' otherlv_2= 'from' ( (lv_importURI_3_0= RULE_STRING ) ) otherlv_4= 'as' ( (lv_name_5_0= RULE_ID ) ) ) )
-            // InternalMappingDsl.g:7459:2: (otherlv_0= 'import' otherlv_1= 'datatypes' otherlv_2= 'from' ( (lv_importURI_3_0= RULE_STRING ) ) otherlv_4= 'as' ( (lv_name_5_0= RULE_ID ) ) )
+            // InternalMappingDsl.g:7466:2: ( (otherlv_0= 'import' otherlv_1= 'datatypes' otherlv_2= 'from' ( (lv_importURI_3_0= RULE_STRING ) ) otherlv_4= 'as' ( (lv_name_5_0= RULE_ID ) ) ) )
+            // InternalMappingDsl.g:7467:2: (otherlv_0= 'import' otherlv_1= 'datatypes' otherlv_2= 'from' ( (lv_importURI_3_0= RULE_STRING ) ) otherlv_4= 'as' ( (lv_name_5_0= RULE_ID ) ) )
             {
-            // InternalMappingDsl.g:7459:2: (otherlv_0= 'import' otherlv_1= 'datatypes' otherlv_2= 'from' ( (lv_importURI_3_0= RULE_STRING ) ) otherlv_4= 'as' ( (lv_name_5_0= RULE_ID ) ) )
-            // InternalMappingDsl.g:7460:3: otherlv_0= 'import' otherlv_1= 'datatypes' otherlv_2= 'from' ( (lv_importURI_3_0= RULE_STRING ) ) otherlv_4= 'as' ( (lv_name_5_0= RULE_ID ) )
+            // InternalMappingDsl.g:7467:2: (otherlv_0= 'import' otherlv_1= 'datatypes' otherlv_2= 'from' ( (lv_importURI_3_0= RULE_STRING ) ) otherlv_4= 'as' ( (lv_name_5_0= RULE_ID ) ) )
+            // InternalMappingDsl.g:7468:3: otherlv_0= 'import' otherlv_1= 'datatypes' otherlv_2= 'from' ( (lv_importURI_3_0= RULE_STRING ) ) otherlv_4= 'as' ( (lv_name_5_0= RULE_ID ) )
             {
-            otherlv_0=(Token)match(input,35,FOLLOW_95); 
+            otherlv_0=(Token)match(input,36,FOLLOW_95); 
 
             			newLeafNode(otherlv_0, grammarAccess.getComplexTypeImportAccess().getImportKeyword_0());
             		
-            otherlv_1=(Token)match(input,98,FOLLOW_55); 
+            otherlv_1=(Token)match(input,99,FOLLOW_55); 
 
             			newLeafNode(otherlv_1, grammarAccess.getComplexTypeImportAccess().getDatatypesKeyword_1());
             		
-            otherlv_2=(Token)match(input,36,FOLLOW_46); 
+            otherlv_2=(Token)match(input,37,FOLLOW_46); 
 
             			newLeafNode(otherlv_2, grammarAccess.getComplexTypeImportAccess().getFromKeyword_2());
             		
-            // InternalMappingDsl.g:7472:3: ( (lv_importURI_3_0= RULE_STRING ) )
-            // InternalMappingDsl.g:7473:4: (lv_importURI_3_0= RULE_STRING )
+            // InternalMappingDsl.g:7480:3: ( (lv_importURI_3_0= RULE_STRING ) )
+            // InternalMappingDsl.g:7481:4: (lv_importURI_3_0= RULE_STRING )
             {
-            // InternalMappingDsl.g:7473:4: (lv_importURI_3_0= RULE_STRING )
-            // InternalMappingDsl.g:7474:5: lv_importURI_3_0= RULE_STRING
+            // InternalMappingDsl.g:7481:4: (lv_importURI_3_0= RULE_STRING )
+            // InternalMappingDsl.g:7482:5: lv_importURI_3_0= RULE_STRING
             {
             lv_importURI_3_0=(Token)match(input,RULE_STRING,FOLLOW_56); 
 
@@ -18577,15 +18597,15 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_4=(Token)match(input,37,FOLLOW_7); 
+            otherlv_4=(Token)match(input,38,FOLLOW_7); 
 
             			newLeafNode(otherlv_4, grammarAccess.getComplexTypeImportAccess().getAsKeyword_4());
             		
-            // InternalMappingDsl.g:7494:3: ( (lv_name_5_0= RULE_ID ) )
-            // InternalMappingDsl.g:7495:4: (lv_name_5_0= RULE_ID )
+            // InternalMappingDsl.g:7502:3: ( (lv_name_5_0= RULE_ID ) )
+            // InternalMappingDsl.g:7503:4: (lv_name_5_0= RULE_ID )
             {
-            // InternalMappingDsl.g:7495:4: (lv_name_5_0= RULE_ID )
-            // InternalMappingDsl.g:7496:5: lv_name_5_0= RULE_ID
+            // InternalMappingDsl.g:7503:4: (lv_name_5_0= RULE_ID )
+            // InternalMappingDsl.g:7504:5: lv_name_5_0= RULE_ID
             {
             lv_name_5_0=(Token)match(input,RULE_ID,FOLLOW_2); 
 
@@ -18630,7 +18650,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleVersion"
-    // InternalMappingDsl.g:7516:1: entryRuleVersion returns [EObject current=null] : iv_ruleVersion= ruleVersion EOF ;
+    // InternalMappingDsl.g:7524:1: entryRuleVersion returns [EObject current=null] : iv_ruleVersion= ruleVersion EOF ;
     public final EObject entryRuleVersion() throws RecognitionException {
         EObject current = null;
 
@@ -18638,8 +18658,8 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalMappingDsl.g:7516:48: (iv_ruleVersion= ruleVersion EOF )
-            // InternalMappingDsl.g:7517:2: iv_ruleVersion= ruleVersion EOF
+            // InternalMappingDsl.g:7524:48: (iv_ruleVersion= ruleVersion EOF )
+            // InternalMappingDsl.g:7525:2: iv_ruleVersion= ruleVersion EOF
             {
              newCompositeNode(grammarAccess.getVersionRule()); 
             pushFollow(FOLLOW_1);
@@ -18666,7 +18686,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleVersion"
-    // InternalMappingDsl.g:7523:1: ruleVersion returns [EObject current=null] : (otherlv_0= 'version' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( ( (lv_complexTypes_3_0= ruleComplexType ) )+ | ( (lv_contexts_4_0= ruleContext ) )+ )? otherlv_5= '}' ) ;
+    // InternalMappingDsl.g:7531:1: ruleVersion returns [EObject current=null] : (otherlv_0= 'version' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( ( (lv_complexTypes_3_0= ruleComplexType ) )+ | ( (lv_contexts_4_0= ruleContext ) )+ )? otherlv_5= '}' ) ;
     public final EObject ruleVersion() throws RecognitionException {
         EObject current = null;
 
@@ -18683,21 +18703,21 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:7529:2: ( (otherlv_0= 'version' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( ( (lv_complexTypes_3_0= ruleComplexType ) )+ | ( (lv_contexts_4_0= ruleContext ) )+ )? otherlv_5= '}' ) )
-            // InternalMappingDsl.g:7530:2: (otherlv_0= 'version' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( ( (lv_complexTypes_3_0= ruleComplexType ) )+ | ( (lv_contexts_4_0= ruleContext ) )+ )? otherlv_5= '}' )
+            // InternalMappingDsl.g:7537:2: ( (otherlv_0= 'version' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( ( (lv_complexTypes_3_0= ruleComplexType ) )+ | ( (lv_contexts_4_0= ruleContext ) )+ )? otherlv_5= '}' ) )
+            // InternalMappingDsl.g:7538:2: (otherlv_0= 'version' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( ( (lv_complexTypes_3_0= ruleComplexType ) )+ | ( (lv_contexts_4_0= ruleContext ) )+ )? otherlv_5= '}' )
             {
-            // InternalMappingDsl.g:7530:2: (otherlv_0= 'version' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( ( (lv_complexTypes_3_0= ruleComplexType ) )+ | ( (lv_contexts_4_0= ruleContext ) )+ )? otherlv_5= '}' )
-            // InternalMappingDsl.g:7531:3: otherlv_0= 'version' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( ( (lv_complexTypes_3_0= ruleComplexType ) )+ | ( (lv_contexts_4_0= ruleContext ) )+ )? otherlv_5= '}'
+            // InternalMappingDsl.g:7538:2: (otherlv_0= 'version' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( ( (lv_complexTypes_3_0= ruleComplexType ) )+ | ( (lv_contexts_4_0= ruleContext ) )+ )? otherlv_5= '}' )
+            // InternalMappingDsl.g:7539:3: otherlv_0= 'version' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( ( (lv_complexTypes_3_0= ruleComplexType ) )+ | ( (lv_contexts_4_0= ruleContext ) )+ )? otherlv_5= '}'
             {
-            otherlv_0=(Token)match(input,42,FOLLOW_7); 
+            otherlv_0=(Token)match(input,43,FOLLOW_7); 
 
             			newLeafNode(otherlv_0, grammarAccess.getVersionAccess().getVersionKeyword_0());
             		
-            // InternalMappingDsl.g:7535:3: ( (lv_name_1_0= RULE_ID ) )
-            // InternalMappingDsl.g:7536:4: (lv_name_1_0= RULE_ID )
+            // InternalMappingDsl.g:7543:3: ( (lv_name_1_0= RULE_ID ) )
+            // InternalMappingDsl.g:7544:4: (lv_name_1_0= RULE_ID )
             {
-            // InternalMappingDsl.g:7536:4: (lv_name_1_0= RULE_ID )
-            // InternalMappingDsl.g:7537:5: lv_name_1_0= RULE_ID
+            // InternalMappingDsl.g:7544:4: (lv_name_1_0= RULE_ID )
+            // InternalMappingDsl.g:7545:5: lv_name_1_0= RULE_ID
             {
             lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_8); 
 
@@ -18719,42 +18739,42 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,14,FOLLOW_123); 
+            otherlv_2=(Token)match(input,15,FOLLOW_123); 
 
             			newLeafNode(otherlv_2, grammarAccess.getVersionAccess().getLeftCurlyBracketKeyword_2());
             		
-            // InternalMappingDsl.g:7557:3: ( ( (lv_complexTypes_3_0= ruleComplexType ) )+ | ( (lv_contexts_4_0= ruleContext ) )+ )?
+            // InternalMappingDsl.g:7565:3: ( ( (lv_complexTypes_3_0= ruleComplexType ) )+ | ( (lv_contexts_4_0= ruleContext ) )+ )?
             int alt175=3;
             int LA175_0 = input.LA(1);
 
-            if ( ((LA175_0>=81 && LA175_0<=82)||LA175_0==116) ) {
+            if ( ((LA175_0>=82 && LA175_0<=83)||LA175_0==117) ) {
                 alt175=1;
             }
-            else if ( (LA175_0==99) ) {
+            else if ( (LA175_0==100) ) {
                 alt175=2;
             }
             switch (alt175) {
                 case 1 :
-                    // InternalMappingDsl.g:7558:4: ( (lv_complexTypes_3_0= ruleComplexType ) )+
+                    // InternalMappingDsl.g:7566:4: ( (lv_complexTypes_3_0= ruleComplexType ) )+
                     {
-                    // InternalMappingDsl.g:7558:4: ( (lv_complexTypes_3_0= ruleComplexType ) )+
+                    // InternalMappingDsl.g:7566:4: ( (lv_complexTypes_3_0= ruleComplexType ) )+
                     int cnt173=0;
                     loop173:
                     do {
                         int alt173=2;
                         int LA173_0 = input.LA(1);
 
-                        if ( ((LA173_0>=81 && LA173_0<=82)||LA173_0==116) ) {
+                        if ( ((LA173_0>=82 && LA173_0<=83)||LA173_0==117) ) {
                             alt173=1;
                         }
 
 
                         switch (alt173) {
                     	case 1 :
-                    	    // InternalMappingDsl.g:7559:5: (lv_complexTypes_3_0= ruleComplexType )
+                    	    // InternalMappingDsl.g:7567:5: (lv_complexTypes_3_0= ruleComplexType )
                     	    {
-                    	    // InternalMappingDsl.g:7559:5: (lv_complexTypes_3_0= ruleComplexType )
-                    	    // InternalMappingDsl.g:7560:6: lv_complexTypes_3_0= ruleComplexType
+                    	    // InternalMappingDsl.g:7567:5: (lv_complexTypes_3_0= ruleComplexType )
+                    	    // InternalMappingDsl.g:7568:6: lv_complexTypes_3_0= ruleComplexType
                     	    {
 
                     	    						newCompositeNode(grammarAccess.getVersionAccess().getComplexTypesComplexTypeParserRuleCall_3_0_0());
@@ -18795,26 +18815,26 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalMappingDsl.g:7578:4: ( (lv_contexts_4_0= ruleContext ) )+
+                    // InternalMappingDsl.g:7586:4: ( (lv_contexts_4_0= ruleContext ) )+
                     {
-                    // InternalMappingDsl.g:7578:4: ( (lv_contexts_4_0= ruleContext ) )+
+                    // InternalMappingDsl.g:7586:4: ( (lv_contexts_4_0= ruleContext ) )+
                     int cnt174=0;
                     loop174:
                     do {
                         int alt174=2;
                         int LA174_0 = input.LA(1);
 
-                        if ( (LA174_0==99) ) {
+                        if ( (LA174_0==100) ) {
                             alt174=1;
                         }
 
 
                         switch (alt174) {
                     	case 1 :
-                    	    // InternalMappingDsl.g:7579:5: (lv_contexts_4_0= ruleContext )
+                    	    // InternalMappingDsl.g:7587:5: (lv_contexts_4_0= ruleContext )
                     	    {
-                    	    // InternalMappingDsl.g:7579:5: (lv_contexts_4_0= ruleContext )
-                    	    // InternalMappingDsl.g:7580:6: lv_contexts_4_0= ruleContext
+                    	    // InternalMappingDsl.g:7587:5: (lv_contexts_4_0= ruleContext )
+                    	    // InternalMappingDsl.g:7588:6: lv_contexts_4_0= ruleContext
                     	    {
 
                     	    						newCompositeNode(grammarAccess.getVersionAccess().getContextsContextParserRuleCall_3_1_0());
@@ -18857,7 +18877,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_5=(Token)match(input,16,FOLLOW_2); 
+            otherlv_5=(Token)match(input,17,FOLLOW_2); 
 
             			newLeafNode(otherlv_5, grammarAccess.getVersionAccess().getRightCurlyBracketKeyword_4());
             		
@@ -18884,7 +18904,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleContext"
-    // InternalMappingDsl.g:7606:1: entryRuleContext returns [EObject current=null] : iv_ruleContext= ruleContext EOF ;
+    // InternalMappingDsl.g:7614:1: entryRuleContext returns [EObject current=null] : iv_ruleContext= ruleContext EOF ;
     public final EObject entryRuleContext() throws RecognitionException {
         EObject current = null;
 
@@ -18892,8 +18912,8 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalMappingDsl.g:7606:48: (iv_ruleContext= ruleContext EOF )
-            // InternalMappingDsl.g:7607:2: iv_ruleContext= ruleContext EOF
+            // InternalMappingDsl.g:7614:48: (iv_ruleContext= ruleContext EOF )
+            // InternalMappingDsl.g:7615:2: iv_ruleContext= ruleContext EOF
             {
              newCompositeNode(grammarAccess.getContextRule()); 
             pushFollow(FOLLOW_1);
@@ -18920,7 +18940,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleContext"
-    // InternalMappingDsl.g:7613:1: ruleContext returns [EObject current=null] : (otherlv_0= 'context' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_complexTypes_3_0= ruleComplexType ) )+ otherlv_4= '}' ) ;
+    // InternalMappingDsl.g:7621:1: ruleContext returns [EObject current=null] : (otherlv_0= 'context' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_complexTypes_3_0= ruleComplexType ) )+ otherlv_4= '}' ) ;
     public final EObject ruleContext() throws RecognitionException {
         EObject current = null;
 
@@ -18935,21 +18955,21 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:7619:2: ( (otherlv_0= 'context' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_complexTypes_3_0= ruleComplexType ) )+ otherlv_4= '}' ) )
-            // InternalMappingDsl.g:7620:2: (otherlv_0= 'context' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_complexTypes_3_0= ruleComplexType ) )+ otherlv_4= '}' )
+            // InternalMappingDsl.g:7627:2: ( (otherlv_0= 'context' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_complexTypes_3_0= ruleComplexType ) )+ otherlv_4= '}' ) )
+            // InternalMappingDsl.g:7628:2: (otherlv_0= 'context' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_complexTypes_3_0= ruleComplexType ) )+ otherlv_4= '}' )
             {
-            // InternalMappingDsl.g:7620:2: (otherlv_0= 'context' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_complexTypes_3_0= ruleComplexType ) )+ otherlv_4= '}' )
-            // InternalMappingDsl.g:7621:3: otherlv_0= 'context' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_complexTypes_3_0= ruleComplexType ) )+ otherlv_4= '}'
+            // InternalMappingDsl.g:7628:2: (otherlv_0= 'context' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_complexTypes_3_0= ruleComplexType ) )+ otherlv_4= '}' )
+            // InternalMappingDsl.g:7629:3: otherlv_0= 'context' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_complexTypes_3_0= ruleComplexType ) )+ otherlv_4= '}'
             {
-            otherlv_0=(Token)match(input,99,FOLLOW_7); 
+            otherlv_0=(Token)match(input,100,FOLLOW_7); 
 
             			newLeafNode(otherlv_0, grammarAccess.getContextAccess().getContextKeyword_0());
             		
-            // InternalMappingDsl.g:7625:3: ( (lv_name_1_0= RULE_ID ) )
-            // InternalMappingDsl.g:7626:4: (lv_name_1_0= RULE_ID )
+            // InternalMappingDsl.g:7633:3: ( (lv_name_1_0= RULE_ID ) )
+            // InternalMappingDsl.g:7634:4: (lv_name_1_0= RULE_ID )
             {
-            // InternalMappingDsl.g:7626:4: (lv_name_1_0= RULE_ID )
-            // InternalMappingDsl.g:7627:5: lv_name_1_0= RULE_ID
+            // InternalMappingDsl.g:7634:4: (lv_name_1_0= RULE_ID )
+            // InternalMappingDsl.g:7635:5: lv_name_1_0= RULE_ID
             {
             lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_8); 
 
@@ -18971,28 +18991,28 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,14,FOLLOW_126); 
+            otherlv_2=(Token)match(input,15,FOLLOW_126); 
 
             			newLeafNode(otherlv_2, grammarAccess.getContextAccess().getLeftCurlyBracketKeyword_2());
             		
-            // InternalMappingDsl.g:7647:3: ( (lv_complexTypes_3_0= ruleComplexType ) )+
+            // InternalMappingDsl.g:7655:3: ( (lv_complexTypes_3_0= ruleComplexType ) )+
             int cnt176=0;
             loop176:
             do {
                 int alt176=2;
                 int LA176_0 = input.LA(1);
 
-                if ( ((LA176_0>=81 && LA176_0<=82)||LA176_0==116) ) {
+                if ( ((LA176_0>=82 && LA176_0<=83)||LA176_0==117) ) {
                     alt176=1;
                 }
 
 
                 switch (alt176) {
             	case 1 :
-            	    // InternalMappingDsl.g:7648:4: (lv_complexTypes_3_0= ruleComplexType )
+            	    // InternalMappingDsl.g:7656:4: (lv_complexTypes_3_0= ruleComplexType )
             	    {
-            	    // InternalMappingDsl.g:7648:4: (lv_complexTypes_3_0= ruleComplexType )
-            	    // InternalMappingDsl.g:7649:5: lv_complexTypes_3_0= ruleComplexType
+            	    // InternalMappingDsl.g:7656:4: (lv_complexTypes_3_0= ruleComplexType )
+            	    // InternalMappingDsl.g:7657:5: lv_complexTypes_3_0= ruleComplexType
             	    {
 
             	    					newCompositeNode(grammarAccess.getContextAccess().getComplexTypesComplexTypeParserRuleCall_3_0());
@@ -19029,7 +19049,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 cnt176++;
             } while (true);
 
-            otherlv_4=(Token)match(input,16,FOLLOW_2); 
+            otherlv_4=(Token)match(input,17,FOLLOW_2); 
 
             			newLeafNode(otherlv_4, grammarAccess.getContextAccess().getRightCurlyBracketKeyword_4());
             		
@@ -19056,7 +19076,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleComplexType"
-    // InternalMappingDsl.g:7674:1: entryRuleComplexType returns [EObject current=null] : iv_ruleComplexType= ruleComplexType EOF ;
+    // InternalMappingDsl.g:7682:1: entryRuleComplexType returns [EObject current=null] : iv_ruleComplexType= ruleComplexType EOF ;
     public final EObject entryRuleComplexType() throws RecognitionException {
         EObject current = null;
 
@@ -19064,8 +19084,8 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalMappingDsl.g:7674:52: (iv_ruleComplexType= ruleComplexType EOF )
-            // InternalMappingDsl.g:7675:2: iv_ruleComplexType= ruleComplexType EOF
+            // InternalMappingDsl.g:7682:52: (iv_ruleComplexType= ruleComplexType EOF )
+            // InternalMappingDsl.g:7683:2: iv_ruleComplexType= ruleComplexType EOF
             {
              newCompositeNode(grammarAccess.getComplexTypeRule()); 
             pushFollow(FOLLOW_1);
@@ -19092,7 +19112,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleComplexType"
-    // InternalMappingDsl.g:7681:1: ruleComplexType returns [EObject current=null] : (this_DataStructure_0= ruleDataStructure | this_ListType_1= ruleListType | this_Enumeration_2= ruleEnumeration ) ;
+    // InternalMappingDsl.g:7689:1: ruleComplexType returns [EObject current=null] : (this_DataStructure_0= ruleDataStructure | this_ListType_1= ruleListType | this_Enumeration_2= ruleEnumeration ) ;
     public final EObject ruleComplexType() throws RecognitionException {
         EObject current = null;
 
@@ -19107,23 +19127,23 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:7687:2: ( (this_DataStructure_0= ruleDataStructure | this_ListType_1= ruleListType | this_Enumeration_2= ruleEnumeration ) )
-            // InternalMappingDsl.g:7688:2: (this_DataStructure_0= ruleDataStructure | this_ListType_1= ruleListType | this_Enumeration_2= ruleEnumeration )
+            // InternalMappingDsl.g:7695:2: ( (this_DataStructure_0= ruleDataStructure | this_ListType_1= ruleListType | this_Enumeration_2= ruleEnumeration ) )
+            // InternalMappingDsl.g:7696:2: (this_DataStructure_0= ruleDataStructure | this_ListType_1= ruleListType | this_Enumeration_2= ruleEnumeration )
             {
-            // InternalMappingDsl.g:7688:2: (this_DataStructure_0= ruleDataStructure | this_ListType_1= ruleListType | this_Enumeration_2= ruleEnumeration )
+            // InternalMappingDsl.g:7696:2: (this_DataStructure_0= ruleDataStructure | this_ListType_1= ruleListType | this_Enumeration_2= ruleEnumeration )
             int alt177=3;
             switch ( input.LA(1) ) {
-            case 82:
+            case 83:
                 {
                 alt177=1;
                 }
                 break;
-            case 81:
+            case 82:
                 {
                 alt177=2;
                 }
                 break;
-            case 116:
+            case 117:
                 {
                 alt177=3;
                 }
@@ -19137,7 +19157,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             switch (alt177) {
                 case 1 :
-                    // InternalMappingDsl.g:7689:3: this_DataStructure_0= ruleDataStructure
+                    // InternalMappingDsl.g:7697:3: this_DataStructure_0= ruleDataStructure
                     {
 
                     			newCompositeNode(grammarAccess.getComplexTypeAccess().getDataStructureParserRuleCall_0());
@@ -19155,7 +19175,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalMappingDsl.g:7698:3: this_ListType_1= ruleListType
+                    // InternalMappingDsl.g:7706:3: this_ListType_1= ruleListType
                     {
 
                     			newCompositeNode(grammarAccess.getComplexTypeAccess().getListTypeParserRuleCall_1());
@@ -19173,7 +19193,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalMappingDsl.g:7707:3: this_Enumeration_2= ruleEnumeration
+                    // InternalMappingDsl.g:7715:3: this_Enumeration_2= ruleEnumeration
                     {
 
                     			newCompositeNode(grammarAccess.getComplexTypeAccess().getEnumerationParserRuleCall_2());
@@ -19213,7 +19233,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleDataStructure"
-    // InternalMappingDsl.g:7719:1: entryRuleDataStructure returns [EObject current=null] : iv_ruleDataStructure= ruleDataStructure EOF ;
+    // InternalMappingDsl.g:7727:1: entryRuleDataStructure returns [EObject current=null] : iv_ruleDataStructure= ruleDataStructure EOF ;
     public final EObject entryRuleDataStructure() throws RecognitionException {
         EObject current = null;
 
@@ -19221,8 +19241,8 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalMappingDsl.g:7719:54: (iv_ruleDataStructure= ruleDataStructure EOF )
-            // InternalMappingDsl.g:7720:2: iv_ruleDataStructure= ruleDataStructure EOF
+            // InternalMappingDsl.g:7727:54: (iv_ruleDataStructure= ruleDataStructure EOF )
+            // InternalMappingDsl.g:7728:2: iv_ruleDataStructure= ruleDataStructure EOF
             {
              newCompositeNode(grammarAccess.getDataStructureRule()); 
             pushFollow(FOLLOW_1);
@@ -19249,7 +19269,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDataStructure"
-    // InternalMappingDsl.g:7726:1: ruleDataStructure returns [EObject current=null] : (otherlv_0= 'structure' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleComplexTypeFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleComplexTypeFeature ) ) )* otherlv_6= '>' )? (otherlv_7= 'extends' ( ( ruleQualifiedName ) ) )? otherlv_9= '{' ( ( ( (lv_dataFields_10_0= ruleDataField ) ) | ( (lv_operations_11_0= ruleDataOperation ) ) ) (otherlv_12= ',' ( ( (lv_dataFields_13_0= ruleDataField ) ) | ( (lv_operations_14_0= ruleDataOperation ) ) ) )* )? otherlv_15= '}' ) ;
+    // InternalMappingDsl.g:7734:1: ruleDataStructure returns [EObject current=null] : (otherlv_0= 'structure' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleComplexTypeFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleComplexTypeFeature ) ) )* otherlv_6= '>' )? (otherlv_7= 'extends' ( ( ruleQualifiedName ) ) )? otherlv_9= '{' ( ( ( (lv_dataFields_10_0= ruleDataField ) ) | ( (lv_operations_11_0= ruleDataOperation ) ) ) (otherlv_12= ',' ( ( (lv_dataFields_13_0= ruleDataField ) ) | ( (lv_operations_14_0= ruleDataOperation ) ) ) )* )? otherlv_15= '}' ) ;
     public final EObject ruleDataStructure() throws RecognitionException {
         EObject current = null;
 
@@ -19279,21 +19299,21 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:7732:2: ( (otherlv_0= 'structure' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleComplexTypeFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleComplexTypeFeature ) ) )* otherlv_6= '>' )? (otherlv_7= 'extends' ( ( ruleQualifiedName ) ) )? otherlv_9= '{' ( ( ( (lv_dataFields_10_0= ruleDataField ) ) | ( (lv_operations_11_0= ruleDataOperation ) ) ) (otherlv_12= ',' ( ( (lv_dataFields_13_0= ruleDataField ) ) | ( (lv_operations_14_0= ruleDataOperation ) ) ) )* )? otherlv_15= '}' ) )
-            // InternalMappingDsl.g:7733:2: (otherlv_0= 'structure' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleComplexTypeFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleComplexTypeFeature ) ) )* otherlv_6= '>' )? (otherlv_7= 'extends' ( ( ruleQualifiedName ) ) )? otherlv_9= '{' ( ( ( (lv_dataFields_10_0= ruleDataField ) ) | ( (lv_operations_11_0= ruleDataOperation ) ) ) (otherlv_12= ',' ( ( (lv_dataFields_13_0= ruleDataField ) ) | ( (lv_operations_14_0= ruleDataOperation ) ) ) )* )? otherlv_15= '}' )
+            // InternalMappingDsl.g:7740:2: ( (otherlv_0= 'structure' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleComplexTypeFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleComplexTypeFeature ) ) )* otherlv_6= '>' )? (otherlv_7= 'extends' ( ( ruleQualifiedName ) ) )? otherlv_9= '{' ( ( ( (lv_dataFields_10_0= ruleDataField ) ) | ( (lv_operations_11_0= ruleDataOperation ) ) ) (otherlv_12= ',' ( ( (lv_dataFields_13_0= ruleDataField ) ) | ( (lv_operations_14_0= ruleDataOperation ) ) ) )* )? otherlv_15= '}' ) )
+            // InternalMappingDsl.g:7741:2: (otherlv_0= 'structure' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleComplexTypeFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleComplexTypeFeature ) ) )* otherlv_6= '>' )? (otherlv_7= 'extends' ( ( ruleQualifiedName ) ) )? otherlv_9= '{' ( ( ( (lv_dataFields_10_0= ruleDataField ) ) | ( (lv_operations_11_0= ruleDataOperation ) ) ) (otherlv_12= ',' ( ( (lv_dataFields_13_0= ruleDataField ) ) | ( (lv_operations_14_0= ruleDataOperation ) ) ) )* )? otherlv_15= '}' )
             {
-            // InternalMappingDsl.g:7733:2: (otherlv_0= 'structure' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleComplexTypeFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleComplexTypeFeature ) ) )* otherlv_6= '>' )? (otherlv_7= 'extends' ( ( ruleQualifiedName ) ) )? otherlv_9= '{' ( ( ( (lv_dataFields_10_0= ruleDataField ) ) | ( (lv_operations_11_0= ruleDataOperation ) ) ) (otherlv_12= ',' ( ( (lv_dataFields_13_0= ruleDataField ) ) | ( (lv_operations_14_0= ruleDataOperation ) ) ) )* )? otherlv_15= '}' )
-            // InternalMappingDsl.g:7734:3: otherlv_0= 'structure' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleComplexTypeFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleComplexTypeFeature ) ) )* otherlv_6= '>' )? (otherlv_7= 'extends' ( ( ruleQualifiedName ) ) )? otherlv_9= '{' ( ( ( (lv_dataFields_10_0= ruleDataField ) ) | ( (lv_operations_11_0= ruleDataOperation ) ) ) (otherlv_12= ',' ( ( (lv_dataFields_13_0= ruleDataField ) ) | ( (lv_operations_14_0= ruleDataOperation ) ) ) )* )? otherlv_15= '}'
+            // InternalMappingDsl.g:7741:2: (otherlv_0= 'structure' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleComplexTypeFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleComplexTypeFeature ) ) )* otherlv_6= '>' )? (otherlv_7= 'extends' ( ( ruleQualifiedName ) ) )? otherlv_9= '{' ( ( ( (lv_dataFields_10_0= ruleDataField ) ) | ( (lv_operations_11_0= ruleDataOperation ) ) ) (otherlv_12= ',' ( ( (lv_dataFields_13_0= ruleDataField ) ) | ( (lv_operations_14_0= ruleDataOperation ) ) ) )* )? otherlv_15= '}' )
+            // InternalMappingDsl.g:7742:3: otherlv_0= 'structure' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleComplexTypeFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleComplexTypeFeature ) ) )* otherlv_6= '>' )? (otherlv_7= 'extends' ( ( ruleQualifiedName ) ) )? otherlv_9= '{' ( ( ( (lv_dataFields_10_0= ruleDataField ) ) | ( (lv_operations_11_0= ruleDataOperation ) ) ) (otherlv_12= ',' ( ( (lv_dataFields_13_0= ruleDataField ) ) | ( (lv_operations_14_0= ruleDataOperation ) ) ) )* )? otherlv_15= '}'
             {
-            otherlv_0=(Token)match(input,82,FOLLOW_7); 
+            otherlv_0=(Token)match(input,83,FOLLOW_7); 
 
             			newLeafNode(otherlv_0, grammarAccess.getDataStructureAccess().getStructureKeyword_0());
             		
-            // InternalMappingDsl.g:7738:3: ( (lv_name_1_0= RULE_ID ) )
-            // InternalMappingDsl.g:7739:4: (lv_name_1_0= RULE_ID )
+            // InternalMappingDsl.g:7746:3: ( (lv_name_1_0= RULE_ID ) )
+            // InternalMappingDsl.g:7747:4: (lv_name_1_0= RULE_ID )
             {
-            // InternalMappingDsl.g:7739:4: (lv_name_1_0= RULE_ID )
-            // InternalMappingDsl.g:7740:5: lv_name_1_0= RULE_ID
+            // InternalMappingDsl.g:7747:4: (lv_name_1_0= RULE_ID )
+            // InternalMappingDsl.g:7748:5: lv_name_1_0= RULE_ID
             {
             lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_127); 
 
@@ -19315,26 +19335,26 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalMappingDsl.g:7756:3: (otherlv_2= '<' ( (lv_features_3_0= ruleComplexTypeFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleComplexTypeFeature ) ) )* otherlv_6= '>' )?
+            // InternalMappingDsl.g:7764:3: (otherlv_2= '<' ( (lv_features_3_0= ruleComplexTypeFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleComplexTypeFeature ) ) )* otherlv_6= '>' )?
             int alt179=2;
             int LA179_0 = input.LA(1);
 
-            if ( (LA179_0==57) ) {
+            if ( (LA179_0==58) ) {
                 alt179=1;
             }
             switch (alt179) {
                 case 1 :
-                    // InternalMappingDsl.g:7757:4: otherlv_2= '<' ( (lv_features_3_0= ruleComplexTypeFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleComplexTypeFeature ) ) )* otherlv_6= '>'
+                    // InternalMappingDsl.g:7765:4: otherlv_2= '<' ( (lv_features_3_0= ruleComplexTypeFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleComplexTypeFeature ) ) )* otherlv_6= '>'
                     {
-                    otherlv_2=(Token)match(input,57,FOLLOW_128); 
+                    otherlv_2=(Token)match(input,58,FOLLOW_128); 
 
                     				newLeafNode(otherlv_2, grammarAccess.getDataStructureAccess().getLessThanSignKeyword_2_0());
                     			
-                    // InternalMappingDsl.g:7761:4: ( (lv_features_3_0= ruleComplexTypeFeature ) )
-                    // InternalMappingDsl.g:7762:5: (lv_features_3_0= ruleComplexTypeFeature )
+                    // InternalMappingDsl.g:7769:4: ( (lv_features_3_0= ruleComplexTypeFeature ) )
+                    // InternalMappingDsl.g:7770:5: (lv_features_3_0= ruleComplexTypeFeature )
                     {
-                    // InternalMappingDsl.g:7762:5: (lv_features_3_0= ruleComplexTypeFeature )
-                    // InternalMappingDsl.g:7763:6: lv_features_3_0= ruleComplexTypeFeature
+                    // InternalMappingDsl.g:7770:5: (lv_features_3_0= ruleComplexTypeFeature )
+                    // InternalMappingDsl.g:7771:6: lv_features_3_0= ruleComplexTypeFeature
                     {
 
                     						newCompositeNode(grammarAccess.getDataStructureAccess().getFeaturesComplexTypeFeatureEnumRuleCall_2_1_0());
@@ -19361,30 +19381,30 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalMappingDsl.g:7780:4: (otherlv_4= ',' ( (lv_features_5_0= ruleComplexTypeFeature ) ) )*
+                    // InternalMappingDsl.g:7788:4: (otherlv_4= ',' ( (lv_features_5_0= ruleComplexTypeFeature ) ) )*
                     loop178:
                     do {
                         int alt178=2;
                         int LA178_0 = input.LA(1);
 
-                        if ( (LA178_0==34) ) {
+                        if ( (LA178_0==35) ) {
                             alt178=1;
                         }
 
 
                         switch (alt178) {
                     	case 1 :
-                    	    // InternalMappingDsl.g:7781:5: otherlv_4= ',' ( (lv_features_5_0= ruleComplexTypeFeature ) )
+                    	    // InternalMappingDsl.g:7789:5: otherlv_4= ',' ( (lv_features_5_0= ruleComplexTypeFeature ) )
                     	    {
-                    	    otherlv_4=(Token)match(input,34,FOLLOW_128); 
+                    	    otherlv_4=(Token)match(input,35,FOLLOW_128); 
 
                     	    					newLeafNode(otherlv_4, grammarAccess.getDataStructureAccess().getCommaKeyword_2_2_0());
                     	    				
-                    	    // InternalMappingDsl.g:7785:5: ( (lv_features_5_0= ruleComplexTypeFeature ) )
-                    	    // InternalMappingDsl.g:7786:6: (lv_features_5_0= ruleComplexTypeFeature )
+                    	    // InternalMappingDsl.g:7793:5: ( (lv_features_5_0= ruleComplexTypeFeature ) )
+                    	    // InternalMappingDsl.g:7794:6: (lv_features_5_0= ruleComplexTypeFeature )
                     	    {
-                    	    // InternalMappingDsl.g:7786:6: (lv_features_5_0= ruleComplexTypeFeature )
-                    	    // InternalMappingDsl.g:7787:7: lv_features_5_0= ruleComplexTypeFeature
+                    	    // InternalMappingDsl.g:7794:6: (lv_features_5_0= ruleComplexTypeFeature )
+                    	    // InternalMappingDsl.g:7795:7: lv_features_5_0= ruleComplexTypeFeature
                     	    {
 
                     	    							newCompositeNode(grammarAccess.getDataStructureAccess().getFeaturesComplexTypeFeatureEnumRuleCall_2_2_1_0());
@@ -19420,7 +19440,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         }
                     } while (true);
 
-                    otherlv_6=(Token)match(input,58,FOLLOW_129); 
+                    otherlv_6=(Token)match(input,59,FOLLOW_129); 
 
                     				newLeafNode(otherlv_6, grammarAccess.getDataStructureAccess().getGreaterThanSignKeyword_2_3());
                     			
@@ -19430,26 +19450,26 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalMappingDsl.g:7810:3: (otherlv_7= 'extends' ( ( ruleQualifiedName ) ) )?
+            // InternalMappingDsl.g:7818:3: (otherlv_7= 'extends' ( ( ruleQualifiedName ) ) )?
             int alt180=2;
             int LA180_0 = input.LA(1);
 
-            if ( (LA180_0==110) ) {
+            if ( (LA180_0==111) ) {
                 alt180=1;
             }
             switch (alt180) {
                 case 1 :
-                    // InternalMappingDsl.g:7811:4: otherlv_7= 'extends' ( ( ruleQualifiedName ) )
+                    // InternalMappingDsl.g:7819:4: otherlv_7= 'extends' ( ( ruleQualifiedName ) )
                     {
-                    otherlv_7=(Token)match(input,110,FOLLOW_7); 
+                    otherlv_7=(Token)match(input,111,FOLLOW_7); 
 
                     				newLeafNode(otherlv_7, grammarAccess.getDataStructureAccess().getExtendsKeyword_3_0());
                     			
-                    // InternalMappingDsl.g:7815:4: ( ( ruleQualifiedName ) )
-                    // InternalMappingDsl.g:7816:5: ( ruleQualifiedName )
+                    // InternalMappingDsl.g:7823:4: ( ( ruleQualifiedName ) )
+                    // InternalMappingDsl.g:7824:5: ( ruleQualifiedName )
                     {
-                    // InternalMappingDsl.g:7816:5: ( ruleQualifiedName )
-                    // InternalMappingDsl.g:7817:6: ruleQualifiedName
+                    // InternalMappingDsl.g:7824:5: ( ruleQualifiedName )
+                    // InternalMappingDsl.g:7825:6: ruleQualifiedName
                     {
 
                     						if (current==null) {
@@ -19479,33 +19499,33 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_9=(Token)match(input,14,FOLLOW_130); 
+            otherlv_9=(Token)match(input,15,FOLLOW_130); 
 
             			newLeafNode(otherlv_9, grammarAccess.getDataStructureAccess().getLeftCurlyBracketKeyword_4());
             		
-            // InternalMappingDsl.g:7836:3: ( ( ( (lv_dataFields_10_0= ruleDataField ) ) | ( (lv_operations_11_0= ruleDataOperation ) ) ) (otherlv_12= ',' ( ( (lv_dataFields_13_0= ruleDataField ) ) | ( (lv_operations_14_0= ruleDataOperation ) ) ) )* )?
+            // InternalMappingDsl.g:7844:3: ( ( ( (lv_dataFields_10_0= ruleDataField ) ) | ( (lv_operations_11_0= ruleDataOperation ) ) ) (otherlv_12= ',' ( ( (lv_dataFields_13_0= ruleDataField ) ) | ( (lv_operations_14_0= ruleDataOperation ) ) ) )* )?
             int alt184=2;
             int LA184_0 = input.LA(1);
 
-            if ( (LA184_0==RULE_ID||(LA184_0>=114 && LA184_0<=115)||(LA184_0>=120 && LA184_0<=131)||LA184_0==138) ) {
+            if ( (LA184_0==RULE_ID||(LA184_0>=115 && LA184_0<=116)||(LA184_0>=121 && LA184_0<=132)||LA184_0==139) ) {
                 alt184=1;
             }
             switch (alt184) {
                 case 1 :
-                    // InternalMappingDsl.g:7837:4: ( ( (lv_dataFields_10_0= ruleDataField ) ) | ( (lv_operations_11_0= ruleDataOperation ) ) ) (otherlv_12= ',' ( ( (lv_dataFields_13_0= ruleDataField ) ) | ( (lv_operations_14_0= ruleDataOperation ) ) ) )*
+                    // InternalMappingDsl.g:7845:4: ( ( (lv_dataFields_10_0= ruleDataField ) ) | ( (lv_operations_11_0= ruleDataOperation ) ) ) (otherlv_12= ',' ( ( (lv_dataFields_13_0= ruleDataField ) ) | ( (lv_operations_14_0= ruleDataOperation ) ) ) )*
                     {
-                    // InternalMappingDsl.g:7837:4: ( ( (lv_dataFields_10_0= ruleDataField ) ) | ( (lv_operations_11_0= ruleDataOperation ) ) )
+                    // InternalMappingDsl.g:7845:4: ( ( (lv_dataFields_10_0= ruleDataField ) ) | ( (lv_operations_11_0= ruleDataOperation ) ) )
                     int alt181=2;
                     switch ( input.LA(1) ) {
-                    case 114:
+                    case 115:
                         {
                         int LA181_1 = input.LA(2);
 
-                        if ( (LA181_1==RULE_ID||LA181_1==115||(LA181_1>=122 && LA181_1<=131)||LA181_1==138) ) {
-                            alt181=1;
-                        }
-                        else if ( ((LA181_1>=120 && LA181_1<=121)) ) {
+                        if ( ((LA181_1>=121 && LA181_1<=122)) ) {
                             alt181=2;
+                        }
+                        else if ( (LA181_1==RULE_ID||LA181_1==116||(LA181_1>=123 && LA181_1<=132)||LA181_1==139) ) {
+                            alt181=1;
                         }
                         else {
                             NoViableAltException nvae =
@@ -19516,8 +19536,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         }
                         break;
                     case RULE_ID:
-                    case 115:
-                    case 122:
+                    case 116:
                     case 123:
                     case 124:
                     case 125:
@@ -19527,13 +19546,14 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     case 129:
                     case 130:
                     case 131:
-                    case 138:
+                    case 132:
+                    case 139:
                         {
                         alt181=1;
                         }
                         break;
-                    case 120:
                     case 121:
+                    case 122:
                         {
                         alt181=2;
                         }
@@ -19547,13 +19567,13 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     switch (alt181) {
                         case 1 :
-                            // InternalMappingDsl.g:7838:5: ( (lv_dataFields_10_0= ruleDataField ) )
+                            // InternalMappingDsl.g:7846:5: ( (lv_dataFields_10_0= ruleDataField ) )
                             {
-                            // InternalMappingDsl.g:7838:5: ( (lv_dataFields_10_0= ruleDataField ) )
-                            // InternalMappingDsl.g:7839:6: (lv_dataFields_10_0= ruleDataField )
+                            // InternalMappingDsl.g:7846:5: ( (lv_dataFields_10_0= ruleDataField ) )
+                            // InternalMappingDsl.g:7847:6: (lv_dataFields_10_0= ruleDataField )
                             {
-                            // InternalMappingDsl.g:7839:6: (lv_dataFields_10_0= ruleDataField )
-                            // InternalMappingDsl.g:7840:7: lv_dataFields_10_0= ruleDataField
+                            // InternalMappingDsl.g:7847:6: (lv_dataFields_10_0= ruleDataField )
+                            // InternalMappingDsl.g:7848:7: lv_dataFields_10_0= ruleDataField
                             {
 
                             							newCompositeNode(grammarAccess.getDataStructureAccess().getDataFieldsDataFieldParserRuleCall_5_0_0_0());
@@ -19584,13 +19604,13 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                             }
                             break;
                         case 2 :
-                            // InternalMappingDsl.g:7858:5: ( (lv_operations_11_0= ruleDataOperation ) )
+                            // InternalMappingDsl.g:7866:5: ( (lv_operations_11_0= ruleDataOperation ) )
                             {
-                            // InternalMappingDsl.g:7858:5: ( (lv_operations_11_0= ruleDataOperation ) )
-                            // InternalMappingDsl.g:7859:6: (lv_operations_11_0= ruleDataOperation )
+                            // InternalMappingDsl.g:7866:5: ( (lv_operations_11_0= ruleDataOperation ) )
+                            // InternalMappingDsl.g:7867:6: (lv_operations_11_0= ruleDataOperation )
                             {
-                            // InternalMappingDsl.g:7859:6: (lv_operations_11_0= ruleDataOperation )
-                            // InternalMappingDsl.g:7860:7: lv_operations_11_0= ruleDataOperation
+                            // InternalMappingDsl.g:7867:6: (lv_operations_11_0= ruleDataOperation )
+                            // InternalMappingDsl.g:7868:7: lv_operations_11_0= ruleDataOperation
                             {
 
                             							newCompositeNode(grammarAccess.getDataStructureAccess().getOperationsDataOperationParserRuleCall_5_0_1_0());
@@ -19623,36 +19643,36 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalMappingDsl.g:7878:4: (otherlv_12= ',' ( ( (lv_dataFields_13_0= ruleDataField ) ) | ( (lv_operations_14_0= ruleDataOperation ) ) ) )*
+                    // InternalMappingDsl.g:7886:4: (otherlv_12= ',' ( ( (lv_dataFields_13_0= ruleDataField ) ) | ( (lv_operations_14_0= ruleDataOperation ) ) ) )*
                     loop183:
                     do {
                         int alt183=2;
                         int LA183_0 = input.LA(1);
 
-                        if ( (LA183_0==34) ) {
+                        if ( (LA183_0==35) ) {
                             alt183=1;
                         }
 
 
                         switch (alt183) {
                     	case 1 :
-                    	    // InternalMappingDsl.g:7879:5: otherlv_12= ',' ( ( (lv_dataFields_13_0= ruleDataField ) ) | ( (lv_operations_14_0= ruleDataOperation ) ) )
+                    	    // InternalMappingDsl.g:7887:5: otherlv_12= ',' ( ( (lv_dataFields_13_0= ruleDataField ) ) | ( (lv_operations_14_0= ruleDataOperation ) ) )
                     	    {
-                    	    otherlv_12=(Token)match(input,34,FOLLOW_131); 
+                    	    otherlv_12=(Token)match(input,35,FOLLOW_131); 
 
                     	    					newLeafNode(otherlv_12, grammarAccess.getDataStructureAccess().getCommaKeyword_5_1_0());
                     	    				
-                    	    // InternalMappingDsl.g:7883:5: ( ( (lv_dataFields_13_0= ruleDataField ) ) | ( (lv_operations_14_0= ruleDataOperation ) ) )
+                    	    // InternalMappingDsl.g:7891:5: ( ( (lv_dataFields_13_0= ruleDataField ) ) | ( (lv_operations_14_0= ruleDataOperation ) ) )
                     	    int alt182=2;
                     	    switch ( input.LA(1) ) {
-                    	    case 114:
+                    	    case 115:
                     	        {
                     	        int LA182_1 = input.LA(2);
 
-                    	        if ( ((LA182_1>=120 && LA182_1<=121)) ) {
+                    	        if ( ((LA182_1>=121 && LA182_1<=122)) ) {
                     	            alt182=2;
                     	        }
-                    	        else if ( (LA182_1==RULE_ID||LA182_1==115||(LA182_1>=122 && LA182_1<=131)||LA182_1==138) ) {
+                    	        else if ( (LA182_1==RULE_ID||LA182_1==116||(LA182_1>=123 && LA182_1<=132)||LA182_1==139) ) {
                     	            alt182=1;
                     	        }
                     	        else {
@@ -19664,8 +19684,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     	        }
                     	        break;
                     	    case RULE_ID:
-                    	    case 115:
-                    	    case 122:
+                    	    case 116:
                     	    case 123:
                     	    case 124:
                     	    case 125:
@@ -19675,13 +19694,14 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     	    case 129:
                     	    case 130:
                     	    case 131:
-                    	    case 138:
+                    	    case 132:
+                    	    case 139:
                     	        {
                     	        alt182=1;
                     	        }
                     	        break;
-                    	    case 120:
                     	    case 121:
+                    	    case 122:
                     	        {
                     	        alt182=2;
                     	        }
@@ -19695,13 +19715,13 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     	    switch (alt182) {
                     	        case 1 :
-                    	            // InternalMappingDsl.g:7884:6: ( (lv_dataFields_13_0= ruleDataField ) )
+                    	            // InternalMappingDsl.g:7892:6: ( (lv_dataFields_13_0= ruleDataField ) )
                     	            {
-                    	            // InternalMappingDsl.g:7884:6: ( (lv_dataFields_13_0= ruleDataField ) )
-                    	            // InternalMappingDsl.g:7885:7: (lv_dataFields_13_0= ruleDataField )
+                    	            // InternalMappingDsl.g:7892:6: ( (lv_dataFields_13_0= ruleDataField ) )
+                    	            // InternalMappingDsl.g:7893:7: (lv_dataFields_13_0= ruleDataField )
                     	            {
-                    	            // InternalMappingDsl.g:7885:7: (lv_dataFields_13_0= ruleDataField )
-                    	            // InternalMappingDsl.g:7886:8: lv_dataFields_13_0= ruleDataField
+                    	            // InternalMappingDsl.g:7893:7: (lv_dataFields_13_0= ruleDataField )
+                    	            // InternalMappingDsl.g:7894:8: lv_dataFields_13_0= ruleDataField
                     	            {
 
                     	            								newCompositeNode(grammarAccess.getDataStructureAccess().getDataFieldsDataFieldParserRuleCall_5_1_1_0_0());
@@ -19732,13 +19752,13 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     	            }
                     	            break;
                     	        case 2 :
-                    	            // InternalMappingDsl.g:7904:6: ( (lv_operations_14_0= ruleDataOperation ) )
+                    	            // InternalMappingDsl.g:7912:6: ( (lv_operations_14_0= ruleDataOperation ) )
                     	            {
-                    	            // InternalMappingDsl.g:7904:6: ( (lv_operations_14_0= ruleDataOperation ) )
-                    	            // InternalMappingDsl.g:7905:7: (lv_operations_14_0= ruleDataOperation )
+                    	            // InternalMappingDsl.g:7912:6: ( (lv_operations_14_0= ruleDataOperation ) )
+                    	            // InternalMappingDsl.g:7913:7: (lv_operations_14_0= ruleDataOperation )
                     	            {
-                    	            // InternalMappingDsl.g:7905:7: (lv_operations_14_0= ruleDataOperation )
-                    	            // InternalMappingDsl.g:7906:8: lv_operations_14_0= ruleDataOperation
+                    	            // InternalMappingDsl.g:7913:7: (lv_operations_14_0= ruleDataOperation )
+                    	            // InternalMappingDsl.g:7914:8: lv_operations_14_0= ruleDataOperation
                     	            {
 
                     	            								newCompositeNode(grammarAccess.getDataStructureAccess().getOperationsDataOperationParserRuleCall_5_1_1_1_0());
@@ -19786,7 +19806,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_15=(Token)match(input,16,FOLLOW_2); 
+            otherlv_15=(Token)match(input,17,FOLLOW_2); 
 
             			newLeafNode(otherlv_15, grammarAccess.getDataStructureAccess().getRightCurlyBracketKeyword_6());
             		
@@ -19813,7 +19833,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleListType"
-    // InternalMappingDsl.g:7934:1: entryRuleListType returns [EObject current=null] : iv_ruleListType= ruleListType EOF ;
+    // InternalMappingDsl.g:7942:1: entryRuleListType returns [EObject current=null] : iv_ruleListType= ruleListType EOF ;
     public final EObject entryRuleListType() throws RecognitionException {
         EObject current = null;
 
@@ -19821,8 +19841,8 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalMappingDsl.g:7934:49: (iv_ruleListType= ruleListType EOF )
-            // InternalMappingDsl.g:7935:2: iv_ruleListType= ruleListType EOF
+            // InternalMappingDsl.g:7942:49: (iv_ruleListType= ruleListType EOF )
+            // InternalMappingDsl.g:7943:2: iv_ruleListType= ruleListType EOF
             {
              newCompositeNode(grammarAccess.getListTypeRule()); 
             pushFollow(FOLLOW_1);
@@ -19849,7 +19869,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleListType"
-    // InternalMappingDsl.g:7941:1: ruleListType returns [EObject current=null] : ( (otherlv_0= 'list' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_dataFields_3_0= ruleDataField ) ) (otherlv_4= ',' ( (lv_dataFields_5_0= ruleDataField ) ) )* otherlv_6= '}' ) | (otherlv_7= 'list' ( (lv_name_8_0= RULE_ID ) ) otherlv_9= '{' ( (lv_primitiveType_10_0= rulePrimitiveType ) ) otherlv_11= '}' ) ) ;
+    // InternalMappingDsl.g:7949:1: ruleListType returns [EObject current=null] : ( (otherlv_0= 'list' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_dataFields_3_0= ruleDataField ) ) (otherlv_4= ',' ( (lv_dataFields_5_0= ruleDataField ) ) )* otherlv_6= '}' ) | (otherlv_7= 'list' ( (lv_name_8_0= RULE_ID ) ) otherlv_9= '{' ( (lv_primitiveType_10_0= rulePrimitiveType ) ) otherlv_11= '}' ) ) ;
     public final EObject ruleListType() throws RecognitionException {
         EObject current = null;
 
@@ -19873,28 +19893,28 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:7947:2: ( ( (otherlv_0= 'list' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_dataFields_3_0= ruleDataField ) ) (otherlv_4= ',' ( (lv_dataFields_5_0= ruleDataField ) ) )* otherlv_6= '}' ) | (otherlv_7= 'list' ( (lv_name_8_0= RULE_ID ) ) otherlv_9= '{' ( (lv_primitiveType_10_0= rulePrimitiveType ) ) otherlv_11= '}' ) ) )
-            // InternalMappingDsl.g:7948:2: ( (otherlv_0= 'list' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_dataFields_3_0= ruleDataField ) ) (otherlv_4= ',' ( (lv_dataFields_5_0= ruleDataField ) ) )* otherlv_6= '}' ) | (otherlv_7= 'list' ( (lv_name_8_0= RULE_ID ) ) otherlv_9= '{' ( (lv_primitiveType_10_0= rulePrimitiveType ) ) otherlv_11= '}' ) )
+            // InternalMappingDsl.g:7955:2: ( ( (otherlv_0= 'list' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_dataFields_3_0= ruleDataField ) ) (otherlv_4= ',' ( (lv_dataFields_5_0= ruleDataField ) ) )* otherlv_6= '}' ) | (otherlv_7= 'list' ( (lv_name_8_0= RULE_ID ) ) otherlv_9= '{' ( (lv_primitiveType_10_0= rulePrimitiveType ) ) otherlv_11= '}' ) ) )
+            // InternalMappingDsl.g:7956:2: ( (otherlv_0= 'list' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_dataFields_3_0= ruleDataField ) ) (otherlv_4= ',' ( (lv_dataFields_5_0= ruleDataField ) ) )* otherlv_6= '}' ) | (otherlv_7= 'list' ( (lv_name_8_0= RULE_ID ) ) otherlv_9= '{' ( (lv_primitiveType_10_0= rulePrimitiveType ) ) otherlv_11= '}' ) )
             {
-            // InternalMappingDsl.g:7948:2: ( (otherlv_0= 'list' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_dataFields_3_0= ruleDataField ) ) (otherlv_4= ',' ( (lv_dataFields_5_0= ruleDataField ) ) )* otherlv_6= '}' ) | (otherlv_7= 'list' ( (lv_name_8_0= RULE_ID ) ) otherlv_9= '{' ( (lv_primitiveType_10_0= rulePrimitiveType ) ) otherlv_11= '}' ) )
+            // InternalMappingDsl.g:7956:2: ( (otherlv_0= 'list' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_dataFields_3_0= ruleDataField ) ) (otherlv_4= ',' ( (lv_dataFields_5_0= ruleDataField ) ) )* otherlv_6= '}' ) | (otherlv_7= 'list' ( (lv_name_8_0= RULE_ID ) ) otherlv_9= '{' ( (lv_primitiveType_10_0= rulePrimitiveType ) ) otherlv_11= '}' ) )
             int alt186=2;
             alt186 = dfa186.predict(input);
             switch (alt186) {
                 case 1 :
-                    // InternalMappingDsl.g:7949:3: (otherlv_0= 'list' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_dataFields_3_0= ruleDataField ) ) (otherlv_4= ',' ( (lv_dataFields_5_0= ruleDataField ) ) )* otherlv_6= '}' )
+                    // InternalMappingDsl.g:7957:3: (otherlv_0= 'list' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_dataFields_3_0= ruleDataField ) ) (otherlv_4= ',' ( (lv_dataFields_5_0= ruleDataField ) ) )* otherlv_6= '}' )
                     {
-                    // InternalMappingDsl.g:7949:3: (otherlv_0= 'list' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_dataFields_3_0= ruleDataField ) ) (otherlv_4= ',' ( (lv_dataFields_5_0= ruleDataField ) ) )* otherlv_6= '}' )
-                    // InternalMappingDsl.g:7950:4: otherlv_0= 'list' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_dataFields_3_0= ruleDataField ) ) (otherlv_4= ',' ( (lv_dataFields_5_0= ruleDataField ) ) )* otherlv_6= '}'
+                    // InternalMappingDsl.g:7957:3: (otherlv_0= 'list' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_dataFields_3_0= ruleDataField ) ) (otherlv_4= ',' ( (lv_dataFields_5_0= ruleDataField ) ) )* otherlv_6= '}' )
+                    // InternalMappingDsl.g:7958:4: otherlv_0= 'list' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_dataFields_3_0= ruleDataField ) ) (otherlv_4= ',' ( (lv_dataFields_5_0= ruleDataField ) ) )* otherlv_6= '}'
                     {
-                    otherlv_0=(Token)match(input,81,FOLLOW_7); 
+                    otherlv_0=(Token)match(input,82,FOLLOW_7); 
 
                     				newLeafNode(otherlv_0, grammarAccess.getListTypeAccess().getListKeyword_0_0());
                     			
-                    // InternalMappingDsl.g:7954:4: ( (lv_name_1_0= RULE_ID ) )
-                    // InternalMappingDsl.g:7955:5: (lv_name_1_0= RULE_ID )
+                    // InternalMappingDsl.g:7962:4: ( (lv_name_1_0= RULE_ID ) )
+                    // InternalMappingDsl.g:7963:5: (lv_name_1_0= RULE_ID )
                     {
-                    // InternalMappingDsl.g:7955:5: (lv_name_1_0= RULE_ID )
-                    // InternalMappingDsl.g:7956:6: lv_name_1_0= RULE_ID
+                    // InternalMappingDsl.g:7963:5: (lv_name_1_0= RULE_ID )
+                    // InternalMappingDsl.g:7964:6: lv_name_1_0= RULE_ID
                     {
                     lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_8); 
 
@@ -19916,15 +19936,15 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_2=(Token)match(input,14,FOLLOW_132); 
+                    otherlv_2=(Token)match(input,15,FOLLOW_132); 
 
                     				newLeafNode(otherlv_2, grammarAccess.getListTypeAccess().getLeftCurlyBracketKeyword_0_2());
                     			
-                    // InternalMappingDsl.g:7976:4: ( (lv_dataFields_3_0= ruleDataField ) )
-                    // InternalMappingDsl.g:7977:5: (lv_dataFields_3_0= ruleDataField )
+                    // InternalMappingDsl.g:7984:4: ( (lv_dataFields_3_0= ruleDataField ) )
+                    // InternalMappingDsl.g:7985:5: (lv_dataFields_3_0= ruleDataField )
                     {
-                    // InternalMappingDsl.g:7977:5: (lv_dataFields_3_0= ruleDataField )
-                    // InternalMappingDsl.g:7978:6: lv_dataFields_3_0= ruleDataField
+                    // InternalMappingDsl.g:7985:5: (lv_dataFields_3_0= ruleDataField )
+                    // InternalMappingDsl.g:7986:6: lv_dataFields_3_0= ruleDataField
                     {
 
                     						newCompositeNode(grammarAccess.getListTypeAccess().getDataFieldsDataFieldParserRuleCall_0_3_0());
@@ -19951,30 +19971,30 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalMappingDsl.g:7995:4: (otherlv_4= ',' ( (lv_dataFields_5_0= ruleDataField ) ) )*
+                    // InternalMappingDsl.g:8003:4: (otherlv_4= ',' ( (lv_dataFields_5_0= ruleDataField ) ) )*
                     loop185:
                     do {
                         int alt185=2;
                         int LA185_0 = input.LA(1);
 
-                        if ( (LA185_0==34) ) {
+                        if ( (LA185_0==35) ) {
                             alt185=1;
                         }
 
 
                         switch (alt185) {
                     	case 1 :
-                    	    // InternalMappingDsl.g:7996:5: otherlv_4= ',' ( (lv_dataFields_5_0= ruleDataField ) )
+                    	    // InternalMappingDsl.g:8004:5: otherlv_4= ',' ( (lv_dataFields_5_0= ruleDataField ) )
                     	    {
-                    	    otherlv_4=(Token)match(input,34,FOLLOW_132); 
+                    	    otherlv_4=(Token)match(input,35,FOLLOW_132); 
 
                     	    					newLeafNode(otherlv_4, grammarAccess.getListTypeAccess().getCommaKeyword_0_4_0());
                     	    				
-                    	    // InternalMappingDsl.g:8000:5: ( (lv_dataFields_5_0= ruleDataField ) )
-                    	    // InternalMappingDsl.g:8001:6: (lv_dataFields_5_0= ruleDataField )
+                    	    // InternalMappingDsl.g:8008:5: ( (lv_dataFields_5_0= ruleDataField ) )
+                    	    // InternalMappingDsl.g:8009:6: (lv_dataFields_5_0= ruleDataField )
                     	    {
-                    	    // InternalMappingDsl.g:8001:6: (lv_dataFields_5_0= ruleDataField )
-                    	    // InternalMappingDsl.g:8002:7: lv_dataFields_5_0= ruleDataField
+                    	    // InternalMappingDsl.g:8009:6: (lv_dataFields_5_0= ruleDataField )
+                    	    // InternalMappingDsl.g:8010:7: lv_dataFields_5_0= ruleDataField
                     	    {
 
                     	    							newCompositeNode(grammarAccess.getListTypeAccess().getDataFieldsDataFieldParserRuleCall_0_4_1_0());
@@ -20010,7 +20030,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         }
                     } while (true);
 
-                    otherlv_6=(Token)match(input,16,FOLLOW_2); 
+                    otherlv_6=(Token)match(input,17,FOLLOW_2); 
 
                     				newLeafNode(otherlv_6, grammarAccess.getListTypeAccess().getRightCurlyBracketKeyword_0_5());
                     			
@@ -20021,20 +20041,20 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalMappingDsl.g:8026:3: (otherlv_7= 'list' ( (lv_name_8_0= RULE_ID ) ) otherlv_9= '{' ( (lv_primitiveType_10_0= rulePrimitiveType ) ) otherlv_11= '}' )
+                    // InternalMappingDsl.g:8034:3: (otherlv_7= 'list' ( (lv_name_8_0= RULE_ID ) ) otherlv_9= '{' ( (lv_primitiveType_10_0= rulePrimitiveType ) ) otherlv_11= '}' )
                     {
-                    // InternalMappingDsl.g:8026:3: (otherlv_7= 'list' ( (lv_name_8_0= RULE_ID ) ) otherlv_9= '{' ( (lv_primitiveType_10_0= rulePrimitiveType ) ) otherlv_11= '}' )
-                    // InternalMappingDsl.g:8027:4: otherlv_7= 'list' ( (lv_name_8_0= RULE_ID ) ) otherlv_9= '{' ( (lv_primitiveType_10_0= rulePrimitiveType ) ) otherlv_11= '}'
+                    // InternalMappingDsl.g:8034:3: (otherlv_7= 'list' ( (lv_name_8_0= RULE_ID ) ) otherlv_9= '{' ( (lv_primitiveType_10_0= rulePrimitiveType ) ) otherlv_11= '}' )
+                    // InternalMappingDsl.g:8035:4: otherlv_7= 'list' ( (lv_name_8_0= RULE_ID ) ) otherlv_9= '{' ( (lv_primitiveType_10_0= rulePrimitiveType ) ) otherlv_11= '}'
                     {
-                    otherlv_7=(Token)match(input,81,FOLLOW_7); 
+                    otherlv_7=(Token)match(input,82,FOLLOW_7); 
 
                     				newLeafNode(otherlv_7, grammarAccess.getListTypeAccess().getListKeyword_1_0());
                     			
-                    // InternalMappingDsl.g:8031:4: ( (lv_name_8_0= RULE_ID ) )
-                    // InternalMappingDsl.g:8032:5: (lv_name_8_0= RULE_ID )
+                    // InternalMappingDsl.g:8039:4: ( (lv_name_8_0= RULE_ID ) )
+                    // InternalMappingDsl.g:8040:5: (lv_name_8_0= RULE_ID )
                     {
-                    // InternalMappingDsl.g:8032:5: (lv_name_8_0= RULE_ID )
-                    // InternalMappingDsl.g:8033:6: lv_name_8_0= RULE_ID
+                    // InternalMappingDsl.g:8040:5: (lv_name_8_0= RULE_ID )
+                    // InternalMappingDsl.g:8041:6: lv_name_8_0= RULE_ID
                     {
                     lv_name_8_0=(Token)match(input,RULE_ID,FOLLOW_8); 
 
@@ -20056,15 +20076,15 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_9=(Token)match(input,14,FOLLOW_103); 
+                    otherlv_9=(Token)match(input,15,FOLLOW_103); 
 
                     				newLeafNode(otherlv_9, grammarAccess.getListTypeAccess().getLeftCurlyBracketKeyword_1_2());
                     			
-                    // InternalMappingDsl.g:8053:4: ( (lv_primitiveType_10_0= rulePrimitiveType ) )
-                    // InternalMappingDsl.g:8054:5: (lv_primitiveType_10_0= rulePrimitiveType )
+                    // InternalMappingDsl.g:8061:4: ( (lv_primitiveType_10_0= rulePrimitiveType ) )
+                    // InternalMappingDsl.g:8062:5: (lv_primitiveType_10_0= rulePrimitiveType )
                     {
-                    // InternalMappingDsl.g:8054:5: (lv_primitiveType_10_0= rulePrimitiveType )
-                    // InternalMappingDsl.g:8055:6: lv_primitiveType_10_0= rulePrimitiveType
+                    // InternalMappingDsl.g:8062:5: (lv_primitiveType_10_0= rulePrimitiveType )
+                    // InternalMappingDsl.g:8063:6: lv_primitiveType_10_0= rulePrimitiveType
                     {
 
                     						newCompositeNode(grammarAccess.getListTypeAccess().getPrimitiveTypePrimitiveTypeParserRuleCall_1_3_0());
@@ -20091,7 +20111,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_11=(Token)match(input,16,FOLLOW_2); 
+                    otherlv_11=(Token)match(input,17,FOLLOW_2); 
 
                     				newLeafNode(otherlv_11, grammarAccess.getListTypeAccess().getRightCurlyBracketKeyword_1_4());
                     			
@@ -20124,7 +20144,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleDataField"
-    // InternalMappingDsl.g:8081:1: entryRuleDataField returns [EObject current=null] : iv_ruleDataField= ruleDataField EOF ;
+    // InternalMappingDsl.g:8089:1: entryRuleDataField returns [EObject current=null] : iv_ruleDataField= ruleDataField EOF ;
     public final EObject entryRuleDataField() throws RecognitionException {
         EObject current = null;
 
@@ -20132,8 +20152,8 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalMappingDsl.g:8081:50: (iv_ruleDataField= ruleDataField EOF )
-            // InternalMappingDsl.g:8082:2: iv_ruleDataField= ruleDataField EOF
+            // InternalMappingDsl.g:8089:50: (iv_ruleDataField= ruleDataField EOF )
+            // InternalMappingDsl.g:8090:2: iv_ruleDataField= ruleDataField EOF
             {
              newCompositeNode(grammarAccess.getDataFieldRule()); 
             pushFollow(FOLLOW_1);
@@ -20160,7 +20180,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDataField"
-    // InternalMappingDsl.g:8088:1: ruleDataField returns [EObject current=null] : ( ( (lv_hidden_0_0= 'hide' ) )? ( (lv_immutable_1_0= 'immutable' ) )? ( ( (lv_primitiveType_2_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexType_4_0= ruleImportedComplexType ) ) )? ( (lv_name_5_0= RULE_ID ) ) (otherlv_6= '=' ( (lv_initializationValue_7_0= rulePrimitiveValue ) ) )? (otherlv_8= '<' ( (lv_features_9_0= ruleDataFieldFeature ) ) (otherlv_10= ',' ( (lv_features_11_0= ruleDataFieldFeature ) ) )* otherlv_12= '>' )? ) ;
+    // InternalMappingDsl.g:8096:1: ruleDataField returns [EObject current=null] : ( ( (lv_hidden_0_0= 'hide' ) )? ( (lv_immutable_1_0= 'immutable' ) )? ( ( (lv_primitiveType_2_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexType_4_0= ruleImportedComplexType ) ) )? ( (lv_name_5_0= RULE_ID ) ) (otherlv_6= '=' ( (lv_initializationValue_7_0= rulePrimitiveValue ) ) )? (otherlv_8= '<' ( (lv_features_9_0= ruleDataFieldFeature ) ) (otherlv_10= ',' ( (lv_features_11_0= ruleDataFieldFeature ) ) )* otherlv_12= '>' )? ) ;
     public final EObject ruleDataField() throws RecognitionException {
         EObject current = null;
 
@@ -20186,27 +20206,27 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:8094:2: ( ( ( (lv_hidden_0_0= 'hide' ) )? ( (lv_immutable_1_0= 'immutable' ) )? ( ( (lv_primitiveType_2_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexType_4_0= ruleImportedComplexType ) ) )? ( (lv_name_5_0= RULE_ID ) ) (otherlv_6= '=' ( (lv_initializationValue_7_0= rulePrimitiveValue ) ) )? (otherlv_8= '<' ( (lv_features_9_0= ruleDataFieldFeature ) ) (otherlv_10= ',' ( (lv_features_11_0= ruleDataFieldFeature ) ) )* otherlv_12= '>' )? ) )
-            // InternalMappingDsl.g:8095:2: ( ( (lv_hidden_0_0= 'hide' ) )? ( (lv_immutable_1_0= 'immutable' ) )? ( ( (lv_primitiveType_2_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexType_4_0= ruleImportedComplexType ) ) )? ( (lv_name_5_0= RULE_ID ) ) (otherlv_6= '=' ( (lv_initializationValue_7_0= rulePrimitiveValue ) ) )? (otherlv_8= '<' ( (lv_features_9_0= ruleDataFieldFeature ) ) (otherlv_10= ',' ( (lv_features_11_0= ruleDataFieldFeature ) ) )* otherlv_12= '>' )? )
+            // InternalMappingDsl.g:8102:2: ( ( ( (lv_hidden_0_0= 'hide' ) )? ( (lv_immutable_1_0= 'immutable' ) )? ( ( (lv_primitiveType_2_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexType_4_0= ruleImportedComplexType ) ) )? ( (lv_name_5_0= RULE_ID ) ) (otherlv_6= '=' ( (lv_initializationValue_7_0= rulePrimitiveValue ) ) )? (otherlv_8= '<' ( (lv_features_9_0= ruleDataFieldFeature ) ) (otherlv_10= ',' ( (lv_features_11_0= ruleDataFieldFeature ) ) )* otherlv_12= '>' )? ) )
+            // InternalMappingDsl.g:8103:2: ( ( (lv_hidden_0_0= 'hide' ) )? ( (lv_immutable_1_0= 'immutable' ) )? ( ( (lv_primitiveType_2_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexType_4_0= ruleImportedComplexType ) ) )? ( (lv_name_5_0= RULE_ID ) ) (otherlv_6= '=' ( (lv_initializationValue_7_0= rulePrimitiveValue ) ) )? (otherlv_8= '<' ( (lv_features_9_0= ruleDataFieldFeature ) ) (otherlv_10= ',' ( (lv_features_11_0= ruleDataFieldFeature ) ) )* otherlv_12= '>' )? )
             {
-            // InternalMappingDsl.g:8095:2: ( ( (lv_hidden_0_0= 'hide' ) )? ( (lv_immutable_1_0= 'immutable' ) )? ( ( (lv_primitiveType_2_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexType_4_0= ruleImportedComplexType ) ) )? ( (lv_name_5_0= RULE_ID ) ) (otherlv_6= '=' ( (lv_initializationValue_7_0= rulePrimitiveValue ) ) )? (otherlv_8= '<' ( (lv_features_9_0= ruleDataFieldFeature ) ) (otherlv_10= ',' ( (lv_features_11_0= ruleDataFieldFeature ) ) )* otherlv_12= '>' )? )
-            // InternalMappingDsl.g:8096:3: ( (lv_hidden_0_0= 'hide' ) )? ( (lv_immutable_1_0= 'immutable' ) )? ( ( (lv_primitiveType_2_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexType_4_0= ruleImportedComplexType ) ) )? ( (lv_name_5_0= RULE_ID ) ) (otherlv_6= '=' ( (lv_initializationValue_7_0= rulePrimitiveValue ) ) )? (otherlv_8= '<' ( (lv_features_9_0= ruleDataFieldFeature ) ) (otherlv_10= ',' ( (lv_features_11_0= ruleDataFieldFeature ) ) )* otherlv_12= '>' )?
+            // InternalMappingDsl.g:8103:2: ( ( (lv_hidden_0_0= 'hide' ) )? ( (lv_immutable_1_0= 'immutable' ) )? ( ( (lv_primitiveType_2_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexType_4_0= ruleImportedComplexType ) ) )? ( (lv_name_5_0= RULE_ID ) ) (otherlv_6= '=' ( (lv_initializationValue_7_0= rulePrimitiveValue ) ) )? (otherlv_8= '<' ( (lv_features_9_0= ruleDataFieldFeature ) ) (otherlv_10= ',' ( (lv_features_11_0= ruleDataFieldFeature ) ) )* otherlv_12= '>' )? )
+            // InternalMappingDsl.g:8104:3: ( (lv_hidden_0_0= 'hide' ) )? ( (lv_immutable_1_0= 'immutable' ) )? ( ( (lv_primitiveType_2_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexType_4_0= ruleImportedComplexType ) ) )? ( (lv_name_5_0= RULE_ID ) ) (otherlv_6= '=' ( (lv_initializationValue_7_0= rulePrimitiveValue ) ) )? (otherlv_8= '<' ( (lv_features_9_0= ruleDataFieldFeature ) ) (otherlv_10= ',' ( (lv_features_11_0= ruleDataFieldFeature ) ) )* otherlv_12= '>' )?
             {
-            // InternalMappingDsl.g:8096:3: ( (lv_hidden_0_0= 'hide' ) )?
+            // InternalMappingDsl.g:8104:3: ( (lv_hidden_0_0= 'hide' ) )?
             int alt187=2;
             int LA187_0 = input.LA(1);
 
-            if ( (LA187_0==114) ) {
+            if ( (LA187_0==115) ) {
                 alt187=1;
             }
             switch (alt187) {
                 case 1 :
-                    // InternalMappingDsl.g:8097:4: (lv_hidden_0_0= 'hide' )
+                    // InternalMappingDsl.g:8105:4: (lv_hidden_0_0= 'hide' )
                     {
-                    // InternalMappingDsl.g:8097:4: (lv_hidden_0_0= 'hide' )
-                    // InternalMappingDsl.g:8098:5: lv_hidden_0_0= 'hide'
+                    // InternalMappingDsl.g:8105:4: (lv_hidden_0_0= 'hide' )
+                    // InternalMappingDsl.g:8106:5: lv_hidden_0_0= 'hide'
                     {
-                    lv_hidden_0_0=(Token)match(input,114,FOLLOW_133); 
+                    lv_hidden_0_0=(Token)match(input,115,FOLLOW_133); 
 
                     					newLeafNode(lv_hidden_0_0, grammarAccess.getDataFieldAccess().getHiddenHideKeyword_0_0());
                     				
@@ -20225,21 +20245,21 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalMappingDsl.g:8110:3: ( (lv_immutable_1_0= 'immutable' ) )?
+            // InternalMappingDsl.g:8118:3: ( (lv_immutable_1_0= 'immutable' ) )?
             int alt188=2;
             int LA188_0 = input.LA(1);
 
-            if ( (LA188_0==115) ) {
+            if ( (LA188_0==116) ) {
                 alt188=1;
             }
             switch (alt188) {
                 case 1 :
-                    // InternalMappingDsl.g:8111:4: (lv_immutable_1_0= 'immutable' )
+                    // InternalMappingDsl.g:8119:4: (lv_immutable_1_0= 'immutable' )
                     {
-                    // InternalMappingDsl.g:8111:4: (lv_immutable_1_0= 'immutable' )
-                    // InternalMappingDsl.g:8112:5: lv_immutable_1_0= 'immutable'
+                    // InternalMappingDsl.g:8119:4: (lv_immutable_1_0= 'immutable' )
+                    // InternalMappingDsl.g:8120:5: lv_immutable_1_0= 'immutable'
                     {
-                    lv_immutable_1_0=(Token)match(input,115,FOLLOW_90); 
+                    lv_immutable_1_0=(Token)match(input,116,FOLLOW_90); 
 
                     					newLeafNode(lv_immutable_1_0, grammarAccess.getDataFieldAccess().getImmutableImmutableKeyword_1_0());
                     				
@@ -20258,32 +20278,32 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalMappingDsl.g:8124:3: ( ( (lv_primitiveType_2_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexType_4_0= ruleImportedComplexType ) ) )?
+            // InternalMappingDsl.g:8132:3: ( ( (lv_primitiveType_2_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexType_4_0= ruleImportedComplexType ) ) )?
             int alt189=4;
             int LA189_0 = input.LA(1);
 
-            if ( ((LA189_0>=122 && LA189_0<=131)||LA189_0==138) ) {
+            if ( ((LA189_0>=123 && LA189_0<=132)||LA189_0==139) ) {
                 alt189=1;
             }
             else if ( (LA189_0==RULE_ID) ) {
                 int LA189_2 = input.LA(2);
 
-                if ( (LA189_2==17) ) {
+                if ( (LA189_2==18) ) {
                     alt189=3;
                 }
-                else if ( (LA189_2==RULE_ID||LA189_2==29) ) {
+                else if ( (LA189_2==RULE_ID||LA189_2==30) ) {
                     alt189=2;
                 }
             }
             switch (alt189) {
                 case 1 :
-                    // InternalMappingDsl.g:8125:4: ( (lv_primitiveType_2_0= rulePrimitiveType ) )
+                    // InternalMappingDsl.g:8133:4: ( (lv_primitiveType_2_0= rulePrimitiveType ) )
                     {
-                    // InternalMappingDsl.g:8125:4: ( (lv_primitiveType_2_0= rulePrimitiveType ) )
-                    // InternalMappingDsl.g:8126:5: (lv_primitiveType_2_0= rulePrimitiveType )
+                    // InternalMappingDsl.g:8133:4: ( (lv_primitiveType_2_0= rulePrimitiveType ) )
+                    // InternalMappingDsl.g:8134:5: (lv_primitiveType_2_0= rulePrimitiveType )
                     {
-                    // InternalMappingDsl.g:8126:5: (lv_primitiveType_2_0= rulePrimitiveType )
-                    // InternalMappingDsl.g:8127:6: lv_primitiveType_2_0= rulePrimitiveType
+                    // InternalMappingDsl.g:8134:5: (lv_primitiveType_2_0= rulePrimitiveType )
+                    // InternalMappingDsl.g:8135:6: lv_primitiveType_2_0= rulePrimitiveType
                     {
 
                     						newCompositeNode(grammarAccess.getDataFieldAccess().getPrimitiveTypePrimitiveTypeParserRuleCall_2_0_0());
@@ -20314,13 +20334,13 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalMappingDsl.g:8145:4: ( ( ruleQualifiedName ) )
+                    // InternalMappingDsl.g:8153:4: ( ( ruleQualifiedName ) )
                     {
-                    // InternalMappingDsl.g:8145:4: ( ( ruleQualifiedName ) )
-                    // InternalMappingDsl.g:8146:5: ( ruleQualifiedName )
+                    // InternalMappingDsl.g:8153:4: ( ( ruleQualifiedName ) )
+                    // InternalMappingDsl.g:8154:5: ( ruleQualifiedName )
                     {
-                    // InternalMappingDsl.g:8146:5: ( ruleQualifiedName )
-                    // InternalMappingDsl.g:8147:6: ruleQualifiedName
+                    // InternalMappingDsl.g:8154:5: ( ruleQualifiedName )
+                    // InternalMappingDsl.g:8155:6: ruleQualifiedName
                     {
 
                     						if (current==null) {
@@ -20348,13 +20368,13 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalMappingDsl.g:8162:4: ( (lv_importedComplexType_4_0= ruleImportedComplexType ) )
+                    // InternalMappingDsl.g:8170:4: ( (lv_importedComplexType_4_0= ruleImportedComplexType ) )
                     {
-                    // InternalMappingDsl.g:8162:4: ( (lv_importedComplexType_4_0= ruleImportedComplexType ) )
-                    // InternalMappingDsl.g:8163:5: (lv_importedComplexType_4_0= ruleImportedComplexType )
+                    // InternalMappingDsl.g:8170:4: ( (lv_importedComplexType_4_0= ruleImportedComplexType ) )
+                    // InternalMappingDsl.g:8171:5: (lv_importedComplexType_4_0= ruleImportedComplexType )
                     {
-                    // InternalMappingDsl.g:8163:5: (lv_importedComplexType_4_0= ruleImportedComplexType )
-                    // InternalMappingDsl.g:8164:6: lv_importedComplexType_4_0= ruleImportedComplexType
+                    // InternalMappingDsl.g:8171:5: (lv_importedComplexType_4_0= ruleImportedComplexType )
+                    // InternalMappingDsl.g:8172:6: lv_importedComplexType_4_0= ruleImportedComplexType
                     {
 
                     						newCompositeNode(grammarAccess.getDataFieldAccess().getImportedComplexTypeImportedComplexTypeParserRuleCall_2_2_0());
@@ -20387,11 +20407,11 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalMappingDsl.g:8182:3: ( (lv_name_5_0= RULE_ID ) )
-            // InternalMappingDsl.g:8183:4: (lv_name_5_0= RULE_ID )
+            // InternalMappingDsl.g:8190:3: ( (lv_name_5_0= RULE_ID ) )
+            // InternalMappingDsl.g:8191:4: (lv_name_5_0= RULE_ID )
             {
-            // InternalMappingDsl.g:8183:4: (lv_name_5_0= RULE_ID )
-            // InternalMappingDsl.g:8184:5: lv_name_5_0= RULE_ID
+            // InternalMappingDsl.g:8191:4: (lv_name_5_0= RULE_ID )
+            // InternalMappingDsl.g:8192:5: lv_name_5_0= RULE_ID
             {
             lv_name_5_0=(Token)match(input,RULE_ID,FOLLOW_134); 
 
@@ -20413,26 +20433,26 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalMappingDsl.g:8200:3: (otherlv_6= '=' ( (lv_initializationValue_7_0= rulePrimitiveValue ) ) )?
+            // InternalMappingDsl.g:8208:3: (otherlv_6= '=' ( (lv_initializationValue_7_0= rulePrimitiveValue ) ) )?
             int alt190=2;
             int LA190_0 = input.LA(1);
 
-            if ( (LA190_0==49) ) {
+            if ( (LA190_0==50) ) {
                 alt190=1;
             }
             switch (alt190) {
                 case 1 :
-                    // InternalMappingDsl.g:8201:4: otherlv_6= '=' ( (lv_initializationValue_7_0= rulePrimitiveValue ) )
+                    // InternalMappingDsl.g:8209:4: otherlv_6= '=' ( (lv_initializationValue_7_0= rulePrimitiveValue ) )
                     {
-                    otherlv_6=(Token)match(input,49,FOLLOW_92); 
+                    otherlv_6=(Token)match(input,50,FOLLOW_92); 
 
                     				newLeafNode(otherlv_6, grammarAccess.getDataFieldAccess().getEqualsSignKeyword_4_0());
                     			
-                    // InternalMappingDsl.g:8205:4: ( (lv_initializationValue_7_0= rulePrimitiveValue ) )
-                    // InternalMappingDsl.g:8206:5: (lv_initializationValue_7_0= rulePrimitiveValue )
+                    // InternalMappingDsl.g:8213:4: ( (lv_initializationValue_7_0= rulePrimitiveValue ) )
+                    // InternalMappingDsl.g:8214:5: (lv_initializationValue_7_0= rulePrimitiveValue )
                     {
-                    // InternalMappingDsl.g:8206:5: (lv_initializationValue_7_0= rulePrimitiveValue )
-                    // InternalMappingDsl.g:8207:6: lv_initializationValue_7_0= rulePrimitiveValue
+                    // InternalMappingDsl.g:8214:5: (lv_initializationValue_7_0= rulePrimitiveValue )
+                    // InternalMappingDsl.g:8215:6: lv_initializationValue_7_0= rulePrimitiveValue
                     {
 
                     						newCompositeNode(grammarAccess.getDataFieldAccess().getInitializationValuePrimitiveValueParserRuleCall_4_1_0());
@@ -20465,26 +20485,26 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalMappingDsl.g:8225:3: (otherlv_8= '<' ( (lv_features_9_0= ruleDataFieldFeature ) ) (otherlv_10= ',' ( (lv_features_11_0= ruleDataFieldFeature ) ) )* otherlv_12= '>' )?
+            // InternalMappingDsl.g:8233:3: (otherlv_8= '<' ( (lv_features_9_0= ruleDataFieldFeature ) ) (otherlv_10= ',' ( (lv_features_11_0= ruleDataFieldFeature ) ) )* otherlv_12= '>' )?
             int alt192=2;
             int LA192_0 = input.LA(1);
 
-            if ( (LA192_0==57) ) {
+            if ( (LA192_0==58) ) {
                 alt192=1;
             }
             switch (alt192) {
                 case 1 :
-                    // InternalMappingDsl.g:8226:4: otherlv_8= '<' ( (lv_features_9_0= ruleDataFieldFeature ) ) (otherlv_10= ',' ( (lv_features_11_0= ruleDataFieldFeature ) ) )* otherlv_12= '>'
+                    // InternalMappingDsl.g:8234:4: otherlv_8= '<' ( (lv_features_9_0= ruleDataFieldFeature ) ) (otherlv_10= ',' ( (lv_features_11_0= ruleDataFieldFeature ) ) )* otherlv_12= '>'
                     {
-                    otherlv_8=(Token)match(input,57,FOLLOW_136); 
+                    otherlv_8=(Token)match(input,58,FOLLOW_136); 
 
                     				newLeafNode(otherlv_8, grammarAccess.getDataFieldAccess().getLessThanSignKeyword_5_0());
                     			
-                    // InternalMappingDsl.g:8230:4: ( (lv_features_9_0= ruleDataFieldFeature ) )
-                    // InternalMappingDsl.g:8231:5: (lv_features_9_0= ruleDataFieldFeature )
+                    // InternalMappingDsl.g:8238:4: ( (lv_features_9_0= ruleDataFieldFeature ) )
+                    // InternalMappingDsl.g:8239:5: (lv_features_9_0= ruleDataFieldFeature )
                     {
-                    // InternalMappingDsl.g:8231:5: (lv_features_9_0= ruleDataFieldFeature )
-                    // InternalMappingDsl.g:8232:6: lv_features_9_0= ruleDataFieldFeature
+                    // InternalMappingDsl.g:8239:5: (lv_features_9_0= ruleDataFieldFeature )
+                    // InternalMappingDsl.g:8240:6: lv_features_9_0= ruleDataFieldFeature
                     {
 
                     						newCompositeNode(grammarAccess.getDataFieldAccess().getFeaturesDataFieldFeatureEnumRuleCall_5_1_0());
@@ -20511,30 +20531,30 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalMappingDsl.g:8249:4: (otherlv_10= ',' ( (lv_features_11_0= ruleDataFieldFeature ) ) )*
+                    // InternalMappingDsl.g:8257:4: (otherlv_10= ',' ( (lv_features_11_0= ruleDataFieldFeature ) ) )*
                     loop191:
                     do {
                         int alt191=2;
                         int LA191_0 = input.LA(1);
 
-                        if ( (LA191_0==34) ) {
+                        if ( (LA191_0==35) ) {
                             alt191=1;
                         }
 
 
                         switch (alt191) {
                     	case 1 :
-                    	    // InternalMappingDsl.g:8250:5: otherlv_10= ',' ( (lv_features_11_0= ruleDataFieldFeature ) )
+                    	    // InternalMappingDsl.g:8258:5: otherlv_10= ',' ( (lv_features_11_0= ruleDataFieldFeature ) )
                     	    {
-                    	    otherlv_10=(Token)match(input,34,FOLLOW_136); 
+                    	    otherlv_10=(Token)match(input,35,FOLLOW_136); 
 
                     	    					newLeafNode(otherlv_10, grammarAccess.getDataFieldAccess().getCommaKeyword_5_2_0());
                     	    				
-                    	    // InternalMappingDsl.g:8254:5: ( (lv_features_11_0= ruleDataFieldFeature ) )
-                    	    // InternalMappingDsl.g:8255:6: (lv_features_11_0= ruleDataFieldFeature )
+                    	    // InternalMappingDsl.g:8262:5: ( (lv_features_11_0= ruleDataFieldFeature ) )
+                    	    // InternalMappingDsl.g:8263:6: (lv_features_11_0= ruleDataFieldFeature )
                     	    {
-                    	    // InternalMappingDsl.g:8255:6: (lv_features_11_0= ruleDataFieldFeature )
-                    	    // InternalMappingDsl.g:8256:7: lv_features_11_0= ruleDataFieldFeature
+                    	    // InternalMappingDsl.g:8263:6: (lv_features_11_0= ruleDataFieldFeature )
+                    	    // InternalMappingDsl.g:8264:7: lv_features_11_0= ruleDataFieldFeature
                     	    {
 
                     	    							newCompositeNode(grammarAccess.getDataFieldAccess().getFeaturesDataFieldFeatureEnumRuleCall_5_2_1_0());
@@ -20570,7 +20590,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         }
                     } while (true);
 
-                    otherlv_12=(Token)match(input,58,FOLLOW_2); 
+                    otherlv_12=(Token)match(input,59,FOLLOW_2); 
 
                     				newLeafNode(otherlv_12, grammarAccess.getDataFieldAccess().getGreaterThanSignKeyword_5_3());
                     			
@@ -20603,7 +20623,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleEnumeration"
-    // InternalMappingDsl.g:8283:1: entryRuleEnumeration returns [EObject current=null] : iv_ruleEnumeration= ruleEnumeration EOF ;
+    // InternalMappingDsl.g:8291:1: entryRuleEnumeration returns [EObject current=null] : iv_ruleEnumeration= ruleEnumeration EOF ;
     public final EObject entryRuleEnumeration() throws RecognitionException {
         EObject current = null;
 
@@ -20611,8 +20631,8 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalMappingDsl.g:8283:52: (iv_ruleEnumeration= ruleEnumeration EOF )
-            // InternalMappingDsl.g:8284:2: iv_ruleEnumeration= ruleEnumeration EOF
+            // InternalMappingDsl.g:8291:52: (iv_ruleEnumeration= ruleEnumeration EOF )
+            // InternalMappingDsl.g:8292:2: iv_ruleEnumeration= ruleEnumeration EOF
             {
              newCompositeNode(grammarAccess.getEnumerationRule()); 
             pushFollow(FOLLOW_1);
@@ -20639,7 +20659,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEnumeration"
-    // InternalMappingDsl.g:8290:1: ruleEnumeration returns [EObject current=null] : (otherlv_0= 'enum' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleComplexTypeFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleComplexTypeFeature ) ) )* otherlv_6= '>' )? otherlv_7= '{' ( (lv_fields_8_0= ruleEnumerationField ) ) (otherlv_9= ',' ( (lv_fields_10_0= ruleEnumerationField ) ) )* otherlv_11= '}' ) ;
+    // InternalMappingDsl.g:8298:1: ruleEnumeration returns [EObject current=null] : (otherlv_0= 'enum' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleComplexTypeFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleComplexTypeFeature ) ) )* otherlv_6= '>' )? otherlv_7= '{' ( (lv_fields_8_0= ruleEnumerationField ) ) (otherlv_9= ',' ( (lv_fields_10_0= ruleEnumerationField ) ) )* otherlv_11= '}' ) ;
     public final EObject ruleEnumeration() throws RecognitionException {
         EObject current = null;
 
@@ -20664,21 +20684,21 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:8296:2: ( (otherlv_0= 'enum' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleComplexTypeFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleComplexTypeFeature ) ) )* otherlv_6= '>' )? otherlv_7= '{' ( (lv_fields_8_0= ruleEnumerationField ) ) (otherlv_9= ',' ( (lv_fields_10_0= ruleEnumerationField ) ) )* otherlv_11= '}' ) )
-            // InternalMappingDsl.g:8297:2: (otherlv_0= 'enum' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleComplexTypeFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleComplexTypeFeature ) ) )* otherlv_6= '>' )? otherlv_7= '{' ( (lv_fields_8_0= ruleEnumerationField ) ) (otherlv_9= ',' ( (lv_fields_10_0= ruleEnumerationField ) ) )* otherlv_11= '}' )
+            // InternalMappingDsl.g:8304:2: ( (otherlv_0= 'enum' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleComplexTypeFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleComplexTypeFeature ) ) )* otherlv_6= '>' )? otherlv_7= '{' ( (lv_fields_8_0= ruleEnumerationField ) ) (otherlv_9= ',' ( (lv_fields_10_0= ruleEnumerationField ) ) )* otherlv_11= '}' ) )
+            // InternalMappingDsl.g:8305:2: (otherlv_0= 'enum' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleComplexTypeFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleComplexTypeFeature ) ) )* otherlv_6= '>' )? otherlv_7= '{' ( (lv_fields_8_0= ruleEnumerationField ) ) (otherlv_9= ',' ( (lv_fields_10_0= ruleEnumerationField ) ) )* otherlv_11= '}' )
             {
-            // InternalMappingDsl.g:8297:2: (otherlv_0= 'enum' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleComplexTypeFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleComplexTypeFeature ) ) )* otherlv_6= '>' )? otherlv_7= '{' ( (lv_fields_8_0= ruleEnumerationField ) ) (otherlv_9= ',' ( (lv_fields_10_0= ruleEnumerationField ) ) )* otherlv_11= '}' )
-            // InternalMappingDsl.g:8298:3: otherlv_0= 'enum' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleComplexTypeFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleComplexTypeFeature ) ) )* otherlv_6= '>' )? otherlv_7= '{' ( (lv_fields_8_0= ruleEnumerationField ) ) (otherlv_9= ',' ( (lv_fields_10_0= ruleEnumerationField ) ) )* otherlv_11= '}'
+            // InternalMappingDsl.g:8305:2: (otherlv_0= 'enum' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleComplexTypeFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleComplexTypeFeature ) ) )* otherlv_6= '>' )? otherlv_7= '{' ( (lv_fields_8_0= ruleEnumerationField ) ) (otherlv_9= ',' ( (lv_fields_10_0= ruleEnumerationField ) ) )* otherlv_11= '}' )
+            // InternalMappingDsl.g:8306:3: otherlv_0= 'enum' ( (lv_name_1_0= RULE_ID ) ) (otherlv_2= '<' ( (lv_features_3_0= ruleComplexTypeFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleComplexTypeFeature ) ) )* otherlv_6= '>' )? otherlv_7= '{' ( (lv_fields_8_0= ruleEnumerationField ) ) (otherlv_9= ',' ( (lv_fields_10_0= ruleEnumerationField ) ) )* otherlv_11= '}'
             {
-            otherlv_0=(Token)match(input,116,FOLLOW_7); 
+            otherlv_0=(Token)match(input,117,FOLLOW_7); 
 
             			newLeafNode(otherlv_0, grammarAccess.getEnumerationAccess().getEnumKeyword_0());
             		
-            // InternalMappingDsl.g:8302:3: ( (lv_name_1_0= RULE_ID ) )
-            // InternalMappingDsl.g:8303:4: (lv_name_1_0= RULE_ID )
+            // InternalMappingDsl.g:8310:3: ( (lv_name_1_0= RULE_ID ) )
+            // InternalMappingDsl.g:8311:4: (lv_name_1_0= RULE_ID )
             {
-            // InternalMappingDsl.g:8303:4: (lv_name_1_0= RULE_ID )
-            // InternalMappingDsl.g:8304:5: lv_name_1_0= RULE_ID
+            // InternalMappingDsl.g:8311:4: (lv_name_1_0= RULE_ID )
+            // InternalMappingDsl.g:8312:5: lv_name_1_0= RULE_ID
             {
             lv_name_1_0=(Token)match(input,RULE_ID,FOLLOW_137); 
 
@@ -20700,26 +20720,26 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalMappingDsl.g:8320:3: (otherlv_2= '<' ( (lv_features_3_0= ruleComplexTypeFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleComplexTypeFeature ) ) )* otherlv_6= '>' )?
+            // InternalMappingDsl.g:8328:3: (otherlv_2= '<' ( (lv_features_3_0= ruleComplexTypeFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleComplexTypeFeature ) ) )* otherlv_6= '>' )?
             int alt194=2;
             int LA194_0 = input.LA(1);
 
-            if ( (LA194_0==57) ) {
+            if ( (LA194_0==58) ) {
                 alt194=1;
             }
             switch (alt194) {
                 case 1 :
-                    // InternalMappingDsl.g:8321:4: otherlv_2= '<' ( (lv_features_3_0= ruleComplexTypeFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleComplexTypeFeature ) ) )* otherlv_6= '>'
+                    // InternalMappingDsl.g:8329:4: otherlv_2= '<' ( (lv_features_3_0= ruleComplexTypeFeature ) ) (otherlv_4= ',' ( (lv_features_5_0= ruleComplexTypeFeature ) ) )* otherlv_6= '>'
                     {
-                    otherlv_2=(Token)match(input,57,FOLLOW_128); 
+                    otherlv_2=(Token)match(input,58,FOLLOW_128); 
 
                     				newLeafNode(otherlv_2, grammarAccess.getEnumerationAccess().getLessThanSignKeyword_2_0());
                     			
-                    // InternalMappingDsl.g:8325:4: ( (lv_features_3_0= ruleComplexTypeFeature ) )
-                    // InternalMappingDsl.g:8326:5: (lv_features_3_0= ruleComplexTypeFeature )
+                    // InternalMappingDsl.g:8333:4: ( (lv_features_3_0= ruleComplexTypeFeature ) )
+                    // InternalMappingDsl.g:8334:5: (lv_features_3_0= ruleComplexTypeFeature )
                     {
-                    // InternalMappingDsl.g:8326:5: (lv_features_3_0= ruleComplexTypeFeature )
-                    // InternalMappingDsl.g:8327:6: lv_features_3_0= ruleComplexTypeFeature
+                    // InternalMappingDsl.g:8334:5: (lv_features_3_0= ruleComplexTypeFeature )
+                    // InternalMappingDsl.g:8335:6: lv_features_3_0= ruleComplexTypeFeature
                     {
 
                     						newCompositeNode(grammarAccess.getEnumerationAccess().getFeaturesComplexTypeFeatureEnumRuleCall_2_1_0());
@@ -20746,30 +20766,30 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalMappingDsl.g:8344:4: (otherlv_4= ',' ( (lv_features_5_0= ruleComplexTypeFeature ) ) )*
+                    // InternalMappingDsl.g:8352:4: (otherlv_4= ',' ( (lv_features_5_0= ruleComplexTypeFeature ) ) )*
                     loop193:
                     do {
                         int alt193=2;
                         int LA193_0 = input.LA(1);
 
-                        if ( (LA193_0==34) ) {
+                        if ( (LA193_0==35) ) {
                             alt193=1;
                         }
 
 
                         switch (alt193) {
                     	case 1 :
-                    	    // InternalMappingDsl.g:8345:5: otherlv_4= ',' ( (lv_features_5_0= ruleComplexTypeFeature ) )
+                    	    // InternalMappingDsl.g:8353:5: otherlv_4= ',' ( (lv_features_5_0= ruleComplexTypeFeature ) )
                     	    {
-                    	    otherlv_4=(Token)match(input,34,FOLLOW_128); 
+                    	    otherlv_4=(Token)match(input,35,FOLLOW_128); 
 
                     	    					newLeafNode(otherlv_4, grammarAccess.getEnumerationAccess().getCommaKeyword_2_2_0());
                     	    				
-                    	    // InternalMappingDsl.g:8349:5: ( (lv_features_5_0= ruleComplexTypeFeature ) )
-                    	    // InternalMappingDsl.g:8350:6: (lv_features_5_0= ruleComplexTypeFeature )
+                    	    // InternalMappingDsl.g:8357:5: ( (lv_features_5_0= ruleComplexTypeFeature ) )
+                    	    // InternalMappingDsl.g:8358:6: (lv_features_5_0= ruleComplexTypeFeature )
                     	    {
-                    	    // InternalMappingDsl.g:8350:6: (lv_features_5_0= ruleComplexTypeFeature )
-                    	    // InternalMappingDsl.g:8351:7: lv_features_5_0= ruleComplexTypeFeature
+                    	    // InternalMappingDsl.g:8358:6: (lv_features_5_0= ruleComplexTypeFeature )
+                    	    // InternalMappingDsl.g:8359:7: lv_features_5_0= ruleComplexTypeFeature
                     	    {
 
                     	    							newCompositeNode(grammarAccess.getEnumerationAccess().getFeaturesComplexTypeFeatureEnumRuleCall_2_2_1_0());
@@ -20805,7 +20825,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         }
                     } while (true);
 
-                    otherlv_6=(Token)match(input,58,FOLLOW_8); 
+                    otherlv_6=(Token)match(input,59,FOLLOW_8); 
 
                     				newLeafNode(otherlv_6, grammarAccess.getEnumerationAccess().getGreaterThanSignKeyword_2_3());
                     			
@@ -20815,15 +20835,15 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_7=(Token)match(input,14,FOLLOW_7); 
+            otherlv_7=(Token)match(input,15,FOLLOW_7); 
 
             			newLeafNode(otherlv_7, grammarAccess.getEnumerationAccess().getLeftCurlyBracketKeyword_3());
             		
-            // InternalMappingDsl.g:8378:3: ( (lv_fields_8_0= ruleEnumerationField ) )
-            // InternalMappingDsl.g:8379:4: (lv_fields_8_0= ruleEnumerationField )
+            // InternalMappingDsl.g:8386:3: ( (lv_fields_8_0= ruleEnumerationField ) )
+            // InternalMappingDsl.g:8387:4: (lv_fields_8_0= ruleEnumerationField )
             {
-            // InternalMappingDsl.g:8379:4: (lv_fields_8_0= ruleEnumerationField )
-            // InternalMappingDsl.g:8380:5: lv_fields_8_0= ruleEnumerationField
+            // InternalMappingDsl.g:8387:4: (lv_fields_8_0= ruleEnumerationField )
+            // InternalMappingDsl.g:8388:5: lv_fields_8_0= ruleEnumerationField
             {
 
             					newCompositeNode(grammarAccess.getEnumerationAccess().getFieldsEnumerationFieldParserRuleCall_4_0());
@@ -20850,30 +20870,30 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalMappingDsl.g:8397:3: (otherlv_9= ',' ( (lv_fields_10_0= ruleEnumerationField ) ) )*
+            // InternalMappingDsl.g:8405:3: (otherlv_9= ',' ( (lv_fields_10_0= ruleEnumerationField ) ) )*
             loop195:
             do {
                 int alt195=2;
                 int LA195_0 = input.LA(1);
 
-                if ( (LA195_0==34) ) {
+                if ( (LA195_0==35) ) {
                     alt195=1;
                 }
 
 
                 switch (alt195) {
             	case 1 :
-            	    // InternalMappingDsl.g:8398:4: otherlv_9= ',' ( (lv_fields_10_0= ruleEnumerationField ) )
+            	    // InternalMappingDsl.g:8406:4: otherlv_9= ',' ( (lv_fields_10_0= ruleEnumerationField ) )
             	    {
-            	    otherlv_9=(Token)match(input,34,FOLLOW_7); 
+            	    otherlv_9=(Token)match(input,35,FOLLOW_7); 
 
             	    				newLeafNode(otherlv_9, grammarAccess.getEnumerationAccess().getCommaKeyword_5_0());
             	    			
-            	    // InternalMappingDsl.g:8402:4: ( (lv_fields_10_0= ruleEnumerationField ) )
-            	    // InternalMappingDsl.g:8403:5: (lv_fields_10_0= ruleEnumerationField )
+            	    // InternalMappingDsl.g:8410:4: ( (lv_fields_10_0= ruleEnumerationField ) )
+            	    // InternalMappingDsl.g:8411:5: (lv_fields_10_0= ruleEnumerationField )
             	    {
-            	    // InternalMappingDsl.g:8403:5: (lv_fields_10_0= ruleEnumerationField )
-            	    // InternalMappingDsl.g:8404:6: lv_fields_10_0= ruleEnumerationField
+            	    // InternalMappingDsl.g:8411:5: (lv_fields_10_0= ruleEnumerationField )
+            	    // InternalMappingDsl.g:8412:6: lv_fields_10_0= ruleEnumerationField
             	    {
 
             	    						newCompositeNode(grammarAccess.getEnumerationAccess().getFieldsEnumerationFieldParserRuleCall_5_1_0());
@@ -20909,7 +20929,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            otherlv_11=(Token)match(input,16,FOLLOW_2); 
+            otherlv_11=(Token)match(input,17,FOLLOW_2); 
 
             			newLeafNode(otherlv_11, grammarAccess.getEnumerationAccess().getRightCurlyBracketKeyword_6());
             		
@@ -20936,7 +20956,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleEnumerationField"
-    // InternalMappingDsl.g:8430:1: entryRuleEnumerationField returns [EObject current=null] : iv_ruleEnumerationField= ruleEnumerationField EOF ;
+    // InternalMappingDsl.g:8438:1: entryRuleEnumerationField returns [EObject current=null] : iv_ruleEnumerationField= ruleEnumerationField EOF ;
     public final EObject entryRuleEnumerationField() throws RecognitionException {
         EObject current = null;
 
@@ -20944,8 +20964,8 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalMappingDsl.g:8430:57: (iv_ruleEnumerationField= ruleEnumerationField EOF )
-            // InternalMappingDsl.g:8431:2: iv_ruleEnumerationField= ruleEnumerationField EOF
+            // InternalMappingDsl.g:8438:57: (iv_ruleEnumerationField= ruleEnumerationField EOF )
+            // InternalMappingDsl.g:8439:2: iv_ruleEnumerationField= ruleEnumerationField EOF
             {
              newCompositeNode(grammarAccess.getEnumerationFieldRule()); 
             pushFollow(FOLLOW_1);
@@ -20972,7 +20992,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEnumerationField"
-    // InternalMappingDsl.g:8437:1: ruleEnumerationField returns [EObject current=null] : ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= '(' ( (lv_initializationValue_2_0= rulePrimitiveValue ) ) otherlv_3= ')' )? ) ;
+    // InternalMappingDsl.g:8445:1: ruleEnumerationField returns [EObject current=null] : ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= '(' ( (lv_initializationValue_2_0= rulePrimitiveValue ) ) otherlv_3= ')' )? ) ;
     public final EObject ruleEnumerationField() throws RecognitionException {
         EObject current = null;
 
@@ -20986,17 +21006,17 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:8443:2: ( ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= '(' ( (lv_initializationValue_2_0= rulePrimitiveValue ) ) otherlv_3= ')' )? ) )
-            // InternalMappingDsl.g:8444:2: ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= '(' ( (lv_initializationValue_2_0= rulePrimitiveValue ) ) otherlv_3= ')' )? )
+            // InternalMappingDsl.g:8451:2: ( ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= '(' ( (lv_initializationValue_2_0= rulePrimitiveValue ) ) otherlv_3= ')' )? ) )
+            // InternalMappingDsl.g:8452:2: ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= '(' ( (lv_initializationValue_2_0= rulePrimitiveValue ) ) otherlv_3= ')' )? )
             {
-            // InternalMappingDsl.g:8444:2: ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= '(' ( (lv_initializationValue_2_0= rulePrimitiveValue ) ) otherlv_3= ')' )? )
-            // InternalMappingDsl.g:8445:3: ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= '(' ( (lv_initializationValue_2_0= rulePrimitiveValue ) ) otherlv_3= ')' )?
+            // InternalMappingDsl.g:8452:2: ( ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= '(' ( (lv_initializationValue_2_0= rulePrimitiveValue ) ) otherlv_3= ')' )? )
+            // InternalMappingDsl.g:8453:3: ( (lv_name_0_0= RULE_ID ) ) (otherlv_1= '(' ( (lv_initializationValue_2_0= rulePrimitiveValue ) ) otherlv_3= ')' )?
             {
-            // InternalMappingDsl.g:8445:3: ( (lv_name_0_0= RULE_ID ) )
-            // InternalMappingDsl.g:8446:4: (lv_name_0_0= RULE_ID )
+            // InternalMappingDsl.g:8453:3: ( (lv_name_0_0= RULE_ID ) )
+            // InternalMappingDsl.g:8454:4: (lv_name_0_0= RULE_ID )
             {
-            // InternalMappingDsl.g:8446:4: (lv_name_0_0= RULE_ID )
-            // InternalMappingDsl.g:8447:5: lv_name_0_0= RULE_ID
+            // InternalMappingDsl.g:8454:4: (lv_name_0_0= RULE_ID )
+            // InternalMappingDsl.g:8455:5: lv_name_0_0= RULE_ID
             {
             lv_name_0_0=(Token)match(input,RULE_ID,FOLLOW_45); 
 
@@ -21018,26 +21038,26 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalMappingDsl.g:8463:3: (otherlv_1= '(' ( (lv_initializationValue_2_0= rulePrimitiveValue ) ) otherlv_3= ')' )?
+            // InternalMappingDsl.g:8471:3: (otherlv_1= '(' ( (lv_initializationValue_2_0= rulePrimitiveValue ) ) otherlv_3= ')' )?
             int alt196=2;
             int LA196_0 = input.LA(1);
 
-            if ( (LA196_0==32) ) {
+            if ( (LA196_0==33) ) {
                 alt196=1;
             }
             switch (alt196) {
                 case 1 :
-                    // InternalMappingDsl.g:8464:4: otherlv_1= '(' ( (lv_initializationValue_2_0= rulePrimitiveValue ) ) otherlv_3= ')'
+                    // InternalMappingDsl.g:8472:4: otherlv_1= '(' ( (lv_initializationValue_2_0= rulePrimitiveValue ) ) otherlv_3= ')'
                     {
-                    otherlv_1=(Token)match(input,32,FOLLOW_92); 
+                    otherlv_1=(Token)match(input,33,FOLLOW_92); 
 
                     				newLeafNode(otherlv_1, grammarAccess.getEnumerationFieldAccess().getLeftParenthesisKeyword_1_0());
                     			
-                    // InternalMappingDsl.g:8468:4: ( (lv_initializationValue_2_0= rulePrimitiveValue ) )
-                    // InternalMappingDsl.g:8469:5: (lv_initializationValue_2_0= rulePrimitiveValue )
+                    // InternalMappingDsl.g:8476:4: ( (lv_initializationValue_2_0= rulePrimitiveValue ) )
+                    // InternalMappingDsl.g:8477:5: (lv_initializationValue_2_0= rulePrimitiveValue )
                     {
-                    // InternalMappingDsl.g:8469:5: (lv_initializationValue_2_0= rulePrimitiveValue )
-                    // InternalMappingDsl.g:8470:6: lv_initializationValue_2_0= rulePrimitiveValue
+                    // InternalMappingDsl.g:8477:5: (lv_initializationValue_2_0= rulePrimitiveValue )
+                    // InternalMappingDsl.g:8478:6: lv_initializationValue_2_0= rulePrimitiveValue
                     {
 
                     						newCompositeNode(grammarAccess.getEnumerationFieldAccess().getInitializationValuePrimitiveValueParserRuleCall_1_1_0());
@@ -21064,7 +21084,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_3=(Token)match(input,33,FOLLOW_2); 
+                    otherlv_3=(Token)match(input,34,FOLLOW_2); 
 
                     				newLeafNode(otherlv_3, grammarAccess.getEnumerationFieldAccess().getRightParenthesisKeyword_1_2());
                     			
@@ -21097,7 +21117,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleDataOperation"
-    // InternalMappingDsl.g:8496:1: entryRuleDataOperation returns [EObject current=null] : iv_ruleDataOperation= ruleDataOperation EOF ;
+    // InternalMappingDsl.g:8504:1: entryRuleDataOperation returns [EObject current=null] : iv_ruleDataOperation= ruleDataOperation EOF ;
     public final EObject entryRuleDataOperation() throws RecognitionException {
         EObject current = null;
 
@@ -21105,8 +21125,8 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalMappingDsl.g:8496:54: (iv_ruleDataOperation= ruleDataOperation EOF )
-            // InternalMappingDsl.g:8497:2: iv_ruleDataOperation= ruleDataOperation EOF
+            // InternalMappingDsl.g:8504:54: (iv_ruleDataOperation= ruleDataOperation EOF )
+            // InternalMappingDsl.g:8505:2: iv_ruleDataOperation= ruleDataOperation EOF
             {
              newCompositeNode(grammarAccess.getDataOperationRule()); 
             pushFollow(FOLLOW_1);
@@ -21133,7 +21153,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDataOperation"
-    // InternalMappingDsl.g:8503:1: ruleDataOperation returns [EObject current=null] : ( ( (lv_hidden_0_0= 'hide' ) )? ( ( (lv_hasNoReturnType_1_0= 'procedure' ) ) | (otherlv_2= 'function' ( ( (lv_primitiveReturnType_3_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexReturnType_5_0= ruleImportedComplexType ) ) )? ) ) ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= '(' ( (lv_parameters_8_0= ruleDataOperationParameter ) )? (otherlv_9= ',' ( (lv_parameters_10_0= ruleDataOperationParameter ) ) )* otherlv_11= ')' )? (otherlv_12= '<' ( (lv_features_13_0= ruleDataOperationFeature ) ) (otherlv_14= ',' ( (lv_features_15_0= ruleDataOperationFeature ) ) )* otherlv_16= '>' )? ) ;
+    // InternalMappingDsl.g:8511:1: ruleDataOperation returns [EObject current=null] : ( ( (lv_hidden_0_0= 'hide' ) )? ( ( (lv_hasNoReturnType_1_0= 'procedure' ) ) | (otherlv_2= 'function' ( ( (lv_primitiveReturnType_3_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexReturnType_5_0= ruleImportedComplexType ) ) )? ) ) ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= '(' ( (lv_parameters_8_0= ruleDataOperationParameter ) )? (otherlv_9= ',' ( (lv_parameters_10_0= ruleDataOperationParameter ) ) )* otherlv_11= ')' )? (otherlv_12= '<' ( (lv_features_13_0= ruleDataOperationFeature ) ) (otherlv_14= ',' ( (lv_features_15_0= ruleDataOperationFeature ) ) )* otherlv_16= '>' )? ) ;
     public final EObject ruleDataOperation() throws RecognitionException {
         EObject current = null;
 
@@ -21164,27 +21184,27 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:8509:2: ( ( ( (lv_hidden_0_0= 'hide' ) )? ( ( (lv_hasNoReturnType_1_0= 'procedure' ) ) | (otherlv_2= 'function' ( ( (lv_primitiveReturnType_3_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexReturnType_5_0= ruleImportedComplexType ) ) )? ) ) ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= '(' ( (lv_parameters_8_0= ruleDataOperationParameter ) )? (otherlv_9= ',' ( (lv_parameters_10_0= ruleDataOperationParameter ) ) )* otherlv_11= ')' )? (otherlv_12= '<' ( (lv_features_13_0= ruleDataOperationFeature ) ) (otherlv_14= ',' ( (lv_features_15_0= ruleDataOperationFeature ) ) )* otherlv_16= '>' )? ) )
-            // InternalMappingDsl.g:8510:2: ( ( (lv_hidden_0_0= 'hide' ) )? ( ( (lv_hasNoReturnType_1_0= 'procedure' ) ) | (otherlv_2= 'function' ( ( (lv_primitiveReturnType_3_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexReturnType_5_0= ruleImportedComplexType ) ) )? ) ) ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= '(' ( (lv_parameters_8_0= ruleDataOperationParameter ) )? (otherlv_9= ',' ( (lv_parameters_10_0= ruleDataOperationParameter ) ) )* otherlv_11= ')' )? (otherlv_12= '<' ( (lv_features_13_0= ruleDataOperationFeature ) ) (otherlv_14= ',' ( (lv_features_15_0= ruleDataOperationFeature ) ) )* otherlv_16= '>' )? )
+            // InternalMappingDsl.g:8517:2: ( ( ( (lv_hidden_0_0= 'hide' ) )? ( ( (lv_hasNoReturnType_1_0= 'procedure' ) ) | (otherlv_2= 'function' ( ( (lv_primitiveReturnType_3_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexReturnType_5_0= ruleImportedComplexType ) ) )? ) ) ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= '(' ( (lv_parameters_8_0= ruleDataOperationParameter ) )? (otherlv_9= ',' ( (lv_parameters_10_0= ruleDataOperationParameter ) ) )* otherlv_11= ')' )? (otherlv_12= '<' ( (lv_features_13_0= ruleDataOperationFeature ) ) (otherlv_14= ',' ( (lv_features_15_0= ruleDataOperationFeature ) ) )* otherlv_16= '>' )? ) )
+            // InternalMappingDsl.g:8518:2: ( ( (lv_hidden_0_0= 'hide' ) )? ( ( (lv_hasNoReturnType_1_0= 'procedure' ) ) | (otherlv_2= 'function' ( ( (lv_primitiveReturnType_3_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexReturnType_5_0= ruleImportedComplexType ) ) )? ) ) ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= '(' ( (lv_parameters_8_0= ruleDataOperationParameter ) )? (otherlv_9= ',' ( (lv_parameters_10_0= ruleDataOperationParameter ) ) )* otherlv_11= ')' )? (otherlv_12= '<' ( (lv_features_13_0= ruleDataOperationFeature ) ) (otherlv_14= ',' ( (lv_features_15_0= ruleDataOperationFeature ) ) )* otherlv_16= '>' )? )
             {
-            // InternalMappingDsl.g:8510:2: ( ( (lv_hidden_0_0= 'hide' ) )? ( ( (lv_hasNoReturnType_1_0= 'procedure' ) ) | (otherlv_2= 'function' ( ( (lv_primitiveReturnType_3_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexReturnType_5_0= ruleImportedComplexType ) ) )? ) ) ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= '(' ( (lv_parameters_8_0= ruleDataOperationParameter ) )? (otherlv_9= ',' ( (lv_parameters_10_0= ruleDataOperationParameter ) ) )* otherlv_11= ')' )? (otherlv_12= '<' ( (lv_features_13_0= ruleDataOperationFeature ) ) (otherlv_14= ',' ( (lv_features_15_0= ruleDataOperationFeature ) ) )* otherlv_16= '>' )? )
-            // InternalMappingDsl.g:8511:3: ( (lv_hidden_0_0= 'hide' ) )? ( ( (lv_hasNoReturnType_1_0= 'procedure' ) ) | (otherlv_2= 'function' ( ( (lv_primitiveReturnType_3_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexReturnType_5_0= ruleImportedComplexType ) ) )? ) ) ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= '(' ( (lv_parameters_8_0= ruleDataOperationParameter ) )? (otherlv_9= ',' ( (lv_parameters_10_0= ruleDataOperationParameter ) ) )* otherlv_11= ')' )? (otherlv_12= '<' ( (lv_features_13_0= ruleDataOperationFeature ) ) (otherlv_14= ',' ( (lv_features_15_0= ruleDataOperationFeature ) ) )* otherlv_16= '>' )?
+            // InternalMappingDsl.g:8518:2: ( ( (lv_hidden_0_0= 'hide' ) )? ( ( (lv_hasNoReturnType_1_0= 'procedure' ) ) | (otherlv_2= 'function' ( ( (lv_primitiveReturnType_3_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexReturnType_5_0= ruleImportedComplexType ) ) )? ) ) ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= '(' ( (lv_parameters_8_0= ruleDataOperationParameter ) )? (otherlv_9= ',' ( (lv_parameters_10_0= ruleDataOperationParameter ) ) )* otherlv_11= ')' )? (otherlv_12= '<' ( (lv_features_13_0= ruleDataOperationFeature ) ) (otherlv_14= ',' ( (lv_features_15_0= ruleDataOperationFeature ) ) )* otherlv_16= '>' )? )
+            // InternalMappingDsl.g:8519:3: ( (lv_hidden_0_0= 'hide' ) )? ( ( (lv_hasNoReturnType_1_0= 'procedure' ) ) | (otherlv_2= 'function' ( ( (lv_primitiveReturnType_3_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexReturnType_5_0= ruleImportedComplexType ) ) )? ) ) ( (lv_name_6_0= RULE_ID ) ) (otherlv_7= '(' ( (lv_parameters_8_0= ruleDataOperationParameter ) )? (otherlv_9= ',' ( (lv_parameters_10_0= ruleDataOperationParameter ) ) )* otherlv_11= ')' )? (otherlv_12= '<' ( (lv_features_13_0= ruleDataOperationFeature ) ) (otherlv_14= ',' ( (lv_features_15_0= ruleDataOperationFeature ) ) )* otherlv_16= '>' )?
             {
-            // InternalMappingDsl.g:8511:3: ( (lv_hidden_0_0= 'hide' ) )?
+            // InternalMappingDsl.g:8519:3: ( (lv_hidden_0_0= 'hide' ) )?
             int alt197=2;
             int LA197_0 = input.LA(1);
 
-            if ( (LA197_0==114) ) {
+            if ( (LA197_0==115) ) {
                 alt197=1;
             }
             switch (alt197) {
                 case 1 :
-                    // InternalMappingDsl.g:8512:4: (lv_hidden_0_0= 'hide' )
+                    // InternalMappingDsl.g:8520:4: (lv_hidden_0_0= 'hide' )
                     {
-                    // InternalMappingDsl.g:8512:4: (lv_hidden_0_0= 'hide' )
-                    // InternalMappingDsl.g:8513:5: lv_hidden_0_0= 'hide'
+                    // InternalMappingDsl.g:8520:4: (lv_hidden_0_0= 'hide' )
+                    // InternalMappingDsl.g:8521:5: lv_hidden_0_0= 'hide'
                     {
-                    lv_hidden_0_0=(Token)match(input,114,FOLLOW_138); 
+                    lv_hidden_0_0=(Token)match(input,115,FOLLOW_138); 
 
                     					newLeafNode(lv_hidden_0_0, grammarAccess.getDataOperationAccess().getHiddenHideKeyword_0_0());
                     				
@@ -21203,14 +21223,14 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalMappingDsl.g:8525:3: ( ( (lv_hasNoReturnType_1_0= 'procedure' ) ) | (otherlv_2= 'function' ( ( (lv_primitiveReturnType_3_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexReturnType_5_0= ruleImportedComplexType ) ) )? ) )
+            // InternalMappingDsl.g:8533:3: ( ( (lv_hasNoReturnType_1_0= 'procedure' ) ) | (otherlv_2= 'function' ( ( (lv_primitiveReturnType_3_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexReturnType_5_0= ruleImportedComplexType ) ) )? ) )
             int alt199=2;
             int LA199_0 = input.LA(1);
 
-            if ( (LA199_0==121) ) {
+            if ( (LA199_0==122) ) {
                 alt199=1;
             }
-            else if ( (LA199_0==120) ) {
+            else if ( (LA199_0==121) ) {
                 alt199=2;
             }
             else {
@@ -21221,15 +21241,15 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             }
             switch (alt199) {
                 case 1 :
-                    // InternalMappingDsl.g:8526:4: ( (lv_hasNoReturnType_1_0= 'procedure' ) )
+                    // InternalMappingDsl.g:8534:4: ( (lv_hasNoReturnType_1_0= 'procedure' ) )
                     {
-                    // InternalMappingDsl.g:8526:4: ( (lv_hasNoReturnType_1_0= 'procedure' ) )
-                    // InternalMappingDsl.g:8527:5: (lv_hasNoReturnType_1_0= 'procedure' )
+                    // InternalMappingDsl.g:8534:4: ( (lv_hasNoReturnType_1_0= 'procedure' ) )
+                    // InternalMappingDsl.g:8535:5: (lv_hasNoReturnType_1_0= 'procedure' )
                     {
-                    // InternalMappingDsl.g:8527:5: (lv_hasNoReturnType_1_0= 'procedure' )
-                    // InternalMappingDsl.g:8528:6: lv_hasNoReturnType_1_0= 'procedure'
+                    // InternalMappingDsl.g:8535:5: (lv_hasNoReturnType_1_0= 'procedure' )
+                    // InternalMappingDsl.g:8536:6: lv_hasNoReturnType_1_0= 'procedure'
                     {
-                    lv_hasNoReturnType_1_0=(Token)match(input,121,FOLLOW_7); 
+                    lv_hasNoReturnType_1_0=(Token)match(input,122,FOLLOW_7); 
 
                     						newLeafNode(lv_hasNoReturnType_1_0, grammarAccess.getDataOperationAccess().getHasNoReturnTypeProcedureKeyword_1_0_0());
                     					
@@ -21249,41 +21269,41 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalMappingDsl.g:8541:4: (otherlv_2= 'function' ( ( (lv_primitiveReturnType_3_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexReturnType_5_0= ruleImportedComplexType ) ) )? )
+                    // InternalMappingDsl.g:8549:4: (otherlv_2= 'function' ( ( (lv_primitiveReturnType_3_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexReturnType_5_0= ruleImportedComplexType ) ) )? )
                     {
-                    // InternalMappingDsl.g:8541:4: (otherlv_2= 'function' ( ( (lv_primitiveReturnType_3_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexReturnType_5_0= ruleImportedComplexType ) ) )? )
-                    // InternalMappingDsl.g:8542:5: otherlv_2= 'function' ( ( (lv_primitiveReturnType_3_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexReturnType_5_0= ruleImportedComplexType ) ) )?
+                    // InternalMappingDsl.g:8549:4: (otherlv_2= 'function' ( ( (lv_primitiveReturnType_3_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexReturnType_5_0= ruleImportedComplexType ) ) )? )
+                    // InternalMappingDsl.g:8550:5: otherlv_2= 'function' ( ( (lv_primitiveReturnType_3_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexReturnType_5_0= ruleImportedComplexType ) ) )?
                     {
-                    otherlv_2=(Token)match(input,120,FOLLOW_90); 
+                    otherlv_2=(Token)match(input,121,FOLLOW_90); 
 
                     					newLeafNode(otherlv_2, grammarAccess.getDataOperationAccess().getFunctionKeyword_1_1_0());
                     				
-                    // InternalMappingDsl.g:8546:5: ( ( (lv_primitiveReturnType_3_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexReturnType_5_0= ruleImportedComplexType ) ) )?
+                    // InternalMappingDsl.g:8554:5: ( ( (lv_primitiveReturnType_3_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexReturnType_5_0= ruleImportedComplexType ) ) )?
                     int alt198=4;
                     int LA198_0 = input.LA(1);
 
-                    if ( ((LA198_0>=122 && LA198_0<=131)||LA198_0==138) ) {
+                    if ( ((LA198_0>=123 && LA198_0<=132)||LA198_0==139) ) {
                         alt198=1;
                     }
                     else if ( (LA198_0==RULE_ID) ) {
                         int LA198_2 = input.LA(2);
 
-                        if ( (LA198_2==17) ) {
+                        if ( (LA198_2==18) ) {
                             alt198=3;
                         }
-                        else if ( (LA198_2==RULE_ID||LA198_2==29) ) {
+                        else if ( (LA198_2==RULE_ID||LA198_2==30) ) {
                             alt198=2;
                         }
                     }
                     switch (alt198) {
                         case 1 :
-                            // InternalMappingDsl.g:8547:6: ( (lv_primitiveReturnType_3_0= rulePrimitiveType ) )
+                            // InternalMappingDsl.g:8555:6: ( (lv_primitiveReturnType_3_0= rulePrimitiveType ) )
                             {
-                            // InternalMappingDsl.g:8547:6: ( (lv_primitiveReturnType_3_0= rulePrimitiveType ) )
-                            // InternalMappingDsl.g:8548:7: (lv_primitiveReturnType_3_0= rulePrimitiveType )
+                            // InternalMappingDsl.g:8555:6: ( (lv_primitiveReturnType_3_0= rulePrimitiveType ) )
+                            // InternalMappingDsl.g:8556:7: (lv_primitiveReturnType_3_0= rulePrimitiveType )
                             {
-                            // InternalMappingDsl.g:8548:7: (lv_primitiveReturnType_3_0= rulePrimitiveType )
-                            // InternalMappingDsl.g:8549:8: lv_primitiveReturnType_3_0= rulePrimitiveType
+                            // InternalMappingDsl.g:8556:7: (lv_primitiveReturnType_3_0= rulePrimitiveType )
+                            // InternalMappingDsl.g:8557:8: lv_primitiveReturnType_3_0= rulePrimitiveType
                             {
 
                             								newCompositeNode(grammarAccess.getDataOperationAccess().getPrimitiveReturnTypePrimitiveTypeParserRuleCall_1_1_1_0_0());
@@ -21314,13 +21334,13 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                             }
                             break;
                         case 2 :
-                            // InternalMappingDsl.g:8567:6: ( ( ruleQualifiedName ) )
+                            // InternalMappingDsl.g:8575:6: ( ( ruleQualifiedName ) )
                             {
-                            // InternalMappingDsl.g:8567:6: ( ( ruleQualifiedName ) )
-                            // InternalMappingDsl.g:8568:7: ( ruleQualifiedName )
+                            // InternalMappingDsl.g:8575:6: ( ( ruleQualifiedName ) )
+                            // InternalMappingDsl.g:8576:7: ( ruleQualifiedName )
                             {
-                            // InternalMappingDsl.g:8568:7: ( ruleQualifiedName )
-                            // InternalMappingDsl.g:8569:8: ruleQualifiedName
+                            // InternalMappingDsl.g:8576:7: ( ruleQualifiedName )
+                            // InternalMappingDsl.g:8577:8: ruleQualifiedName
                             {
 
                             								if (current==null) {
@@ -21348,13 +21368,13 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                             }
                             break;
                         case 3 :
-                            // InternalMappingDsl.g:8584:6: ( (lv_importedComplexReturnType_5_0= ruleImportedComplexType ) )
+                            // InternalMappingDsl.g:8592:6: ( (lv_importedComplexReturnType_5_0= ruleImportedComplexType ) )
                             {
-                            // InternalMappingDsl.g:8584:6: ( (lv_importedComplexReturnType_5_0= ruleImportedComplexType ) )
-                            // InternalMappingDsl.g:8585:7: (lv_importedComplexReturnType_5_0= ruleImportedComplexType )
+                            // InternalMappingDsl.g:8592:6: ( (lv_importedComplexReturnType_5_0= ruleImportedComplexType ) )
+                            // InternalMappingDsl.g:8593:7: (lv_importedComplexReturnType_5_0= ruleImportedComplexType )
                             {
-                            // InternalMappingDsl.g:8585:7: (lv_importedComplexReturnType_5_0= ruleImportedComplexType )
-                            // InternalMappingDsl.g:8586:8: lv_importedComplexReturnType_5_0= ruleImportedComplexType
+                            // InternalMappingDsl.g:8593:7: (lv_importedComplexReturnType_5_0= ruleImportedComplexType )
+                            // InternalMappingDsl.g:8594:8: lv_importedComplexReturnType_5_0= ruleImportedComplexType
                             {
 
                             								newCompositeNode(grammarAccess.getDataOperationAccess().getImportedComplexReturnTypeImportedComplexTypeParserRuleCall_1_1_1_2_0());
@@ -21396,11 +21416,11 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalMappingDsl.g:8606:3: ( (lv_name_6_0= RULE_ID ) )
-            // InternalMappingDsl.g:8607:4: (lv_name_6_0= RULE_ID )
+            // InternalMappingDsl.g:8614:3: ( (lv_name_6_0= RULE_ID ) )
+            // InternalMappingDsl.g:8615:4: (lv_name_6_0= RULE_ID )
             {
-            // InternalMappingDsl.g:8607:4: (lv_name_6_0= RULE_ID )
-            // InternalMappingDsl.g:8608:5: lv_name_6_0= RULE_ID
+            // InternalMappingDsl.g:8615:4: (lv_name_6_0= RULE_ID )
+            // InternalMappingDsl.g:8616:5: lv_name_6_0= RULE_ID
             {
             lv_name_6_0=(Token)match(input,RULE_ID,FOLLOW_139); 
 
@@ -21422,34 +21442,34 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalMappingDsl.g:8624:3: (otherlv_7= '(' ( (lv_parameters_8_0= ruleDataOperationParameter ) )? (otherlv_9= ',' ( (lv_parameters_10_0= ruleDataOperationParameter ) ) )* otherlv_11= ')' )?
+            // InternalMappingDsl.g:8632:3: (otherlv_7= '(' ( (lv_parameters_8_0= ruleDataOperationParameter ) )? (otherlv_9= ',' ( (lv_parameters_10_0= ruleDataOperationParameter ) ) )* otherlv_11= ')' )?
             int alt202=2;
             int LA202_0 = input.LA(1);
 
-            if ( (LA202_0==32) ) {
+            if ( (LA202_0==33) ) {
                 alt202=1;
             }
             switch (alt202) {
                 case 1 :
-                    // InternalMappingDsl.g:8625:4: otherlv_7= '(' ( (lv_parameters_8_0= ruleDataOperationParameter ) )? (otherlv_9= ',' ( (lv_parameters_10_0= ruleDataOperationParameter ) ) )* otherlv_11= ')'
+                    // InternalMappingDsl.g:8633:4: otherlv_7= '(' ( (lv_parameters_8_0= ruleDataOperationParameter ) )? (otherlv_9= ',' ( (lv_parameters_10_0= ruleDataOperationParameter ) ) )* otherlv_11= ')'
                     {
-                    otherlv_7=(Token)match(input,32,FOLLOW_140); 
+                    otherlv_7=(Token)match(input,33,FOLLOW_140); 
 
                     				newLeafNode(otherlv_7, grammarAccess.getDataOperationAccess().getLeftParenthesisKeyword_3_0());
                     			
-                    // InternalMappingDsl.g:8629:4: ( (lv_parameters_8_0= ruleDataOperationParameter ) )?
+                    // InternalMappingDsl.g:8637:4: ( (lv_parameters_8_0= ruleDataOperationParameter ) )?
                     int alt200=2;
                     int LA200_0 = input.LA(1);
 
-                    if ( (LA200_0==RULE_ID||(LA200_0>=122 && LA200_0<=131)||LA200_0==138) ) {
+                    if ( (LA200_0==RULE_ID||(LA200_0>=123 && LA200_0<=132)||LA200_0==139) ) {
                         alt200=1;
                     }
                     switch (alt200) {
                         case 1 :
-                            // InternalMappingDsl.g:8630:5: (lv_parameters_8_0= ruleDataOperationParameter )
+                            // InternalMappingDsl.g:8638:5: (lv_parameters_8_0= ruleDataOperationParameter )
                             {
-                            // InternalMappingDsl.g:8630:5: (lv_parameters_8_0= ruleDataOperationParameter )
-                            // InternalMappingDsl.g:8631:6: lv_parameters_8_0= ruleDataOperationParameter
+                            // InternalMappingDsl.g:8638:5: (lv_parameters_8_0= ruleDataOperationParameter )
+                            // InternalMappingDsl.g:8639:6: lv_parameters_8_0= ruleDataOperationParameter
                             {
 
                             						newCompositeNode(grammarAccess.getDataOperationAccess().getParametersDataOperationParameterParserRuleCall_3_1_0());
@@ -21479,30 +21499,30 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalMappingDsl.g:8648:4: (otherlv_9= ',' ( (lv_parameters_10_0= ruleDataOperationParameter ) ) )*
+                    // InternalMappingDsl.g:8656:4: (otherlv_9= ',' ( (lv_parameters_10_0= ruleDataOperationParameter ) ) )*
                     loop201:
                     do {
                         int alt201=2;
                         int LA201_0 = input.LA(1);
 
-                        if ( (LA201_0==34) ) {
+                        if ( (LA201_0==35) ) {
                             alt201=1;
                         }
 
 
                         switch (alt201) {
                     	case 1 :
-                    	    // InternalMappingDsl.g:8649:5: otherlv_9= ',' ( (lv_parameters_10_0= ruleDataOperationParameter ) )
+                    	    // InternalMappingDsl.g:8657:5: otherlv_9= ',' ( (lv_parameters_10_0= ruleDataOperationParameter ) )
                     	    {
-                    	    otherlv_9=(Token)match(input,34,FOLLOW_90); 
+                    	    otherlv_9=(Token)match(input,35,FOLLOW_90); 
 
                     	    					newLeafNode(otherlv_9, grammarAccess.getDataOperationAccess().getCommaKeyword_3_2_0());
                     	    				
-                    	    // InternalMappingDsl.g:8653:5: ( (lv_parameters_10_0= ruleDataOperationParameter ) )
-                    	    // InternalMappingDsl.g:8654:6: (lv_parameters_10_0= ruleDataOperationParameter )
+                    	    // InternalMappingDsl.g:8661:5: ( (lv_parameters_10_0= ruleDataOperationParameter ) )
+                    	    // InternalMappingDsl.g:8662:6: (lv_parameters_10_0= ruleDataOperationParameter )
                     	    {
-                    	    // InternalMappingDsl.g:8654:6: (lv_parameters_10_0= ruleDataOperationParameter )
-                    	    // InternalMappingDsl.g:8655:7: lv_parameters_10_0= ruleDataOperationParameter
+                    	    // InternalMappingDsl.g:8662:6: (lv_parameters_10_0= ruleDataOperationParameter )
+                    	    // InternalMappingDsl.g:8663:7: lv_parameters_10_0= ruleDataOperationParameter
                     	    {
 
                     	    							newCompositeNode(grammarAccess.getDataOperationAccess().getParametersDataOperationParameterParserRuleCall_3_2_1_0());
@@ -21538,7 +21558,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         }
                     } while (true);
 
-                    otherlv_11=(Token)match(input,33,FOLLOW_135); 
+                    otherlv_11=(Token)match(input,34,FOLLOW_135); 
 
                     				newLeafNode(otherlv_11, grammarAccess.getDataOperationAccess().getRightParenthesisKeyword_3_3());
                     			
@@ -21548,26 +21568,26 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalMappingDsl.g:8678:3: (otherlv_12= '<' ( (lv_features_13_0= ruleDataOperationFeature ) ) (otherlv_14= ',' ( (lv_features_15_0= ruleDataOperationFeature ) ) )* otherlv_16= '>' )?
+            // InternalMappingDsl.g:8686:3: (otherlv_12= '<' ( (lv_features_13_0= ruleDataOperationFeature ) ) (otherlv_14= ',' ( (lv_features_15_0= ruleDataOperationFeature ) ) )* otherlv_16= '>' )?
             int alt204=2;
             int LA204_0 = input.LA(1);
 
-            if ( (LA204_0==57) ) {
+            if ( (LA204_0==58) ) {
                 alt204=1;
             }
             switch (alt204) {
                 case 1 :
-                    // InternalMappingDsl.g:8679:4: otherlv_12= '<' ( (lv_features_13_0= ruleDataOperationFeature ) ) (otherlv_14= ',' ( (lv_features_15_0= ruleDataOperationFeature ) ) )* otherlv_16= '>'
+                    // InternalMappingDsl.g:8687:4: otherlv_12= '<' ( (lv_features_13_0= ruleDataOperationFeature ) ) (otherlv_14= ',' ( (lv_features_15_0= ruleDataOperationFeature ) ) )* otherlv_16= '>'
                     {
-                    otherlv_12=(Token)match(input,57,FOLLOW_141); 
+                    otherlv_12=(Token)match(input,58,FOLLOW_141); 
 
                     				newLeafNode(otherlv_12, grammarAccess.getDataOperationAccess().getLessThanSignKeyword_4_0());
                     			
-                    // InternalMappingDsl.g:8683:4: ( (lv_features_13_0= ruleDataOperationFeature ) )
-                    // InternalMappingDsl.g:8684:5: (lv_features_13_0= ruleDataOperationFeature )
+                    // InternalMappingDsl.g:8691:4: ( (lv_features_13_0= ruleDataOperationFeature ) )
+                    // InternalMappingDsl.g:8692:5: (lv_features_13_0= ruleDataOperationFeature )
                     {
-                    // InternalMappingDsl.g:8684:5: (lv_features_13_0= ruleDataOperationFeature )
-                    // InternalMappingDsl.g:8685:6: lv_features_13_0= ruleDataOperationFeature
+                    // InternalMappingDsl.g:8692:5: (lv_features_13_0= ruleDataOperationFeature )
+                    // InternalMappingDsl.g:8693:6: lv_features_13_0= ruleDataOperationFeature
                     {
 
                     						newCompositeNode(grammarAccess.getDataOperationAccess().getFeaturesDataOperationFeatureEnumRuleCall_4_1_0());
@@ -21594,30 +21614,30 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalMappingDsl.g:8702:4: (otherlv_14= ',' ( (lv_features_15_0= ruleDataOperationFeature ) ) )*
+                    // InternalMappingDsl.g:8710:4: (otherlv_14= ',' ( (lv_features_15_0= ruleDataOperationFeature ) ) )*
                     loop203:
                     do {
                         int alt203=2;
                         int LA203_0 = input.LA(1);
 
-                        if ( (LA203_0==34) ) {
+                        if ( (LA203_0==35) ) {
                             alt203=1;
                         }
 
 
                         switch (alt203) {
                     	case 1 :
-                    	    // InternalMappingDsl.g:8703:5: otherlv_14= ',' ( (lv_features_15_0= ruleDataOperationFeature ) )
+                    	    // InternalMappingDsl.g:8711:5: otherlv_14= ',' ( (lv_features_15_0= ruleDataOperationFeature ) )
                     	    {
-                    	    otherlv_14=(Token)match(input,34,FOLLOW_141); 
+                    	    otherlv_14=(Token)match(input,35,FOLLOW_141); 
 
                     	    					newLeafNode(otherlv_14, grammarAccess.getDataOperationAccess().getCommaKeyword_4_2_0());
                     	    				
-                    	    // InternalMappingDsl.g:8707:5: ( (lv_features_15_0= ruleDataOperationFeature ) )
-                    	    // InternalMappingDsl.g:8708:6: (lv_features_15_0= ruleDataOperationFeature )
+                    	    // InternalMappingDsl.g:8715:5: ( (lv_features_15_0= ruleDataOperationFeature ) )
+                    	    // InternalMappingDsl.g:8716:6: (lv_features_15_0= ruleDataOperationFeature )
                     	    {
-                    	    // InternalMappingDsl.g:8708:6: (lv_features_15_0= ruleDataOperationFeature )
-                    	    // InternalMappingDsl.g:8709:7: lv_features_15_0= ruleDataOperationFeature
+                    	    // InternalMappingDsl.g:8716:6: (lv_features_15_0= ruleDataOperationFeature )
+                    	    // InternalMappingDsl.g:8717:7: lv_features_15_0= ruleDataOperationFeature
                     	    {
 
                     	    							newCompositeNode(grammarAccess.getDataOperationAccess().getFeaturesDataOperationFeatureEnumRuleCall_4_2_1_0());
@@ -21653,7 +21673,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                         }
                     } while (true);
 
-                    otherlv_16=(Token)match(input,58,FOLLOW_2); 
+                    otherlv_16=(Token)match(input,59,FOLLOW_2); 
 
                     				newLeafNode(otherlv_16, grammarAccess.getDataOperationAccess().getGreaterThanSignKeyword_4_3());
                     			
@@ -21686,7 +21706,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleDataOperationParameter"
-    // InternalMappingDsl.g:8736:1: entryRuleDataOperationParameter returns [EObject current=null] : iv_ruleDataOperationParameter= ruleDataOperationParameter EOF ;
+    // InternalMappingDsl.g:8744:1: entryRuleDataOperationParameter returns [EObject current=null] : iv_ruleDataOperationParameter= ruleDataOperationParameter EOF ;
     public final EObject entryRuleDataOperationParameter() throws RecognitionException {
         EObject current = null;
 
@@ -21694,8 +21714,8 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalMappingDsl.g:8736:63: (iv_ruleDataOperationParameter= ruleDataOperationParameter EOF )
-            // InternalMappingDsl.g:8737:2: iv_ruleDataOperationParameter= ruleDataOperationParameter EOF
+            // InternalMappingDsl.g:8744:63: (iv_ruleDataOperationParameter= ruleDataOperationParameter EOF )
+            // InternalMappingDsl.g:8745:2: iv_ruleDataOperationParameter= ruleDataOperationParameter EOF
             {
              newCompositeNode(grammarAccess.getDataOperationParameterRule()); 
             pushFollow(FOLLOW_1);
@@ -21722,7 +21742,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDataOperationParameter"
-    // InternalMappingDsl.g:8743:1: ruleDataOperationParameter returns [EObject current=null] : ( ( ( (lv_primitiveType_0_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexType_2_0= ruleImportedComplexType ) ) ) ( (lv_name_3_0= RULE_ID ) ) ) ;
+    // InternalMappingDsl.g:8751:1: ruleDataOperationParameter returns [EObject current=null] : ( ( ( (lv_primitiveType_0_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexType_2_0= ruleImportedComplexType ) ) ) ( (lv_name_3_0= RULE_ID ) ) ) ;
     public final EObject ruleDataOperationParameter() throws RecognitionException {
         EObject current = null;
 
@@ -21736,26 +21756,26 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:8749:2: ( ( ( ( (lv_primitiveType_0_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexType_2_0= ruleImportedComplexType ) ) ) ( (lv_name_3_0= RULE_ID ) ) ) )
-            // InternalMappingDsl.g:8750:2: ( ( ( (lv_primitiveType_0_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexType_2_0= ruleImportedComplexType ) ) ) ( (lv_name_3_0= RULE_ID ) ) )
+            // InternalMappingDsl.g:8757:2: ( ( ( ( (lv_primitiveType_0_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexType_2_0= ruleImportedComplexType ) ) ) ( (lv_name_3_0= RULE_ID ) ) ) )
+            // InternalMappingDsl.g:8758:2: ( ( ( (lv_primitiveType_0_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexType_2_0= ruleImportedComplexType ) ) ) ( (lv_name_3_0= RULE_ID ) ) )
             {
-            // InternalMappingDsl.g:8750:2: ( ( ( (lv_primitiveType_0_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexType_2_0= ruleImportedComplexType ) ) ) ( (lv_name_3_0= RULE_ID ) ) )
-            // InternalMappingDsl.g:8751:3: ( ( (lv_primitiveType_0_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexType_2_0= ruleImportedComplexType ) ) ) ( (lv_name_3_0= RULE_ID ) )
+            // InternalMappingDsl.g:8758:2: ( ( ( (lv_primitiveType_0_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexType_2_0= ruleImportedComplexType ) ) ) ( (lv_name_3_0= RULE_ID ) ) )
+            // InternalMappingDsl.g:8759:3: ( ( (lv_primitiveType_0_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexType_2_0= ruleImportedComplexType ) ) ) ( (lv_name_3_0= RULE_ID ) )
             {
-            // InternalMappingDsl.g:8751:3: ( ( (lv_primitiveType_0_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexType_2_0= ruleImportedComplexType ) ) )
+            // InternalMappingDsl.g:8759:3: ( ( (lv_primitiveType_0_0= rulePrimitiveType ) ) | ( ( ruleQualifiedName ) ) | ( (lv_importedComplexType_2_0= ruleImportedComplexType ) ) )
             int alt205=3;
             int LA205_0 = input.LA(1);
 
-            if ( ((LA205_0>=122 && LA205_0<=131)||LA205_0==138) ) {
+            if ( ((LA205_0>=123 && LA205_0<=132)||LA205_0==139) ) {
                 alt205=1;
             }
             else if ( (LA205_0==RULE_ID) ) {
                 int LA205_2 = input.LA(2);
 
-                if ( (LA205_2==RULE_ID||LA205_2==29) ) {
+                if ( (LA205_2==RULE_ID||LA205_2==30) ) {
                     alt205=2;
                 }
-                else if ( (LA205_2==17) ) {
+                else if ( (LA205_2==18) ) {
                     alt205=3;
                 }
                 else {
@@ -21773,13 +21793,13 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             }
             switch (alt205) {
                 case 1 :
-                    // InternalMappingDsl.g:8752:4: ( (lv_primitiveType_0_0= rulePrimitiveType ) )
+                    // InternalMappingDsl.g:8760:4: ( (lv_primitiveType_0_0= rulePrimitiveType ) )
                     {
-                    // InternalMappingDsl.g:8752:4: ( (lv_primitiveType_0_0= rulePrimitiveType ) )
-                    // InternalMappingDsl.g:8753:5: (lv_primitiveType_0_0= rulePrimitiveType )
+                    // InternalMappingDsl.g:8760:4: ( (lv_primitiveType_0_0= rulePrimitiveType ) )
+                    // InternalMappingDsl.g:8761:5: (lv_primitiveType_0_0= rulePrimitiveType )
                     {
-                    // InternalMappingDsl.g:8753:5: (lv_primitiveType_0_0= rulePrimitiveType )
-                    // InternalMappingDsl.g:8754:6: lv_primitiveType_0_0= rulePrimitiveType
+                    // InternalMappingDsl.g:8761:5: (lv_primitiveType_0_0= rulePrimitiveType )
+                    // InternalMappingDsl.g:8762:6: lv_primitiveType_0_0= rulePrimitiveType
                     {
 
                     						newCompositeNode(grammarAccess.getDataOperationParameterAccess().getPrimitiveTypePrimitiveTypeParserRuleCall_0_0_0());
@@ -21810,13 +21830,13 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalMappingDsl.g:8772:4: ( ( ruleQualifiedName ) )
+                    // InternalMappingDsl.g:8780:4: ( ( ruleQualifiedName ) )
                     {
-                    // InternalMappingDsl.g:8772:4: ( ( ruleQualifiedName ) )
-                    // InternalMappingDsl.g:8773:5: ( ruleQualifiedName )
+                    // InternalMappingDsl.g:8780:4: ( ( ruleQualifiedName ) )
+                    // InternalMappingDsl.g:8781:5: ( ruleQualifiedName )
                     {
-                    // InternalMappingDsl.g:8773:5: ( ruleQualifiedName )
-                    // InternalMappingDsl.g:8774:6: ruleQualifiedName
+                    // InternalMappingDsl.g:8781:5: ( ruleQualifiedName )
+                    // InternalMappingDsl.g:8782:6: ruleQualifiedName
                     {
 
                     						if (current==null) {
@@ -21844,13 +21864,13 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalMappingDsl.g:8789:4: ( (lv_importedComplexType_2_0= ruleImportedComplexType ) )
+                    // InternalMappingDsl.g:8797:4: ( (lv_importedComplexType_2_0= ruleImportedComplexType ) )
                     {
-                    // InternalMappingDsl.g:8789:4: ( (lv_importedComplexType_2_0= ruleImportedComplexType ) )
-                    // InternalMappingDsl.g:8790:5: (lv_importedComplexType_2_0= ruleImportedComplexType )
+                    // InternalMappingDsl.g:8797:4: ( (lv_importedComplexType_2_0= ruleImportedComplexType ) )
+                    // InternalMappingDsl.g:8798:5: (lv_importedComplexType_2_0= ruleImportedComplexType )
                     {
-                    // InternalMappingDsl.g:8790:5: (lv_importedComplexType_2_0= ruleImportedComplexType )
-                    // InternalMappingDsl.g:8791:6: lv_importedComplexType_2_0= ruleImportedComplexType
+                    // InternalMappingDsl.g:8798:5: (lv_importedComplexType_2_0= ruleImportedComplexType )
+                    // InternalMappingDsl.g:8799:6: lv_importedComplexType_2_0= ruleImportedComplexType
                     {
 
                     						newCompositeNode(grammarAccess.getDataOperationParameterAccess().getImportedComplexTypeImportedComplexTypeParserRuleCall_0_2_0());
@@ -21883,11 +21903,11 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalMappingDsl.g:8809:3: ( (lv_name_3_0= RULE_ID ) )
-            // InternalMappingDsl.g:8810:4: (lv_name_3_0= RULE_ID )
+            // InternalMappingDsl.g:8817:3: ( (lv_name_3_0= RULE_ID ) )
+            // InternalMappingDsl.g:8818:4: (lv_name_3_0= RULE_ID )
             {
-            // InternalMappingDsl.g:8810:4: (lv_name_3_0= RULE_ID )
-            // InternalMappingDsl.g:8811:5: lv_name_3_0= RULE_ID
+            // InternalMappingDsl.g:8818:4: (lv_name_3_0= RULE_ID )
+            // InternalMappingDsl.g:8819:5: lv_name_3_0= RULE_ID
             {
             lv_name_3_0=(Token)match(input,RULE_ID,FOLLOW_2); 
 
@@ -21932,7 +21952,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRulePrimitiveValue"
-    // InternalMappingDsl.g:8831:1: entryRulePrimitiveValue returns [EObject current=null] : iv_rulePrimitiveValue= rulePrimitiveValue EOF ;
+    // InternalMappingDsl.g:8839:1: entryRulePrimitiveValue returns [EObject current=null] : iv_rulePrimitiveValue= rulePrimitiveValue EOF ;
     public final EObject entryRulePrimitiveValue() throws RecognitionException {
         EObject current = null;
 
@@ -21940,8 +21960,8 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalMappingDsl.g:8831:55: (iv_rulePrimitiveValue= rulePrimitiveValue EOF )
-            // InternalMappingDsl.g:8832:2: iv_rulePrimitiveValue= rulePrimitiveValue EOF
+            // InternalMappingDsl.g:8839:55: (iv_rulePrimitiveValue= rulePrimitiveValue EOF )
+            // InternalMappingDsl.g:8840:2: iv_rulePrimitiveValue= rulePrimitiveValue EOF
             {
              newCompositeNode(grammarAccess.getPrimitiveValueRule()); 
             pushFollow(FOLLOW_1);
@@ -21968,7 +21988,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePrimitiveValue"
-    // InternalMappingDsl.g:8838:1: rulePrimitiveValue returns [EObject current=null] : ( ( (lv_numericValue_0_0= RULE_BIG_DECIMAL ) ) | ( (lv_booleanValue_1_0= RULE_BOOLEAN ) ) | ( (lv_stringValue_2_0= RULE_STRING ) ) ) ;
+    // InternalMappingDsl.g:8846:1: rulePrimitiveValue returns [EObject current=null] : ( ( (lv_numericValue_0_0= RULE_BIG_DECIMAL ) ) | ( (lv_booleanValue_1_0= RULE_BOOLEAN ) ) | ( (lv_stringValue_2_0= RULE_STRING ) ) ) ;
     public final EObject rulePrimitiveValue() throws RecognitionException {
         EObject current = null;
 
@@ -21980,10 +22000,10 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:8844:2: ( ( ( (lv_numericValue_0_0= RULE_BIG_DECIMAL ) ) | ( (lv_booleanValue_1_0= RULE_BOOLEAN ) ) | ( (lv_stringValue_2_0= RULE_STRING ) ) ) )
-            // InternalMappingDsl.g:8845:2: ( ( (lv_numericValue_0_0= RULE_BIG_DECIMAL ) ) | ( (lv_booleanValue_1_0= RULE_BOOLEAN ) ) | ( (lv_stringValue_2_0= RULE_STRING ) ) )
+            // InternalMappingDsl.g:8852:2: ( ( ( (lv_numericValue_0_0= RULE_BIG_DECIMAL ) ) | ( (lv_booleanValue_1_0= RULE_BOOLEAN ) ) | ( (lv_stringValue_2_0= RULE_STRING ) ) ) )
+            // InternalMappingDsl.g:8853:2: ( ( (lv_numericValue_0_0= RULE_BIG_DECIMAL ) ) | ( (lv_booleanValue_1_0= RULE_BOOLEAN ) ) | ( (lv_stringValue_2_0= RULE_STRING ) ) )
             {
-            // InternalMappingDsl.g:8845:2: ( ( (lv_numericValue_0_0= RULE_BIG_DECIMAL ) ) | ( (lv_booleanValue_1_0= RULE_BOOLEAN ) ) | ( (lv_stringValue_2_0= RULE_STRING ) ) )
+            // InternalMappingDsl.g:8853:2: ( ( (lv_numericValue_0_0= RULE_BIG_DECIMAL ) ) | ( (lv_booleanValue_1_0= RULE_BOOLEAN ) ) | ( (lv_stringValue_2_0= RULE_STRING ) ) )
             int alt206=3;
             switch ( input.LA(1) ) {
             case RULE_BIG_DECIMAL:
@@ -22010,13 +22030,13 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             switch (alt206) {
                 case 1 :
-                    // InternalMappingDsl.g:8846:3: ( (lv_numericValue_0_0= RULE_BIG_DECIMAL ) )
+                    // InternalMappingDsl.g:8854:3: ( (lv_numericValue_0_0= RULE_BIG_DECIMAL ) )
                     {
-                    // InternalMappingDsl.g:8846:3: ( (lv_numericValue_0_0= RULE_BIG_DECIMAL ) )
-                    // InternalMappingDsl.g:8847:4: (lv_numericValue_0_0= RULE_BIG_DECIMAL )
+                    // InternalMappingDsl.g:8854:3: ( (lv_numericValue_0_0= RULE_BIG_DECIMAL ) )
+                    // InternalMappingDsl.g:8855:4: (lv_numericValue_0_0= RULE_BIG_DECIMAL )
                     {
-                    // InternalMappingDsl.g:8847:4: (lv_numericValue_0_0= RULE_BIG_DECIMAL )
-                    // InternalMappingDsl.g:8848:5: lv_numericValue_0_0= RULE_BIG_DECIMAL
+                    // InternalMappingDsl.g:8855:4: (lv_numericValue_0_0= RULE_BIG_DECIMAL )
+                    // InternalMappingDsl.g:8856:5: lv_numericValue_0_0= RULE_BIG_DECIMAL
                     {
                     lv_numericValue_0_0=(Token)match(input,RULE_BIG_DECIMAL,FOLLOW_2); 
 
@@ -22042,13 +22062,13 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalMappingDsl.g:8865:3: ( (lv_booleanValue_1_0= RULE_BOOLEAN ) )
+                    // InternalMappingDsl.g:8873:3: ( (lv_booleanValue_1_0= RULE_BOOLEAN ) )
                     {
-                    // InternalMappingDsl.g:8865:3: ( (lv_booleanValue_1_0= RULE_BOOLEAN ) )
-                    // InternalMappingDsl.g:8866:4: (lv_booleanValue_1_0= RULE_BOOLEAN )
+                    // InternalMappingDsl.g:8873:3: ( (lv_booleanValue_1_0= RULE_BOOLEAN ) )
+                    // InternalMappingDsl.g:8874:4: (lv_booleanValue_1_0= RULE_BOOLEAN )
                     {
-                    // InternalMappingDsl.g:8866:4: (lv_booleanValue_1_0= RULE_BOOLEAN )
-                    // InternalMappingDsl.g:8867:5: lv_booleanValue_1_0= RULE_BOOLEAN
+                    // InternalMappingDsl.g:8874:4: (lv_booleanValue_1_0= RULE_BOOLEAN )
+                    // InternalMappingDsl.g:8875:5: lv_booleanValue_1_0= RULE_BOOLEAN
                     {
                     lv_booleanValue_1_0=(Token)match(input,RULE_BOOLEAN,FOLLOW_2); 
 
@@ -22074,13 +22094,13 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalMappingDsl.g:8884:3: ( (lv_stringValue_2_0= RULE_STRING ) )
+                    // InternalMappingDsl.g:8892:3: ( (lv_stringValue_2_0= RULE_STRING ) )
                     {
-                    // InternalMappingDsl.g:8884:3: ( (lv_stringValue_2_0= RULE_STRING ) )
-                    // InternalMappingDsl.g:8885:4: (lv_stringValue_2_0= RULE_STRING )
+                    // InternalMappingDsl.g:8892:3: ( (lv_stringValue_2_0= RULE_STRING ) )
+                    // InternalMappingDsl.g:8893:4: (lv_stringValue_2_0= RULE_STRING )
                     {
-                    // InternalMappingDsl.g:8885:4: (lv_stringValue_2_0= RULE_STRING )
-                    // InternalMappingDsl.g:8886:5: lv_stringValue_2_0= RULE_STRING
+                    // InternalMappingDsl.g:8893:4: (lv_stringValue_2_0= RULE_STRING )
+                    // InternalMappingDsl.g:8894:5: lv_stringValue_2_0= RULE_STRING
                     {
                     lv_stringValue_2_0=(Token)match(input,RULE_STRING,FOLLOW_2); 
 
@@ -22128,7 +22148,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleImportedComplexType"
-    // InternalMappingDsl.g:8906:1: entryRuleImportedComplexType returns [EObject current=null] : iv_ruleImportedComplexType= ruleImportedComplexType EOF ;
+    // InternalMappingDsl.g:8914:1: entryRuleImportedComplexType returns [EObject current=null] : iv_ruleImportedComplexType= ruleImportedComplexType EOF ;
     public final EObject entryRuleImportedComplexType() throws RecognitionException {
         EObject current = null;
 
@@ -22136,8 +22156,8 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalMappingDsl.g:8906:60: (iv_ruleImportedComplexType= ruleImportedComplexType EOF )
-            // InternalMappingDsl.g:8907:2: iv_ruleImportedComplexType= ruleImportedComplexType EOF
+            // InternalMappingDsl.g:8914:60: (iv_ruleImportedComplexType= ruleImportedComplexType EOF )
+            // InternalMappingDsl.g:8915:2: iv_ruleImportedComplexType= ruleImportedComplexType EOF
             {
              newCompositeNode(grammarAccess.getImportedComplexTypeRule()); 
             pushFollow(FOLLOW_1);
@@ -22164,7 +22184,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleImportedComplexType"
-    // InternalMappingDsl.g:8913:1: ruleImportedComplexType returns [EObject current=null] : ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' ( ( ruleQualifiedName ) ) ) ;
+    // InternalMappingDsl.g:8921:1: ruleImportedComplexType returns [EObject current=null] : ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' ( ( ruleQualifiedName ) ) ) ;
     public final EObject ruleImportedComplexType() throws RecognitionException {
         EObject current = null;
 
@@ -22175,17 +22195,17 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:8919:2: ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' ( ( ruleQualifiedName ) ) ) )
-            // InternalMappingDsl.g:8920:2: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' ( ( ruleQualifiedName ) ) )
+            // InternalMappingDsl.g:8927:2: ( ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' ( ( ruleQualifiedName ) ) ) )
+            // InternalMappingDsl.g:8928:2: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' ( ( ruleQualifiedName ) ) )
             {
-            // InternalMappingDsl.g:8920:2: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' ( ( ruleQualifiedName ) ) )
-            // InternalMappingDsl.g:8921:3: ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' ( ( ruleQualifiedName ) )
+            // InternalMappingDsl.g:8928:2: ( ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' ( ( ruleQualifiedName ) ) )
+            // InternalMappingDsl.g:8929:3: ( (otherlv_0= RULE_ID ) ) otherlv_1= '::' ( ( ruleQualifiedName ) )
             {
-            // InternalMappingDsl.g:8921:3: ( (otherlv_0= RULE_ID ) )
-            // InternalMappingDsl.g:8922:4: (otherlv_0= RULE_ID )
+            // InternalMappingDsl.g:8929:3: ( (otherlv_0= RULE_ID ) )
+            // InternalMappingDsl.g:8930:4: (otherlv_0= RULE_ID )
             {
-            // InternalMappingDsl.g:8922:4: (otherlv_0= RULE_ID )
-            // InternalMappingDsl.g:8923:5: otherlv_0= RULE_ID
+            // InternalMappingDsl.g:8930:4: (otherlv_0= RULE_ID )
+            // InternalMappingDsl.g:8931:5: otherlv_0= RULE_ID
             {
 
             					if (current==null) {
@@ -22202,15 +22222,15 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,17,FOLLOW_7); 
+            otherlv_1=(Token)match(input,18,FOLLOW_7); 
 
             			newLeafNode(otherlv_1, grammarAccess.getImportedComplexTypeAccess().getColonColonKeyword_1());
             		
-            // InternalMappingDsl.g:8938:3: ( ( ruleQualifiedName ) )
-            // InternalMappingDsl.g:8939:4: ( ruleQualifiedName )
+            // InternalMappingDsl.g:8946:3: ( ( ruleQualifiedName ) )
+            // InternalMappingDsl.g:8947:4: ( ruleQualifiedName )
             {
-            // InternalMappingDsl.g:8939:4: ( ruleQualifiedName )
-            // InternalMappingDsl.g:8940:5: ruleQualifiedName
+            // InternalMappingDsl.g:8947:4: ( ruleQualifiedName )
+            // InternalMappingDsl.g:8948:5: ruleQualifiedName
             {
 
             					if (current==null) {
@@ -22257,7 +22277,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRulePrimitiveType"
-    // InternalMappingDsl.g:8958:1: entryRulePrimitiveType returns [EObject current=null] : iv_rulePrimitiveType= rulePrimitiveType EOF ;
+    // InternalMappingDsl.g:8966:1: entryRulePrimitiveType returns [EObject current=null] : iv_rulePrimitiveType= rulePrimitiveType EOF ;
     public final EObject entryRulePrimitiveType() throws RecognitionException {
         EObject current = null;
 
@@ -22265,8 +22285,8 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalMappingDsl.g:8958:54: (iv_rulePrimitiveType= rulePrimitiveType EOF )
-            // InternalMappingDsl.g:8959:2: iv_rulePrimitiveType= rulePrimitiveType EOF
+            // InternalMappingDsl.g:8966:54: (iv_rulePrimitiveType= rulePrimitiveType EOF )
+            // InternalMappingDsl.g:8967:2: iv_rulePrimitiveType= rulePrimitiveType EOF
             {
              newCompositeNode(grammarAccess.getPrimitiveTypeRule()); 
             pushFollow(FOLLOW_1);
@@ -22293,7 +22313,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePrimitiveType"
-    // InternalMappingDsl.g:8965:1: rulePrimitiveType returns [EObject current=null] : ( ( () otherlv_1= 'boolean' ) | ( () otherlv_3= 'byte' ) | ( () otherlv_5= 'char' ) | ( () otherlv_7= 'date' ) | ( () otherlv_9= 'double' ) | ( () otherlv_11= 'float' ) | ( () otherlv_13= 'int' ) | ( () otherlv_15= 'long' ) | ( () otherlv_17= 'short' ) | ( () otherlv_19= 'string' ) | ( () otherlv_21= 'unspecified' ) ) ;
+    // InternalMappingDsl.g:8973:1: rulePrimitiveType returns [EObject current=null] : ( ( () otherlv_1= 'boolean' ) | ( () otherlv_3= 'byte' ) | ( () otherlv_5= 'char' ) | ( () otherlv_7= 'date' ) | ( () otherlv_9= 'double' ) | ( () otherlv_11= 'float' ) | ( () otherlv_13= 'int' ) | ( () otherlv_15= 'long' ) | ( () otherlv_17= 'short' ) | ( () otherlv_19= 'string' ) | ( () otherlv_21= 'unspecified' ) ) ;
     public final EObject rulePrimitiveType() throws RecognitionException {
         EObject current = null;
 
@@ -22313,63 +22333,63 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:8971:2: ( ( ( () otherlv_1= 'boolean' ) | ( () otherlv_3= 'byte' ) | ( () otherlv_5= 'char' ) | ( () otherlv_7= 'date' ) | ( () otherlv_9= 'double' ) | ( () otherlv_11= 'float' ) | ( () otherlv_13= 'int' ) | ( () otherlv_15= 'long' ) | ( () otherlv_17= 'short' ) | ( () otherlv_19= 'string' ) | ( () otherlv_21= 'unspecified' ) ) )
-            // InternalMappingDsl.g:8972:2: ( ( () otherlv_1= 'boolean' ) | ( () otherlv_3= 'byte' ) | ( () otherlv_5= 'char' ) | ( () otherlv_7= 'date' ) | ( () otherlv_9= 'double' ) | ( () otherlv_11= 'float' ) | ( () otherlv_13= 'int' ) | ( () otherlv_15= 'long' ) | ( () otherlv_17= 'short' ) | ( () otherlv_19= 'string' ) | ( () otherlv_21= 'unspecified' ) )
+            // InternalMappingDsl.g:8979:2: ( ( ( () otherlv_1= 'boolean' ) | ( () otherlv_3= 'byte' ) | ( () otherlv_5= 'char' ) | ( () otherlv_7= 'date' ) | ( () otherlv_9= 'double' ) | ( () otherlv_11= 'float' ) | ( () otherlv_13= 'int' ) | ( () otherlv_15= 'long' ) | ( () otherlv_17= 'short' ) | ( () otherlv_19= 'string' ) | ( () otherlv_21= 'unspecified' ) ) )
+            // InternalMappingDsl.g:8980:2: ( ( () otherlv_1= 'boolean' ) | ( () otherlv_3= 'byte' ) | ( () otherlv_5= 'char' ) | ( () otherlv_7= 'date' ) | ( () otherlv_9= 'double' ) | ( () otherlv_11= 'float' ) | ( () otherlv_13= 'int' ) | ( () otherlv_15= 'long' ) | ( () otherlv_17= 'short' ) | ( () otherlv_19= 'string' ) | ( () otherlv_21= 'unspecified' ) )
             {
-            // InternalMappingDsl.g:8972:2: ( ( () otherlv_1= 'boolean' ) | ( () otherlv_3= 'byte' ) | ( () otherlv_5= 'char' ) | ( () otherlv_7= 'date' ) | ( () otherlv_9= 'double' ) | ( () otherlv_11= 'float' ) | ( () otherlv_13= 'int' ) | ( () otherlv_15= 'long' ) | ( () otherlv_17= 'short' ) | ( () otherlv_19= 'string' ) | ( () otherlv_21= 'unspecified' ) )
+            // InternalMappingDsl.g:8980:2: ( ( () otherlv_1= 'boolean' ) | ( () otherlv_3= 'byte' ) | ( () otherlv_5= 'char' ) | ( () otherlv_7= 'date' ) | ( () otherlv_9= 'double' ) | ( () otherlv_11= 'float' ) | ( () otherlv_13= 'int' ) | ( () otherlv_15= 'long' ) | ( () otherlv_17= 'short' ) | ( () otherlv_19= 'string' ) | ( () otherlv_21= 'unspecified' ) )
             int alt207=11;
             switch ( input.LA(1) ) {
-            case 122:
+            case 123:
                 {
                 alt207=1;
                 }
                 break;
-            case 123:
+            case 124:
                 {
                 alt207=2;
                 }
                 break;
-            case 124:
+            case 125:
                 {
                 alt207=3;
                 }
                 break;
-            case 125:
+            case 126:
                 {
                 alt207=4;
                 }
                 break;
-            case 126:
+            case 127:
                 {
                 alt207=5;
                 }
                 break;
-            case 127:
+            case 128:
                 {
                 alt207=6;
                 }
                 break;
-            case 128:
+            case 129:
                 {
                 alt207=7;
                 }
                 break;
-            case 129:
+            case 130:
                 {
                 alt207=8;
                 }
                 break;
-            case 130:
+            case 131:
                 {
                 alt207=9;
                 }
                 break;
-            case 131:
+            case 132:
                 {
                 alt207=10;
                 }
                 break;
-            case 138:
+            case 139:
                 {
                 alt207=11;
                 }
@@ -22383,13 +22403,13 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             switch (alt207) {
                 case 1 :
-                    // InternalMappingDsl.g:8973:3: ( () otherlv_1= 'boolean' )
+                    // InternalMappingDsl.g:8981:3: ( () otherlv_1= 'boolean' )
                     {
-                    // InternalMappingDsl.g:8973:3: ( () otherlv_1= 'boolean' )
-                    // InternalMappingDsl.g:8974:4: () otherlv_1= 'boolean'
+                    // InternalMappingDsl.g:8981:3: ( () otherlv_1= 'boolean' )
+                    // InternalMappingDsl.g:8982:4: () otherlv_1= 'boolean'
                     {
-                    // InternalMappingDsl.g:8974:4: ()
-                    // InternalMappingDsl.g:8975:5: 
+                    // InternalMappingDsl.g:8982:4: ()
+                    // InternalMappingDsl.g:8983:5: 
                     {
 
                     					current = forceCreateModelElement(
@@ -22399,7 +22419,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_1=(Token)match(input,122,FOLLOW_2); 
+                    otherlv_1=(Token)match(input,123,FOLLOW_2); 
 
                     				newLeafNode(otherlv_1, grammarAccess.getPrimitiveTypeAccess().getBooleanKeyword_0_1());
                     			
@@ -22410,13 +22430,13 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalMappingDsl.g:8987:3: ( () otherlv_3= 'byte' )
+                    // InternalMappingDsl.g:8995:3: ( () otherlv_3= 'byte' )
                     {
-                    // InternalMappingDsl.g:8987:3: ( () otherlv_3= 'byte' )
-                    // InternalMappingDsl.g:8988:4: () otherlv_3= 'byte'
+                    // InternalMappingDsl.g:8995:3: ( () otherlv_3= 'byte' )
+                    // InternalMappingDsl.g:8996:4: () otherlv_3= 'byte'
                     {
-                    // InternalMappingDsl.g:8988:4: ()
-                    // InternalMappingDsl.g:8989:5: 
+                    // InternalMappingDsl.g:8996:4: ()
+                    // InternalMappingDsl.g:8997:5: 
                     {
 
                     					current = forceCreateModelElement(
@@ -22426,7 +22446,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_3=(Token)match(input,123,FOLLOW_2); 
+                    otherlv_3=(Token)match(input,124,FOLLOW_2); 
 
                     				newLeafNode(otherlv_3, grammarAccess.getPrimitiveTypeAccess().getByteKeyword_1_1());
                     			
@@ -22437,13 +22457,13 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalMappingDsl.g:9001:3: ( () otherlv_5= 'char' )
+                    // InternalMappingDsl.g:9009:3: ( () otherlv_5= 'char' )
                     {
-                    // InternalMappingDsl.g:9001:3: ( () otherlv_5= 'char' )
-                    // InternalMappingDsl.g:9002:4: () otherlv_5= 'char'
+                    // InternalMappingDsl.g:9009:3: ( () otherlv_5= 'char' )
+                    // InternalMappingDsl.g:9010:4: () otherlv_5= 'char'
                     {
-                    // InternalMappingDsl.g:9002:4: ()
-                    // InternalMappingDsl.g:9003:5: 
+                    // InternalMappingDsl.g:9010:4: ()
+                    // InternalMappingDsl.g:9011:5: 
                     {
 
                     					current = forceCreateModelElement(
@@ -22453,7 +22473,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_5=(Token)match(input,124,FOLLOW_2); 
+                    otherlv_5=(Token)match(input,125,FOLLOW_2); 
 
                     				newLeafNode(otherlv_5, grammarAccess.getPrimitiveTypeAccess().getCharKeyword_2_1());
                     			
@@ -22464,13 +22484,13 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalMappingDsl.g:9015:3: ( () otherlv_7= 'date' )
+                    // InternalMappingDsl.g:9023:3: ( () otherlv_7= 'date' )
                     {
-                    // InternalMappingDsl.g:9015:3: ( () otherlv_7= 'date' )
-                    // InternalMappingDsl.g:9016:4: () otherlv_7= 'date'
+                    // InternalMappingDsl.g:9023:3: ( () otherlv_7= 'date' )
+                    // InternalMappingDsl.g:9024:4: () otherlv_7= 'date'
                     {
-                    // InternalMappingDsl.g:9016:4: ()
-                    // InternalMappingDsl.g:9017:5: 
+                    // InternalMappingDsl.g:9024:4: ()
+                    // InternalMappingDsl.g:9025:5: 
                     {
 
                     					current = forceCreateModelElement(
@@ -22480,7 +22500,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_7=(Token)match(input,125,FOLLOW_2); 
+                    otherlv_7=(Token)match(input,126,FOLLOW_2); 
 
                     				newLeafNode(otherlv_7, grammarAccess.getPrimitiveTypeAccess().getDateKeyword_3_1());
                     			
@@ -22491,13 +22511,13 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalMappingDsl.g:9029:3: ( () otherlv_9= 'double' )
+                    // InternalMappingDsl.g:9037:3: ( () otherlv_9= 'double' )
                     {
-                    // InternalMappingDsl.g:9029:3: ( () otherlv_9= 'double' )
-                    // InternalMappingDsl.g:9030:4: () otherlv_9= 'double'
+                    // InternalMappingDsl.g:9037:3: ( () otherlv_9= 'double' )
+                    // InternalMappingDsl.g:9038:4: () otherlv_9= 'double'
                     {
-                    // InternalMappingDsl.g:9030:4: ()
-                    // InternalMappingDsl.g:9031:5: 
+                    // InternalMappingDsl.g:9038:4: ()
+                    // InternalMappingDsl.g:9039:5: 
                     {
 
                     					current = forceCreateModelElement(
@@ -22507,7 +22527,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_9=(Token)match(input,126,FOLLOW_2); 
+                    otherlv_9=(Token)match(input,127,FOLLOW_2); 
 
                     				newLeafNode(otherlv_9, grammarAccess.getPrimitiveTypeAccess().getDoubleKeyword_4_1());
                     			
@@ -22518,13 +22538,13 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalMappingDsl.g:9043:3: ( () otherlv_11= 'float' )
+                    // InternalMappingDsl.g:9051:3: ( () otherlv_11= 'float' )
                     {
-                    // InternalMappingDsl.g:9043:3: ( () otherlv_11= 'float' )
-                    // InternalMappingDsl.g:9044:4: () otherlv_11= 'float'
+                    // InternalMappingDsl.g:9051:3: ( () otherlv_11= 'float' )
+                    // InternalMappingDsl.g:9052:4: () otherlv_11= 'float'
                     {
-                    // InternalMappingDsl.g:9044:4: ()
-                    // InternalMappingDsl.g:9045:5: 
+                    // InternalMappingDsl.g:9052:4: ()
+                    // InternalMappingDsl.g:9053:5: 
                     {
 
                     					current = forceCreateModelElement(
@@ -22534,7 +22554,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_11=(Token)match(input,127,FOLLOW_2); 
+                    otherlv_11=(Token)match(input,128,FOLLOW_2); 
 
                     				newLeafNode(otherlv_11, grammarAccess.getPrimitiveTypeAccess().getFloatKeyword_5_1());
                     			
@@ -22545,13 +22565,13 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // InternalMappingDsl.g:9057:3: ( () otherlv_13= 'int' )
+                    // InternalMappingDsl.g:9065:3: ( () otherlv_13= 'int' )
                     {
-                    // InternalMappingDsl.g:9057:3: ( () otherlv_13= 'int' )
-                    // InternalMappingDsl.g:9058:4: () otherlv_13= 'int'
+                    // InternalMappingDsl.g:9065:3: ( () otherlv_13= 'int' )
+                    // InternalMappingDsl.g:9066:4: () otherlv_13= 'int'
                     {
-                    // InternalMappingDsl.g:9058:4: ()
-                    // InternalMappingDsl.g:9059:5: 
+                    // InternalMappingDsl.g:9066:4: ()
+                    // InternalMappingDsl.g:9067:5: 
                     {
 
                     					current = forceCreateModelElement(
@@ -22561,7 +22581,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_13=(Token)match(input,128,FOLLOW_2); 
+                    otherlv_13=(Token)match(input,129,FOLLOW_2); 
 
                     				newLeafNode(otherlv_13, grammarAccess.getPrimitiveTypeAccess().getIntKeyword_6_1());
                     			
@@ -22572,13 +22592,13 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 8 :
-                    // InternalMappingDsl.g:9071:3: ( () otherlv_15= 'long' )
+                    // InternalMappingDsl.g:9079:3: ( () otherlv_15= 'long' )
                     {
-                    // InternalMappingDsl.g:9071:3: ( () otherlv_15= 'long' )
-                    // InternalMappingDsl.g:9072:4: () otherlv_15= 'long'
+                    // InternalMappingDsl.g:9079:3: ( () otherlv_15= 'long' )
+                    // InternalMappingDsl.g:9080:4: () otherlv_15= 'long'
                     {
-                    // InternalMappingDsl.g:9072:4: ()
-                    // InternalMappingDsl.g:9073:5: 
+                    // InternalMappingDsl.g:9080:4: ()
+                    // InternalMappingDsl.g:9081:5: 
                     {
 
                     					current = forceCreateModelElement(
@@ -22588,7 +22608,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_15=(Token)match(input,129,FOLLOW_2); 
+                    otherlv_15=(Token)match(input,130,FOLLOW_2); 
 
                     				newLeafNode(otherlv_15, grammarAccess.getPrimitiveTypeAccess().getLongKeyword_7_1());
                     			
@@ -22599,13 +22619,13 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 9 :
-                    // InternalMappingDsl.g:9085:3: ( () otherlv_17= 'short' )
+                    // InternalMappingDsl.g:9093:3: ( () otherlv_17= 'short' )
                     {
-                    // InternalMappingDsl.g:9085:3: ( () otherlv_17= 'short' )
-                    // InternalMappingDsl.g:9086:4: () otherlv_17= 'short'
+                    // InternalMappingDsl.g:9093:3: ( () otherlv_17= 'short' )
+                    // InternalMappingDsl.g:9094:4: () otherlv_17= 'short'
                     {
-                    // InternalMappingDsl.g:9086:4: ()
-                    // InternalMappingDsl.g:9087:5: 
+                    // InternalMappingDsl.g:9094:4: ()
+                    // InternalMappingDsl.g:9095:5: 
                     {
 
                     					current = forceCreateModelElement(
@@ -22615,7 +22635,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_17=(Token)match(input,130,FOLLOW_2); 
+                    otherlv_17=(Token)match(input,131,FOLLOW_2); 
 
                     				newLeafNode(otherlv_17, grammarAccess.getPrimitiveTypeAccess().getShortKeyword_8_1());
                     			
@@ -22626,13 +22646,13 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 10 :
-                    // InternalMappingDsl.g:9099:3: ( () otherlv_19= 'string' )
+                    // InternalMappingDsl.g:9107:3: ( () otherlv_19= 'string' )
                     {
-                    // InternalMappingDsl.g:9099:3: ( () otherlv_19= 'string' )
-                    // InternalMappingDsl.g:9100:4: () otherlv_19= 'string'
+                    // InternalMappingDsl.g:9107:3: ( () otherlv_19= 'string' )
+                    // InternalMappingDsl.g:9108:4: () otherlv_19= 'string'
                     {
-                    // InternalMappingDsl.g:9100:4: ()
-                    // InternalMappingDsl.g:9101:5: 
+                    // InternalMappingDsl.g:9108:4: ()
+                    // InternalMappingDsl.g:9109:5: 
                     {
 
                     					current = forceCreateModelElement(
@@ -22642,7 +22662,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_19=(Token)match(input,131,FOLLOW_2); 
+                    otherlv_19=(Token)match(input,132,FOLLOW_2); 
 
                     				newLeafNode(otherlv_19, grammarAccess.getPrimitiveTypeAccess().getStringKeyword_9_1());
                     			
@@ -22653,13 +22673,13 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 11 :
-                    // InternalMappingDsl.g:9113:3: ( () otherlv_21= 'unspecified' )
+                    // InternalMappingDsl.g:9121:3: ( () otherlv_21= 'unspecified' )
                     {
-                    // InternalMappingDsl.g:9113:3: ( () otherlv_21= 'unspecified' )
-                    // InternalMappingDsl.g:9114:4: () otherlv_21= 'unspecified'
+                    // InternalMappingDsl.g:9121:3: ( () otherlv_21= 'unspecified' )
+                    // InternalMappingDsl.g:9122:4: () otherlv_21= 'unspecified'
                     {
-                    // InternalMappingDsl.g:9114:4: ()
-                    // InternalMappingDsl.g:9115:5: 
+                    // InternalMappingDsl.g:9122:4: ()
+                    // InternalMappingDsl.g:9123:5: 
                     {
 
                     					current = forceCreateModelElement(
@@ -22669,7 +22689,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_21=(Token)match(input,138,FOLLOW_2); 
+                    otherlv_21=(Token)match(input,139,FOLLOW_2); 
 
                     				newLeafNode(otherlv_21, grammarAccess.getPrimitiveTypeAccess().getUnspecifiedKeyword_10_1());
                     			
@@ -22702,7 +22722,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleQualifiedName"
-    // InternalMappingDsl.g:9130:1: entryRuleQualifiedName returns [String current=null] : iv_ruleQualifiedName= ruleQualifiedName EOF ;
+    // InternalMappingDsl.g:9138:1: entryRuleQualifiedName returns [String current=null] : iv_ruleQualifiedName= ruleQualifiedName EOF ;
     public final String entryRuleQualifiedName() throws RecognitionException {
         String current = null;
 
@@ -22710,8 +22730,8 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalMappingDsl.g:9130:53: (iv_ruleQualifiedName= ruleQualifiedName EOF )
-            // InternalMappingDsl.g:9131:2: iv_ruleQualifiedName= ruleQualifiedName EOF
+            // InternalMappingDsl.g:9138:53: (iv_ruleQualifiedName= ruleQualifiedName EOF )
+            // InternalMappingDsl.g:9139:2: iv_ruleQualifiedName= ruleQualifiedName EOF
             {
              newCompositeNode(grammarAccess.getQualifiedNameRule()); 
             pushFollow(FOLLOW_1);
@@ -22738,7 +22758,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleQualifiedName"
-    // InternalMappingDsl.g:9137:1: ruleQualifiedName returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* ) ;
+    // InternalMappingDsl.g:9145:1: ruleQualifiedName returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* ) ;
     public final AntlrDatatypeRuleToken ruleQualifiedName() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -22750,11 +22770,11 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:9143:2: ( (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* ) )
-            // InternalMappingDsl.g:9144:2: (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* )
+            // InternalMappingDsl.g:9151:2: ( (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* ) )
+            // InternalMappingDsl.g:9152:2: (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* )
             {
-            // InternalMappingDsl.g:9144:2: (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* )
-            // InternalMappingDsl.g:9145:3: this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )*
+            // InternalMappingDsl.g:9152:2: (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* )
+            // InternalMappingDsl.g:9153:3: this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )*
             {
             this_ID_0=(Token)match(input,RULE_ID,FOLLOW_142); 
 
@@ -22763,22 +22783,22 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             			newLeafNode(this_ID_0, grammarAccess.getQualifiedNameAccess().getIDTerminalRuleCall_0());
             		
-            // InternalMappingDsl.g:9152:3: (kw= '.' this_ID_2= RULE_ID )*
+            // InternalMappingDsl.g:9160:3: (kw= '.' this_ID_2= RULE_ID )*
             loop208:
             do {
                 int alt208=2;
                 int LA208_0 = input.LA(1);
 
-                if ( (LA208_0==29) ) {
+                if ( (LA208_0==30) ) {
                     alt208=1;
                 }
 
 
                 switch (alt208) {
             	case 1 :
-            	    // InternalMappingDsl.g:9153:4: kw= '.' this_ID_2= RULE_ID
+            	    // InternalMappingDsl.g:9161:4: kw= '.' this_ID_2= RULE_ID
             	    {
-            	    kw=(Token)match(input,29,FOLLOW_7); 
+            	    kw=(Token)match(input,30,FOLLOW_7); 
 
             	    				current.merge(kw);
             	    				newLeafNode(kw, grammarAccess.getQualifiedNameAccess().getFullStopKeyword_1_0());
@@ -22822,7 +22842,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleImportType"
-    // InternalMappingDsl.g:9170:1: ruleImportType returns [Enumerator current=null] : ( (enumLiteral_0= 'technology' ) | (enumLiteral_1= 'microservices' ) ) ;
+    // InternalMappingDsl.g:9178:1: ruleImportType returns [Enumerator current=null] : ( (enumLiteral_0= 'technology' ) | (enumLiteral_1= 'microservices' ) ) ;
     public final Enumerator ruleImportType() throws RecognitionException {
         Enumerator current = null;
 
@@ -22833,17 +22853,17 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:9176:2: ( ( (enumLiteral_0= 'technology' ) | (enumLiteral_1= 'microservices' ) ) )
-            // InternalMappingDsl.g:9177:2: ( (enumLiteral_0= 'technology' ) | (enumLiteral_1= 'microservices' ) )
+            // InternalMappingDsl.g:9184:2: ( ( (enumLiteral_0= 'technology' ) | (enumLiteral_1= 'microservices' ) ) )
+            // InternalMappingDsl.g:9185:2: ( (enumLiteral_0= 'technology' ) | (enumLiteral_1= 'microservices' ) )
             {
-            // InternalMappingDsl.g:9177:2: ( (enumLiteral_0= 'technology' ) | (enumLiteral_1= 'microservices' ) )
+            // InternalMappingDsl.g:9185:2: ( (enumLiteral_0= 'technology' ) | (enumLiteral_1= 'microservices' ) )
             int alt209=2;
             int LA209_0 = input.LA(1);
 
-            if ( (LA209_0==47) ) {
+            if ( (LA209_0==48) ) {
                 alt209=1;
             }
-            else if ( (LA209_0==44) ) {
+            else if ( (LA209_0==45) ) {
                 alt209=2;
             }
             else {
@@ -22854,12 +22874,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             }
             switch (alt209) {
                 case 1 :
-                    // InternalMappingDsl.g:9178:3: (enumLiteral_0= 'technology' )
+                    // InternalMappingDsl.g:9186:3: (enumLiteral_0= 'technology' )
                     {
-                    // InternalMappingDsl.g:9178:3: (enumLiteral_0= 'technology' )
-                    // InternalMappingDsl.g:9179:4: enumLiteral_0= 'technology'
+                    // InternalMappingDsl.g:9186:3: (enumLiteral_0= 'technology' )
+                    // InternalMappingDsl.g:9187:4: enumLiteral_0= 'technology'
                     {
-                    enumLiteral_0=(Token)match(input,47,FOLLOW_2); 
+                    enumLiteral_0=(Token)match(input,48,FOLLOW_2); 
 
                     				current = grammarAccess.getImportTypeAccess().getTECHNOLOGYEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_0, grammarAccess.getImportTypeAccess().getTECHNOLOGYEnumLiteralDeclaration_0());
@@ -22871,12 +22891,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalMappingDsl.g:9186:3: (enumLiteral_1= 'microservices' )
+                    // InternalMappingDsl.g:9194:3: (enumLiteral_1= 'microservices' )
                     {
-                    // InternalMappingDsl.g:9186:3: (enumLiteral_1= 'microservices' )
-                    // InternalMappingDsl.g:9187:4: enumLiteral_1= 'microservices'
+                    // InternalMappingDsl.g:9194:3: (enumLiteral_1= 'microservices' )
+                    // InternalMappingDsl.g:9195:4: enumLiteral_1= 'microservices'
                     {
-                    enumLiteral_1=(Token)match(input,44,FOLLOW_2); 
+                    enumLiteral_1=(Token)match(input,45,FOLLOW_2); 
 
                     				current = grammarAccess.getImportTypeAccess().getMICROSERVICESEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_1, grammarAccess.getImportTypeAccess().getMICROSERVICESEnumLiteralDeclaration_1());
@@ -22910,7 +22930,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleVisibility"
-    // InternalMappingDsl.g:9197:1: ruleVisibility returns [Enumerator current=null] : ( (enumLiteral_0= 'internal' ) | (enumLiteral_1= 'architecture' ) | (enumLiteral_2= 'public' ) ) ;
+    // InternalMappingDsl.g:9205:1: ruleVisibility returns [Enumerator current=null] : ( (enumLiteral_0= 'internal' ) | (enumLiteral_1= 'architecture' ) | (enumLiteral_2= 'public' ) ) ;
     public final Enumerator ruleVisibility() throws RecognitionException {
         Enumerator current = null;
 
@@ -22922,23 +22942,23 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:9203:2: ( ( (enumLiteral_0= 'internal' ) | (enumLiteral_1= 'architecture' ) | (enumLiteral_2= 'public' ) ) )
-            // InternalMappingDsl.g:9204:2: ( (enumLiteral_0= 'internal' ) | (enumLiteral_1= 'architecture' ) | (enumLiteral_2= 'public' ) )
+            // InternalMappingDsl.g:9211:2: ( ( (enumLiteral_0= 'internal' ) | (enumLiteral_1= 'architecture' ) | (enumLiteral_2= 'public' ) ) )
+            // InternalMappingDsl.g:9212:2: ( (enumLiteral_0= 'internal' ) | (enumLiteral_1= 'architecture' ) | (enumLiteral_2= 'public' ) )
             {
-            // InternalMappingDsl.g:9204:2: ( (enumLiteral_0= 'internal' ) | (enumLiteral_1= 'architecture' ) | (enumLiteral_2= 'public' ) )
+            // InternalMappingDsl.g:9212:2: ( (enumLiteral_0= 'internal' ) | (enumLiteral_1= 'architecture' ) | (enumLiteral_2= 'public' ) )
             int alt210=3;
             switch ( input.LA(1) ) {
-            case 132:
+            case 133:
                 {
                 alt210=1;
                 }
                 break;
-            case 133:
+            case 134:
                 {
                 alt210=2;
                 }
                 break;
-            case 134:
+            case 135:
                 {
                 alt210=3;
                 }
@@ -22952,12 +22972,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             switch (alt210) {
                 case 1 :
-                    // InternalMappingDsl.g:9205:3: (enumLiteral_0= 'internal' )
+                    // InternalMappingDsl.g:9213:3: (enumLiteral_0= 'internal' )
                     {
-                    // InternalMappingDsl.g:9205:3: (enumLiteral_0= 'internal' )
-                    // InternalMappingDsl.g:9206:4: enumLiteral_0= 'internal'
+                    // InternalMappingDsl.g:9213:3: (enumLiteral_0= 'internal' )
+                    // InternalMappingDsl.g:9214:4: enumLiteral_0= 'internal'
                     {
-                    enumLiteral_0=(Token)match(input,132,FOLLOW_2); 
+                    enumLiteral_0=(Token)match(input,133,FOLLOW_2); 
 
                     				current = grammarAccess.getVisibilityAccess().getINTERNALEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_0, grammarAccess.getVisibilityAccess().getINTERNALEnumLiteralDeclaration_0());
@@ -22969,12 +22989,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalMappingDsl.g:9213:3: (enumLiteral_1= 'architecture' )
+                    // InternalMappingDsl.g:9221:3: (enumLiteral_1= 'architecture' )
                     {
-                    // InternalMappingDsl.g:9213:3: (enumLiteral_1= 'architecture' )
-                    // InternalMappingDsl.g:9214:4: enumLiteral_1= 'architecture'
+                    // InternalMappingDsl.g:9221:3: (enumLiteral_1= 'architecture' )
+                    // InternalMappingDsl.g:9222:4: enumLiteral_1= 'architecture'
                     {
-                    enumLiteral_1=(Token)match(input,133,FOLLOW_2); 
+                    enumLiteral_1=(Token)match(input,134,FOLLOW_2); 
 
                     				current = grammarAccess.getVisibilityAccess().getARCHITECTUREEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_1, grammarAccess.getVisibilityAccess().getARCHITECTUREEnumLiteralDeclaration_1());
@@ -22986,12 +23006,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalMappingDsl.g:9221:3: (enumLiteral_2= 'public' )
+                    // InternalMappingDsl.g:9229:3: (enumLiteral_2= 'public' )
                     {
-                    // InternalMappingDsl.g:9221:3: (enumLiteral_2= 'public' )
-                    // InternalMappingDsl.g:9222:4: enumLiteral_2= 'public'
+                    // InternalMappingDsl.g:9229:3: (enumLiteral_2= 'public' )
+                    // InternalMappingDsl.g:9230:4: enumLiteral_2= 'public'
                     {
-                    enumLiteral_2=(Token)match(input,134,FOLLOW_2); 
+                    enumLiteral_2=(Token)match(input,135,FOLLOW_2); 
 
                     				current = grammarAccess.getVisibilityAccess().getPUBLICEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_2, grammarAccess.getVisibilityAccess().getPUBLICEnumLiteralDeclaration_2());
@@ -23025,7 +23045,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleMicroserviceType"
-    // InternalMappingDsl.g:9232:1: ruleMicroserviceType returns [Enumerator current=null] : ( (enumLiteral_0= 'functional' ) | (enumLiteral_1= 'utility' ) | (enumLiteral_2= 'infrastructure' ) ) ;
+    // InternalMappingDsl.g:9240:1: ruleMicroserviceType returns [Enumerator current=null] : ( (enumLiteral_0= 'functional' ) | (enumLiteral_1= 'utility' ) | (enumLiteral_2= 'infrastructure' ) ) ;
     public final Enumerator ruleMicroserviceType() throws RecognitionException {
         Enumerator current = null;
 
@@ -23037,23 +23057,23 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:9238:2: ( ( (enumLiteral_0= 'functional' ) | (enumLiteral_1= 'utility' ) | (enumLiteral_2= 'infrastructure' ) ) )
-            // InternalMappingDsl.g:9239:2: ( (enumLiteral_0= 'functional' ) | (enumLiteral_1= 'utility' ) | (enumLiteral_2= 'infrastructure' ) )
+            // InternalMappingDsl.g:9246:2: ( ( (enumLiteral_0= 'functional' ) | (enumLiteral_1= 'utility' ) | (enumLiteral_2= 'infrastructure' ) ) )
+            // InternalMappingDsl.g:9247:2: ( (enumLiteral_0= 'functional' ) | (enumLiteral_1= 'utility' ) | (enumLiteral_2= 'infrastructure' ) )
             {
-            // InternalMappingDsl.g:9239:2: ( (enumLiteral_0= 'functional' ) | (enumLiteral_1= 'utility' ) | (enumLiteral_2= 'infrastructure' ) )
+            // InternalMappingDsl.g:9247:2: ( (enumLiteral_0= 'functional' ) | (enumLiteral_1= 'utility' ) | (enumLiteral_2= 'infrastructure' ) )
             int alt211=3;
             switch ( input.LA(1) ) {
-            case 136:
+            case 137:
                 {
                 alt211=1;
                 }
                 break;
-            case 137:
+            case 138:
                 {
                 alt211=2;
                 }
                 break;
-            case 68:
+            case 69:
                 {
                 alt211=3;
                 }
@@ -23067,12 +23087,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             switch (alt211) {
                 case 1 :
-                    // InternalMappingDsl.g:9240:3: (enumLiteral_0= 'functional' )
+                    // InternalMappingDsl.g:9248:3: (enumLiteral_0= 'functional' )
                     {
-                    // InternalMappingDsl.g:9240:3: (enumLiteral_0= 'functional' )
-                    // InternalMappingDsl.g:9241:4: enumLiteral_0= 'functional'
+                    // InternalMappingDsl.g:9248:3: (enumLiteral_0= 'functional' )
+                    // InternalMappingDsl.g:9249:4: enumLiteral_0= 'functional'
                     {
-                    enumLiteral_0=(Token)match(input,136,FOLLOW_2); 
+                    enumLiteral_0=(Token)match(input,137,FOLLOW_2); 
 
                     				current = grammarAccess.getMicroserviceTypeAccess().getFUNCTIONALEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_0, grammarAccess.getMicroserviceTypeAccess().getFUNCTIONALEnumLiteralDeclaration_0());
@@ -23084,12 +23104,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalMappingDsl.g:9248:3: (enumLiteral_1= 'utility' )
+                    // InternalMappingDsl.g:9256:3: (enumLiteral_1= 'utility' )
                     {
-                    // InternalMappingDsl.g:9248:3: (enumLiteral_1= 'utility' )
-                    // InternalMappingDsl.g:9249:4: enumLiteral_1= 'utility'
+                    // InternalMappingDsl.g:9256:3: (enumLiteral_1= 'utility' )
+                    // InternalMappingDsl.g:9257:4: enumLiteral_1= 'utility'
                     {
-                    enumLiteral_1=(Token)match(input,137,FOLLOW_2); 
+                    enumLiteral_1=(Token)match(input,138,FOLLOW_2); 
 
                     				current = grammarAccess.getMicroserviceTypeAccess().getUTILITYEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_1, grammarAccess.getMicroserviceTypeAccess().getUTILITYEnumLiteralDeclaration_1());
@@ -23101,12 +23121,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalMappingDsl.g:9256:3: (enumLiteral_2= 'infrastructure' )
+                    // InternalMappingDsl.g:9264:3: (enumLiteral_2= 'infrastructure' )
                     {
-                    // InternalMappingDsl.g:9256:3: (enumLiteral_2= 'infrastructure' )
-                    // InternalMappingDsl.g:9257:4: enumLiteral_2= 'infrastructure'
+                    // InternalMappingDsl.g:9264:3: (enumLiteral_2= 'infrastructure' )
+                    // InternalMappingDsl.g:9265:4: enumLiteral_2= 'infrastructure'
                     {
-                    enumLiteral_2=(Token)match(input,68,FOLLOW_2); 
+                    enumLiteral_2=(Token)match(input,69,FOLLOW_2); 
 
                     				current = grammarAccess.getMicroserviceTypeAccess().getINFRASTRUCTUREEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_2, grammarAccess.getMicroserviceTypeAccess().getINFRASTRUCTUREEnumLiteralDeclaration_2());
@@ -23140,7 +23160,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleExchangePattern"
-    // InternalMappingDsl.g:9267:1: ruleExchangePattern returns [Enumerator current=null] : ( (enumLiteral_0= 'in' ) | (enumLiteral_1= 'out' ) | (enumLiteral_2= 'inout' ) ) ;
+    // InternalMappingDsl.g:9275:1: ruleExchangePattern returns [Enumerator current=null] : ( (enumLiteral_0= 'in' ) | (enumLiteral_1= 'out' ) | (enumLiteral_2= 'inout' ) ) ;
     public final Enumerator ruleExchangePattern() throws RecognitionException {
         Enumerator current = null;
 
@@ -23152,23 +23172,23 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:9273:2: ( ( (enumLiteral_0= 'in' ) | (enumLiteral_1= 'out' ) | (enumLiteral_2= 'inout' ) ) )
-            // InternalMappingDsl.g:9274:2: ( (enumLiteral_0= 'in' ) | (enumLiteral_1= 'out' ) | (enumLiteral_2= 'inout' ) )
+            // InternalMappingDsl.g:9281:2: ( ( (enumLiteral_0= 'in' ) | (enumLiteral_1= 'out' ) | (enumLiteral_2= 'inout' ) ) )
+            // InternalMappingDsl.g:9282:2: ( (enumLiteral_0= 'in' ) | (enumLiteral_1= 'out' ) | (enumLiteral_2= 'inout' ) )
             {
-            // InternalMappingDsl.g:9274:2: ( (enumLiteral_0= 'in' ) | (enumLiteral_1= 'out' ) | (enumLiteral_2= 'inout' ) )
+            // InternalMappingDsl.g:9282:2: ( (enumLiteral_0= 'in' ) | (enumLiteral_1= 'out' ) | (enumLiteral_2= 'inout' ) )
             int alt212=3;
             switch ( input.LA(1) ) {
-            case 74:
+            case 75:
                 {
                 alt212=1;
                 }
                 break;
-            case 75:
+            case 76:
                 {
                 alt212=2;
                 }
                 break;
-            case 76:
+            case 77:
                 {
                 alt212=3;
                 }
@@ -23182,12 +23202,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             switch (alt212) {
                 case 1 :
-                    // InternalMappingDsl.g:9275:3: (enumLiteral_0= 'in' )
+                    // InternalMappingDsl.g:9283:3: (enumLiteral_0= 'in' )
                     {
-                    // InternalMappingDsl.g:9275:3: (enumLiteral_0= 'in' )
-                    // InternalMappingDsl.g:9276:4: enumLiteral_0= 'in'
+                    // InternalMappingDsl.g:9283:3: (enumLiteral_0= 'in' )
+                    // InternalMappingDsl.g:9284:4: enumLiteral_0= 'in'
                     {
-                    enumLiteral_0=(Token)match(input,74,FOLLOW_2); 
+                    enumLiteral_0=(Token)match(input,75,FOLLOW_2); 
 
                     				current = grammarAccess.getExchangePatternAccess().getINEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_0, grammarAccess.getExchangePatternAccess().getINEnumLiteralDeclaration_0());
@@ -23199,12 +23219,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalMappingDsl.g:9283:3: (enumLiteral_1= 'out' )
+                    // InternalMappingDsl.g:9291:3: (enumLiteral_1= 'out' )
                     {
-                    // InternalMappingDsl.g:9283:3: (enumLiteral_1= 'out' )
-                    // InternalMappingDsl.g:9284:4: enumLiteral_1= 'out'
+                    // InternalMappingDsl.g:9291:3: (enumLiteral_1= 'out' )
+                    // InternalMappingDsl.g:9292:4: enumLiteral_1= 'out'
                     {
-                    enumLiteral_1=(Token)match(input,75,FOLLOW_2); 
+                    enumLiteral_1=(Token)match(input,76,FOLLOW_2); 
 
                     				current = grammarAccess.getExchangePatternAccess().getOUTEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_1, grammarAccess.getExchangePatternAccess().getOUTEnumLiteralDeclaration_1());
@@ -23216,12 +23236,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalMappingDsl.g:9291:3: (enumLiteral_2= 'inout' )
+                    // InternalMappingDsl.g:9299:3: (enumLiteral_2= 'inout' )
                     {
-                    // InternalMappingDsl.g:9291:3: (enumLiteral_2= 'inout' )
-                    // InternalMappingDsl.g:9292:4: enumLiteral_2= 'inout'
+                    // InternalMappingDsl.g:9299:3: (enumLiteral_2= 'inout' )
+                    // InternalMappingDsl.g:9300:4: enumLiteral_2= 'inout'
                     {
-                    enumLiteral_2=(Token)match(input,76,FOLLOW_2); 
+                    enumLiteral_2=(Token)match(input,77,FOLLOW_2); 
 
                     				current = grammarAccess.getExchangePatternAccess().getINOUTEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_2, grammarAccess.getExchangePatternAccess().getINOUTEnumLiteralDeclaration_2());
@@ -23255,7 +23275,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCommunicationType"
-    // InternalMappingDsl.g:9302:1: ruleCommunicationType returns [Enumerator current=null] : ( (enumLiteral_0= 'sync' ) | (enumLiteral_1= 'async' ) ) ;
+    // InternalMappingDsl.g:9310:1: ruleCommunicationType returns [Enumerator current=null] : ( (enumLiteral_0= 'sync' ) | (enumLiteral_1= 'async' ) ) ;
     public final Enumerator ruleCommunicationType() throws RecognitionException {
         Enumerator current = null;
 
@@ -23266,17 +23286,17 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:9308:2: ( ( (enumLiteral_0= 'sync' ) | (enumLiteral_1= 'async' ) ) )
-            // InternalMappingDsl.g:9309:2: ( (enumLiteral_0= 'sync' ) | (enumLiteral_1= 'async' ) )
+            // InternalMappingDsl.g:9316:2: ( ( (enumLiteral_0= 'sync' ) | (enumLiteral_1= 'async' ) ) )
+            // InternalMappingDsl.g:9317:2: ( (enumLiteral_0= 'sync' ) | (enumLiteral_1= 'async' ) )
             {
-            // InternalMappingDsl.g:9309:2: ( (enumLiteral_0= 'sync' ) | (enumLiteral_1= 'async' ) )
+            // InternalMappingDsl.g:9317:2: ( (enumLiteral_0= 'sync' ) | (enumLiteral_1= 'async' ) )
             int alt213=2;
             int LA213_0 = input.LA(1);
 
-            if ( (LA213_0==77) ) {
+            if ( (LA213_0==78) ) {
                 alt213=1;
             }
-            else if ( (LA213_0==78) ) {
+            else if ( (LA213_0==79) ) {
                 alt213=2;
             }
             else {
@@ -23287,12 +23307,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             }
             switch (alt213) {
                 case 1 :
-                    // InternalMappingDsl.g:9310:3: (enumLiteral_0= 'sync' )
+                    // InternalMappingDsl.g:9318:3: (enumLiteral_0= 'sync' )
                     {
-                    // InternalMappingDsl.g:9310:3: (enumLiteral_0= 'sync' )
-                    // InternalMappingDsl.g:9311:4: enumLiteral_0= 'sync'
+                    // InternalMappingDsl.g:9318:3: (enumLiteral_0= 'sync' )
+                    // InternalMappingDsl.g:9319:4: enumLiteral_0= 'sync'
                     {
-                    enumLiteral_0=(Token)match(input,77,FOLLOW_2); 
+                    enumLiteral_0=(Token)match(input,78,FOLLOW_2); 
 
                     				current = grammarAccess.getCommunicationTypeAccess().getSYNCHRONOUSEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_0, grammarAccess.getCommunicationTypeAccess().getSYNCHRONOUSEnumLiteralDeclaration_0());
@@ -23304,12 +23324,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalMappingDsl.g:9318:3: (enumLiteral_1= 'async' )
+                    // InternalMappingDsl.g:9326:3: (enumLiteral_1= 'async' )
                     {
-                    // InternalMappingDsl.g:9318:3: (enumLiteral_1= 'async' )
-                    // InternalMappingDsl.g:9319:4: enumLiteral_1= 'async'
+                    // InternalMappingDsl.g:9326:3: (enumLiteral_1= 'async' )
+                    // InternalMappingDsl.g:9327:4: enumLiteral_1= 'async'
                     {
-                    enumLiteral_1=(Token)match(input,78,FOLLOW_2); 
+                    enumLiteral_1=(Token)match(input,79,FOLLOW_2); 
 
                     				current = grammarAccess.getCommunicationTypeAccess().getASYNCHRONOUSEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_1, grammarAccess.getCommunicationTypeAccess().getASYNCHRONOUSEnumLiteralDeclaration_1());
@@ -23343,7 +23363,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCompatibilityDirection"
-    // InternalMappingDsl.g:9329:1: ruleCompatibilityDirection returns [Enumerator current=null] : ( (enumLiteral_0= '<-' ) | (enumLiteral_1= '->' ) | (enumLiteral_2= '<->' ) ) ;
+    // InternalMappingDsl.g:9337:1: ruleCompatibilityDirection returns [Enumerator current=null] : ( (enumLiteral_0= '<-' ) | (enumLiteral_1= '->' ) | (enumLiteral_2= '<->' ) ) ;
     public final Enumerator ruleCompatibilityDirection() throws RecognitionException {
         Enumerator current = null;
 
@@ -23355,23 +23375,23 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:9335:2: ( ( (enumLiteral_0= '<-' ) | (enumLiteral_1= '->' ) | (enumLiteral_2= '<->' ) ) )
-            // InternalMappingDsl.g:9336:2: ( (enumLiteral_0= '<-' ) | (enumLiteral_1= '->' ) | (enumLiteral_2= '<->' ) )
+            // InternalMappingDsl.g:9343:2: ( ( (enumLiteral_0= '<-' ) | (enumLiteral_1= '->' ) | (enumLiteral_2= '<->' ) ) )
+            // InternalMappingDsl.g:9344:2: ( (enumLiteral_0= '<-' ) | (enumLiteral_1= '->' ) | (enumLiteral_2= '<->' ) )
             {
-            // InternalMappingDsl.g:9336:2: ( (enumLiteral_0= '<-' ) | (enumLiteral_1= '->' ) | (enumLiteral_2= '<->' ) )
+            // InternalMappingDsl.g:9344:2: ( (enumLiteral_0= '<-' ) | (enumLiteral_1= '->' ) | (enumLiteral_2= '<->' ) )
             int alt214=3;
             switch ( input.LA(1) ) {
-            case 83:
+            case 84:
                 {
                 alt214=1;
                 }
                 break;
-            case 28:
+            case 29:
                 {
                 alt214=2;
                 }
                 break;
-            case 84:
+            case 85:
                 {
                 alt214=3;
                 }
@@ -23385,12 +23405,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             switch (alt214) {
                 case 1 :
-                    // InternalMappingDsl.g:9337:3: (enumLiteral_0= '<-' )
+                    // InternalMappingDsl.g:9345:3: (enumLiteral_0= '<-' )
                     {
-                    // InternalMappingDsl.g:9337:3: (enumLiteral_0= '<-' )
-                    // InternalMappingDsl.g:9338:4: enumLiteral_0= '<-'
+                    // InternalMappingDsl.g:9345:3: (enumLiteral_0= '<-' )
+                    // InternalMappingDsl.g:9346:4: enumLiteral_0= '<-'
                     {
-                    enumLiteral_0=(Token)match(input,83,FOLLOW_2); 
+                    enumLiteral_0=(Token)match(input,84,FOLLOW_2); 
 
                     				current = grammarAccess.getCompatibilityDirectionAccess().getMAPPING_TO_COMPATIBLE_TYPESEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_0, grammarAccess.getCompatibilityDirectionAccess().getMAPPING_TO_COMPATIBLE_TYPESEnumLiteralDeclaration_0());
@@ -23402,12 +23422,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalMappingDsl.g:9345:3: (enumLiteral_1= '->' )
+                    // InternalMappingDsl.g:9353:3: (enumLiteral_1= '->' )
                     {
-                    // InternalMappingDsl.g:9345:3: (enumLiteral_1= '->' )
-                    // InternalMappingDsl.g:9346:4: enumLiteral_1= '->'
+                    // InternalMappingDsl.g:9353:3: (enumLiteral_1= '->' )
+                    // InternalMappingDsl.g:9354:4: enumLiteral_1= '->'
                     {
-                    enumLiteral_1=(Token)match(input,28,FOLLOW_2); 
+                    enumLiteral_1=(Token)match(input,29,FOLLOW_2); 
 
                     				current = grammarAccess.getCompatibilityDirectionAccess().getCOMPATIBLE_TYPES_TO_MAPPINGEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_1, grammarAccess.getCompatibilityDirectionAccess().getCOMPATIBLE_TYPES_TO_MAPPINGEnumLiteralDeclaration_1());
@@ -23419,12 +23439,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalMappingDsl.g:9353:3: (enumLiteral_2= '<->' )
+                    // InternalMappingDsl.g:9361:3: (enumLiteral_2= '<->' )
                     {
-                    // InternalMappingDsl.g:9353:3: (enumLiteral_2= '<->' )
-                    // InternalMappingDsl.g:9354:4: enumLiteral_2= '<->'
+                    // InternalMappingDsl.g:9361:3: (enumLiteral_2= '<->' )
+                    // InternalMappingDsl.g:9362:4: enumLiteral_2= '<->'
                     {
-                    enumLiteral_2=(Token)match(input,84,FOLLOW_2); 
+                    enumLiteral_2=(Token)match(input,85,FOLLOW_2); 
 
                     				current = grammarAccess.getCompatibilityDirectionAccess().getBIDIRECTIONALEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_2, grammarAccess.getCompatibilityDirectionAccess().getBIDIRECTIONALEnumLiteralDeclaration_2());
@@ -23458,7 +23478,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePropertyFeature"
-    // InternalMappingDsl.g:9364:1: rulePropertyFeature returns [Enumerator current=null] : ( (enumLiteral_0= 'mandatory' ) | (enumLiteral_1= 'singleval' ) ) ;
+    // InternalMappingDsl.g:9372:1: rulePropertyFeature returns [Enumerator current=null] : ( (enumLiteral_0= 'mandatory' ) | (enumLiteral_1= 'singleval' ) ) ;
     public final Enumerator rulePropertyFeature() throws RecognitionException {
         Enumerator current = null;
 
@@ -23469,17 +23489,17 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:9370:2: ( ( (enumLiteral_0= 'mandatory' ) | (enumLiteral_1= 'singleval' ) ) )
-            // InternalMappingDsl.g:9371:2: ( (enumLiteral_0= 'mandatory' ) | (enumLiteral_1= 'singleval' ) )
+            // InternalMappingDsl.g:9378:2: ( ( (enumLiteral_0= 'mandatory' ) | (enumLiteral_1= 'singleval' ) ) )
+            // InternalMappingDsl.g:9379:2: ( (enumLiteral_0= 'mandatory' ) | (enumLiteral_1= 'singleval' ) )
             {
-            // InternalMappingDsl.g:9371:2: ( (enumLiteral_0= 'mandatory' ) | (enumLiteral_1= 'singleval' ) )
+            // InternalMappingDsl.g:9379:2: ( (enumLiteral_0= 'mandatory' ) | (enumLiteral_1= 'singleval' ) )
             int alt215=2;
             int LA215_0 = input.LA(1);
 
-            if ( (LA215_0==87) ) {
+            if ( (LA215_0==88) ) {
                 alt215=1;
             }
-            else if ( (LA215_0==88) ) {
+            else if ( (LA215_0==89) ) {
                 alt215=2;
             }
             else {
@@ -23490,12 +23510,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             }
             switch (alt215) {
                 case 1 :
-                    // InternalMappingDsl.g:9372:3: (enumLiteral_0= 'mandatory' )
+                    // InternalMappingDsl.g:9380:3: (enumLiteral_0= 'mandatory' )
                     {
-                    // InternalMappingDsl.g:9372:3: (enumLiteral_0= 'mandatory' )
-                    // InternalMappingDsl.g:9373:4: enumLiteral_0= 'mandatory'
+                    // InternalMappingDsl.g:9380:3: (enumLiteral_0= 'mandatory' )
+                    // InternalMappingDsl.g:9381:4: enumLiteral_0= 'mandatory'
                     {
-                    enumLiteral_0=(Token)match(input,87,FOLLOW_2); 
+                    enumLiteral_0=(Token)match(input,88,FOLLOW_2); 
 
                     				current = grammarAccess.getPropertyFeatureAccess().getMANDATORYEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_0, grammarAccess.getPropertyFeatureAccess().getMANDATORYEnumLiteralDeclaration_0());
@@ -23507,12 +23527,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalMappingDsl.g:9380:3: (enumLiteral_1= 'singleval' )
+                    // InternalMappingDsl.g:9388:3: (enumLiteral_1= 'singleval' )
                     {
-                    // InternalMappingDsl.g:9380:3: (enumLiteral_1= 'singleval' )
-                    // InternalMappingDsl.g:9381:4: enumLiteral_1= 'singleval'
+                    // InternalMappingDsl.g:9388:3: (enumLiteral_1= 'singleval' )
+                    // InternalMappingDsl.g:9389:4: enumLiteral_1= 'singleval'
                     {
-                    enumLiteral_1=(Token)match(input,88,FOLLOW_2); 
+                    enumLiteral_1=(Token)match(input,89,FOLLOW_2); 
 
                     				current = grammarAccess.getPropertyFeatureAccess().getSINGLE_VALUEDEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_1, grammarAccess.getPropertyFeatureAccess().getSINGLE_VALUEDEnumLiteralDeclaration_1());
@@ -23546,7 +23566,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleServiceJoinPointType"
-    // InternalMappingDsl.g:9391:1: ruleServiceJoinPointType returns [Enumerator current=null] : ( (enumLiteral_0= 'types' ) | (enumLiteral_1= 'fields' ) | (enumLiteral_2= 'domainOperations' ) | (enumLiteral_3= 'domainParameters' ) | (enumLiteral_4= 'microservices' ) | (enumLiteral_5= 'interfaces' ) | (enumLiteral_6= 'operations' ) | (enumLiteral_7= 'parameters' ) ) ;
+    // InternalMappingDsl.g:9399:1: ruleServiceJoinPointType returns [Enumerator current=null] : ( (enumLiteral_0= 'types' ) | (enumLiteral_1= 'fields' ) | (enumLiteral_2= 'domainOperations' ) | (enumLiteral_3= 'domainParameters' ) | (enumLiteral_4= 'microservices' ) | (enumLiteral_5= 'interfaces' ) | (enumLiteral_6= 'operations' ) | (enumLiteral_7= 'parameters' ) ) ;
     public final Enumerator ruleServiceJoinPointType() throws RecognitionException {
         Enumerator current = null;
 
@@ -23563,48 +23583,48 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:9397:2: ( ( (enumLiteral_0= 'types' ) | (enumLiteral_1= 'fields' ) | (enumLiteral_2= 'domainOperations' ) | (enumLiteral_3= 'domainParameters' ) | (enumLiteral_4= 'microservices' ) | (enumLiteral_5= 'interfaces' ) | (enumLiteral_6= 'operations' ) | (enumLiteral_7= 'parameters' ) ) )
-            // InternalMappingDsl.g:9398:2: ( (enumLiteral_0= 'types' ) | (enumLiteral_1= 'fields' ) | (enumLiteral_2= 'domainOperations' ) | (enumLiteral_3= 'domainParameters' ) | (enumLiteral_4= 'microservices' ) | (enumLiteral_5= 'interfaces' ) | (enumLiteral_6= 'operations' ) | (enumLiteral_7= 'parameters' ) )
+            // InternalMappingDsl.g:9405:2: ( ( (enumLiteral_0= 'types' ) | (enumLiteral_1= 'fields' ) | (enumLiteral_2= 'domainOperations' ) | (enumLiteral_3= 'domainParameters' ) | (enumLiteral_4= 'microservices' ) | (enumLiteral_5= 'interfaces' ) | (enumLiteral_6= 'operations' ) | (enumLiteral_7= 'parameters' ) ) )
+            // InternalMappingDsl.g:9406:2: ( (enumLiteral_0= 'types' ) | (enumLiteral_1= 'fields' ) | (enumLiteral_2= 'domainOperations' ) | (enumLiteral_3= 'domainParameters' ) | (enumLiteral_4= 'microservices' ) | (enumLiteral_5= 'interfaces' ) | (enumLiteral_6= 'operations' ) | (enumLiteral_7= 'parameters' ) )
             {
-            // InternalMappingDsl.g:9398:2: ( (enumLiteral_0= 'types' ) | (enumLiteral_1= 'fields' ) | (enumLiteral_2= 'domainOperations' ) | (enumLiteral_3= 'domainParameters' ) | (enumLiteral_4= 'microservices' ) | (enumLiteral_5= 'interfaces' ) | (enumLiteral_6= 'operations' ) | (enumLiteral_7= 'parameters' ) )
+            // InternalMappingDsl.g:9406:2: ( (enumLiteral_0= 'types' ) | (enumLiteral_1= 'fields' ) | (enumLiteral_2= 'domainOperations' ) | (enumLiteral_3= 'domainParameters' ) | (enumLiteral_4= 'microservices' ) | (enumLiteral_5= 'interfaces' ) | (enumLiteral_6= 'operations' ) | (enumLiteral_7= 'parameters' ) )
             int alt216=8;
             switch ( input.LA(1) ) {
-            case 62:
+            case 63:
                 {
                 alt216=1;
                 }
                 break;
-            case 89:
+            case 90:
                 {
                 alt216=2;
                 }
                 break;
-            case 139:
+            case 140:
                 {
                 alt216=3;
                 }
                 break;
-            case 140:
+            case 141:
                 {
                 alt216=4;
                 }
                 break;
-            case 44:
+            case 45:
                 {
                 alt216=5;
                 }
                 break;
-            case 45:
+            case 46:
                 {
                 alt216=6;
                 }
                 break;
-            case 46:
+            case 47:
                 {
                 alt216=7;
                 }
                 break;
-            case 22:
+            case 23:
                 {
                 alt216=8;
                 }
@@ -23618,12 +23638,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             switch (alt216) {
                 case 1 :
-                    // InternalMappingDsl.g:9399:3: (enumLiteral_0= 'types' )
+                    // InternalMappingDsl.g:9407:3: (enumLiteral_0= 'types' )
                     {
-                    // InternalMappingDsl.g:9399:3: (enumLiteral_0= 'types' )
-                    // InternalMappingDsl.g:9400:4: enumLiteral_0= 'types'
+                    // InternalMappingDsl.g:9407:3: (enumLiteral_0= 'types' )
+                    // InternalMappingDsl.g:9408:4: enumLiteral_0= 'types'
                     {
-                    enumLiteral_0=(Token)match(input,62,FOLLOW_2); 
+                    enumLiteral_0=(Token)match(input,63,FOLLOW_2); 
 
                     				current = grammarAccess.getServiceJoinPointTypeAccess().getCOMPLEX_TYPESEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_0, grammarAccess.getServiceJoinPointTypeAccess().getCOMPLEX_TYPESEnumLiteralDeclaration_0());
@@ -23635,12 +23655,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalMappingDsl.g:9407:3: (enumLiteral_1= 'fields' )
+                    // InternalMappingDsl.g:9415:3: (enumLiteral_1= 'fields' )
                     {
-                    // InternalMappingDsl.g:9407:3: (enumLiteral_1= 'fields' )
-                    // InternalMappingDsl.g:9408:4: enumLiteral_1= 'fields'
+                    // InternalMappingDsl.g:9415:3: (enumLiteral_1= 'fields' )
+                    // InternalMappingDsl.g:9416:4: enumLiteral_1= 'fields'
                     {
-                    enumLiteral_1=(Token)match(input,89,FOLLOW_2); 
+                    enumLiteral_1=(Token)match(input,90,FOLLOW_2); 
 
                     				current = grammarAccess.getServiceJoinPointTypeAccess().getDATA_FIELDSEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_1, grammarAccess.getServiceJoinPointTypeAccess().getDATA_FIELDSEnumLiteralDeclaration_1());
@@ -23652,12 +23672,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalMappingDsl.g:9415:3: (enumLiteral_2= 'domainOperations' )
+                    // InternalMappingDsl.g:9423:3: (enumLiteral_2= 'domainOperations' )
                     {
-                    // InternalMappingDsl.g:9415:3: (enumLiteral_2= 'domainOperations' )
-                    // InternalMappingDsl.g:9416:4: enumLiteral_2= 'domainOperations'
+                    // InternalMappingDsl.g:9423:3: (enumLiteral_2= 'domainOperations' )
+                    // InternalMappingDsl.g:9424:4: enumLiteral_2= 'domainOperations'
                     {
-                    enumLiteral_2=(Token)match(input,139,FOLLOW_2); 
+                    enumLiteral_2=(Token)match(input,140,FOLLOW_2); 
 
                     				current = grammarAccess.getServiceJoinPointTypeAccess().getDATA_OPERATIONSEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_2, grammarAccess.getServiceJoinPointTypeAccess().getDATA_OPERATIONSEnumLiteralDeclaration_2());
@@ -23669,12 +23689,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalMappingDsl.g:9423:3: (enumLiteral_3= 'domainParameters' )
+                    // InternalMappingDsl.g:9431:3: (enumLiteral_3= 'domainParameters' )
                     {
-                    // InternalMappingDsl.g:9423:3: (enumLiteral_3= 'domainParameters' )
-                    // InternalMappingDsl.g:9424:4: enumLiteral_3= 'domainParameters'
+                    // InternalMappingDsl.g:9431:3: (enumLiteral_3= 'domainParameters' )
+                    // InternalMappingDsl.g:9432:4: enumLiteral_3= 'domainParameters'
                     {
-                    enumLiteral_3=(Token)match(input,140,FOLLOW_2); 
+                    enumLiteral_3=(Token)match(input,141,FOLLOW_2); 
 
                     				current = grammarAccess.getServiceJoinPointTypeAccess().getDATA_OPERATION_PARAMETERSEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_3, grammarAccess.getServiceJoinPointTypeAccess().getDATA_OPERATION_PARAMETERSEnumLiteralDeclaration_3());
@@ -23686,12 +23706,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalMappingDsl.g:9431:3: (enumLiteral_4= 'microservices' )
+                    // InternalMappingDsl.g:9439:3: (enumLiteral_4= 'microservices' )
                     {
-                    // InternalMappingDsl.g:9431:3: (enumLiteral_4= 'microservices' )
-                    // InternalMappingDsl.g:9432:4: enumLiteral_4= 'microservices'
+                    // InternalMappingDsl.g:9439:3: (enumLiteral_4= 'microservices' )
+                    // InternalMappingDsl.g:9440:4: enumLiteral_4= 'microservices'
                     {
-                    enumLiteral_4=(Token)match(input,44,FOLLOW_2); 
+                    enumLiteral_4=(Token)match(input,45,FOLLOW_2); 
 
                     				current = grammarAccess.getServiceJoinPointTypeAccess().getMICROSERVICESEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_4, grammarAccess.getServiceJoinPointTypeAccess().getMICROSERVICESEnumLiteralDeclaration_4());
@@ -23703,12 +23723,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalMappingDsl.g:9439:3: (enumLiteral_5= 'interfaces' )
+                    // InternalMappingDsl.g:9447:3: (enumLiteral_5= 'interfaces' )
                     {
-                    // InternalMappingDsl.g:9439:3: (enumLiteral_5= 'interfaces' )
-                    // InternalMappingDsl.g:9440:4: enumLiteral_5= 'interfaces'
+                    // InternalMappingDsl.g:9447:3: (enumLiteral_5= 'interfaces' )
+                    // InternalMappingDsl.g:9448:4: enumLiteral_5= 'interfaces'
                     {
-                    enumLiteral_5=(Token)match(input,45,FOLLOW_2); 
+                    enumLiteral_5=(Token)match(input,46,FOLLOW_2); 
 
                     				current = grammarAccess.getServiceJoinPointTypeAccess().getINTERFACESEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_5, grammarAccess.getServiceJoinPointTypeAccess().getINTERFACESEnumLiteralDeclaration_5());
@@ -23720,12 +23740,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // InternalMappingDsl.g:9447:3: (enumLiteral_6= 'operations' )
+                    // InternalMappingDsl.g:9455:3: (enumLiteral_6= 'operations' )
                     {
-                    // InternalMappingDsl.g:9447:3: (enumLiteral_6= 'operations' )
-                    // InternalMappingDsl.g:9448:4: enumLiteral_6= 'operations'
+                    // InternalMappingDsl.g:9455:3: (enumLiteral_6= 'operations' )
+                    // InternalMappingDsl.g:9456:4: enumLiteral_6= 'operations'
                     {
-                    enumLiteral_6=(Token)match(input,46,FOLLOW_2); 
+                    enumLiteral_6=(Token)match(input,47,FOLLOW_2); 
 
                     				current = grammarAccess.getServiceJoinPointTypeAccess().getOPERATIONSEnumLiteralDeclaration_6().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_6, grammarAccess.getServiceJoinPointTypeAccess().getOPERATIONSEnumLiteralDeclaration_6());
@@ -23737,12 +23757,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 8 :
-                    // InternalMappingDsl.g:9455:3: (enumLiteral_7= 'parameters' )
+                    // InternalMappingDsl.g:9463:3: (enumLiteral_7= 'parameters' )
                     {
-                    // InternalMappingDsl.g:9455:3: (enumLiteral_7= 'parameters' )
-                    // InternalMappingDsl.g:9456:4: enumLiteral_7= 'parameters'
+                    // InternalMappingDsl.g:9463:3: (enumLiteral_7= 'parameters' )
+                    // InternalMappingDsl.g:9464:4: enumLiteral_7= 'parameters'
                     {
-                    enumLiteral_7=(Token)match(input,22,FOLLOW_2); 
+                    enumLiteral_7=(Token)match(input,23,FOLLOW_2); 
 
                     				current = grammarAccess.getServiceJoinPointTypeAccess().getPARAMETERSEnumLiteralDeclaration_7().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_7, grammarAccess.getServiceJoinPointTypeAccess().getPARAMETERSEnumLiteralDeclaration_7());
@@ -23776,7 +23796,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAspectFeature"
-    // InternalMappingDsl.g:9466:1: ruleAspectFeature returns [Enumerator current=null] : (enumLiteral_0= 'singleval' ) ;
+    // InternalMappingDsl.g:9474:1: ruleAspectFeature returns [Enumerator current=null] : (enumLiteral_0= 'singleval' ) ;
     public final Enumerator ruleAspectFeature() throws RecognitionException {
         Enumerator current = null;
 
@@ -23786,13 +23806,13 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:9472:2: ( (enumLiteral_0= 'singleval' ) )
-            // InternalMappingDsl.g:9473:2: (enumLiteral_0= 'singleval' )
+            // InternalMappingDsl.g:9480:2: ( (enumLiteral_0= 'singleval' ) )
+            // InternalMappingDsl.g:9481:2: (enumLiteral_0= 'singleval' )
             {
-            // InternalMappingDsl.g:9473:2: (enumLiteral_0= 'singleval' )
-            // InternalMappingDsl.g:9474:3: enumLiteral_0= 'singleval'
+            // InternalMappingDsl.g:9481:2: (enumLiteral_0= 'singleval' )
+            // InternalMappingDsl.g:9482:3: enumLiteral_0= 'singleval'
             {
-            enumLiteral_0=(Token)match(input,88,FOLLOW_2); 
+            enumLiteral_0=(Token)match(input,89,FOLLOW_2); 
 
             			current = grammarAccess.getAspectFeatureAccess().getSINGLE_VALUEDEnumLiteralDeclaration().getEnumLiteral().getInstance();
             			newLeafNode(enumLiteral_0, grammarAccess.getAspectFeatureAccess().getSINGLE_VALUEDEnumLiteralDeclaration());
@@ -23820,7 +23840,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleOperationJoinPointType"
-    // InternalMappingDsl.g:9483:1: ruleOperationJoinPointType returns [Enumerator current=null] : ( (enumLiteral_0= 'containers' ) | (enumLiteral_1= 'infrastructure' ) ) ;
+    // InternalMappingDsl.g:9491:1: ruleOperationJoinPointType returns [Enumerator current=null] : ( (enumLiteral_0= 'containers' ) | (enumLiteral_1= 'infrastructure' ) ) ;
     public final Enumerator ruleOperationJoinPointType() throws RecognitionException {
         Enumerator current = null;
 
@@ -23831,17 +23851,17 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:9489:2: ( ( (enumLiteral_0= 'containers' ) | (enumLiteral_1= 'infrastructure' ) ) )
-            // InternalMappingDsl.g:9490:2: ( (enumLiteral_0= 'containers' ) | (enumLiteral_1= 'infrastructure' ) )
+            // InternalMappingDsl.g:9497:2: ( ( (enumLiteral_0= 'containers' ) | (enumLiteral_1= 'infrastructure' ) ) )
+            // InternalMappingDsl.g:9498:2: ( (enumLiteral_0= 'containers' ) | (enumLiteral_1= 'infrastructure' ) )
             {
-            // InternalMappingDsl.g:9490:2: ( (enumLiteral_0= 'containers' ) | (enumLiteral_1= 'infrastructure' ) )
+            // InternalMappingDsl.g:9498:2: ( (enumLiteral_0= 'containers' ) | (enumLiteral_1= 'infrastructure' ) )
             int alt217=2;
             int LA217_0 = input.LA(1);
 
-            if ( (LA217_0==96) ) {
+            if ( (LA217_0==97) ) {
                 alt217=1;
             }
-            else if ( (LA217_0==68) ) {
+            else if ( (LA217_0==69) ) {
                 alt217=2;
             }
             else {
@@ -23852,12 +23872,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             }
             switch (alt217) {
                 case 1 :
-                    // InternalMappingDsl.g:9491:3: (enumLiteral_0= 'containers' )
+                    // InternalMappingDsl.g:9499:3: (enumLiteral_0= 'containers' )
                     {
-                    // InternalMappingDsl.g:9491:3: (enumLiteral_0= 'containers' )
-                    // InternalMappingDsl.g:9492:4: enumLiteral_0= 'containers'
+                    // InternalMappingDsl.g:9499:3: (enumLiteral_0= 'containers' )
+                    // InternalMappingDsl.g:9500:4: enumLiteral_0= 'containers'
                     {
-                    enumLiteral_0=(Token)match(input,96,FOLLOW_2); 
+                    enumLiteral_0=(Token)match(input,97,FOLLOW_2); 
 
                     				current = grammarAccess.getOperationJoinPointTypeAccess().getCONTAINERSEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_0, grammarAccess.getOperationJoinPointTypeAccess().getCONTAINERSEnumLiteralDeclaration_0());
@@ -23869,12 +23889,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalMappingDsl.g:9499:3: (enumLiteral_1= 'infrastructure' )
+                    // InternalMappingDsl.g:9507:3: (enumLiteral_1= 'infrastructure' )
                     {
-                    // InternalMappingDsl.g:9499:3: (enumLiteral_1= 'infrastructure' )
-                    // InternalMappingDsl.g:9500:4: enumLiteral_1= 'infrastructure'
+                    // InternalMappingDsl.g:9507:3: (enumLiteral_1= 'infrastructure' )
+                    // InternalMappingDsl.g:9508:4: enumLiteral_1= 'infrastructure'
                     {
-                    enumLiteral_1=(Token)match(input,68,FOLLOW_2); 
+                    enumLiteral_1=(Token)match(input,69,FOLLOW_2); 
 
                     				current = grammarAccess.getOperationJoinPointTypeAccess().getINFRASTRUCTURE_NODESEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_1, grammarAccess.getOperationJoinPointTypeAccess().getINFRASTRUCTURE_NODESEnumLiteralDeclaration_1());
@@ -23908,7 +23928,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleComplexTypeFeature"
-    // InternalMappingDsl.g:9510:1: ruleComplexTypeFeature returns [Enumerator current=null] : ( (enumLiteral_0= 'aggregate' ) | (enumLiteral_1= 'applicationService' ) | (enumLiteral_2= 'domainEvent' ) | (enumLiteral_3= 'domainService' ) | (enumLiteral_4= 'entity' ) | (enumLiteral_5= 'factory' ) | (enumLiteral_6= 'infrastructureService' ) | (enumLiteral_7= 'repository' ) | (enumLiteral_8= 'service' ) | (enumLiteral_9= 'specification' ) | (enumLiteral_10= 'valueObject' ) ) ;
+    // InternalMappingDsl.g:9518:1: ruleComplexTypeFeature returns [Enumerator current=null] : ( (enumLiteral_0= 'aggregate' ) | (enumLiteral_1= 'applicationService' ) | (enumLiteral_2= 'domainEvent' ) | (enumLiteral_3= 'domainService' ) | (enumLiteral_4= 'entity' ) | (enumLiteral_5= 'factory' ) | (enumLiteral_6= 'infrastructureService' ) | (enumLiteral_7= 'repository' ) | (enumLiteral_8= 'service' ) | (enumLiteral_9= 'specification' ) | (enumLiteral_10= 'valueObject' ) ) ;
     public final Enumerator ruleComplexTypeFeature() throws RecognitionException {
         Enumerator current = null;
 
@@ -23928,63 +23948,63 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:9516:2: ( ( (enumLiteral_0= 'aggregate' ) | (enumLiteral_1= 'applicationService' ) | (enumLiteral_2= 'domainEvent' ) | (enumLiteral_3= 'domainService' ) | (enumLiteral_4= 'entity' ) | (enumLiteral_5= 'factory' ) | (enumLiteral_6= 'infrastructureService' ) | (enumLiteral_7= 'repository' ) | (enumLiteral_8= 'service' ) | (enumLiteral_9= 'specification' ) | (enumLiteral_10= 'valueObject' ) ) )
-            // InternalMappingDsl.g:9517:2: ( (enumLiteral_0= 'aggregate' ) | (enumLiteral_1= 'applicationService' ) | (enumLiteral_2= 'domainEvent' ) | (enumLiteral_3= 'domainService' ) | (enumLiteral_4= 'entity' ) | (enumLiteral_5= 'factory' ) | (enumLiteral_6= 'infrastructureService' ) | (enumLiteral_7= 'repository' ) | (enumLiteral_8= 'service' ) | (enumLiteral_9= 'specification' ) | (enumLiteral_10= 'valueObject' ) )
+            // InternalMappingDsl.g:9524:2: ( ( (enumLiteral_0= 'aggregate' ) | (enumLiteral_1= 'applicationService' ) | (enumLiteral_2= 'domainEvent' ) | (enumLiteral_3= 'domainService' ) | (enumLiteral_4= 'entity' ) | (enumLiteral_5= 'factory' ) | (enumLiteral_6= 'infrastructureService' ) | (enumLiteral_7= 'repository' ) | (enumLiteral_8= 'service' ) | (enumLiteral_9= 'specification' ) | (enumLiteral_10= 'valueObject' ) ) )
+            // InternalMappingDsl.g:9525:2: ( (enumLiteral_0= 'aggregate' ) | (enumLiteral_1= 'applicationService' ) | (enumLiteral_2= 'domainEvent' ) | (enumLiteral_3= 'domainService' ) | (enumLiteral_4= 'entity' ) | (enumLiteral_5= 'factory' ) | (enumLiteral_6= 'infrastructureService' ) | (enumLiteral_7= 'repository' ) | (enumLiteral_8= 'service' ) | (enumLiteral_9= 'specification' ) | (enumLiteral_10= 'valueObject' ) )
             {
-            // InternalMappingDsl.g:9517:2: ( (enumLiteral_0= 'aggregate' ) | (enumLiteral_1= 'applicationService' ) | (enumLiteral_2= 'domainEvent' ) | (enumLiteral_3= 'domainService' ) | (enumLiteral_4= 'entity' ) | (enumLiteral_5= 'factory' ) | (enumLiteral_6= 'infrastructureService' ) | (enumLiteral_7= 'repository' ) | (enumLiteral_8= 'service' ) | (enumLiteral_9= 'specification' ) | (enumLiteral_10= 'valueObject' ) )
+            // InternalMappingDsl.g:9525:2: ( (enumLiteral_0= 'aggregate' ) | (enumLiteral_1= 'applicationService' ) | (enumLiteral_2= 'domainEvent' ) | (enumLiteral_3= 'domainService' ) | (enumLiteral_4= 'entity' ) | (enumLiteral_5= 'factory' ) | (enumLiteral_6= 'infrastructureService' ) | (enumLiteral_7= 'repository' ) | (enumLiteral_8= 'service' ) | (enumLiteral_9= 'specification' ) | (enumLiteral_10= 'valueObject' ) )
             int alt218=11;
             switch ( input.LA(1) ) {
-            case 100:
+            case 101:
                 {
                 alt218=1;
                 }
                 break;
-            case 101:
+            case 102:
                 {
                 alt218=2;
                 }
                 break;
-            case 102:
+            case 103:
                 {
                 alt218=3;
                 }
                 break;
-            case 103:
+            case 104:
                 {
                 alt218=4;
                 }
                 break;
-            case 104:
+            case 105:
                 {
                 alt218=5;
                 }
                 break;
-            case 105:
+            case 106:
                 {
                 alt218=6;
                 }
                 break;
-            case 106:
+            case 107:
                 {
                 alt218=7;
                 }
                 break;
-            case 107:
+            case 108:
                 {
                 alt218=8;
                 }
                 break;
-            case 65:
+            case 66:
                 {
                 alt218=9;
                 }
                 break;
-            case 108:
+            case 109:
                 {
                 alt218=10;
                 }
                 break;
-            case 109:
+            case 110:
                 {
                 alt218=11;
                 }
@@ -23998,12 +24018,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             switch (alt218) {
                 case 1 :
-                    // InternalMappingDsl.g:9518:3: (enumLiteral_0= 'aggregate' )
+                    // InternalMappingDsl.g:9526:3: (enumLiteral_0= 'aggregate' )
                     {
-                    // InternalMappingDsl.g:9518:3: (enumLiteral_0= 'aggregate' )
-                    // InternalMappingDsl.g:9519:4: enumLiteral_0= 'aggregate'
+                    // InternalMappingDsl.g:9526:3: (enumLiteral_0= 'aggregate' )
+                    // InternalMappingDsl.g:9527:4: enumLiteral_0= 'aggregate'
                     {
-                    enumLiteral_0=(Token)match(input,100,FOLLOW_2); 
+                    enumLiteral_0=(Token)match(input,101,FOLLOW_2); 
 
                     				current = grammarAccess.getComplexTypeFeatureAccess().getAGGREGATEEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_0, grammarAccess.getComplexTypeFeatureAccess().getAGGREGATEEnumLiteralDeclaration_0());
@@ -24015,12 +24035,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalMappingDsl.g:9526:3: (enumLiteral_1= 'applicationService' )
+                    // InternalMappingDsl.g:9534:3: (enumLiteral_1= 'applicationService' )
                     {
-                    // InternalMappingDsl.g:9526:3: (enumLiteral_1= 'applicationService' )
-                    // InternalMappingDsl.g:9527:4: enumLiteral_1= 'applicationService'
+                    // InternalMappingDsl.g:9534:3: (enumLiteral_1= 'applicationService' )
+                    // InternalMappingDsl.g:9535:4: enumLiteral_1= 'applicationService'
                     {
-                    enumLiteral_1=(Token)match(input,101,FOLLOW_2); 
+                    enumLiteral_1=(Token)match(input,102,FOLLOW_2); 
 
                     				current = grammarAccess.getComplexTypeFeatureAccess().getAPPLICATION_SERVICEEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_1, grammarAccess.getComplexTypeFeatureAccess().getAPPLICATION_SERVICEEnumLiteralDeclaration_1());
@@ -24032,12 +24052,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalMappingDsl.g:9534:3: (enumLiteral_2= 'domainEvent' )
+                    // InternalMappingDsl.g:9542:3: (enumLiteral_2= 'domainEvent' )
                     {
-                    // InternalMappingDsl.g:9534:3: (enumLiteral_2= 'domainEvent' )
-                    // InternalMappingDsl.g:9535:4: enumLiteral_2= 'domainEvent'
+                    // InternalMappingDsl.g:9542:3: (enumLiteral_2= 'domainEvent' )
+                    // InternalMappingDsl.g:9543:4: enumLiteral_2= 'domainEvent'
                     {
-                    enumLiteral_2=(Token)match(input,102,FOLLOW_2); 
+                    enumLiteral_2=(Token)match(input,103,FOLLOW_2); 
 
                     				current = grammarAccess.getComplexTypeFeatureAccess().getDOMAIN_EVENTEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_2, grammarAccess.getComplexTypeFeatureAccess().getDOMAIN_EVENTEnumLiteralDeclaration_2());
@@ -24049,12 +24069,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalMappingDsl.g:9542:3: (enumLiteral_3= 'domainService' )
+                    // InternalMappingDsl.g:9550:3: (enumLiteral_3= 'domainService' )
                     {
-                    // InternalMappingDsl.g:9542:3: (enumLiteral_3= 'domainService' )
-                    // InternalMappingDsl.g:9543:4: enumLiteral_3= 'domainService'
+                    // InternalMappingDsl.g:9550:3: (enumLiteral_3= 'domainService' )
+                    // InternalMappingDsl.g:9551:4: enumLiteral_3= 'domainService'
                     {
-                    enumLiteral_3=(Token)match(input,103,FOLLOW_2); 
+                    enumLiteral_3=(Token)match(input,104,FOLLOW_2); 
 
                     				current = grammarAccess.getComplexTypeFeatureAccess().getDOMAIN_SERVICEEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_3, grammarAccess.getComplexTypeFeatureAccess().getDOMAIN_SERVICEEnumLiteralDeclaration_3());
@@ -24066,12 +24086,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalMappingDsl.g:9550:3: (enumLiteral_4= 'entity' )
+                    // InternalMappingDsl.g:9558:3: (enumLiteral_4= 'entity' )
                     {
-                    // InternalMappingDsl.g:9550:3: (enumLiteral_4= 'entity' )
-                    // InternalMappingDsl.g:9551:4: enumLiteral_4= 'entity'
+                    // InternalMappingDsl.g:9558:3: (enumLiteral_4= 'entity' )
+                    // InternalMappingDsl.g:9559:4: enumLiteral_4= 'entity'
                     {
-                    enumLiteral_4=(Token)match(input,104,FOLLOW_2); 
+                    enumLiteral_4=(Token)match(input,105,FOLLOW_2); 
 
                     				current = grammarAccess.getComplexTypeFeatureAccess().getENTITYEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_4, grammarAccess.getComplexTypeFeatureAccess().getENTITYEnumLiteralDeclaration_4());
@@ -24083,12 +24103,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalMappingDsl.g:9558:3: (enumLiteral_5= 'factory' )
+                    // InternalMappingDsl.g:9566:3: (enumLiteral_5= 'factory' )
                     {
-                    // InternalMappingDsl.g:9558:3: (enumLiteral_5= 'factory' )
-                    // InternalMappingDsl.g:9559:4: enumLiteral_5= 'factory'
+                    // InternalMappingDsl.g:9566:3: (enumLiteral_5= 'factory' )
+                    // InternalMappingDsl.g:9567:4: enumLiteral_5= 'factory'
                     {
-                    enumLiteral_5=(Token)match(input,105,FOLLOW_2); 
+                    enumLiteral_5=(Token)match(input,106,FOLLOW_2); 
 
                     				current = grammarAccess.getComplexTypeFeatureAccess().getFACTORYEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_5, grammarAccess.getComplexTypeFeatureAccess().getFACTORYEnumLiteralDeclaration_5());
@@ -24100,12 +24120,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // InternalMappingDsl.g:9566:3: (enumLiteral_6= 'infrastructureService' )
+                    // InternalMappingDsl.g:9574:3: (enumLiteral_6= 'infrastructureService' )
                     {
-                    // InternalMappingDsl.g:9566:3: (enumLiteral_6= 'infrastructureService' )
-                    // InternalMappingDsl.g:9567:4: enumLiteral_6= 'infrastructureService'
+                    // InternalMappingDsl.g:9574:3: (enumLiteral_6= 'infrastructureService' )
+                    // InternalMappingDsl.g:9575:4: enumLiteral_6= 'infrastructureService'
                     {
-                    enumLiteral_6=(Token)match(input,106,FOLLOW_2); 
+                    enumLiteral_6=(Token)match(input,107,FOLLOW_2); 
 
                     				current = grammarAccess.getComplexTypeFeatureAccess().getINFRASTRUCTURE_SERVICEEnumLiteralDeclaration_6().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_6, grammarAccess.getComplexTypeFeatureAccess().getINFRASTRUCTURE_SERVICEEnumLiteralDeclaration_6());
@@ -24117,12 +24137,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 8 :
-                    // InternalMappingDsl.g:9574:3: (enumLiteral_7= 'repository' )
+                    // InternalMappingDsl.g:9582:3: (enumLiteral_7= 'repository' )
                     {
-                    // InternalMappingDsl.g:9574:3: (enumLiteral_7= 'repository' )
-                    // InternalMappingDsl.g:9575:4: enumLiteral_7= 'repository'
+                    // InternalMappingDsl.g:9582:3: (enumLiteral_7= 'repository' )
+                    // InternalMappingDsl.g:9583:4: enumLiteral_7= 'repository'
                     {
-                    enumLiteral_7=(Token)match(input,107,FOLLOW_2); 
+                    enumLiteral_7=(Token)match(input,108,FOLLOW_2); 
 
                     				current = grammarAccess.getComplexTypeFeatureAccess().getREPOSITORYEnumLiteralDeclaration_7().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_7, grammarAccess.getComplexTypeFeatureAccess().getREPOSITORYEnumLiteralDeclaration_7());
@@ -24134,12 +24154,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 9 :
-                    // InternalMappingDsl.g:9582:3: (enumLiteral_8= 'service' )
+                    // InternalMappingDsl.g:9590:3: (enumLiteral_8= 'service' )
                     {
-                    // InternalMappingDsl.g:9582:3: (enumLiteral_8= 'service' )
-                    // InternalMappingDsl.g:9583:4: enumLiteral_8= 'service'
+                    // InternalMappingDsl.g:9590:3: (enumLiteral_8= 'service' )
+                    // InternalMappingDsl.g:9591:4: enumLiteral_8= 'service'
                     {
-                    enumLiteral_8=(Token)match(input,65,FOLLOW_2); 
+                    enumLiteral_8=(Token)match(input,66,FOLLOW_2); 
 
                     				current = grammarAccess.getComplexTypeFeatureAccess().getSERVICEEnumLiteralDeclaration_8().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_8, grammarAccess.getComplexTypeFeatureAccess().getSERVICEEnumLiteralDeclaration_8());
@@ -24151,12 +24171,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 10 :
-                    // InternalMappingDsl.g:9590:3: (enumLiteral_9= 'specification' )
+                    // InternalMappingDsl.g:9598:3: (enumLiteral_9= 'specification' )
                     {
-                    // InternalMappingDsl.g:9590:3: (enumLiteral_9= 'specification' )
-                    // InternalMappingDsl.g:9591:4: enumLiteral_9= 'specification'
+                    // InternalMappingDsl.g:9598:3: (enumLiteral_9= 'specification' )
+                    // InternalMappingDsl.g:9599:4: enumLiteral_9= 'specification'
                     {
-                    enumLiteral_9=(Token)match(input,108,FOLLOW_2); 
+                    enumLiteral_9=(Token)match(input,109,FOLLOW_2); 
 
                     				current = grammarAccess.getComplexTypeFeatureAccess().getSPECIFICATIONEnumLiteralDeclaration_9().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_9, grammarAccess.getComplexTypeFeatureAccess().getSPECIFICATIONEnumLiteralDeclaration_9());
@@ -24168,12 +24188,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 11 :
-                    // InternalMappingDsl.g:9598:3: (enumLiteral_10= 'valueObject' )
+                    // InternalMappingDsl.g:9606:3: (enumLiteral_10= 'valueObject' )
                     {
-                    // InternalMappingDsl.g:9598:3: (enumLiteral_10= 'valueObject' )
-                    // InternalMappingDsl.g:9599:4: enumLiteral_10= 'valueObject'
+                    // InternalMappingDsl.g:9606:3: (enumLiteral_10= 'valueObject' )
+                    // InternalMappingDsl.g:9607:4: enumLiteral_10= 'valueObject'
                     {
-                    enumLiteral_10=(Token)match(input,109,FOLLOW_2); 
+                    enumLiteral_10=(Token)match(input,110,FOLLOW_2); 
 
                     				current = grammarAccess.getComplexTypeFeatureAccess().getVALUE_OBJECTEnumLiteralDeclaration_10().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_10, grammarAccess.getComplexTypeFeatureAccess().getVALUE_OBJECTEnumLiteralDeclaration_10());
@@ -24207,7 +24227,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDataFieldFeature"
-    // InternalMappingDsl.g:9609:1: ruleDataFieldFeature returns [Enumerator current=null] : ( (enumLiteral_0= 'identifier' ) | (enumLiteral_1= 'neverEmpty' ) | (enumLiteral_2= 'part' ) ) ;
+    // InternalMappingDsl.g:9617:1: ruleDataFieldFeature returns [Enumerator current=null] : ( (enumLiteral_0= 'identifier' ) | (enumLiteral_1= 'neverEmpty' ) | (enumLiteral_2= 'part' ) ) ;
     public final Enumerator ruleDataFieldFeature() throws RecognitionException {
         Enumerator current = null;
 
@@ -24219,23 +24239,23 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:9615:2: ( ( (enumLiteral_0= 'identifier' ) | (enumLiteral_1= 'neverEmpty' ) | (enumLiteral_2= 'part' ) ) )
-            // InternalMappingDsl.g:9616:2: ( (enumLiteral_0= 'identifier' ) | (enumLiteral_1= 'neverEmpty' ) | (enumLiteral_2= 'part' ) )
+            // InternalMappingDsl.g:9623:2: ( ( (enumLiteral_0= 'identifier' ) | (enumLiteral_1= 'neverEmpty' ) | (enumLiteral_2= 'part' ) ) )
+            // InternalMappingDsl.g:9624:2: ( (enumLiteral_0= 'identifier' ) | (enumLiteral_1= 'neverEmpty' ) | (enumLiteral_2= 'part' ) )
             {
-            // InternalMappingDsl.g:9616:2: ( (enumLiteral_0= 'identifier' ) | (enumLiteral_1= 'neverEmpty' ) | (enumLiteral_2= 'part' ) )
+            // InternalMappingDsl.g:9624:2: ( (enumLiteral_0= 'identifier' ) | (enumLiteral_1= 'neverEmpty' ) | (enumLiteral_2= 'part' ) )
             int alt219=3;
             switch ( input.LA(1) ) {
-            case 111:
+            case 112:
                 {
                 alt219=1;
                 }
                 break;
-            case 112:
+            case 113:
                 {
                 alt219=2;
                 }
                 break;
-            case 113:
+            case 114:
                 {
                 alt219=3;
                 }
@@ -24249,12 +24269,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             switch (alt219) {
                 case 1 :
-                    // InternalMappingDsl.g:9617:3: (enumLiteral_0= 'identifier' )
+                    // InternalMappingDsl.g:9625:3: (enumLiteral_0= 'identifier' )
                     {
-                    // InternalMappingDsl.g:9617:3: (enumLiteral_0= 'identifier' )
-                    // InternalMappingDsl.g:9618:4: enumLiteral_0= 'identifier'
+                    // InternalMappingDsl.g:9625:3: (enumLiteral_0= 'identifier' )
+                    // InternalMappingDsl.g:9626:4: enumLiteral_0= 'identifier'
                     {
-                    enumLiteral_0=(Token)match(input,111,FOLLOW_2); 
+                    enumLiteral_0=(Token)match(input,112,FOLLOW_2); 
 
                     				current = grammarAccess.getDataFieldFeatureAccess().getIDENTIFIEREnumLiteralDeclaration_0().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_0, grammarAccess.getDataFieldFeatureAccess().getIDENTIFIEREnumLiteralDeclaration_0());
@@ -24266,12 +24286,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalMappingDsl.g:9625:3: (enumLiteral_1= 'neverEmpty' )
+                    // InternalMappingDsl.g:9633:3: (enumLiteral_1= 'neverEmpty' )
                     {
-                    // InternalMappingDsl.g:9625:3: (enumLiteral_1= 'neverEmpty' )
-                    // InternalMappingDsl.g:9626:4: enumLiteral_1= 'neverEmpty'
+                    // InternalMappingDsl.g:9633:3: (enumLiteral_1= 'neverEmpty' )
+                    // InternalMappingDsl.g:9634:4: enumLiteral_1= 'neverEmpty'
                     {
-                    enumLiteral_1=(Token)match(input,112,FOLLOW_2); 
+                    enumLiteral_1=(Token)match(input,113,FOLLOW_2); 
 
                     				current = grammarAccess.getDataFieldFeatureAccess().getNEVER_EMPTYEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_1, grammarAccess.getDataFieldFeatureAccess().getNEVER_EMPTYEnumLiteralDeclaration_1());
@@ -24283,12 +24303,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalMappingDsl.g:9633:3: (enumLiteral_2= 'part' )
+                    // InternalMappingDsl.g:9641:3: (enumLiteral_2= 'part' )
                     {
-                    // InternalMappingDsl.g:9633:3: (enumLiteral_2= 'part' )
-                    // InternalMappingDsl.g:9634:4: enumLiteral_2= 'part'
+                    // InternalMappingDsl.g:9641:3: (enumLiteral_2= 'part' )
+                    // InternalMappingDsl.g:9642:4: enumLiteral_2= 'part'
                     {
-                    enumLiteral_2=(Token)match(input,113,FOLLOW_2); 
+                    enumLiteral_2=(Token)match(input,114,FOLLOW_2); 
 
                     				current = grammarAccess.getDataFieldFeatureAccess().getPARTEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_2, grammarAccess.getDataFieldFeatureAccess().getPARTEnumLiteralDeclaration_2());
@@ -24322,7 +24342,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDataOperationFeature"
-    // InternalMappingDsl.g:9644:1: ruleDataOperationFeature returns [Enumerator current=null] : ( (enumLiteral_0= 'closure' ) | (enumLiteral_1= 'identifier' ) | (enumLiteral_2= 'sideEffectFree' ) | (enumLiteral_3= 'validator' ) ) ;
+    // InternalMappingDsl.g:9652:1: ruleDataOperationFeature returns [Enumerator current=null] : ( (enumLiteral_0= 'closure' ) | (enumLiteral_1= 'identifier' ) | (enumLiteral_2= 'sideEffectFree' ) | (enumLiteral_3= 'validator' ) ) ;
     public final Enumerator ruleDataOperationFeature() throws RecognitionException {
         Enumerator current = null;
 
@@ -24335,28 +24355,28 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalMappingDsl.g:9650:2: ( ( (enumLiteral_0= 'closure' ) | (enumLiteral_1= 'identifier' ) | (enumLiteral_2= 'sideEffectFree' ) | (enumLiteral_3= 'validator' ) ) )
-            // InternalMappingDsl.g:9651:2: ( (enumLiteral_0= 'closure' ) | (enumLiteral_1= 'identifier' ) | (enumLiteral_2= 'sideEffectFree' ) | (enumLiteral_3= 'validator' ) )
+            // InternalMappingDsl.g:9658:2: ( ( (enumLiteral_0= 'closure' ) | (enumLiteral_1= 'identifier' ) | (enumLiteral_2= 'sideEffectFree' ) | (enumLiteral_3= 'validator' ) ) )
+            // InternalMappingDsl.g:9659:2: ( (enumLiteral_0= 'closure' ) | (enumLiteral_1= 'identifier' ) | (enumLiteral_2= 'sideEffectFree' ) | (enumLiteral_3= 'validator' ) )
             {
-            // InternalMappingDsl.g:9651:2: ( (enumLiteral_0= 'closure' ) | (enumLiteral_1= 'identifier' ) | (enumLiteral_2= 'sideEffectFree' ) | (enumLiteral_3= 'validator' ) )
+            // InternalMappingDsl.g:9659:2: ( (enumLiteral_0= 'closure' ) | (enumLiteral_1= 'identifier' ) | (enumLiteral_2= 'sideEffectFree' ) | (enumLiteral_3= 'validator' ) )
             int alt220=4;
             switch ( input.LA(1) ) {
-            case 117:
+            case 118:
                 {
                 alt220=1;
                 }
                 break;
-            case 111:
+            case 112:
                 {
                 alt220=2;
                 }
                 break;
-            case 118:
+            case 119:
                 {
                 alt220=3;
                 }
                 break;
-            case 119:
+            case 120:
                 {
                 alt220=4;
                 }
@@ -24370,12 +24390,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
 
             switch (alt220) {
                 case 1 :
-                    // InternalMappingDsl.g:9652:3: (enumLiteral_0= 'closure' )
+                    // InternalMappingDsl.g:9660:3: (enumLiteral_0= 'closure' )
                     {
-                    // InternalMappingDsl.g:9652:3: (enumLiteral_0= 'closure' )
-                    // InternalMappingDsl.g:9653:4: enumLiteral_0= 'closure'
+                    // InternalMappingDsl.g:9660:3: (enumLiteral_0= 'closure' )
+                    // InternalMappingDsl.g:9661:4: enumLiteral_0= 'closure'
                     {
-                    enumLiteral_0=(Token)match(input,117,FOLLOW_2); 
+                    enumLiteral_0=(Token)match(input,118,FOLLOW_2); 
 
                     				current = grammarAccess.getDataOperationFeatureAccess().getCLOSUREEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_0, grammarAccess.getDataOperationFeatureAccess().getCLOSUREEnumLiteralDeclaration_0());
@@ -24387,12 +24407,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalMappingDsl.g:9660:3: (enumLiteral_1= 'identifier' )
+                    // InternalMappingDsl.g:9668:3: (enumLiteral_1= 'identifier' )
                     {
-                    // InternalMappingDsl.g:9660:3: (enumLiteral_1= 'identifier' )
-                    // InternalMappingDsl.g:9661:4: enumLiteral_1= 'identifier'
+                    // InternalMappingDsl.g:9668:3: (enumLiteral_1= 'identifier' )
+                    // InternalMappingDsl.g:9669:4: enumLiteral_1= 'identifier'
                     {
-                    enumLiteral_1=(Token)match(input,111,FOLLOW_2); 
+                    enumLiteral_1=(Token)match(input,112,FOLLOW_2); 
 
                     				current = grammarAccess.getDataOperationFeatureAccess().getIDENTIFIEREnumLiteralDeclaration_1().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_1, grammarAccess.getDataOperationFeatureAccess().getIDENTIFIEREnumLiteralDeclaration_1());
@@ -24404,12 +24424,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalMappingDsl.g:9668:3: (enumLiteral_2= 'sideEffectFree' )
+                    // InternalMappingDsl.g:9676:3: (enumLiteral_2= 'sideEffectFree' )
                     {
-                    // InternalMappingDsl.g:9668:3: (enumLiteral_2= 'sideEffectFree' )
-                    // InternalMappingDsl.g:9669:4: enumLiteral_2= 'sideEffectFree'
+                    // InternalMappingDsl.g:9676:3: (enumLiteral_2= 'sideEffectFree' )
+                    // InternalMappingDsl.g:9677:4: enumLiteral_2= 'sideEffectFree'
                     {
-                    enumLiteral_2=(Token)match(input,118,FOLLOW_2); 
+                    enumLiteral_2=(Token)match(input,119,FOLLOW_2); 
 
                     				current = grammarAccess.getDataOperationFeatureAccess().getSIDE_EFFECT_FREEEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_2, grammarAccess.getDataOperationFeatureAccess().getSIDE_EFFECT_FREEEnumLiteralDeclaration_2());
@@ -24421,12 +24441,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalMappingDsl.g:9676:3: (enumLiteral_3= 'validator' )
+                    // InternalMappingDsl.g:9684:3: (enumLiteral_3= 'validator' )
                     {
-                    // InternalMappingDsl.g:9676:3: (enumLiteral_3= 'validator' )
-                    // InternalMappingDsl.g:9677:4: enumLiteral_3= 'validator'
+                    // InternalMappingDsl.g:9684:3: (enumLiteral_3= 'validator' )
+                    // InternalMappingDsl.g:9685:4: enumLiteral_3= 'validator'
                     {
-                    enumLiteral_3=(Token)match(input,119,FOLLOW_2); 
+                    enumLiteral_3=(Token)match(input,120,FOLLOW_2); 
 
                     				current = grammarAccess.getDataOperationFeatureAccess().getVALIDATOREnumLiteralDeclaration_3().getEnumLiteral().getInstance();
                     				newLeafNode(enumLiteral_3, grammarAccess.getDataOperationFeatureAccess().getVALIDATOREnumLiteralDeclaration_3());
@@ -24466,12 +24486,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
     protected DFA186 dfa186 = new DFA186(this);
     static final String dfa_1s = "\14\uffff";
     static final String dfa_2s = "\1\2\13\uffff";
-    static final String dfa_3s = "\1\4\1\57\2\uffff\1\40\1\4\1\41\1\60\1\4\1\61\1\6\1\41";
-    static final String dfa_4s = "\1\46\1\57\2\uffff\1\40\1\4\1\42\1\60\1\46\1\61\1\6\1\41";
+    static final String dfa_3s = "\1\4\1\60\2\uffff\1\41\1\4\1\42\1\61\1\4\1\62\1\6\1\42";
+    static final String dfa_4s = "\1\47\1\60\2\uffff\1\41\1\4\1\43\1\61\1\47\1\62\1\6\1\42";
     static final String dfa_5s = "\2\uffff\1\2\1\1\10\uffff";
     static final String dfa_6s = "\14\uffff}>";
     static final String[] dfa_7s = {
-            "\1\2\10\uffff\1\3\30\uffff\1\1",
+            "\1\2\11\uffff\1\3\30\uffff\1\1",
             "\1\4",
             "",
             "",
@@ -24479,7 +24499,7 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             "\1\6",
             "\1\10\1\7",
             "\1\11",
-            "\1\2\10\uffff\1\3\30\uffff\1\1",
+            "\1\2\11\uffff\1\3\30\uffff\1\1",
             "\1\12",
             "\1\13",
             "\1\10"
@@ -24511,14 +24531,14 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         }
     }
     static final String dfa_8s = "\161\uffff";
-    static final String dfa_9s = "\1\4\1\uffff\1\4\1\uffff\3\40\1\21\4\4\3\21\7\4\1\35\2\31\1\4\3\41\1\40\1\4\1\5\2\4\1\5\1\4\1\5\1\4\1\5\1\4\1\5\1\4\2\5\1\35\1\41\1\4\1\31\1\41\1\21\1\32\1\31\1\41\1\21\1\32\7\41\2\40\1\31\1\4\1\5\1\4\1\31\1\4\1\5\2\4\1\41\1\4\1\31\1\32\1\4\1\31\1\32\1\4\1\40\1\21\1\4\1\5\2\4\3\5\1\4\1\31\1\41\1\47\1\31\7\41\1\35\2\31\1\41\1\4\1\5\1\4\1\35\1\41\1\4\1\41";
-    static final String dfa_10s = "\1\u0086\1\uffff\1\116\1\uffff\2\40\1\47\1\21\4\4\3\21\1\u0086\4\4\1\7\1\4\1\41\2\42\1\u0086\3\41\1\61\1\4\1\5\1\u0086\1\4\1\5\1\4\1\5\1\4\1\5\1\4\1\5\1\u0086\2\7\2\41\1\116\1\42\1\41\1\21\2\42\1\41\1\21\4\42\4\41\2\40\1\42\1\4\1\5\1\41\1\42\1\4\1\5\1\50\1\4\1\42\1\4\2\42\1\u0086\2\42\1\u0086\1\61\1\21\1\4\1\5\1\23\1\4\1\5\2\7\1\4\1\42\1\41\1\47\1\42\1\41\3\42\4\41\3\42\1\4\1\5\1\u0086\2\41\1\23\1\41";
+    static final String dfa_9s = "\1\4\1\uffff\1\4\1\uffff\3\41\1\22\4\4\3\22\7\4\1\36\2\32\1\4\3\42\1\41\1\4\1\5\2\4\1\5\1\4\1\5\1\4\1\5\1\4\1\5\1\4\2\5\1\36\1\42\1\4\1\32\1\42\1\22\1\33\1\32\1\42\1\22\1\33\7\42\2\41\1\32\1\4\1\5\1\4\1\32\1\4\1\5\2\4\1\42\1\4\1\32\1\33\1\4\1\32\1\33\1\4\1\41\1\22\1\4\1\5\2\4\3\5\1\4\1\32\1\42\1\50\1\32\7\42\1\36\2\32\1\42\1\4\1\5\1\4\1\36\1\42\1\4\1\42";
+    static final String dfa_10s = "\1\u0087\1\uffff\1\117\1\uffff\2\41\1\50\1\22\4\4\3\22\1\u0087\4\4\1\10\1\4\1\42\2\43\1\u0087\3\42\1\62\1\4\1\5\1\u0087\1\4\1\5\1\4\1\5\1\4\1\5\1\4\1\5\1\u0087\2\10\2\42\1\117\1\43\1\42\1\22\2\43\1\42\1\22\4\43\4\42\2\41\1\43\1\4\1\5\1\42\1\43\1\4\1\5\1\51\1\4\1\43\1\4\2\43\1\u0087\2\43\1\u0087\1\62\1\22\1\4\1\5\1\24\1\4\1\5\2\10\1\4\1\43\1\42\1\50\1\43\1\42\3\43\4\42\3\43\1\4\1\5\1\u0087\2\42\1\24\1\42";
     static final String dfa_11s = "\1\uffff\1\2\1\uffff\1\1\155\uffff";
     static final String dfa_12s = "\161\uffff}>";
     static final String[] dfa_13s = {
-            "\1\1\13\uffff\1\1\25\uffff\1\2\13\uffff\2\1\2\uffff\1\3\115\uffff\3\1",
+            "\1\1\14\uffff\1\1\25\uffff\1\2\13\uffff\2\1\2\uffff\1\3\115\uffff\3\1",
             "",
-            "\1\7\16\uffff\1\6\71\uffff\1\4\1\5",
+            "\1\7\17\uffff\1\6\71\uffff\1\4\1\5",
             "",
             "\1\10",
             "\1\10",
@@ -24531,24 +24551,24 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             "\1\20",
             "\1\21",
             "\1\22",
-            "\1\1\30\uffff\1\23\2\uffff\1\24\5\uffff\1\25\13\uffff\1\1\3\uffff\1\3\115\uffff\3\1",
+            "\1\1\31\uffff\1\23\2\uffff\1\24\5\uffff\1\25\13\uffff\1\1\3\uffff\1\3\115\uffff\3\1",
             "\1\26",
             "\1\27",
             "\1\30",
             "\1\31",
-            "\1\35\1\34\1\33\1\32",
+            "\1\35\1\34\1\33\1\uffff\1\32",
             "\1\7",
             "\1\36\2\uffff\1\37\1\40",
             "\1\44\3\uffff\1\41\2\uffff\1\42\1\uffff\1\43",
             "\1\50\3\uffff\1\45\2\uffff\1\46\1\uffff\1\47",
-            "\1\1\30\uffff\1\23\2\uffff\1\24\5\uffff\1\25\13\uffff\1\1\3\uffff\1\3\115\uffff\3\1",
+            "\1\1\31\uffff\1\23\2\uffff\1\24\5\uffff\1\25\13\uffff\1\1\3\uffff\1\3\115\uffff\3\1",
             "\1\51",
             "\1\51",
             "\1\51",
             "\1\53\20\uffff\1\52",
             "\1\54",
             "\1\55",
-            "\1\1\41\uffff\1\56\13\uffff\1\1\3\uffff\1\3\115\uffff\3\1",
+            "\1\1\42\uffff\1\56\13\uffff\1\1\3\uffff\1\3\115\uffff\3\1",
             "\1\57",
             "\1\60",
             "\1\61",
@@ -24557,12 +24577,12 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             "\1\64",
             "\1\65",
             "\1\66",
-            "\1\1\41\uffff\1\25\13\uffff\1\1\3\uffff\1\3\115\uffff\3\1",
-            "\1\71\1\70\1\67",
-            "\1\74\1\73\1\72",
+            "\1\1\42\uffff\1\25\13\uffff\1\1\3\uffff\1\3\115\uffff\3\1",
+            "\1\71\1\70\1\uffff\1\67",
+            "\1\74\1\73\1\uffff\1\72",
             "\1\36\2\uffff\1\37\1\40",
             "\1\75",
-            "\1\7\16\uffff\1\6\71\uffff\1\76\1\77",
+            "\1\7\17\uffff\1\6\71\uffff\1\76\1\77",
             "\1\44\3\uffff\1\41\2\uffff\1\42\1\uffff\1\43",
             "\1\100",
             "\1\101",
@@ -24583,29 +24603,29 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             "\1\44\10\uffff\1\43",
             "\1\113",
             "\1\114",
-            "\1\15\34\uffff\1\115",
+            "\1\15\35\uffff\1\115",
             "\1\50\10\uffff\1\47",
             "\1\116",
             "\1\117",
-            "\1\16\43\uffff\1\120",
+            "\1\16\44\uffff\1\120",
             "\1\121",
             "\1\51\1\110",
             "\1\122",
             "\1\44\3\uffff\1\123\2\uffff\1\124\1\uffff\1\43",
             "\1\103\7\uffff\1\102",
-            "\1\1\41\uffff\1\125\13\uffff\1\1\3\uffff\1\3\115\uffff\3\1",
+            "\1\1\42\uffff\1\125\13\uffff\1\1\3\uffff\1\3\115\uffff\3\1",
             "\1\50\3\uffff\1\126\2\uffff\1\127\1\uffff\1\47",
             "\1\107\7\uffff\1\106",
-            "\1\1\41\uffff\1\25\13\uffff\1\1\3\uffff\1\3\115\uffff\3\1",
+            "\1\1\42\uffff\1\25\13\uffff\1\1\3\uffff\1\3\115\uffff\3\1",
             "\1\131\20\uffff\1\130",
             "\1\132",
             "\1\133",
             "\1\134",
-            "\1\7\16\uffff\1\135",
+            "\1\7\17\uffff\1\135",
             "\1\136",
             "\1\137",
-            "\1\142\1\141\1\140",
-            "\1\145\1\144\1\143",
+            "\1\142\1\141\1\uffff\1\140",
+            "\1\145\1\144\1\uffff\1\143",
             "\1\146",
             "\1\44\3\uffff\1\123\2\uffff\1\124\1\uffff\1\43",
             "\1\147",
@@ -24624,10 +24644,10 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             "\1\51\1\110",
             "\1\155",
             "\1\156",
-            "\1\1\41\uffff\1\157\13\uffff\1\1\3\uffff\1\3\115\uffff\3\1",
+            "\1\1\42\uffff\1\157\13\uffff\1\1\3\uffff\1\3\115\uffff\3\1",
             "\1\152\2\uffff\1\153\1\154",
             "\1\160",
-            "\1\7\16\uffff\1\6",
+            "\1\7\17\uffff\1\6",
             "\1\154"
     };
 
@@ -24656,27 +24676,27 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
         }
     }
     static final String dfa_14s = "\21\uffff";
-    static final String dfa_15s = "\1\121\1\4\1\16\1\4\1\uffff\13\4\1\uffff";
-    static final String dfa_16s = "\1\121\1\4\1\16\1\u008a\1\uffff\13\20\1\uffff";
+    static final String dfa_15s = "\1\122\1\4\1\17\1\4\1\uffff\13\4\1\uffff";
+    static final String dfa_16s = "\1\122\1\4\1\17\1\u008b\1\uffff\13\21\1\uffff";
     static final String dfa_17s = "\4\uffff\1\1\13\uffff\1\2";
     static final String dfa_18s = "\21\uffff}>";
     static final String[] dfa_19s = {
             "\1\1",
             "\1\2",
             "\1\3",
-            "\1\4\155\uffff\2\4\6\uffff\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\1\15\1\16\6\uffff\1\17",
+            "\1\4\156\uffff\2\4\6\uffff\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\1\15\1\16\6\uffff\1\17",
             "",
-            "\1\4\13\uffff\1\20",
-            "\1\4\13\uffff\1\20",
-            "\1\4\13\uffff\1\20",
-            "\1\4\13\uffff\1\20",
-            "\1\4\13\uffff\1\20",
-            "\1\4\13\uffff\1\20",
-            "\1\4\13\uffff\1\20",
-            "\1\4\13\uffff\1\20",
-            "\1\4\13\uffff\1\20",
-            "\1\4\13\uffff\1\20",
-            "\1\4\13\uffff\1\20",
+            "\1\4\14\uffff\1\20",
+            "\1\4\14\uffff\1\20",
+            "\1\4\14\uffff\1\20",
+            "\1\4\14\uffff\1\20",
+            "\1\4\14\uffff\1\20",
+            "\1\4\14\uffff\1\20",
+            "\1\4\14\uffff\1\20",
+            "\1\4\14\uffff\1\20",
+            "\1\4\14\uffff\1\20",
+            "\1\4\14\uffff\1\20",
+            "\1\4\14\uffff\1\20",
             ""
     };
 
@@ -24701,152 +24721,152 @@ public class InternalMappingDslParser extends AbstractInternalAntlrParser {
             this.transition = dfa_19;
         }
         public String getDescription() {
-            return "7948:2: ( (otherlv_0= 'list' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_dataFields_3_0= ruleDataField ) ) (otherlv_4= ',' ( (lv_dataFields_5_0= ruleDataField ) ) )* otherlv_6= '}' ) | (otherlv_7= 'list' ( (lv_name_8_0= RULE_ID ) ) otherlv_9= '{' ( (lv_primitiveType_10_0= rulePrimitiveType ) ) otherlv_11= '}' ) )";
+            return "7956:2: ( (otherlv_0= 'list' ( (lv_name_1_0= RULE_ID ) ) otherlv_2= '{' ( (lv_dataFields_3_0= ruleDataField ) ) (otherlv_4= ',' ( (lv_dataFields_5_0= ruleDataField ) ) )* otherlv_6= '}' ) | (otherlv_7= 'list' ( (lv_name_8_0= RULE_ID ) ) otherlv_9= '{' ( (lv_primitiveType_10_0= rulePrimitiveType ) ) otherlv_11= '}' ) )";
         }
     }
  
 
     public static final BitSet FOLLOW_1 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_2 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_3 = new BitSet(new long[]{0x0000004800002012L});
-    public static final BitSet FOLLOW_4 = new BitSet(new long[]{0x0000004000002012L});
-    public static final BitSet FOLLOW_5 = new BitSet(new long[]{0x0000004000000012L});
-    public static final BitSet FOLLOW_6 = new BitSet(new long[]{0x0000004000002000L});
+    public static final BitSet FOLLOW_3 = new BitSet(new long[]{0x0000009000004012L});
+    public static final BitSet FOLLOW_4 = new BitSet(new long[]{0x0000008000004012L});
+    public static final BitSet FOLLOW_5 = new BitSet(new long[]{0x0000008000000012L});
+    public static final BitSet FOLLOW_6 = new BitSet(new long[]{0x0000008000004000L});
     public static final BitSet FOLLOW_7 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_8 = new BitSet(new long[]{0x0000000000004000L});
-    public static final BitSet FOLLOW_9 = new BitSet(new long[]{0x0000000060018010L});
-    public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x0000000000010010L});
-    public static final BitSet FOLLOW_11 = new BitSet(new long[]{0x0000000060010010L});
-    public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x0000000040010000L});
-    public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x0000000000020000L});
-    public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x0000004000000010L});
-    public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x0000000000BD8000L});
-    public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x0000000000000000L,0x0000000000006000L});
-    public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x0000000000010000L,0x0000000000006000L});
-    public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x0000000000B98000L});
-    public static final BitSet FOLLOW_19 = new BitSet(new long[]{0x0000000000B18000L});
-    public static final BitSet FOLLOW_20 = new BitSet(new long[]{0x0000000000B10000L});
-    public static final BitSet FOLLOW_21 = new BitSet(new long[]{0x0000000000A10000L});
-    public static final BitSet FOLLOW_22 = new BitSet(new long[]{0x0000000000210000L});
-    public static final BitSet FOLLOW_23 = new BitSet(new long[]{0x00000000000D8000L});
-    public static final BitSet FOLLOW_24 = new BitSet(new long[]{0x0000000000098000L});
-    public static final BitSet FOLLOW_25 = new BitSet(new long[]{0x0000000000018000L});
-    public static final BitSet FOLLOW_26 = new BitSet(new long[]{0x0000000000010000L});
-    public static final BitSet FOLLOW_27 = new BitSet(new long[]{0x00000000004D8000L});
-    public static final BitSet FOLLOW_28 = new BitSet(new long[]{0x0000000000498000L});
-    public static final BitSet FOLLOW_29 = new BitSet(new long[]{0x0000000000418000L});
-    public static final BitSet FOLLOW_30 = new BitSet(new long[]{0x0000000000410000L});
-    public static final BitSet FOLLOW_31 = new BitSet(new long[]{0x0000000009000000L});
-    public static final BitSet FOLLOW_32 = new BitSet(new long[]{0x0000000009010000L});
-    public static final BitSet FOLLOW_33 = new BitSet(new long[]{0x0000000000200000L});
-    public static final BitSet FOLLOW_34 = new BitSet(new long[]{0x0000000006004000L});
-    public static final BitSet FOLLOW_35 = new BitSet(new long[]{0x0000000004004000L});
-    public static final BitSet FOLLOW_36 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_37 = new BitSet(new long[]{0x0000000016004000L});
-    public static final BitSet FOLLOW_38 = new BitSet(new long[]{0x0000000020008010L});
-    public static final BitSet FOLLOW_39 = new BitSet(new long[]{0x0000000020000010L});
-    public static final BitSet FOLLOW_40 = new BitSet(new long[]{0x0000000020010010L});
-    public static final BitSet FOLLOW_41 = new BitSet(new long[]{0x0000000080418000L});
-    public static final BitSet FOLLOW_42 = new BitSet(new long[]{0x0000000080410000L});
-    public static final BitSet FOLLOW_43 = new BitSet(new long[]{0x0000000000002000L});
-    public static final BitSet FOLLOW_44 = new BitSet(new long[]{0x0000000002000000L});
-    public static final BitSet FOLLOW_45 = new BitSet(new long[]{0x0000000100000002L});
+    public static final BitSet FOLLOW_8 = new BitSet(new long[]{0x0000000000008000L});
+    public static final BitSet FOLLOW_9 = new BitSet(new long[]{0x00000000C0030010L});
+    public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x0000000000020010L});
+    public static final BitSet FOLLOW_11 = new BitSet(new long[]{0x00000000C0020010L});
+    public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x0000000080020000L});
+    public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x0000000000040000L});
+    public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x0000008000000010L});
+    public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x00000000017B0000L});
+    public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x0000000000000000L,0x000000000000C000L});
+    public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x0000000000020000L,0x000000000000C000L});
+    public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x0000000001730000L});
+    public static final BitSet FOLLOW_19 = new BitSet(new long[]{0x0000000001630000L});
+    public static final BitSet FOLLOW_20 = new BitSet(new long[]{0x0000000001620000L});
+    public static final BitSet FOLLOW_21 = new BitSet(new long[]{0x0000000001420000L});
+    public static final BitSet FOLLOW_22 = new BitSet(new long[]{0x0000000000420000L});
+    public static final BitSet FOLLOW_23 = new BitSet(new long[]{0x00000000001B0000L});
+    public static final BitSet FOLLOW_24 = new BitSet(new long[]{0x0000000000130000L});
+    public static final BitSet FOLLOW_25 = new BitSet(new long[]{0x0000000000030000L});
+    public static final BitSet FOLLOW_26 = new BitSet(new long[]{0x0000000000020000L});
+    public static final BitSet FOLLOW_27 = new BitSet(new long[]{0x00000000009B0000L});
+    public static final BitSet FOLLOW_28 = new BitSet(new long[]{0x0000000000930000L});
+    public static final BitSet FOLLOW_29 = new BitSet(new long[]{0x0000000000830000L});
+    public static final BitSet FOLLOW_30 = new BitSet(new long[]{0x0000000000820000L});
+    public static final BitSet FOLLOW_31 = new BitSet(new long[]{0x0000000012000000L});
+    public static final BitSet FOLLOW_32 = new BitSet(new long[]{0x0000000012020000L});
+    public static final BitSet FOLLOW_33 = new BitSet(new long[]{0x0000000000400000L});
+    public static final BitSet FOLLOW_34 = new BitSet(new long[]{0x000000000C008000L});
+    public static final BitSet FOLLOW_35 = new BitSet(new long[]{0x0000000008008000L});
+    public static final BitSet FOLLOW_36 = new BitSet(new long[]{0x0000000000010000L});
+    public static final BitSet FOLLOW_37 = new BitSet(new long[]{0x000000002C008000L});
+    public static final BitSet FOLLOW_38 = new BitSet(new long[]{0x0000000040010010L});
+    public static final BitSet FOLLOW_39 = new BitSet(new long[]{0x0000000040000010L});
+    public static final BitSet FOLLOW_40 = new BitSet(new long[]{0x0000000040020010L});
+    public static final BitSet FOLLOW_41 = new BitSet(new long[]{0x0000000100830000L});
+    public static final BitSet FOLLOW_42 = new BitSet(new long[]{0x0000000100820000L});
+    public static final BitSet FOLLOW_43 = new BitSet(new long[]{0x0000000000004000L});
+    public static final BitSet FOLLOW_44 = new BitSet(new long[]{0x0000000004000000L});
+    public static final BitSet FOLLOW_45 = new BitSet(new long[]{0x0000000200000002L});
     public static final BitSet FOLLOW_46 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_47 = new BitSet(new long[]{0x0000000200000000L});
-    public static final BitSet FOLLOW_48 = new BitSet(new long[]{0x0000000402000000L});
-    public static final BitSet FOLLOW_49 = new BitSet(new long[]{0x0000000404000000L});
-    public static final BitSet FOLLOW_50 = new BitSet(new long[]{0x0000000104000000L});
-    public static final BitSet FOLLOW_51 = new BitSet(new long[]{0x00000000000000F0L});
-    public static final BitSet FOLLOW_52 = new BitSet(new long[]{0x0000000600000000L});
-    public static final BitSet FOLLOW_53 = new BitSet(new long[]{0x0000000004000000L});
-    public static final BitSet FOLLOW_54 = new BitSet(new long[]{0x0000900000000000L});
-    public static final BitSet FOLLOW_55 = new BitSet(new long[]{0x0000001000000000L});
-    public static final BitSet FOLLOW_56 = new BitSet(new long[]{0x0000002000000000L});
-    public static final BitSet FOLLOW_57 = new BitSet(new long[]{0x0000004000000000L,0x0000000000000010L,0x0000000000000370L});
-    public static final BitSet FOLLOW_58 = new BitSet(new long[]{0x0000000000080000L});
-    public static final BitSet FOLLOW_59 = new BitSet(new long[]{0x0000000100000000L});
-    public static final BitSet FOLLOW_60 = new BitSet(new long[]{0x0000000200000010L});
-    public static final BitSet FOLLOW_61 = new BitSet(new long[]{0x0000008000000000L});
-    public static final BitSet FOLLOW_62 = new BitSet(new long[]{0x0000010000000010L});
-    public static final BitSet FOLLOW_63 = new BitSet(new long[]{0x0000020000000000L});
-    public static final BitSet FOLLOW_64 = new BitSet(new long[]{0x0000040000004000L});
-    public static final BitSet FOLLOW_65 = new BitSet(new long[]{0x0004084000100000L,0x0000000000000000L,0x0000000000000070L});
-    public static final BitSet FOLLOW_66 = new BitSet(new long[]{0x0000100000000000L});
-    public static final BitSet FOLLOW_67 = new BitSet(new long[]{0x0000000400010000L});
-    public static final BitSet FOLLOW_68 = new BitSet(new long[]{0x0000200000000000L});
-    public static final BitSet FOLLOW_69 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_70 = new BitSet(new long[]{0x0004084000110000L,0x0000000000000000L,0x0000000000000070L});
-    public static final BitSet FOLLOW_71 = new BitSet(new long[]{0x0000800000000000L});
-    public static final BitSet FOLLOW_72 = new BitSet(new long[]{0x0001000000000000L});
-    public static final BitSet FOLLOW_73 = new BitSet(new long[]{0x0002000000000000L});
+    public static final BitSet FOLLOW_47 = new BitSet(new long[]{0x0000000400000000L});
+    public static final BitSet FOLLOW_48 = new BitSet(new long[]{0x0000000804000000L});
+    public static final BitSet FOLLOW_49 = new BitSet(new long[]{0x0000000808000000L});
+    public static final BitSet FOLLOW_50 = new BitSet(new long[]{0x0000000208000000L});
+    public static final BitSet FOLLOW_51 = new BitSet(new long[]{0x0000000000000170L});
+    public static final BitSet FOLLOW_52 = new BitSet(new long[]{0x0000000C00000000L});
+    public static final BitSet FOLLOW_53 = new BitSet(new long[]{0x0000000008000000L});
+    public static final BitSet FOLLOW_54 = new BitSet(new long[]{0x0001200000000000L});
+    public static final BitSet FOLLOW_55 = new BitSet(new long[]{0x0000002000000000L});
+    public static final BitSet FOLLOW_56 = new BitSet(new long[]{0x0000004000000000L});
+    public static final BitSet FOLLOW_57 = new BitSet(new long[]{0x0000008000000000L,0x0000000000000020L,0x00000000000006E0L});
+    public static final BitSet FOLLOW_58 = new BitSet(new long[]{0x0000000000100000L});
+    public static final BitSet FOLLOW_59 = new BitSet(new long[]{0x0000000200000000L});
+    public static final BitSet FOLLOW_60 = new BitSet(new long[]{0x0000000400000010L});
+    public static final BitSet FOLLOW_61 = new BitSet(new long[]{0x0000010000000000L});
+    public static final BitSet FOLLOW_62 = new BitSet(new long[]{0x0000020000000010L});
+    public static final BitSet FOLLOW_63 = new BitSet(new long[]{0x0000040000000000L});
+    public static final BitSet FOLLOW_64 = new BitSet(new long[]{0x0000080000008000L});
+    public static final BitSet FOLLOW_65 = new BitSet(new long[]{0x0008108000200000L,0x0000000000000000L,0x00000000000000E0L});
+    public static final BitSet FOLLOW_66 = new BitSet(new long[]{0x0000200000000000L});
+    public static final BitSet FOLLOW_67 = new BitSet(new long[]{0x0000000800020000L});
+    public static final BitSet FOLLOW_68 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_69 = new BitSet(new long[]{0x0000800000000000L});
+    public static final BitSet FOLLOW_70 = new BitSet(new long[]{0x0008108000220000L,0x0000000000000000L,0x00000000000000E0L});
+    public static final BitSet FOLLOW_71 = new BitSet(new long[]{0x0001000000000000L});
+    public static final BitSet FOLLOW_72 = new BitSet(new long[]{0x0002000000000000L});
+    public static final BitSet FOLLOW_73 = new BitSet(new long[]{0x0004000000000000L});
     public static final BitSet FOLLOW_74 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_75 = new BitSet(new long[]{0x0004004000100000L,0x0000000000000000L,0x0000000000000070L});
-    public static final BitSet FOLLOW_76 = new BitSet(new long[]{0x0000000000100000L,0x0000000000000000L,0x0000000000000070L});
-    public static final BitSet FOLLOW_77 = new BitSet(new long[]{0x0000000000100000L});
-    public static final BitSet FOLLOW_78 = new BitSet(new long[]{0x004C004000010010L,0x0000000000000000L,0x0000000000000070L});
-    public static final BitSet FOLLOW_79 = new BitSet(new long[]{0x000C004000010010L,0x0000000000000000L,0x0000000000000070L});
-    public static final BitSet FOLLOW_80 = new BitSet(new long[]{0xFFC7FE7F377FE1F0L,0xFFFFFFFBFFFFFFFFL,0x00000000000003FFL});
-    public static final BitSet FOLLOW_81 = new BitSet(new long[]{0x0038000000000000L});
-    public static final BitSet FOLLOW_82 = new BitSet(new long[]{0x0004004000000010L,0x0000000000000000L,0x0000000000000070L});
-    public static final BitSet FOLLOW_83 = new BitSet(new long[]{0x0000000000000010L,0x0000000000000000L,0x0000000000000070L});
-    public static final BitSet FOLLOW_84 = new BitSet(new long[]{0x0000004600000000L,0x0000000000006000L});
-    public static final BitSet FOLLOW_85 = new BitSet(new long[]{0x0000004000000000L,0x0000000000006000L});
-    public static final BitSet FOLLOW_86 = new BitSet(new long[]{0x0040004000000000L});
-    public static final BitSet FOLLOW_87 = new BitSet(new long[]{0x0080000000000010L,0x0000000000001C00L});
-    public static final BitSet FOLLOW_88 = new BitSet(new long[]{0x0080000000000010L});
-    public static final BitSet FOLLOW_89 = new BitSet(new long[]{0x0100000002000000L});
-    public static final BitSet FOLLOW_90 = new BitSet(new long[]{0x0000000000000010L,0xFC00000000000000L,0x000000000000040FL});
-    public static final BitSet FOLLOW_91 = new BitSet(new long[]{0x0002000000000002L});
-    public static final BitSet FOLLOW_92 = new BitSet(new long[]{0x00000000000000E0L});
-    public static final BitSet FOLLOW_93 = new BitSet(new long[]{0x0000000020000000L});
-    public static final BitSet FOLLOW_94 = new BitSet(new long[]{0xFFC7FE7F377FE1F2L,0xFFFFFFFBFFFFFFFFL,0x00000000000003FFL});
-    public static final BitSet FOLLOW_95 = new BitSet(new long[]{0x0000000000000000L,0x0000000400000000L});
-    public static final BitSet FOLLOW_96 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000020L});
-    public static final BitSet FOLLOW_97 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000040L});
-    public static final BitSet FOLLOW_98 = new BitSet(new long[]{0x0000000404000000L,0x0000000000000080L});
-    public static final BitSet FOLLOW_99 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000100L});
-    public static final BitSet FOLLOW_100 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000200L});
-    public static final BitSet FOLLOW_101 = new BitSet(new long[]{0x0000000004000000L,0x0000000000008000L});
-    public static final BitSet FOLLOW_102 = new BitSet(new long[]{0x0000000000000000L,0x0000000000010000L});
-    public static final BitSet FOLLOW_103 = new BitSet(new long[]{0x0000000000000000L,0xFC00000000000000L,0x000000000000040FL});
-    public static final BitSet FOLLOW_104 = new BitSet(new long[]{0x0000000410000000L,0x0000000000180000L});
-    public static final BitSet FOLLOW_105 = new BitSet(new long[]{0x0000000000000000L,0x0000000000200000L});
-    public static final BitSet FOLLOW_106 = new BitSet(new long[]{0x0000000000010000L,0x0000000000000002L});
-    public static final BitSet FOLLOW_107 = new BitSet(new long[]{0x0000000000000000L,0x0000000000400000L});
-    public static final BitSet FOLLOW_108 = new BitSet(new long[]{0x0000000000010000L,0xFC00000000000000L,0x000000000000040FL});
-    public static final BitSet FOLLOW_109 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000080L});
-    public static final BitSet FOLLOW_110 = new BitSet(new long[]{0x0202000004000000L});
-    public static final BitSet FOLLOW_111 = new BitSet(new long[]{0x0200000004000000L});
-    public static final BitSet FOLLOW_112 = new BitSet(new long[]{0x0000000000000000L,0x0000000001800000L});
-    public static final BitSet FOLLOW_113 = new BitSet(new long[]{0x0400000400000000L});
-    public static final BitSet FOLLOW_114 = new BitSet(new long[]{0x0000000000000000L,0x0000000000001C00L});
-    public static final BitSet FOLLOW_115 = new BitSet(new long[]{0x0000000000000000L,0x000000003C000000L});
-    public static final BitSet FOLLOW_116 = new BitSet(new long[]{0x0200000000000000L,0x0000000080000000L});
-    public static final BitSet FOLLOW_117 = new BitSet(new long[]{0x0000000000000000L,0x0000000001000000L});
-    public static final BitSet FOLLOW_118 = new BitSet(new long[]{0x0000000000000000L,0x0000000080000000L});
-    public static final BitSet FOLLOW_119 = new BitSet(new long[]{0x4000700000400000L,0x0000000002000000L,0x0000000000001800L});
-    public static final BitSet FOLLOW_120 = new BitSet(new long[]{0x0000000404004000L});
-    public static final BitSet FOLLOW_121 = new BitSet(new long[]{0x0000000000010000L,0xFC00000200000000L,0x000000000000040FL});
-    public static final BitSet FOLLOW_122 = new BitSet(new long[]{0x0000000000000000L,0x0000000100000010L});
-    public static final BitSet FOLLOW_123 = new BitSet(new long[]{0x0000000000010000L,0x0010000800060000L});
-    public static final BitSet FOLLOW_124 = new BitSet(new long[]{0x0000000000010000L,0x0010000000060000L});
-    public static final BitSet FOLLOW_125 = new BitSet(new long[]{0x0000000000010000L,0x0000000800000000L});
-    public static final BitSet FOLLOW_126 = new BitSet(new long[]{0x0000000000000000L,0x0010000000060000L});
-    public static final BitSet FOLLOW_127 = new BitSet(new long[]{0x0200000000004000L,0x0000400000000000L});
-    public static final BitSet FOLLOW_128 = new BitSet(new long[]{0x0000000000000000L,0x00003FF000000002L});
-    public static final BitSet FOLLOW_129 = new BitSet(new long[]{0x0000000000004000L,0x0000400000000000L});
-    public static final BitSet FOLLOW_130 = new BitSet(new long[]{0x0000000000010010L,0xFF0C000000000000L,0x000000000000040FL});
-    public static final BitSet FOLLOW_131 = new BitSet(new long[]{0x0000000000000010L,0xFF0C000000000000L,0x000000000000040FL});
-    public static final BitSet FOLLOW_132 = new BitSet(new long[]{0x0000000000000010L,0xFC0C000000000000L,0x000000000000040FL});
-    public static final BitSet FOLLOW_133 = new BitSet(new long[]{0x0000000000000010L,0xFC08000000000000L,0x000000000000040FL});
-    public static final BitSet FOLLOW_134 = new BitSet(new long[]{0x0202000000000002L});
-    public static final BitSet FOLLOW_135 = new BitSet(new long[]{0x0200000000000002L});
-    public static final BitSet FOLLOW_136 = new BitSet(new long[]{0x0000000000000000L,0x0003800000000000L});
-    public static final BitSet FOLLOW_137 = new BitSet(new long[]{0x0200000000004000L});
-    public static final BitSet FOLLOW_138 = new BitSet(new long[]{0x0000000000000000L,0x0300000000000000L});
-    public static final BitSet FOLLOW_139 = new BitSet(new long[]{0x0200000100000002L});
-    public static final BitSet FOLLOW_140 = new BitSet(new long[]{0x0000000600000010L,0xFC00000000000000L,0x000000000000040FL});
-    public static final BitSet FOLLOW_141 = new BitSet(new long[]{0x0000000000000000L,0x00E0800000000000L});
-    public static final BitSet FOLLOW_142 = new BitSet(new long[]{0x0000000020000002L});
+    public static final BitSet FOLLOW_75 = new BitSet(new long[]{0x0008008000200000L,0x0000000000000000L,0x00000000000000E0L});
+    public static final BitSet FOLLOW_76 = new BitSet(new long[]{0x0000000000200000L,0x0000000000000000L,0x00000000000000E0L});
+    public static final BitSet FOLLOW_77 = new BitSet(new long[]{0x0000000000200000L});
+    public static final BitSet FOLLOW_78 = new BitSet(new long[]{0x0098008000020010L,0x0000000000000000L,0x00000000000000E0L});
+    public static final BitSet FOLLOW_79 = new BitSet(new long[]{0x0018008000020010L,0x0000000000000000L,0x00000000000000E0L});
+    public static final BitSet FOLLOW_80 = new BitSet(new long[]{0xFF8FFCFE6EFFC3F0L,0xFFFFFFF7FFFFFFFFL,0x00000000000007FFL});
+    public static final BitSet FOLLOW_81 = new BitSet(new long[]{0x0070000000000000L});
+    public static final BitSet FOLLOW_82 = new BitSet(new long[]{0x0008008000000010L,0x0000000000000000L,0x00000000000000E0L});
+    public static final BitSet FOLLOW_83 = new BitSet(new long[]{0x0000000000000010L,0x0000000000000000L,0x00000000000000E0L});
+    public static final BitSet FOLLOW_84 = new BitSet(new long[]{0x0000008C00000000L,0x000000000000C000L});
+    public static final BitSet FOLLOW_85 = new BitSet(new long[]{0x0000008000000000L,0x000000000000C000L});
+    public static final BitSet FOLLOW_86 = new BitSet(new long[]{0x0080008000000000L});
+    public static final BitSet FOLLOW_87 = new BitSet(new long[]{0x0100000000000010L,0x0000000000003800L});
+    public static final BitSet FOLLOW_88 = new BitSet(new long[]{0x0100000000000010L});
+    public static final BitSet FOLLOW_89 = new BitSet(new long[]{0x0200000004000000L});
+    public static final BitSet FOLLOW_90 = new BitSet(new long[]{0x0000000000000010L,0xF800000000000000L,0x000000000000081FL});
+    public static final BitSet FOLLOW_91 = new BitSet(new long[]{0x0004000000000002L});
+    public static final BitSet FOLLOW_92 = new BitSet(new long[]{0x0000000000000160L});
+    public static final BitSet FOLLOW_93 = new BitSet(new long[]{0x0000000040000000L});
+    public static final BitSet FOLLOW_94 = new BitSet(new long[]{0xFF8FFCFE6EFFC3F2L,0xFFFFFFF7FFFFFFFFL,0x00000000000007FFL});
+    public static final BitSet FOLLOW_95 = new BitSet(new long[]{0x0000000000000000L,0x0000000800000000L});
+    public static final BitSet FOLLOW_96 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000040L});
+    public static final BitSet FOLLOW_97 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000080L});
+    public static final BitSet FOLLOW_98 = new BitSet(new long[]{0x0000000808000000L,0x0000000000000100L});
+    public static final BitSet FOLLOW_99 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000200L});
+    public static final BitSet FOLLOW_100 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000400L});
+    public static final BitSet FOLLOW_101 = new BitSet(new long[]{0x0000000008000000L,0x0000000000010000L});
+    public static final BitSet FOLLOW_102 = new BitSet(new long[]{0x0000000000000000L,0x0000000000020000L});
+    public static final BitSet FOLLOW_103 = new BitSet(new long[]{0x0000000000000000L,0xF800000000000000L,0x000000000000081FL});
+    public static final BitSet FOLLOW_104 = new BitSet(new long[]{0x0000000820000000L,0x0000000000300000L});
+    public static final BitSet FOLLOW_105 = new BitSet(new long[]{0x0000000000000000L,0x0000000000400000L});
+    public static final BitSet FOLLOW_106 = new BitSet(new long[]{0x0000000000020000L,0x0000000000000004L});
+    public static final BitSet FOLLOW_107 = new BitSet(new long[]{0x0000000000000000L,0x0000000000800000L});
+    public static final BitSet FOLLOW_108 = new BitSet(new long[]{0x0000000000020000L,0xF800000000000000L,0x000000000000081FL});
+    public static final BitSet FOLLOW_109 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000100L});
+    public static final BitSet FOLLOW_110 = new BitSet(new long[]{0x0404000008000000L});
+    public static final BitSet FOLLOW_111 = new BitSet(new long[]{0x0400000008000000L});
+    public static final BitSet FOLLOW_112 = new BitSet(new long[]{0x0000000000000000L,0x0000000003000000L});
+    public static final BitSet FOLLOW_113 = new BitSet(new long[]{0x0800000800000000L});
+    public static final BitSet FOLLOW_114 = new BitSet(new long[]{0x0000000000000000L,0x0000000000003800L});
+    public static final BitSet FOLLOW_115 = new BitSet(new long[]{0x0000000000000000L,0x0000000078000000L});
+    public static final BitSet FOLLOW_116 = new BitSet(new long[]{0x0400000000000000L,0x0000000100000000L});
+    public static final BitSet FOLLOW_117 = new BitSet(new long[]{0x0000000000000000L,0x0000000002000000L});
+    public static final BitSet FOLLOW_118 = new BitSet(new long[]{0x0000000000000000L,0x0000000100000000L});
+    public static final BitSet FOLLOW_119 = new BitSet(new long[]{0x8000E00000800000L,0x0000000004000000L,0x0000000000003000L});
+    public static final BitSet FOLLOW_120 = new BitSet(new long[]{0x0000000808008000L});
+    public static final BitSet FOLLOW_121 = new BitSet(new long[]{0x0000000000020000L,0xF800000400000000L,0x000000000000081FL});
+    public static final BitSet FOLLOW_122 = new BitSet(new long[]{0x0000000000000000L,0x0000000200000020L});
+    public static final BitSet FOLLOW_123 = new BitSet(new long[]{0x0000000000020000L,0x00200010000C0000L});
+    public static final BitSet FOLLOW_124 = new BitSet(new long[]{0x0000000000020000L,0x00200000000C0000L});
+    public static final BitSet FOLLOW_125 = new BitSet(new long[]{0x0000000000020000L,0x0000001000000000L});
+    public static final BitSet FOLLOW_126 = new BitSet(new long[]{0x0000000000000000L,0x00200000000C0000L});
+    public static final BitSet FOLLOW_127 = new BitSet(new long[]{0x0400000000008000L,0x0000800000000000L});
+    public static final BitSet FOLLOW_128 = new BitSet(new long[]{0x0000000000000000L,0x00007FE000000004L});
+    public static final BitSet FOLLOW_129 = new BitSet(new long[]{0x0000000000008000L,0x0000800000000000L});
+    public static final BitSet FOLLOW_130 = new BitSet(new long[]{0x0000000000020010L,0xFE18000000000000L,0x000000000000081FL});
+    public static final BitSet FOLLOW_131 = new BitSet(new long[]{0x0000000000000010L,0xFE18000000000000L,0x000000000000081FL});
+    public static final BitSet FOLLOW_132 = new BitSet(new long[]{0x0000000000000010L,0xF818000000000000L,0x000000000000081FL});
+    public static final BitSet FOLLOW_133 = new BitSet(new long[]{0x0000000000000010L,0xF810000000000000L,0x000000000000081FL});
+    public static final BitSet FOLLOW_134 = new BitSet(new long[]{0x0404000000000002L});
+    public static final BitSet FOLLOW_135 = new BitSet(new long[]{0x0400000000000002L});
+    public static final BitSet FOLLOW_136 = new BitSet(new long[]{0x0000000000000000L,0x0007000000000000L});
+    public static final BitSet FOLLOW_137 = new BitSet(new long[]{0x0400000000008000L});
+    public static final BitSet FOLLOW_138 = new BitSet(new long[]{0x0000000000000000L,0x0600000000000000L});
+    public static final BitSet FOLLOW_139 = new BitSet(new long[]{0x0400000200000002L});
+    public static final BitSet FOLLOW_140 = new BitSet(new long[]{0x0000000C00000010L,0xF800000000000000L,0x000000000000081FL});
+    public static final BitSet FOLLOW_141 = new BitSet(new long[]{0x0000000000000000L,0x01C1000000000000L});
+    public static final BitSet FOLLOW_142 = new BitSet(new long[]{0x0000000040000002L});
 
 }

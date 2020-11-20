@@ -313,6 +313,9 @@ public abstract class AbstractServiceDslProposalProvider extends TechnologyDslPr
 	public void complete_QualifiedNameWithAtLeastOneLevel(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		// subclasses may override
 	}
+	public void complete_NUMBER_WITH_TRAILING_PERIOD(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		// subclasses may override
+	}
 	public void complete_Anything(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		// subclasses may override
 	}

@@ -3280,36 +3280,44 @@ ruleAnything returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken(
 			newLeafNode(this_BOOLEAN_116, grammarAccess.getAnythingAccess().getBOOLEANTerminalRuleCall_115());
 		}
 		    |
-		this_BIG_DECIMAL_117=RULE_BIG_DECIMAL
+		this_NUMBER_WITH_TRAILING_PERIOD_117=RULE_NUMBER_WITH_TRAILING_PERIOD
 		{
-			$current.merge(this_BIG_DECIMAL_117);
+			$current.merge(this_NUMBER_WITH_TRAILING_PERIOD_117);
 		}
 		{
-			newLeafNode(this_BIG_DECIMAL_117, grammarAccess.getAnythingAccess().getBIG_DECIMALTerminalRuleCall_116());
-		}
-		    |
-		this_ID_118=RULE_ID
-		{
-			$current.merge(this_ID_118);
-		}
-		{
-			newLeafNode(this_ID_118, grammarAccess.getAnythingAccess().getIDTerminalRuleCall_117());
+			newLeafNode(this_NUMBER_WITH_TRAILING_PERIOD_117, grammarAccess.getAnythingAccess().getNUMBER_WITH_TRAILING_PERIODTerminalRuleCall_116());
 		}
 		    |
-		this_STRING_119=RULE_STRING
+		this_BIG_DECIMAL_118=RULE_BIG_DECIMAL
 		{
-			$current.merge(this_STRING_119);
+			$current.merge(this_BIG_DECIMAL_118);
 		}
 		{
-			newLeafNode(this_STRING_119, grammarAccess.getAnythingAccess().getSTRINGTerminalRuleCall_118());
+			newLeafNode(this_BIG_DECIMAL_118, grammarAccess.getAnythingAccess().getBIG_DECIMALTerminalRuleCall_117());
 		}
 		    |
-		this_ANY_OTHER_120=RULE_ANY_OTHER
+		this_ID_119=RULE_ID
 		{
-			$current.merge(this_ANY_OTHER_120);
+			$current.merge(this_ID_119);
 		}
 		{
-			newLeafNode(this_ANY_OTHER_120, grammarAccess.getAnythingAccess().getANY_OTHERTerminalRuleCall_119());
+			newLeafNode(this_ID_119, grammarAccess.getAnythingAccess().getIDTerminalRuleCall_118());
+		}
+		    |
+		this_STRING_120=RULE_STRING
+		{
+			$current.merge(this_STRING_120);
+		}
+		{
+			newLeafNode(this_STRING_120, grammarAccess.getAnythingAccess().getSTRINGTerminalRuleCall_119());
+		}
+		    |
+		this_ANY_OTHER_121=RULE_ANY_OTHER
+		{
+			$current.merge(this_ANY_OTHER_121);
+		}
+		{
+			newLeafNode(this_ANY_OTHER_121, grammarAccess.getAnythingAccess().getANY_OTHERTerminalRuleCall_120());
 		}
 	)+
 ;
@@ -7436,6 +7444,8 @@ ruleDataOperationFeature returns [Enumerator current=null]
 		)
 	)
 ;
+
+RULE_NUMBER_WITH_TRAILING_PERIOD : RULE_INT '.';
 
 RULE_STRING : '"' ('\\' .|~(('\\'|'"')))* '"';
 

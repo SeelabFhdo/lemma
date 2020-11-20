@@ -172,6 +172,8 @@ QualifiedNameWithAtLeastOneLevel:
     ID '.' QualifiedName
 ;
 
+terminal NUMBER_WITH_TRAILING_PERIOD: INT '.';
+
 // Rule to consume any character
 Anything:
     (
@@ -211,7 +213,7 @@ Anything:
         // All other terminal rules of the Service and the Data DSL (from which the Service DSL
         // inherits). If we don't specify them here, they will be recognized as regular grammar
         // tokens in the Anything string.
-        BOOLEAN | BIG_DECIMAL | ID | STRING | ANY_OTHER
+        BOOLEAN | NUMBER_WITH_TRAILING_PERIOD | BIG_DECIMAL | ID | STRING | ANY_OTHER
     )+
 ;
 
