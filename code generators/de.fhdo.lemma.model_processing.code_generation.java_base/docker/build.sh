@@ -8,8 +8,9 @@
 # file. Furthermore, the script requires the JARs of the Java Base Generator and
 # all of its Genlets to have been built locally.
 
-docker build \
-    -t repository.seelab.fh-dortmund.de:51900/lemma/java_generator:latest \
+export LEMMA_DOCKER_IMAGE_TAG="lemma/java_generator:latest"
+
+docker build -t $LEMMA_DOCKER_IMAGE_TAG \
     --build-arg LEMMA_VERSION="$1" \
-    -f ../../docker/java/Dockerfile \
-    "../../../code generators"
+    -f Dockerfile \
+    ../..

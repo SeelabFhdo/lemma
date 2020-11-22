@@ -10,9 +10,11 @@ pipeline {
         JAVA_GENERATOR_IMAGE = "lemma/java_generator:latest"
         VERSION_PATTERN = /version\s*=\s*(?<version>.+)/
 
-        DOCKER_NEXUS_REGISTRY_CREDENTIALS = "seelab-nexus-docker-registry"
+        DOCKER_NEXUS_REGISTRY_CREDENTIALS_KEY = "seelab-nexus-docker-registry"
+        DOCKER_NEXUS_REGISTRY_CREDENTIALS = credentials("$DOCKER_NEXUS_REGISTRY_CREDENTIALS_KEY")
         DOCKER_NEXUS_REGISTRY_URL = "http://repository.seelab.fh-dortmund.de:51900"
-        DOCKER_RANCHER_REGISTRY_CREDENTIALS = "seelab-rancher-docker-registry"
+        DOCKER_RANCHER_REGISTRY_CREDENTIALS_KEY = "seelab-rancher-docker-registry"
+        DOCKER_RANCHER_REGISTRY_CREDENTIALS = credentials("$DOCKER_RANCHER_REGISTRY_CREDENTIALS_KEY")
         DOCKER_RANCHER_REGISTRY_URL = "http://registry.seelab.fh-dortmund.de"
 
         BUILD_IMAGE = "lemma/build:latest"
@@ -112,11 +114,11 @@ pipeline {
                             buildImage = docker.build BUILD_IMAGE,
                                 "./build/docker"
                             docker.withRegistry(DOCKER_NEXUS_REGISTRY_URL,
-                                DOCKER_NEXUS_REGISTRY_CREDENTIALS) {
+                                DOCKER_NEXUS_REGISTRY_CREDENTIALS_KEY) {
                                 buildImage.push()
                             }
                             docker.withRegistry(DOCKER_RANCHER_REGISTRY_URL,
-                                DOCKER_RANCHER_REGISTRY_CREDENTIALS) {
+                                DOCKER_RANCHER_REGISTRY_CREDENTIALS_KEY) {
                                 buildImage.push()
                             }
                         }
@@ -142,11 +144,11 @@ pipeline {
                             updatesiteImage = docker.build BUILD_UPDATESITE_IMAGE,
                                 "./build/updatesite/docker"
                             docker.withRegistry(DOCKER_NEXUS_REGISTRY_URL,
-                                DOCKER_NEXUS_REGISTRY_CREDENTIALS) {
+                                DOCKER_NEXUS_REGISTRY_CREDENTIALS_KEY) {
                                 updatesiteImage.push()
                             }
                             docker.withRegistry(DOCKER_RANCHER_REGISTRY_URL,
-                                DOCKER_RANCHER_REGISTRY_CREDENTIALS) {
+                                DOCKER_RANCHER_REGISTRY_CREDENTIALS_KEY) {
                                 updatesiteImage.push()
                             }
                         }
@@ -180,11 +182,11 @@ pipeline {
 
                             if (env.BRANCH_NAME == 'master') {
                                 docker.withRegistry(DOCKER_NEXUS_REGISTRY_URL,
-                                    DOCKER_NEXUS_REGISTRY_CREDENTIALS) {
+                                    DOCKER_NEXUS_REGISTRY_CREDENTIALS_KEY) {
                                     deployImage.push()
                                 }
                                 docker.withRegistry(DOCKER_RANCHER_REGISTRY_URL,
-                                    DOCKER_RANCHER_REGISTRY_CREDENTIALS) {
+                                    DOCKER_RANCHER_REGISTRY_CREDENTIALS_KEY) {
                                     deployImage.push()
                                 }
                             }
@@ -220,28 +222,17 @@ pipeline {
                     }
                 }
 
-                stage("Build: Build and Push Java Generator Docker Image") {
+                stage("Docker: Build and Publish Docker Images") {
                     steps {
                         script {
-                            def lemmaVersion = javaGeneratorVersion(CODE_GENERATORS_FOLDER)
-
-                            // We need to build the image in any case, otherwise the subsequent stage will fail,
-                            // because the image doesn't exist
-                            generatorImage = docker.build JAVA_GENERATOR_IMAGE,
-                                "--build-arg LEMMA_VERSION=\"${lemmaVersion}\" " +
-                                "-f \"./${CODE_GENERATORS_FOLDER}/docker/java/Dockerfile\" " +
-                                "\"${CODE_GENERATORS_FOLDER}\""
-
-                            if (env.BRANCH_NAME == 'master' && isRelease()) {
-                                docker.withRegistry(DOCKER_NEXUS_REGISTRY_URL,
-                                    DOCKER_NEXUS_REGISTRY_CREDENTIALS) {
-                                    generatorImage.push()
-                                }
-                                docker.withRegistry(DOCKER_RANCHER_REGISTRY_URL,
-                                    DOCKER_RANCHER_REGISTRY_CREDENTIALS) {
-                                    generatorImage.push()
-                                }
-                            }
+                            def buildAndPublishArgs =
+                                "registry=\'$DOCKER_NEXUS_REGISTRY_URL\' " +
+                                "user=\'$DOCKER_NEXUS_REGISTRY_CREDENTIALS_USR\' " +
+                                "password=\'$DOCKER_NEXUS_REGISTRY_CREDENTIALS_PSW\' " +
+                                "registry=\'$DOCKER_RANCHER_REGISTRY_URL\' " +
+                                "user=\'$DOCKER_RANCHER_REGISTRY_CREDENTIALS_USR\' " +
+                                "password=\'$DOCKER_RANCHER_REGISTRY_CREDENTIALS_PSW\'"
+                            sh "cd build/docker-images-push && ./docker-images-push.sh $buildAndPublishArgs"
                         }
                     }
                 }
@@ -284,52 +275,4 @@ pipeline {
             }
         }
     }
-}
-
-/**
- * Check if this a LEMMA release
- */
-def isRelease() {
-    // Check if the last commit has a tag. Note: The subsequent call to "git
-    // describe" returns the STDOUT, while this call return the status code.
-    // We need to do the status code call, because otherwise the sh() command
-    // of Jenkins will fail, if no tag exists. That is, because sh() ignores
-    // piping STDERR to /dev/null via "2>/dev/null".
-    def hasTag = sh(
-        script: "git describe --exact-match --tags --abbrev=0 HEAD",
-        returnStatus: true
-    ) == 0
-    if (!hasTag)
-        return false
-
-    // Check if the tag of the last commit follows LEMMA's pattern for release
-    // tags
-    def tag = sh(
-        script: "git describe --exact-match --tags --abbrev=0 HEAD",
-        returnStdout: true
-    ).trim()
-    return tag ==~ RELEASE_TAG_PATTERN
-}
-
-/**
- * Get the current version of LEMMA's Java Base Generator from its
- * "gradle.properties" file
- */
-def javaGeneratorVersion(String codeGeneratorsFolder) {
-    def folderPrefix = ""
-    if (codeGeneratorsFolder?.trim())
-        folderPrefix = "$codeGeneratorsFolder/"
-
-    // Read the contents of "gradle.properties"
-    def gradleProperties = sh(
-        script: "cat \"${folderPrefix}de.fhdo.lemma.model_processing.code_generation.java_base/gradle.properties\"",
-        returnStdout: true
-    ).trim()
-
-    // Find the line with the version identifier and get the version
-    def versionStr = gradleProperties.split('\n')
-        .find({l -> l ==~ VERSION_PATTERN})
-    def versionMatcher = (versionStr =~ VERSION_PATTERN)
-    versionMatcher.find()
-    return versionMatcher.group('version')
 }

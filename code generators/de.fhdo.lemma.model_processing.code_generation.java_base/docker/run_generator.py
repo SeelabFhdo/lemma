@@ -26,20 +26,22 @@ import subprocess
 import sys
 
 DEFAULT_PATTERN = 'extended-generation-gap'
-IMAGE_NAME = 'lemma/java_generator:latest'
-IMAGE_REPOSITORY = 'repository.seelab.fh-dortmund.de:51900'
-IMAGE_FULL_PATH = IMAGE_REPOSITORY + '/' + IMAGE_NAME
+ENVIRONMENT_VARIABLE_REGEX = re.compile('(?P<variable>[^ =]+)=(?P<value>.*)')
+EXPECTED_IMAGE_NAME = 'lemma/java_generator:latest'
+EXPECTED_IMAGE_REPOSITORY = 'repository.seelab.fh-dortmund.de:51900'
+EXPECTED_IMAGE_FULL_PATH = EXPECTED_IMAGE_REPOSITORY + '/' + EXPECTED_IMAGE_NAME
 JAVA_GENERATOR_PATH = '../../' \
     'de.fhdo.lemma.model_processing.code_generation.java_base'
+LOCAL_IMAGE_NAME_ENVIRONMENT_VARIABLE = 'LEMMA_DOCKER_IMAGE_TAG'
 VERSION_REGEX = r'version\s*=\s*(?P<version>.+)'
 
 def exists_docker_image():
     """Verify if the Java generator Docker image is present."""
     result = subprocess.check_output(['docker', 'images', '-q',
-        IMAGE_FULL_PATH])
+        EXPECTED_IMAGE_FULL_PATH])
     return len(result) > 0
 
-def build_image_locally(buildScript):
+def build_image_locally(buildScript, expectedImage):
     """Build the Java generator Docker image locally."""
     gradlePropertiesPath = JAVA_GENERATOR_PATH + os.sep + 'gradle.properties'
     try:
@@ -49,8 +51,38 @@ def build_image_locally(buildScript):
             'exist?' % gradlePropertiesPath)
         sys.exit(1)
 
-    subprocess.call('"%s" "%s"' % (buildScript, javaGeneratorVersion),
-        shell=True)
+    (exitcode, env) = execute_and_getenv(buildScript, javaGeneratorVersion)
+    if exitcode != 0:
+        sys.exit(exitcode)
+
+    image = env[LOCAL_IMAGE_NAME_ENVIRONMENT_VARIABLE]
+    if image != expectedImage:
+        print('Build script "%s" returned image name "%s", which differs from '\
+            'the expected image name "%s". Exiting.' % \
+                (buildScript, image, expectedImage))
+        sys.exit(1)
+
+    return image
+
+def execute_and_getenv(script, args):
+    """Execute the script with the given args and return its environment
+    variables as a dict.
+    """
+    pipe = subprocess.Popen('"%s" "%s"; env' % (script, args), shell=True,
+        stdout=subprocess.PIPE, universal_newlines=True)
+    scriptOutput = pipe.communicate()[0]
+
+    env = {}
+    for line in scriptOutput.split('\n'):
+        variableMatch = ENVIRONMENT_VARIABLE_REGEX.match(line)
+        if variableMatch:
+            variable = variableMatch.group('variable')
+            value = variableMatch.group('value')
+            env[variable] = value
+        else:
+            print(line)
+
+    return (pipe.returncode, env)
 
 def read_java_generator_version(gradlePropertiesPath):
     """Read the version of the Java Base Generator."""
@@ -112,14 +144,14 @@ def parse_commandline():
             'must be relative to model base path)')
     return parser.parse_args()
 
-def run_generator_in_container(args):
+def run_generator_in_container(image, args):
     """Run the Java generator in a Docker container based on the present
     image.
     """
-    subprocess.call('docker run -i ' + build_docker_run_arguments(args),
+    subprocess.call('docker run -i ' + build_docker_run_arguments(image, args),
         shell=True)
 
-def build_docker_run_arguments(args):
+def build_docker_run_arguments(image, args):
     """Build run arguments for the Docker container.
 
     These arguments will
@@ -158,7 +190,7 @@ def build_docker_run_arguments(args):
     dockerArgs = ('-v "%s":"%s" ' % (args.basePath, args.basePath)) + \
         ('-v "%s":/home/target ' % targetFolderPath) + \
         '-u $(id -u ${USER}):$(id -g ${USER}) ' + \
-        ('%s ' % IMAGE_FULL_PATH) + \
+        ('%s ' % image) + \
         ('-s "%s" ' % smContainerPath) + \
         ('-i "%s" ' % imContainerPath) + \
         '-t /home/target ' + \
@@ -190,22 +222,23 @@ def get_existing_path_from(basePath, relPath, checkIsFile=True):
 if __name__ == '__main__':
     # Make sure that the Docker image exists locally
     if not exists_docker_image():
-        localBuildScript = './build_locally.sh'
+        localBuildScript = './build.sh'
         getDockerImage = input('Required docker image "%s" does not exist ' \
             'locally. Do you want to ' \
             '\n\t- build it locally via build script "%s" [b],' \
             '\n\t- pull it from the remote registry "%s" [p], or' \
             '\n\t- abort [a]? ' % \
-                (IMAGE_NAME, localBuildScript, IMAGE_FULL_PATH)
+                (EXPECTED_IMAGE_NAME, localBuildScript, EXPECTED_IMAGE_FULL_PATH)
             )
         if getDockerImage == 'b':
-            build_image_locally(localBuildScript)
+            image = build_image_locally(localBuildScript, EXPECTED_IMAGE_NAME)
         elif getDockerImage == 'p':
-            pull_image(IMAGE_FULL_PATH)
+            image = EXPECTED_IMAGE_FULL_PATH
+            pull_image(image)
         else:
             print('Image retrieval aborted. Exiting.')
             sys.exit(0)
 
     # Run the generator inside the Docker container
     args = parse_commandline()
-    run_generator_in_container(args)
+    run_generator_in_container(image, args)
