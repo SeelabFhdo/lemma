@@ -12,6 +12,7 @@ import java.nio.file.Paths
 import java.nio.charset.StandardCharsets
 import de.fhdo.lemma.model_processing.code_generation.container_base.util.Util
 import de.fhdo.lemma.model_processing.code_generation.container_base.template.DockerComposeTemplate
+import de.fhdo.lemma.utils.LemmaUtils
 
 /**
  * This class uses the singleton design pattern handling the generation of the docker-compose file.
@@ -119,7 +120,7 @@ class OpenedDockerComposeFile {
     private def String getServiceFromContainer(IntermediateContainer container) {
         val service = getBasicServiceFromOperationNode(container)
 
-        service.build = Util::buildPathFromQualifiedName(
+        service.build = LemmaUtils.getQualifyingParts(
             container.deployedServices.get(0).qualifiedName
         )
 
@@ -158,7 +159,7 @@ class OpenedDockerComposeFile {
 
         node.endpoints.forEach[endpoint |
             endpoint.addresses.forEach[address |
-                val port = Util::getPortFromAddress(address)
+                val port = LemmaUtils.getPortFromAddress(address)
                 service.ports.add(port + ':' + port)
             ]
         ]

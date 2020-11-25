@@ -11,6 +11,7 @@ import de.fhdo.lemma.model_processing.code_generation.container_base.util.Util
 import de.fhdo.lemma.model_processing.code_generation.container_base.template.KubernetesTemplate
 import java.io.File
 import org.jetbrains.annotations.NotNull
+import de.fhdo.lemma.utils.LemmaUtils
 
 /**
  * Main class of the Kubernetes deployment file generation module of the container base code
@@ -53,8 +54,9 @@ class KubernetesCodeGenerator extends AbstractCodeGenerationModule {
     private def createKuberntesFileForContainer(IntermediateContainer container) {
         var aspect = container.aspects.findFirst[aspect | aspect.name == "KubernetesDeployment"]
 
-        val serviceName = Util::buildPathFromQualifiedName(
-            container.deployedServices.get(0).qualifiedName)
+        val serviceName = LemmaUtils.getQualifyingParts(
+            container.deployedServices.get(0).qualifiedName
+        )
 
         var kubernetesFileContent = ""
 

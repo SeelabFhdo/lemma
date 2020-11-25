@@ -849,31 +849,37 @@ final class LemmaUtils {
     }
 
     /**
-     * Get the short name for a service. Transforms for example "de.demo.demoservice" to
-     * "demoservice".
+     * Get the simple name of a qualified string. This is the last name segment of the string. For
+     * instance, the simple name of
+     *      "org.example.package.Foo"
+     * is
+     *      "Foo"
      */
-    static def String getShortNameService(String fullname) {
-        fullname.substring(fullname.lastIndexOf('.'), fullname.length).replace('.', '')
+    static def String getSimpleName(String qualifiedString) {
+        val lastQualifyingPartIndex = qualifiedString.lastIndexOf(".")
+        return if (!qualifiedString.nullOrEmpty && lastQualifyingPartIndex > -1)
+                qualifiedString.substring(lastQualifyingPartIndex + 1)
+            else
+                qualifiedString
     }
 
     /**
-     * Get the build path from the qualified name of a deployed microservice.
-     * Transformation of "v1.de.demo.demoservice" to "v1.de.demo". This function is needed to
-     * fit the filesystem structure of the java base code generator.
+     * Get the qualifying parts of a qualified string. These are all qualifier segments of the
+     * string, without the last name segment. For instance, the qualifying parts of
+     *      "org.example.package.Foo"
+     * are
+     *      "org.example.package"
      */
-    static def String buildPathFromQualifiedName (String qualifedName) {
-        val stringBuilder = new StringBuilder
-        qualifedName.split("\\.").forEach[p |
-            if(p != getShortNameService(qualifedName)) {
-                stringBuilder.append(p)
-                stringBuilder.append(File.separator)
-            }
-        ]
-        return stringBuilder.toString
+    static def String getQualifyingParts(String qualifiedString) {
+        val lastQualifyingPartIndex = qualifiedString.lastIndexOf(".")
+        return if (!qualifiedString.nullOrEmpty && lastQualifyingPartIndex > -1)
+                qualifiedString.substring(0, lastQualifyingPartIndex)
+            else
+                null
     }
 
     /**
-     * Get the specific port form the address string.
+     * Get the port of an address like a URI
      */
     static def String getPortFromAddress(String address) {
         var part = ""
@@ -884,20 +890,5 @@ final class LemmaUtils {
            part = matcher.group.replace(':', '')
 
         return part
-    }
-
-    /**
-     * Get a file from a specific file path
-     */
-    static def File asFile(String filePath) {
-        return new File(Files.readAllLines(Paths.get(filePath)).toString)
-    }
-
-    /**
-     * Remove line with a given indicator at the beginning of the line
-     */
-    static def String removeLineFromString(String content, String indicator) {
-        var String[] lines = content.split(System.getProperty("line.separator"));
-        lines.drop(1).join(System.getProperty("line.separator"))
     }
 }

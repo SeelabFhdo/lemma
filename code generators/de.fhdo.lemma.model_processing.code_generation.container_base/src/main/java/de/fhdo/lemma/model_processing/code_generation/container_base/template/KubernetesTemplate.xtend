@@ -1,7 +1,7 @@
 package de.fhdo.lemma.model_processing.code_generation.container_base.template
 
 import de.fhdo.lemma.operation.intermediate.IntermediateOperationNode
-import de.fhdo.lemma.model_processing.code_generation.container_base.util.Util
+import de.fhdo.lemma.utils.LemmaUtils
 
 /**
  * Template class for generating Kubernetes deployment files.
@@ -50,9 +50,9 @@ class KubernetesTemplate {
           ports:
           «FOR endpoints : node.endpoints»
               «FOR address : endpoints.addresses»
-                  - name: "«Util.getPortFromAddress(address)»"
-                    port: «Util::getPortFromAddress(address)»
-                    targetPort: «Util::getPortFromAddress(address)»
+                  - name: "«LemmaUtils.getPortFromAddress(address)»"
+                    port: «LemmaUtils.getPortFromAddress(address)»
+                    targetPort: «LemmaUtils.getPortFromAddress(address)»
               «ENDFOR»
           «ENDFOR»
           selector:

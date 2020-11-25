@@ -4,6 +4,7 @@ import de.fhdo.lemma.data.avro.Util;
 import de.fhdo.lemma.data.intermediate.IntermediateComplexType;
 import de.fhdo.lemma.data.intermediate.IntermediateContext;
 import de.fhdo.lemma.data.intermediate.IntermediateVersion;
+import de.fhdo.lemma.utils.LemmaUtils;
 import java.util.Comparator;
 import java.util.List;
 import org.eclipse.emf.ecore.EObject;
@@ -33,8 +34,8 @@ public class ElementTreeContentProvider implements ITreeContentProvider {
     return IterableExtensions.sortWith(eObjects, new Comparator<EObject>() {
       @Override
       public int compare(final EObject o1, final EObject o2) {
-        final String name1 = Util.getSimpleName(Util.qualifiedName(o1));
-        final String name2 = Util.getSimpleName(Util.qualifiedName(o2));
+        final String name1 = LemmaUtils.getSimpleName(Util.qualifiedName(o1));
+        final String name2 = LemmaUtils.getSimpleName(Util.qualifiedName(o2));
         return name1.compareTo(name2);
       }
     });

@@ -29,6 +29,7 @@ import org.apache.commons.lang.StringUtils
 import de.fhdo.lemma.data.intermediate.IntermediateVersion
 import de.fhdo.lemma.data.intermediate.IntermediateContext
 import de.fhdo.lemma.data.intermediate.IntermediateComplexType
+import de.fhdo.lemma.utils.LemmaUtils
 
 /**
  * This class collects _static_ utility methods for the Avro plugin.
@@ -62,44 +63,16 @@ final class Util {
      * number of qualifying parts of the qualified string.
      */
     static def int qualifyingLevelCount(String qualifiedString) {
-        StringUtils.countMatches(qualifiedString.qualifyingParts, ".")
-    }
-
-    /**
-     * Get the qualifying parts of a qualified string. These are all qualifier segments of the
-     * string, without the last name segment. For instance, the qualifying parts of
-     *      "org.example.package.Foo"
-     * are
-     *      "org.example.package"
-     */
-    static def String getQualifyingParts(String qualifiedString) {
-        val lastQualifyingPartIndex = qualifiedString.lastIndexOf(".")
-        return if (!qualifiedString.nullOrEmpty && lastQualifyingPartIndex > -1)
-                qualifiedString.substring(0, lastQualifyingPartIndex)
-            else
-                null
+        val qualifyingParts = LemmaUtils.getQualifyingParts(qualifiedString)
+        StringUtils.countMatches(qualifyingParts, ".")
     }
 
     /**
      * Convenience method to get the qualifying parts of a qualified string as list
      */
     static def List<String> getQualifyingPartsAsList(String qualifiedString) {
-        return qualifiedString?.qualifyingParts?.split("\\.")
-    }
-
-    /**
-     * Get the simple name of a qualified string. This is the last name segment of the string. For
-     * instance, the simple name of
-     *      "org.example.package.Foo"
-     * is
-     *      "Foo"
-     */
-    static def String getSimpleName(String qualifiedString) {
-        val lastQualifyingPartIndex = qualifiedString.lastIndexOf(".")
-        return if (!qualifiedString.nullOrEmpty && lastQualifyingPartIndex > -1)
-                qualifiedString.substring(lastQualifyingPartIndex + 1)
-            else
-                qualifiedString
+        val qualifyingParts = LemmaUtils.getQualifyingParts(qualifiedString)
+        return qualifyingParts?.split("\\.")
     }
 
     /**
@@ -107,7 +80,7 @@ final class Util {
      * consisting of the qualifying parts and simple name.
      */
     static def Pair<String, String> splitNameParts(String qualifiedString) {
-        return getQualifyingParts(qualifiedString) -> getSimpleName(qualifiedString)
+        return getQualifyingParts(qualifiedString) -> LemmaUtils.getSimpleName(qualifiedString)
     }
 
     /**

@@ -32,6 +32,7 @@ import java.util.Set
 import de.fhdo.lemma.data.PrimitiveInteger
 import org.apache.avro.Protocol
 import de.fhdo.lemma.data.Version
+import de.fhdo.lemma.utils.LemmaUtils
 
 /**
  * Generate LEMMA models from Avro schema specifications.
@@ -183,7 +184,7 @@ class LemmaGenerator {
      * simple name of the schema.
      */
     private def String lemmaNameElseSchemaName(Schema schema) {
-        return getSimpleName(lemmaNameOrElse(schema, schema.name))
+        return LemmaUtils.getSimpleName(lemmaNameOrElse(schema, schema.name))
     }
 
     /**
@@ -572,7 +573,7 @@ class LemmaGenerator {
             else if (isNamedSchema(schema))
                 generateEObjectsFromNamedSchema(schema).key as ComplexType
             else {
-                val namespace = getQualifyingParts(qualifiedName(parentType))
+                val namespace = LemmaUtils.getQualifyingParts(qualifiedName(parentType))
                 generateEObjectsFromUnnamedSchema(schema, namespace).key as ComplexType
             }
 

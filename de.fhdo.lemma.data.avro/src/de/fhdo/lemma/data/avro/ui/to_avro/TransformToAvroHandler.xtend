@@ -28,6 +28,7 @@ import java.io.FileOutputStream
 import de.fhdo.lemma.data.avro.ui.Util
 import org.eclipse.emf.ecore.xmi.XMIResource
 import org.apache.avro.Protocol
+import de.fhdo.lemma.utils.LemmaUtils
 
 /**
  * Handler to control the conversion of LEMMA models to Avro schema specification files.
@@ -125,9 +126,9 @@ class TransformToAvroHandler extends AbstractHandler {
         // Determine target file extension
         val isProtocolTransformation = !selectResult.protocolName.nullOrEmpty
         val filenameAndExtension = if (isProtocolTransformation)
-                getSimpleName(selectResult.protocolName) -> Util.PROTOCOL_FILE_EXTENSION
+                LemmaUtils.getSimpleName(selectResult.protocolName) -> Util.PROTOCOL_FILE_EXTENSION
             else
-                getSimpleName(qualifiedName(selectResult.elements.get(0)))
+                LemmaUtils.getSimpleName(qualifiedName(selectResult.elements.get(0)))
                     -> Util.SCHEMA_FILE_EXTENSION
 
         /*
@@ -261,8 +262,8 @@ class TransformToAvroHandler extends AbstractHandler {
      */
     private def Protocol generateProtocol(List<Schema> schemas, String protocolName,
         String protocolDocumentation) {
-        val name = getSimpleName(protocolName)
-        val namespace = getQualifyingParts(protocolName)
+        val name = LemmaUtils.getSimpleName(protocolName)
+        val namespace = LemmaUtils.getQualifyingParts(protocolName)
         return new AvroGenerator().toProtocol(schemas, name, protocolDocumentation, namespace)
     }
 

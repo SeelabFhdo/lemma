@@ -9,6 +9,7 @@ import java.util.List
 import de.fhdo.lemma.data.intermediate.IntermediateVersion
 import de.fhdo.lemma.data.intermediate.IntermediateContext
 import de.fhdo.lemma.data.intermediate.IntermediateComplexType
+import de.fhdo.lemma.utils.LemmaUtils
 
 /**
  * Content provider for the model element selection tree in the LEMMA to Avro dialog.
@@ -29,8 +30,8 @@ class ElementTreeContentProvider implements ITreeContentProvider {
     private def List<? extends EObject> sortByName(List<? extends EObject> eObjects) {
         return eObjects.sortWith(new Comparator<EObject>() {
             override compare(EObject o1, EObject o2) {
-                val name1 = getSimpleName(qualifiedName(o1))
-                val name2 = getSimpleName(qualifiedName(o2))
+                val name1 = LemmaUtils.getSimpleName(qualifiedName(o1))
+                val name2 = LemmaUtils.getSimpleName(qualifiedName(o2))
                 return name1.compareTo(name2)
             }
         })

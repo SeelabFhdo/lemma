@@ -7,8 +7,8 @@ import de.fhdo.lemma.operation.intermediate.IntermediateContainer
 import de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode
 import de.fhdo.lemma.operation.intermediate.IntermediateOperationNode
 import de.fhdo.lemma.service.intermediate.IntermediateEndpoint
-import de.fhdo.lemma.model_processing.code_generation.container_base.util.Util
 import org.eclipse.xtext.validation.Check
+import de.fhdo.lemma.utils.LemmaUtils
 
 /**
  * The container base intermediate model validator is responsible for checking general aspects for
@@ -84,7 +84,7 @@ class ContainerBaseIntermediateModelValidator extends AbstractIntermediateDeclar
     @Check
     def checkPortsOnEndpoints(IntermediateEndpoint endpoint) {
         endpoint.addresses.forEach[address |
-            val port = Integer.parseInt(Util::getPortFromAddress(address))
+            val port = Integer.parseInt(LemmaUtils.getPortFromAddress(address))
             if (port < 0 && port > 65353)
                 error("The value of the port is not in the specified port range between " +
                     "0 and 65353.",

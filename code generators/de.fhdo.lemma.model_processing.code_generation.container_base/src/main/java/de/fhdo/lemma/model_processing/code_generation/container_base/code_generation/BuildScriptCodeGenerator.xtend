@@ -5,11 +5,11 @@ import de.fhdo.lemma.model_processing.builtin_phases.code_generation.AbstractCod
 import de.fhdo.lemma.operation.intermediate.IntermediatePackage
 import de.fhdo.lemma.model_processing.languages.LanguageDescription
 import de.fhdo.lemma.operation.intermediate.IntermediateOperationModel
-import de.fhdo.lemma.model_processing.code_generation.container_base.util.Util
 import de.fhdo.lemma.model_processing.code_generation.container_base.template.BuildScriptTemplate
 import de.fhdo.lemma.model_processing.code_generation.container_base.buildscript.OpenedRootBuildScript
 import java.io.File
 import org.jetbrains.annotations.NotNull
+import de.fhdo.lemma.utils.LemmaUtils
 
 /**
  * Main class of the build script code generation module of the container base code generator.
@@ -35,7 +35,7 @@ class BuildScriptCodeGenerator extends AbstractCodeGenerationModule {
 
         // Create a build script for containers
         model.containers.forEach[container |
-            val nodeName = Util::buildPathFromQualifiedName(
+            val nodeName = LemmaUtils.getQualifyingParts(
                 container.deployedServices?.get(0).qualifiedName
             )
 

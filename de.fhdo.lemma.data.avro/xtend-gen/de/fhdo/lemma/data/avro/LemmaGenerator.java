@@ -29,6 +29,7 @@ import de.fhdo.lemma.technology.mapping.MappingFactory;
 import de.fhdo.lemma.technology.mapping.TechnologyMapping;
 import de.fhdo.lemma.technology.mapping.TechnologySpecificFieldMapping;
 import de.fhdo.lemma.technology.mapping.TechnologySpecificImportedServiceAspect;
+import de.fhdo.lemma.utils.LemmaUtils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -231,7 +232,7 @@ public class LemmaGenerator {
    * simple name of the schema.
    */
   private String lemmaNameElseSchemaName(final Schema schema) {
-    return Util.getSimpleName(Shared.lemmaNameOrElse(schema, schema.getName()));
+    return LemmaUtils.getSimpleName(Shared.lemmaNameOrElse(schema, schema.getName()));
   }
   
   /**
@@ -712,7 +713,7 @@ public class LemmaGenerator {
           } else {
             ComplexType _xblockexpression = null;
             {
-              final String namespace = Util.getQualifyingParts(Util.qualifiedName(parentType));
+              final String namespace = LemmaUtils.getQualifyingParts(Util.qualifiedName(parentType));
               EObject _key_1 = this.generateEObjectsFromUnnamedSchema(schema, namespace).getKey();
               _xblockexpression = ((ComplexType) _key_1);
             }

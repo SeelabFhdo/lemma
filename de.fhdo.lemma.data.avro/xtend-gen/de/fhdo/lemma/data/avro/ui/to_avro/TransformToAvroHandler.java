@@ -11,6 +11,7 @@ import de.fhdo.lemma.data.intermediate.IntermediateContext;
 import de.fhdo.lemma.data.intermediate.IntermediateDataModel;
 import de.fhdo.lemma.data.intermediate.IntermediateVersion;
 import de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils;
+import de.fhdo.lemma.utils.LemmaUtils;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.nio.file.Files;
@@ -180,10 +181,10 @@ public class TransformToAvroHandler extends AbstractHandler {
     final boolean isProtocolTransformation = (!_isNullOrEmpty);
     Pair<String, String> _xifexpression = null;
     if (isProtocolTransformation) {
-      String _simpleName = de.fhdo.lemma.data.avro.Util.getSimpleName(selectResult.protocolName);
+      String _simpleName = LemmaUtils.getSimpleName(selectResult.protocolName);
       _xifexpression = Pair.<String, String>of(_simpleName, Util.PROTOCOL_FILE_EXTENSION);
     } else {
-      String _simpleName_1 = de.fhdo.lemma.data.avro.Util.getSimpleName(de.fhdo.lemma.data.avro.Util.qualifiedName(selectResult.elements.get(0)));
+      String _simpleName_1 = LemmaUtils.getSimpleName(de.fhdo.lemma.data.avro.Util.qualifiedName(selectResult.elements.get(0)));
       _xifexpression = Pair.<String, String>of(_simpleName_1, Util.SCHEMA_FILE_EXTENSION);
     }
     final Pair<String, String> filenameAndExtension = _xifexpression;
@@ -349,8 +350,8 @@ public class TransformToAvroHandler extends AbstractHandler {
    * Generate an Avro protocol from the given list of Avro schemas
    */
   private Protocol generateProtocol(final List<Schema> schemas, final String protocolName, final String protocolDocumentation) {
-    final String name = de.fhdo.lemma.data.avro.Util.getSimpleName(protocolName);
-    final String namespace = de.fhdo.lemma.data.avro.Util.getQualifyingParts(protocolName);
+    final String name = LemmaUtils.getSimpleName(protocolName);
+    final String namespace = LemmaUtils.getQualifyingParts(protocolName);
     return new AvroGenerator().toProtocol(schemas, name, protocolDocumentation, namespace);
   }
   

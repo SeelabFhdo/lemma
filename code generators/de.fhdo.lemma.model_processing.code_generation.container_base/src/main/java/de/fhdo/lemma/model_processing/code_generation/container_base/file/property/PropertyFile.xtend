@@ -1,6 +1,5 @@
 package de.fhdo.lemma.model_processing.code_generation.container_base.file.property
 
-import de.fhdo.lemma.model_processing.code_generation.container_base.util.Util
 import java.io.BufferedWriter
 import java.io.FileWriter
 import java.io.StringWriter
@@ -101,9 +100,15 @@ class PropertyFile {
         val writer = new StringWriter()
         properties.store(writer, null)
         var fileContent = writer.toString()
-        fileContent = Util.removeLineFromString(fileContent, "#")
+        return fileContent.withoutFirstLine
+    }
 
-        return fileContent
+    /**
+     * Remove the first line of the contents of a file
+     */
+    private def withoutFirstLine(String fileContent) {
+        var String[] lines = fileContent.split(System.getProperty("line.separator"))
+        lines.drop(1).join(System.getProperty("line.separator"))
     }
 
     /**

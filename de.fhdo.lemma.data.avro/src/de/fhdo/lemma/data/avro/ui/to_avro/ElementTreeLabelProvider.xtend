@@ -14,6 +14,7 @@ import de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils
 import de.fhdo.lemma.data.intermediate.IntermediateVersion
 import de.fhdo.lemma.data.intermediate.IntermediateContext
 import de.fhdo.lemma.data.intermediate.IntermediateComplexType
+import de.fhdo.lemma.utils.LemmaUtils
 
 /**
  * Provider of styled labels for model tree elements.
@@ -55,7 +56,7 @@ class ElementTreeLabelProvider extends LabelProvider implements IStyledLabelProv
      * Get styled text for element
      */
     override getStyledText(Object element) {
-        return new StyledString(getSimpleName(qualifiedName(element as EObject)))
+        return new StyledString(LemmaUtils.getSimpleName(qualifiedName(element as EObject)))
     }
 
     /**

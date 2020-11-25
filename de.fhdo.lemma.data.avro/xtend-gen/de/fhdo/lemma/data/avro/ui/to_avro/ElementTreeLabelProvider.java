@@ -5,6 +5,7 @@ import de.fhdo.lemma.data.intermediate.IntermediateComplexType;
 import de.fhdo.lemma.data.intermediate.IntermediateContext;
 import de.fhdo.lemma.data.intermediate.IntermediateVersion;
 import de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils;
+import de.fhdo.lemma.utils.LemmaUtils;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
@@ -49,7 +50,7 @@ public class ElementTreeLabelProvider extends LabelProvider implements Delegatin
    */
   @Override
   public StyledString getStyledText(final Object element) {
-    String _simpleName = Util.getSimpleName(Util.qualifiedName(((EObject) element)));
+    String _simpleName = LemmaUtils.getSimpleName(Util.qualifiedName(((EObject) element)));
     return new StyledString(_simpleName);
   }
   

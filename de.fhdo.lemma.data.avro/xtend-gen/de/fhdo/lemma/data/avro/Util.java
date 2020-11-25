@@ -113,58 +113,24 @@ public final class Util {
    * number of qualifying parts of the qualified string.
    */
   public static int qualifyingLevelCount(final String qualifiedString) {
-    return StringUtils.countMatches(Util.getQualifyingParts(qualifiedString), ".");
-  }
-  
-  /**
-   * Get the qualifying parts of a qualified string. These are all qualifier segments of the
-   * string, without the last name segment. For instance, the qualifying parts of
-   *      "org.example.package.Foo"
-   * are
-   *      "org.example.package"
-   */
-  public static String getQualifyingParts(final String qualifiedString) {
-    final int lastQualifyingPartIndex = qualifiedString.lastIndexOf(".");
-    String _xifexpression = null;
-    if (((!StringExtensions.isNullOrEmpty(qualifiedString)) && (lastQualifyingPartIndex > (-1)))) {
-      _xifexpression = qualifiedString.substring(0, lastQualifyingPartIndex);
-    } else {
-      _xifexpression = null;
+    int _xblockexpression = (int) 0;
+    {
+      final String qualifyingParts = LemmaUtils.getQualifyingParts(qualifiedString);
+      _xblockexpression = StringUtils.countMatches(qualifyingParts, ".");
     }
-    return _xifexpression;
+    return _xblockexpression;
   }
   
   /**
    * Convenience method to get the qualifying parts of a qualified string as list
    */
   public static List<String> getQualifyingPartsAsList(final String qualifiedString) {
-    String _qualifyingParts = null;
-    if (qualifiedString!=null) {
-      _qualifyingParts=Util.getQualifyingParts(qualifiedString);
-    }
+    final String qualifyingParts = LemmaUtils.getQualifyingParts(qualifiedString);
     String[] _split = null;
-    if (_qualifyingParts!=null) {
-      _split=_qualifyingParts.split("\\.");
+    if (qualifyingParts!=null) {
+      _split=qualifyingParts.split("\\.");
     }
     return (List<String>)Conversions.doWrapArray(_split);
-  }
-  
-  /**
-   * Get the simple name of a qualified string. This is the last name segment of the string. For
-   * instance, the simple name of
-   *      "org.example.package.Foo"
-   * is
-   *      "Foo"
-   */
-  public static String getSimpleName(final String qualifiedString) {
-    final int lastQualifyingPartIndex = qualifiedString.lastIndexOf(".");
-    String _xifexpression = null;
-    if (((!StringExtensions.isNullOrEmpty(qualifiedString)) && (lastQualifyingPartIndex > (-1)))) {
-      _xifexpression = qualifiedString.substring((lastQualifyingPartIndex + 1));
-    } else {
-      _xifexpression = qualifiedString;
-    }
-    return _xifexpression;
   }
   
   /**
@@ -172,8 +138,8 @@ public final class Util {
    * consisting of the qualifying parts and simple name.
    */
   public static Pair<String, String> splitNameParts(final String qualifiedString) {
-    String _qualifyingParts = Util.getQualifyingParts(qualifiedString);
-    String _simpleName = Util.getSimpleName(qualifiedString);
+    String _qualifyingParts = LemmaUtils.getQualifyingParts(qualifiedString);
+    String _simpleName = LemmaUtils.getSimpleName(qualifiedString);
     return Pair.<String, String>of(_qualifyingParts, _simpleName);
   }
   

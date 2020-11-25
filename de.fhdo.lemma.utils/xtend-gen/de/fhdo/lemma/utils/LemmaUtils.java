@@ -42,6 +42,7 @@ import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.ExclusiveRange;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
+import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 /**
  * This class collects _static_ utility methods to be used across DSLs' implementations.
@@ -922,34 +923,43 @@ public final class LemmaUtils {
   }
   
   /**
-   * Get the short name for a service. Transforms for example "de.demo.demoservice" to
-   * "demoservice".
+   * Get the simple name of a qualified string. This is the last name segment of the string. For
+   * instance, the simple name of
+   *      "org.example.package.Foo"
+   * is
+   *      "Foo"
    */
-  public static String getShortNameService(final String fullname) {
-    return fullname.substring(fullname.lastIndexOf("."), fullname.length()).replace(".", "");
+  public static String getSimpleName(final String qualifiedString) {
+    final int lastQualifyingPartIndex = qualifiedString.lastIndexOf(".");
+    String _xifexpression = null;
+    if (((!StringExtensions.isNullOrEmpty(qualifiedString)) && (lastQualifyingPartIndex > (-1)))) {
+      _xifexpression = qualifiedString.substring((lastQualifyingPartIndex + 1));
+    } else {
+      _xifexpression = qualifiedString;
+    }
+    return _xifexpression;
   }
   
   /**
-   * Get the build path from the qualified name of a deployed microservice.
-   * Transformation of "v1.de.demo.demoservice" to "v1.de.demo". This function is needed to
-   * fit the filesystem structure of the java base code generator.
+   * Get the qualifying parts of a qualified string. These are all qualifier segments of the
+   * string, without the last name segment. For instance, the qualifying parts of
+   *      "org.example.package.Foo"
+   * are
+   *      "org.example.package"
    */
-  public static String buildPathFromQualifiedName(final String qualifedName) {
-    final StringBuilder stringBuilder = new StringBuilder();
-    final Consumer<String> _function = (String p) -> {
-      String _shortNameService = LemmaUtils.getShortNameService(qualifedName);
-      boolean _notEquals = (!Objects.equal(p, _shortNameService));
-      if (_notEquals) {
-        stringBuilder.append(p);
-        stringBuilder.append(File.separator);
-      }
-    };
-    ((List<String>)Conversions.doWrapArray(qualifedName.split("\\."))).forEach(_function);
-    return stringBuilder.toString();
+  public static String getQualifyingParts(final String qualifiedString) {
+    final int lastQualifyingPartIndex = qualifiedString.lastIndexOf(".");
+    String _xifexpression = null;
+    if (((!StringExtensions.isNullOrEmpty(qualifiedString)) && (lastQualifyingPartIndex > (-1)))) {
+      _xifexpression = qualifiedString.substring(0, lastQualifyingPartIndex);
+    } else {
+      _xifexpression = null;
+    }
+    return _xifexpression;
   }
   
   /**
-   * Get the specific port form the address string.
+   * Get the port of an address like a URI
    */
   public static String getPortFromAddress(final String address) {
     String part = "";
@@ -959,30 +969,5 @@ public final class LemmaUtils {
       part = matcher.group().replace(":", "");
     }
     return part;
-  }
-  
-  /**
-   * Get a file from a specific file path
-   */
-  public static File asFile(final String filePath) {
-    try {
-      String _string = Files.readAllLines(Paths.get(filePath)).toString();
-      return new File(_string);
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
-    }
-  }
-  
-  /**
-   * Remove line with a given indicator at the beginning of the line
-   */
-  public static String removeLineFromString(final String content, final String indicator) {
-    String _xblockexpression = null;
-    {
-      String[] lines = content.split(System.getProperty("line.separator"));
-      final String[] _converted_lines = (String[])lines;
-      _xblockexpression = IterableExtensions.join(IterableExtensions.<String>drop(((Iterable<String>)Conversions.doWrapArray(_converted_lines)), 1), System.getProperty("line.separator"));
-    }
-    return _xblockexpression;
   }
 }
