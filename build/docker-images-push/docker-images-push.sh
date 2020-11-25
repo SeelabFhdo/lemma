@@ -33,6 +33,9 @@
 #       registry='registry1' user='registry1User' password='registry1Password' \
 #       registry='registry2' user='registry2User' password='registry2Password' \
 #       ...
+#                                      In case no registry tuples are provided,
+#                                      the script will only build the images and
+#                                      not publish them.
 
 declare -A registryUsers
 declare -A registryPasswords
@@ -68,8 +71,11 @@ do_image_build_and_push() {
     echo "Docker image build and push of module $module"
     echo -e "------------------------------------------------------------------------\033[0m"
     do_image_build "$module"
-    do_image_push "$module" $LEMMA_DOCKER_IMAGE_TAG
-    unset LEMMA_DOCKER_IMAGE_TAG
+
+    if [ "${#registryUsers[@]}" -ne 0 ]; then
+        do_image_push "$module" $LEMMA_DOCKER_IMAGE_TAG
+        unset LEMMA_DOCKER_IMAGE_TAG
+    fi
 }
 
 # Build the image of a given module

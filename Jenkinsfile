@@ -225,14 +225,17 @@ pipeline {
                 stage("Docker: Build and Publish Docker Images") {
                     steps {
                         script {
-                            def buildAndPublishArgs =
-                                "registry=\'$DOCKER_NEXUS_REGISTRY_URL\' " +
-                                "user=\'$DOCKER_NEXUS_REGISTRY_CREDENTIALS_USR\' " +
-                                "password=\'$DOCKER_NEXUS_REGISTRY_CREDENTIALS_PSW\' " +
-                                "registry=\'$DOCKER_RANCHER_REGISTRY_URL\' " +
-                                "user=\'$DOCKER_RANCHER_REGISTRY_CREDENTIALS_USR\' " +
-                                "password=\'$DOCKER_RANCHER_REGISTRY_CREDENTIALS_PSW\'"
-                            sh "cd build/docker-images-push && ./docker-images-push.sh $buildAndPublishArgs"
+                            if (env.BRANCH_NAME == 'master') {
+                                def publishArgs =
+                                    "registry=\'$DOCKER_NEXUS_REGISTRY_URL\' " +
+                                    "user=\'$DOCKER_NEXUS_REGISTRY_CREDENTIALS_USR\' " +
+                                    "password=\'$DOCKER_NEXUS_REGISTRY_CREDENTIALS_PSW\' " +
+                                    "registry=\'$DOCKER_RANCHER_REGISTRY_URL\' " +
+                                    "user=\'$DOCKER_RANCHER_REGISTRY_CREDENTIALS_USR\' " +
+                                    "password=\'$DOCKER_RANCHER_REGISTRY_CREDENTIALS_PSW\'"
+                                sh "cd build/docker-images-push && ./docker-images-push.sh $publishArgs"
+                            } else
+                                sh "cd build/docker-images-push && ./docker-images-push.sh"
                         }
                     }
                 }
