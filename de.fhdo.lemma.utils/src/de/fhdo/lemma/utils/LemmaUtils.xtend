@@ -22,6 +22,7 @@ import org.eclipse.core.runtime.Path
 import org.eclipse.core.resources.IFile
 import java.util.Properties
 import org.eclipse.core.resources.IProject
+import java.util.regex.Pattern
 
 /**
  * This class collects _static_ utility methods to be used across DSLs' implementations.
@@ -845,5 +846,58 @@ final class LemmaUtils {
             return false
 
         return rootElement.class.interfaces.contains(expectedRootType)
+    }
+
+    /**
+     * Get the short name for a service. Transforms for example "de.demo.demoservice" to
+     * "demoservice".
+     */
+    static def String getShortNameService(String fullname) {
+        fullname.substring(fullname.lastIndexOf('.'), fullname.length).replace('.', '')
+    }
+
+    /**
+     * Get the build path from the qualified name of a deployed microservice.
+     * Transformation of "v1.de.demo.demoservice" to "v1.de.demo". This function is needed to
+     * fit the filesystem structure of the java base code generator.
+     */
+    static def String buildPathFromQualifiedName (String qualifedName) {
+        val stringBuilder = new StringBuilder
+        qualifedName.split("\\.").forEach[p |
+            if(p != getShortNameService(qualifedName)) {
+                stringBuilder.append(p)
+                stringBuilder.append(File.separator)
+            }
+        ]
+        return stringBuilder.toString
+    }
+
+    /**
+     * Get the specific port form the address string.
+     */
+    static def String getPortFromAddress(String address) {
+        var part = ""
+        val pattern = Pattern.compile("(:[0-9]+)")
+
+        val matcher = pattern.matcher(address)
+        while(matcher.find)
+           part = matcher.group.replace(':', '')
+
+        return part
+    }
+
+    /**
+     * Get a file from a specific file path
+     */
+    static def File asFile(String filePath) {
+        return new File(Files.readAllLines(Paths.get(filePath)).toString)
+    }
+
+    /**
+     * Remove line with a given indicator at the beginning of the line
+     */
+    static def String removeLineFromString(String content, String indicator) {
+        var String[] lines = content.split(System.getProperty("line.separator"));
+        lines.drop(1).join(System.getProperty("line.separator"))
     }
 }

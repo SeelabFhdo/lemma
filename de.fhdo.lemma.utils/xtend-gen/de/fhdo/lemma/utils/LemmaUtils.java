@@ -14,6 +14,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
 import java.util.function.Consumer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -917,5 +919,70 @@ public final class LemmaUtils {
       return false;
     }
     return ArrayExtensions.contains(rootElement.getClass().getInterfaces(), expectedRootType);
+  }
+  
+  /**
+   * Get the short name for a service. Transforms for example "de.demo.demoservice" to
+   * "demoservice".
+   */
+  public static String getShortNameService(final String fullname) {
+    return fullname.substring(fullname.lastIndexOf("."), fullname.length()).replace(".", "");
+  }
+  
+  /**
+   * Get the build path from the qualified name of a deployed microservice.
+   * Transformation of "v1.de.demo.demoservice" to "v1.de.demo". This function is needed to
+   * fit the filesystem structure of the java base code generator.
+   */
+  public static String buildPathFromQualifiedName(final String qualifedName) {
+    final StringBuilder stringBuilder = new StringBuilder();
+    final Consumer<String> _function = (String p) -> {
+      String _shortNameService = LemmaUtils.getShortNameService(qualifedName);
+      boolean _notEquals = (!Objects.equal(p, _shortNameService));
+      if (_notEquals) {
+        stringBuilder.append(p);
+        stringBuilder.append(File.separator);
+      }
+    };
+    ((List<String>)Conversions.doWrapArray(qualifedName.split("\\."))).forEach(_function);
+    return stringBuilder.toString();
+  }
+  
+  /**
+   * Get the specific port form the address string.
+   */
+  public static String getPortFromAddress(final String address) {
+    String part = "";
+    final Pattern pattern = Pattern.compile("(:[0-9]+)");
+    final Matcher matcher = pattern.matcher(address);
+    while (matcher.find()) {
+      part = matcher.group().replace(":", "");
+    }
+    return part;
+  }
+  
+  /**
+   * Get a file from a specific file path
+   */
+  public static File asFile(final String filePath) {
+    try {
+      String _string = Files.readAllLines(Paths.get(filePath)).toString();
+      return new File(_string);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  /**
+   * Remove line with a given indicator at the beginning of the line
+   */
+  public static String removeLineFromString(final String content, final String indicator) {
+    String _xblockexpression = null;
+    {
+      String[] lines = content.split(System.getProperty("line.separator"));
+      final String[] _converted_lines = (String[])lines;
+      _xblockexpression = IterableExtensions.join(IterableExtensions.<String>drop(((Iterable<String>)Conversions.doWrapArray(_converted_lines)), 1), System.getProperty("line.separator"));
+    }
+    return _xblockexpression;
   }
 }
