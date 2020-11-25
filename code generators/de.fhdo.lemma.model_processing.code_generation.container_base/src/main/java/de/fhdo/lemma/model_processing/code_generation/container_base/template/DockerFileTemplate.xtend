@@ -1,0 +1,24 @@
+package de.fhdo.lemma.model_processing.code_generation.container_base.template
+
+/**
+ * Template class for generating Dockerfiles.
+ *
+ * @author <a href="mailto:philip.wizenty@fh-dortmund.de">Philip Wizenty</a>
+ */
+class DockerFileTemplate {
+    /**
+     * File template for the creation of the Dockerfile by the docker file code generation module.
+     */
+    static def String buildDockerFile(String operationEnvironment,
+        String deployedServiceName,
+        String version
+        )'''
+        FROM «operationEnvironment»
+        ENV APP_FILE «deployedServiceName»-«version».jar
+        ENV APP_HOME /usr/apps
+        COPY target/$APP_FILE $APP_HOME/
+        WORKDIR $APP_HOME
+        ENTRYPOINT ["sh", "-c"]
+        CMD ["exec java -jar $APP_FILE"]
+    '''
+}
