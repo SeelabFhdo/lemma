@@ -9,6 +9,8 @@
     <description>A LEMMA code generator for dockerfiles.</description>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
         <java.version>11</java.version>
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
         <xtend.version>2.20.0</xtend.version>
