@@ -83,11 +83,11 @@ class OpenedDockerComposeFile {
     def addOrReplaceDockerComposePart(IntermediateOperationNode node) {
         switch (node) {
             IntermediateInfrastructureNode : {
-                val serv = '''«getServiceFromNode(node as IntermediateInfrastructureNode)»«"\n"»'''
+                val serv = '''«getServiceFromNode(node)»«"\n"»'''
                 addOrReplace(node.name, serv)
             }
             IntermediateContainer: {
-                val serv = '''«getServiceFromContainer(node as IntermediateContainer)»«"\n"»'''
+                val serv = '''«getServiceFromContainer(node)»«"\n"»'''
                 addOrReplace(node.name, serv)
             }
             default : throw new IllegalArgumentException("OperationNode instance not supported.")
