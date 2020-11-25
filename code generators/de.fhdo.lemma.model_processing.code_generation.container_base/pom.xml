@@ -120,7 +120,7 @@
                 <finalName>${artifactId}-${project.version}-standalone</finalName>
                 <archive>
                   <manifest>
-                    <mainClass>de.fhdo.lemma.model_processing.code_generation.container_base.ConatainerBaseGenerator</mainClass>
+                    <mainClass>de.fhdo.lemma.model_processing.code_generation.container_base.ContainerBaseGenerator</mainClass>
                   </manifest>
                 </archive>
                 <descriptors>

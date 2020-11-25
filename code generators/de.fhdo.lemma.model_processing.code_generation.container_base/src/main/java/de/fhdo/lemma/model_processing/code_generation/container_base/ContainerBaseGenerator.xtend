@@ -8,7 +8,7 @@ import de.fhdo.lemma.model_processing.AbstractModelProcessor
  *
  * @author <a href="mailto:philip.wizenty@fh-dortmund.de">Philip Wizenty</a>
  */
-class ConatainerBaseGenerator extends AbstractModelProcessor {
+class ContainerBaseGenerator extends AbstractModelProcessor {
     /**
      * Entry point for the model processor. Should contain the package name for the code generation
      * modules.
@@ -18,6 +18,6 @@ class ConatainerBaseGenerator extends AbstractModelProcessor {
     }
 
     def static void main(String[] args) {
-        new ConatainerBaseGenerator().run(args)
+        new ContainerBaseGenerator().run(args)
     }
 }
