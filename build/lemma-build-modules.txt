@@ -58,3 +58,6 @@ code generators/de.fhdo.lemma.model_processing.code_generation.springcloud
 code generators/de.fhdo.lemma.model_processing.code_generation.springcloud.domain_events
 code generators/de.fhdo.lemma.model_processing.code_generation.springcloud.cqrs
 code generators/de.fhdo.lemma.model_processing.code_generation.springcloud.kafka
+
+# Analyzer
+de.fhdo.lemma.analyzer.lib
