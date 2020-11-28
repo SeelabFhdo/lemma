@@ -60,6 +60,7 @@ set modules=%modules%;"code generators\de.fhdo.lemma.model_processing.code_gener
 
 REM Analyzer
 set modules=%modules%;de.fhdo.lemma.analyzer.lib
+set modules=%modules%;de.fhdo.lemma.analyzer
 
 REM Initialize colors for colorEcho
 for /F "tokens=1,2 delims=#" %%a in ('"prompt #$H#$E# & echo on & for %%b in (1) do     rem"') do (
