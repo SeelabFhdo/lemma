@@ -22,7 +22,7 @@ internal object CommandLine {
      * Selected analysis modules
      */
     @CommandLine.Option(
-        names = ["--analysis_modules"],
+        names = ["--analysis_module"],
         paramLabel = "ANALYSIS_MODULE",
         description = ["analysis module to execute"]
     )

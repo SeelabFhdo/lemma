@@ -32,7 +32,7 @@ internal fun findAnalysisModules(packageName: String = "de.fhdo.lemma.analyzer",
 }
 
 /**
- * Get the CLI options of all analysis modules
+ * Get the CLI options of all analysis modules.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
