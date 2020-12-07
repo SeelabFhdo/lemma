@@ -14,7 +14,7 @@ import java.io.File
 import java.io.ByteArrayInputStream
 import org.jetbrains.annotations.NotNull
 import de.fhdo.lemma.model_processing.code_generation.container_base.file.property.OpenedPropertyFiles
-import de.fhdo.lemma.utils.LemmaUtils
+import de.fhdo.lemma.model_processing.code_generation.container_base.util.Util
 
 /**
  * Main class of the spring based service property file generation module of the container base code
@@ -58,7 +58,7 @@ class PropertyFileCodeGenerator extends AbstractCodeGenerationModule{
     private def createDeployedMicroservice(OperationMicroserviceReference service) {
         val property = PropertyFileTemplate::getPropertiesForServiceConfiguration(
                 service.node.getEffectiveConfigurationValues(service))
-        val buildPath =  LemmaUtils.getQualifyingParts(service.qualifiedName)
+        val buildPath =  Util.buildPathFromQualifiedName(service.qualifiedName)
 
         addConfigurationToPropertyFile(buildPath, property)
     }

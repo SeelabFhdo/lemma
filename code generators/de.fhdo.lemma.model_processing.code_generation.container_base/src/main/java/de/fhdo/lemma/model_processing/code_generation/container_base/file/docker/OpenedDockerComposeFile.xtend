@@ -120,7 +120,7 @@ class OpenedDockerComposeFile {
     private def String getServiceFromContainer(IntermediateContainer container) {
         val service = getBasicServiceFromOperationNode(container)
 
-        service.build = LemmaUtils.getQualifyingParts(
+        service.build = Util.buildPathFromQualifiedName(
             container.deployedServices.get(0).qualifiedName
         )
 

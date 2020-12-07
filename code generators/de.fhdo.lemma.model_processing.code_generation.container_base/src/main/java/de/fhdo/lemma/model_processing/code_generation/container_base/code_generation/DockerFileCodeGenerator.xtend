@@ -11,7 +11,7 @@ import de.fhdo.lemma.model_processing.code_generation.container_base.exception.D
 import de.fhdo.lemma.model_processing.code_generation.container_base.file.docker.DockerFile
 import java.io.File
 import org.jetbrains.annotations.NotNull
-import de.fhdo.lemma.utils.LemmaUtils
+import de.fhdo.lemma.model_processing.code_generation.container_base.util.Util
 
 /**
  * Main class of the docker file generation module of the container base code generator.
@@ -80,7 +80,7 @@ class DockerFileCodeGenerator extends AbstractCodeGenerationModule {
         val dockerFileAspect = container.aspects.findFirst[aspect |
             aspect.name.toLowerCase == "dockerfile"]
 
-        val serviceName = LemmaUtils.getQualifyingParts(
+        val serviceName = Util.buildPathFromQualifiedName(
             container.deployedServices.get(0).qualifiedName
         )
 
