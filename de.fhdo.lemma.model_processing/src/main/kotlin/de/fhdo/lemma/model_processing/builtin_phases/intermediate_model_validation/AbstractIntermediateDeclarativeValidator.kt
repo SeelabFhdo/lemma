@@ -33,7 +33,14 @@ import kotlin.reflect.jvm.isAccessible
 abstract class AbstractIntermediateDeclarativeValidator : AbstractDeclarativeValidator() {
     // The currently validated object
     private lateinit var validatedObject: EObject
-    private lateinit var phaseArguments: Array<String>
+
+    // This attribute must not be of type Kotlin Array. Otherwise the discovery of @Check methods in Java-based concrete
+    // validators will fail with a KotlinReflectionInternalError from the mapPropertySignature() method of the
+    // RuntimeTypeMapper Singleton from Kotlin's reflect library. The reason for this error is probably that
+    // RuntimeTypeMapper does not support resolution of Java fields with Kotlin's built-ins Array type, yet (the
+    // reflective javaElement field will be null for such fields which ultimately causes the error in
+    // mapPropertySignature()).
+    private lateinit var phaseArguments: List<String>
 
     /**
      * Get namespace of intermediate model language
@@ -44,13 +51,13 @@ abstract class AbstractIntermediateDeclarativeValidator : AbstractDeclarativeVal
      * Internal setter for arguments that concern the phase
      */
     internal fun setPhaseArguments(phaseArguments: Array<String>) {
-        this.phaseArguments = phaseArguments
+        this.phaseArguments = phaseArguments.toList()
     }
 
     /**
      * External getter for phase arguments. May be used by concrete implementers.
      */
-    fun getPhaseArguments() = phaseArguments
+    fun getPhaseArguments() = phaseArguments.toTypedArray()
 
     /**
      * Execute validator with the loaded model resource
