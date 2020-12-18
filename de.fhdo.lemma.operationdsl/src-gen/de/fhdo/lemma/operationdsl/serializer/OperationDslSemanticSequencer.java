@@ -364,8 +364,7 @@ public class OperationDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 *         deployedServices+=ImportedMicroservice 
 	 *         deployedServices+=ImportedMicroservice* 
 	 *         (dependsOnNodes+=PossiblyImportedOperationNode dependsOnNodes+=PossiblyImportedOperationNode*)? 
-	 *         usedByNodes+=PossiblyImportedOperationNode* 
-	 *         usedByNodes+=PossiblyImportedOperationNode* 
+	 *         (usedByNodes+=PossiblyImportedOperationNode usedByNodes+=PossiblyImportedOperationNode*)? 
 	 *         aspects+=ImportedOperationAspect* 
 	 *         (
 	 *             defaultServicePropertyValues+=PropertyValueAssignment+ | 
@@ -450,8 +449,7 @@ public class OperationDslSemanticSequencer extends ServiceDslSemanticSequencer {
 	 *         operationEnvironment=[OperationEnvironment|STRING]? 
 	 *         (dependsOnNodes+=PossiblyImportedOperationNode dependsOnNodes+=PossiblyImportedOperationNode*)? 
 	 *         (deployedServices+=ImportedMicroservice deployedServices+=ImportedMicroservice*)? 
-	 *         usedByNodes+=PossiblyImportedOperationNode* 
-	 *         usedByNodes+=PossiblyImportedOperationNode* 
+	 *         (usedByNodes+=PossiblyImportedOperationNode usedByNodes+=PossiblyImportedOperationNode*)? 
 	 *         aspects+=ImportedOperationAspect* 
 	 *         defaultServicePropertyValues+=PropertyValueAssignment* 
 	 *         endpoints+=BasicEndpoint* 

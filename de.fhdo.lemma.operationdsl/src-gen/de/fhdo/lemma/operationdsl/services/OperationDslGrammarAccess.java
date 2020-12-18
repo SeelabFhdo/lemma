@@ -160,7 +160,7 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 		//	operationEnvironment=[technology::OperationEnvironment|STRING])?
 		//	'deploys' deployedServices+=ImportedMicroservice (',' deployedServices+=ImportedMicroservice)* ('depends' 'on' 'nodes'
 		//	dependsOnNodes+=PossiblyImportedOperationNode (',' dependsOnNodes+=PossiblyImportedOperationNode)*)? ('used' 'by'
-		//	'nodes' usedByNodes+=PossiblyImportedOperationNode* (',' usedByNodes+=PossiblyImportedOperationNode)*)?
+		//	'nodes' usedByNodes+=PossiblyImportedOperationNode (',' usedByNodes+=PossiblyImportedOperationNode)*)?
 		//	'{' ('aspects' '{'
 		//	aspects+=ImportedOperationAspect+
 		//	'}')? ('default' 'values' '{' (defaultServicePropertyValues+=PropertyValueAssignment+
@@ -179,7 +179,7 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 		//deploymentTechnology=DeploymentTechnologyReference ('with' 'operation' 'environment'
 		//operationEnvironment=[technology::OperationEnvironment|STRING])? 'deploys' deployedServices+=ImportedMicroservice (','
 		//deployedServices+=ImportedMicroservice)* ('depends' 'on' 'nodes' dependsOnNodes+=PossiblyImportedOperationNode (','
-		//dependsOnNodes+=PossiblyImportedOperationNode)*)? ('used' 'by' 'nodes' usedByNodes+=PossiblyImportedOperationNode* (','
+		//dependsOnNodes+=PossiblyImportedOperationNode)*)? ('used' 'by' 'nodes' usedByNodes+=PossiblyImportedOperationNode (','
 		//usedByNodes+=PossiblyImportedOperationNode)*)? '{' ('aspects' '{' aspects+=ImportedOperationAspect+ '}')? ('default'
 		//'values' '{' (defaultServicePropertyValues+=PropertyValueAssignment+ | 'basic' 'endpoints' '{'
 		//defaultBasicEndpoints+=BasicEndpoint+ '}' | defaultServicePropertyValues+=PropertyValueAssignment+ 'basic' 'endpoints'
@@ -304,7 +304,7 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 		//PossiblyImportedOperationNode
 		public RuleCall getDependsOnNodesPossiblyImportedOperationNodeParserRuleCall_10_4_1_0() { return cDependsOnNodesPossiblyImportedOperationNodeParserRuleCall_10_4_1_0; }
 		
-		//('used' 'by' 'nodes' usedByNodes+=PossiblyImportedOperationNode* (',' usedByNodes+=PossiblyImportedOperationNode)*)?
+		//('used' 'by' 'nodes' usedByNodes+=PossiblyImportedOperationNode (',' usedByNodes+=PossiblyImportedOperationNode)*)?
 		public Group getGroup_11() { return cGroup_11; }
 		
 		//'used'
@@ -316,7 +316,7 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 		//'nodes'
 		public Keyword getNodesKeyword_11_2() { return cNodesKeyword_11_2; }
 		
-		//usedByNodes+=PossiblyImportedOperationNode*
+		//usedByNodes+=PossiblyImportedOperationNode
 		public Assignment getUsedByNodesAssignment_11_3() { return cUsedByNodesAssignment_11_3; }
 		
 		//PossiblyImportedOperationNode
@@ -563,7 +563,7 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 		//	operationEnvironment=[technology::OperationEnvironment|STRING])? ('depends' 'on' 'nodes'
 		//	dependsOnNodes+=PossiblyImportedOperationNode (',' dependsOnNodes+=PossiblyImportedOperationNode)*)? ('used' 'by'
 		//	'services' deployedServices+=ImportedMicroservice (',' deployedServices+=ImportedMicroservice)*)? ('used' 'by' 'nodes'
-		//	usedByNodes+=PossiblyImportedOperationNode* (',' usedByNodes+=PossiblyImportedOperationNode)*)?
+		//	usedByNodes+=PossiblyImportedOperationNode (',' usedByNodes+=PossiblyImportedOperationNode)*)?
 		//	'{' ('aspects' '{'
 		//	aspects+=ImportedOperationAspect+
 		//	'}')? ('default' 'values' '{'
@@ -580,7 +580,7 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 		//operationEnvironment=[technology::OperationEnvironment|STRING])? ('depends' 'on' 'nodes'
 		//dependsOnNodes+=PossiblyImportedOperationNode (',' dependsOnNodes+=PossiblyImportedOperationNode)*)? ('used' 'by'
 		//'services' deployedServices+=ImportedMicroservice (',' deployedServices+=ImportedMicroservice)*)? ('used' 'by' 'nodes'
-		//usedByNodes+=PossiblyImportedOperationNode* (',' usedByNodes+=PossiblyImportedOperationNode)*)? '{' ('aspects' '{'
+		//usedByNodes+=PossiblyImportedOperationNode (',' usedByNodes+=PossiblyImportedOperationNode)*)? '{' ('aspects' '{'
 		//aspects+=ImportedOperationAspect+ '}')? ('default' 'values' '{' defaultServicePropertyValues+=PropertyValueAssignment+
 		//'}')? ('endpoints' '{' endpoints+=BasicEndpoint+ '}')? deploymentSpecifications+=ServiceDeploymentSpecification* '}'
 		public Group getGroup() { return cGroup; }
@@ -706,7 +706,7 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 		//ImportedMicroservice
 		public RuleCall getDeployedServicesImportedMicroserviceParserRuleCall_6_4_1_0() { return cDeployedServicesImportedMicroserviceParserRuleCall_6_4_1_0; }
 		
-		//('used' 'by' 'nodes' usedByNodes+=PossiblyImportedOperationNode* (',' usedByNodes+=PossiblyImportedOperationNode)*)?
+		//('used' 'by' 'nodes' usedByNodes+=PossiblyImportedOperationNode (',' usedByNodes+=PossiblyImportedOperationNode)*)?
 		public Group getGroup_7() { return cGroup_7; }
 		
 		//'used'
@@ -718,7 +718,7 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 		//'nodes'
 		public Keyword getNodesKeyword_7_2() { return cNodesKeyword_7_2; }
 		
-		//usedByNodes+=PossiblyImportedOperationNode*
+		//usedByNodes+=PossiblyImportedOperationNode
 		public Assignment getUsedByNodesAssignment_7_3() { return cUsedByNodesAssignment_7_3; }
 		
 		//PossiblyImportedOperationNode
@@ -1484,7 +1484,7 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 	//	operationEnvironment=[technology::OperationEnvironment|STRING])?
 	//	'deploys' deployedServices+=ImportedMicroservice (',' deployedServices+=ImportedMicroservice)* ('depends' 'on' 'nodes'
 	//	dependsOnNodes+=PossiblyImportedOperationNode (',' dependsOnNodes+=PossiblyImportedOperationNode)*)? ('used' 'by'
-	//	'nodes' usedByNodes+=PossiblyImportedOperationNode* (',' usedByNodes+=PossiblyImportedOperationNode)*)?
+	//	'nodes' usedByNodes+=PossiblyImportedOperationNode (',' usedByNodes+=PossiblyImportedOperationNode)*)?
 	//	'{' ('aspects' '{'
 	//	aspects+=ImportedOperationAspect+
 	//	'}')? ('default' 'values' '{' (defaultServicePropertyValues+=PropertyValueAssignment+
@@ -1522,7 +1522,7 @@ public class OperationDslGrammarAccess extends AbstractGrammarElementFinder {
 	//	operationEnvironment=[technology::OperationEnvironment|STRING])? ('depends' 'on' 'nodes'
 	//	dependsOnNodes+=PossiblyImportedOperationNode (',' dependsOnNodes+=PossiblyImportedOperationNode)*)? ('used' 'by'
 	//	'services' deployedServices+=ImportedMicroservice (',' deployedServices+=ImportedMicroservice)*)? ('used' 'by' 'nodes'
-	//	usedByNodes+=PossiblyImportedOperationNode* (',' usedByNodes+=PossiblyImportedOperationNode)*)?
+	//	usedByNodes+=PossiblyImportedOperationNode (',' usedByNodes+=PossiblyImportedOperationNode)*)?
 	//	'{' ('aspects' '{'
 	//	aspects+=ImportedOperationAspect+
 	//	'}')? ('default' 'values' '{'
