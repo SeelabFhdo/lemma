@@ -189,6 +189,9 @@ class OperationModelTransformationStrategy extends AbstractUiModelTransformation
      * Get files being import by a given model file in the form of IFile instances
      */
     override getImportedModelFiles(ModelFile modelFile) {
+        if (modelFile.xtextResource.contents.empty)
+            return Collections.EMPTY_MAP
+
         /* Get aliases and import URIs of imported files */
         var Map<String, String> importAliasesAndUris
 
@@ -197,16 +200,17 @@ class OperationModelTransformationStrategy extends AbstractUiModelTransformation
             if (LemmaUiUtils.hasExtension(modelFile.file, SERVICE_MODEL_FILE_EXTENSIONS)) {
                 val modelRoot = modelFile.xtextResource.contents.get(0) as ServiceModel
                 importAliasesAndUris = modelRoot.imports
-                    .filter[
-                        importType === ImportType.MICROSERVICES
-                    ].toMap([name], [importURI])
+                    .filter[importType === ImportType.MICROSERVICES]
+                    .toMap([name], [importURI])
             }
 
             // Operation Models
             else if (LemmaUiUtils.hasExtension(modelFile.file, OPERATION_MODEL_FILE_EXTENSIONS)) {
                 val modelRoot = modelFile.xtextResource.contents.get(0) as OperationModel
                 importAliasesAndUris = modelRoot.imports
-                    .filter[importType === ImportType.MICROSERVICES]
+                    .filter[
+                        importType === ImportType.MICROSERVICES ||
+                        importType === ImportType.OPERATION_NODES]
                     .toMap([name], [importURI])
             }
 

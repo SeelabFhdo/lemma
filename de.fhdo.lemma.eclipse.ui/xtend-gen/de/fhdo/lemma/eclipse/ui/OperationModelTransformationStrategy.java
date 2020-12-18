@@ -256,9 +256,13 @@ public class OperationModelTransformationStrategy extends AbstractUiModelTransfo
    */
   @Override
   public Map<String, IFile> getImportedModelFiles(final ModelFile modelFile) {
-    Map<String, String> importAliasesAndUris = null;
     boolean _isEmpty = modelFile.getXtextResource().getContents().isEmpty();
-    boolean _not = (!_isEmpty);
+    if (_isEmpty) {
+      return Collections.EMPTY_MAP;
+    }
+    Map<String, String> importAliasesAndUris = null;
+    boolean _isEmpty_1 = modelFile.getXtextResource().getContents().isEmpty();
+    boolean _not = (!_isEmpty_1);
     if (_not) {
       boolean _hasExtension = LemmaUiUtils.hasExtension(modelFile.getFile(), ((String[])Conversions.unwrapArray(OperationModelTransformationStrategy.SERVICE_MODEL_FILE_EXTENSIONS, String.class)));
       if (_hasExtension) {
@@ -281,8 +285,8 @@ public class OperationModelTransformationStrategy extends AbstractUiModelTransfo
           EObject _get_1 = modelFile.getXtextResource().getContents().get(0);
           final OperationModel modelRoot_1 = ((OperationModel) _get_1);
           final Function1<Import, Boolean> _function_3 = (Import it) -> {
-            ImportType _importType = it.getImportType();
-            return Boolean.valueOf((_importType == ImportType.MICROSERVICES));
+            return Boolean.valueOf(((it.getImportType() == ImportType.MICROSERVICES) || 
+              (it.getImportType() == ImportType.OPERATION_NODES)));
           };
           final Function1<Import, String> _function_4 = (Import it) -> {
             return it.getName();
@@ -303,8 +307,8 @@ public class OperationModelTransformationStrategy extends AbstractUiModelTransfo
       final URI absoluteImportUri = URI.create(
         LemmaUtils.convertToFileUri(absoluteImportPath).replaceAll("\\s", "%20"));
       final IFile[] files = ResourcesPlugin.getWorkspace().getRoot().findFilesForLocationURI(absoluteImportUri);
-      boolean _isEmpty_1 = ((List<IFile>)Conversions.doWrapArray(files)).isEmpty();
-      boolean _not_1 = (!_isEmpty_1);
+      boolean _isEmpty_2 = ((List<IFile>)Conversions.doWrapArray(files)).isEmpty();
+      boolean _not_1 = (!_isEmpty_2);
       if (_not_1) {
         importedModelFiles.put(alias, files[0]);
       }
