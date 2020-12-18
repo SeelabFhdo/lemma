@@ -105,11 +105,14 @@ public class SpecifyLemmaPathsDialog extends TitleAreaDialog {
     }
     
     /**
-     * Compare with Object (does not correspond to equals()-contract on purpose)
+     * Compare with Object
      */
     @Override
     public boolean equals(final Object o) {
-      return Objects.equal(this.kind, o);
+      if ((!(o instanceof SpecifyLemmaPathsDialog.LemmaModelKind))) {
+        return false;
+      }
+      return Objects.equal(this.kind, ((SpecifyLemmaPathsDialog.LemmaModelKind) o).kind);
     }
     
     /**

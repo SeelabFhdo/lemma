@@ -124,10 +124,13 @@ class SpecifyLemmaPathsDialog extends TitleAreaDialog {
         }
 
         /**
-         * Compare with Object (does not correspond to equals()-contract on purpose)
+         * Compare with Object
          */
         override equals(Object o) {
-            return kind == o
+            if (!(o instanceof LemmaModelKind))
+                return false
+
+            return kind == (o as LemmaModelKind).kind
         }
 
         /**
