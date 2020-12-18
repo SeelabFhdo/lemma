@@ -31,7 +31,7 @@ Container returns Container:
         (',' dependsOnNodes+=PossiblyImportedOperationNode)*
     )?
     (
-        'used' 'by' 'nodes' (usedByNodes+=PossiblyImportedOperationNode)*
+        'used' 'by' 'nodes' usedByNodes+=PossiblyImportedOperationNode
         (',' usedByNodes+=PossiblyImportedOperationNode)*
     )?
     '{'
@@ -82,7 +82,7 @@ InfrastructureNode returns InfrastructureNode:
         (',' deployedServices+=ImportedMicroservice)*
     )?
     (
-        'used' 'by' 'nodes' (usedByNodes+=PossiblyImportedOperationNode)*
+        'used' 'by' 'nodes' usedByNodes+=PossiblyImportedOperationNode
         (',' usedByNodes+=PossiblyImportedOperationNode)*
     )?
     '{'

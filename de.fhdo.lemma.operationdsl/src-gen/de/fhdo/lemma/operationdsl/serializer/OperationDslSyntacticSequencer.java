@@ -22,18 +22,14 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public class OperationDslSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected OperationDslGrammarAccess grammarAccess;
-	protected AbstractElementAlias match_Container___UsedKeyword_11_0_ByKeyword_11_1_NodesKeyword_11_2__q;
 	protected AbstractElementAlias match_DataOperation___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_3__q;
-	protected AbstractElementAlias match_InfrastructureNode___UsedKeyword_7_0_ByKeyword_7_1_NodesKeyword_7_2__q;
 	protected AbstractElementAlias match_OperationAspect_SemicolonKeyword_6_1_or___LeftCurlyBracketKeyword_6_0_0_RightCurlyBracketKeyword_6_0_3__;
 	protected AbstractElementAlias match_ServiceAspect_SemicolonKeyword_6_1_or___LeftCurlyBracketKeyword_6_0_0_RightCurlyBracketKeyword_6_0_3__;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (OperationDslGrammarAccess) access;
-		match_Container___UsedKeyword_11_0_ByKeyword_11_1_NodesKeyword_11_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getContainerAccess().getUsedKeyword_11_0()), new TokenAlias(false, false, grammarAccess.getContainerAccess().getByKeyword_11_1()), new TokenAlias(false, false, grammarAccess.getContainerAccess().getNodesKeyword_11_2()));
 		match_DataOperation___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_3__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getDataOperationAccess().getLeftParenthesisKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getDataOperationAccess().getRightParenthesisKeyword_3_3()));
-		match_InfrastructureNode___UsedKeyword_7_0_ByKeyword_7_1_NodesKeyword_7_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getInfrastructureNodeAccess().getUsedKeyword_7_0()), new TokenAlias(false, false, grammarAccess.getInfrastructureNodeAccess().getByKeyword_7_1()), new TokenAlias(false, false, grammarAccess.getInfrastructureNodeAccess().getNodesKeyword_7_2()));
 		match_OperationAspect_SemicolonKeyword_6_1_or___LeftCurlyBracketKeyword_6_0_0_RightCurlyBracketKeyword_6_0_3__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getOperationAspectAccess().getLeftCurlyBracketKeyword_6_0_0()), new TokenAlias(false, false, grammarAccess.getOperationAspectAccess().getRightCurlyBracketKeyword_6_0_3())), new TokenAlias(false, false, grammarAccess.getOperationAspectAccess().getSemicolonKeyword_6_1()));
 		match_ServiceAspect_SemicolonKeyword_6_1_or___LeftCurlyBracketKeyword_6_0_0_RightCurlyBracketKeyword_6_0_3__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getServiceAspectAccess().getLeftCurlyBracketKeyword_6_0_0()), new TokenAlias(false, false, grammarAccess.getServiceAspectAccess().getRightCurlyBracketKeyword_6_0_3())), new TokenAlias(false, false, grammarAccess.getServiceAspectAccess().getSemicolonKeyword_6_1()));
 	}
@@ -50,12 +46,8 @@ public class OperationDslSyntacticSequencer extends AbstractSyntacticSequencer {
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if (match_Container___UsedKeyword_11_0_ByKeyword_11_1_NodesKeyword_11_2__q.equals(syntax))
-				emit_Container___UsedKeyword_11_0_ByKeyword_11_1_NodesKeyword_11_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_DataOperation___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_3__q.equals(syntax))
+			if (match_DataOperation___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_3__q.equals(syntax))
 				emit_DataOperation___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_3__q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_InfrastructureNode___UsedKeyword_7_0_ByKeyword_7_1_NodesKeyword_7_2__q.equals(syntax))
-				emit_InfrastructureNode___UsedKeyword_7_0_ByKeyword_7_1_NodesKeyword_7_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_OperationAspect_SemicolonKeyword_6_1_or___LeftCurlyBracketKeyword_6_0_0_RightCurlyBracketKeyword_6_0_3__.equals(syntax))
 				emit_OperationAspect_SemicolonKeyword_6_1_or___LeftCurlyBracketKeyword_6_0_0_RightCurlyBracketKeyword_6_0_3__(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_ServiceAspect_SemicolonKeyword_6_1_or___LeftCurlyBracketKeyword_6_0_0_RightCurlyBracketKeyword_6_0_3__.equals(syntax))
@@ -66,26 +58,6 @@ public class OperationDslSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	/**
 	 * Ambiguous syntax:
-	 *     ('used' 'by' 'nodes')?
-	 *
-	 * This ambiguous syntax occurs at:
-	 *     dependsOnNodes+=PossiblyImportedOperationNode (ambiguity) '{' 'aspects' '{' aspects+=ImportedOperationAspect
-	 *     dependsOnNodes+=PossiblyImportedOperationNode (ambiguity) '{' 'default' 'values' '{' 'basic' 'endpoints' '{' defaultBasicEndpoints+=BasicEndpoint
-	 *     dependsOnNodes+=PossiblyImportedOperationNode (ambiguity) '{' 'default' 'values' '{' defaultServicePropertyValues+=PropertyValueAssignment
-	 *     dependsOnNodes+=PossiblyImportedOperationNode (ambiguity) '{' '}' (rule end)
-	 *     dependsOnNodes+=PossiblyImportedOperationNode (ambiguity) '{' deploymentSpecifications+=ServiceDeploymentSpecification
-	 *     deployedServices+=ImportedMicroservice (ambiguity) '{' 'aspects' '{' aspects+=ImportedOperationAspect
-	 *     deployedServices+=ImportedMicroservice (ambiguity) '{' 'default' 'values' '{' 'basic' 'endpoints' '{' defaultBasicEndpoints+=BasicEndpoint
-	 *     deployedServices+=ImportedMicroservice (ambiguity) '{' 'default' 'values' '{' defaultServicePropertyValues+=PropertyValueAssignment
-	 *     deployedServices+=ImportedMicroservice (ambiguity) '{' '}' (rule end)
-	 *     deployedServices+=ImportedMicroservice (ambiguity) '{' deploymentSpecifications+=ServiceDeploymentSpecification
-	 */
-	protected void emit_Container___UsedKeyword_11_0_ByKeyword_11_1_NodesKeyword_11_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Ambiguous syntax:
 	 *     ('(' ')')?
 	 *
 	 * This ambiguous syntax occurs at:
@@ -93,36 +65,6 @@ public class OperationDslSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     name=ID (ambiguity) (rule end)
 	 */
 	protected void emit_DataOperation___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_3__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Ambiguous syntax:
-	 *     ('used' 'by' 'nodes')?
-	 *
-	 * This ambiguous syntax occurs at:
-	 *     dependsOnNodes+=PossiblyImportedOperationNode (ambiguity) '{' 'aspects' '{' aspects+=ImportedOperationAspect
-	 *     dependsOnNodes+=PossiblyImportedOperationNode (ambiguity) '{' 'default' 'values' '{' defaultServicePropertyValues+=PropertyValueAssignment
-	 *     dependsOnNodes+=PossiblyImportedOperationNode (ambiguity) '{' 'endpoints' '{' endpoints+=BasicEndpoint
-	 *     dependsOnNodes+=PossiblyImportedOperationNode (ambiguity) '{' '}' (rule end)
-	 *     dependsOnNodes+=PossiblyImportedOperationNode (ambiguity) '{' deploymentSpecifications+=ServiceDeploymentSpecification
-	 *     deployedServices+=ImportedMicroservice (ambiguity) '{' 'aspects' '{' aspects+=ImportedOperationAspect
-	 *     deployedServices+=ImportedMicroservice (ambiguity) '{' 'default' 'values' '{' defaultServicePropertyValues+=PropertyValueAssignment
-	 *     deployedServices+=ImportedMicroservice (ambiguity) '{' 'endpoints' '{' endpoints+=BasicEndpoint
-	 *     deployedServices+=ImportedMicroservice (ambiguity) '{' '}' (rule end)
-	 *     deployedServices+=ImportedMicroservice (ambiguity) '{' deploymentSpecifications+=ServiceDeploymentSpecification
-	 *     infrastructureTechnology=InfrastructureTechnologyReference (ambiguity) '{' 'aspects' '{' aspects+=ImportedOperationAspect
-	 *     infrastructureTechnology=InfrastructureTechnologyReference (ambiguity) '{' 'default' 'values' '{' defaultServicePropertyValues+=PropertyValueAssignment
-	 *     infrastructureTechnology=InfrastructureTechnologyReference (ambiguity) '{' 'endpoints' '{' endpoints+=BasicEndpoint
-	 *     infrastructureTechnology=InfrastructureTechnologyReference (ambiguity) '{' '}' (rule end)
-	 *     infrastructureTechnology=InfrastructureTechnologyReference (ambiguity) '{' deploymentSpecifications+=ServiceDeploymentSpecification
-	 *     operationEnvironment=[OperationEnvironment|STRING] (ambiguity) '{' 'aspects' '{' aspects+=ImportedOperationAspect
-	 *     operationEnvironment=[OperationEnvironment|STRING] (ambiguity) '{' 'default' 'values' '{' defaultServicePropertyValues+=PropertyValueAssignment
-	 *     operationEnvironment=[OperationEnvironment|STRING] (ambiguity) '{' 'endpoints' '{' endpoints+=BasicEndpoint
-	 *     operationEnvironment=[OperationEnvironment|STRING] (ambiguity) '{' '}' (rule end)
-	 *     operationEnvironment=[OperationEnvironment|STRING] (ambiguity) '{' deploymentSpecifications+=ServiceDeploymentSpecification
-	 */
-	protected void emit_InfrastructureNode___UsedKeyword_7_0_ByKeyword_7_1_NodesKeyword_7_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

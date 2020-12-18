@@ -397,7 +397,7 @@ ruleContainer returns [EObject current=null]
 						afterParserOrEnumRuleCall();
 					}
 				)
-			)*
+			)
 			(
 				otherlv_28=','
 				{
@@ -935,7 +935,7 @@ ruleInfrastructureNode returns [EObject current=null]
 						afterParserOrEnumRuleCall();
 					}
 				)
-			)*
+			)
 			(
 				otherlv_28=','
 				{
