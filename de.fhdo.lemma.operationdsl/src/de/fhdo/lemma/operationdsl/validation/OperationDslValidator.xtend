@@ -749,4 +749,47 @@ class OperationDslValidator extends AbstractOperationDslValidator {
             ]
         }
     }
+
+    /**
+     * Check if node is either used by or dependent on the same node
+     */
+    @Check
+    def checkDuplicatedOperationNodeDependenciesForUsedByNodes(OperationNode node) {
+        node.dependsOnNodes.forEach[dependsOnNode |
+            node.usedByNodes.forEach[usedByNode, index |
+                if (usedByNode.node == dependsOnNode.node)
+                    error('''«node.name» may only depend on or being used by the same ''' +
+                        '''«usedByNode.node.name» node''', node,
+                        OperationPackage.Literals::OPERATION_NODE__USED_BY_NODES, index)
+            ]
+        ]
+    }
+
+    /**
+     * Check cyclic depends on relationships between operation nodes
+     */
+    @Check
+    def checkConflictingDependenciesBetweenDependsOnOperationNodes(OperationNode node) {
+        node.dependsOnNodes.forEach[dependsOnNode |
+            val conflictingNode = dependsOnNode.node.dependsOnNodes.findFirst[n | n.node == node]
+
+            if (conflictingNode !== null)
+                error('''Cyclic dependency between «node.name» and «dependsOnNode.node.name».''',
+                    node, OperationPackage.Literals::OPERATION_NODE__DEPENDS_ON_NODES)
+        ]
+    }
+
+    /**
+     * Check cyclic used by relationships between operation nodes
+     */
+    @Check
+    def checkConflictingDependenciesBetweenUsedByOperationNodes(OperationNode node) {
+        node.usedByNodes.forEach[usedBynode |
+            val conflictingNode = usedBynode.node.usedByNodes.findFirst[n | n.node == node]
+
+            if (conflictingNode !== null)
+                error('''Cyclic dependency between «node.name» and «usedBynode.node.name».''',
+                    node, OperationPackage.Literals::OPERATION_NODE__USED_BY_NODES)
+        ]
+    }
 }

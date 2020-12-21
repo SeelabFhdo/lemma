@@ -51,6 +51,7 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
+import org.eclipse.xtext.xbase.lib.Procedures.Procedure2;
 
 /**
  * This class contains validation rules for the Operation DSL.
@@ -1027,5 +1028,86 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
         mandatoryPropertiesWithoutValues.forEach(_function_2);
       }
     }
+  }
+  
+  /**
+   * Check if node is either used by or dependent on the same node
+   */
+  @Check
+  public void checkDuplicatedOperationNodeDependenciesForUsedByNodes(final OperationNode node) {
+    final Consumer<PossiblyImportedOperationNode> _function = (PossiblyImportedOperationNode dependsOnNode) -> {
+      final Procedure2<PossiblyImportedOperationNode, Integer> _function_1 = (PossiblyImportedOperationNode usedByNode, Integer index) -> {
+        OperationNode _node = usedByNode.getNode();
+        OperationNode _node_1 = dependsOnNode.getNode();
+        boolean _equals = Objects.equal(_node, _node_1);
+        if (_equals) {
+          StringConcatenation _builder = new StringConcatenation();
+          String _name = node.getName();
+          _builder.append(_name);
+          _builder.append(" may only depend on or being used by the same ");
+          StringConcatenation _builder_1 = new StringConcatenation();
+          String _name_1 = usedByNode.getNode().getName();
+          _builder_1.append(_name_1);
+          _builder_1.append(" node");
+          String _plus = (_builder.toString() + _builder_1);
+          this.error(_plus, node, 
+            OperationPackage.Literals.OPERATION_NODE__USED_BY_NODES, (index).intValue());
+        }
+      };
+      IterableExtensions.<PossiblyImportedOperationNode>forEach(node.getUsedByNodes(), _function_1);
+    };
+    node.getDependsOnNodes().forEach(_function);
+  }
+  
+  /**
+   * Check cyclic depends on relationships between operation nodes
+   */
+  @Check
+  public void checkConflictingDependenciesBetweenDependsOnOperationNodes(final OperationNode node) {
+    final Consumer<PossiblyImportedOperationNode> _function = (PossiblyImportedOperationNode dependsOnNode) -> {
+      final Function1<PossiblyImportedOperationNode, Boolean> _function_1 = (PossiblyImportedOperationNode n) -> {
+        OperationNode _node = n.getNode();
+        return Boolean.valueOf(Objects.equal(_node, node));
+      };
+      final PossiblyImportedOperationNode conflictingNode = IterableExtensions.<PossiblyImportedOperationNode>findFirst(dependsOnNode.getNode().getDependsOnNodes(), _function_1);
+      if ((conflictingNode != null)) {
+        StringConcatenation _builder = new StringConcatenation();
+        _builder.append("Cyclic dependency between ");
+        String _name = node.getName();
+        _builder.append(_name);
+        _builder.append(" and ");
+        String _name_1 = dependsOnNode.getNode().getName();
+        _builder.append(_name_1);
+        _builder.append(".");
+        this.error(_builder.toString(), node, OperationPackage.Literals.OPERATION_NODE__DEPENDS_ON_NODES);
+      }
+    };
+    node.getDependsOnNodes().forEach(_function);
+  }
+  
+  /**
+   * Check cyclic used by relationships between operation nodes
+   */
+  @Check
+  public void checkConflictingDependenciesBetweenUsedByOperationNodes(final OperationNode node) {
+    final Consumer<PossiblyImportedOperationNode> _function = (PossiblyImportedOperationNode usedBynode) -> {
+      final Function1<PossiblyImportedOperationNode, Boolean> _function_1 = (PossiblyImportedOperationNode n) -> {
+        OperationNode _node = n.getNode();
+        return Boolean.valueOf(Objects.equal(_node, node));
+      };
+      final PossiblyImportedOperationNode conflictingNode = IterableExtensions.<PossiblyImportedOperationNode>findFirst(usedBynode.getNode().getUsedByNodes(), _function_1);
+      if ((conflictingNode != null)) {
+        StringConcatenation _builder = new StringConcatenation();
+        _builder.append("Cyclic dependency between ");
+        String _name = node.getName();
+        _builder.append(_name);
+        _builder.append(" and ");
+        String _name_1 = usedBynode.getNode().getName();
+        _builder.append(_name_1);
+        _builder.append(".");
+        this.error(_builder.toString(), node, OperationPackage.Literals.OPERATION_NODE__USED_BY_NODES);
+      }
+    };
+    node.getUsedByNodes().forEach(_function);
   }
 }
