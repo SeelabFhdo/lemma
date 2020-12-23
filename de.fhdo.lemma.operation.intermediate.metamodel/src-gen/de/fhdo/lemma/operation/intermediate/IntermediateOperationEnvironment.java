@@ -29,73 +29,73 @@ import org.eclipse.emf.ecore.EObject;
  * @generated
  */
 public interface IntermediateOperationEnvironment extends EObject {
-    /**
-     * Returns the value of the '<em><b>Environment Name</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Environment Name</em>' attribute.
-     * @see #setEnvironmentName(String)
-     * @see de.fhdo.lemma.operation.intermediate.IntermediatePackage#getIntermediateOperationEnvironment_EnvironmentName()
-     * @model unique="false"
-     * @generated
-     */
-    String getEnvironmentName();
+	/**
+	 * Returns the value of the '<em><b>Environment Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Environment Name</em>' attribute.
+	 * @see #setEnvironmentName(String)
+	 * @see de.fhdo.lemma.operation.intermediate.IntermediatePackage#getIntermediateOperationEnvironment_EnvironmentName()
+	 * @model unique="false"
+	 * @generated
+	 */
+	String getEnvironmentName();
 
-    /**
-     * Sets the value of the '{@link de.fhdo.lemma.operation.intermediate.IntermediateOperationEnvironment#getEnvironmentName <em>Environment Name</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Environment Name</em>' attribute.
-     * @see #getEnvironmentName()
-     * @generated
-     */
-    void setEnvironmentName(String value);
+	/**
+	 * Sets the value of the '{@link de.fhdo.lemma.operation.intermediate.IntermediateOperationEnvironment#getEnvironmentName <em>Environment Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Environment Name</em>' attribute.
+	 * @see #getEnvironmentName()
+	 * @generated
+	 */
+	void setEnvironmentName(String value);
 
-    /**
-     * Returns the value of the '<em><b>Default</b></em>' attribute.
-     * The default value is <code>"false"</code>.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Default</em>' attribute.
-     * @see #setDefault(boolean)
-     * @see de.fhdo.lemma.operation.intermediate.IntermediatePackage#getIntermediateOperationEnvironment_Default()
-     * @model default="false" unique="false"
-     * @generated
-     */
-    boolean isDefault();
+	/**
+	 * Returns the value of the '<em><b>Default</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Default</em>' attribute.
+	 * @see #setDefault(boolean)
+	 * @see de.fhdo.lemma.operation.intermediate.IntermediatePackage#getIntermediateOperationEnvironment_Default()
+	 * @model default="false" unique="false"
+	 * @generated
+	 */
+	boolean isDefault();
 
-    /**
-     * Sets the value of the '{@link de.fhdo.lemma.operation.intermediate.IntermediateOperationEnvironment#isDefault <em>Default</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Default</em>' attribute.
-     * @see #isDefault()
-     * @generated
-     */
-    void setDefault(boolean value);
+	/**
+	 * Sets the value of the '{@link de.fhdo.lemma.operation.intermediate.IntermediateOperationEnvironment#isDefault <em>Default</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Default</em>' attribute.
+	 * @see #isDefault()
+	 * @generated
+	 */
+	void setDefault(boolean value);
 
-    /**
-     * Returns the value of the '<em><b>Operation Technology</b></em>' container reference.
-     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.operation.intermediate.IntermediateOperationTechnology#getEnvironment <em>Environment</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Operation Technology</em>' container reference.
-     * @see #setOperationTechnology(IntermediateOperationTechnology)
-     * @see de.fhdo.lemma.operation.intermediate.IntermediatePackage#getIntermediateOperationEnvironment_OperationTechnology()
-     * @see de.fhdo.lemma.operation.intermediate.IntermediateOperationTechnology#getEnvironment
-     * @model opposite="environment" transient="false"
-     * @generated
-     */
-    IntermediateOperationTechnology getOperationTechnology();
+	/**
+	 * Returns the value of the '<em><b>Operation Technology</b></em>' container reference.
+	 * It is bidirectional and its opposite is '{@link de.fhdo.lemma.operation.intermediate.IntermediateOperationTechnology#getEnvironment <em>Environment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Operation Technology</em>' container reference.
+	 * @see #setOperationTechnology(IntermediateOperationTechnology)
+	 * @see de.fhdo.lemma.operation.intermediate.IntermediatePackage#getIntermediateOperationEnvironment_OperationTechnology()
+	 * @see de.fhdo.lemma.operation.intermediate.IntermediateOperationTechnology#getEnvironment
+	 * @model opposite="environment" transient="false"
+	 * @generated
+	 */
+	IntermediateOperationTechnology getOperationTechnology();
 
-    /**
-     * Sets the value of the '{@link de.fhdo.lemma.operation.intermediate.IntermediateOperationEnvironment#getOperationTechnology <em>Operation Technology</em>}' container reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Operation Technology</em>' container reference.
-     * @see #getOperationTechnology()
-     * @generated
-     */
-    void setOperationTechnology(IntermediateOperationTechnology value);
+	/**
+	 * Sets the value of the '{@link de.fhdo.lemma.operation.intermediate.IntermediateOperationEnvironment#getOperationTechnology <em>Operation Technology</em>}' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Operation Technology</em>' container reference.
+	 * @see #getOperationTechnology()
+	 * @generated
+	 */
+	void setOperationTechnology(IntermediateOperationTechnology value);
 
 } // IntermediateOperationEnvironment

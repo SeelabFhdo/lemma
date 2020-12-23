@@ -258,4 +258,19 @@ class ImportedOperationAspect {
 class PossiblyImportedOperationNode {
     refers Import[0..1] ^import
     refers OperationNode node
+
+    /**
+     * Get the qualified infrastructure technology name for infrastructure nodes or the deployment
+     * technology name for container.
+     */
+    op String getTechnologyName(OperationNode node) {
+        switch(node) {
+            InfrastructureNode:
+                node.infrastructureTechnology.infrastructureTechnology.buildQualifiedName(".", true,
+                    false)
+            Container:
+                node.deploymentTechnology.deploymentTechnology.buildQualifiedName(".", true, false)
+            default: null
+        }
+    }
 }

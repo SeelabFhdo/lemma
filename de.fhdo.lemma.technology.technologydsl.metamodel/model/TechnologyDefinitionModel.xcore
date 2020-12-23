@@ -446,6 +446,30 @@ class DeploymentTechnology extends OperationTechnology {
         nameParts.add(name)
         nameParts.asEList
     }
+
+    /**
+     *Build qualified name name based in the technology and deployment technology name
+     */
+    op String buildQualifiedName(String separator, boolean withTechnologyName,
+        boolean withNamespace) {
+        if (separator === null)
+            return null
+
+        var String qualifiedName = ""
+
+        // Add technology name
+        if (withTechnologyName)
+            qualifiedName += technology.name
+
+        // Add deployment technology name
+        qualifiedName += separator + name
+
+        // Add namespace qualified name
+        if(withNamespace)
+            qualifiedName += "_deployment"
+
+        return qualifiedName
+    }
 }
 
 /**
@@ -471,6 +495,30 @@ class InfrastructureTechnology extends OperationTechnology {
         nameParts.add("_infrastructure")
         nameParts.add(name)
         nameParts.asEList
+    }
+
+    /**
+     * Build qualified name name based in the technology and infrastructure technology name
+     */
+    op String buildQualifiedName(String separator, boolean withTechnologyName,
+        boolean withNamespace) {
+        if (separator === null)
+            return null
+
+        var String qualifiedName = ""
+
+        // Add technology name
+        if (withTechnologyName)
+            qualifiedName += technology.name
+
+        // Add deployment technology name
+        qualifiedName += separator + name
+
+        // Add namespace qualified name
+        if(withNamespace)
+            qualifiedName += "_infrastructure"
+
+        return qualifiedName
     }
 }
 

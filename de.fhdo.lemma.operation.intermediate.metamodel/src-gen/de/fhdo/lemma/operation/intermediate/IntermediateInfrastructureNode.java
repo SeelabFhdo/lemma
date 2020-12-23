@@ -18,6 +18,7 @@ package de.fhdo.lemma.operation.intermediate;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode#getQualifiedInfrastructureTechnologyName <em>Qualified Infrastructure Technology Name</em>}</li>
  *   <li>{@link de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode#getReference <em>Reference</em>}</li>
  *   <li>{@link de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode#getOperationModel <em>Operation Model</em>}</li>
  * </ul>
@@ -27,52 +28,74 @@ package de.fhdo.lemma.operation.intermediate;
  * @generated
  */
 public interface IntermediateInfrastructureNode extends IntermediateOperationNode {
-    /**
-     * Returns the value of the '<em><b>Reference</b></em>' containment reference.
-     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureTechnologyReference#getInfrastructureNode <em>Infrastructure Node</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Reference</em>' containment reference.
-     * @see #setReference(IntermediateInfrastructureTechnologyReference)
-     * @see de.fhdo.lemma.operation.intermediate.IntermediatePackage#getIntermediateInfrastructureNode_Reference()
-     * @see de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureTechnologyReference#getInfrastructureNode
-     * @model opposite="infrastructureNode" containment="true"
-     * @generated
-     */
-    IntermediateInfrastructureTechnologyReference getReference();
+	/**
+	 * Returns the value of the '<em><b>Qualified Infrastructure Technology Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Qualified Infrastructure Technology Name</em>' attribute.
+	 * @see #setQualifiedInfrastructureTechnologyName(String)
+	 * @see de.fhdo.lemma.operation.intermediate.IntermediatePackage#getIntermediateInfrastructureNode_QualifiedInfrastructureTechnologyName()
+	 * @model unique="false"
+	 * @generated
+	 */
+	String getQualifiedInfrastructureTechnologyName();
 
-    /**
-     * Sets the value of the '{@link de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode#getReference <em>Reference</em>}' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Reference</em>' containment reference.
-     * @see #getReference()
-     * @generated
-     */
-    void setReference(IntermediateInfrastructureTechnologyReference value);
+	/**
+	 * Sets the value of the '{@link de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode#getQualifiedInfrastructureTechnologyName <em>Qualified Infrastructure Technology Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Qualified Infrastructure Technology Name</em>' attribute.
+	 * @see #getQualifiedInfrastructureTechnologyName()
+	 * @generated
+	 */
+	void setQualifiedInfrastructureTechnologyName(String value);
 
-    /**
-     * Returns the value of the '<em><b>Operation Model</b></em>' container reference.
-     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.operation.intermediate.IntermediateOperationModel#getInfrastructureNodes <em>Infrastructure Nodes</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Operation Model</em>' container reference.
-     * @see #setOperationModel(IntermediateOperationModel)
-     * @see de.fhdo.lemma.operation.intermediate.IntermediatePackage#getIntermediateInfrastructureNode_OperationModel()
-     * @see de.fhdo.lemma.operation.intermediate.IntermediateOperationModel#getInfrastructureNodes
-     * @model opposite="infrastructureNodes" transient="false"
-     * @generated
-     */
-    IntermediateOperationModel getOperationModel();
+	/**
+	 * Returns the value of the '<em><b>Reference</b></em>' containment reference.
+	 * It is bidirectional and its opposite is '{@link de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureTechnologyReference#getInfrastructureNode <em>Infrastructure Node</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Reference</em>' containment reference.
+	 * @see #setReference(IntermediateInfrastructureTechnologyReference)
+	 * @see de.fhdo.lemma.operation.intermediate.IntermediatePackage#getIntermediateInfrastructureNode_Reference()
+	 * @see de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureTechnologyReference#getInfrastructureNode
+	 * @model opposite="infrastructureNode" containment="true"
+	 * @generated
+	 */
+	IntermediateInfrastructureTechnologyReference getReference();
 
-    /**
-     * Sets the value of the '{@link de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode#getOperationModel <em>Operation Model</em>}' container reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Operation Model</em>' container reference.
-     * @see #getOperationModel()
-     * @generated
-     */
-    void setOperationModel(IntermediateOperationModel value);
+	/**
+	 * Sets the value of the '{@link de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode#getReference <em>Reference</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Reference</em>' containment reference.
+	 * @see #getReference()
+	 * @generated
+	 */
+	void setReference(IntermediateInfrastructureTechnologyReference value);
+
+	/**
+	 * Returns the value of the '<em><b>Operation Model</b></em>' container reference.
+	 * It is bidirectional and its opposite is '{@link de.fhdo.lemma.operation.intermediate.IntermediateOperationModel#getInfrastructureNodes <em>Infrastructure Nodes</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Operation Model</em>' container reference.
+	 * @see #setOperationModel(IntermediateOperationModel)
+	 * @see de.fhdo.lemma.operation.intermediate.IntermediatePackage#getIntermediateInfrastructureNode_OperationModel()
+	 * @see de.fhdo.lemma.operation.intermediate.IntermediateOperationModel#getInfrastructureNodes
+	 * @model opposite="infrastructureNodes" transient="false"
+	 * @generated
+	 */
+	IntermediateOperationModel getOperationModel();
+
+	/**
+	 * Sets the value of the '{@link de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode#getOperationModel <em>Operation Model</em>}' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Operation Model</em>' container reference.
+	 * @see #getOperationModel()
+	 * @generated
+	 */
+	void setOperationModel(IntermediateOperationModel value);
 
 } // IntermediateInfrastructureNode
