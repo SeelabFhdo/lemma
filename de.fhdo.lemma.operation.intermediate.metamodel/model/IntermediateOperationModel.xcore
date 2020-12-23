@@ -39,8 +39,8 @@ abstract class IntermediateOperationNode {
     contains IntermediateServiceDeploymentSpecification[] specifications opposite operationNode
     contains IntermediateTechnologySpecificPropertyValue[] defaultValues opposite operationNode
     contains IntermediateImportedAspect[] aspects
-    contains IntermediateOperationNode[] dependsOnNodes
-    contains IntermediateOperationNode[] usedByNodes
+    contains IntermediateOperationNodeReference[] dependsOnNodes opposite dependOnNode
+    contains IntermediateOperationNodeReference[] usedByNodes opposite usedByNode
 
     // This method forms based on the technology-specific configuration and the default values
     // the effective configuration of the operation node.
@@ -74,6 +74,8 @@ abstract class IntermediateOperationNode {
  * and operation.
  */
 class IntermediateContainer extends IntermediateOperationNode {
+    String qualifiedDeploymentTechnologyName
+
     contains IntermediateDeploymentTechnologyReference technologyReference opposite ^container
 
     container IntermediateOperationModel operationModel opposite containers
@@ -84,6 +86,8 @@ class IntermediateContainer extends IntermediateOperationNode {
  * e.g., a configuration provider
  */
 class IntermediateInfrastructureNode extends IntermediateOperationNode {
+    String qualifiedInfrastructureTechnologyName
+
     // Intermediate operation nodes which the intermediate infrastructure node depends on, e.g.,
     // a service discovery or database
     contains IntermediateInfrastructureTechnologyReference reference opposite infrastructureNode
@@ -212,4 +216,17 @@ class IntermediateOperationEndpoint extends IntermediateEndpoint {
     contains IntermediateEndpointTechnology endpointTechnology opposite endpoint
 
     container IntermediateOperationNode node opposite endpoints
+}
+
+/**
+ * References to imported operation nodes
+ */
+class IntermediateOperationNodeReference {
+    boolean imported = "false"
+    String name
+    String qualifiedTechnologyName
+    refers IntermediateImport ^import
+
+    container IntermediateOperationNode dependOnNode opposite dependsOnNodes
+    container IntermediateOperationNode usedByNode opposite usedByNodes
 }
