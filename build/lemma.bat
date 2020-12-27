@@ -58,6 +58,7 @@ set modules=%modules%;"code generators\de.fhdo.lemma.model_processing.code_gener
 set modules=%modules%;"code generators\de.fhdo.lemma.model_processing.code_generation.springcloud.cqrs"
 set modules=%modules%;"code generators\de.fhdo.lemma.model_processing.code_generation.springcloud.kafka"
 set modules=%modules%;"code generators\de.fhdo.lemma.model_processing.code_generation.container_base"
+set modules=%modules%;"code generators\de.fhdo.lemma.model_processing.code_generation.mongodb"
 
 REM Analyzer
 set modules=%modules%;de.fhdo.lemma.analyzer.lib
