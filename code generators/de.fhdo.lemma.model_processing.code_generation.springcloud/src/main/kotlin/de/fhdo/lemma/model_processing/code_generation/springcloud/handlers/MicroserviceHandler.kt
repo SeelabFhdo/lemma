@@ -135,7 +135,12 @@ internal class MicroserviceHandler
      * Handle CustomProperty aspect
      */
     private fun handleCustomPropertyAspect(intermediateService: IntermediateMicroservice)
-        = intermediateService.forEachAspect("java.CustomProperty", "Spring.CustomProperty") {
+        = intermediateService.forEachAspect(
+            "java.ApplicationProperty",
+            "java.CustomProperty",
+            "Spring.ApplicationProperty",
+            "Spring.CustomProperty"
+        ) {
             val customPropertyName = it.getPropertyValue("name")!!
             it.newApplicationProperty("value", customPropertyName)
         }
