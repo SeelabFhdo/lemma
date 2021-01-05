@@ -45,6 +45,7 @@ code generators/de.fhdo.lemma.model_processing.code_generation.container_base
 code generators/de.fhdo.lemma.model_processing.code_generation.mariadb
 code generators/de.fhdo.lemma.model_processing.code_generation.mongodb
 code generators/de.fhdo.lemma.model_processing.code_generation.springcloud.zuul
+code generators/de.fhdo.lemma.model_processing.code_generation.springcloud.eureka
 
 # Analyzer
 de.fhdo.lemma.analyzer.lib
