@@ -60,6 +60,7 @@ set modules=%modules%;"code generators\de.fhdo.lemma.model_processing.code_gener
 set modules=%modules%;"code generators\de.fhdo.lemma.model_processing.code_generation.container_base"
 set modules=%modules%;"code generators\de.fhdo.lemma.model_processing.code_generation.mariadb"
 set modules=%modules%;"code generators\de.fhdo.lemma.model_processing.code_generation.mongodb"
+set modules=%modules%;"code generators\de.fhdo.lemma.model_processing.code_generation.springcloud.zuul"
 
 REM Analyzer
 set modules=%modules%;de.fhdo.lemma.analyzer.lib
