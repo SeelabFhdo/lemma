@@ -8,8 +8,9 @@
 # The present "docker-images-push" script will invoke a module's
 # "docker/build.sh" script and pass to it the version of the LEMMA module. To
 # determine the version of the LEMMA module, the "docker-images-push" script
-# leverages the "read_version_identifier_from_build_file.py" Python script,
-# which can parse Gradle as well as Maven version identifier files.
+# leverages the "read_version_identifier_from_build_file.py" Python script in
+# the "../../scripts/" folder, which can parse Gradle as well as Maven version
+# identifier files.
 #
 # The "docker-images-push" script expects the invoked "docker/build.sh" script
 # to build a Docker image for its LEMMA module. Furthermore, the invoked
@@ -114,8 +115,10 @@ read_version_identifier() {
         exit 1
     fi
 
+    versionIdentifierScriptFolder=$SCRIPT_ROOT/../../scripts
+    versionIdentifierScript="read_version_identifier_from_build_file.py"
     versionFileFullPath="$BUILD_ROOT/$module/$versionFile"
-    version=$(python3 $SCRIPT_ROOT/read_version_identifier_from_build_file.py \
+    version=$(python3 $versionIdentifierScriptFolder/$versionIdentifierScript \
         "$versionFileFullPath" 2>&1)
     if [ $? -eq 1 ]
     then

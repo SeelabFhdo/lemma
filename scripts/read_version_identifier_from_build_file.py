@@ -86,14 +86,18 @@ PARSER_FUNCTIONS = {
     'pom.xml': identifier_from_maven_pom
 }
 
+def identifier_from_build_file(filepath):
+    """Read version identifier from build file."""
+
+    parserFunction = find_parser_function(filepath)
+    return parserFunction(filepath)
+
 if __name__ == '__main__':
     if len(sys.argv) <= 1:
         error_and_die('Missing filename. Exiting.')
 
     try:
-        filepath = sys.argv[1]
-        parserFunction = find_parser_function(filepath)
-        versionIdentifier = parserFunction(filepath)
+        versionIdentifier = identifier_from_build_file(sys.argv[1])
         if not versionIdentifier:
             error_and_die(ex)
         print(versionIdentifier)

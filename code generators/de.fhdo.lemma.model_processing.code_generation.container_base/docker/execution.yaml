@@ -1,0 +1,13 @@
+- processor:
+  - description: "LEMMA Container Base Generator"
+  - docker:
+    - image: "lemma/container_base_generator:latest"
+    - repository: "repository.seelab.fh-dortmund.de:51900"
+    - buildscript: "./build.sh"
+    - lemma_version_file: "../pom.xml"
+
+- required_args:
+  - builtin:
+    - source_model: "path to operation model (must be relative to model base path)"
+    - intermediate_model: "path to intermediate operation model (must be relative to model base path)"
+    - target_folder: "path to generation target folder"
