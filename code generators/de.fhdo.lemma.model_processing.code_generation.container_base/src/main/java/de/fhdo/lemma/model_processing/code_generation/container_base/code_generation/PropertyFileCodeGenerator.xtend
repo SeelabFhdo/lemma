@@ -36,8 +36,10 @@ class PropertyFileCodeGenerator extends AbstractCodeGenerationModule{
         model.containers.forEach [container |
             createDeployedMicroservice(container.deployedServices?.get(0))]
 
-        OpenedPropertyFiles.instance.serializeOpenedPropertyFiles
-        OpenedPropertyFiles.instance.closeOpenedPropertyFiles
+        // Create application.properties files
+        OpenedPropertyFiles.instance.propertyFiles.forEach[
+            content.put(it.filePath, it.buildPropertyFile)
+        ]
 
         return withCharset(content, "UTF-8");
     }

@@ -15,8 +15,6 @@ class DockerFile {
     String operationEnvironment
     @Accessors
     String deployedServiceName
-    @Accessors
-    String Version
 
     /**
      * This attribute is necessary to support the creation of Dockerfiles from operation aspects.
@@ -70,6 +68,6 @@ class DockerFile {
         if (createdByAspect)
             fileContent.toString
         else
-            DockerFileTemplate::buildDockerFile(operationEnvironment, deployedServiceName, version)
+            DockerFileTemplate::buildDockerFile(operationEnvironment, deployedServiceName)
     }
 }

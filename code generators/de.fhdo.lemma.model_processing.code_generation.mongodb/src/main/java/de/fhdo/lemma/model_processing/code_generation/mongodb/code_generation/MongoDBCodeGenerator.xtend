@@ -39,6 +39,7 @@ class MongoDBCodeGenerator extends AbstractCodeGenerationModule {
         // Receive the intermediate operation model
         model = intermediateModelResource.contents.get(0) as IntermediateOperationModel
 
+        // Create service-specific MongoDB configurations
         model.containers.forEach[
             val dependsOnMongoDB = it.dependsOnNodes.exists[it.qualifiedTechnologyName.toLowerCase
                 == MONGODB_TECHNOLOGY]
@@ -47,6 +48,7 @@ class MongoDBCodeGenerator extends AbstractCodeGenerationModule {
                 createContainerSpecificConfiguration(it)
         ]
 
+        // Create MongoDB components, e.g., docker-compose parts and Kubernetes deployments
         model.infrastructureNodes.forEach[node |
             if (node.qualifiedInfrastructureTechnologyName.toLowerCase == MONGODB_TECHNOLOGY) {
                 createMongoDBKubernetesDeployment(node)
@@ -54,12 +56,10 @@ class MongoDBCodeGenerator extends AbstractCodeGenerationModule {
             }
         ]
 
-        /*
-         * Serialize the created Spring-based application.properties files for each deployed
-         * microservice.
-         */
-        OpenedPropertyFiles.instance.serializeOpenedPropertyFiles
-        OpenedPropertyFiles.instance.closeOpenedPropertyFiles
+        // Create application.properties files
+        OpenedPropertyFiles.instance.propertyFiles.forEach[
+            content.put(it.filePath, it.buildPropertyFile)
+        ]
 
         return withCharset(content, "UTF-8");
     }

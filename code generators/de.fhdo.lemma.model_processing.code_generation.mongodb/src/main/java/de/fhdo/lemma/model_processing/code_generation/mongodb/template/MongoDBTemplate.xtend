@@ -25,6 +25,7 @@ class MongoDBTemplate {
                 spring.data.mongodb.database=«property.value.toLowerCase»
             «ENDIF»
             «IF 'springdatamongodbusername' == property.technologySpecificProperty.name.toLowerCase»
+                spring.data.mongodb.authentication-database=admin
                 spring.data.mongodb.username=«property.value.toLowerCase»
             «ENDIF»
             «IF 'stringdatamongodbpassword' == property.technologySpecificProperty.name.toLowerCase»

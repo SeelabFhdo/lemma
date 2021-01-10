@@ -1,6 +1,7 @@
 package de.fhdo.lemma.model_processing.code_generation.container_base.file.property
 
 import java.io.File
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * This class manages several different application.properties files, used in the spring framework.
@@ -15,6 +16,7 @@ import java.io.File
  */
 class OpenedPropertyFiles {
     static OpenedPropertyFiles instance
+    @Accessors(PUBLIC_GETTER)
     val propertyFiles = <PropertyFile> newHashSet
 
     static def OpenedPropertyFiles getInstance() {

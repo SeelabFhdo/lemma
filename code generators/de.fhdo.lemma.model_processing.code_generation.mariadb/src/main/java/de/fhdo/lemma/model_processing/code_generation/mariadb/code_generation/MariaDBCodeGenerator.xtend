@@ -41,7 +41,7 @@ class MariaDBCodeGenerator extends AbstractCodeGenerationModule {
         // Receive the intermediate operation model
         model = intermediateModelResource.contents.get(0) as IntermediateOperationModel
 
-        // Create a build script for containers
+        // Create service-specific MariaDB configurations
         model.containers.forEach[
             val usesMariaDB = it.dependsOnNodes.exists[ it.qualifiedTechnologyName.toLowerCase
                 == MARIADB_TECHNOLOGY]
@@ -50,7 +50,7 @@ class MariaDBCodeGenerator extends AbstractCodeGenerationModule {
                 createContainerSpecificConfiguration(it)
         ]
 
-        // Create build script for infrastructure nodes
+        // Create MariaDB components, e.g., docker-compose parts and Kubernetes deployments
         model.infrastructureNodes.forEach[node |
             val usesMariaDBTechnology =
                 node.qualifiedInfrastructureTechnologyName.toLowerCase == MARIADB_TECHNOLOGY
@@ -61,12 +61,10 @@ class MariaDBCodeGenerator extends AbstractCodeGenerationModule {
             }
         ]
 
-        /*
-         * Serialize the created Spring-based application.properties files for each deployed
-         * microservice.
-         */
-        OpenedPropertyFiles.instance.serializeOpenedPropertyFiles
-        OpenedPropertyFiles.instance.closeOpenedPropertyFiles
+        // Create application.properties files
+        OpenedPropertyFiles.instance.propertyFiles.forEach[
+            content.put(it.filePath, it.buildPropertyFile)
+        ]
 
         return withCharset(content, "UTF-8");
     }

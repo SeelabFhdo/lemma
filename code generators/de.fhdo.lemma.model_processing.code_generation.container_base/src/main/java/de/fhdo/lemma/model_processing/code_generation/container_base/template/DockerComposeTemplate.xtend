@@ -20,7 +20,7 @@ class DockerComposeTemplate {
         «IF service.container_name !== null»
             «""»    container_name: «service.container_name.toLowerCase»
         «ENDIF»
-        «IF service.environment !== null»
+        «IF service.environment !== null && !service.environment.empty»
             «""»    environment:
             «FOR Map.Entry<String, String> environment : service.environment.entrySet»
                 «""»      «environment.key»: «environment.value»

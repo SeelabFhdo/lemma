@@ -10,15 +10,11 @@ class DockerFileTemplate {
      * File template for the creation of the Dockerfile by the docker file code generation module.
      */
     static def String buildDockerFile(String operationEnvironment,
-        String deployedServiceName,
-        String version
+        String deployedServiceName
         )'''
         FROM «operationEnvironment»
-        ENV APP_FILE «deployedServiceName»-«version».jar
-        ENV APP_HOME /usr/apps
-        COPY target/$APP_FILE $APP_HOME/
-        WORKDIR $APP_HOME
-        ENTRYPOINT ["sh", "-c"]
-        CMD ["exec java -jar $APP_FILE"]
+        ARG JAR_FILE=target/«deployedServiceName»*.jar
+        COPY ${JAR_FILE} «deployedServiceName».jar
+        ENTRYPOINT ["java","-jar","/«deployedServiceName».jar"]
     '''
 }

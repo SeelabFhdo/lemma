@@ -41,7 +41,7 @@ class MongoDBIntermediateModelValidator extends AbstractIntermediateDeclarativeV
      */
     @Check
     def checkMongoDBTechnologyForInfrastructureNode(IntermediateInfrastructureNode node) {
-        if(node.qualifiedInfrastructureTechnologyName.toLowerCase ==
+        if(node.qualifiedInfrastructureTechnologyName.toLowerCase !=
             MongoDBCodeGenerator.MONGODB_TECHNOLOGY)
             warning('''No supported technology model found for InfrastructureNode «node.name».''',
                 IntermediatePackage.Literals.INTERMEDIATE_DEPLOYMENT_TECHNOLOGY_REFERENCE__IMPORT)

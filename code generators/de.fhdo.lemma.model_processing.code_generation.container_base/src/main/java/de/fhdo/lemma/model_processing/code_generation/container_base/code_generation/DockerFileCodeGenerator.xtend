@@ -24,9 +24,6 @@ class DockerFileCodeGenerator extends AbstractCodeGenerationModule {
      * The buildVersion is set to support infrastructure nodes, e.g., Zuul or Eureka, that are
      * modeled without a specific version.
      */
-    static val buildVersion = "0.0.1-SNAPSHOT"
-    //The dockerBuildVersion is set to support underspecified service specification.
-    static val dockerBuildVersion = "v0"
     var IntermediateOperationModel model
     val content = <String, String> newHashMap
 
@@ -92,14 +89,6 @@ class DockerFileCodeGenerator extends AbstractCodeGenerationModule {
         } else {
             val dockerFile = new DockerFile
             dockerFile.deployedServiceName = container.name.toLowerCase
-            val deployedServiceVersion = container.deployedServices.get(0).version
-
-            if (deployedServiceVersion === null)
-                dockerFile.version = dockerBuildVersion
-                else
-                    dockerFile.version = deployedServiceVersion
-
-            dockerFile.version = deployedServiceVersion
             dockerFile.operationEnvironment = container.operationEnvironment.environmentName
             dockerFileContent = dockerFile.toString
         }
@@ -128,7 +117,6 @@ class DockerFileCodeGenerator extends AbstractCodeGenerationModule {
         } else {
             var dockerFile = new DockerFile
             dockerFile.deployedServiceName = node.name.toLowerCase
-            dockerFile.version = buildVersion
             dockerFile.operationEnvironment = node.operationEnvironment.environmentName
             content.put(filePath,dockerFile.toString)
         }

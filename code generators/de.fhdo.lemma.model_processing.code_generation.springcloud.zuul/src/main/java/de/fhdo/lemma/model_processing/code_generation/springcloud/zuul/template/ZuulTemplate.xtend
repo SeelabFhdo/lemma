@@ -147,22 +147,22 @@ class ZuulTemplate {
 
         «FOR property : node.defaultValues»
             «IF property.technologySpecificProperty.name.toLowerCase == "mavengroupid"»
-                «""»    <groupId>«property.value»</groupId>
+                «""»    <groupId>«property.value.toLowerCase»</groupId>
             «ENDIF»
         «ENDFOR»
         «FOR property : node.defaultValues»
             «IF property.technologySpecificProperty.name.toLowerCase == "mavenartifactid"»
-                «""»    <artifactId>«property.value»</artifactId>
+                «""»    <artifactId>«property.value.toLowerCase»</artifactId>
             «ENDIF»
         «ENDFOR»
         «FOR property : node.defaultValues»
             «IF property.technologySpecificProperty.name.toLowerCase == "mavenversion"»
-                «""»    <version>«property.value»</version>
+                «""»    <version>«property.value.toLowerCase»</version>
             «ENDIF»
         «ENDFOR»
         «FOR property : node.defaultValues»
             «IF property.technologySpecificProperty.name.toLowerCase == "mavenname"»
-                «""»    <name>«property.value»</name>
+                «""»    <name>«property.value.toLowerCase»</name>
             «ENDIF»
         «ENDFOR»
 
@@ -263,22 +263,22 @@ class ZuulTemplate {
 
         «FOR property : node.defaultValues»
             «IF property.technologySpecificProperty.name.toLowerCase == "mavengroupid"»
-                «""»    <groupId>«property.value»</groupId>
+                «""»    <groupId>«property.value.toLowerCase»</groupId>
             «ENDIF»
         «ENDFOR»
         «FOR property : node.defaultValues»
             «IF property.technologySpecificProperty.name.toLowerCase == "mavenartifactid"»
-                «""»    <artifactId>«property.value»</artifactId>
+                «""»    <artifactId>«property.value.toLowerCase»</artifactId>
             «ENDIF»
         «ENDFOR»
         «FOR property : node.defaultValues»
             «IF property.technologySpecificProperty.name.toLowerCase == "mavenversion"»
-                «""»    <version>«property.value»</version>
+                «""»    <version>«property.value.toLowerCase»</version>
             «ENDIF»
         «ENDFOR»
         «FOR property : node.defaultValues»
             «IF property.technologySpecificProperty.name.toLowerCase == "mavenname"»
-                «""»    <name>«property.value»</name>
+                «""»    <name>«property.value.toLowerCase»</name>
             «ENDIF»
         «ENDFOR»
 

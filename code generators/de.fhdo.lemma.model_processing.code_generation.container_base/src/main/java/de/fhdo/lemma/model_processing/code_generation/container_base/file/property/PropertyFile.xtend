@@ -135,4 +135,16 @@ class PropertyFile {
 
         return filePath == (object as PropertyFile).filePath
     }
+
+    /**
+     * Build Spring-based application.properties file
+     */
+    def String buildPropertyFile() {
+        val stringBuild = new StringBuilder
+        properties.forEach[key, value |
+            val property = '''«key»=«value»'''
+            stringBuild.append(property + "\n")
+        ]
+        return stringBuild.toString
+    }
 }
