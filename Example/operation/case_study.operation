@@ -1,15 +1,22 @@
 import technology from "../technology/java.technology" as java
 import technology from "../technology/python.technology" as python
 import technology from "../technology/shared.technology" as shared
+import technology from "../technology/container_base.technology" as container_base
 import microservices from "../microservices/case_study.services" as ^services
+import nodes from "eureka.operation" as eureka
+import nodes from "zuul.operation" as zuul
 
 /* Containers */
 // Current allocation
 @technology(java)
 @technology(shared)
-container CurrentAllocation deployment technology java::_deployment.docker
-deploys ^services::com.example.CurrentAllocation {
+@technology(container_base)
+container CurrentAllocation deployment technology container_base::_deployment.Kubernetes
+deploys ^services::com.example.allocationsovertime.AllocationsOverTime
+depends on nodes eureka::Eureka, zuul::Zuul {
 	default values {
+		springApplicationName="CurrentAllocationService"
+		serverPort=8080
 		basic endpoints {
 			shared::_protocols.amqp: "amqp://example.com:5672/ca";
 			shared::_protocols.rest: "http://example.com:8080/ca";
@@ -20,9 +27,13 @@ deploys ^services::com.example.CurrentAllocation {
 // Search for free space
 @technology(java)
 @technology(shared)
-container SearchForFreeSpace deployment technology java::_deployment.docker
-deploys ^services::com.example.SearchForFreeSpace {
+@technology(container_base)
+container SearchForFreeSpace deployment technology container_base::_deployment.Kubernetes
+deploys ^services::com.example.searchforfreespace.SearchForFreeSpace
+depends on nodes eureka::Eureka, zuul::Zuul {
 	default values {
+		springApplicationName="SearchForFreeSpaceService"
+		serverPort=8080
 		basic endpoints {
 			shared::_protocols.rest: "http://example.com:8080/sfs";
 		}
@@ -32,9 +43,13 @@ deploys ^services::com.example.SearchForFreeSpace {
 // Allocations over time
 @technology(python)
 @technology(shared)
-container AllocationsOverTime deployment technology python::_deployment.docker
-deploys ^services::com.example.AllocationsOverTime {
+@technology(container_base)
+container AllocationsOverTime deployment technology container_base::_deployment.Kubernetes
+deploys ^services::com.example.allocationsovertime.AllocationsOverTime
+depends on nodes eureka::Eureka, zuul::Zuul {
 	default values {
+		springApplicationName="AllocationsOverTimeService"
+		serverPort=8080
 		basic endpoints {
 			shared::_protocols.amqp: "amqp://example.com:5672/aot";
 			shared::_protocols.rest: "http://example.com:8080/aot";
@@ -45,9 +60,13 @@ deploys ^services::com.example.AllocationsOverTime {
 // Parking space management
 @technology(java)
 @technology(shared)
-container ParkingSpaceManagement deployment technology java::_deployment.docker
-deploys ^services::com.example.ParkingSpaceManagement {
+@technology(container_base)
+container ParkingSpaceManagement deployment technology container_base::_deployment.Kubernetes
+deploys ^services::com.example.parkingspacemanagement.ParkingSpaceManagement
+depends on nodes eureka::Eureka, zuul::Zuul {
 	default values {
+		springApplicationName="ParkingSpaceManagementService"
+		serverPort=8080
 		basic endpoints {
 			shared::_protocols.amqp: "amqp://example.com:5672/psm";
 			shared::_protocols.rest: "http://example.com:8080/psm";
@@ -58,32 +77,15 @@ deploys ^services::com.example.ParkingSpaceManagement {
 // Data export
 @technology(java)
 @technology(shared)
-container DataExport deployment technology java::_deployment.docker
-deploys ^services::com.example.DataExport {
+@technology(container_base)
+container DataExport deployment technology container_base::_deployment.Kubernetes
+deploys ^services::com.example.dataexport.DataExport
+depends on nodes eureka::Eureka, zuul::Zuul {
 	default values {
+		springApplicationName="ParkingSpaceManagementService"
+		serverPort=8080
 		basic endpoints {
 			shared::_protocols.soap: "http://example.com:8080/dex";
 		}
 	}
 }
-
-/* Infrastructure nodes */
-// Service discovery
-@technology(shared)
-ServiceDiscovery is shared::_infrastructure.serviceDiscovery
-used by services
-	^services::com.example.CurrentAllocation,
-	^services::com.example.SearchForFreeSpace,
-	^services::com.example.AllocationsOverTime,
-	^services::com.example.DataExport,
-	^services::com.example.ParkingSpaceManagement {}
-
-// API Gateway
-@technology(shared)
-ApiGateway is shared::_infrastructure.apiGateway
-used by services
-	^services::com.example.CurrentAllocation,
-	^services::com.example.SearchForFreeSpace,
-	^services::com.example.AllocationsOverTime,
-	^services::com.example.DataExport,
-	^services::com.example.ParkingSpaceManagement {}

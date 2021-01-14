@@ -1,0 +1,30 @@
+import technology from "../Technology/container_base.technology" as container_base
+import technology from "../Technology/shared.technology" as shared
+import technology from "../Technology/eureka.technology" as Eureka
+import nodes from "case_study.operation" as deployedServices
+import nodes from "zuul.operation" as zuul
+
+@technology(container_base)
+@technology(Eureka)
+@technology(shared)
+Eureka is Eureka::_infrastructure.Eureka
+    with operation environment "openjdk:11-jdk-slim"
+    used by nodes deployedServices::AllocationsOverTime,
+		deployedServices::CurrentAllocation,
+ 		deployedServices::DataExport,
+ 		deployedServices::ParkingSpaceManagement,
+ 		deployedServices::SearchForFreeSpace,
+ 		zuul::Zuul {
+    default values {
+        hostname="eureka"
+        port=8761
+        imageType="SpringComponent"
+        mavenArtifactId="Eureka"
+        mavenGroupId="de.fhdo.puls.service.eureka"
+        mavenVersion="0.0.1-SNAPSHOT"
+        mavenName="eureka"
+        programmingLanguage="Java"
+
+    }
+    endpoints {shared::_protocols.rest : "http://localhost:8761";}
+}

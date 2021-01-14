@@ -6,7 +6,7 @@ import technology from "../technology/shared.technology" as shared
 /* Current allocation */
 @technology(java)
 @technology(shared)
-functional microservice com.example.CurrentAllocation {
+functional microservice com.example.currentallocation.CurrentAllocation {
 	interface CurrentAllocation {
 		@shared::_aspects.get
 		getCurrentAllocation(
@@ -25,7 +25,7 @@ functional microservice com.example.CurrentAllocation {
 /* Search for free space */
 @technology(java)
 @technology(shared)
-functional microservice com.example.SearchForFreeSpace {
+functional microservice com.example.searchforfreespace.SearchForFreeSpace {
 	interface SearchSpace {
 		@shared::_aspects.get
 		getFreeSpace(
@@ -44,7 +44,7 @@ functional microservice com.example.SearchForFreeSpace {
 /* Allocations over time */
 @technology(python)
 @technology(shared)
-functional microservice com.example.AllocationsOverTime {
+functional microservice com.example.allocationsovertime.AllocationsOverTime {
 	interface AllocationsOverTime {
 		@shared::_aspects.get
 		getAllocations(
@@ -65,7 +65,7 @@ functional microservice com.example.AllocationsOverTime {
 /* Parking space management */
 @technology(java)
 @technology(shared)
-functional microservice com.example.ParkingSpaceManagement {
+functional microservice com.example.parkingspacemanagement.ParkingSpaceManagement {
 	interface ParkingSpaceInformation {
 		@shared::_aspects.get
 		getInformation(
@@ -104,7 +104,7 @@ functional microservice com.example.ParkingSpaceManagement {
 /* Data export */
 @technology(java)
 @technology(shared)
-functional microservice com.example.DataExport {
+functional microservice com.example.dataexport.DataExport {
 	interface DataExport {
 		@shared::_aspects.get
 		getAllExportData(

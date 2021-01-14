@@ -1,0 +1,32 @@
+import technology from "../Technology/container_base.technology" as container_base
+import technology from "../Technology/shared.technology" as shared
+import technology from "../Technology/eureka.technology" as Eureka
+import nodes from "charging.operation" as chargingNodes
+import nodes from "environment.operation" as environmentNodes
+import nodes from "payment.operation" as paymentNodes
+import nodes from "zuul.operation" as zuul
+import nodes from "security.operation" as securityNodes
+
+@technology(container_base)
+@technology(Eureka)
+@technology(shared)
+Eureka is Eureka::_infrastructure.Eureka
+    with operation environment "openjdk:11-jdk-slim"
+    used by nodes chargingNodes::ChargingContainer,
+    	environmentNodes::EnvironmentContainer,
+    	paymentNodes::PaymentContainer,
+    	securityNodes::SecurityContainer,
+ 		zuul::Zuul {
+    default values {
+        hostname="eureka"
+        port=8761
+        imageType="SpringComponent"
+        mavenArtifactId="Eureka"
+        mavenGroupId="de.fhdo.puls.service.eureka"
+        mavenVersion="0.0.1-SNAPSHOT"
+        mavenName="eureka"
+        programmingLanguage="Java"
+
+    }
+    endpoints {shared::_protocols.rest : "http://localhost:8761";}
+}

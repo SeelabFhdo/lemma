@@ -1,12 +1,14 @@
 import microservices from "policyManagementBackend.services" as policyManagementBackendServices
 import technology from "../technology/docker.technology" as containerTechnology
 import technology from "../technology/javaWithSpring.technology" as protocolTechnology
+import nodes from "../eureka-server/eurekaServer.operation" as eureka
 
 @technology(containerTechnology)
 @technology(protocolTechnology)
-container CustomerManagementContainer deployment technology containerTechnology::_deployment.Docker
+container PolicyManagementContainer deployment technology containerTechnology::_deployment.Docker
 	deploys policyManagementBackendServices
-		::com.lakesidemutual.policymanagement.PolicyManagementBackend {
+		::com.lakesidemutual.policymanagement.PolicyManagementBackend
+		depends on nodes eureka::ServiceDiscovery {
 	policyManagementBackendServices::com.lakesidemutual.policymanagement.PolicyManagementBackend {
 		Dockerfile('
 			# syntax=docker/dockerfile:experimental

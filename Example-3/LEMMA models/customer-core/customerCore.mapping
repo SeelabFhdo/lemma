@@ -187,7 +187,6 @@ type customerCoreServices::domain::customerCore.Profile {
 	.NORMAL { aspects { java::_aspects.XmlEnumValue("normal"); } }
 }
 
-@technology(eureka)
 @technology(map)
 @technology(java)
 customerCoreServices::com.lakesidemutual.customercore.CustomerCore {
@@ -208,10 +207,6 @@ customerCoreServices::com.lakesidemutual.customercore.CustomerCore {
 		java::_aspects.AllowBeanDefinitionOverriding;
 		java::_aspects.CommonsRequestLoggingFilter("DEBUG");
 		java::_aspects.AdminClientUrl("http://localhost:9000");
-		eureka::_aspects.EurekaConfiguration(
-			clientDefaultZone = "http://localhost:8761/eureka",
-			preferIpAddress = true
-		);
 	}
 
 	interface cityStaticDataHolder {

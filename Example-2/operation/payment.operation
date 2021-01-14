@@ -7,15 +7,19 @@ import microservices from "../microservices/payment.services" as paymentService
  * operation nodes. The imported model is assigned to Container instances with the "@technology"
  * annotation.
  */
- 
+
  // Operation specification for the PaymentService
 import technology from "../technology/shared.technology" as paymentTech
+import technology from "../technology/container_base.technology" as container_base
 
 @technology(paymentTech)
-container PaymentContainer 
-	deployment technology paymentTech::_deployment.docker	
+@technology(container_base)
+container PaymentContainer
+	deployment technology container_base::_deployment.Kubernetes
 	deploys paymentService::de.fhdo.PaymentService {
 	default values {
+		springApplicationName="PaymentService"
+		springDataMongodbPort=8080
 		basic endpoints {
 			paymentTech::_protocols.mqtt,
 			paymentTech::_protocols.rest: "http://www.example.com:8080";

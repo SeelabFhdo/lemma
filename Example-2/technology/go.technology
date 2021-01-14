@@ -30,11 +30,4 @@ technology Go {
 		primitive type complex64;
 		primitive type complex128;
 	}
-
-	// Technology for the deployment of the service
-	deployment technologies {
-		docker {
-			operation environments = "golang" default;
-		}
-	}
 }

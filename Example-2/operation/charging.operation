@@ -8,16 +8,22 @@ import microservices from "../microservices/charging.services" as chargingServic
  * annotation.
  */
 import technology from "../technology/shared.technology" as operationTech
+import technology from "../technology/container_base.technology" as container_base
+
+import nodes from "eureka.operation" as eureka
+import nodes from "zuul.operation" as zuul
 
 // Operation specification for the ChargingService
 @technology(operationTech)
-container ChargingContainer 
-	deployment technology operationTech::_deployment.docker
+@technology(container_base)
+container ChargingContainer
+	deployment technology container_base::_deployment.Kubernetes
 	with operation environment "golang"
-	deploys chargingService::v01.de.fhdo.ChargingService  {
+	deploys chargingService::v01.de.fhdo.ChargingService
+	depends on nodes eureka::Eureka, zuul::Zuul {
 	default values {
 		basic endpoints {
-			operationTech::_protocols.rest, 
+			operationTech::_protocols.rest,
 			operationTech::_protocols.mqtt: "http://www.example.com:8080";
 		}
 	}

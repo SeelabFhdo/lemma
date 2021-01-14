@@ -7,18 +7,22 @@ import microservices from "../microservices/infrastructure.services" as infrastr
  * operation nodes. The imported model is assigned to Container instances with the "@technology"
  * annotation.
  */
-import technology from "../technology/shared.technology" as infrastructureTech 
+import technology from "../technology/shared.technology" as infrastructureTech
+import technology from "../technology/container_base.technology" as container_base
 
-// Operation specification for the infrastructural Services 
+import nodes from "eureka.operation" as eureka
+import nodes from "zuul.operation" as zuul
+
+// Operation specification for the infrastructural Services
 @technology(infrastructureTech)
-container InfrastructureContainer 
-	deployment technology infrastructureTech:: _deployment.docker
-	deploys infrastructureServices::v01.de.fhdo.APIGateways,
-			infrastructureServices::v01.de.fhdo.DiscoveryService,
-			infrastructureServices::v01.de.fhdo.SecurityService {
+@technology(container_base)
+container SecurityContainer
+	deployment technology container_base::_deployment.Kubernetes
+	deploys infrastructureServices::v01.de.fhdo.SecurityService
+	depends on nodes eureka::Eureka, zuul::Zuul{
 	default values {
 		basic endpoints {
-			infrastructureTech::_protocols.mqtt, 
+			infrastructureTech::_protocols.mqtt,
 			infrastructureTech::_protocols.rest: "http://www.example.com:8080";
 		}
 	}

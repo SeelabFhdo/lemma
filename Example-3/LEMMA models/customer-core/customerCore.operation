@@ -1,11 +1,13 @@
 import microservices from "customerCore.services" as customerCoreServices
-import technology from "../technology/docker.technology" as containerTechnology
+import technology from "../technology/container_base.technology" as container_base
 import technology from "../technology/javaWithSpring.technology" as protocolTechnology
+import nodes from "../eureka-server/eurekaServer.operation" as eureka
 
-@technology(containerTechnology)
+@technology(container_base)
 @technology(protocolTechnology)
-container CustomerCoreContainer deployment technology containerTechnology::_deployment.Docker
-	deploys customerCoreServices::com.lakesidemutual.customercore.CustomerCore {
+container CustomerCoreContainer deployment technology container_base::_deployment.Kubernetes
+	deploys customerCoreServices::com.lakesidemutual.customercore.CustomerCore
+	depends on nodes eureka::ServiceDiscovery {
 	customerCoreServices::com.lakesidemutual.customercore.CustomerCore {
 		Dockerfile('
 			# syntax=docker/dockerfile:experimental
@@ -43,6 +45,7 @@ container CustomerCoreContainer deployment technology containerTechnology::_depl
 		apiKeyValidKey = "b318ad736c6c844b"
 		apiKeyValidKey = "999ab497f8ec1052"
 		apiKeyValidKey = "9b93ebe19e16bbbd"
+		eurekaUri = "http://localhost:8761"
 
 		basic endpoints { protocolTechnology::_protocols.rest: "http://localhost:8110"; }
 	}

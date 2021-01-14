@@ -1,9 +1,17 @@
 import technology from "../technology/docker.technology" as containerTechnology
-import technology from "../technology/eureka.technology" as serviceDiscoveryTechnology
+import technology from "../technology/eureka.technology" as Eureka
+import nodes from "../customer-core/customerCore.operation" as customerCore
+import nodes from "../customer-management-backend/customerManagementBackend.operation" as customerManagementBackend
+import nodes from "../customer-self-service-backend/customerSelfServiceBackend.operation" as customerSelfServicebackend
+import nodes from "../policy-management-backend/policyManagementBackend.operation" as policyManagementBackend
 
 @technology(containerTechnology)
-@technology(serviceDiscoveryTechnology)
-ServiceDiscovery is serviceDiscoveryTechnology::_infrastructure.Eureka {
+@technology(Eureka)
+ServiceDiscovery is Eureka::_infrastructure.Eureka
+	used by nodes customerCore::CustomerCoreContainer,
+		customerManagementBackend::CustomerManagementContainer,
+		customerSelfServicebackend::CustomerSelfServiceBackendContainer,
+		policyManagementBackend::PolicyManagementContainer {
 	aspects {
 		containerTechnology::_aspects.Dockerfile(
 			'
@@ -50,8 +58,13 @@ ServiceDiscovery is serviceDiscoveryTechnology::_infrastructure.Eureka {
 	}
 
 	default values {
+		hostname="DiscoveryService"
+		imageType="SpringComponent"
 		port = 8761
-		clientRegisterWithEureka = false
-		clientFetchRegistry = false
+        mavenArtifactId="EurekaServer"
+        mavenGroupId="com.lakesidemutual.eurekaserver"
+        mavenVersion="0.0.1-SNAPSHOT"
+        mavenName="EurekaServer"
+        programmingLanguage="Java"
 	}
 }

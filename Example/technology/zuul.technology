@@ -1,15 +1,16 @@
-technology Eureka {
+technology Zuul {
 	infrastructure technologies {
-		Eureka {
+		Zuul {
 			operation environments = "openjdk:11-jdk-slim";
-            service properties {
+			service properties {
                 string hostname<mandatory>;
                 int port<mandatory>;
-                string imageType <mandatory>;
                 string mavenGroupId<mandatory>;
             	string mavenArtifactId<mandatory>;
             	string mavenVersion<mandatory>;
             	string mavenName<mandatory>;
+            	string eurekaUri<mandatory>;
+            	string imageType <mandatory>;
             	string programmingLanguage<mandatory>;
             }
 		}

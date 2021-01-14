@@ -21,22 +21,8 @@ technology Shared {
 		}
 	}
 
-	deployment technologies {
-		docker {
-			operation environments = "openjdk" default, "golang";
-		}
-	}
-
 	// Shared infrastructure technologies
 	infrastructure technologies {
-		serviceDiscovery {
-			operation environments = "spring-cloud-netflix-eureka" default;
-		}
-
-		apiGateway {
-			operation environments = "spring-cloud-netflix-zuul" default;
-		}
-
 		securityService {
 			operation environments = "oauth2" default;
 		}

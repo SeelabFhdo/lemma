@@ -1,0 +1,30 @@
+import technology from "../Technology/zuul.technology" as Zuul
+import technology from "../Technology/container_base.technology" as container_base
+import technology from "../Technology/shared.technology" as shared
+import nodes from "eureka.operation" as eureka
+import nodes from "case_study.operation" as deployedServices
+
+@technology(Zuul)
+@technology(container_base)
+@technology(shared)
+Zuul is Zuul::_infrastructure.Zuul
+    with operation environment "openjdk:11-jdk-slim"
+    depends on nodes eureka::Eureka
+    used by nodes deployedServices::AllocationsOverTime,
+ 		deployedServices::CurrentAllocation,
+ 		deployedServices::DataExport,
+ 		deployedServices::ParkingSpaceManagement,
+ 		deployedServices::SearchForFreeSpace {
+    default values {
+        hostname="Zuul"
+        port=8080
+        eurekaUri="http://eureka:8761"
+        mavenArtifactId="zuul"
+        mavenGroupId="de.fhdo.puls.service.zuul"
+        mavenVersion="0.0.1-SNAPSHOT"
+        mavenName="zuul"
+        imageType="SpringComponent"
+        programmingLanguage="Kotlin"
+    }
+    endpoints {shared::_protocols.rest: "http://localhost:8080";}
+}

@@ -318,7 +318,6 @@ type selfServiceBackendServices::customerSelfServiceBackend
 	op fromDomainObject { aspects { java::_aspects.static; } }
 }
 
-@technology(eureka)
 @technology(java)
 @technology(map)
 selfServiceBackendServices::com.lakesidemutual.customerselfservice.CustomerSelfServiceBackend {
@@ -368,10 +367,6 @@ selfServiceBackendServices::com.lakesidemutual.customerselfservice.CustomerSelfS
 		java::_aspects.Management(property="info.git.mode", value="full");
 		java::_aspects.AllowBeanDefinitionOverriding;
 		java::_aspects.AdminClientUrl("http://localhost:9000");
-		eureka::_aspects.EurekaConfiguration(
-			clientDefaultZone = "http://localhost:8761/eureka",
-			preferIpAddress = true
-		);
 	}
 
 	interface authenticationController {

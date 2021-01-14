@@ -8,16 +8,24 @@ import microservices from "../microservices/environment.services" as environment
  * annotation.
  */
 import technology from "../technology/shared.technology" as environmentTech
+import technology from "../technology/container_base.technology" as container_base
+
+import nodes from "eureka.operation" as eureka
+import nodes from "zuul.operation" as zuul
 
 // Operation specification for the EnvironmentService
 @technology(environmentTech)
-container EnvironmentContainer 
-	deployment technology environmentTech::_deployment.docker
-	deploys environmentService::v01.de.fhdo.EnvironmentService  {
+@technology(container_base)
+container EnvironmentContainer
+	deployment technology container_base::_deployment.Kubernetes
+	deploys environmentService::v01.de.fhdo.EnvironmentService
+	depends on nodes eureka::Eureka, zuul::Zuul {
 	default values {
+		springApplicationName="EnvironmentService"
+		serverPort=8080
 		basic endpoints {
 			environmentTech::_protocols.rest,
-			environmentTech::_protocols.mqtt: "http://www.example.com:8080";		
+			environmentTech::_protocols.mqtt: "http://www.example.com:8080";
 		}
 	}
 }

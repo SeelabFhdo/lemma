@@ -402,7 +402,6 @@ type policyManagementBackendServices::policyManagementBackend::policyManagement.
 	op fromDomainObject { aspects { java::_aspects.static; } }
 }
 
-@technology(eureka)
 @technology(java)
 @technology(map)
 policyManagementBackendServices::com.lakesidemutual.policymanagement.PolicyManagementBackend {
@@ -459,10 +458,6 @@ policyManagementBackendServices::com.lakesidemutual.policymanagement.PolicyManag
 		java::_aspects.Management(property="endpoints.web.exposure.include", value="*");
 		java::_aspects.Management(property="info.git.mode", value="full");
 		java::_aspects.AdminClientUrl("http://localhost:9000");
-		eureka::_aspects.EurekaConfiguration(
-			clientDefaultZone = "http://localhost:8761/eureka",
-			preferIpAddress = true
-		);
 	}
 
 	interface customerInformationHolder {

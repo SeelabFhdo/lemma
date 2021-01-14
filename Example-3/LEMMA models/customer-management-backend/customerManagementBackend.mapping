@@ -54,14 +54,10 @@ type managementServices::customerManagementBackend
 	interactionLogRepository { aspects { java::_aspects.Autowired; } }
 }
 
-@technology(eureka)
 @technology(java)
 @technology(map)
 managementServices::com.lakesidemutual.customerManagementBackend.CustomerManagementBackend {
 	aspects {
-		eureka::_aspects.EurekaConfiguration(clientDefaultZone = "http://localhost:8761/eureka",
-			preferIpAddress = true);
-
 		java::_aspects.Port(8100);
 
 		java::_aspects.ApplicationName("customer-management-backend");

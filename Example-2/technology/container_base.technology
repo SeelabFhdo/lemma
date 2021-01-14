@@ -1,0 +1,53 @@
+technology container_base {
+    deployment technologies {
+        Kubernetes {
+            operation environments = "openjdk:11-jdk-slim" default, "golang";
+
+            service properties {
+                // General Spring Boot configurations
+                string springApplicationName;
+                int serverPort;
+
+                // MariaDB database configuration
+                string springDatasourceUsername;
+                string springDatasourcePassword;
+                string springDatasourceUrl;
+
+                // MongoDB database configuration
+                string springDataMongodbHost;
+                int springDataMongodbPort;
+                string springDataMongodbUri;
+                string springDataMongodbDatabase;
+                string springDataMongodbUsername;
+                string stringDataMongodbPassword;
+
+                //Eureka configuration
+                string eurekaUri;
+            }
+        }
+    }
+
+    operation aspects {
+    	// Operation aspect for the configuration of custom dockerfiles
+        aspect Dockerfile<singleval> for containers, infrastructure {
+            string contents <mandatory>;
+        }
+
+		// Operation aspect for the configuration of custom Kubernetes files
+        aspect KubernetesDeployment<singleval> for containers, infrastructure {
+            string contents <mandatory>;
+        }
+
+		// Operation aspect for the configuration of custom docker-compose parts
+        aspect ComposePart<singleval> for containers, infrastructure {
+            string contents <mandatory>;
+        }
+
+		// Operation aspect for the configuration of Maven-based microservices
+        aspect MavenBuildConfiguration for containers, infrastructure {
+            string artifactId;
+            string ^version;
+            string name;
+        }
+    }
+}
