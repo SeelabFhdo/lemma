@@ -6,47 +6,47 @@ import nodes from "../eureka-server/eurekaServer.operation" as eureka
 @technology(container_base)
 @technology(protocolTechnology)
 container CustomerManagementContainer deployment technology container_base::_deployment.Kubernetes
-	deploys customerManagementServices
-		::com.lakesidemutual.customerManagementBackend.CustomerManagementBackend
-		depends on nodes eureka::ServiceDiscovery {
-	customerManagementServices
-		::com.lakesidemutual.customerManagementBackend.CustomerManagementBackend {
-		Dockerfile('
-			# syntax=docker/dockerfile:experimental
-			FROM maven:3.6.1-jdk-8-alpine AS build
-			ARG BASE=/usr/src/app
-			COPY pom.xml ${BASE}/
-			COPY src ${BASE}/src
-			RUN --mount=type=cache,target=/root/.m2 mvn -f ${BASE}/pom.xml install -DskipTests
+    deploys customerManagementServices
+        ::com.lakesidemutual.customerManagementBackend.CustomerManagementBackend
+        depends on nodes eureka::ServiceDiscovery {
+    customerManagementServices
+        ::com.lakesidemutual.customerManagementBackend.CustomerManagementBackend {
+        Dockerfile('
+            # syntax=docker/dockerfile:experimental
+            FROM maven:3.6.1-jdk-8-alpine AS build
+            ARG BASE=/usr/src/app
+            COPY pom.xml ${BASE}/
+            COPY src ${BASE}/src
+            RUN --mount=type=cache,target=/root/.m2 mvn -f ${BASE}/pom.xml install -DskipTests
 
-			FROM openjdk:8-jdk-alpine
-			COPY --from=build /usr/src/app/target/dependency/BOOT-INF/lib/* /app/lib/
-			COPY --from=build /usr/src/app/target/dependency/META-INF /app/META-INF
-			COPY --from=build /usr/src/app/target/dependency/BOOT-INF/classes /app
+            FROM openjdk:8-jdk-alpine
+            COPY --from=build /usr/src/app/target/dependency/BOOT-INF/lib/* /app/lib/
+            COPY --from=build /usr/src/app/target/dependency/META-INF /app/META-INF
+            COPY --from=build /usr/src/app/target/dependency/BOOT-INF/classes /app
 
-			EXPOSE 8100
-			ENTRYPOINT ["java","-cp","app:app/lib/*","com.lakesidemutual.customermanagement.CustomerManagementApplication"]
-		')
+            EXPOSE 8100
+            ENTRYPOINT ["java","-cp","app:app/lib/*","com.lakesidemutual.customermanagement.CustomerManagementApplication"]
+        ')
 
-		ComposePart('
-			customer-management-backend:
-			    build: customer-management-backend
-			    image: lakesidemutual/customer-management-backend
-			    depends_on:
-			      - customer-core
-			    environment:
-			      - "EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka"
-			      - "SPRING_PROFILES_ACTIVE=eureka"
-			    ports:
-			      - "8100:8100"
-			    volumes:
-			      - "maven_repo:/root/.m2"
-		')
+        ComposePart('
+            customer-management-backend:
+                build: customer-management-backend
+                image: lakesidemutual/customer-management-backend
+                depends_on:
+                  - customer-core
+                environment:
+                  - "EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka"
+                  - "SPRING_PROFILES_ACTIVE=eureka"
+                ports:
+                  - "8100:8100"
+                volumes:
+                  - "maven_repo:/root/.m2"
+        ')
 
-		apiKeyHeader = "Authorization"
-		apiKeyValue= "9b93ebe19e16bbbd"
-		eurekaUri = "http://localhost:8761"
+        apiKeyHeader = "Authorization"
+        apiKeyValue= "9b93ebe19e16bbbd"
+        eurekaUri = "http://localhost:8761"
 
-		basic endpoints { protocolTechnology::_protocols.rest: "http://localhost:8100"; }
-	}
+        basic endpoints { protocolTechnology::_protocols.rest: "http://localhost:8100"; }
+    }
 }

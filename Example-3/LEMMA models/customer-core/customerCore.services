@@ -1,156 +1,156 @@
 import datatypes from "customerCore.data" as domain
 
 public functional microservice com.lakesidemutual.customercore.CustomerCore {
-	interface cityStaticDataHolder {
-		---
-		Get the cities for a particular postal code.
+    interface cityStaticDataHolder {
+        ---
+        Get the cities for a particular postal code.
 
-		@required postalCode the postal code
-		---
-		getCitiesForPostalCode(
-			sync postalCode : string,
-			sync out cities : domain::customerCore.CitiesResponseDto
-		);
-	}
+        @required postalCode the postal code
+        ---
+        getCitiesForPostalCode(
+            sync postalCode : string,
+            sync out cities : domain::customerCore.CitiesResponseDto
+        );
+    }
 
-	interface customerInformationHolder {
-		---
-		Change a customer's address.
+    interface customerInformationHolder {
+        ---
+        Change a customer's address.
 
-		@required customerId the customer's unique id
-		@required requestDto the customer's new address
-		---
-		changeAddress(
-			sync customerId : domain::customerCore.CustomerId,
-			sync requestDto : domain::customerCore.AddressDto,
-			sync out responseDto : domain::customerCore.AddressDto,
-			sync out fault customerNotFound : string
-		);
+        @required customerId the customer's unique id
+        @required requestDto the customer's new address
+        ---
+        changeAddress(
+            sync customerId : domain::customerCore.CustomerId,
+            sync requestDto : domain::customerCore.AddressDto,
+            sync out responseDto : domain::customerCore.AddressDto,
+            sync out fault customerNotFound : string
+        );
 
-		internal getIncludedFields(
-			sync ^fields : string,
-			sync out result : domain::customerCore.FieldNames
-		);
+        internal getIncludedFields(
+            sync ^fields : string,
+            sync out result : domain::customerCore.FieldNames
+        );
 
-		internal createCustomerResponseDto(
-			sync customer : domain::customerCore.CustomerAggregateRoot,
-			sync ^fields : string,
-			sync out customerResponseDto : domain::customerCore.CustomerResponseDto
-		);
+        internal createCustomerResponseDto(
+            sync customer : domain::customerCore.CustomerAggregateRoot,
+            sync ^fields : string,
+            sync out customerResponseDto : domain::customerCore.CustomerResponseDto
+        );
 
-		internal createPaginatedCustomerResponseDto(
-			sync filter : string,
-			sync limit : int,
-			sync offset : int,
-			sync size : int,
-			sync ^fields : string,
-			sync customerDtos : domain::customerCore.CustomerResponseDtos,
-			sync out responseDto : domain::customerCore.PaginatedCustomerResponseDto
-		);
+        internal createPaginatedCustomerResponseDto(
+            sync filter : string,
+            sync limit : int,
+            sync offset : int,
+            sync size : int,
+            sync ^fields : string,
+            sync customerDtos : domain::customerCore.CustomerResponseDtos,
+            sync out responseDto : domain::customerCore.PaginatedCustomerResponseDto
+        );
 
-		---
-		Get a specific set of customers.
+        ---
+        Get a specific set of customers.
 
-		@required ids a comma-separated list of customer ids
-		@param ^fields a comma-separated list of the fields that should be included in the response
-		---
-		getCustomer(
-			sync ids : string,
-			sync ^fields? : string,
-			sync out customersResponseDto : domain::customerCore.CustomerResponseDto
-		);
+        @required ids a comma-separated list of customer ids
+        @param ^fields a comma-separated list of the fields that should be included in the response
+        ---
+        getCustomer(
+            sync ids : string,
+            sync ^fields? : string,
+            sync out customersResponseDto : domain::customerCore.CustomerResponseDto
+        );
 
-		---
-		Update the profile of the customer with the given customer id.
+        ---
+        Update the profile of the customer with the given customer id.
 
-		@required customerId the customer's unique id
-		@required requestDto the customer's updated profile
-		---
-		updateCustomer(
-			sync customerId : domain::customerCore.CustomerId,
-			sync requestDto : domain::customerCore.CustomerProfileUpdateRequestDto,
-			sync out customersResponseDto : domain::customerCore.CustomerResponseDto,
-			sync out fault customerToUpdateNotFound : string
-		);
+        @required customerId the customer's unique id
+        @required requestDto the customer's updated profile
+        ---
+        updateCustomer(
+            sync customerId : domain::customerCore.CustomerId,
+            sync requestDto : domain::customerCore.CustomerProfileUpdateRequestDto,
+            sync out customersResponseDto : domain::customerCore.CustomerResponseDto,
+            sync out fault customerToUpdateNotFound : string
+        );
 
-		---
-		Get all customers in pages of 10 entries per page.
+        ---
+        Get all customers in pages of 10 entries per page.
 
-		@param filter search terms to filter the customers by name
-		@param limit the maximum number of customers per page
-		@param offset the offset of the page's first customer
-		@param ^fields a comma-separated list of the fields that should be included in the response
-		---
-		getCustomers(
-			sync filter? : string,
-			sync limit? : int,
-			sync offset? : int,
-			sync ^fields? : string,
-			sync out customersResponseDto : domain::customerCore.PaginatedCustomerResponseDto
-		);
+        @param filter search terms to filter the customers by name
+        @param limit the maximum number of customers per page
+        @param offset the offset of the page's first customer
+        @param ^fields a comma-separated list of the fields that should be included in the response
+        ---
+        getCustomers(
+            sync filter? : string,
+            sync limit? : int,
+            sync offset? : int,
+            sync ^fields? : string,
+            sync out customersResponseDto : domain::customerCore.PaginatedCustomerResponseDto
+        );
 
-		---
-		Create a new customer.
+        ---
+        Create a new customer.
 
-		@required requestDto the customer's profile information
-		---
-		createCustomer(
-			sync requestDto : domain::customerCore.CustomerProfileUpdateRequestDto,
-			sync out customersResponseDto : domain::customerCore.CustomerResponseDto
-		);
-	}
+        @required requestDto the customer's profile information
+        ---
+        createCustomer(
+            sync requestDto : domain::customerCore.CustomerProfileUpdateRequestDto,
+            sync out customersResponseDto : domain::customerCore.CustomerResponseDto
+        );
+    }
 
-	interface customerInformationHolderSOAPAdapter {
-		changeAddress(
-			sync customerId : domain::customerCore.CustomerId,
-			sync requestDto : domain::customerCore.AddressDto,
-			sync out responseDto : domain::customerCore.AddressDto,
-			sync out fault customerNotFound : string
-		);
+    interface customerInformationHolderSOAPAdapter {
+        changeAddress(
+            sync customerId : domain::customerCore.CustomerId,
+            sync requestDto : domain::customerCore.AddressDto,
+            sync out responseDto : domain::customerCore.AddressDto,
+            sync out fault customerNotFound : string
+        );
 
-		internal getIncludedFields(
-			sync ^fields : string,
-			sync out result : domain::customerCore.FieldNames
-		);
+        internal getIncludedFields(
+            sync ^fields : string,
+            sync out result : domain::customerCore.FieldNames
+        );
 
-		internal createCustomerResponseDto(
-			sync customer : domain::customerCore.CustomerAggregateRoot,
-			sync ^fields : string,
-			sync out customerResponseDto : domain::customerCore.CustomerResponseDto
-		);
+        internal createCustomerResponseDto(
+            sync customer : domain::customerCore.CustomerAggregateRoot,
+            sync ^fields : string,
+            sync out customerResponseDto : domain::customerCore.CustomerResponseDto
+        );
 
-		internal createPaginatedCustomerResponseDto(
-			sync filter : string,
-			sync limit : int,
-			sync offset : int,
-			sync size : int,
-			sync ^fields : string,
-			sync customerDtos : domain::customerCore.CustomerResponseDtos,
-			sync out responseDto : domain::customerCore.PaginatedCustomerResponseDto
-		);
+        internal createPaginatedCustomerResponseDto(
+            sync filter : string,
+            sync limit : int,
+            sync offset : int,
+            sync size : int,
+            sync ^fields : string,
+            sync customerDtos : domain::customerCore.CustomerResponseDtos,
+            sync out responseDto : domain::customerCore.PaginatedCustomerResponseDto
+        );
 
-		getCustomer(
-			sync request : domain::customerCore.GetCustomerRequest
-		);
+        getCustomer(
+            sync request : domain::customerCore.GetCustomerRequest
+        );
 
-		updateCustomer(
-			sync customerId : domain::customerCore.CustomerId,
-			sync requestDto : domain::customerCore.CustomerProfileUpdateRequestDto,
-			sync out responseDto : domain::customerCore.CustomerResponseDto,
-			sync out fault customerNotFound : string
-		);
+        updateCustomer(
+            sync customerId : domain::customerCore.CustomerId,
+            sync requestDto : domain::customerCore.CustomerProfileUpdateRequestDto,
+            sync out responseDto : domain::customerCore.CustomerResponseDto,
+            sync out fault customerNotFound : string
+        );
 
-		getCustomers(
-			sync filter : string,
-			sync limit : int,
-			sync offset : int,
-			sync ^fields : string,
-			sync out responseDto : domain::customerCore.PaginatedCustomerResponseDto
-		);
+        getCustomers(
+            sync filter : string,
+            sync limit : int,
+            sync offset : int,
+            sync ^fields : string,
+            sync out responseDto : domain::customerCore.PaginatedCustomerResponseDto
+        );
 
-		createCustomer(
-			sync requestDto : domain::customerCore.CustomerProfileUpdateRequestDto,
-			sync out responseDto : domain::customerCore.CustomerResponseDto
-		);
-	}
+        createCustomer(
+            sync requestDto : domain::customerCore.CustomerProfileUpdateRequestDto,
+            sync out responseDto : domain::customerCore.CustomerResponseDto
+        );
+    }
 }

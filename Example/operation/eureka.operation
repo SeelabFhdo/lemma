@@ -1,6 +1,6 @@
-import technology from "../Technology/container_base.technology" as container_base
-import technology from "../Technology/shared.technology" as shared
-import technology from "../Technology/eureka.technology" as Eureka
+import technology from "../technology/container_base.technology" as container_base
+import technology from "../technology/shared.technology" as shared
+import technology from "../technology/eureka.technology" as Eureka
 import nodes from "case_study.operation" as deployedServices
 import nodes from "zuul.operation" as zuul
 
@@ -10,11 +10,11 @@ import nodes from "zuul.operation" as zuul
 Eureka is Eureka::_infrastructure.Eureka
     with operation environment "openjdk:11-jdk-slim"
     used by nodes deployedServices::AllocationsOverTime,
-		deployedServices::CurrentAllocation,
- 		deployedServices::DataExport,
- 		deployedServices::ParkingSpaceManagement,
- 		deployedServices::SearchForFreeSpace,
- 		zuul::Zuul {
+        deployedServices::CurrentAllocation,
+        deployedServices::DataExport,
+        deployedServices::ParkingSpaceManagement,
+        deployedServices::SearchForFreeSpace,
+        zuul::Zuul {
     default values {
         hostname="eureka"
         port=8761
@@ -26,5 +26,7 @@ Eureka is Eureka::_infrastructure.Eureka
         programmingLanguage="Java"
 
     }
-    endpoints {shared::_protocols.rest : "http://localhost:8761";}
+    endpoints {
+        shared::_protocols.rest : "http://localhost:8761";
+    }
 }

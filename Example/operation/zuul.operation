@@ -1,6 +1,6 @@
-import technology from "../Technology/zuul.technology" as Zuul
-import technology from "../Technology/container_base.technology" as container_base
-import technology from "../Technology/shared.technology" as shared
+import technology from "../technology/zuul.technology" as Zuul
+import technology from "../technology/container_base.technology" as container_base
+import technology from "../technology/shared.technology" as shared
 import nodes from "eureka.operation" as eureka
 import nodes from "case_study.operation" as deployedServices
 
@@ -11,10 +11,10 @@ Zuul is Zuul::_infrastructure.Zuul
     with operation environment "openjdk:11-jdk-slim"
     depends on nodes eureka::Eureka
     used by nodes deployedServices::AllocationsOverTime,
- 		deployedServices::CurrentAllocation,
- 		deployedServices::DataExport,
- 		deployedServices::ParkingSpaceManagement,
- 		deployedServices::SearchForFreeSpace {
+        deployedServices::CurrentAllocation,
+        deployedServices::DataExport,
+        deployedServices::ParkingSpaceManagement,
+        deployedServices::SearchForFreeSpace {
     default values {
         hostname="Zuul"
         port=8080

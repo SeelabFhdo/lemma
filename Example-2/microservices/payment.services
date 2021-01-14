@@ -14,38 +14,38 @@ import microservices from "charging.services" as chargingServices
 
 /*
  * Model for the PaymentService. The protocols are defined in the file "shared.technology".
- */ 
+ */
 @technology(java)
 @technology(shared)
 @endpoints(shared::_protocols.rest: "/payment";)
 functional microservice de.fhdo.PaymentService {
-	// The Invoice interface offers functions for payment
-	@endpoints(shared::_protocols.rest: "/invoice";)
-	public interface InvoiceInterface {
-		// Get an invoice
-		@endpoints(shared::_protocols.rest: "/{invoiceNumber}";)
-		getInvoice(
-			sync in invoiceNumber : int,
-			sync out invoice : paymentData::v01.Payment.Invoice
-		);
-		
-		// Create an invoice
-		@endpoints(shared::_protocols.rest: "/create";)
-		createInvoice(sync in invoice : paymentData::v01.Payment.Invoice);
+    // The Invoice interface offers functions for payment
+    @endpoints(shared::_protocols.rest: "/invoice";)
+    public interface InvoiceInterface {
+        // Get an invoice
+        @endpoints(shared::_protocols.rest: "/{invoiceNumber}";)
+        getInvoice(
+            sync in invoiceNumber : int,
+            sync out invoice : paymentData::v01.Payment.Invoice
+        );
 
-		// Pay an invoice
-		@endpoints(shared::_protocols.rest: "/pay/{invoiceNumber}";)
-		payInvoice(
-			sync in invoiceNumber : int,
-			sync in paymentAmount : float,
-			sync out confirmation : string
-		);
+        // Create an invoice
+        @endpoints(shared::_protocols.rest: "/create";)
+        createInvoice(sync in invoice : paymentData::v01.Payment.Invoice);
 
-		// Get a receipt for a paid invoice
-		@endpoints(shared::_protocols.rest: "/receipt/{invoiceNumber}";)
-		getReceipt(
-			sync in invoiceNumber : int,
-			sync out receipt : paymentData::v01.Payment.Receipt
-		);
-	}
+        // Pay an invoice
+        @endpoints(shared::_protocols.rest: "/pay/{invoiceNumber}";)
+        payInvoice(
+            sync in invoiceNumber : int,
+            sync in paymentAmount : float,
+            sync out confirmation : string
+        );
+
+        // Get a receipt for a paid invoice
+        @endpoints(shared::_protocols.rest: "/receipt/{invoiceNumber}";)
+        getReceipt(
+            sync in invoiceNumber : int,
+            sync out receipt : paymentData::v01.Payment.Receipt
+        );
+    }
 }

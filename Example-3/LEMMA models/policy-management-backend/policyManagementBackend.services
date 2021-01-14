@@ -2,259 +2,259 @@ import datatypes from "policyManagementBackend.data" as policyManagementBackend
 import microservices from "../customer-core/customerCore.services" as customerCoreServices
 
 functional microservice com.lakesidemutual.policymanagement.PolicyManagementBackend {
-	required microservices { customerCoreServices::com.lakesidemutual.customercore.CustomerCore }
-	interface customerInformationHolder {
-		---
-		Get all customers
+    required microservices { customerCoreServices::com.lakesidemutual.customercore.CustomerCore }
+    interface customerInformationHolder {
+        ---
+        Get all customers
 
-		@param filter search terms to filter the customers by name
-		@param limit the maximum number of customers per page
-		@param offset the offset of the page's first customer
-		---
-		getCustomers(
-			sync filter? : string,
-			sync limit? : int,
-			sync offset? : int,
-			sync out paginatedResponseOut
-				: policyManagementBackend::policyManagement.PaginatedCustomerResponseDto,
-			sync out customerCoreNotAvailable : string
-		);
+        @param filter search terms to filter the customers by name
+        @param limit the maximum number of customers per page
+        @param offset the offset of the page's first customer
+        ---
+        getCustomers(
+            sync filter? : string,
+            sync limit? : int,
+            sync offset? : int,
+            sync out paginatedResponseOut
+                : policyManagementBackend::policyManagement.PaginatedCustomerResponseDto,
+            sync out customerCoreNotAvailable : string
+        );
 
-		internal createPaginatedCustomerResponseDto(
-			sync filter : string,
-			sync limit : int,
-			sync offset : int,
-			sync size : int,
-			sync customerDtos : policyManagementBackend::policyManagement.CustomerDtos,
-			sync out paginatedCustomerResponseDto
-				: policyManagementBackend::policyManagement.PaginatedCustomerResponseDto
-		);
+        internal createPaginatedCustomerResponseDto(
+            sync filter : string,
+            sync limit : int,
+            sync offset : int,
+            sync size : int,
+            sync customerDtos : policyManagementBackend::policyManagement.CustomerDtos,
+            sync out paginatedCustomerResponseDto
+                : policyManagementBackend::policyManagement.PaginatedCustomerResponseDto
+        );
 
-		internal addCustomerLinks(
-			sync customerDto : policyManagementBackend::policyManagement.CustomerDto
-		);
+        internal addCustomerLinks(
+            sync customerDto : policyManagementBackend::policyManagement.CustomerDto
+        );
 
-		---
-		Get customer with a given customer id.
+        ---
+        Get customer with a given customer id.
 
-		@required customerIdDto the customer's unique id
-		---
-		getCustomer(
-			sync customerIdDto : policyManagementBackend::policyManagement.CustomerIdDto,
-			sync out customer : policyManagementBackend::policyManagement.CustomerDto,
-			sync out fault customerNotFound : string,
-			sync out customerCoreNotAvailable : string
-		);
+        @required customerIdDto the customer's unique id
+        ---
+        getCustomer(
+            sync customerIdDto : policyManagementBackend::policyManagement.CustomerIdDto,
+            sync out customer : policyManagementBackend::policyManagement.CustomerDto,
+            sync out fault customerNotFound : string,
+            sync out customerCoreNotAvailable : string
+        );
 
-		---
-		Get a customer's policies.
+        ---
+        Get a customer's policies.
 
-		@required customerIdDto the customer's unique id
-		@param expand a comma-separated list of the fields that should be expanded in the response
-		---
-		getPolicies(
-			sync customerIdDto : policyManagementBackend::policyManagement.CustomerIdDto,
-			sync expand? : string,
-			sync out policyDtos : policyManagementBackend::policyManagement.PolicyDtos
-		);
+        @required customerIdDto the customer's unique id
+        @param expand a comma-separated list of the fields that should be expanded in the response
+        ---
+        getPolicies(
+            sync customerIdDto : policyManagementBackend::policyManagement.CustomerIdDto,
+            sync expand? : string,
+            sync out policyDtos : policyManagementBackend::policyManagement.PolicyDtos
+        );
 
-		internal createPolicyDto(
-			sync policy : policyManagementBackend::policyManagement.PolicyAggregateRoot,
-			sync expand : string,
-			sync out policyDto : policyManagementBackend::policyManagement.PolicyDto,
-			sync out customerCoreNotAvailable : string
-		);
-	}
+        internal createPolicyDto(
+            sync policy : policyManagementBackend::policyManagement.PolicyAggregateRoot,
+            sync expand : string,
+            sync out policyDto : policyManagementBackend::policyManagement.PolicyDto,
+            sync out customerCoreNotAvailable : string
+        );
+    }
 
-	interface insuranceQuoteRequestInformationHolder {
-		---
-		Get all Insurance Quote Requests.
-		---
-		getInsuranceQuoteRequests(
-			sync out quoteRequestDtos
-				: policyManagementBackend::policyManagement.InsuranceQuoteRequestDtos
-		);
+    interface insuranceQuoteRequestInformationHolder {
+        ---
+        Get all Insurance Quote Requests.
+        ---
+        getInsuranceQuoteRequests(
+            sync out quoteRequestDtos
+                : policyManagementBackend::policyManagement.InsuranceQuoteRequestDtos
+        );
 
-		---
-		Get a specific Insurance Quote Request.
+        ---
+        Get a specific Insurance Quote Request.
 
-		@required id the insurance quote request's unique id
-		---
-		getInsuranceQuoteRequest(
-			sync id : long,
-			sync out insuranceQuoteRequestDto
-				: policyManagementBackend::policyManagement.InsuranceQuoteRequestDto,
-			sync out fault insuranceQuoteRequestNotFound : string
-		);
+        @required id the insurance quote request's unique id
+        ---
+        getInsuranceQuoteRequest(
+            sync id : long,
+            sync out insuranceQuoteRequestDto
+                : policyManagementBackend::policyManagement.InsuranceQuoteRequestDto,
+            sync out fault insuranceQuoteRequestNotFound : string
+        );
 
-		---
-		Updates the status of an existing Insurance Quote Request.
+        ---
+        Updates the status of an existing Insurance Quote Request.
 
-		@required id the insurance quote request's unique id
-		@required insuranceQuoteResponseDto the response that contains a new insurance quote if the
-											request has been accepted
-		---
-		respondToInsuranceQuoteRequest(
-			sync id : long,
-			sync insuranceQuoteResponseDto
-				: policyManagementBackend::policyManagement.InsuranceQuoteResponseDto,
-			sync out result : policyManagementBackend::policyManagement.InsuranceQuoteRequestDto,
-			sync out fault insuranceQuoteRequestNotFound : string,
-			async out event : policyManagementBackend::policyManagement.InsuranceQuoteResponseEvent
-		);
-	}
+        @required id the insurance quote request's unique id
+        @required insuranceQuoteResponseDto the response that contains a new insurance quote if the
+                                            request has been accepted
+        ---
+        respondToInsuranceQuoteRequest(
+            sync id : long,
+            sync insuranceQuoteResponseDto
+                : policyManagementBackend::policyManagement.InsuranceQuoteResponseDto,
+            sync out result : policyManagementBackend::policyManagement.InsuranceQuoteRequestDto,
+            sync out fault insuranceQuoteRequestNotFound : string,
+            async out event : policyManagementBackend::policyManagement.InsuranceQuoteResponseEvent
+        );
+    }
 
-	interface insuranceQuoteRequestMessageConsumer {
-		receiveInsuranceQuoteRequest(
-			async message : policyManagementBackend::policyManagement.InsuranceQuoteRequestEvent
-		);
-	}
+    interface insuranceQuoteRequestMessageConsumer {
+        receiveInsuranceQuoteRequest(
+            async message : policyManagementBackend::policyManagement.InsuranceQuoteRequestEvent
+        );
+    }
 
-	interface policyInformationHolder {
-		---
-		Create a new policy.
+    interface policyInformationHolder {
+        ---
+        Create a new policy.
 
-		@required createPolicyDto the policy that is to be added
-		---
-		createPolicy(
-			sync createPolicyDto : policyManagementBackend::policyManagement.CreatePolicyRequestDto,
-			sync request : string,
-			sync out policyDto : policyManagementBackend::policyManagement.PolicyDto,
-			sync out fault unknownCustomer : string,
-			async out updatePolicyEvent
-				: policyManagementBackend::policyManagement.UpdatePolicyEvent,
-			sync out fault customerCoreNotAvailable : string
-		);
+        @required createPolicyDto the policy that is to be added
+        ---
+        createPolicy(
+            sync createPolicyDto : policyManagementBackend::policyManagement.CreatePolicyRequestDto,
+            sync request : string,
+            sync out policyDto : policyManagementBackend::policyManagement.PolicyDto,
+            sync out fault unknownCustomer : string,
+            async out updatePolicyEvent
+                : policyManagementBackend::policyManagement.UpdatePolicyEvent,
+            sync out fault customerCoreNotAvailable : string
+        );
 
-		---
-		Update an existing policy.
+        ---
+        Update an existing policy.
 
-		@required policyId the policy's unique id
-		@required createPolicyDto the updated policy
-		---
-		updatePolicy(
-			sync policyId : policyManagementBackend::policyManagement.PolicyId,
-			sync createPolicyDto : policyManagementBackend::policyManagement.CreatePolicyRequestDto,
-			sync request : string,
-			sync out policyDto : policyManagementBackend::policyManagement.PolicyDto,
-			sync out fault policyNotFound : string,
-			sync out fault unknownCustomer : string,
-			async out updatePolicyEvent
-				: policyManagementBackend::policyManagement.UpdatePolicyEvent,
-			sync out fault customerCoreNotAvailable : string
-		);
+        @required policyId the policy's unique id
+        @required createPolicyDto the updated policy
+        ---
+        updatePolicy(
+            sync policyId : policyManagementBackend::policyManagement.PolicyId,
+            sync createPolicyDto : policyManagementBackend::policyManagement.CreatePolicyRequestDto,
+            sync request : string,
+            sync out policyDto : policyManagementBackend::policyManagement.PolicyDto,
+            sync out fault policyNotFound : string,
+            sync out fault unknownCustomer : string,
+            async out updatePolicyEvent
+                : policyManagementBackend::policyManagement.UpdatePolicyEvent,
+            sync out fault customerCoreNotAvailable : string
+        );
 
-		---
-		Delete an existing policy.
+        ---
+        Delete an existing policy.
 
-		@required policyId the policy's unique id
-		---
-		deletePolicy(
-			sync policyId : policyManagementBackend::policyManagement.PolicyId,
-			sync request : string,
-			sync out result : string,
-			async out deletePolicyEvent
-				: policyManagementBackend::policyManagement.DeletePolicyEvent
-		);
+        @required policyId the policy's unique id
+        ---
+        deletePolicy(
+            sync policyId : policyManagementBackend::policyManagement.PolicyId,
+            sync request : string,
+            sync out result : string,
+            async out deletePolicyEvent
+                : policyManagementBackend::policyManagement.DeletePolicyEvent
+        );
 
-		internal createPolicyDtos(
-			sync policies : policyManagementBackend::policyManagement.PolicyAggregateRoots,
-			sync expand : string,
-			sync result : policyManagementBackend::policyManagement.PolicyDtos,
-			sync out fault customerCoreNotAvailable : string
-		);
+        internal createPolicyDtos(
+            sync policies : policyManagementBackend::policyManagement.PolicyAggregateRoots,
+            sync expand : string,
+            sync result : policyManagementBackend::policyManagement.PolicyDtos,
+            sync out fault customerCoreNotAvailable : string
+        );
 
-		internal createPaginatedPolicyResponseDto(
-			sync limit : int,
-			sync offset : int,
-			sync expand : string,
-			sync szie : int,
-			sync policyDtos : policyManagementBackend::policyManagement.PolicyDtos,
-			sync out paginatedPolicyResponseDto
-				: policyManagementBackend::policyManagement.PaginatedPolicyResponseDto
-		);
+        internal createPaginatedPolicyResponseDto(
+            sync limit : int,
+            sync offset : int,
+            sync expand : string,
+            sync szie : int,
+            sync policyDtos : policyManagementBackend::policyManagement.PolicyDtos,
+            sync out paginatedPolicyResponseDto
+                : policyManagementBackend::policyManagement.PaginatedPolicyResponseDto
+        );
 
-		---
-		Get all policies, newest first.
+        ---
+        Get all policies, newest first.
 
-		@param limit the maximum number of policies per page
-		@param offset the offset of the page's first policy
-		@param expand a comma-separated list of the fields that should be expanded in the response
-		---
-		getPolicies(
-			sync limit? : int,
-			sync offset? : int,
-			sync expand? : string,
-			sync out paginatedPolicyResponse
-				: policyManagementBackend::policyManagement.PaginatedPolicyResponseDto
-		);
+        @param limit the maximum number of policies per page
+        @param offset the offset of the page's first policy
+        @param expand a comma-separated list of the fields that should be expanded in the response
+        ---
+        getPolicies(
+            sync limit? : int,
+            sync offset? : int,
+            sync expand? : string,
+            sync out paginatedPolicyResponse
+                : policyManagementBackend::policyManagement.PaginatedPolicyResponseDto
+        );
 
-		---
-		Get a single policy.
+        ---
+        Get a single policy.
 
-		@required policyId the policy's unique id
-		@param expand a comma-separated list of the fields that should be expanded in the response
-		---
-		getPolicy(
-			sync policyId : policyManagementBackend::policyManagement.PolicyId,
-			sync expand? : string,
-			sync out response : policyManagementBackend::policyManagement.PolicyDto,
-			sync out fault policyNotFound : string
-		);
-	}
+        @required policyId the policy's unique id
+        @param expand a comma-separated list of the fields that should be expanded in the response
+        ---
+        getPolicy(
+            sync policyId : policyManagementBackend::policyManagement.PolicyId,
+            sync expand? : string,
+            sync out response : policyManagementBackend::policyManagement.PolicyDto,
+            sync out fault policyNotFound : string
+        );
+    }
 
-	interface riskComputationService {
-		---
-		Computes the risk factor for a given customer.
+    interface riskComputationService {
+        ---
+        Computes the risk factor for a given customer.
 
-		@required riskFactorRequest the request containing relevant customer attributes (e.g.,
-									postal code, birthday)
-		---
-		computeRiskFactor(
-			sync riskFactorRequest
-				: policyManagementBackend::policyManagement.RiskFactorRequestDto,
-			sync out riskFactorResponse
-				: policyManagementBackend::policyManagement.RiskFactorResponseDto
-		);
+        @required riskFactorRequest the request containing relevant customer attributes (e.g.,
+                                    postal code, birthday)
+        ---
+        computeRiskFactor(
+            sync riskFactorRequest
+                : policyManagementBackend::policyManagement.RiskFactorRequestDto,
+            sync out riskFactorResponse
+                : policyManagementBackend::policyManagement.RiskFactorResponseDto
+        );
 
-		internal getAge(
-			sync birthday : date,
-			sync out age : int
-		);
+        internal getAge(
+            sync birthday : date,
+            sync out age : int
+        );
 
-		internal computeRiskFactorInternal(
-			sync age : int,
-			sync postalCode : string,
-			sync out factor : int
-		);
+        internal computeRiskFactorInternal(
+            sync age : int,
+            sync postalCode : string,
+            sync out factor : int
+        );
 
-		internal computeAgeGroupRiskFactor(
-			sync age : int,
-			sync out factor : int
-		);
+        internal computeAgeGroupRiskFactor(
+            sync age : int,
+            sync out factor : int
+        );
 
-		internal computeLocalityRiskFactor(
-			sync postalCodeStr : string,
-			sync out factor : int
-		);
-	}
+        internal computeLocalityRiskFactor(
+            sync postalCodeStr : string,
+            sync out factor : int
+        );
+    }
 
-	interface customerDecisionMessageConsumer {
-		receiveCustomerDecision(
-			async message : policyManagementBackend::policyManagement.CustomerDecisionEvent,
-			async out insuranceQuoteExpiredEvent
-				: policyManagementBackend::policyManagement.InsuranceQuoteExpiredEvent,
-			async out policyCreatedEvent
-				: policyManagementBackend::policyManagement.PolicyCreatedEvent,
-			async out policyUpdatedEvent
-				: policyManagementBackend::policyManagement.UpdatePolicyEvent,
-			sync out customerCoreNotAvailable : string
-		);
+    interface customerDecisionMessageConsumer {
+        receiveCustomerDecision(
+            async message : policyManagementBackend::policyManagement.CustomerDecisionEvent,
+            async out insuranceQuoteExpiredEvent
+                : policyManagementBackend::policyManagement.InsuranceQuoteExpiredEvent,
+            async out policyCreatedEvent
+                : policyManagementBackend::policyManagement.PolicyCreatedEvent,
+            async out policyUpdatedEvent
+                : policyManagementBackend::policyManagement.UpdatePolicyEvent,
+            sync out customerCoreNotAvailable : string
+        );
 
-		internal createPolicyForInsuranceQuoteRequest(
-			sync insuranceQuoteRequest
-				: policyManagementBackend::policyManagement.CustomerDecisionEvent,
-			sync out policy: policyManagementBackend::policyManagement.PolicyAggregateRoot
-		);
-	}
+        internal createPolicyForInsuranceQuoteRequest(
+            sync insuranceQuoteRequest
+                : policyManagementBackend::policyManagement.CustomerDecisionEvent,
+            sync out policy: policyManagementBackend::policyManagement.PolicyAggregateRoot
+        );
+    }
 }

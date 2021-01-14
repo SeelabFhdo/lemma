@@ -1,28 +1,28 @@
 version v01 {
-	/*  Common domain concepts */
-	context Common {
-		// Address
-		structure Address {
-			string city,
-			string street,
-			int streetNumber,
-			int zipCode
-		}
+    /*  Common domain concepts */
+    context Common {
+        // Address
+        structure Address {
+            string city,
+            string street,
+            int streetNumber,
+            int zipCode
+        }
 
-		// General user information
-		structure User {
-			string lastname,
-			string firstname,
-			string username,
-			string password,
-			string title,
-			int age
-		}
+        // General user information
+        structure User {
+            string lastname,
+            string firstname,
+            string username,
+            string password,
+            string title,
+            int age
+        }
 
-		// Login information
-		structure Credentials {
-			string username,
-			string passwordHash
-		}
-	}
+        // Login information
+        structure Credentials {
+            string username,
+            string passwordHash
+        }
+    }
 }

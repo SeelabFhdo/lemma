@@ -6,50 +6,50 @@ import nodes from "../eureka-server/eurekaServer.operation" as eureka
 @technology(container_base)
 @technology(protocolTechnology)
 container CustomerSelfServiceBackendContainer
-	deployment technology container_base::_deployment.Kubernetes
-	deploys customerSelfServiceBackend
-		::com.lakesidemutual.customerselfservice.CustomerSelfServiceBackend
-		depends on nodes eureka::ServiceDiscovery {
-	customerSelfServiceBackend
-		::com.lakesidemutual.customerselfservice.CustomerSelfServiceBackend {
-		Dockerfile('
-			# syntax=docker/dockerfile:experimental
-			FROM maven:3.6.1-jdk-8-alpine AS build
-			ARG BASE=/usr/src/app
-			COPY pom.xml ${BASE}/
-			COPY src ${BASE}/src
-			RUN --mount=type=cache,target=/root/.m2 mvn -f ${BASE}/pom.xml install -DskipTests
+    deployment technology container_base::_deployment.Kubernetes
+    deploys customerSelfServiceBackend
+        ::com.lakesidemutual.customerselfservice.CustomerSelfServiceBackend
+        depends on nodes eureka::ServiceDiscovery {
+    customerSelfServiceBackend
+        ::com.lakesidemutual.customerselfservice.CustomerSelfServiceBackend {
+        Dockerfile('
+            # syntax=docker/dockerfile:experimental
+            FROM maven:3.6.1-jdk-8-alpine AS build
+            ARG BASE=/usr/src/app
+            COPY pom.xml ${BASE}/
+            COPY src ${BASE}/src
+            RUN --mount=type=cache,target=/root/.m2 mvn -f ${BASE}/pom.xml install -DskipTests
 
-			FROM openjdk:8-jdk-alpine
-			COPY --from=build /usr/src/app/target/dependency/BOOT-INF/lib/* /app/lib/
-			COPY --from=build /usr/src/app/target/dependency/META-INF /app/META-INF
-			COPY --from=build /usr/src/app/target/dependency/BOOT-INF/classes /app
+            FROM openjdk:8-jdk-alpine
+            COPY --from=build /usr/src/app/target/dependency/BOOT-INF/lib/* /app/lib/
+            COPY --from=build /usr/src/app/target/dependency/META-INF /app/META-INF
+            COPY --from=build /usr/src/app/target/dependency/BOOT-INF/classes /app
 
-			EXPOSE 8080
-			ENTRYPOINT ["java","-cp","app:app/lib/*","com.lakesidemutual.customerselfservice.CustomerSelfServiceApplication"]
-		')
+            EXPOSE 8080
+            ENTRYPOINT ["java","-cp","app:app/lib/*","com.lakesidemutual.customerselfservice.CustomerSelfServiceApplication"]
+        ')
 
-		ComposePart('
-			customer-self-service-backend:
-			    build: customer-self-service-backend
-			    image: lakesidemutual/customer-self-service-backend
-			    depends_on:
-			      - customer-core
-			      - policy-management-backend
-			    environment:
-			      - "EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka"
-			      - "SPRING_PROFILES_ACTIVE=eureka"
-			      - "POLICYMANAGEMENT_TCPBROKERBINDADDRESS=tcp://policy-management-backend:61616"
-			    ports:
-			      - "8080:8080"
-			    volumes:
-			      - "maven_repo:/root/.m2"
-			')
+        ComposePart('
+            customer-self-service-backend:
+                build: customer-self-service-backend
+                image: lakesidemutual/customer-self-service-backend
+                depends_on:
+                  - customer-core
+                  - policy-management-backend
+                environment:
+                  - "EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka"
+                  - "SPRING_PROFILES_ACTIVE=eureka"
+                  - "POLICYMANAGEMENT_TCPBROKERBINDADDRESS=tcp://policy-management-backend:61616"
+                ports:
+                  - "8080:8080"
+                volumes:
+                  - "maven_repo:/root/.m2"
+            ')
 
-		apiKeyHeader = "Authorization"
-		apiKeyValue = "b318ad736c6c844b"
-		rateLimitPerMinute = 60
+        apiKeyHeader = "Authorization"
+        apiKeyValue = "b318ad736c6c844b"
+        rateLimitPerMinute = 60
 
-		basic endpoints { protocolTechnology::_protocols.rest: "http://localhost:8080"; }
-	}
+        basic endpoints { protocolTechnology::_protocols.rest: "http://localhost:8080"; }
+    }
 }

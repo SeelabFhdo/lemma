@@ -1,6 +1,6 @@
-import technology from "../Technology/zuul.technology" as Zuul
-import technology from "../Technology/container_base.technology" as container_base
-import technology from "../Technology/shared.technology" as shared
+import technology from "../technology/zuul.technology" as Zuul
+import technology from "../technology/container_base.technology" as container_base
+import technology from "../technology/shared.technology" as shared
 import nodes from "eureka.operation" as eureka
 import nodes from "charging.operation" as chargingNodes
 import nodes from "environment.operation" as environmentNodes
@@ -14,9 +14,9 @@ Zuul is Zuul::_infrastructure.Zuul
     with operation environment "openjdk:11-jdk-slim"
     depends on nodes eureka::Eureka
     used by nodes  chargingNodes::ChargingContainer,
-    	environmentNodes::EnvironmentContainer,
-    	paymentNodes::PaymentContainer,
-    	securityNodes::SecurityContainer {
+        environmentNodes::EnvironmentContainer,
+        paymentNodes::PaymentContainer,
+        securityNodes::SecurityContainer {
     default values {
         hostname="Zuul"
         port=8080
@@ -28,5 +28,7 @@ Zuul is Zuul::_infrastructure.Zuul
         imageType="SpringComponent"
         programmingLanguage="Kotlin"
     }
-    endpoints {shared::_protocols.rest: "http://localhost:8080";}
+    endpoints {
+        shared::_protocols.rest: "http://localhost:8080";
+    }
 }

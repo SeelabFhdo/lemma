@@ -1,18 +1,18 @@
 technology ^operation {
-	protocols {
-		sync rest data formats "application/json" default with format "application/json";
-		sync soap data formats "application/xml";
-		async amqp data formats "application/json" default with format "application/json";
-	}
+    protocols {
+        sync rest data formats "application/json" default with format "application/json";
+        sync soap data formats "application/xml";
+        async amqp data formats "application/json" default with format "application/json";
+    }
 
-	service aspects {
-		aspect get for operations {
-			selector (protocol = rest);
-		}
-		aspect HttpStatus for parameters {
-			selector (protocol = rest, exchange_pattern = out);
-			selector (protocol = rest, exchange_pattern = inout);
-			int statusCode <mandatory>;
-		}
-	}
+    service aspects {
+        aspect get for operations {
+            selector (protocol = rest);
+        }
+        aspect HttpStatus for parameters {
+            selector (protocol = rest, exchange_pattern = out);
+            selector (protocol = rest, exchange_pattern = inout);
+            int statusCode <mandatory>;
+        }
+    }
 }

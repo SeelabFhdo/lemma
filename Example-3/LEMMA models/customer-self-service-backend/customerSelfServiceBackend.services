@@ -1,195 +1,195 @@
 import datatypes from "customerSelfServiceBackend.data" as customerSelfServiceBackend
 import microservices from "../customer-core/customerCore.services" as customerCoreServices
 import microservices from "../policy-management-backend/policyManagementBackend.services"
-	as policyManagementBackendServices
+    as policyManagementBackendServices
 
 functional microservice com.lakesidemutual.customerselfservice.CustomerSelfServiceBackend {
-	required microservices {
-		customerCoreServices::com.lakesidemutual.customercore.CustomerCore,
-		policyManagementBackendServices::com.lakesidemutual.policymanagement.PolicyManagementBackend
-	}
-	interface authenticationController {
-		---
-		Authenticate a user based on a given email address and password.
+    required microservices {
+        customerCoreServices::com.lakesidemutual.customercore.CustomerCore,
+        policyManagementBackendServices::com.lakesidemutual.policymanagement.PolicyManagementBackend
+    }
+    interface authenticationController {
+        ---
+        Authenticate a user based on a given email address and password.
 
-		@required authenticationRequest the email and password used to authenticate the user
-		---
-		authenticationRequest(
-			sync authenticationRequest
-				: customerSelfServiceBackend::customerSelfService.AuthenticationRequestDto,
-			sync out authenticationResponse
-				: customerSelfServiceBackend::customerSelfService.AuthenticationResponseDto,
-			sync out fault authenticationException : string
-		);
+        @required authenticationRequest the email and password used to authenticate the user
+        ---
+        authenticationRequest(
+            sync authenticationRequest
+                : customerSelfServiceBackend::customerSelfService.AuthenticationRequestDto,
+            sync out authenticationResponse
+                : customerSelfServiceBackend::customerSelfService.AuthenticationResponseDto,
+            sync out fault authenticationException : string
+        );
 
-		---
-		Create a new user.
+        ---
+        Create a new user.
 
-		@required registration the email and password used to create a new user
-		---
-		signupUser(
-			sync registration : customerSelfServiceBackend::customerSelfService.SignupRequestDto,
-			sync out userResponse : customerSelfServiceBackend::customerSelfService.UserResponseDto,
-			sync out fault userAlreadyExists : string
-		);
-	}
+        @required registration the email and password used to create a new user
+        ---
+        signupUser(
+            sync registration : customerSelfServiceBackend::customerSelfService.SignupRequestDto,
+            sync out userResponse : customerSelfServiceBackend::customerSelfService.UserResponseDto,
+            sync out fault userAlreadyExists : string
+        );
+    }
 
-	interface cityStaticDataHolder {
-		---
-		Get the cities for a particular postal code.
+    interface cityStaticDataHolder {
+        ---
+        Get the cities for a particular postal code.
 
-		@required postcalCode the postal code
-		---
-		getCitiesForPostalCode(
-			sync postcalCode : string,
-			sync out result : customerSelfServiceBackend::customerSelfService.CitiesResponseDto,
-			sync out fault customerCoreNotAvailable : string
-		);
-	}
+        @required postcalCode the postal code
+        ---
+        getCitiesForPostalCode(
+            sync postcalCode : string,
+            sync out result : customerSelfServiceBackend::customerSelfService.CitiesResponseDto,
+            sync out fault customerCoreNotAvailable : string
+        );
+    }
 
-	interface customerInformationHolder {
-		---
-		Change a customer's address.
+    interface customerInformationHolder {
+        ---
+        Change a customer's address.
 
-		@required customerId the customer's unique id
-		@required requestDto the customer's new address
-		---
-		changeAddress(
-			sync customerId : customerSelfServiceBackend::customerSelfService.CustomerId,
-			sync requestDto : customerSelfServiceBackend::customerSelfService.AddressDto,
-			sync out result : customerSelfServiceBackend::customerSelfService.AddressDto,
-			sync out fault customerCoreNotAvailable : string
-		);
+        @required customerId the customer's unique id
+        @required requestDto the customer's new address
+        ---
+        changeAddress(
+            sync customerId : customerSelfServiceBackend::customerSelfService.CustomerId,
+            sync requestDto : customerSelfServiceBackend::customerSelfService.AddressDto,
+            sync out result : customerSelfServiceBackend::customerSelfService.AddressDto,
+            sync out fault customerCoreNotAvailable : string
+        );
 
-		---
-		Get customer with a given customer id.
+        ---
+        Get customer with a given customer id.
 
-		@required customerId the customer's unique id
-		---
-		getCustomer(
-			sync authentication : string,
-			sync customerId : customerSelfServiceBackend::customerSelfService.CustomerId,
-			sync out result : customerSelfServiceBackend::customerSelfService.CustomerDto,
-			sync out fault customerNotFound : string,
-			sync out fault customerCoreNotAvailable : string
-		);
+        @required customerId the customer's unique id
+        ---
+        getCustomer(
+            sync authentication : string,
+            sync customerId : customerSelfServiceBackend::customerSelfService.CustomerId,
+            sync out result : customerSelfServiceBackend::customerSelfService.CustomerDto,
+            sync out fault customerNotFound : string,
+            sync out fault customerCoreNotAvailable : string
+        );
 
-		---
-		Complete the registration of a new customer.
+        ---
+        Complete the registration of a new customer.
 
-		@required requestDto the customer's profile information
-		---
-		registerCustomer(
-			sync authentication : string,
-			sync requestDto
-				: customerSelfServiceBackend::customerSelfService.CustomerRegistrationRequestDto,
-			sync out result : customerSelfServiceBackend::customerSelfService.CustomerDto,
-			sync out fault customerCoreNotAvailable : string
-		);
+        @required requestDto the customer's profile information
+        ---
+        registerCustomer(
+            sync authentication : string,
+            sync requestDto
+                : customerSelfServiceBackend::customerSelfService.CustomerRegistrationRequestDto,
+            sync out result : customerSelfServiceBackend::customerSelfService.CustomerDto,
+            sync out fault customerCoreNotAvailable : string
+        );
 
-		---
-		Get a customer's insurance quote requests.
+        ---
+        Get a customer's insurance quote requests.
 
-		@required customerId the customer's unique id
-		---
-		getInsuranceQuoteRequests(
-			sync customerId : customerSelfServiceBackend::customerSelfService.CustomerId,
-			sync out result
-				: customerSelfServiceBackend::customerSelfService.InsuranceQuoteRequestDtos
-		);
+        @required customerId the customer's unique id
+        ---
+        getInsuranceQuoteRequests(
+            sync customerId : customerSelfServiceBackend::customerSelfService.CustomerId,
+            sync out result
+                : customerSelfServiceBackend::customerSelfService.InsuranceQuoteRequestDtos
+        );
 
-		internal addHATEOASLinks(
-			sync customerDto : customerSelfServiceBackend::customerSelfService.CustomerDto
-		);
-	}
+        internal addHATEOASLinks(
+            sync customerDto : customerSelfServiceBackend::customerSelfService.CustomerDto
+        );
+    }
 
-	interface userInformationHolder {
-		---
-		Get the user details for the currently logged-in user.
-		---
-		getCurrentUser(
-			sync authentitaction : string,
-			sync out response : customerSelfServiceBackend::customerSelfService.UserResponseDto
-		);
-	}
+    interface userInformationHolder {
+        ---
+        Get the user details for the currently logged-in user.
+        ---
+        getCurrentUser(
+            sync authentitaction : string,
+            sync out response : customerSelfServiceBackend::customerSelfService.UserResponseDto
+        );
+    }
 
-	interface insuranceQuoteExpiredMessageConsumer {
-		receiveInsuranceQuoteExpiredEvent(
-			async message
-				: customerSelfServiceBackend::customerSelfService.InsuranceQuoteExpiredEvent
-		);
-	}
+    interface insuranceQuoteExpiredMessageConsumer {
+        receiveInsuranceQuoteExpiredEvent(
+            async message
+                : customerSelfServiceBackend::customerSelfService.InsuranceQuoteExpiredEvent
+        );
+    }
 
-	interface insuranceQuoteRequestInformationHolder {
-		---
-		Get all Insurance Quote Requests.
-		---
-		getInsuranceQuoteRequests(
-			sync out quoteRequestDtos
-				: customerSelfServiceBackend::customerSelfService.InsuranceQuoteRequestDtos
-		);
+    interface insuranceQuoteRequestInformationHolder {
+        ---
+        Get all Insurance Quote Requests.
+        ---
+        getInsuranceQuoteRequests(
+            sync out quoteRequestDtos
+                : customerSelfServiceBackend::customerSelfService.InsuranceQuoteRequestDtos
+        );
 
-		---
-		Get a specific Insurance Quote Request.
+        ---
+        Get a specific Insurance Quote Request.
 
-		@required insuranceQuoteRequestId the insurance quote request's unique id
-		---
-		getInsuranceQuoteRequest(
-			sync authentication : string,
-			sync insuranceQuoteRequestId : long,
-			sync out quoteRequestDto
-				: customerSelfServiceBackend::customerSelfService.InsuranceQuoteRequestDto,
-			sync out fault insuranceQuoteRequestNotFound : string,
-			sync out fault unauthorized : string
-		);
+        @required insuranceQuoteRequestId the insurance quote request's unique id
+        ---
+        getInsuranceQuoteRequest(
+            sync authentication : string,
+            sync insuranceQuoteRequestId : long,
+            sync out quoteRequestDto
+                : customerSelfServiceBackend::customerSelfService.InsuranceQuoteRequestDto,
+            sync out fault insuranceQuoteRequestNotFound : string,
+            sync out fault unauthorized : string
+        );
 
-		---
-		Create a new Insurance Quote Request.
+        ---
+        Create a new Insurance Quote Request.
 
-		@required requestDto the insurance quote request
-		---
-		createInsuranceQuoteRequest(
-			sync authentication : string,
-			sync requestDto
-				: customerSelfServiceBackend::customerSelfService.InsuranceQuoteRequestDto,
-			sync out quoteRequestDto
-				: customerSelfServiceBackend::customerSelfService.InsuranceQuoteRequestDto,
-			async out insuranceQuoteRequestEvent
-				: customerSelfServiceBackend::customerSelfService.InsuranceQuoteRequestEvent,
-			sync out fault unauthorized : string
-		);
+        @required requestDto the insurance quote request
+        ---
+        createInsuranceQuoteRequest(
+            sync authentication : string,
+            sync requestDto
+                : customerSelfServiceBackend::customerSelfService.InsuranceQuoteRequestDto,
+            sync out quoteRequestDto
+                : customerSelfServiceBackend::customerSelfService.InsuranceQuoteRequestDto,
+            async out insuranceQuoteRequestEvent
+                : customerSelfServiceBackend::customerSelfService.InsuranceQuoteRequestEvent,
+            sync out fault unauthorized : string
+        );
 
-		---
-		Updates the status of an existing Insurance Quote Request.
+        ---
+        Updates the status of an existing Insurance Quote Request.
 
-		@required id the insurance quote request's unique id
-		@required insuranceQuoteResponseDto the response that contains the customer's decision
-											whether to accept or reject an insurance quote
-		---
-		respondToInsuranceQuote(
-			sync id : long,
-			sync insuranceQuoteResponseDto
-				: customerSelfServiceBackend::customerSelfService.InsuranceQuoteResponseDto,
-			sync out quoteRequestDto
-				: customerSelfServiceBackend::customerSelfService.InsuranceQuoteRequestDto,
-			sync out fault insuranceQuoteRequestNotFound : string,
-			async out customerDecisionEvent
-				: customerSelfServiceBackend::customerSelfService.CustomerDecisionEvent,
-			sync out fault unauthorized : string
-		);
-	}
+        @required id the insurance quote request's unique id
+        @required insuranceQuoteResponseDto the response that contains the customer's decision
+                                            whether to accept or reject an insurance quote
+        ---
+        respondToInsuranceQuote(
+            sync id : long,
+            sync insuranceQuoteResponseDto
+                : customerSelfServiceBackend::customerSelfService.InsuranceQuoteResponseDto,
+            sync out quoteRequestDto
+                : customerSelfServiceBackend::customerSelfService.InsuranceQuoteRequestDto,
+            sync out fault insuranceQuoteRequestNotFound : string,
+            async out customerDecisionEvent
+                : customerSelfServiceBackend::customerSelfService.CustomerDecisionEvent,
+            sync out fault unauthorized : string
+        );
+    }
 
-	interface insuranceQuoteResponseMessageConsumer {
-		receiveInsuranceQuoteResponse(
-			async message
-				: customerSelfServiceBackend::customerSelfService.InsuranceQuoteResponseEvent
-		);
-	}
+    interface insuranceQuoteResponseMessageConsumer {
+        receiveInsuranceQuoteResponse(
+            async message
+                : customerSelfServiceBackend::customerSelfService.InsuranceQuoteResponseEvent
+        );
+    }
 
-	interface policyCreatedMessageConsumer {
-		receivePolicyCreatedEvent(
-			async message
-				: customerSelfServiceBackend::customerSelfService.InsuranceQuoteResponseEvent
-		);
-	}
+    interface policyCreatedMessageConsumer {
+        receivePolicyCreatedEvent(
+            async message
+                : customerSelfServiceBackend::customerSelfService.InsuranceQuoteResponseEvent
+        );
+    }
 }

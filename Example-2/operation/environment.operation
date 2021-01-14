@@ -17,15 +17,15 @@ import nodes from "zuul.operation" as zuul
 @technology(environmentTech)
 @technology(container_base)
 container EnvironmentContainer
-	deployment technology container_base::_deployment.Kubernetes
-	deploys environmentService::v01.de.fhdo.EnvironmentService
-	depends on nodes eureka::Eureka, zuul::Zuul {
-	default values {
-		springApplicationName="EnvironmentService"
-		serverPort=8080
-		basic endpoints {
-			environmentTech::_protocols.rest,
-			environmentTech::_protocols.mqtt: "http://www.example.com:8080";
-		}
-	}
+    deployment technology container_base::_deployment.Kubernetes
+    deploys environmentService::v01.de.fhdo.EnvironmentService
+    depends on nodes eureka::Eureka, zuul::Zuul {
+    default values {
+        springApplicationName="EnvironmentService"
+        serverPort=8080
+        basic endpoints {
+            environmentTech::_protocols.rest,
+            environmentTech::_protocols.mqtt: "http://www.example.com:8080";
+        }
+    }
 }

@@ -7,715 +7,715 @@ import microservices from "policyManagementBackend.services" as policyManagement
 @technology(java)
 @technology(eadr)
 type policyManagementBackendServices::policyManagementBackend::policyManagement.CustomerId {
-	aspects {
-		eadr::_aspects.MADR(
-			value = 2,
-			title = "Separation between domain data model and infrastructure data model",
-			contextAndProblem = "
-				JPA / Spring Data annotations usually belong into a separate data model in the
-				infrastructure layer
-			",
-			alternatives = "
-				Keep the JPA / Spring Data annotations in the domain data model,
-				Implement a separate data model with JPA / Spring Data annotations in the
-				infrastructure layer
-			",
-			chosenAlternative = "Keep the JPA / Spring Data annotations in the domain data model",
-			justification = "
-				The relatively small size of this application does not warrant the additional
-				complexity (yet).
-			"
-		);
-	}
+    aspects {
+        eadr::_aspects.MADR(
+            value = 2,
+            title = "Separation between domain data model and infrastructure data model",
+            contextAndProblem = "
+                JPA / Spring Data annotations usually belong into a separate data model in the
+                infrastructure layer
+            ",
+            alternatives = "
+                Keep the JPA / Spring Data annotations in the domain data model,
+                Implement a separate data model with JPA / Spring Data annotations in the
+                infrastructure layer
+            ",
+            chosenAlternative = "Keep the JPA / Spring Data annotations in the domain data model",
+            justification = "
+                The relatively small size of this application does not warrant the additional
+                complexity (yet).
+            "
+        );
+    }
 }
 
 @technology(java)
 type policyManagementBackendServices::policyManagementBackend::policyManagement.Address {
-	aspects { java::_aspects.Table("addresses"); }
+    aspects { java::_aspects.Table("addresses"); }
 
-	id { aspects { java::_aspects.GeneratedValue; } }
+    id { aspects { java::_aspects.GeneratedValue; } }
 }
 
 @technology(java)
 type policyManagementBackendServices::policyManagementBackend::policyManagement.AddressDto {
-	op fromDomainObject { aspects { java::_aspects.static; } }
+    op fromDomainObject { aspects { java::_aspects.static; } }
 }
 
 @technology(java)
 type policyManagementBackendServices::policyManagementBackend::policyManagement.CustomerInfoDto {
-	op fromDomainObject { aspects { java::_aspects.static; } }
+    op fromDomainObject { aspects { java::_aspects.static; } }
 }
 
 @technology(java)
 type policyManagementBackendServices::policyManagementBackend::policyManagement.CustomerInfoEntity {
-	aspects { java::_aspects.Table("customerinfos"); }
+    aspects { java::_aspects.Table("customerinfos"); }
 
-	id { aspects { java::_aspects.GeneratedValue; } }
+    id { aspects { java::_aspects.GeneratedValue; } }
 
-	customerId {
-		aspects {
-			java::_aspects.Embedded;
-			java::_aspects.AttributeOverrideColumn(name="id", column="customerId");
-		}
-	}
+    customerId {
+        aspects {
+            java::_aspects.Embedded;
+            java::_aspects.AttributeOverrideColumn(name="id", column="customerId");
+        }
+    }
 }
 
 @technology(java)
 type policyManagementBackendServices::policyManagementBackend
-	::policyManagement.InsuranceOptionsEntity {
-	aspects { java::_aspects.Table("insuranceoptions"); }
+    ::policyManagement.InsuranceOptionsEntity {
+    aspects { java::_aspects.Table("insuranceoptions"); }
 
-	id { aspects { java::_aspects.GeneratedValue; } }
+    id { aspects { java::_aspects.GeneratedValue; } }
 
-	insuranceType {
-		aspects {
-			java::_aspects.Embedded;
-			java::_aspects.AttributeOverrideColumn(name="id", column="customerId");
-		}
-	}
+    insuranceType {
+        aspects {
+            java::_aspects.Embedded;
+            java::_aspects.AttributeOverrideColumn(name="id", column="customerId");
+        }
+    }
 
-	deductible {
-		aspects {
-			java::_aspects.Embedded;
-			java::_aspects.AttributeOverrideColumn(name="amount", column="deductibleAmount");
-			java::_aspects.AttributeOverrideColumn(name="currency", column="deductibleCurrency");
-		}
-	}
+    deductible {
+        aspects {
+            java::_aspects.Embedded;
+            java::_aspects.AttributeOverrideColumn(name="amount", column="deductibleAmount");
+            java::_aspects.AttributeOverrideColumn(name="currency", column="deductibleCurrency");
+        }
+    }
 }
 
 @technology(java)
 type policyManagementBackendServices::policyManagementBackend
-	::policyManagement.InsuranceQuoteEntity {
-	aspects { java::_aspects.Table("insurancequotes"); }
+    ::policyManagement.InsuranceQuoteEntity {
+    aspects { java::_aspects.Table("insurancequotes"); }
 
-	id { aspects { java::_aspects.GeneratedValue; } }
+    id { aspects { java::_aspects.GeneratedValue; } }
 
-	insurancePremium {
-		aspects {
-			java::_aspects.Embedded;
-			java::_aspects.AttributeOverrideColumn(name="amount",
-				column="insurancePremiumAmount");
-			java::_aspects.AttributeOverrideColumn(name="currency",
-				column="insurancePremiumCurrency");
-		}
-	}
+    insurancePremium {
+        aspects {
+            java::_aspects.Embedded;
+            java::_aspects.AttributeOverrideColumn(name="amount",
+                column="insurancePremiumAmount");
+            java::_aspects.AttributeOverrideColumn(name="currency",
+                column="insurancePremiumCurrency");
+        }
+    }
 
-	policyLimit {
-		aspects {
-			java::_aspects.Embedded;
-			java::_aspects.AttributeOverrideColumn(name="amount", column="policyLimitAmount");
-			java::_aspects.AttributeOverrideColumn(name="currency",
-				column="policyLimitCurrency" );
-		}
-	}
+    policyLimit {
+        aspects {
+            java::_aspects.Embedded;
+            java::_aspects.AttributeOverrideColumn(name="amount", column="policyLimitAmount");
+            java::_aspects.AttributeOverrideColumn(name="currency",
+                column="policyLimitCurrency" );
+        }
+    }
 }
 
 @technology(java)
 type policyManagementBackendServices::policyManagementBackend
-	::policyManagement.InsuranceQuoteRequestAggregateRoot {
-	aspects { java::_aspects.Table("insurancequoterequests"); }
+    ::policyManagement.InsuranceQuoteRequestAggregateRoot {
+    aspects { java::_aspects.Table("insurancequoterequests"); }
 
-	statusHistory { aspects { java::_aspects.OneToMany(fetch="EAGER"); } }
+    statusHistory { aspects { java::_aspects.OneToMany(fetch="EAGER"); } }
 
-	customerInfo { aspects { java::_aspects.OneToMany; } }
+    customerInfo { aspects { java::_aspects.OneToMany; } }
 
-	insuranceOptions { aspects { java::_aspects.OneToMany; } }
+    insuranceOptions { aspects { java::_aspects.OneToMany; } }
 
-	insuranceQuote { aspects { java::_aspects.OneToMany; } }
+    insuranceQuote { aspects { java::_aspects.OneToMany; } }
 }
 
 @technology(java)
 type policyManagementBackendServices::policyManagementBackend
-	::policyManagement.RequestStatusChange {
-	aspects { java::_aspects.Table("requeststatuschanges"); }
+    ::policyManagement.RequestStatusChange {
+    aspects { java::_aspects.Table("requeststatuschanges"); }
 
-	id { aspects { java::_aspects.GeneratedValue; } }
+    id { aspects { java::_aspects.GeneratedValue; } }
 
-	status { aspects { java::_aspects.Enumerated("STRING"); } }
+    status { aspects { java::_aspects.Enumerated("STRING"); } }
 }
 
 @technology(java)
 type policyManagementBackendServices::policyManagementBackend
-	::policyManagement.InsuringAgreementEntity {
-	aspects { java::_aspects.Table("insuringagreements"); }
+    ::policyManagement.InsuringAgreementEntity {
+    aspects { java::_aspects.Table("insuringagreements"); }
 
-	id { aspects { java::_aspects.GeneratedValue; } }
+    id { aspects { java::_aspects.GeneratedValue; } }
 
-	agreementItems { aspects { java::_aspects.OneToMany; } }
+    agreementItems { aspects { java::_aspects.OneToMany; } }
 }
 
 @technology(java)
 type policyManagementBackendServices::policyManagementBackend
-	::policyManagement.InsuringAgreementItem {
-	aspects { java::_aspects.Table("insuranceagreementitems"); }
+    ::policyManagement.InsuringAgreementItem {
+    aspects { java::_aspects.Table("insuranceagreementitems"); }
 
-	id { aspects { java::_aspects.GeneratedValue; } }
+    id { aspects { java::_aspects.GeneratedValue; } }
 }
 
 @technology(java)
 type policyManagementBackendServices::policyManagementBackend::policyManagement.MoneyAmount {
-	amount : java::_types.BigDecimal;
-	currency : java::_types.Currency;
+    amount : java::_types.BigDecimal;
+    currency : java::_types.Currency;
 }
 
 @technology(java)
 @technology(eadr)
 type policyManagementBackendServices::policyManagementBackend
-	::policyManagement.PolicyAggregateRoot {
-	aspects {
-		java::_aspects.Table("insurancepolicies");
-		eadr::_aspects.MADR(
-			value = 2,
-			title = "Separation between domain data model and infrastructure data model",
-			contextAndProblem = "
-				JPA / Spring Data annotations usually belong into a separate data model in the
-				infrastructure layer
-			",
-			alternatives = "
-				Keep the JPA / Spring Data annotations in the domain data model,
-				Implement a separate data model with JPA / Spring Data annotations in the
-				infrastructure layer
-			",
-			chosenAlternative = "Keep the JPA / Spring Data annotations in the domain data model",
-			justification = "
-				The relatively small size of this application does not warrant the additional
-				complexity (yet).
-			"
-		);
-	}
+    ::policyManagement.PolicyAggregateRoot {
+    aspects {
+        java::_aspects.Table("insurancepolicies");
+        eadr::_aspects.MADR(
+            value = 2,
+            title = "Separation between domain data model and infrastructure data model",
+            contextAndProblem = "
+                JPA / Spring Data annotations usually belong into a separate data model in the
+                infrastructure layer
+            ",
+            alternatives = "
+                Keep the JPA / Spring Data annotations in the domain data model,
+                Implement a separate data model with JPA / Spring Data annotations in the
+                infrastructure layer
+            ",
+            chosenAlternative = "Keep the JPA / Spring Data annotations in the domain data model",
+            justification = "
+                The relatively small size of this application does not warrant the additional
+                complexity (yet).
+            "
+        );
+    }
 
-	FIELD_CREATION_DATE { aspects { java::_aspects.Constant; } }
-	insuringAgreement { aspects { java::_aspects.OneToOne; } }
-	customerId {
-		aspects {
-			java::_aspects.AttributeOverrideColumn(name="id", column="customerId");
-		}
-	}
-	deductible {
-		aspects {
-			java::_aspects.AttributeOverrideColumn(name="amount", column="deductibleAmount");
-			java::_aspects.AttributeOverrideColumn(name="currency", column="deductibleCurrency");
-		}
-	}
-	policyLimit {
-		aspects {
-			java::_aspects.AttributeOverrideColumn(name="amount", column="limitAmount");
-			java::_aspects.AttributeOverrideColumn(name="currency", column="limitCurrency");
-		}
-	}
-	insurancePremium {
-		aspects {
-			java::_aspects.AttributeOverrideColumn(name="amount", column="premiumAmount");
-			java::_aspects.AttributeOverrideColumn(name="currency", column="premiumCurrency");
-		}
-	}
+    FIELD_CREATION_DATE { aspects { java::_aspects.Constant; } }
+    insuringAgreement { aspects { java::_aspects.OneToOne; } }
+    customerId {
+        aspects {
+            java::_aspects.AttributeOverrideColumn(name="id", column="customerId");
+        }
+    }
+    deductible {
+        aspects {
+            java::_aspects.AttributeOverrideColumn(name="amount", column="deductibleAmount");
+            java::_aspects.AttributeOverrideColumn(name="currency", column="deductibleCurrency");
+        }
+    }
+    policyLimit {
+        aspects {
+            java::_aspects.AttributeOverrideColumn(name="amount", column="limitAmount");
+            java::_aspects.AttributeOverrideColumn(name="currency", column="limitCurrency");
+        }
+    }
+    insurancePremium {
+        aspects {
+            java::_aspects.AttributeOverrideColumn(name="amount", column="premiumAmount");
+            java::_aspects.AttributeOverrideColumn(name="currency", column="premiumCurrency");
+        }
+    }
 }
 
 @technology(java)
 type policyManagementBackendServices::policyManagementBackend::policyManagement.PolicyId {
-	op random { aspects { java::_aspects.static; } }
+    op random { aspects { java::_aspects.static; } }
 }
 
 @technology(java)
 type policyManagementBackendServices::policyManagementBackend
-	::policyManagement.CustomerCoreRemoteProxy {
-	customerCoreBaseURL { aspects { java::_aspects.Value("${customercore.baseURL}"); } }
+    ::policyManagement.CustomerCoreRemoteProxy {
+    customerCoreBaseURL { aspects { java::_aspects.Value("${customercore.baseURL}"); } }
 }
 
 @technology(java)
 type policyManagementBackendServices::policyManagementBackend
-	::policyManagement.CustomerSelfServiceMessageProducer {
-	quoteResponseQueue {
-		aspects { java::_aspects.Value("${insuranceQuoteResponseEvent.queueName}"); }
-	}
+    ::policyManagement.CustomerSelfServiceMessageProducer {
+    quoteResponseQueue {
+        aspects { java::_aspects.Value("${insuranceQuoteResponseEvent.queueName}"); }
+    }
 
-	quoteExpiredQueue {
-		aspects { java::_aspects.Value("${insuranceQuoteExpiredEvent.queueName}"); }
-	}
+    quoteExpiredQueue {
+        aspects { java::_aspects.Value("${insuranceQuoteExpiredEvent.queueName}"); }
+    }
 
-	policyCreatedQueue { aspects { java::_aspects.Value("${policyCreatedEvent.queueName}"); } }
+    policyCreatedQueue { aspects { java::_aspects.Value("${policyCreatedEvent.queueName}"); } }
 }
 
 @technology(java)
 type policyManagementBackendServices::policyManagementBackend::policyManagement.RequestStatus {
-	aspects {
-		java::_aspects.EnumerationMethod(
-			"public boolean canTransitionTo(RequestStatus newStatus)"
-		);
-	}
+    aspects {
+        java::_aspects.EnumerationMethod(
+            "public boolean canTransitionTo(RequestStatus newStatus)"
+        );
+    }
 }
 
 @technology(java)
 type policyManagementBackendServices::policyManagementBackend
-	::policyManagement.RiskManagementMessageProducer {
-	queueName { aspects { java::_aspects.Value("${riskmanagement.queueName}"); } }
+    ::policyManagement.RiskManagementMessageProducer {
+    queueName { aspects { java::_aspects.Value("${riskmanagement.queueName}"); } }
 }
 
 @technology(java)
 type policyManagementBackendServices::policyManagementBackend::policyManagement.CustomerDto {
-	aspects { java::_aspects.ResourceSupport; }
+    aspects { java::_aspects.ResourceSupport; }
 
-	customerProfile { aspects { java::_aspects.JsonUnwrapped; } }
+    customerProfile { aspects { java::_aspects.JsonUnwrapped; } }
 }
 
 @technology(java)
 type policyManagementBackendServices::policyManagementBackend::policyManagement.CustomerProfileDto {
-	currentAddress { aspects { java::_aspects.JsonUnwrapped; } }
+    currentAddress { aspects { java::_aspects.JsonUnwrapped; } }
 }
 
 @technology(java)
 type policyManagementBackendServices::policyManagementBackend::policyManagement.CustomersDto {
-	aspects { java::_aspects.ResourceSupport; }
+    aspects { java::_aspects.ResourceSupport; }
 }
 
 @technology(java)
 @technology(map)
 type policyManagementBackendServices::policyManagementBackend
-	::policyManagement.PaginatedCustomerResponseDto {
-	aspects {
-		java::_aspects.ResourceSupport;
-		map::_aspects.Pagination;
-	}
+    ::policyManagement.PaginatedCustomerResponseDto {
+    aspects {
+        java::_aspects.ResourceSupport;
+        map::_aspects.Pagination;
+    }
 }
 
 @technology(java)
 type policyManagementBackendServices::policyManagementBackend
-	::policyManagement.InsuranceOptionsDto {
-	op fromDomainObject { aspects { java::_aspects.static; } }
+    ::policyManagement.InsuranceOptionsDto {
+    op fromDomainObject { aspects { java::_aspects.static; } }
 }
 
 @technology(java)
 type policyManagementBackendServices::policyManagementBackend
-	::policyManagement.InsuranceQuoteDto {
-	expirationDate { aspects { java::_aspects.Valid; } }
+    ::policyManagement.InsuranceQuoteDto {
+    expirationDate { aspects { java::_aspects.Valid; } }
 
-	insurancePremium { aspects { java::_aspects.Valid; } }
+    insurancePremium { aspects { java::_aspects.Valid; } }
 
-	policyLimit { aspects { java::_aspects.Valid; } }
+    policyLimit { aspects { java::_aspects.Valid; } }
 
-	op fromDomainObject { aspects { java::_aspects.static; } }
+    op fromDomainObject { aspects { java::_aspects.static; } }
 }
 
 @technology(java)
 type policyManagementBackendServices::policyManagementBackend
-	::policyManagement.InsuranceQuoteRequestDto {
-	^date { aspects { java::_aspects.Valid; } }
+    ::policyManagement.InsuranceQuoteRequestDto {
+    ^date { aspects { java::_aspects.Valid; } }
 
-	statusHistory { aspects { java::_aspects.Valid; } }
+    statusHistory { aspects { java::_aspects.Valid; } }
 
-	customerInfo { aspects { java::_aspects.Valid; } }
+    customerInfo { aspects { java::_aspects.Valid; } }
 
-	insuranceOptions { aspects { java::_aspects.Valid; } }
+    insuranceOptions { aspects { java::_aspects.Valid; } }
 
-	insuranceQuote { aspects { java::_aspects.Valid; } }
+    insuranceQuote { aspects { java::_aspects.Valid; } }
 
-	op fromDomainObject { aspects { java::_aspects.static; } }
+    op fromDomainObject { aspects { java::_aspects.static; } }
 }
 
 @technology(java)
 type policyManagementBackendServices::policyManagementBackend
-	::policyManagement.InsuranceQuoteResponseDto {
-	status { aspects { java::_aspects.Valid; } }
+    ::policyManagement.InsuranceQuoteResponseDto {
+    status { aspects { java::_aspects.Valid; } }
 
-	expirationDate {
-		aspects {
-			java::_aspects.Future;
-			java::_aspects.Valid;
-		}
-	}
+    expirationDate {
+        aspects {
+            java::_aspects.Future;
+            java::_aspects.Valid;
+        }
+    }
 
-	insurancePremium { aspects { java::_aspects.Valid; } }
+    insurancePremium { aspects { java::_aspects.Valid; } }
 
-	policyLimit { aspects { java::_aspects.Valid; } }
+    policyLimit { aspects { java::_aspects.Valid; } }
 }
 
 @technology(java)
 type policyManagementBackendServices::policyManagementBackend
-	::policyManagement.RequestStatusChangeDto {
-	^date { aspects { java::_aspects.Valid; } }
+    ::policyManagement.RequestStatusChangeDto {
+    ^date { aspects { java::_aspects.Valid; } }
 
-	op fromDomainObject { aspects { java::_aspects.static; } }
+    op fromDomainObject { aspects { java::_aspects.static; } }
 }
 
 @technology(java)
 type policyManagementBackendServices::policyManagementBackend
-	::policyManagement.CreatePolicyRequestDto {
-	customerId { aspects { java::_aspects.Valid; } }
-	policyPeriod { aspects { java::_aspects.Valid; } }
-	policyType { aspects { java::_aspects.Valid; } }
-	deductible { aspects { java::_aspects.Valid; } }
-	policyLimit { aspects { java::_aspects.Valid; } }
-	insurancePremium { aspects { java::_aspects.Valid; } }
-	insuringAgreement { aspects { java::_aspects.Valid; } }
+    ::policyManagement.CreatePolicyRequestDto {
+    customerId { aspects { java::_aspects.Valid; } }
+    policyPeriod { aspects { java::_aspects.Valid; } }
+    policyType { aspects { java::_aspects.Valid; } }
+    deductible { aspects { java::_aspects.Valid; } }
+    policyLimit { aspects { java::_aspects.Valid; } }
+    insurancePremium { aspects { java::_aspects.Valid; } }
+    insuringAgreement { aspects { java::_aspects.Valid; } }
 }
 
 @technology(java)
 type policyManagementBackendServices::policyManagementBackend
-	::policyManagement.InsuringAgreementDto {
-	agreementItems { aspects { java::_aspects.Valid; } }
+    ::policyManagement.InsuringAgreementDto {
+    agreementItems { aspects { java::_aspects.Valid; } }
 
-	op fromDomainObject { aspects { java::_aspects.static; } }
+    op fromDomainObject { aspects { java::_aspects.static; } }
 }
 
 @technology(java)
 type policyManagementBackendServices::policyManagementBackend
-	::policyManagement.InsuringAgreementItemDto {
-	title { aspects { java::_aspects.Valid; } }
-	description { aspects { java::_aspects.Valid; } }
+    ::policyManagement.InsuringAgreementItemDto {
+    title { aspects { java::_aspects.Valid; } }
+    description { aspects { java::_aspects.Valid; } }
 
-	op fromDomainObject { aspects { java::_aspects.static; } }
+    op fromDomainObject { aspects { java::_aspects.static; } }
 }
 
 @technology(java)
 type policyManagementBackendServices::policyManagementBackend::policyManagement.MoneyAmountDto {
-	amount : java::_types.BigDecimal {
-		aspects {
-			java::_aspects.DecimalMax(value="1000000000000");
-			java::_aspects.DecimalMin(value="0");
-		}
-	}
+    amount : java::_types.BigDecimal {
+        aspects {
+            java::_aspects.DecimalMax(value="1000000000000");
+            java::_aspects.DecimalMin(value="0");
+        }
+    }
 
-	op fromDomainObject { aspects { java::_aspects.static; } }
+    op fromDomainObject { aspects { java::_aspects.static; } }
 }
 
 @technology(java)
 @technology(map)
 type policyManagementBackendServices::policyManagementBackend
-	::policyManagement.PaginatedPolicyResponseDto {
-	aspects {
-		java::_aspects.ResourceSupport;
-		map::_aspects.Pagination;
-	}
+    ::policyManagement.PaginatedPolicyResponseDto {
+    aspects {
+        java::_aspects.ResourceSupport;
+        map::_aspects.Pagination;
+    }
 }
 
 @technology(java)
 type policyManagementBackendServices::policyManagementBackend::policyManagement.PolicyDto {
-	aspects { java::_aspects.ResourceSupport; }
+    aspects { java::_aspects.ResourceSupport; }
 
-	expandable : java::_types.Array { aspects { java::_aspects.JsonProperty("_expandable"); } }
+    expandable : java::_types.Array { aspects { java::_aspects.JsonProperty("_expandable"); } }
 
-	op fromDomainObject { aspects { java::_aspects.static; } }
+    op fromDomainObject { aspects { java::_aspects.static; } }
 }
 
 @technology(java)
 type policyManagementBackendServices::policyManagementBackend::policyManagement.PolicyPeriodDto {
-	op fromDomainObject { aspects { java::_aspects.static; } }
+    op fromDomainObject { aspects { java::_aspects.static; } }
 }
 
 @technology(java)
 @technology(map)
 policyManagementBackendServices::com.lakesidemutual.policymanagement.PolicyManagementBackend {
-	aspects {
-		java::_aspects.CustomProperty(
-			name="insuranceQuoteRequestEvent.queueName",
-			value="insurance-quote-request-event-queue"
-		);
-		java::_aspects.CustomProperty(
-			name="customerDecisionEvent.queueName",
-			value="customer-decision-event-queue"
-		);
-		java::_aspects.CustomProperty(
-			name="insuranceQuoteResponseEvent.queueName",
-			value="insurance-quote-response-event-queue"
-		);
-		java::_aspects.CustomProperty(
-			name="insuranceQuoteExpiredEvent.queueName",
-			value="insurance-quote-expired-event-queue"
-		);
-		java::_aspects.CustomProperty(
-			name="policyCreatedEvent.queueName",
-			value="policy-created-event-queue"
-		);
-		java::_aspects.CustomProperty(
-			name="riskmanagement.queueName",
-			value="newpolicies"
-		);
-		java::_aspects.ActiveMqConfiguration(
-			user = "queueuser",
-			password = "secret"
-		);
-		java::_aspects.CustomProperty(
-			name="policymanagement.stompBrokerBindAddress",
-			value="stomp://0.0.0.0:61613"
-		);
-		java::_aspects.CustomProperty(
-			name="policymanagement.tcpBrokerBindAddress",
-			value="tcp://0.0.0.0:61616"
-		);
+    aspects {
+        java::_aspects.CustomProperty(
+            name="insuranceQuoteRequestEvent.queueName",
+            value="insurance-quote-request-event-queue"
+        );
+        java::_aspects.CustomProperty(
+            name="customerDecisionEvent.queueName",
+            value="customer-decision-event-queue"
+        );
+        java::_aspects.CustomProperty(
+            name="insuranceQuoteResponseEvent.queueName",
+            value="insurance-quote-response-event-queue"
+        );
+        java::_aspects.CustomProperty(
+            name="insuranceQuoteExpiredEvent.queueName",
+            value="insurance-quote-expired-event-queue"
+        );
+        java::_aspects.CustomProperty(
+            name="policyCreatedEvent.queueName",
+            value="policy-created-event-queue"
+        );
+        java::_aspects.CustomProperty(
+            name="riskmanagement.queueName",
+            value="newpolicies"
+        );
+        java::_aspects.ActiveMqConfiguration(
+            user = "queueuser",
+            password = "secret"
+        );
+        java::_aspects.CustomProperty(
+            name="policymanagement.stompBrokerBindAddress",
+            value="stomp://0.0.0.0:61613"
+        );
+        java::_aspects.CustomProperty(
+            name="policymanagement.tcpBrokerBindAddress",
+            value="tcp://0.0.0.0:61616"
+        );
 
-		java::_aspects.ApplicationName("policy-management-backend");
-		java::_aspects.JacksonConfiguration(INDENT_OUTPUT=true,
-			defaultPropertyInclusion="NON_NULL" );
-		java::_aspects.DatasourceConfiguration(
-			url="jdbc:h2:file:./policymanagement",
-			username="sa",
-			password="sa",
-			driverClassName="org.h2.Driver"
-		);
-		java::_aspects.HibernateConfiguration("create-drop");
-		java::_aspects.Port(8090);
-		java::_aspects.CustomProperty(name="customercore.baseURL", value="http://customer-core");
-		java::_aspects.Management(property="endpoints.web.exposure.include", value="*");
-		java::_aspects.Management(property="info.git.mode", value="full");
-		java::_aspects.AdminClientUrl("http://localhost:9000");
-	}
+        java::_aspects.ApplicationName("policy-management-backend");
+        java::_aspects.JacksonConfiguration(INDENT_OUTPUT=true,
+            defaultPropertyInclusion="NON_NULL" );
+        java::_aspects.DatasourceConfiguration(
+            url="jdbc:h2:file:./policymanagement",
+            username="sa",
+            password="sa",
+            driverClassName="org.h2.Driver"
+        );
+        java::_aspects.HibernateConfiguration("create-drop");
+        java::_aspects.Port(8090);
+        java::_aspects.CustomProperty(name="customercore.baseURL", value="http://customer-core");
+        java::_aspects.Management(property="endpoints.web.exposure.include", value="*");
+        java::_aspects.Management(property="info.git.mode", value="full");
+        java::_aspects.AdminClientUrl("http://localhost:9000");
+    }
 
-	interface customerInformationHolder {
-		endpoints { java::_protocols.rest: "/customers"; }
+    interface customerInformationHolder {
+        endpoints { java::_protocols.rest: "/customers"; }
 
-		aspects {
-			map::_aspects.InformationHolderResource;
-			map::_aspects.MasterDataHolder;
-		}
-	}
+        aspects {
+            map::_aspects.InformationHolderResource;
+            map::_aspects.MasterDataHolder;
+        }
+    }
 
-	interface policyInformationHolder {
-		endpoints { java::_protocols.rest: "/policies"; }
+    interface policyInformationHolder {
+        endpoints { java::_protocols.rest: "/policies"; }
 
-		aspects {
-			map::_aspects.InformationHolderResource;
-			map::_aspects.MasterDataHolder;
-		}
-	}
+        aspects {
+            map::_aspects.InformationHolderResource;
+            map::_aspects.MasterDataHolder;
+        }
+    }
 
-	interface riskComputationService {
-		endpoints { java::_protocols.rest: "/riskfactor"; }
+    interface riskComputationService {
+        endpoints { java::_protocols.rest: "/riskfactor"; }
 
-		aspects { map::_aspects.ComputationFunction; }
-	}
+        aspects { map::_aspects.ComputationFunction; }
+    }
 
-	interface insuranceQuoteRequestInformationHolder {
-		endpoints { java::_protocols.rest: "/insurance-quote-requests"; }
+    interface insuranceQuoteRequestInformationHolder {
+        endpoints { java::_protocols.rest: "/insurance-quote-requests"; }
 
-		aspects {
-			map::_aspects.InformationHolderResource;
-			map::_aspects.MasterDataHolder;
-		}
-	}
+        aspects {
+            map::_aspects.InformationHolderResource;
+            map::_aspects.MasterDataHolder;
+        }
+    }
 
-	operation customerInformationHolder.getCustomers {
-		aspects { java::_aspects.GetMapping; }
+    operation customerInformationHolder.getCustomers {
+        aspects { java::_aspects.GetMapping; }
 
-		parameters {
-			primitive filter { aspects { java::_aspects.RequestParam(value="filter"); } }
-			primitive limit {
-				aspects { java::_aspects.RequestParam(value="limit", defaultValue="10"); }
-			}
-			primitive offset {
-				aspects { java::_aspects.RequestParam(value="offset", defaultValue="0"); }
-			}
-			complex paginatedResponseOut : java::_types.ResponseEntity;
-			primitive customerCoreNotAvailable {
-				aspects { java::_aspects.ResponseStatus("BAD_GATEWAY"); }
-			}
-		}
-	}
+        parameters {
+            primitive filter { aspects { java::_aspects.RequestParam(value="filter"); } }
+            primitive limit {
+                aspects { java::_aspects.RequestParam(value="limit", defaultValue="10"); }
+            }
+            primitive offset {
+                aspects { java::_aspects.RequestParam(value="offset", defaultValue="0"); }
+            }
+            complex paginatedResponseOut : java::_types.ResponseEntity;
+            primitive customerCoreNotAvailable {
+                aspects { java::_aspects.ResponseStatus("BAD_GATEWAY"); }
+            }
+        }
+    }
 
-	operation customerInformationHolder.getCustomer {
-		endpoints { java::_protocols.rest: "/{customerIdDto}"; }
+    operation customerInformationHolder.getCustomer {
+        endpoints { java::_protocols.rest: "/{customerIdDto}"; }
 
-		aspects { java::_aspects.GetMapping; }
+        aspects { java::_aspects.GetMapping; }
 
-		parameters {
-			complex customerIdDto { aspects { java::_aspects.PathVariable; } }
-			complex customer : java::_types.ResponseEntity;
-			primitive customerNotFound { aspects { java::_aspects.ResponseStatus("NOT_FOUND"); } }
-			primitive customerCoreNotAvailable {
-				aspects { java::_aspects.ResponseStatus("BAD_GATEWAY"); }
-			}
-		}
-	}
+        parameters {
+            complex customerIdDto { aspects { java::_aspects.PathVariable; } }
+            complex customer : java::_types.ResponseEntity;
+            primitive customerNotFound { aspects { java::_aspects.ResponseStatus("NOT_FOUND"); } }
+            primitive customerCoreNotAvailable {
+                aspects { java::_aspects.ResponseStatus("BAD_GATEWAY"); }
+            }
+        }
+    }
 
-	operation customerInformationHolder.getPolicies {
-		endpoints { java::_protocols.rest: "/{customerIdDto}/policies"; }
+    operation customerInformationHolder.getPolicies {
+        endpoints { java::_protocols.rest: "/{customerIdDto}/policies"; }
 
-		aspects { java::_aspects.GetMapping; }
+        aspects { java::_aspects.GetMapping; }
 
-		parameters {
-			complex customerIdDto { aspects { java::_aspects.PathVariable; } }
-			primitive expand { aspects { java::_aspects.RequestParam(value="expand"); } }
-			complex policyDtos : java::_types.ResponseEntities;
-		}
-	}
+        parameters {
+            complex customerIdDto { aspects { java::_aspects.PathVariable; } }
+            primitive expand { aspects { java::_aspects.RequestParam(value="expand"); } }
+            complex policyDtos : java::_types.ResponseEntities;
+        }
+    }
 
-	operation customerInformationHolder.createPolicyDto {
-		parameters {
-			primitive customerCoreNotAvailable {
-				aspects { java::_aspects.ResponseStatus("BAD_GATEWAY"); }
-			}
-		}
-	}
+    operation customerInformationHolder.createPolicyDto {
+        parameters {
+            primitive customerCoreNotAvailable {
+                aspects { java::_aspects.ResponseStatus("BAD_GATEWAY"); }
+            }
+        }
+    }
 
-	operation policyInformationHolder.createPolicy {
-		aspects { java::_aspects.PostMapping; }
+    operation policyInformationHolder.createPolicy {
+        aspects { java::_aspects.PostMapping; }
 
-		parameters {
-			complex createPolicyDto {
-				aspects {
-					java::_aspects.Valid;
-					java::_aspects.RequestBody;
-				}
-			}
-			primitive request : java::_types.HttpServletRequest;
-			complex policyDto : java::_types.ResponseEntity;
-			primitive unknownCustomer {
-				aspects { java::_aspects.ResponseStatus("FAILED_DEPENDENCY"); }
-			}
-			primitive customerCoreNotAvailable {
-				aspects { java::_aspects.ResponseStatus("BAD_GATEWAY"); }
-			}
-		}
-	}
+        parameters {
+            complex createPolicyDto {
+                aspects {
+                    java::_aspects.Valid;
+                    java::_aspects.RequestBody;
+                }
+            }
+            primitive request : java::_types.HttpServletRequest;
+            complex policyDto : java::_types.ResponseEntity;
+            primitive unknownCustomer {
+                aspects { java::_aspects.ResponseStatus("FAILED_DEPENDENCY"); }
+            }
+            primitive customerCoreNotAvailable {
+                aspects { java::_aspects.ResponseStatus("BAD_GATEWAY"); }
+            }
+        }
+    }
 
-	operation policyInformationHolder.updatePolicy {
-		endpoints { java::_protocols.rest: "/{policyId}"; }
+    operation policyInformationHolder.updatePolicy {
+        endpoints { java::_protocols.rest: "/{policyId}"; }
 
-		aspects { java::_aspects.PutMapping; }
+        aspects { java::_aspects.PutMapping; }
 
-		parameters {
-			complex policyId { aspects { java::_aspects.PathVariable; } }
-			complex createPolicyDto {
-				aspects {
-					java::_aspects.RequestBody;
-					java::_aspects.Valid;
-				}
-			}
-			primitive request : java::_types.HttpServletRequest;
-			complex policyDto : java::_types.ResponseEntity;
-			primitive policyNotFound { aspects { java::_aspects.ResponseStatus("NOT_FOUND"); } }
-			primitive unknownCustomer {
-				aspects {
-					java::_aspects.ResponseStatus("FAILED_DEPENDENCY");
-				}
-			}
-			primitive customerCoreNotAvailable {
-				aspects { java::_aspects.ResponseStatus("BAD_GATEWAY"); }
-			}
-		}
-	}
+        parameters {
+            complex policyId { aspects { java::_aspects.PathVariable; } }
+            complex createPolicyDto {
+                aspects {
+                    java::_aspects.RequestBody;
+                    java::_aspects.Valid;
+                }
+            }
+            primitive request : java::_types.HttpServletRequest;
+            complex policyDto : java::_types.ResponseEntity;
+            primitive policyNotFound { aspects { java::_aspects.ResponseStatus("NOT_FOUND"); } }
+            primitive unknownCustomer {
+                aspects {
+                    java::_aspects.ResponseStatus("FAILED_DEPENDENCY");
+                }
+            }
+            primitive customerCoreNotAvailable {
+                aspects { java::_aspects.ResponseStatus("BAD_GATEWAY"); }
+            }
+        }
+    }
 
-	operation policyInformationHolder.deletePolicy {
-		endpoints { java::_protocols.rest: "/{policyId}"; }
+    operation policyInformationHolder.deletePolicy {
+        endpoints { java::_protocols.rest: "/{policyId}"; }
 
-		aspects { java::_aspects.DeleteMapping; }
+        aspects { java::_aspects.DeleteMapping; }
 
-		parameters {
-			complex policyId { aspects { java::_aspects.PathVariable; } }
-			primitive request : java::_types.HttpServletRequest;
-			primitive result : java::_types.ResponseEntityNoContent;
-		}
-	}
+        parameters {
+            complex policyId { aspects { java::_aspects.PathVariable; } }
+            primitive request : java::_types.HttpServletRequest;
+            primitive result : java::_types.ResponseEntityNoContent;
+        }
+    }
 
-	operation policyInformationHolder.createPolicyDtos {
-		parameters {
-			primitive customerCoreNotAvailable {
-				aspects { java::_aspects.ResponseStatus("BAD_GATEWAY"); }
-			}
-		}
-	}
+    operation policyInformationHolder.createPolicyDtos {
+        parameters {
+            primitive customerCoreNotAvailable {
+                aspects { java::_aspects.ResponseStatus("BAD_GATEWAY"); }
+            }
+        }
+    }
 
-	operation policyInformationHolder.getPolicies {
-		aspects { java::_aspects.GetMapping; }
+    operation policyInformationHolder.getPolicies {
+        aspects { java::_aspects.GetMapping; }
 
-		parameters {
-			primitive limit {
-				aspects { java::_aspects.RequestParam(value="limit", defaultValue="10"); }
-			}
-			primitive offset {
-				aspects { java::_aspects.RequestParam(value="offset", defaultValue="0"); }
-			}
-			primitive expand { aspects { java::_aspects.RequestParam(value="expand"); } }
-			complex paginatedPolicyResponse  : java::_types.ResponseEntity;
-		}
-	}
+        parameters {
+            primitive limit {
+                aspects { java::_aspects.RequestParam(value="limit", defaultValue="10"); }
+            }
+            primitive offset {
+                aspects { java::_aspects.RequestParam(value="offset", defaultValue="0"); }
+            }
+            primitive expand { aspects { java::_aspects.RequestParam(value="expand"); } }
+            complex paginatedPolicyResponse  : java::_types.ResponseEntity;
+        }
+    }
 
-	operation policyInformationHolder.getPolicy {
-		endpoints { java::_protocols.rest: "/{policyId}"; }
+    operation policyInformationHolder.getPolicy {
+        endpoints { java::_protocols.rest: "/{policyId}"; }
 
-		aspects { java::_aspects.GetMapping; }
+        aspects { java::_aspects.GetMapping; }
 
-		parameters {
-			complex policyId { aspects { java::_aspects.PathVariable; } }
-			primitive expand { aspects { java::_aspects.RequestParam(value="expand"); } }
-			complex response  : java::_types.ResponseEntity;
-			primitive policyNotFound { aspects { java::_aspects.ResponseStatus("NOT_FOUND"); } }
-		}
-	}
+        parameters {
+            complex policyId { aspects { java::_aspects.PathVariable; } }
+            primitive expand { aspects { java::_aspects.RequestParam(value="expand"); } }
+            complex response  : java::_types.ResponseEntity;
+            primitive policyNotFound { aspects { java::_aspects.ResponseStatus("NOT_FOUND"); } }
+        }
+    }
 
-	operation riskComputationService.computeRiskFactor {
-		endpoints { java::_protocols.rest: "/compute"; }
+    operation riskComputationService.computeRiskFactor {
+        endpoints { java::_protocols.rest: "/compute"; }
 
-		aspects { java::_aspects.PostMapping; }
+        aspects { java::_aspects.PostMapping; }
 
-		parameters {
-			complex riskFactorRequest {
-				aspects {
-					java::_aspects.Valid;
-					java::_aspects.RequestBody;
-				}
-			}
-			complex riskFactorResponse : java::_types.ResponseEntity;
-		}
-	}
+        parameters {
+            complex riskFactorRequest {
+                aspects {
+                    java::_aspects.Valid;
+                    java::_aspects.RequestBody;
+                }
+            }
+            complex riskFactorResponse : java::_types.ResponseEntity;
+        }
+    }
 
-	operation customerDecisionMessageConsumer.receiveCustomerDecision {
-		endpoints { java::_protocols.amqp: "customer-decision-event-queue"; }
+    operation customerDecisionMessageConsumer.receiveCustomerDecision {
+        endpoints { java::_protocols.amqp: "customer-decision-event-queue"; }
 
-		parameters {
-			complex message : java::_types.Message;
-			primitive customerCoreNotAvailable {
-				aspects { java::_aspects.ResponseStatus("BAD_GATEWAY"); }
-			}
-		}
-	}
+        parameters {
+            complex message : java::_types.Message;
+            primitive customerCoreNotAvailable {
+                aspects { java::_aspects.ResponseStatus("BAD_GATEWAY"); }
+            }
+        }
+    }
 
-	operation insuranceQuoteRequestInformationHolder.getInsuranceQuoteRequests {
-		aspects { java::_aspects.GetMapping; }
+    operation insuranceQuoteRequestInformationHolder.getInsuranceQuoteRequests {
+        aspects { java::_aspects.GetMapping; }
 
-		parameters { complex quoteRequestDtos : java::_types.ResponseEntities; }
-	}
+        parameters { complex quoteRequestDtos : java::_types.ResponseEntities; }
+    }
 
-	operation insuranceQuoteRequestInformationHolder.getInsuranceQuoteRequest {
-		endpoints { java::_protocols.rest: "/{id}"; }
+    operation insuranceQuoteRequestInformationHolder.getInsuranceQuoteRequest {
+        endpoints { java::_protocols.rest: "/{id}"; }
 
-		aspects { java::_aspects.GetMapping; }
+        aspects { java::_aspects.GetMapping; }
 
-		parameters {
-			primitive id { aspects { java::_aspects.PathVariable; } }
-			complex insuranceQuoteRequestDto : java::_types.ResponseEntity;
-			primitive insuranceQuoteRequestNotFound {
-				aspects {
-					java::_aspects.ResponseStatus("NOT_FOUND");
-				}
-			}
-		}
-	}
+        parameters {
+            primitive id { aspects { java::_aspects.PathVariable; } }
+            complex insuranceQuoteRequestDto : java::_types.ResponseEntity;
+            primitive insuranceQuoteRequestNotFound {
+                aspects {
+                    java::_aspects.ResponseStatus("NOT_FOUND");
+                }
+            }
+        }
+    }
 
-	operation insuranceQuoteRequestInformationHolder.respondToInsuranceQuoteRequest {
-		endpoints { java::_protocols.rest: "/{id}"; }
+    operation insuranceQuoteRequestInformationHolder.respondToInsuranceQuoteRequest {
+        endpoints { java::_protocols.rest: "/{id}"; }
 
-		aspects { java::_aspects.PatchMapping; }
+        aspects { java::_aspects.PatchMapping; }
 
-		parameters {
-			primitive id { aspects { java::_aspects.PathVariable; } }
-			complex insuranceQuoteResponseDto {
-				aspects {
-					java::_aspects.RequestBody;
-					java::_aspects.Valid;
-				}
-			}
-			complex result : java::_types.ResponseEntity;
-			primitive insuranceQuoteRequestNotFound {
-				aspects {
-					java::_aspects.ResponseStatus("NOT_FOUND");
-				}
-			}
-		}
-	}
+        parameters {
+            primitive id { aspects { java::_aspects.PathVariable; } }
+            complex insuranceQuoteResponseDto {
+                aspects {
+                    java::_aspects.RequestBody;
+                    java::_aspects.Valid;
+                }
+            }
+            complex result : java::_types.ResponseEntity;
+            primitive insuranceQuoteRequestNotFound {
+                aspects {
+                    java::_aspects.ResponseStatus("NOT_FOUND");
+                }
+            }
+        }
+    }
 
-	operation insuranceQuoteRequestMessageConsumer.receiveInsuranceQuoteRequest {
-		endpoints { java::_protocols.amqp: "insurance-quote-request-event-queue"; }
+    operation insuranceQuoteRequestMessageConsumer.receiveInsuranceQuoteRequest {
+        endpoints { java::_protocols.amqp: "insurance-quote-request-event-queue"; }
 
-		parameters { complex message : java::_types.Message; }
-	}
+        parameters { complex message : java::_types.Message; }
+    }
 }

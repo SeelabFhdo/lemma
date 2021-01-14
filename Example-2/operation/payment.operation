@@ -15,14 +15,14 @@ import technology from "../technology/container_base.technology" as container_ba
 @technology(paymentTech)
 @technology(container_base)
 container PaymentContainer
-	deployment technology container_base::_deployment.Kubernetes
-	deploys paymentService::de.fhdo.PaymentService {
-	default values {
-		springApplicationName="PaymentService"
-		springDataMongodbPort=8080
-		basic endpoints {
-			paymentTech::_protocols.mqtt,
-			paymentTech::_protocols.rest: "http://www.example.com:8080";
-		}
-	}
+    deployment technology container_base::_deployment.Kubernetes
+    deploys paymentService::de.fhdo.PaymentService {
+    default values {
+        springApplicationName="PaymentService"
+        springDataMongodbPort=8080
+        basic endpoints {
+            paymentTech::_protocols.mqtt,
+            paymentTech::_protocols.rest: "http://www.example.com:8080";
+        }
+    }
 }

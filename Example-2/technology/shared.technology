@@ -5,26 +5,26 @@
  * make technology definitions reusable across microservices and operation nodes.
  */
 technology Shared {
-	// Shared protocols
-	protocols {
-		sync rest data formats "application/json" default with format "application/json";
-		async mqtt data formats "application/json" default with format "application/json";
-	}
+    // Shared protocols
+    protocols {
+        sync rest data formats "application/json" default with format "application/json";
+        async mqtt data formats "application/json" default with format "application/json";
+    }
 
-	service aspects {
-		aspect put for operations {
-			selector(protocol = rest);
-		}
+    service aspects {
+        aspect put for operations {
+            selector(protocol = rest);
+        }
 
-		aspect post for operations {
-			selector(protocol = rest);
-		}
-	}
+        aspect post for operations {
+            selector(protocol = rest);
+        }
+    }
 
-	// Shared infrastructure technologies
-	infrastructure technologies {
-		securityService {
-			operation environments = "oauth2" default;
-		}
-	}
+    // Shared infrastructure technologies
+    infrastructure technologies {
+        securityService {
+            operation environments = "oauth2" default;
+        }
+    }
 }

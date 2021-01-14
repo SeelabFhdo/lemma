@@ -1,143 +1,143 @@
 context customerCore {
-	structure Address<valueObject> {
-		hide long id<identifier>,
-		immutable string streetAddress<neverEmpty>,
-		immutable string postalCode<neverEmpty>,
-		immutable string city<neverEmpty>
-	}
+    structure Address<valueObject> {
+        hide long id<identifier>,
+        immutable string streetAddress<neverEmpty>,
+        immutable string postalCode<neverEmpty>,
+        immutable string city<neverEmpty>
+    }
 
-	list Addresses { Address a }
+    list Addresses { Address a }
 
-	structure CustomerId<valueObject> {
-		string id,
-		function CustomerId random
-	}
+    structure CustomerId<valueObject> {
+        string id,
+        function CustomerId random
+    }
 
-	structure CustomerProfileEntity<entity> {
-		string firstname,
-		string lastname,
-		date birthday,
-		Address currentAddress,
-		string email,
-		string phoneNumber,
-		Addresses moveHistory
-	}
+    structure CustomerProfileEntity<entity> {
+        string firstname,
+        string lastname,
+        date birthday,
+        Address currentAddress,
+        string email,
+        string phoneNumber,
+        Addresses moveHistory
+    }
 
-	structure CustomerAggregateRoot<entity, aggregate> {
-		immutable CustomerId id<identifier, part>,
-		immutable CustomerProfileEntity customerProfile<part>,
-		procedure moveToAddress(Address address),
-		procedure updateCustomerProfile(CustomerProfileEntity updatedCustomerProfile)
-	}
+    structure CustomerAggregateRoot<entity, aggregate> {
+        immutable CustomerId id<identifier, part>,
+        immutable CustomerProfileEntity customerProfile<part>,
+        procedure moveToAddress(Address address),
+        procedure updateCustomerProfile(CustomerProfileEntity updatedCustomerProfile)
+    }
 
-	list CustomerAggregateRoots { CustomerAggregateRoot r }
+    list CustomerAggregateRoots { CustomerAggregateRoot r }
 
-	structure CustomerFactory<factory> {
-		hide immutable CustomerRepository customerRepository,
-		function CustomerAggregateRoot create(CustomerProfileEntity customerProfile),
-		function string formatPhoneNumber(string phoneNumberStr)
-	}
+    structure CustomerFactory<factory> {
+        hide immutable CustomerRepository customerRepository,
+        function CustomerAggregateRoot create(CustomerProfileEntity customerProfile),
+        function string formatPhoneNumber(string phoneNumberStr)
+    }
 
-	structure PhoneNumberValidator<specification> {
-		function boolean isValid(string phoneNumberStr)<validator>
-	}
+    structure PhoneNumberValidator<specification> {
+        function boolean isValid(string phoneNumberStr)<validator>
+    }
 
-	structure CustomerRepository<repository> {
-		CustomerAggregateRoot customerAggregate,
-		CustomerId customerId,
-		function CustomerId nextId
-	}
+    structure CustomerRepository<repository> {
+        CustomerAggregateRoot customerAggregate,
+        CustomerId customerId,
+        function CustomerId nextId
+    }
 
-	structure CustomerService<applicationService> {
-		hide immutable CustomerRepository customerRepository,
-		hide immutable CustomerFactory customerFactory,
-		function CustomerAggregateRoot updateAddress(CustomerId customerId, Address updatedAddress),
-		function CustomerAggregateRoot updateCustomerProfile(CustomerId customerId,
-			CustomerProfileEntity updatedCustomerProfile),
-		function CustomerAggregateRoot createCustomer(CustomerProfileEntity customerProfile),
-		function CustomerAggregateRoots getCustomers(string ids),
-		function CustomerAggregateRoots getCustomersPaginated(string filter, int limit, int offset),
-		function boolean matchesFilter(CustomerAggregateRoot customer, string filter)
-	}
+    structure CustomerService<applicationService> {
+        hide immutable CustomerRepository customerRepository,
+        hide immutable CustomerFactory customerFactory,
+        function CustomerAggregateRoot updateAddress(CustomerId customerId, Address updatedAddress),
+        function CustomerAggregateRoot updateCustomerProfile(CustomerId customerId,
+            CustomerProfileEntity updatedCustomerProfile),
+        function CustomerAggregateRoot createCustomer(CustomerProfileEntity customerProfile),
+        function CustomerAggregateRoots getCustomers(string ids),
+        function CustomerAggregateRoots getCustomersPaginated(string filter, int limit, int offset),
+        function boolean matchesFilter(CustomerAggregateRoot customer, string filter)
+    }
 
-	structure AddressDto<valueObject> {
-		string streetAddress<neverEmpty>,
-		string postalCode<neverEmpty>,
-		string city<neverEmpty>,
-		function AddressDto fromDomainObject(Address address),
-		function Address toDomainObject
-	}
+    structure AddressDto<valueObject> {
+        string streetAddress<neverEmpty>,
+        string postalCode<neverEmpty>,
+        string city<neverEmpty>,
+        function AddressDto fromDomainObject(Address address),
+        function Address toDomainObject
+    }
 
-	structure CustomerProfileUpdateRequestDto<valueObject> {
-		string firstname<neverEmpty>,
-		string lastname<neverEmpty>,
-		date birthday,
-		string streetAddress<neverEmpty>,
-		string postalCode<neverEmpty>,
-		string city<neverEmpty>,
-		string email<neverEmpty>,
-		string phoneNumber
-	}
+    structure CustomerProfileUpdateRequestDto<valueObject> {
+        string firstname<neverEmpty>,
+        string lastname<neverEmpty>,
+        date birthday,
+        string streetAddress<neverEmpty>,
+        string postalCode<neverEmpty>,
+        string city<neverEmpty>,
+        string email<neverEmpty>,
+        string phoneNumber
+    }
 
-	structure CustomerResponseDto<valueObject> {
-		immutable string customerId,
-		immutable string firstname,
-		immutable string lastname,
-		immutable date birthday,
-		immutable string streetAddress,
-		immutable string postalCode,
-		immutable string city,
-		immutable string email,
-		immutable string phoneNumber,
-		immutable Addresses moveHistory
-	}
+    structure CustomerResponseDto<valueObject> {
+        immutable string customerId,
+        immutable string firstname,
+        immutable string lastname,
+        immutable date birthday,
+        immutable string streetAddress,
+        immutable string postalCode,
+        immutable string city,
+        immutable string email,
+        immutable string phoneNumber,
+        immutable Addresses moveHistory
+    }
 
-	list CustomerResponseDtos { CustomerResponseDto d }
+    list CustomerResponseDtos { CustomerResponseDto d }
 
-	structure CustomersResponseDto<valueObject> {
-		immutable CustomerResponseDtos customers
-	}
+    structure CustomersResponseDto<valueObject> {
+        immutable CustomerResponseDtos customers
+    }
 
-	structure PaginatedCustomerResponseDto<valueObject> {
-		immutable string filter,
-		immutable int limit,
-		immutable int offset,
-		immutable int size,
-		immutable CustomerResponseDtos customers
-	}
+    structure PaginatedCustomerResponseDto<valueObject> {
+        immutable string filter,
+        immutable int limit,
+        immutable int offset,
+        immutable int size,
+        immutable CustomerResponseDtos customers
+    }
 
-	list PostalCodesAndCities { string postalCode, string city }
-	list Cities { string city }
-	list FieldNames { string }
+    list PostalCodesAndCities { string postalCode, string city }
+    list Cities { string city }
+    list FieldNames { string }
 
-	structure CityLookupService<domainService> {
-		hide function PostalCodesAndCities loadLookupMap(),
-		hide function PostalCodesAndCities getLookupMap(),
-		function Cities getCitiesForPostalCode (string postalCode)
-	}
+    structure CityLookupService<domainService> {
+        hide function PostalCodesAndCities loadLookupMap(),
+        hide function PostalCodesAndCities getLookupMap(),
+        function Cities getCitiesForPostalCode (string postalCode)
+    }
 
-	structure CitiesResponseDto<valueObject> {
-		immutable Cities cities
-	}
+    structure CitiesResponseDto<valueObject> {
+        immutable Cities cities
+    }
 
-	structure GetCustomerRequest {
-		string id
-	}
+    structure GetCustomerRequest {
+        string id
+    }
 
-	structure GetCustomerResponse {
-		Customer customer
-	}
+    structure GetCustomerResponse {
+        Customer customer
+    }
 
-	structure Customer {
-		string name,
-		date birthday,
-		string address,
-		Profile segment
-	}
+    structure Customer {
+        string name,
+        date birthday,
+        string address,
+        Profile segment
+    }
 
-	enum Profile {
-		N_A("n/a"),
-		NORMAL("normal"),
-    	VIP("VIP")
-	}
+    enum Profile {
+        N_A("n/a"),
+        NORMAL("normal"),
+        VIP("VIP")
+    }
 }

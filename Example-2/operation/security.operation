@@ -13,17 +13,17 @@ import technology from "../technology/container_base.technology" as container_ba
 import nodes from "eureka.operation" as eureka
 import nodes from "zuul.operation" as zuul
 
-// Operation specification for the infrastructural Services
+// Operation specification for infrastructure services
 @technology(infrastructureTech)
 @technology(container_base)
 container SecurityContainer
-	deployment technology container_base::_deployment.Kubernetes
-	deploys infrastructureServices::v01.de.fhdo.SecurityService
-	depends on nodes eureka::Eureka, zuul::Zuul{
-	default values {
-		basic endpoints {
-			infrastructureTech::_protocols.mqtt,
-			infrastructureTech::_protocols.rest: "http://www.example.com:8080";
-		}
-	}
+    deployment technology container_base::_deployment.Kubernetes
+    deploys infrastructureServices::v01.de.fhdo.SecurityService
+    depends on nodes eureka::Eureka, zuul::Zuul{
+    default values {
+        basic endpoints {
+            infrastructureTech::_protocols.mqtt,
+            infrastructureTech::_protocols.rest: "http://www.example.com:8080";
+        }
+    }
 }

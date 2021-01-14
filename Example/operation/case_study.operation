@@ -14,14 +14,14 @@ import nodes from "zuul.operation" as zuul
 container CurrentAllocation deployment technology container_base::_deployment.Kubernetes
 deploys ^services::com.example.allocationsovertime.AllocationsOverTime
 depends on nodes eureka::Eureka, zuul::Zuul {
-	default values {
-		springApplicationName="CurrentAllocationService"
-		serverPort=8080
-		basic endpoints {
-			shared::_protocols.amqp: "amqp://example.com:5672/ca";
-			shared::_protocols.rest: "http://example.com:8080/ca";
-		}
-	}
+    default values {
+        springApplicationName="CurrentAllocationService"
+        serverPort=8080
+        basic endpoints {
+            shared::_protocols.amqp: "amqp://example.com:5672/ca";
+            shared::_protocols.rest: "http://example.com:8080/ca";
+        }
+    }
 }
 
 // Search for free space
@@ -31,13 +31,13 @@ depends on nodes eureka::Eureka, zuul::Zuul {
 container SearchForFreeSpace deployment technology container_base::_deployment.Kubernetes
 deploys ^services::com.example.searchforfreespace.SearchForFreeSpace
 depends on nodes eureka::Eureka, zuul::Zuul {
-	default values {
-		springApplicationName="SearchForFreeSpaceService"
-		serverPort=8080
-		basic endpoints {
-			shared::_protocols.rest: "http://example.com:8080/sfs";
-		}
-	}
+    default values {
+        springApplicationName="SearchForFreeSpaceService"
+        serverPort=8080
+        basic endpoints {
+            shared::_protocols.rest: "http://example.com:8080/sfs";
+        }
+    }
 }
 
 // Allocations over time
@@ -47,14 +47,14 @@ depends on nodes eureka::Eureka, zuul::Zuul {
 container AllocationsOverTime deployment technology container_base::_deployment.Kubernetes
 deploys ^services::com.example.allocationsovertime.AllocationsOverTime
 depends on nodes eureka::Eureka, zuul::Zuul {
-	default values {
-		springApplicationName="AllocationsOverTimeService"
-		serverPort=8080
-		basic endpoints {
-			shared::_protocols.amqp: "amqp://example.com:5672/aot";
-			shared::_protocols.rest: "http://example.com:8080/aot";
-		}
-	}
+    default values {
+        springApplicationName="AllocationsOverTimeService"
+        serverPort=8080
+        basic endpoints {
+            shared::_protocols.amqp: "amqp://example.com:5672/aot";
+            shared::_protocols.rest: "http://example.com:8080/aot";
+        }
+    }
 }
 
 // Parking space management
@@ -64,14 +64,14 @@ depends on nodes eureka::Eureka, zuul::Zuul {
 container ParkingSpaceManagement deployment technology container_base::_deployment.Kubernetes
 deploys ^services::com.example.parkingspacemanagement.ParkingSpaceManagement
 depends on nodes eureka::Eureka, zuul::Zuul {
-	default values {
-		springApplicationName="ParkingSpaceManagementService"
-		serverPort=8080
-		basic endpoints {
-			shared::_protocols.amqp: "amqp://example.com:5672/psm";
-			shared::_protocols.rest: "http://example.com:8080/psm";
-		}
-	}
+    default values {
+        springApplicationName="ParkingSpaceManagementService"
+        serverPort=8080
+        basic endpoints {
+            shared::_protocols.amqp: "amqp://example.com:5672/psm";
+            shared::_protocols.rest: "http://example.com:8080/psm";
+        }
+    }
 }
 
 // Data export
@@ -81,11 +81,11 @@ depends on nodes eureka::Eureka, zuul::Zuul {
 container DataExport deployment technology container_base::_deployment.Kubernetes
 deploys ^services::com.example.dataexport.DataExport
 depends on nodes eureka::Eureka, zuul::Zuul {
-	default values {
-		springApplicationName="ParkingSpaceManagementService"
-		serverPort=8080
-		basic endpoints {
-			shared::_protocols.soap: "http://example.com:8080/dex";
-		}
-	}
+    default values {
+        springApplicationName="ParkingSpaceManagementService"
+        serverPort=8080
+        basic endpoints {
+            shared::_protocols.soap: "http://example.com:8080/dex";
+        }
+    }
 }

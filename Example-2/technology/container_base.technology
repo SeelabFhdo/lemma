@@ -28,22 +28,22 @@ technology container_base {
     }
 
     operation aspects {
-    	// Operation aspect for the configuration of custom dockerfiles
+        // Operation aspect for the configuration of custom Dockerfiles
         aspect Dockerfile<singleval> for containers, infrastructure {
             string contents <mandatory>;
         }
 
-		// Operation aspect for the configuration of custom Kubernetes files
+        // Operation aspect for the configuration of custom Kubernetes files
         aspect KubernetesDeployment<singleval> for containers, infrastructure {
             string contents <mandatory>;
         }
 
-		// Operation aspect for the configuration of custom docker-compose parts
+        // Operation aspect for the configuration of custom Docker Compose parts
         aspect ComposePart<singleval> for containers, infrastructure {
             string contents <mandatory>;
         }
 
-		// Operation aspect for the configuration of Maven-based microservices
+        // Operation aspect for the configuration of Maven-based microservices
         aspect MavenBuildConfiguration for containers, infrastructure {
             string artifactId;
             string ^version;

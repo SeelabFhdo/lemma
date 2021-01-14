@@ -7,346 +7,346 @@ import technology from "../technology/eureka.technology" as eureka
 
 @technology(java)
 type customerCoreServices::domain::customerCore.Address {
-	aspects { java::_aspects.Table("addresses"); }
+    aspects { java::_aspects.Table("addresses"); }
 
-	id { aspects { java::_aspects.GeneratedValue; } }
+    id { aspects { java::_aspects.GeneratedValue; } }
 }
 
 @technology(java)
 type customerCoreServices::domain::customerCore.CustomerId {
-	op random { aspects { java::_aspects.static; } }
+    op random { aspects { java::_aspects.static; } }
 }
 
 @technology(java)
 type customerCoreServices::domain::customerCore.CustomerProfileEntity {
-	currentAddress { aspects { java::_aspects.OneToOne; } }
+    currentAddress { aspects { java::_aspects.OneToOne; } }
 
-	moveHistory : java::_types.Collection { aspects { java::_aspects.OneToMany; } }
+    moveHistory : java::_types.Collection { aspects { java::_aspects.OneToMany; } }
 }
 
 @technology(java)
 @technology(eadr)
 type customerCoreServices::domain::customerCore.CustomerAggregateRoot {
-	aspects { java::_aspects.Table("customers"); }
+    aspects { java::_aspects.Table("customers"); }
 
-	op moveToAddress {
-		aspects {
-			eadr::_aspects.MADR(
-				value = 1,
-				title = "Data transfer between interface layer and domain layer",
-				contextAndProblem = "
-					Need to pass information from the interfaces layer to the domain layer without
-					introducing a layering violation
-				",
-				alternatives = "
-					Pass existing domain objects,
-					Pass the DTOs directly,
-					Pass the components of the DTO,
-					Add a new value type in the domain layer and use it as parameter object
-				",
-				chosenAlternative = "Pass existing domain objects",
-				justification = "
-					This solution doesn't introduce a layering violation and it is simple because it
-					doesn't require any additional classes.
-				"
-			);
-		}
-	}
+    op moveToAddress {
+        aspects {
+            eadr::_aspects.MADR(
+                value = 1,
+                title = "Data transfer between interface layer and domain layer",
+                contextAndProblem = "
+                    Need to pass information from the interfaces layer to the domain layer without
+                    introducing a layering violation
+                ",
+                alternatives = "
+                    Pass existing domain objects,
+                    Pass the DTOs directly,
+                    Pass the components of the DTO,
+                    Add a new value type in the domain layer and use it as parameter object
+                ",
+                chosenAlternative = "Pass existing domain objects",
+                justification = "
+                    This solution doesn't introduce a layering violation and it is simple because it
+                    doesn't require any additional classes.
+                "
+            );
+        }
+    }
 }
 
 @technology(java)
 type customerCoreServices::domain::customerCore.CustomerFactory {
-	customerRepository { aspects { java::_aspects.Autowired; } }
+    customerRepository { aspects { java::_aspects.Autowired; } }
 
-	op formatPhoneNumber { aspects { java::_aspects.static; } }
+    op formatPhoneNumber { aspects { java::_aspects.static; } }
 }
 
 @technology(java)
 type customerCoreServices::domain::customerCore.CityLookupService {
-	op loadLookupMap { return type : java::_types.Multimap; }
+    op loadLookupMap { return type : java::_types.Multimap; }
 
-	op getLookupMap  { return type : java::_types.Multimap; }
+    op getLookupMap  { return type : java::_types.Multimap; }
 }
 
 @technology(java)
 @technology(map)
 type customerCoreServices::domain::customerCore.AddressDto {
-	aspects { map::_aspects.AtomicParameterList; }
+    aspects { map::_aspects.AtomicParameterList; }
 
-	op fromDomainObject { aspects { java::_aspects.static; } }
+    op fromDomainObject { aspects { java::_aspects.static; } }
 }
 
 @technology(java, typedef=true)
 @technology(lakesideMutual)
 type customerCoreServices::domain::customerCore.CustomerProfileUpdateRequestDto {
-	birthday { aspects { java::_aspects.JsonFormat("yyyy-MM-dd"); } }
-	phoneNumber { aspects { lakesideMutual::_aspects.PhoneNumber; } }
+    birthday { aspects { java::_aspects.JsonFormat("yyyy-MM-dd"); } }
+    phoneNumber { aspects { lakesideMutual::_aspects.PhoneNumber; } }
 }
 
 @technology(java)
 @technology(map)
 type customerCoreServices::domain::customerCore.CustomerResponseDto {
-	aspects {
-		java::_aspects.ResourceSupport;
-		map::_aspects.ParameterTree;
-	}
+    aspects {
+        java::_aspects.ResourceSupport;
+        map::_aspects.ParameterTree;
+    }
 
-	moveHistory : java::_types.Collection;
+    moveHistory : java::_types.Collection;
 }
 
 @technology(java)
 @technology(map)
 type customerCoreServices::domain::customerCore.CustomersResponseDto {
-	aspects {
-		java::_aspects.ResourceSupport;
-		map::_aspects.ParameterForest;
-	}
+    aspects {
+        java::_aspects.ResourceSupport;
+        map::_aspects.ParameterForest;
+    }
 }
 
 @technology(java)
 @technology(map)
 type customerCoreServices::domain::customerCore.PaginatedCustomerResponseDto {
-	aspects {
-		java::_aspects.ResourceSupport;
-		map::_aspects.Pagination;
-	}
+    aspects {
+        java::_aspects.ResourceSupport;
+        map::_aspects.Pagination;
+    }
 }
 
 @technology(map)
 type customerCoreServices::domain::customerCore.CitiesResponseDto {
-	aspects { map::_aspects.AtomicParameter; }
+    aspects { map::_aspects.AtomicParameter; }
 }
 
 @technology(java, typedef=true)
 @technology(lakesideMutual)
 type customerCoreServices::domain::customerCore.CustomerService {
-	customerRepository { aspects { java::_aspects.Autowired; } }
+    customerRepository { aspects { java::_aspects.Autowired; } }
 
-	customerFactory { aspects { java::_aspects.Autowired; } }
+    customerFactory { aspects { java::_aspects.Autowired; } }
 
-	op updateAddress { return type : java::_types.Optional; }
+    op updateAddress { return type : java::_types.Optional; }
 
-	op updateCustomerProfile { return type : java::_types.Optional; }
+    op updateCustomerProfile { return type : java::_types.Optional; }
 
-	op getCustomers { return type : lakesideMutual::_types.Page; }
+    op getCustomers { return type : lakesideMutual::_types.Page; }
 }
 
 @technology(java)
 type customerCoreServices::domain::customerCore.GetCustomerRequest {
-	aspects {
-		java::_aspects.XmlAccessorType;
-		java::_aspects.XmlType(propOrder="id");
-		java::_aspects.XmlRootElement("getCustomerRequest");
-	}
+    aspects {
+        java::_aspects.XmlAccessorType;
+        java::_aspects.XmlType(propOrder="id");
+        java::_aspects.XmlRootElement("getCustomerRequest");
+    }
 
-	id { aspects { java::_aspects.XmlElement(^required=true); } }
+    id { aspects { java::_aspects.XmlElement(^required=true); } }
 }
 
 @technology(java)
 type customerCoreServices::domain::customerCore.GetCustomerResponse {
-	aspects {
-		java::_aspects.XmlAccessorType;
-		java::_aspects.XmlType(propOrder="customer");
-		java::_aspects.XmlRootElement("getCustomerResponse");
-	}
+    aspects {
+        java::_aspects.XmlAccessorType;
+        java::_aspects.XmlType(propOrder="customer");
+        java::_aspects.XmlRootElement("getCustomerResponse");
+    }
 
-	customer { aspects { java::_aspects.XmlElement(^required=true); } }
+    customer { aspects { java::_aspects.XmlElement(^required=true); } }
 }
 
 @technology(java)
 type customerCoreServices::domain::customerCore.Customer {
-	aspects {
-		java::_aspects.XmlAccessorType;
-		java::_aspects.XmlType(
-			name="customer",
-			propOrder="name,birthday,address,segment"
-		);
-	}
+    aspects {
+        java::_aspects.XmlAccessorType;
+        java::_aspects.XmlType(
+            name="customer",
+            propOrder="name,birthday,address,segment"
+        );
+    }
 
-	name { aspects { java::_aspects.XmlElement(^required=true); } }
+    name { aspects { java::_aspects.XmlElement(^required=true); } }
 
-	birthday : java::_types.XMLGregorianCalendar {
-		aspects { java::_aspects.XmlElement(^required=true); }
-	}
+    birthday : java::_types.XMLGregorianCalendar {
+        aspects { java::_aspects.XmlElement(^required=true); }
+    }
 
-	address { aspects { java::_aspects.XmlElement(^required=true); } }
+    address { aspects { java::_aspects.XmlElement(^required=true); } }
 
-	segment { aspects { java::_aspects.XmlElement(^required=true); } }
+    segment { aspects { java::_aspects.XmlElement(^required=true); } }
 }
 
 @technology(java)
 type customerCoreServices::domain::customerCore.Profile {
-	aspects {
-		java::_aspects.EnumerationMethod("public static Profile fromValue(String v)");
-		java::_aspects.XmlEnum;
-		java::_aspects.XmlType(name="profile");
-	}
+    aspects {
+        java::_aspects.EnumerationMethod("public static Profile fromValue(String v)");
+        java::_aspects.XmlEnum;
+        java::_aspects.XmlType(name="profile");
+    }
 
-	.N_A { aspects { java::_aspects.XmlEnumValue("n/a"); } }
+    .N_A { aspects { java::_aspects.XmlEnumValue("n/a"); } }
 
-	.NORMAL { aspects { java::_aspects.XmlEnumValue("normal"); } }
+    .NORMAL { aspects { java::_aspects.XmlEnumValue("normal"); } }
 }
 
 @technology(map)
 @technology(java)
 customerCoreServices::com.lakesidemutual.customercore.CustomerCore {
-	aspects {
-		java::_aspects.ApplicationName("customer-core");
-		java::_aspects.JacksonConfiguration(INDENT_OUTPUT=true,
-			defaultPropertyInclusion="NON_NULL");
-		java::_aspects.DatasourceConfiguration(
-			url="jdbc:h2:file:./customercore",
-			username="sa",
-			password="sa",
-			driverClassName="org.h2.Driver"
-		);
-		java::_aspects.HibernateConfiguration("create-drop");
-		java::_aspects.Port(8110);
-		java::_aspects.Management(property="endpoints.web.exposure.include", value="*");
-		java::_aspects.Management(property="info.git.mode", value="full");
-		java::_aspects.AllowBeanDefinitionOverriding;
-		java::_aspects.CommonsRequestLoggingFilter("DEBUG");
-		java::_aspects.AdminClientUrl("http://localhost:9000");
-	}
+    aspects {
+        java::_aspects.ApplicationName("customer-core");
+        java::_aspects.JacksonConfiguration(INDENT_OUTPUT=true,
+            defaultPropertyInclusion="NON_NULL");
+        java::_aspects.DatasourceConfiguration(
+            url="jdbc:h2:file:./customercore",
+            username="sa",
+            password="sa",
+            driverClassName="org.h2.Driver"
+        );
+        java::_aspects.HibernateConfiguration("create-drop");
+        java::_aspects.Port(8110);
+        java::_aspects.Management(property="endpoints.web.exposure.include", value="*");
+        java::_aspects.Management(property="info.git.mode", value="full");
+        java::_aspects.AllowBeanDefinitionOverriding;
+        java::_aspects.CommonsRequestLoggingFilter("DEBUG");
+        java::_aspects.AdminClientUrl("http://localhost:9000");
+    }
 
-	interface cityStaticDataHolder {
-		endpoints { java::_protocols.rest: "/cities"; }
+    interface cityStaticDataHolder {
+        endpoints { java::_protocols.rest: "/cities"; }
 
-		aspects { map::_aspects.StaticDataHolder; }
-	}
+        aspects { map::_aspects.StaticDataHolder; }
+    }
 
-	interface customerInformationHolder {
-		endpoints { java::_protocols.rest: "/customers"; }
+    interface customerInformationHolder {
+        endpoints { java::_protocols.rest: "/customers"; }
 
-		aspects {
-			map::_aspects.InformationHolderResource;
-			map::_aspects.MasterDataHolder;
-		}
-	}
+        aspects {
+            map::_aspects.InformationHolderResource;
+            map::_aspects.MasterDataHolder;
+        }
+    }
 
-	interface customerInformationHolderSOAPAdapter {
-		protocols { sync: java::_protocols.soap }
+    interface customerInformationHolderSOAPAdapter {
+        protocols { sync: java::_protocols.soap }
 
-		endpoints { java::_protocols.soap: "http://lm.com/ccore"; }
+        endpoints { java::_protocols.soap: "http://lm.com/ccore"; }
 
-		aspects {
-			map::_aspects.InformationHolderResource;
-			map::_aspects.MasterDataHolder;
-		}
-	}
+        aspects {
+            map::_aspects.InformationHolderResource;
+            map::_aspects.MasterDataHolder;
+        }
+    }
 
-	operation cityStaticDataHolder.getCitiesForPostalCode {
-		endpoints { java::_protocols.rest: "/{postalCode}"; }
+    operation cityStaticDataHolder.getCitiesForPostalCode {
+        endpoints { java::_protocols.rest: "/{postalCode}"; }
 
-		aspects { java::_aspects.GetMapping; }
+        aspects { java::_aspects.GetMapping; }
 
-		parameters {
-			primitive postalCode { aspects { java::_aspects.PathVariable; } }
-			complex cities : java::_types.ResponseEntity;
-		}
-	}
+        parameters {
+            primitive postalCode { aspects { java::_aspects.PathVariable; } }
+            complex cities : java::_types.ResponseEntity;
+        }
+    }
 
-	operation customerInformationHolder.changeAddress {
-		endpoints { java::_protocols.rest: "/{customerId}/address"; }
+    operation customerInformationHolder.changeAddress {
+        endpoints { java::_protocols.rest: "/{customerId}/address"; }
 
-		aspects { java::_aspects.PutMapping; }
+        aspects { java::_aspects.PutMapping; }
 
-		parameters {
-			complex customerId { aspects { java::_aspects.PathVariable; } }
-			complex requestDto { aspects { java::_aspects.Valid; java::_aspects.RequestBody; } }
-			complex responseDto : java::_types.ResponseEntity;
-			primitive customerNotFound { aspects { java::_aspects.ResponseStatus("NOT_FOUND"); } }
-		}
-	}
+        parameters {
+            complex customerId { aspects { java::_aspects.PathVariable; } }
+            complex requestDto { aspects { java::_aspects.Valid; java::_aspects.RequestBody; } }
+            complex responseDto : java::_types.ResponseEntity;
+            primitive customerNotFound { aspects { java::_aspects.ResponseStatus("NOT_FOUND"); } }
+        }
+    }
 
-	operation customerInformationHolder.getIncludedFields {
-		parameters { complex result : java::_types.Set; }
-	}
+    operation customerInformationHolder.getIncludedFields {
+        parameters { complex result : java::_types.Set; }
+    }
 
-	operation customerInformationHolder.getCustomer {
-		endpoints { java::_protocols.rest: "/{ids}"; }
+    operation customerInformationHolder.getCustomer {
+        endpoints { java::_protocols.rest: "/{ids}"; }
 
-		aspects {
-			java::_aspects.GetMapping;
-			map::_aspects.RequestBundle;
-			map::_aspects.WishList;
-		}
+        aspects {
+            java::_aspects.GetMapping;
+            map::_aspects.RequestBundle;
+            map::_aspects.WishList;
+        }
 
-		parameters {
-			primitive ids { aspects { java::_aspects.PathVariable; } }
-			primitive ^fields { aspects { java::_aspects.RequestParam(value="fields"); } }
-			complex customersResponseDto : java::_types.ResponseEntity;
-		}
-	}
+        parameters {
+            primitive ids { aspects { java::_aspects.PathVariable; } }
+            primitive ^fields { aspects { java::_aspects.RequestParam(value="fields"); } }
+            complex customersResponseDto : java::_types.ResponseEntity;
+        }
+    }
 
-	operation customerInformationHolder.updateCustomer {
-		endpoints { java::_protocols.rest: "/{customerId}"; }
+    operation customerInformationHolder.updateCustomer {
+        endpoints { java::_protocols.rest: "/{customerId}"; }
 
-		aspects { java::_aspects.PutMapping; }
+        aspects { java::_aspects.PutMapping; }
 
-		parameters {
-			complex customerId { aspects { java::_aspects.PathVariable; } }
-			complex requestDto { aspects { java::_aspects.Valid; java::_aspects.RequestBody; } }
-			complex customersResponseDto : java::_types.ResponseEntity {
-				aspects {
-					java::_aspects.Valid;
-				}
-			}
-			primitive customerToUpdateNotFound { aspects {
-				java::_aspects.ResponseStatus("NOT_FOUND");
-			} }
-		}
-	}
+        parameters {
+            complex customerId { aspects { java::_aspects.PathVariable; } }
+            complex requestDto { aspects { java::_aspects.Valid; java::_aspects.RequestBody; } }
+            complex customersResponseDto : java::_types.ResponseEntity {
+                aspects {
+                    java::_aspects.Valid;
+                }
+            }
+            primitive customerToUpdateNotFound { aspects {
+                java::_aspects.ResponseStatus("NOT_FOUND");
+            } }
+        }
+    }
 
-	operation customerInformationHolder.getCustomers {
-		aspects {
-			java::_aspects.GetMapping;
-			map::_aspects.Pagination;
-		}
+    operation customerInformationHolder.getCustomers {
+        aspects {
+            java::_aspects.GetMapping;
+            map::_aspects.Pagination;
+        }
 
-		parameters {
-			primitive filter { aspects { java::_aspects.RequestParam(value="filter"); } }
-			primitive limit { aspects {
-				java::_aspects.RequestParam(value="limit", defaultValue="10");
-			} }
-			primitive offset { aspects {
-				java::_aspects.RequestParam(value="offset", defaultValue="0");
-			} }
-			primitive ^fields { aspects { java::_aspects.RequestParam(value="fields"); } }
-			complex customersResponseDto : java::_types.ResponseEntity;
-		}
-	}
+        parameters {
+            primitive filter { aspects { java::_aspects.RequestParam(value="filter"); } }
+            primitive limit { aspects {
+                java::_aspects.RequestParam(value="limit", defaultValue="10");
+            } }
+            primitive offset { aspects {
+                java::_aspects.RequestParam(value="offset", defaultValue="0");
+            } }
+            primitive ^fields { aspects { java::_aspects.RequestParam(value="fields"); } }
+            complex customersResponseDto : java::_types.ResponseEntity;
+        }
+    }
 
-	operation customerInformationHolder.createCustomer {
-		aspects { java::_aspects.PostMapping; }
+    operation customerInformationHolder.createCustomer {
+        aspects { java::_aspects.PostMapping; }
 
-		parameters {
-			complex requestDto { aspects { java::_aspects.Valid; java::_aspects.RequestBody; } }
-			complex customersResponseDto : java::_types.ResponseEntity;
-		}
-	}
+        parameters {
+            complex requestDto { aspects { java::_aspects.Valid; java::_aspects.RequestBody; } }
+            complex customersResponseDto : java::_types.ResponseEntity;
+        }
+    }
 
-	operation customerInformationHolderSOAPAdapter.changeAddress {
-		parameters { complex requestDto { aspects { java::_aspects.Valid; } } }
-	}
+    operation customerInformationHolderSOAPAdapter.changeAddress {
+        parameters { complex requestDto { aspects { java::_aspects.Valid; } } }
+    }
 
-	operation customerInformationHolderSOAPAdapter.getIncludedFields {
-		parameters { complex result : java::_types.Set; }
-	}
+    operation customerInformationHolderSOAPAdapter.getIncludedFields {
+        parameters { complex result : java::_types.Set; }
+    }
 
-	operation customerInformationHolderSOAPAdapter.getCustomer {
-		endpoints { java::_protocols.soap: "http://lm.com/ccore/getCustomerRequest"; }
+    operation customerInformationHolderSOAPAdapter.getCustomer {
+        endpoints { java::_protocols.soap: "http://lm.com/ccore/getCustomerRequest"; }
 
-		aspects { java::_aspects.ResponsePayload; }
+        aspects { java::_aspects.ResponsePayload; }
 
-		parameters { complex request { aspects { java::_aspects.RequestPayload; } } }
-	}
+        parameters { complex request { aspects { java::_aspects.RequestPayload; } } }
+    }
 
-	operation customerInformationHolderSOAPAdapter.updateCustomer {
-		parameters { complex requestDto { aspects { java::_aspects.Valid; } } }
-	}
+    operation customerInformationHolderSOAPAdapter.updateCustomer {
+        parameters { complex requestDto { aspects { java::_aspects.Valid; } } }
+    }
 
-	operation customerInformationHolderSOAPAdapter.createCustomer {
-		parameters { complex requestDto { aspects { java::_aspects.Valid; } } }
-	}
+    operation customerInformationHolderSOAPAdapter.createCustomer {
+        parameters { complex requestDto { aspects { java::_aspects.Valid; } } }
+    }
 }

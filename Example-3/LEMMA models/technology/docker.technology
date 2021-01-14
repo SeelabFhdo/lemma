@@ -1,26 +1,26 @@
 technology docker {
-	deployment technologies {
-		Docker {
-			operation environments = "maven:3.6.1-jdk-8-alpine" default;
+    deployment technologies {
+        Docker {
+            operation environments = "maven:3.6.1-jdk-8-alpine" default;
 
-			service properties {
-				string apiKeyHeader <singleval>;
-				string apiKeyValidKey;
-				string apiKeyValue <singleval>;
-				string ComposePart<singleval>;
-				string Dockerfile<mandatory, singleval>;
-				int rateLimitPerMinute;
-			}
-		}
-	}
+            service properties {
+                string apiKeyHeader <singleval>;
+                string apiKeyValidKey;
+                string apiKeyValue <singleval>;
+                string ComposePart<singleval>;
+                string Dockerfile<mandatory, singleval>;
+                int rateLimitPerMinute;
+            }
+        }
+    }
 
-	operation aspects {
-		aspect ComposePart for infrastructure {
-			string content<mandatory>;
-		}
+    operation aspects {
+        aspect ComposePart for infrastructure {
+            string content<mandatory>;
+        }
 
-		aspect Dockerfile for infrastructure {
-			string content<mandatory>;
-		}
-	}
+        aspect Dockerfile for infrastructure {
+            string content<mandatory>;
+        }
+    }
 }

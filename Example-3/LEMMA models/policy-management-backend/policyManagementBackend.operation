@@ -6,49 +6,49 @@ import nodes from "../eureka-server/eurekaServer.operation" as eureka
 @technology(containerTechnology)
 @technology(protocolTechnology)
 container PolicyManagementContainer deployment technology containerTechnology::_deployment.Docker
-	deploys policyManagementBackendServices
-		::com.lakesidemutual.policymanagement.PolicyManagementBackend
-		depends on nodes eureka::ServiceDiscovery {
-	policyManagementBackendServices::com.lakesidemutual.policymanagement.PolicyManagementBackend {
-		Dockerfile('
-			# syntax=docker/dockerfile:experimental
-			FROM maven:3.6.1-jdk-8-alpine AS build
-			ARG BASE=/usr/src/app
-			COPY pom.xml ${BASE}/
-			COPY src ${BASE}/src
-			RUN --mount=type=cache,target=/root/.m2 mvn -f ${BASE}/pom.xml install -DskipTests
+    deploys policyManagementBackendServices
+        ::com.lakesidemutual.policymanagement.PolicyManagementBackend
+        depends on nodes eureka::ServiceDiscovery {
+    policyManagementBackendServices::com.lakesidemutual.policymanagement.PolicyManagementBackend {
+        Dockerfile('
+            # syntax=docker/dockerfile:experimental
+            FROM maven:3.6.1-jdk-8-alpine AS build
+            ARG BASE=/usr/src/app
+            COPY pom.xml ${BASE}/
+            COPY src ${BASE}/src
+            RUN --mount=type=cache,target=/root/.m2 mvn -f ${BASE}/pom.xml install -DskipTests
 
-			FROM openjdk:8-jdk-alpine
-			COPY --from=build /usr/src/app/target/dependency/BOOT-INF/lib/* /app/lib/
-			COPY --from=build /usr/src/app/target/dependency/META-INF /app/META-INF
-			COPY --from=build /usr/src/app/target/dependency/BOOT-INF/classes /app
+            FROM openjdk:8-jdk-alpine
+            COPY --from=build /usr/src/app/target/dependency/BOOT-INF/lib/* /app/lib/
+            COPY --from=build /usr/src/app/target/dependency/META-INF /app/META-INF
+            COPY --from=build /usr/src/app/target/dependency/BOOT-INF/classes /app
 
-			EXPOSE 8090
-			EXPOSE 61613
-			EXPOSE 61616
-			ENTRYPOINT ["java","-cp","app:app/lib/*","com.lakesidemutual.policymanagement.PolicyManagementApplication"]
-			')
+            EXPOSE 8090
+            EXPOSE 61613
+            EXPOSE 61616
+            ENTRYPOINT ["java","-cp","app:app/lib/*","com.lakesidemutual.policymanagement.PolicyManagementApplication"]
+            ')
 
-		ComposePart('
-			policy-management-backend:
-			    build: policy-management-backend
-			    image: lakesidemutual/policy-management-backend
-			    depends_on:
-			      - customer-core
-			    environment:
-			      - "EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka"
-			      - "SPRING_PROFILES_ACTIVE=eureka"
-			    ports:
-			      - "8090:8090"
-			      - "61613:61613"
-			      - "61616:61616"
-			    volumes:
-			      - "maven_repo:/root/.m2"
-			')
+        ComposePart('
+            policy-management-backend:
+                build: policy-management-backend
+                image: lakesidemutual/policy-management-backend
+                depends_on:
+                  - customer-core
+                environment:
+                  - "EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka"
+                  - "SPRING_PROFILES_ACTIVE=eureka"
+                ports:
+                  - "8090:8090"
+                  - "61613:61613"
+                  - "61616:61616"
+                volumes:
+                  - "maven_repo:/root/.m2"
+            ')
 
-		apiKeyHeader = "Authorization"
-		apiKeyValidKey = "999ab497f8ec1052"
+        apiKeyHeader = "Authorization"
+        apiKeyValidKey = "999ab497f8ec1052"
 
-		basic endpoints { protocolTechnology::_protocols.rest: "http://localhost:8090"; }
-	}
+        basic endpoints { protocolTechnology::_protocols.rest: "http://localhost:8090"; }
+    }
 }
