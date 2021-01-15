@@ -1,0 +1,2 @@
+javasphinx
+sphinxcontrib.bibtex

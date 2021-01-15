@@ -1,27 +1,17 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>1   Introduction &#8212; Intermediate Service Model Format Specification 1.0 documentation</title>
+    <meta charset="utf-8" />
+    <title>1 Introduction &#8212; Intermediate Service Model Format Specification 1.0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '1.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="Intermediate Service Model Format Specification" href="index.html" />
@@ -31,8 +21,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body>
+  </head><body>
   
 
     <div class="document">
@@ -43,121 +32,121 @@
           <div class="body" role="main">
             
   <div class="section" id="introduction">
-<span id="id1"></span><h1>1&nbsp;&nbsp;&nbsp;Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h1><span class="sectnum">1</span> Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
 <p>This document describes the Intermediate Service Model format of the
 <a class="reference external" href="https://github.com/SeelabFhdo/lemma">Language Ecosystem for Modeling Microservice Archictecture</a>. The project aims
 to facilitate the development of <em>microservice-based software systems</em>
-<a class="reference internal" href="#newman2015" id="id2">[New15]</a> by employing Model-driven Development (MDD)
-<a class="reference internal" href="#combemale2017" id="id3">[CFJezequel+17]</a>.</p>
+<span id="id2">[<a class="reference internal" href="#id18"><span>New15</span></a>]</span> by employing Model-driven Development (MDD)
+<span id="id3">[<a class="reference internal" href="#id19"><span>CFJezequel+17</span></a>]</span>.</p>
 <p>In this context, a microservice architecture consists of several different types
 of models, listed in <a class="reference internal" href="#tab-model-types"><span class="std std-numref">Table 1</span></a>.</p>
-<span id="tab-model-types"></span><table border="1" class="docutils" id="id17">
-<caption><span class="caption-number">Table 1 </span><span class="caption-text">Model types</span><a class="headerlink" href="#id17" title="Permalink to this table">¶</a></caption>
+<span id="tab-model-types"></span><table class="docutils align-default" id="id23">
+<caption><span class="caption-number">Table 1 </span><span class="caption-text">Model types</span><a class="headerlink" href="#id23" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="23%" />
-<col width="77%" />
+<col style="width: 23%" />
+<col style="width: 77%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><strong>Model Type</strong></td>
-<td><strong>Description</strong></td>
+<tbody>
+<tr class="row-odd"><td><p><strong>Model Type</strong></p></td>
+<td><p><strong>Description</strong></p></td>
 </tr>
-<tr class="row-even"><td>Domain Data Model</td>
-<td>A Domain Data Model describes the domain-specific data
+<tr class="row-even"><td><p>Domain Data Model</p></td>
+<td><p>A Domain Data Model describes the domain-specific data
 used by a modeled microservice to specify its
 input/output data. See also the
-<a class="reference external" href="../../../../de.fhdo.lemma.data.intermediate.metamodel/doc/build/html/index.html" title="(in Intermediate Data Model Format Specification v1.0)"><span class="xref std std-doc">Intermediate Data Model Format Specification</span></a>.</td>
+<span class="xref std std-doc">Intermediate Data Model Format Specification</span>.</p></td>
 </tr>
-<tr class="row-odd"><td>Mapping Model</td>
-<td>A Mapping Model allows for assigning (alternative)
+<tr class="row-odd"><td><p>Mapping Model</p></td>
+<td><p>A Mapping Model allows for assigning (alternative)
 technologies to, e.g., modeled microservices in a
-Service Model and complex types in a Data Model.</td>
+Service Model and complex types in a Data Model.</p></td>
 </tr>
-<tr class="row-even"><td>Service Model</td>
-<td>A Service Model contains several microservice models,
+<tr class="row-even"><td><p>Service Model</p></td>
+<td><p>A Service Model contains several microservice models,
 their interfaces, and operations. The contents of
 imported Domain Data Models, e.g., data structures, may
-be used to type operations’ parameters.</td>
+be used to type operations’ parameters.</p></td>
 </tr>
-<tr class="row-odd"><td>Operation Model</td>
-<td>An Operation Model expresses the deployment of
-microservices being imported from Service Models.</td>
+<tr class="row-odd"><td><p>Operation Model</p></td>
+<td><p>An Operation Model expresses the deployment of
+microservices being imported from Service Models.</p></td>
 </tr>
-<tr class="row-even"><td>Technology Model</td>
-<td>A Technology models encapsulates descriptions of
+<tr class="row-even"><td><p>Technology Model</p></td>
+<td><p>A Technology models encapsulates descriptions of
 technologies. For instance, certain implementation
 technologies, e.g., Java or Go, and protocol
 technologies, e.g., REST or AMQP, may be contained in a
 Technology Model. Moreover, service or operation
-<em>aspects</em> <a class="reference internal" href="#kiczales1997" id="id4">[KLM+97]</a> may be defined, which
+<em>aspects</em> <span id="id4">[<a class="reference internal" href="#id20"><span>KLM+97</span></a>]</span> may be defined, which
 enable to reify technology specifications in Mapping,
-Operation, or Service Models.</td>
+Operation, or Service Models.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="section" id="model-processing">
-<span id="modelprocessing"></span><h1>2&nbsp;&nbsp;&nbsp;Model Processing<a class="headerlink" href="#model-processing" title="Permalink to this headline">¶</a></h1>
-<p>The creation of the models happens within a bundle of Eclipse <a class="footnote-reference" href="#eclipse" id="id5">[1]</a>
-plugins that are based on Xcore <a class="footnote-reference" href="#xcore" id="id6">[2]</a> and Xtext <a class="footnote-reference" href="#xtext" id="id7">[3]</a>. These
-technologies build upon the Ecore metamodeling standard <a class="reference internal" href="#steinberg2011" id="id8">[SBPM11]</a>
-and the Eclipse Modeling Framework (EMF) <a class="footnote-reference" href="#emf" id="id9">[4]</a>.</p>
+<span id="modelprocessing"></span><h1><span class="sectnum">2</span> Model Processing<a class="headerlink" href="#model-processing" title="Permalink to this headline">¶</a></h1>
+<p>The creation of the models happens within a bundle of Eclipse <a class="footnote-reference brackets" href="#eclipse" id="id5">1</a>
+plugins that are based on Xcore <a class="footnote-reference brackets" href="#xcore" id="id6">2</a> and Xtext <a class="footnote-reference brackets" href="#xtext" id="id7">3</a>. These
+technologies build upon the Ecore metamodeling standard <span id="id8">[<a class="reference internal" href="#id21"><span>SBPM11</span></a>]</span>
+and the Eclipse Modeling Framework (EMF) <a class="footnote-reference brackets" href="#emf" id="id9">4</a>.</p>
 <p>However, to detach the processing of the models from the Eclipse ecosystem and
 allow microservice teams for creating custom model processors like validators
-and <em>code generators</em> <a class="reference internal" href="#combemale2017" id="id10">[CFJezequel+17]</a> that do not need to depend on EMF,
-the models are exported <a class="footnote-reference" href="#model-export" id="id11">[5]</a> from Eclipse to the technology-agnostic
-XML Metadata Interchange (XMI) format <a class="footnote-reference" href="#xmi" id="id12">[6]</a>.</p>
+and <em>code generators</em> <span id="id10">[<a class="reference internal" href="#id19"><span>CFJezequel+17</span></a>]</span> that do not need to depend on EMF,
+the models are exported <a class="footnote-reference brackets" href="#model-export" id="id11">5</a> from Eclipse to the technology-agnostic
+XML Metadata Interchange (XMI) format <a class="footnote-reference brackets" href="#xmi" id="id12">6</a>.</p>
 <p>XMI is based on XML and encodes a model instance, whose <em>metamodel</em>
-<a class="reference internal" href="#combemale2017" id="id13">[CFJezequel+17]</a> is based on the Meta Object Facility (MOF) <a class="footnote-reference" href="#mof" id="id14">[7]</a> which
+<span id="id13">[<a class="reference internal" href="#id19"><span>CFJezequel+17</span></a>]</span> is based on the Meta Object Facility (MOF) <a class="footnote-reference brackets" href="#mof" id="id14">7</a> which
 is generally the case for Ecore metamodels and derived model instances.</p>
 </div>
 <div class="section" id="format-specification">
-<h1>3&nbsp;&nbsp;&nbsp;Format Specification<a class="headerlink" href="#format-specification" title="Permalink to this headline">¶</a></h1>
+<h1><span class="sectnum">3</span> Format Specification<a class="headerlink" href="#format-specification" title="Permalink to this headline">¶</a></h1>
 <p>This document describes the metamodel and thus the structure of XMI files of
 Intermediate Service Models, i.e., instances of Service Models that were
-exported from Eclipse (cf. <a class="reference internal" href="#introduction"><span class="std std-ref">1&nbsp;&nbsp;&nbsp;Introduction</span></a> and <a class="reference internal" href="#modelprocessing"><span class="std std-ref">2&nbsp;&nbsp;&nbsp;Model Processing</span></a>). It
+exported from Eclipse (cf. <a class="reference internal" href="#introduction"><span class="std std-ref">1   Introduction</span></a> and <a class="reference internal" href="#modelprocessing"><span class="std std-ref">2   Model Processing</span></a>). It
 may be used as reference, when implementing custom model processors for
 microservice-related Service Models.</p>
 <p><a class="reference internal" href="#fig-metamodel"><span class="std std-numref">Fig. 1</span></a> shows the structure of the metamodel of the Intermediate
 Service Models in an object-oriented way in the form of a UML class diagram. The
 modeling concepts, their properties, and relationships are depicted as classes,
 attributes, and associations, respectively.</p>
-<div class="figure" id="id18">
+<div class="figure align-default" id="id24">
 <span id="fig-metamodel"></span><a class="reference external image-reference" href="_images/metamodel.png"><img alt="_images/metamodel.png" src="_images/metamodel.png" /></a>
-<p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">Metamodel of Intermediate Service Models</span></p>
+<p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">Metamodel of Intermediate Service Models</span><a class="headerlink" href="#id24" title="Permalink to this image">¶</a></p>
 </div>
 <p>In the following, the document contains a reference of each modeling concept of
 the metamodel depicted in <a class="reference internal" href="#fig-metamodel"><span class="std std-numref">Fig. 1</span></a>.</p>
 <div class="admonition hint">
-<p class="first admonition-title">Hint</p>
-<p>Attributes that may contain more than one value but exhibit a <code class="docutils literal"><span class="pre">*</span></code>
+<p class="admonition-title">Hint</p>
+<p>Attributes that may contain more than one value but exhibit a <code class="docutils literal notranslate"><span class="pre">*</span></code>
 multiplicity, i.e., they may contain an arbitrary number of values or even
-none at all (<code class="docutils literal"><span class="pre">*</span></code> is shorthand UML notation for <code class="docutils literal"><span class="pre">0..*</span></code>), are never null.</p>
+none at all (<code class="docutils literal notranslate"><span class="pre">*</span></code> is shorthand UML notation for <code class="docutils literal notranslate"><span class="pre">0..*</span></code>), are never null.</p>
 <p>In case no multiplicity is stated after the object type of an attribute, the
-attribute may be null. For example, an attribute defined as <code class="docutils literal"><span class="pre">String</span> <span class="pre">name</span></code>
-implicitly has a multiplicity <code class="docutils literal"><span class="pre">0..1</span></code> and in the zero-case the String may
+attribute may be null. For example, an attribute defined as <code class="docutils literal notranslate"><span class="pre">String</span> <span class="pre">name</span></code>
+implicitly has a multiplicity <code class="docutils literal notranslate"><span class="pre">0..1</span></code> and in the zero-case the String may
 be null.</p>
-<p class="last">However, in case the attribute’s type is a built-in primitive Java type,
-e.g. <code class="docutils literal"><span class="pre">int</span></code>, the attribute will never be null but exhibits the type’s
+<p>However, in case the attribute’s type is a built-in primitive Java type,
+e.g. <code class="docutils literal notranslate"><span class="pre">int</span></code>, the attribute will never be null but exhibits the type’s
 default value in case it did not receive an explicit value.</p>
 </div>
 <div class="section" id="model-root">
-<h2>3.1&nbsp;&nbsp;&nbsp;Model Root<a class="headerlink" href="#model-root" title="Permalink to this headline">¶</a></h2>
+<h2><span class="sectnum">3.1</span> Model Root<a class="headerlink" href="#model-root" title="Permalink to this headline">¶</a></h2>
 <dl class="type">
 <dt id="IntermediateServiceModel">
- class <code class="descname">IntermediateServiceModel</code><a class="headerlink" href="#IntermediateServiceModel" title="Permalink to this definition">¶</a></dt>
+ class <code class="sig-name descname">IntermediateServiceModel</code><a class="headerlink" href="#IntermediateServiceModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Root of the Intermediate Service Model instance.</p>
 <dl class="attribute">
 <dt>
-<code class="descname">String[1] sourceModelUri</code></dt>
+<code class="sig-name descname">String[1] sourceModelUri</code></dt>
 <dd><p><cite>“file”</cite> URI pointing to the source Service Model file from which
 this model was derived. Note that this might be an empty string, if the
-<a class="reference internal" href="#IntermediateMicroservice" title="IntermediateMicroservice"><code class="xref java java-type docutils literal"><span class="pre">IntermediateMicroservice</span></code></a> instances were derived from
+<a class="reference internal" href="#IntermediateMicroservice" title="IntermediateMicroservice"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateMicroservice</span></code></a> instances were derived from
 different Service Models. Model processors should then rely on the
 <a class="reference internal" href="#link-intermediatemicroservice-sourcemodeluri"><span class="std std-ref">eponymous attribute</span></a> in the
-<code class="docutils literal"><span class="pre">IntermediateMicroservice</span></code> concept.</p>
+<code class="docutils literal notranslate"><span class="pre">IntermediateMicroservice</span></code> concept.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Model processors must not depend on this URI being absolute or
+<p class="admonition-title">Note</p>
+<p>Model processors must not depend on this URI being absolute or
 relative. Both cases may occur in practice and are totally up to the
 modeler.</p>
 </div>
@@ -165,17 +154,17 @@ modeler.</p>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateImport[*] imports</code></dt>
-<dd><p>References to <a class="reference external" href="../../../../de.fhdo.lemma.data.intermediate.metamodel/doc/build/html/body.html#IntermediateDataModel" title="(in Intermediate Data Model Format Specification v1.0)"><code class="docutils literal"><span class="pre">IntermediateDataModel</span></code></a>, Technology
+<code class="sig-name descname">IntermediateImport[*] imports</code></dt>
+<dd><p>References to <code class="xref java java-type docutils literal notranslate"><span class="pre">data_model:IntermediateDataModel</span></code>, Technology
 Model (cf. <a class="reference internal" href="#tab-model-types"><span class="std std-numref">Table 1</span></a>), or Intermediate Service Model
 instances that were imported into the source Service Model
-(cf. <a class="reference external" href="../../../../de.fhdo.lemma.data.intermediate.metamodel/doc/build/html/body.html#IntermediateImport" title="(in Intermediate Data Model Format Specification v1.0)"><code class="docutils literal"><span class="pre">IntermediateImport</span></code></a>).</p>
+(cf. <code class="xref java java-type docutils literal notranslate"><span class="pre">data_model:IntermediateImport</span></code>).</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateMicroservice[1..*] microservices</code></dt>
-<dd><p>Modeled <a class="reference internal" href="#IntermediateMicroservice" title="IntermediateMicroservice"><code class="xref java java-type docutils literal"><span class="pre">microservices</span></code></a> in the
+<code class="sig-name descname">IntermediateMicroservice[1..*] microservices</code></dt>
+<dd><p>Modeled <a class="reference internal" href="#IntermediateMicroservice" title="IntermediateMicroservice"><code class="xref java java-type docutils literal notranslate"><span class="pre">microservices</span></code></a> in the
 source Service Model.</p>
 </dd></dl>
 
@@ -183,19 +172,19 @@ source Service Model.</p>
 
 </div>
 <div class="section" id="microservices">
-<h2>3.2&nbsp;&nbsp;&nbsp;Microservices<a class="headerlink" href="#microservices" title="Permalink to this headline">¶</a></h2>
+<h2><span class="sectnum">3.2</span> Microservices<a class="headerlink" href="#microservices" title="Permalink to this headline">¶</a></h2>
 <dl class="type">
 <dt id="IntermediateMicroservice">
- class <code class="descname">IntermediateMicroservice</code><a class="headerlink" href="#IntermediateMicroservice" title="Permalink to this definition">¶</a></dt>
+ class <code class="sig-name descname">IntermediateMicroservice</code><a class="headerlink" href="#IntermediateMicroservice" title="Permalink to this definition">¶</a></dt>
 <dd><p>A modeled microservice.</p>
 <span class="target" id="link-intermediatemicroservice-sourcemodeluri"></span><dl class="attribute">
 <dt>
-<code class="descname">String[1] sourceModelUri</code></dt>
+<code class="sig-name descname">String[1] sourceModelUri</code></dt>
 <dd><p><cite>“file”</cite> URI pointing to the source Service Model file from which
 this microservice originates.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Model processors must not depend on this URI being absolute or
+<p class="admonition-title">Note</p>
+<p>Model processors must not depend on this URI being absolute or
 relative. Both cases may occur in practice and are totally up to the
 modeler.</p>
 </div>
@@ -203,52 +192,52 @@ modeler.</p>
 
 <span class="target" id="link-intermediatemicroservice-name"></span><dl class="attribute">
 <dt>
-<code class="descname">String[1] name</code></dt>
+<code class="sig-name descname">String[1] name</code></dt>
 <dd><p>Unique name of the service.</p>
 </dd></dl>
 
 <span class="target" id="link-intermediatemicroservice-version"></span><dl class="attribute">
 <dt>
-<code class="descname">String version</code></dt>
+<code class="sig-name descname">String version</code></dt>
 <dd><p>Optional version of the service.</p>
 </dd></dl>
 
 <span class="target" id="link-intermediatemicroservice-qualifiedname"></span><dl class="attribute">
 <dt>
-<code class="descname">String[1] qualifiedName</code></dt>
+<code class="sig-name descname">String[1] qualifiedName</code></dt>
 <dd><p>Qualified name of the service. This is the service’s name prefixed by
 its version, if any. Both name fragments are separated by dots.</p>
 </dd></dl>
 
 <span class="target" id="link-intermediatemicroservice-type"></span><dl class="attribute">
 <dt>
-<code class="descname">String[1] type</code></dt>
+<code class="sig-name descname">String[1] type</code></dt>
 <dd><p>Type of the microservice. The following values are possible:</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="32%" />
-<col width="68%" />
+<col style="width: 32%" />
+<col style="width: 68%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><strong>Type</strong></td>
-<td><strong>Description</strong></td>
+<tbody>
+<tr class="row-odd"><td><p><strong>Type</strong></p></td>
+<td><p><strong>Description</strong></p></td>
 </tr>
-<tr class="row-even"><td>FUNCTIONAL</td>
-<td>A functional microservice realizes the business
+<tr class="row-even"><td><p>FUNCTIONAL</p></td>
+<td><p>A functional microservice realizes the business
 functions of the microservice-based software
-system.</td>
+system.</p></td>
 </tr>
-<tr class="row-odd"><td>INFRASTRUCTURE</td>
-<td>Infrastructure microservices provide the
+<tr class="row-odd"><td><p>INFRASTRUCTURE</p></td>
+<td><p>Infrastructure microservices provide the
 architecture with capabilities that are not
 related to business but technical functions.
 Examples of such functions comprise database
-lookups or integration of legacy systems.</td>
+lookups or integration of legacy systems.</p></td>
 </tr>
-<tr class="row-even"><td>UTILITY</td>
-<td>Teams may realize utility microservices to
+<tr class="row-even"><td><p>UTILITY</p></td>
+<td><p>Teams may realize utility microservices to
 implement reusable, business-related helper
-functions, e.g., for currency conversion.</td>
+functions, e.g., for currency conversion.</p></td>
 </tr>
 </tbody>
 </table>
@@ -256,30 +245,30 @@ functions, e.g., for currency conversion.</td>
 
 <span class="target" id="link-intermediatemicroservice-visibility"></span><dl class="attribute">
 <dt>
-<code class="descname">String[1] visibility</code></dt>
+<code class="sig-name descname">String[1] visibility</code></dt>
 <dd><p>Visibility of the microservice. The following values are possible:</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="32%" />
-<col width="68%" />
+<col style="width: 32%" />
+<col style="width: 68%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><strong>Visibility</strong></td>
-<td><strong>Description</strong></td>
+<tbody>
+<tr class="row-odd"><td><p><strong>Visibility</strong></p></td>
+<td><p><strong>Description</strong></p></td>
 </tr>
-<tr class="row-even"><td>INTERNAL</td>
-<td>Service must only be visible to the services of
-the same team.</td>
+<tr class="row-even"><td><p>INTERNAL</p></td>
+<td><p>Service must only be visible to the services of
+the same team.</p></td>
 </tr>
-<tr class="row-odd"><td>ARCHITECTURE</td>
-<td>Service must only be visible to the services of
+<tr class="row-odd"><td><p>ARCHITECTURE</p></td>
+<td><p>Service must only be visible to the services of
 the same architecture, but not to external
-consumers.</td>
+consumers.</p></td>
 </tr>
-<tr class="row-even"><td>PUBLIC</td>
-<td>Service must be visible to all services of the
+<tr class="row-even"><td><p>PUBLIC</p></td>
+<td><p>Service must be visible to all services of the
 same architecture and also to external
-consumers.</td>
+consumers.</p></td>
 </tr>
 </tbody>
 </table>
@@ -287,31 +276,31 @@ consumers.</td>
 
 <span class="target" id="link-intermediatemicroservice-effectivelyimplemented"></span><dl class="attribute">
 <dt>
-<code class="descname">boolean effectivelyImplemented</code></dt>
+<code class="sig-name descname">boolean effectivelyImplemented</code></dt>
 <dd><p>Flag to indicate if the microservice has at least one
-<a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal"><span class="pre">IntermediateOperation</span></code></a> that is not marked as being not
+<a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateOperation</span></code></a> that is not marked as being not
 not implemented (either directly or transitively via its encapsulating
-<a class="reference internal" href="#IntermediateInterface" title="IntermediateInterface"><code class="xref java java-type docutils literal"><span class="pre">IntermediateInterface</span></code></a>.</p>
+<a class="reference internal" href="#IntermediateInterface" title="IntermediateInterface"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateInterface</span></code></a>.</p>
 <div class="admonition hint">
-<p class="first admonition-title">Hint</p>
-<p class="last">Code generators should consider to also generate code for not (yet)
+<p class="admonition-title">Hint</p>
+<p>Code generators should consider to also generate code for not (yet)
 implemented microservices and, e.g., return failures to callers.</p>
 </div>
 </dd></dl>
 
 <span class="target" id="link-intermediatemicroservice-technologies"></span><dl class="attribute">
 <dt>
-<code class="descname">IntermediateTechnology[*] technologies</code></dt>
-<dd><p><code class="xref java java-type docutils literal"><span class="pre">Technologies</span></code> assigned to the
+<code class="sig-name descname">IntermediateTechnology[*] technologies</code></dt>
+<dd><p><code class="xref java java-type docutils literal notranslate"><span class="pre">Technologies</span></code> assigned to the
 microservice.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">In case, no technologies are specified for a microservice, code
+<p class="admonition-title">Note</p>
+<p>In case, no technologies are specified for a microservice, code
 generators are free to generate code for the microservice or not.</p>
 </div>
 <div class="admonition hint">
-<p class="first admonition-title">Hint</p>
-<p class="last">There can only be one technology that defines default primitive
+<p class="admonition-title">Hint</p>
+<p>There can only be one technology that defines default primitive
 types. Moreover, it is guaranteed that default protocol/data format
 combinations are unambiguous. For instance, there can only be one
 default synchronous protocol across all referenced technologies.</p>
@@ -320,16 +309,16 @@ default synchronous protocol across all referenced technologies.</p>
 
 <span class="target" id="link-intermediatemicroservice-endpoints"></span><dl class="attribute">
 <dt>
-<code class="descname">IntermediateEndpoint[*] endpoints</code></dt>
-<dd><p><a class="reference internal" href="#IntermediateEndpoint" title="IntermediateEndpoint"><code class="xref java java-type docutils literal"><span class="pre">Endpoints</span></code></a> assigned to the
+<code class="sig-name descname">IntermediateEndpoint[*] endpoints</code></dt>
+<dd><p><a class="reference internal" href="#IntermediateEndpoint" title="IntermediateEndpoint"><code class="xref java java-type docutils literal notranslate"><span class="pre">Endpoints</span></code></a> assigned to the
 microservice.</p>
 <div class="admonition hint">
-<p class="first admonition-title">Hint</p>
+<p class="admonition-title">Hint</p>
 <p>If no endpoints were specified for the microservice’s (default)
 <a class="reference internal" href="#link-intermediatemicroservice-protocols"><span class="std std-ref">protocol specifications</span></a>, the
 <a class="reference internal" href="#link-intermediateendpoint-addresses"><span class="std std-ref">addresses</span></a> attribute of
-the <a class="reference internal" href="#IntermediateEndpoint" title="IntermediateEndpoint"><code class="xref java java-type docutils literal"><span class="pre">IntermediateEndpoint</span></code></a> class will be empty.</p>
-<p class="last">If no endpoints were specified or could be determined from (default)
+the <a class="reference internal" href="#IntermediateEndpoint" title="IntermediateEndpoint"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateEndpoint</span></code></a> class will be empty.</p>
+<p>If no endpoints were specified or could be determined from (default)
 <a class="reference internal" href="#link-intermediatemicroservice-protocols"><span class="std std-ref">protocol specifications</span></a>, or in case the
 <a class="reference internal" href="#link-intermediateendpoint-addresses"><span class="std std-ref">addresses</span></a> attribute
 is empty, code generators should produce sensible defaults, e.g.,
@@ -339,13 +328,13 @@ from the microservice’s name.</p>
 
 <span class="target" id="link-intermediatemicroservice-protocols"></span><dl class="attribute">
 <dt>
-<code class="descname">IntermediateProtocolSpecification[0..2] protocols</code></dt>
-<dd><p><a class="reference internal" href="#IntermediateProtocolSpecification" title="IntermediateProtocolSpecification"><code class="xref java java-type docutils literal"><span class="pre">Protocol</span> <span class="pre">specifications</span></code></a>
+<code class="sig-name descname">IntermediateProtocolSpecification[0..2] protocols</code></dt>
+<dd><p><a class="reference internal" href="#IntermediateProtocolSpecification" title="IntermediateProtocolSpecification"><code class="xref java java-type docutils literal notranslate"><span class="pre">Protocol</span> <span class="pre">specifications</span></code></a>
 assigned to the microservice. There might be exactly one protocol
 specification per communication type.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">In case the microservice had no protocols assigned in the source
+<p class="admonition-title">Note</p>
+<p>In case the microservice had no protocols assigned in the source
 Service Model, the default protocols of the missing communication
 types are taken from the assigned
 <a class="reference internal" href="#link-intermediatemicroservice-technologies"><span class="std std-ref">technologies</span></a>.
@@ -353,8 +342,8 @@ That is, the attribute is only empty if the microservice had no
 protocol-defining technology assigned.</p>
 </div>
 <div class="admonition hint">
-<p class="first admonition-title">Hint</p>
-<p class="last">If no protocol specifications are assigned to the service, code
+<p class="admonition-title">Hint</p>
+<p>If no protocol specifications are assigned to the service, code
 generators should produce sensible defaults, e.g., from the
 microservice’s name.</p>
 </div>
@@ -362,57 +351,57 @@ microservice’s name.</p>
 
 <span class="target" id="link-intermediatemicroservice-requiredmicroservices"></span><dl class="attribute">
 <dt>
-<code class="descname">MicroserviceReference[*] requiredMicroservices</code></dt>
-<dd><p><a class="reference internal" href="#MicroserviceReference" title="MicroserviceReference"><code class="xref java java-type docutils literal"><span class="pre">References</span></code></a> to required
+<code class="sig-name descname">MicroserviceReference[*] requiredMicroservices</code></dt>
+<dd><p><a class="reference internal" href="#MicroserviceReference" title="MicroserviceReference"><code class="xref java java-type docutils literal notranslate"><span class="pre">References</span></code></a> to required
 microservices.</p>
 </dd></dl>
 
 <span class="target" id="link-intermediatemicroservice-requiredinterfaces"></span><dl class="attribute">
 <dt>
-<code class="descname">InterfaceReference[*] requiredInterfaces</code></dt>
-<dd><p><a class="reference internal" href="#InterfaceReference" title="InterfaceReference"><code class="xref java java-type docutils literal"><span class="pre">References</span></code></a> to required interfaces.</p>
+<code class="sig-name descname">InterfaceReference[*] requiredInterfaces</code></dt>
+<dd><p><a class="reference internal" href="#InterfaceReference" title="InterfaceReference"><code class="xref java java-type docutils literal notranslate"><span class="pre">References</span></code></a> to required interfaces.</p>
 </dd></dl>
 
 <span class="target" id="link-intermediatemicroservice-requiredoperations"></span><dl class="attribute">
 <dt>
-<code class="descname">OperationReference[*] requiredOperations</code></dt>
-<dd><p><a class="reference internal" href="#OperationReference" title="OperationReference"><code class="xref java java-type docutils literal"><span class="pre">References</span></code></a> to required operations.</p>
+<code class="sig-name descname">OperationReference[*] requiredOperations</code></dt>
+<dd><p><a class="reference internal" href="#OperationReference" title="OperationReference"><code class="xref java java-type docutils literal notranslate"><span class="pre">References</span></code></a> to required operations.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateImportedAspect[*] aspects</code></dt>
-<dd><p><a class="reference external" href="../../../../de.fhdo.lemma.data.intermediate.metamodel/doc/build/html/body.html#IntermediateImportedAspect" title="(in Intermediate Data Model Format Specification v1.0)"><code class="xref java java-type docutils literal"><span class="pre">Aspects</span></code></a> of the microservice.</p>
+<code class="sig-name descname">IntermediateImportedAspect[*] aspects</code></dt>
+<dd><p><code class="xref java java-type docutils literal notranslate"><span class="pre">Aspects</span></code> of the microservice.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateServiceModel serviceModel</code></dt>
-<dd><p>Link to the containing <a class="reference internal" href="#IntermediateServiceModel" title="IntermediateServiceModel"><code class="xref java java-type docutils literal"><span class="pre">IntermediateServiceModel</span></code></a> instance.</p>
+<code class="sig-name descname">IntermediateServiceModel serviceModel</code></dt>
+<dd><p>Link to the containing <a class="reference internal" href="#IntermediateServiceModel" title="IntermediateServiceModel"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateServiceModel</span></code></a> instance.</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="type">
 <dt id="IntermediateInterface">
- class <code class="descname">IntermediateInterface</code><a class="headerlink" href="#IntermediateInterface" title="Permalink to this definition">¶</a></dt>
+ class <code class="sig-name descname">IntermediateInterface</code><a class="headerlink" href="#IntermediateInterface" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class represents an interface of an
-<a class="reference internal" href="#IntermediateMicroservice" title="IntermediateMicroservice"><code class="xref java java-type docutils literal"><span class="pre">IntermediateMicroservice</span></code></a>.</p>
+<a class="reference internal" href="#IntermediateMicroservice" title="IntermediateMicroservice"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateMicroservice</span></code></a>.</p>
 <span class="target" id="link-intermediateinterface-name"></span><dl class="attribute">
 <dt>
-<code class="descname">String[1] name</code></dt>
+<code class="sig-name descname">String[1] name</code></dt>
 <dd><p>Name of the interface.</p>
 </dd></dl>
 
 <span class="target" id="link-intermediateinterface-version"></span><dl class="attribute">
 <dt>
-<code class="descname">String version</code></dt>
+<code class="sig-name descname">String version</code></dt>
 <dd><p>Optional version of the interface.</p>
 </dd></dl>
 
 <span class="target" id="link-intermediateinterface-qualifiedname"></span><dl class="attribute">
 <dt>
-<code class="descname">String[1] qualifiedName</code></dt>
+<code class="sig-name descname">String[1] qualifiedName</code></dt>
 <dd><p>Qualified name of the interface. This is the interface’s name prefixed
 by its version and its microservice’s
 <a class="reference internal" href="#link-intermediatemicroservice-qualifiedname"><span class="std std-ref">qualified name</span></a>.
@@ -421,34 +410,34 @@ All name fragments are separated by dots.</p>
 
 <dl class="attribute">
 <dt>
-<code class="descname">String[1] visibility</code></dt>
+<code class="sig-name descname">String[1] visibility</code></dt>
 <dd><p>Visibility of the interface. The following values are possible:</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="32%" />
-<col width="68%" />
+<col style="width: 32%" />
+<col style="width: 68%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><strong>Visibility</strong></td>
-<td><strong>Description</strong></td>
+<tbody>
+<tr class="row-odd"><td><p><strong>Visibility</strong></p></td>
+<td><p><strong>Description</strong></p></td>
 </tr>
-<tr class="row-even"><td>INTERNAL</td>
-<td>Interface must only be visible to the services
-of the same team.</td>
+<tr class="row-even"><td><p>INTERNAL</p></td>
+<td><p>Interface must only be visible to the services
+of the same team.</p></td>
 </tr>
-<tr class="row-odd"><td>IN_MODEL</td>
-<td>Interface must only be visible to the services
-within the same service model file.</td>
+<tr class="row-odd"><td><p>IN_MODEL</p></td>
+<td><p>Interface must only be visible to the services
+within the same service model file.</p></td>
 </tr>
-<tr class="row-even"><td>ARCHITECTURE</td>
-<td>Interface must only be visible to the services
+<tr class="row-even"><td><p>ARCHITECTURE</p></td>
+<td><p>Interface must only be visible to the services
 of the same architecture, but not to external
-consumers.</td>
+consumers.</p></td>
 </tr>
-<tr class="row-odd"><td>PUBLIC</td>
-<td>Interface must be visible to all services of
+<tr class="row-odd"><td><p>PUBLIC</p></td>
+<td><p>Interface must be visible to all services of
 the same architecture and also to external
-consumers.</td>
+consumers.</p></td>
 </tr>
 </tbody>
 </table>
@@ -456,50 +445,50 @@ consumers.</td>
 
 <span class="target" id="link-intermediateinterface-notimplemented"></span><dl class="attribute">
 <dt>
-<code class="descname">boolean notImplemented</code></dt>
+<code class="sig-name descname">boolean notImplemented</code></dt>
 <dd><p>Flag to indicate if the interface was marked as being not implemented.</p>
 <div class="admonition hint">
-<p class="first admonition-title">Hint</p>
-<p class="last">Code generators should consider to also generate code for not (yet)
+<p class="admonition-title">Hint</p>
+<p>Code generators should consider to also generate code for not (yet)
 implemented interfaces and, e.g., return failures to callers.</p>
 </div>
 </dd></dl>
 
 <span class="target" id="link-intermediateinterface-hasimplementedoperations"></span><dl class="attribute">
 <dt>
-<code class="descname">boolean hasImplementedOperations</code></dt>
+<code class="sig-name descname">boolean hasImplementedOperations</code></dt>
 <dd><p>Flag to indicate if the interface has at least one
-<a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal"><span class="pre">operation</span></code></a> whose
+<a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal notranslate"><span class="pre">operation</span></code></a> whose
 <a class="reference internal" href="#link-intermediateoperation-notimplemented"><span class="std std-ref">notImplemented</span></a>
-attribute is <code class="docutils literal"><span class="pre">false</span></code>.</p>
+attribute is <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
 <div class="admonition hint">
-<p class="first admonition-title">Hint</p>
-<p class="last">Code generators should consider to also generate code for interfaces
+<p class="admonition-title">Hint</p>
+<p>Code generators should consider to also generate code for interfaces
 whose operations are not (yet) implemented and, e.g., return
 failures to callers.</p>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The
+<p class="admonition-title">Note</p>
+<p>The
 <a class="reference internal" href="#link-intermediateinterface-notimplemented"><span class="std std-ref">notImplemented</span></a>
 and <a class="reference internal" href="#link-intermediateinterface-hasimplementedoperations"><span class="std std-ref">hasImplementedOperations</span></a> are
 independent of each other. The first is set by the modeler, while
 the second is derived from the corresponding flags of the
-interface’s <a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal"><span class="pre">operations</span></code></a>.</p>
+interface’s <a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal notranslate"><span class="pre">operations</span></code></a>.</p>
 </div>
 </dd></dl>
 
 <span class="target" id="link-intermediateinterface-endpoints"></span><dl class="attribute">
 <dt>
-<code class="descname">IntermediateEndpoint[*] endpoints</code></dt>
-<dd><p><a class="reference internal" href="#IntermediateEndpoint" title="IntermediateEndpoint"><code class="xref java java-type docutils literal"><span class="pre">Endpoints</span></code></a> assigned to the interface.</p>
+<code class="sig-name descname">IntermediateEndpoint[*] endpoints</code></dt>
+<dd><p><a class="reference internal" href="#IntermediateEndpoint" title="IntermediateEndpoint"><code class="xref java java-type docutils literal notranslate"><span class="pre">Endpoints</span></code></a> assigned to the interface.</p>
 <div class="admonition hint">
-<p class="first admonition-title">Hint</p>
+<p class="admonition-title">Hint</p>
 <p>If no endpoints were specified for the interface’s (default)
 <a class="reference internal" href="#link-intermediateinterface-protocols"><span class="std std-ref">protocol specifications</span></a>, the
 <a class="reference internal" href="#link-intermediateendpoint-addresses"><span class="std std-ref">addresses</span></a> attribute of
-the <a class="reference internal" href="#IntermediateEndpoint" title="IntermediateEndpoint"><code class="xref java java-type docutils literal"><span class="pre">IntermediateEndpoint</span></code></a> class will be empty.</p>
-<p class="last">If no endpoints were specified or could be determined from (default)
+the <a class="reference internal" href="#IntermediateEndpoint" title="IntermediateEndpoint"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateEndpoint</span></code></a> class will be empty.</p>
+<p>If no endpoints were specified or could be determined from (default)
 <a class="reference internal" href="#link-intermediateinterface-protocols"><span class="std std-ref">protocol specifications</span></a>, or in case the
 <a class="reference internal" href="#link-intermediateendpoint-addresses"><span class="std std-ref">addresses</span></a> attribute
 is empty, code generators should produce sensible defaults, e.g.,
@@ -509,16 +498,16 @@ from the interface’s name.</p>
 
 <span class="target" id="link-intermediateinterface-protocols"></span><dl class="attribute">
 <dt>
-<code class="descname">IntermediateProtocolSpecification[0..2] protocols</code></dt>
-<dd><p><a class="reference internal" href="#IntermediateProtocolSpecification" title="IntermediateProtocolSpecification"><code class="xref java java-type docutils literal"><span class="pre">Protocol</span> <span class="pre">specifications</span></code></a>
+<code class="sig-name descname">IntermediateProtocolSpecification[0..2] protocols</code></dt>
+<dd><p><a class="reference internal" href="#IntermediateProtocolSpecification" title="IntermediateProtocolSpecification"><code class="xref java java-type docutils literal notranslate"><span class="pre">Protocol</span> <span class="pre">specifications</span></code></a>
 assigned to the interface. There might be exactly one protocol
 specification per communication type.</p>
 <div class="admonition hint">
-<p class="first admonition-title">Hint</p>
+<p class="admonition-title">Hint</p>
 <p>If no protocol specifications were explicitly assigned to the
 interface, it “inherits” the specifications of its
 <a class="reference internal" href="#link-intermediatemicroservice-protocols"><span class="std std-ref">microservice</span></a>.</p>
-<p class="last">If the service also exhibited no protocol specifications and thus
+<p>If the service also exhibited no protocol specifications and thus
 the interface does neither, code generators should produce sensible
 defaults, e.g., from the interface’s name.</p>
 </div>
@@ -526,50 +515,50 @@ defaults, e.g., from the interface’s name.</p>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateOperation[*] operations</code></dt>
-<dd><p><a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal"><span class="pre">Operations</span></code></a> of the interface.</p>
+<code class="sig-name descname">IntermediateOperation[*] operations</code></dt>
+<dd><p><a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal notranslate"><span class="pre">Operations</span></code></a> of the interface.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateReferredOperation[*] referredOperations</code></dt>
-<dd><p><a class="reference internal" href="#IntermediateReferredOperation" title="IntermediateReferredOperation"><code class="xref java java-type docutils literal"><span class="pre">Referred</span> <span class="pre">Operations</span></code></a> of the
+<code class="sig-name descname">IntermediateReferredOperation[*] referredOperations</code></dt>
+<dd><p><a class="reference internal" href="#IntermediateReferredOperation" title="IntermediateReferredOperation"><code class="xref java java-type docutils literal notranslate"><span class="pre">Referred</span> <span class="pre">Operations</span></code></a> of the
 interface.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">An interface defines at least one operation or refers to an existing
-operation, i.e., at least one of the <code class="docutils literal"><span class="pre">operations</span></code> and
-<code class="docutils literal"><span class="pre">referredOperations</span></code> is not empty.</p>
+<p class="admonition-title">Note</p>
+<p>An interface defines at least one operation or refers to an existing
+operation, i.e., at least one of the <code class="docutils literal notranslate"><span class="pre">operations</span></code> and
+<code class="docutils literal notranslate"><span class="pre">referredOperations</span></code> is not empty.</p>
 </div>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateImportedAspect[*] aspects</code></dt>
-<dd><p><a class="reference external" href="../../../../de.fhdo.lemma.data.intermediate.metamodel/doc/build/html/body.html#IntermediateImportedAspect" title="(in Intermediate Data Model Format Specification v1.0)"><code class="xref java java-type docutils literal"><span class="pre">Aspects</span></code></a> of the interface.</p>
+<code class="sig-name descname">IntermediateImportedAspect[*] aspects</code></dt>
+<dd><p><code class="xref java java-type docutils literal notranslate"><span class="pre">Aspects</span></code> of the interface.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateMicroservice microservice</code></dt>
-<dd><p>Link to the containing <a class="reference internal" href="#IntermediateMicroservice" title="IntermediateMicroservice"><code class="xref java java-type docutils literal"><span class="pre">IntermediateMicroservice</span></code></a> instance.</p>
+<code class="sig-name descname">IntermediateMicroservice microservice</code></dt>
+<dd><p>Link to the containing <a class="reference internal" href="#IntermediateMicroservice" title="IntermediateMicroservice"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateMicroservice</span></code></a> instance.</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="type">
 <dt id="IntermediateOperation">
- class <code class="descname">IntermediateOperation</code><a class="headerlink" href="#IntermediateOperation" title="Permalink to this definition">¶</a></dt>
-<dd><p>This class represents an operation of an <a class="reference internal" href="#IntermediateInterface" title="IntermediateInterface"><code class="xref java java-type docutils literal"><span class="pre">IntermediateInterface</span></code></a>.</p>
+ class <code class="sig-name descname">IntermediateOperation</code><a class="headerlink" href="#IntermediateOperation" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class represents an operation of an <a class="reference internal" href="#IntermediateInterface" title="IntermediateInterface"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateInterface</span></code></a>.</p>
 <span class="target" id="link-intermediateoperation-name"></span><dl class="attribute">
 <dt>
-<code class="descname">String[1] name</code></dt>
+<code class="sig-name descname">String[1] name</code></dt>
 <dd><p>Name of the operation.</p>
 </dd></dl>
 
 <span class="target" id="link-intermediateoperation-qualifiedname"></span><dl class="attribute">
 <dt>
-<code class="descname">String[1] qualifiedName</code></dt>
+<code class="sig-name descname">String[1] qualifiedName</code></dt>
 <dd><p>Qualified name of the operation. This is the operation’s name prefixed
 by its interface’s
 <a class="reference internal" href="#link-intermediateinterface-qualifiedname"><span class="std std-ref">qualified name</span></a>.
@@ -578,34 +567,34 @@ Both name fragments are separated by dots.</p>
 
 <dl class="attribute">
 <dt>
-<code class="descname">String[1] visibility</code></dt>
+<code class="sig-name descname">String[1] visibility</code></dt>
 <dd><p>Visibility of the operation. The following values are possible:</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="32%" />
-<col width="68%" />
+<col style="width: 32%" />
+<col style="width: 68%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><strong>Visibility</strong></td>
-<td><strong>Description</strong></td>
+<tbody>
+<tr class="row-odd"><td><p><strong>Visibility</strong></p></td>
+<td><p><strong>Description</strong></p></td>
 </tr>
-<tr class="row-even"><td>INTERNAL</td>
-<td>Operation must only be visible to the services
-of the same team.</td>
+<tr class="row-even"><td><p>INTERNAL</p></td>
+<td><p>Operation must only be visible to the services
+of the same team.</p></td>
 </tr>
-<tr class="row-odd"><td>IN_MODEL</td>
-<td>Operation must only be visible to the services
-within the same service model file.</td>
+<tr class="row-odd"><td><p>IN_MODEL</p></td>
+<td><p>Operation must only be visible to the services
+within the same service model file.</p></td>
 </tr>
-<tr class="row-even"><td>ARCHITECTURE</td>
-<td>Operation must only be visible to the services
+<tr class="row-even"><td><p>ARCHITECTURE</p></td>
+<td><p>Operation must only be visible to the services
 of the same architecture, but not to external
-consumers.</td>
+consumers.</p></td>
 </tr>
-<tr class="row-odd"><td>PUBLIC</td>
-<td>Operation must be visible to all services of
+<tr class="row-odd"><td><p>PUBLIC</p></td>
+<td><p>Operation must be visible to all services of
 the same architecture and also to external
-consumers.</td>
+consumers.</p></td>
 </tr>
 </tbody>
 </table>
@@ -613,26 +602,26 @@ consumers.</td>
 
 <span class="target" id="link-intermediateoperation-notimplemented"></span><dl class="attribute">
 <dt>
-<code class="descname">boolean notImplemented</code></dt>
+<code class="sig-name descname">boolean notImplemented</code></dt>
 <dd><p>Flag to indicate if the operation was marked as being not implemented.</p>
 <div class="admonition hint">
-<p class="first admonition-title">Hint</p>
-<p class="last">Code generators should consider to also generate code for not (yet)
+<p class="admonition-title">Hint</p>
+<p>Code generators should consider to also generate code for not (yet)
 implemented operation and, e.g., return failures to callers.</p>
 </div>
 </dd></dl>
 
 <span class="target" id="link-intermediateoperation-endpoints"></span><dl class="attribute">
 <dt>
-<code class="descname">IntermediateEndpoint[*] endpoints</code></dt>
-<dd><p><a class="reference internal" href="#IntermediateEndpoint" title="IntermediateEndpoint"><code class="xref java java-type docutils literal"><span class="pre">Endpoints</span></code></a> assigned to the operation.</p>
+<code class="sig-name descname">IntermediateEndpoint[*] endpoints</code></dt>
+<dd><p><a class="reference internal" href="#IntermediateEndpoint" title="IntermediateEndpoint"><code class="xref java java-type docutils literal notranslate"><span class="pre">Endpoints</span></code></a> assigned to the operation.</p>
 <div class="admonition hint">
-<p class="first admonition-title">Hint</p>
+<p class="admonition-title">Hint</p>
 <p>If no endpoints were specified for the operation’s (default)
 <a class="reference internal" href="#link-intermediateoperation-protocols"><span class="std std-ref">protocol specifications</span></a>, the
 <a class="reference internal" href="#link-intermediateendpoint-addresses"><span class="std std-ref">addresses</span></a> attribute of
-the <a class="reference internal" href="#IntermediateEndpoint" title="IntermediateEndpoint"><code class="xref java java-type docutils literal"><span class="pre">IntermediateEndpoint</span></code></a> class will be empty.</p>
-<p class="last">If no endpoints were specified or could be determined from (default)
+the <a class="reference internal" href="#IntermediateEndpoint" title="IntermediateEndpoint"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateEndpoint</span></code></a> class will be empty.</p>
+<p>If no endpoints were specified or could be determined from (default)
 <a class="reference internal" href="#link-intermediateoperation-protocols"><span class="std std-ref">protocol specifications</span></a>, or in case the
 <a class="reference internal" href="#link-intermediateendpoint-addresses"><span class="std std-ref">addresses</span></a> attribute
 is empty, code generators should produce sensible defaults, e.g.,
@@ -642,16 +631,16 @@ from the operation’s name.</p>
 
 <span class="target" id="link-intermediateoperation-protocols"></span><dl class="attribute">
 <dt>
-<code class="descname">IntermediateProtocolSpecification[0..2] protocols</code></dt>
-<dd><p><a class="reference internal" href="#IntermediateProtocolSpecification" title="IntermediateProtocolSpecification"><code class="xref java java-type docutils literal"><span class="pre">Protocol</span> <span class="pre">specifications</span></code></a>
+<code class="sig-name descname">IntermediateProtocolSpecification[0..2] protocols</code></dt>
+<dd><p><a class="reference internal" href="#IntermediateProtocolSpecification" title="IntermediateProtocolSpecification"><code class="xref java java-type docutils literal notranslate"><span class="pre">Protocol</span> <span class="pre">specifications</span></code></a>
 assigned to the operation. There might be exactly one protocol
 specification per communication type.</p>
 <div class="admonition hint">
-<p class="first admonition-title">Hint</p>
+<p class="admonition-title">Hint</p>
 <p>If no protocol specifications were explicitly assigned to the
 operation, it “inherits” the specifications of its
 <a class="reference internal" href="#link-intermediateinterface-protocols"><span class="std std-ref">interface</span></a>.</p>
-<p class="last">If the interface also exhibited no protocol specifications and thus
+<p>If the interface also exhibited no protocol specifications and thus
 the operation does neither, code generators should produce sensible
 defaults, e.g., from the operation’s name.</p>
 </div>
@@ -659,11 +648,11 @@ defaults, e.g., from the operation’s name.</p>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateParameter[*] parameters</code></dt>
-<dd><p><a class="reference internal" href="#IntermediateParameter" title="IntermediateParameter"><code class="xref java java-type docutils literal"><span class="pre">Parameters</span></code></a> of the operation.</p>
+<code class="sig-name descname">IntermediateParameter[*] parameters</code></dt>
+<dd><p><a class="reference internal" href="#IntermediateParameter" title="IntermediateParameter"><code class="xref java java-type docutils literal notranslate"><span class="pre">Parameters</span></code></a> of the operation.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">There might be more than one outgoing parameter and it is up to code
+<p class="admonition-title">Note</p>
+<p>There might be more than one outgoing parameter and it is up to code
 generators on how to proceed with this. For example, all outgoing
 parameters could be condensed within a uniforming data structure.</p>
 </div>
@@ -671,44 +660,44 @@ parameters could be condensed within a uniforming data structure.</p>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateApiOperationComment[0..1] apiOperationComment</code></dt>
-<dd><p><a class="reference internal" href="#IntermediateApiOperationComment" title="IntermediateApiOperationComment"><code class="xref java java-type docutils literal"><span class="pre">API</span> <span class="pre">comment</span></code></a> of the
+<code class="sig-name descname">IntermediateApiOperationComment[0..1] apiOperationComment</code></dt>
+<dd><p><a class="reference internal" href="#IntermediateApiOperationComment" title="IntermediateApiOperationComment"><code class="xref java java-type docutils literal notranslate"><span class="pre">API</span> <span class="pre">comment</span></code></a> of the
 operation.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateImportedAspect[*] aspects</code></dt>
-<dd><p><a class="reference external" href="../../../../de.fhdo.lemma.data.intermediate.metamodel/doc/build/html/body.html#IntermediateImportedAspect" title="(in Intermediate Data Model Format Specification v1.0)"><code class="xref java java-type docutils literal"><span class="pre">Aspects</span></code></a> of the operation.</p>
+<code class="sig-name descname">IntermediateImportedAspect[*] aspects</code></dt>
+<dd><p><code class="xref java java-type docutils literal notranslate"><span class="pre">Aspects</span></code> of the operation.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateInterface interface</code></dt>
-<dd><p>Link to the containing <a class="reference internal" href="#IntermediateInterface" title="IntermediateInterface"><code class="xref java java-type docutils literal"><span class="pre">IntermediateInterface</span></code></a> instance.</p>
+<code class="sig-name descname">IntermediateInterface interface</code></dt>
+<dd><p>Link to the containing <a class="reference internal" href="#IntermediateInterface" title="IntermediateInterface"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateInterface</span></code></a> instance.</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="type">
 <dt id="IntermediateApiOperationComment">
- class <code class="descname">IntermediateApiOperationComment</code><a class="headerlink" href="#IntermediateApiOperationComment" title="Permalink to this definition">¶</a></dt>
-<dd><p>An API-related comment of an <a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal"><span class="pre">operation</span></code></a>.
+ class <code class="sig-name descname">IntermediateApiOperationComment</code><a class="headerlink" href="#IntermediateApiOperationComment" title="Permalink to this definition">¶</a></dt>
+<dd><p>An API-related comment of an <a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal notranslate"><span class="pre">operation</span></code></a>.
 It  describes the purpose of the operation, possibly together with its
-parameters in <a class="reference internal" href="#IntermediateApiParameterComment" title="IntermediateApiParameterComment"><code class="xref java java-type docutils literal"><span class="pre">IntermediateApiParameterComment</span></code></a> instances.</p>
+parameters in <a class="reference internal" href="#IntermediateApiParameterComment" title="IntermediateApiParameterComment"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateApiParameterComment</span></code></a> instances.</p>
 <dl class="attribute">
 <dt>
-<code class="descname">String[1] comment</code></dt>
+<code class="sig-name descname">String[1] comment</code></dt>
 <dd><p>Comment, which describes the operation.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateApiParameterComment[*] parameterComments</code></dt>
+<code class="sig-name descname">IntermediateApiParameterComment[*] parameterComments</code></dt>
 <dd><p>API comments for the operation’s parameters.</p>
 <div class="admonition hint">
-<p class="first admonition-title">Hint</p>
-<p class="last">It is possible that a parameter is commented more than once. Code
+<p class="admonition-title">Hint</p>
+<p>It is possible that a parameter is commented more than once. Code
 generators are free in their reaction to such a situation. For
 instance, all comments may be dropped except for the last one or
 they may ask users on how to proceed in such a situation.</p>
@@ -717,8 +706,8 @@ they may ask users on how to proceed in such a situation.</p>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateOperation operation</code></dt>
-<dd><p>The <a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal"><span class="pre">operation</span></code></a> being documented by
+<code class="sig-name descname">IntermediateOperation operation</code></dt>
+<dd><p>The <a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal notranslate"><span class="pre">operation</span></code></a> being documented by
 this comment.</p>
 </dd></dl>
 
@@ -726,38 +715,38 @@ this comment.</p>
 
 <dl class="type">
 <dt id="IntermediateApiParameterComment">
- class <code class="descname">IntermediateApiParameterComment</code><a class="headerlink" href="#IntermediateApiParameterComment" title="Permalink to this definition">¶</a></dt>
-<dd><p>An API-related comment for a <a class="reference internal" href="#IntermediateParameter" title="IntermediateParameter"><code class="xref java java-type docutils literal"><span class="pre">parameter</span></code></a>
-of an <a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal"><span class="pre">operation</span></code></a>.</p>
+ class <code class="sig-name descname">IntermediateApiParameterComment</code><a class="headerlink" href="#IntermediateApiParameterComment" title="Permalink to this definition">¶</a></dt>
+<dd><p>An API-related comment for a <a class="reference internal" href="#IntermediateParameter" title="IntermediateParameter"><code class="xref java java-type docutils literal notranslate"><span class="pre">parameter</span></code></a>
+of an <a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal notranslate"><span class="pre">operation</span></code></a>.</p>
 <blockquote>
 <div><dl class="attribute">
 <dt>
-<code class="descname">String[1] comment</code></dt>
+<code class="sig-name descname">String[1] comment</code></dt>
 <dd><p>Comment, which describes the parameter.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="descname">boolean required</code></dt>
+<code class="sig-name descname">boolean required</code></dt>
 <dd><p>Flag to indicate if this parameter is required (from an API point of
 view).</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">It is possible to document even <a class="reference internal" href="#link-intermediateparameter-optional"><span class="std std-ref">optional parameters</span></a> as being required.</p>
+<p class="admonition-title">Note</p>
+<p>It is possible to document even <a class="reference internal" href="#link-intermediateparameter-optional"><span class="std std-ref">optional parameters</span></a> as being required.</p>
 </div>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateParameter parameter</code></dt>
-<dd><p>The <a class="reference internal" href="#IntermediateParameter" title="IntermediateParameter"><code class="xref java java-type docutils literal"><span class="pre">parameter</span></code></a> being documented
+<code class="sig-name descname">IntermediateParameter parameter</code></dt>
+<dd><p>The <a class="reference internal" href="#IntermediateParameter" title="IntermediateParameter"><code class="xref java java-type docutils literal notranslate"><span class="pre">parameter</span></code></a> being documented
 by this comment.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateApiOperationComment operationComment</code></dt>
-<dd><p>The <a class="reference internal" href="#IntermediateApiOperationComment" title="IntermediateApiOperationComment"><code class="xref java java-type docutils literal"><span class="pre">API</span> <span class="pre">operation</span> <span class="pre">comment</span></code></a> to which this parameter comment
+<code class="sig-name descname">IntermediateApiOperationComment operationComment</code></dt>
+<dd><p>The <a class="reference internal" href="#IntermediateApiOperationComment" title="IntermediateApiOperationComment"><code class="xref java java-type docutils literal notranslate"><span class="pre">API</span> <span class="pre">operation</span> <span class="pre">comment</span></code></a> to which this parameter comment
 belongs.</p>
 </dd></dl>
 
@@ -766,17 +755,17 @@ belongs.</p>
 
 <dl class="type">
 <dt id="IntermediateParameter">
- class <code class="descname">IntermediateParameter</code><a class="headerlink" href="#IntermediateParameter" title="Permalink to this definition">¶</a></dt>
-<dd><p>A parameter of an <a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal"><span class="pre">operation</span></code></a>.</p>
+ class <code class="sig-name descname">IntermediateParameter</code><a class="headerlink" href="#IntermediateParameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>A parameter of an <a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal notranslate"><span class="pre">operation</span></code></a>.</p>
 <dl class="attribute">
 <dt>
-<code class="descname">String[1] name</code></dt>
+<code class="sig-name descname">String[1] name</code></dt>
 <dd><p>Name of the parameter.</p>
 </dd></dl>
 
 <span class="target" id="link-intermediateparameter-qualifiedname"></span><dl class="attribute">
 <dt>
-<code class="descname">String[1] qualifiedName</code></dt>
+<code class="sig-name descname">String[1] qualifiedName</code></dt>
 <dd><p>Qualified name of the parameter. This is the parameter’s name prefixed
 by its operation’s
 <a class="reference internal" href="#link-intermediateoperation-qualifiedname"><span class="std std-ref">qualified name</span></a>.
@@ -785,25 +774,25 @@ Both name fragments are separated by dots.</p>
 
 <span class="target" id="link-intermediateparameter-exchangepattern"></span><dl class="attribute">
 <dt>
-<code class="descname">String[1] exchangePattern</code></dt>
+<code class="sig-name descname">String[1] exchangePattern</code></dt>
 <dd><p>Exchange pattern of the parameter. The following values are possible:</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="32%" />
-<col width="68%" />
+<col style="width: 32%" />
+<col style="width: 68%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><strong>Pattern</strong></td>
-<td><strong>Description</strong></td>
+<tbody>
+<tr class="row-odd"><td><p><strong>Pattern</strong></p></td>
+<td><p><strong>Description</strong></p></td>
 </tr>
-<tr class="row-even"><td>IN</td>
-<td>Incoming information exchange.</td>
+<tr class="row-even"><td><p>IN</p></td>
+<td><p>Incoming information exchange.</p></td>
 </tr>
-<tr class="row-odd"><td>OUT</td>
-<td>Outgoing information exchange.</td>
+<tr class="row-odd"><td><p>OUT</p></td>
+<td><p>Outgoing information exchange.</p></td>
 </tr>
-<tr class="row-even"><td>INOUT</td>
-<td>Incoming and outgoing information exchange.</td>
+<tr class="row-even"><td><p>INOUT</p></td>
+<td><p>Incoming and outgoing information exchange.</p></td>
 </tr>
 </tbody>
 </table>
@@ -811,22 +800,22 @@ Both name fragments are separated by dots.</p>
 
 <span class="target" id="link-intermediateparameter-communicationtype"></span><dl class="attribute">
 <dt>
-<code class="descname">String[1] communicationType</code></dt>
+<code class="sig-name descname">String[1] communicationType</code></dt>
 <dd><p>Communication type of the parameter. The following values are possible:</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="32%" />
-<col width="68%" />
+<col style="width: 32%" />
+<col style="width: 68%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><strong>Type</strong></td>
-<td><strong>Description</strong></td>
+<tbody>
+<tr class="row-odd"><td><p><strong>Type</strong></p></td>
+<td><p><strong>Description</strong></p></td>
 </tr>
-<tr class="row-even"><td>ASYNCHRONOUS</td>
-<td>Asynchronous communication.</td>
+<tr class="row-even"><td><p>ASYNCHRONOUS</p></td>
+<td><p>Asynchronous communication.</p></td>
 </tr>
-<tr class="row-odd"><td>SYNCHRONOUS</td>
-<td>Synchronous communication.</td>
+<tr class="row-odd"><td><p>SYNCHRONOUS</p></td>
+<td><p>Synchronous communication.</p></td>
 </tr>
 </tbody>
 </table>
@@ -834,112 +823,112 @@ Both name fragments are separated by dots.</p>
 
 <dl class="attribute">
 <dt>
-<code class="descname">boolean communicatesFault</code></dt>
+<code class="sig-name descname">boolean communicatesFault</code></dt>
 <dd><p>Flag to indicate that the parameter is used to communicate fault values
 to the caller.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">It is up to the code generator to ensure that the caller is aware
+<p class="admonition-title">Note</p>
+<p>It is up to the code generator to ensure that the caller is aware
 that the parameter communicates a fault.</p>
 </div>
 </dd></dl>
 
 <span class="target" id="link-intermediateparameter-optional"></span><dl class="attribute">
 <dt>
-<code class="descname">boolean optional</code></dt>
+<code class="sig-name descname">boolean optional</code></dt>
 <dd><p>Flag to indicate that the parameter is optional.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p>The combination of the exchange pattern, communication type, and
-<code class="docutils literal"><span class="pre">optional</span></code> attributes determine a parameter’s “timing behavior”:</p>
-<table border="1" class="last docutils">
+<code class="docutils literal notranslate"><span class="pre">optional</span></code> attributes determine a parameter’s “timing behavior”:</p>
+<table class="docutils align-default">
 <colgroup>
-<col width="19%" />
-<col width="27%" />
-<col width="14%" />
-<col width="40%" />
+<col style="width: 19%" />
+<col style="width: 27%" />
+<col style="width: 14%" />
+<col style="width: 40%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head"><strong>Exchange</strong>
-<strong>Pattern</strong></th>
-<th class="head"><strong>Communication</strong>
-<strong>Type</strong></th>
-<th class="head"><strong>Opt?</strong></th>
-<th class="head"><strong>Operation Behavior</strong></th>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Exchange</strong>
+<strong>Pattern</strong></p></th>
+<th class="head"><p><strong>Communication</strong>
+<strong>Type</strong></p></th>
+<th class="head"><p><strong>Opt?</strong></p></th>
+<th class="head"><p><strong>Operation Behavior</strong></p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">IN</span></code></td>
-<td><code class="docutils literal"><span class="pre">ASYNCHRONOUS</span></code></td>
-<td><code class="docutils literal"><span class="pre">false</span></code></td>
-<td>Operation may retrieve
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">IN</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ASYNCHRONOUS</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>Operation may retrieve
 value at an arbitrary
 point in time during its
-execution.</td>
+execution.</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">IN</span></code></td>
-<td><code class="docutils literal"><span class="pre">ASYNCHRONOUS</span></code></td>
-<td><code class="docutils literal"><span class="pre">true</span></code></td>
-<td>Operation must retrieve
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">IN</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ASYNCHRONOUS</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+<td><p>Operation must retrieve
 value at some point in
 time during its
-execution.</td>
+execution.</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">IN</span></code></td>
-<td><code class="docutils literal"><span class="pre">SYNCHRONOUS</span></code></td>
-<td><code class="docutils literal"><span class="pre">false</span></code></td>
-<td>Operation can only be
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">IN</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SYNCHRONOUS</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>Operation can only be
 executed if parameter has
-has a value.</td>
+has a value.</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">IN</span></code></td>
-<td><code class="docutils literal"><span class="pre">SYNCHRONOUS</span></code></td>
-<td><code class="docutils literal"><span class="pre">true</span></code></td>
-<td>Operation can be executed
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">IN</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SYNCHRONOUS</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+<td><p>Operation can be executed
 without the parameter
 value and it cannot
 expect to ever retrieve
 a value for the
-parameter.</td>
+parameter.</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">OUT</span></code></td>
-<td><code class="docutils literal"><span class="pre">ASYNCHRONOUS</span></code></td>
-<td><code class="docutils literal"><span class="pre">false</span></code></td>
-<td>Operation may emit value
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">OUT</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ASYNCHRONOUS</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>Operation may emit value
 at an arbitrary point in
 time during its
-execution.</td>
+execution.</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">OUT</span></code></td>
-<td><code class="docutils literal"><span class="pre">ASYNCHRONOUS</span></code></td>
-<td><code class="docutils literal"><span class="pre">true</span></code></td>
-<td>Operation emits value at
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">OUT</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ASYNCHRONOUS</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+<td><p>Operation emits value at
 some point in time during
-its execution.</td>
+its execution.</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">OUT</span></code></td>
-<td><code class="docutils literal"><span class="pre">SYNCHRONOUS</span></code></td>
-<td><code class="docutils literal"><span class="pre">false</span></code></td>
-<td>Operation emits value
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">OUT</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SYNCHRONOUS</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>Operation emits value
 when it finished its
-execution.</td>
+execution.</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">OUT</span></code></td>
-<td><code class="docutils literal"><span class="pre">SYNCHRONOUS</span></code></td>
-<td><code class="docutils literal"><span class="pre">true</span></code></td>
-<td>Operation might emit
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">OUT</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SYNCHRONOUS</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+<td><p>Operation might emit
 value after it finished
-its execution.</td>
+its execution.</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">INOUT</span></code></td>
-<td>all</td>
-<td>all</td>
-<td>Parameter behaves
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">INOUT</span></code></p></td>
+<td><p>all</p></td>
+<td><p>all</p></td>
+<td><p>Parameter behaves
 like an incoming and
 outgoing parameter for
 the respective
 communication type and
-“optional” flag.</td>
+“optional” flag.</p></td>
 </tr>
 </tbody>
 </table>
@@ -948,32 +937,32 @@ communication type and
 
 <span class="target" id="link-intermediateparameter-type"></span><dl class="attribute">
 <dt>
-<code class="descname">IntermediateType type</code></dt>
-<dd><p><a class="reference external" href="../../../../de.fhdo.lemma.data.intermediate.metamodel/doc/build/html/body.html#link-intermediatetype" title="(in Intermediate Data Model Format Specification v1.0)"><span class="xref std std-ref">Type</span></a> of the parameter.</p>
+<code class="sig-name descname">IntermediateType type</code></dt>
+<dd><p><span class="xref std std-ref">Type</span> of the parameter.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">A parameter cannot be typed with the built-in primitive type
-<code class="docutils literal"><span class="pre">unspecified</span></code>.</p>
+<p class="admonition-title">Note</p>
+<p>A parameter cannot be typed with the built-in primitive type
+<code class="docutils literal notranslate"><span class="pre">unspecified</span></code>.</p>
 </div>
 <div class="admonition hint">
-<p class="first admonition-title">Hint</p>
-<p class="last">Code generators must use this type as the parameter’s return type
+<p class="admonition-title">Hint</p>
+<p>Code generators must use this type as the parameter’s return type
 and not <a class="reference internal" href="#link-intermediateparameter-originaltype"><span class="std std-ref">originalType</span></a>.</p>
 </div>
 </dd></dl>
 
 <span class="target" id="link-intermediateparameter-originaltype"></span><dl class="attribute">
 <dt>
-<code class="descname">IntermediateType[1] originalType</code></dt>
+<code class="sig-name descname">IntermediateType[1] originalType</code></dt>
 <dd><p>The original return type of the parameter in case it got mapped within a
 Mapping Model or a technology-agnostic base type exists.</p>
 <div class="admonition hint">
-<p class="first admonition-title">Hint</p>
-<p class="last">This attribute always holds a value. In case it differs from the
+<p class="admonition-title">Hint</p>
+<p>This attribute always holds a value. In case it differs from the
 <a class="reference internal" href="#link-intermediateparameter-type"><span class="std std-ref">type</span></a>, the type got mapped
 either explicitly via a Mapping Model or implicitly, because a
 technology-specific type exists with the original type being its
-base type. For instance, the built-in primitive type <code class="docutils literal"><span class="pre">string</span></code>
+base type. For instance, the built-in primitive type <code class="docutils literal notranslate"><span class="pre">string</span></code>
 always gets mapped to its technology-specific counterpart, if it
 can be identified from a technology model on the service.</p>
 </div>
@@ -981,16 +970,16 @@ can be identified from a technology model on the service.</p>
 
 <span class="target" id="link-intermediateparameter-initializedbyoperation"></span><dl class="attribute">
 <dt>
-<code class="descname">OperationReference initializedByOperation</code></dt>
-<dd><p>Link to the <a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal"><span class="pre">IntermediateOperation</span></code></a> that initializes the
+<code class="sig-name descname">OperationReference initializedByOperation</code></dt>
+<dd><p>Link to the <a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateOperation</span></code></a> that initializes the
 parameter.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">It is not safely guaranteed that the operation’s return values and
+<p class="admonition-title">Note</p>
+<p>It is not safely guaranteed that the operation’s return values and
 the parameter’s type are compatible. This is due to the Service
 Modeling Language only yielding a warning if a (possible) type
 incompatibility is detected. Moreover, the type check is based on
-the <a class="reference external" href="../../../../de.fhdo.lemma.data.intermediate.metamodel/doc/build/html/body.html#link-built-in-type-system" title="(in Intermediate Data Model Format Specification v1.0)"><span class="xref std std-ref">type system</span></a> of
+the <span class="xref std std-ref">type system</span> of
 the Domain Data Modeling Language, which may not be applicable to
 all target languages.</p>
 </div>
@@ -998,89 +987,89 @@ all target languages.</p>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateImportedAspect[*] aspects</code></dt>
-<dd><p><a class="reference external" href="../../../../de.fhdo.lemma.data.intermediate.metamodel/doc/build/html/body.html#IntermediateImportedAspect" title="(in Intermediate Data Model Format Specification v1.0)"><code class="xref java java-type docutils literal"><span class="pre">Aspects</span></code></a> of the parameter.</p>
+<code class="sig-name descname">IntermediateImportedAspect[*] aspects</code></dt>
+<dd><p><code class="xref java java-type docutils literal notranslate"><span class="pre">Aspects</span></code> of the parameter.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="descname">DataFieldAspects[*] fieldAspects</code></dt>
-<dd><p><a class="reference external" href="../../../../de.fhdo.lemma.data.intermediate.metamodel/doc/build/html/body.html#IntermediateImportedAspect" title="(in Intermediate Data Model Format Specification v1.0)"><code class="xref java java-type docutils literal"><span class="pre">Aspects</span></code></a> that were assigned to
-fields of the <a class="reference external" href="../../../../de.fhdo.lemma.data.intermediate.metamodel/doc/build/html/body.html#link-intermediatedatastructure" title="(in Intermediate Data Model Format Specification v1.0)"><span class="xref std std-ref">structure type</span></a> or <a class="reference external" href="../../../../de.fhdo.lemma.data.intermediate.metamodel/doc/build/html/body.html#link-intermediateenumeration" title="(in Intermediate Data Model Format Specification v1.0)"><span class="xref std std-ref">enumeration type</span></a> of the parameter within a
+<code class="sig-name descname">DataFieldAspects[*] fieldAspects</code></dt>
+<dd><p><code class="xref java java-type docutils literal notranslate"><span class="pre">Aspects</span></code> that were assigned to
+fields of the <span class="xref std std-ref">structure type</span> or <span class="xref std std-ref">enumeration type</span> of the parameter within a
 Mapping Model.</p>
 <div class="admonition hint">
-<p class="first admonition-title">Hint</p>
-<p class="last">These aspects are relevant only in the context of the parameter
+<p class="admonition-title">Hint</p>
+<p>These aspects are relevant only in the context of the parameter
 within its defining operation. They are, however, not relevant in
 the context of the type of that defines the fields in its Data
 Model. Aspects that were assigned to fields of the complex type
 itself are directly assigned to the type in the corresponding
-<a class="reference external" href="../../../../de.fhdo.lemma.data.intermediate.metamodel/doc/build/html/body.html#IntermediateDataModel" title="(in Intermediate Data Model Format Specification v1.0)"><code class="xref java java-type docutils literal"><span class="pre">IntermediateDataModel</span></code></a>.</p>
+<code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateDataModel</span></code>.</p>
 </div>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateOperation operation</code></dt>
-<dd><p>Link to the containing <a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal"><span class="pre">IntermediateOperation</span></code></a> instance.</p>
+<code class="sig-name descname">IntermediateOperation operation</code></dt>
+<dd><p>Link to the containing <a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateOperation</span></code></a> instance.</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="type">
 <dt id="DataFieldAspects">
- class <code class="descname">DataFieldAspects</code><a class="headerlink" href="#DataFieldAspects" title="Permalink to this definition">¶</a></dt>
-<dd><p>This concepts contains <a class="reference external" href="../../../../de.fhdo.lemma.data.intermediate.metamodel/doc/build/html/body.html#IntermediateImportedAspect" title="(in Intermediate Data Model Format Specification v1.0)"><code class="xref java java-type docutils literal"><span class="pre">aspects</span></code></a>
-that were assigned to fields of a <a class="reference internal" href="#IntermediateParameter" title="IntermediateParameter"><code class="xref java java-type docutils literal"><span class="pre">parameter's</span></code></a> <a class="reference external" href="../../../../de.fhdo.lemma.data.intermediate.metamodel/doc/build/html/body.html#link-intermediatedatastructure" title="(in Intermediate Data Model Format Specification v1.0)"><span class="xref std std-ref">structure type</span></a> or <a class="reference external" href="../../../../de.fhdo.lemma.data.intermediate.metamodel/doc/build/html/body.html#link-intermediateenumeration" title="(in Intermediate Data Model Format Specification v1.0)"><span class="xref std std-ref">enumeration type</span></a> within a Mapping Model.</p>
+ class <code class="sig-name descname">DataFieldAspects</code><a class="headerlink" href="#DataFieldAspects" title="Permalink to this definition">¶</a></dt>
+<dd><p>This concepts contains <code class="xref java java-type docutils literal notranslate"><span class="pre">aspects</span></code>
+that were assigned to fields of a <a class="reference internal" href="#IntermediateParameter" title="IntermediateParameter"><code class="xref java java-type docutils literal notranslate"><span class="pre">parameter's</span></code></a> <span class="xref std std-ref">structure type</span> or <span class="xref std std-ref">enumeration type</span> within a Mapping Model.</p>
 <span class="target" id="link-datafieldaspects-name"></span><dl class="attribute">
 <dt>
-<code class="descname">String[1] name</code></dt>
-<dd><p>The name of the <a class="reference external" href="../../../../de.fhdo.lemma.data.intermediate.metamodel/doc/build/html/body.html#link-intermediatedatastructure" title="(in Intermediate Data Model Format Specification v1.0)"><span class="xref std std-ref">structure type’s</span></a> or <a class="reference external" href="../../../../de.fhdo.lemma.data.intermediate.metamodel/doc/build/html/body.html#link-intermediateenumeration" title="(in Intermediate Data Model Format Specification v1.0)"><span class="xref std std-ref">enumeration
-type’s</span></a> field to which the
+<code class="sig-name descname">String[1] name</code></dt>
+<dd><p>The name of the <span class="xref std std-ref">structure type’s</span> or <span class="xref std std-ref">enumeration
+type’s</span> field to which the
 aspects in the context of the parameter were assigned.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="descname">String[1] qualifiedName</code></dt>
+<code class="sig-name descname">String[1] qualifiedName</code></dt>
 <dd><p>Qualified name of the field. It consists of the field’s <a class="reference internal" href="#link-datafieldaspects-name"><span class="std std-ref">name</span></a> prefixed by the parameter’s
 <a class="reference internal" href="#link-intermediateparameter-qualifiedname"><span class="std std-ref">qualified name</span></a>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateImportedAspect[1..*] aspects</code></dt>
-<dd><p>The <a class="reference external" href="../../../../de.fhdo.lemma.data.intermediate.metamodel/doc/build/html/body.html#IntermediateImportedAspect" title="(in Intermediate Data Model Format Specification v1.0)"><code class="xref java java-type docutils literal"><span class="pre">aspects</span></code></a> that were assigned
+<code class="sig-name descname">IntermediateImportedAspect[1..*] aspects</code></dt>
+<dd><p>The <code class="xref java java-type docutils literal notranslate"><span class="pre">aspects</span></code> that were assigned
 to the field in the context of the parameter.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateParameter parameter</code></dt>
-<dd><p>Link to the containing <a class="reference internal" href="#IntermediateParameter" title="IntermediateParameter"><code class="xref java java-type docutils literal"><span class="pre">IntermediateParameter</span></code></a> instance.</p>
+<code class="sig-name descname">IntermediateParameter parameter</code></dt>
+<dd><p>Link to the containing <a class="reference internal" href="#IntermediateParameter" title="IntermediateParameter"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateParameter</span></code></a> instance.</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="type">
 <dt id="IntermediateReferredOperation">
- class <code class="descname">IntermediateReferredOperation</code><a class="headerlink" href="#IntermediateReferredOperation" title="Permalink to this definition">¶</a></dt>
-<dd><p>Referred operation of an <a class="reference internal" href="#IntermediateInterface" title="IntermediateInterface"><code class="xref java java-type docutils literal"><span class="pre">IntermediateInterface</span></code></a>. In contrast to
-<a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal"><span class="pre">IntermediateOperations</span></code></a>, referred
+ class <code class="sig-name descname">IntermediateReferredOperation</code><a class="headerlink" href="#IntermediateReferredOperation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Referred operation of an <a class="reference internal" href="#IntermediateInterface" title="IntermediateInterface"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateInterface</span></code></a>. In contrast to
+<a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateOperations</span></code></a>, referred
 operations do not implement their own business logic. Instead, they act as
 façades to implemented
-<a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal"><span class="pre">IntermediateOperations</span></code></a> within the same
+<a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateOperations</span></code></a> within the same
 microservice. That is, requests/responses to the original operation/the
 caller are just forwarded by referred operations.</p>
 <p>Referred operations exhibit the same
-<a class="reference internal" href="#IntermediateParameter" title="IntermediateParameter"><code class="xref java java-type docutils literal"><span class="pre">parameters</span></code></a> as the original operations.
+<a class="reference internal" href="#IntermediateParameter" title="IntermediateParameter"><code class="xref java java-type docutils literal notranslate"><span class="pre">parameters</span></code></a> as the original operations.
 However, they may have different
-<a class="reference internal" href="#IntermediateEndpoint" title="IntermediateEndpoint"><code class="xref java java-type docutils literal"><span class="pre">endpoints</span></code></a>,
-<a class="reference internal" href="#IntermediateProtocolSpecification" title="IntermediateProtocolSpecification"><code class="xref java java-type docutils literal"><span class="pre">protocols</span></code></a>, and
-<a class="reference external" href="../../../../de.fhdo.lemma.data.intermediate.metamodel/doc/build/html/body.html#IntermediateImportedAspect" title="(in Intermediate Data Model Format Specification v1.0)"><code class="xref java java-type docutils literal"><span class="pre">aspects</span></code></a>.</p>
+<a class="reference internal" href="#IntermediateEndpoint" title="IntermediateEndpoint"><code class="xref java java-type docutils literal notranslate"><span class="pre">endpoints</span></code></a>,
+<a class="reference internal" href="#IntermediateProtocolSpecification" title="IntermediateProtocolSpecification"><code class="xref java java-type docutils literal notranslate"><span class="pre">protocols</span></code></a>, and
+<code class="xref java java-type docutils literal notranslate"><span class="pre">aspects</span></code>.</p>
 <dl class="attribute">
 <dt>
-<code class="descname">String[1] nameInReferringInterface</code></dt>
+<code class="sig-name descname">String[1] nameInReferringInterface</code></dt>
 <dd><p>The name of the referred operation within the referring interface.
 Currently, the name is identical to the name of the original operation.
 However, code generators should not rely on that and instead use the
@@ -1089,7 +1078,7 @@ content of this attribute to generate the referring operation.</p>
 
 <dl class="attribute">
 <dt>
-<code class="descname">String[1] qualifiedNameInReferringInterface</code></dt>
+<code class="sig-name descname">String[1] qualifiedNameInReferringInterface</code></dt>
 <dd><p>The qualified name of the referred operation within the referring
 interface. It consists of the name of the referring operation prefixed
 by the <a class="reference internal" href="#link-intermediateinterface-qualifiedname"><span class="std std-ref">qualified name</span></a> of its interface. Both name
@@ -1098,12 +1087,12 @@ fragments are separated by dots.</p>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateOperation[1] operation</code></dt>
-<dd><p>Link to the original <a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal"><span class="pre">operation</span></code></a>.</p>
+<code class="sig-name descname">IntermediateOperation[1] operation</code></dt>
+<dd><p>Link to the original <a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal notranslate"><span class="pre">operation</span></code></a>.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The type of the attribute is <code class="docutils literal"><span class="pre">IntermediateOperation</span></code> instead of
-<a class="reference internal" href="#OperationReference" title="OperationReference"><code class="xref java java-type docutils literal"><span class="pre">OperationReference</span></code></a>, because the original operation must
+<p class="admonition-title">Note</p>
+<p>The type of the attribute is <code class="docutils literal notranslate"><span class="pre">IntermediateOperation</span></code> instead of
+<a class="reference internal" href="#OperationReference" title="OperationReference"><code class="xref java java-type docutils literal notranslate"><span class="pre">OperationReference</span></code></a>, because the original operation must
 be in the same microservice as the referring operation and can thus
 not originate from an imported Service Model.</p>
 </div>
@@ -1111,16 +1100,16 @@ not originate from an imported Service Model.</p>
 
 <span class="target" id="link-intermediatereferredoperation-endpoints"></span><dl class="attribute">
 <dt>
-<code class="descname">IntermediateEndpoint[*] endpoints</code></dt>
-<dd><p><a class="reference internal" href="#IntermediateEndpoint" title="IntermediateEndpoint"><code class="xref java java-type docutils literal"><span class="pre">Endpoints</span></code></a> assigned to the referred
+<code class="sig-name descname">IntermediateEndpoint[*] endpoints</code></dt>
+<dd><p><a class="reference internal" href="#IntermediateEndpoint" title="IntermediateEndpoint"><code class="xref java java-type docutils literal notranslate"><span class="pre">Endpoints</span></code></a> assigned to the referred
 operation.</p>
 <div class="admonition hint">
-<p class="first admonition-title">Hint</p>
+<p class="admonition-title">Hint</p>
 <p>If no endpoints were specified for the referred operation’s
 (default) <a class="reference internal" href="#link-intermediateoperation-protocols"><span class="std std-ref">protocol specifications</span></a>, the
 <a class="reference internal" href="#link-intermediateendpoint-addresses"><span class="std std-ref">addresses</span></a> attribute of
-the <a class="reference internal" href="#IntermediateEndpoint" title="IntermediateEndpoint"><code class="xref java java-type docutils literal"><span class="pre">IntermediateEndpoint</span></code></a> class will be empty.</p>
-<p class="last">If no endpoints were specified or could be determined from (default)
+the <a class="reference internal" href="#IntermediateEndpoint" title="IntermediateEndpoint"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateEndpoint</span></code></a> class will be empty.</p>
+<p>If no endpoints were specified or could be determined from (default)
 <a class="reference internal" href="#link-intermediateoperation-protocols"><span class="std std-ref">protocol specifications</span></a>, or in case the
 <a class="reference internal" href="#link-intermediateendpoint-addresses"><span class="std std-ref">addresses</span></a> attribute
 is empty, code generators should produce sensible defaults, e.g.,
@@ -1130,16 +1119,16 @@ from the referred operation’s name.</p>
 
 <span class="target" id="link-intermediatereferredoperation-protocols"></span><dl class="attribute">
 <dt>
-<code class="descname">IntermediateProtocolSpecification[0..2] protocols</code></dt>
-<dd><p><a class="reference internal" href="#IntermediateProtocolSpecification" title="IntermediateProtocolSpecification"><code class="xref java java-type docutils literal"><span class="pre">Protocol</span> <span class="pre">specifications</span></code></a>
+<code class="sig-name descname">IntermediateProtocolSpecification[0..2] protocols</code></dt>
+<dd><p><a class="reference internal" href="#IntermediateProtocolSpecification" title="IntermediateProtocolSpecification"><code class="xref java java-type docutils literal notranslate"><span class="pre">Protocol</span> <span class="pre">specifications</span></code></a>
 assigned to the referred operation. There might be exactly one protocol
 specification per communication type.</p>
 <div class="admonition hint">
-<p class="first admonition-title">Hint</p>
+<p class="admonition-title">Hint</p>
 <p>If no protocol specifications were explicitly assigned to the
 referred operation, it “inherits” the specifications of its
 <a class="reference internal" href="#link-intermediateinterface-protocols"><span class="std std-ref">interface</span></a>.</p>
-<p class="last">If the interface also exhibited no protocol specifications and thus
+<p>If the interface also exhibited no protocol specifications and thus
 the referred operation does neither, code generators should produce
 sensible defaults, e.g., from the referred operation’s name.</p>
 </div>
@@ -1147,50 +1136,50 @@ sensible defaults, e.g., from the referred operation’s name.</p>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateImportedAspect[*] aspects</code></dt>
-<dd><p><a class="reference external" href="../../../../de.fhdo.lemma.data.intermediate.metamodel/doc/build/html/body.html#IntermediateImportedAspect" title="(in Intermediate Data Model Format Specification v1.0)"><code class="xref java java-type docutils literal"><span class="pre">Aspects</span></code></a> of the referred
+<code class="sig-name descname">IntermediateImportedAspect[*] aspects</code></dt>
+<dd><p><code class="xref java java-type docutils literal notranslate"><span class="pre">Aspects</span></code> of the referred
 operation.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateInterface referringInterface</code></dt>
-<dd><p>Link to the containing <a class="reference internal" href="#IntermediateInterface" title="IntermediateInterface"><code class="xref java java-type docutils literal"><span class="pre">IntermediateInterface</span></code></a> instance.</p>
+<code class="sig-name descname">IntermediateInterface referringInterface</code></dt>
+<dd><p>Link to the containing <a class="reference internal" href="#IntermediateInterface" title="IntermediateInterface"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateInterface</span></code></a> instance.</p>
 </dd></dl>
 
 </dd></dl>
 
 </div>
 <div class="section" id="communication">
-<h2>3.3&nbsp;&nbsp;&nbsp;Communication<a class="headerlink" href="#communication" title="Permalink to this headline">¶</a></h2>
+<h2><span class="sectnum">3.3</span> Communication<a class="headerlink" href="#communication" title="Permalink to this headline">¶</a></h2>
 <p>This subsection describes concepts related to specifying the communication
 between microservices.</p>
 <dl class="type">
 <dt id="IntermediateEndpoint">
- class <code class="descname">IntermediateEndpoint</code><a class="headerlink" href="#IntermediateEndpoint" title="Permalink to this definition">¶</a></dt>
+ class <code class="sig-name descname">IntermediateEndpoint</code><a class="headerlink" href="#IntermediateEndpoint" title="Permalink to this definition">¶</a></dt>
 <dd><p>A protocol- and format-specific endpoint, e.g., <cite>“http://www.example.org”</cite>
 for HTTP and a format like JSON.</p>
 <dl class="attribute">
 <dt>
-<code class="descname">String[1] communicationType</code></dt>
+<code class="sig-name descname">String[1] communicationType</code></dt>
 <dd><p>The communication type of the endpoint. It corresponds to the
 communication type of the endpoint’s
 <a class="reference internal" href="#link-intermediateendpoint-protocol"><span class="std std-ref">protocol</span></a>.</p>
 <p>The following values are possible:</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="32%" />
-<col width="68%" />
+<col style="width: 32%" />
+<col style="width: 68%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><strong>Type</strong></td>
-<td><strong>Description</strong></td>
+<tbody>
+<tr class="row-odd"><td><p><strong>Type</strong></p></td>
+<td><p><strong>Description</strong></p></td>
 </tr>
-<tr class="row-even"><td>ASYNCHRONOUS</td>
-<td>Asynchronous communication.</td>
+<tr class="row-even"><td><p>ASYNCHRONOUS</p></td>
+<td><p>Asynchronous communication.</p></td>
 </tr>
-<tr class="row-odd"><td>SYNCHRONOUS</td>
-<td>Synchronous communication.</td>
+<tr class="row-odd"><td><p>SYNCHRONOUS</p></td>
+<td><p>Synchronous communication.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1198,17 +1187,17 @@ communication type of the endpoint’s
 
 <span class="target" id="link-intermediateendpoint-protocol"></span><dl class="attribute">
 <dt>
-<code class="descname">String[1] protocol</code></dt>
+<code class="sig-name descname">String[1] protocol</code></dt>
 <dd><p>Name of the endpoint’s protocol.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="descname">String[1] dataFormat</code></dt>
+<code class="sig-name descname">String[1] dataFormat</code></dt>
 <dd><p>Name of the endpoint’s data format.</p>
 <div class="admonition hint">
-<p class="first admonition-title">Hint</p>
-<p class="last">We do not prescribe the notation of data formats in their defining
+<p class="admonition-title">Hint</p>
+<p>We do not prescribe the notation of data formats in their defining
 technology models. For instance, two model processors may refer to
 the JSON format by means of its simple name, e.g., “json”, or its
 MIME type, i.e., “application/json”, within technology models.</p>
@@ -1217,12 +1206,12 @@ MIME type, i.e., “application/json”, within technology models.</p>
 
 <span class="target" id="link-intermediateendpoint-addresses"></span><dl class="attribute">
 <dt>
-<code class="descname">String[*] addresses</code></dt>
+<code class="sig-name descname">String[*] addresses</code></dt>
 <dd><p>List of protocol- and format-specific addresses that were assigned to
 the endpoint, e.g., <cite>“http://www.example.org”</cite>.</p>
 <div class="admonition hint">
-<p class="first admonition-title">Hint</p>
-<p class="last">If the list of addresses is empty, code generators should produce
+<p class="admonition-title">Hint</p>
+<p>If the list of addresses is empty, code generators should produce
 sensible defaults, as described
 <a class="reference internal" href="#link-intermediatemicroservice-endpoints"><span class="std std-ref">here</span></a>,
 <a class="reference internal" href="#link-intermediateinterface-endpoints"><span class="std std-ref">here</span></a>,
@@ -1230,8 +1219,8 @@ sensible defaults, as described
 <a class="reference internal" href="#link-intermediatereferredoperation-endpoints"><span class="std std-ref">here</span></a>.</p>
 </div>
 <div class="admonition hint">
-<p class="first admonition-title">Hint</p>
-<p class="last">In case the modeler did not specify a data format for an endpoint,
+<p class="admonition-title">Hint</p>
+<p>In case the modeler did not specify a data format for an endpoint,
 it depends on the technology models, which endpoints are created. If
 the technology model defines a default protocol and thus a default
 format, an endpoint for this protocol and format is created. If the
@@ -1246,42 +1235,42 @@ assigned to the respective
 <a class="reference internal" href="#link-intermediatereferredoperation-protocols"><span class="std std-ref">referred operation</span></a>.</p>
 </div>
 <div class="admonition hint">
-<p class="first admonition-title">Hint</p>
-<p class="last">The addresses are not checked for validity by the Service Modeling
+<p class="admonition-title">Hint</p>
+<p>The addresses are not checked for validity by the Service Modeling
 Language. This step has to be done by model processors.</p>
 </div>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateTechnology[1] technology</code></dt>
+<code class="sig-name descname">IntermediateTechnology[1] technology</code></dt>
 <dd><p>Link to the Technology Model (cf. <a class="reference internal" href="#tab-model-types"><span class="std std-numref">Table 1</span></a>) which
 defines the protocol and data format.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateMicroservice microservice</code></dt>
-<dd><p><a class="reference internal" href="#IntermediateMicroservice" title="IntermediateMicroservice"><code class="xref java java-type docutils literal"><span class="pre">IntermediateMicroservice</span></code></a> to which the endpoint was
+<code class="sig-name descname">IntermediateMicroservice microservice</code></dt>
+<dd><p><a class="reference internal" href="#IntermediateMicroservice" title="IntermediateMicroservice"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateMicroservice</span></code></a> to which the endpoint was
 assigned.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateInterface interface</code></dt>
-<dd><p><a class="reference internal" href="#IntermediateInterface" title="IntermediateInterface"><code class="xref java java-type docutils literal"><span class="pre">IntermediateInterface</span></code></a> to which the endpoint was assigned.</p>
+<code class="sig-name descname">IntermediateInterface interface</code></dt>
+<dd><p><a class="reference internal" href="#IntermediateInterface" title="IntermediateInterface"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateInterface</span></code></a> to which the endpoint was assigned.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateOperation operation</code></dt>
-<dd><p><a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal"><span class="pre">IntermediateOperation</span></code></a> to which the endpoint was assigned.</p>
+<code class="sig-name descname">IntermediateOperation operation</code></dt>
+<dd><p><a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateOperation</span></code></a> to which the endpoint was assigned.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateReferredOperation referredOperation</code></dt>
-<dd><p><a class="reference internal" href="#IntermediateReferredOperation" title="IntermediateReferredOperation"><code class="xref java java-type docutils literal"><span class="pre">IntermediateReferredOperation</span></code></a> to which the endpoint was
+<code class="sig-name descname">IntermediateReferredOperation referredOperation</code></dt>
+<dd><p><a class="reference internal" href="#IntermediateReferredOperation" title="IntermediateReferredOperation"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateReferredOperation</span></code></a> to which the endpoint was
 assigned.</p>
 </dd></dl>
 
@@ -1289,27 +1278,27 @@ assigned.</p>
 
 <dl class="type">
 <dt id="IntermediateProtocolSpecification">
- class <code class="descname">IntermediateProtocolSpecification</code><a class="headerlink" href="#IntermediateProtocolSpecification" title="Permalink to this definition">¶</a></dt>
+ class <code class="sig-name descname">IntermediateProtocolSpecification</code><a class="headerlink" href="#IntermediateProtocolSpecification" title="Permalink to this definition">¶</a></dt>
 <dd><p>A protocol and data format specification.</p>
 <dl class="attribute">
 <dt>
-<code class="descname">String[1] communicationType</code></dt>
+<code class="sig-name descname">String[1] communicationType</code></dt>
 <dd><p>Communication type of the specification. The following values are
 possible:</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="32%" />
-<col width="68%" />
+<col style="width: 32%" />
+<col style="width: 68%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><strong>Type</strong></td>
-<td><strong>Description</strong></td>
+<tbody>
+<tr class="row-odd"><td><p><strong>Type</strong></p></td>
+<td><p><strong>Description</strong></p></td>
 </tr>
-<tr class="row-even"><td>ASYNCHRONOUS</td>
-<td>Asynchronous communication.</td>
+<tr class="row-even"><td><p>ASYNCHRONOUS</p></td>
+<td><p>Asynchronous communication.</p></td>
 </tr>
-<tr class="row-odd"><td>SYNCHRONOUS</td>
-<td>Synchronous communication.</td>
+<tr class="row-odd"><td><p>SYNCHRONOUS</p></td>
+<td><p>Synchronous communication.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1317,13 +1306,13 @@ possible:</p>
 
 <dl class="attribute">
 <dt>
-<code class="descname">String[1] protocol</code></dt>
+<code class="sig-name descname">String[1] protocol</code></dt>
 <dd><p>Name of the specification’s protocol.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="descname">String[1] dataFormat</code></dt>
+<code class="sig-name descname">String[1] dataFormat</code></dt>
 <dd><p>Name of the specification’s data format.</p>
 </dd></dl>
 
@@ -1331,76 +1320,76 @@ possible:</p>
 
 </div>
 <div class="section" id="references">
-<h2>3.4&nbsp;&nbsp;&nbsp;References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<h2><span class="sectnum">3.4</span> References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
 <p>This subsection describes concepts that are used to model references to possibly
-imported <a class="reference internal" href="#IntermediateMicroservice" title="IntermediateMicroservice"><code class="xref java java-type docutils literal"><span class="pre">microservices</span></code></a>,
-<a class="reference internal" href="#IntermediateInterface" title="IntermediateInterface"><code class="xref java java-type docutils literal"><span class="pre">interfaces</span></code></a>, or
-<a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal"><span class="pre">operation</span></code></a>.</p>
+imported <a class="reference internal" href="#IntermediateMicroservice" title="IntermediateMicroservice"><code class="xref java java-type docutils literal notranslate"><span class="pre">microservices</span></code></a>,
+<a class="reference internal" href="#IntermediateInterface" title="IntermediateInterface"><code class="xref java java-type docutils literal notranslate"><span class="pre">interfaces</span></code></a>, or
+<a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal notranslate"><span class="pre">operation</span></code></a>.</p>
 <dl class="type">
 <dt id="MicroserviceReference">
- class <code class="descname">MicroserviceReference</code><a class="headerlink" href="#MicroserviceReference" title="Permalink to this definition">¶</a></dt>
+ class <code class="sig-name descname">MicroserviceReference</code><a class="headerlink" href="#MicroserviceReference" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reference to a possibly imported
-<a class="reference internal" href="#IntermediateMicroservice" title="IntermediateMicroservice"><code class="xref java java-type docutils literal"><span class="pre">microservice</span></code></a>.</p>
+<a class="reference internal" href="#IntermediateMicroservice" title="IntermediateMicroservice"><code class="xref java java-type docutils literal notranslate"><span class="pre">microservice</span></code></a>.</p>
 <dl class="attribute">
 <dt>
-<code class="descname">String[1] name</code></dt>
+<code class="sig-name descname">String[1] name</code></dt>
 <dd><p><a class="reference internal" href="#link-intermediatemicroservice-name"><span class="std std-ref">Name</span></a> of the referenced
 microservice.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="descname">String version</code></dt>
+<code class="sig-name descname">String version</code></dt>
 <dd><p><a class="reference internal" href="#link-intermediatemicroservice-version"><span class="std std-ref">Version</span></a> of the
 referenced microservice.</p>
 </dd></dl>
 
 <span class="target" id="link-microservicereference-qualifiedname"></span><dl class="attribute">
 <dt>
-<code class="descname">String[1] qualifiedName</code></dt>
+<code class="sig-name descname">String[1] qualifiedName</code></dt>
 <dd><p><a class="reference internal" href="#link-intermediatemicroservice-qualifiedname"><span class="std std-ref">Qualified name</span></a> of
 the referenced microservice.</p>
 </dd></dl>
 
 <span class="target" id="link-microservicereference-imported"></span><dl class="attribute">
 <dt>
-<code class="descname">boolean imported</code></dt>
+<code class="sig-name descname">boolean imported</code></dt>
 <dd><p>Flag to indicate if the referenced microservice was imported from
 another Service Model.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateImport import</code></dt>
-<dd><p>Link to the <a class="reference external" href="../../../../de.fhdo.lemma.data.intermediate.metamodel/doc/build/html/body.html#IntermediateImport" title="(in Intermediate Data Model Format Specification v1.0)"><code class="docutils literal"><span class="pre">IntermediateImport</span></code></a> which points to
+<code class="sig-name descname">IntermediateImport import</code></dt>
+<dd><p>Link to the <code class="xref java java-type docutils literal notranslate"><span class="pre">data_model:IntermediateImport</span></code> which points to
 the imported Service Model. If the
-<a class="reference internal" href="#link-microservicereference-imported"><span class="std std-ref">imported</span></a> flag is <code class="docutils literal"><span class="pre">true</span></code>
-this attribute contains a value. Otherwise it is <code class="docutils literal"><span class="pre">null</span></code>.</p>
+<a class="reference internal" href="#link-microservicereference-imported"><span class="std std-ref">imported</span></a> flag is <code class="docutils literal notranslate"><span class="pre">true</span></code>
+this attribute contains a value. Otherwise it is <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateMicroservice localMicroservice</code></dt>
-<dd><p>Link to the referenced <a class="reference internal" href="#IntermediateMicroservice" title="IntermediateMicroservice"><code class="xref java java-type docutils literal"><span class="pre">IntermediateMicroservice</span></code></a> in the same
-Service Model as the <code class="docutils literal"><span class="pre">MicroserviceReference</span></code>. If the
-<a class="reference internal" href="#link-microservicereference-imported"><span class="std std-ref">imported</span></a> flag is <code class="docutils literal"><span class="pre">true</span></code>
-this attribute is <code class="docutils literal"><span class="pre">null</span></code>. Otherwise it contains a value.</p>
+<code class="sig-name descname">IntermediateMicroservice localMicroservice</code></dt>
+<dd><p>Link to the referenced <a class="reference internal" href="#IntermediateMicroservice" title="IntermediateMicroservice"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateMicroservice</span></code></a> in the same
+Service Model as the <code class="docutils literal notranslate"><span class="pre">MicroserviceReference</span></code>. If the
+<a class="reference internal" href="#link-microservicereference-imported"><span class="std std-ref">imported</span></a> flag is <code class="docutils literal notranslate"><span class="pre">true</span></code>
+this attribute is <code class="docutils literal notranslate"><span class="pre">null</span></code>. Otherwise it contains a value.</p>
 <div class="admonition hint">
-<p class="first admonition-title">Hint</p>
-<p class="last">If the attribute is <code class="docutils literal"><span class="pre">null</span></code>, i.e., the referenced microservice is
+<p class="admonition-title">Hint</p>
+<p>If the attribute is <code class="docutils literal notranslate"><span class="pre">null</span></code>, i.e., the referenced microservice is
 defined in another Service Model, model processors need to retrieve
 details of the referenced service from the imported Service Model
 themselves. That is, they need to parse the imported model and find
 the referenced microservice leveraging the
 <a class="reference internal" href="#link-microservicereference-qualifiedname"><span class="std std-ref">qualified name</span></a> of
-this <code class="docutils literal"><span class="pre">MicroserviceReference</span></code> instance.</p>
+this <code class="docutils literal notranslate"><span class="pre">MicroserviceReference</span></code> instance.</p>
 </div>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateMicroservice requiringMicroservice</code></dt>
-<dd><p><a class="reference internal" href="#IntermediateMicroservice" title="IntermediateMicroservice"><code class="xref java java-type docutils literal"><span class="pre">IntermediateMicroservice</span></code></a> that
+<code class="sig-name descname">IntermediateMicroservice requiringMicroservice</code></dt>
+<dd><p><a class="reference internal" href="#IntermediateMicroservice" title="IntermediateMicroservice"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateMicroservice</span></code></a> that
 <a class="reference internal" href="#link-intermediatemicroservice-requiredmicroservices"><span class="std std-ref">requires</span></a>
 this microservice.</p>
 </dd></dl>
@@ -1409,69 +1398,69 @@ this microservice.</p>
 
 <dl class="type">
 <dt id="InterfaceReference">
- class <code class="descname">InterfaceReference</code><a class="headerlink" href="#InterfaceReference" title="Permalink to this definition">¶</a></dt>
+ class <code class="sig-name descname">InterfaceReference</code><a class="headerlink" href="#InterfaceReference" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reference to a possibly imported
-<a class="reference internal" href="#IntermediateInterface" title="IntermediateInterface"><code class="xref java java-type docutils literal"><span class="pre">interface</span></code></a>.</p>
+<a class="reference internal" href="#IntermediateInterface" title="IntermediateInterface"><code class="xref java java-type docutils literal notranslate"><span class="pre">interface</span></code></a>.</p>
 <dl class="attribute">
 <dt>
-<code class="descname">String[1] name</code></dt>
+<code class="sig-name descname">String[1] name</code></dt>
 <dd><p><a class="reference internal" href="#link-intermediateinterface-name"><span class="std std-ref">Name</span></a> of the referenced
 interface.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="descname">String version</code></dt>
+<code class="sig-name descname">String version</code></dt>
 <dd><p><a class="reference internal" href="#link-intermediateinterface-version"><span class="std std-ref">Version</span></a> of the referenced
 interface.</p>
 </dd></dl>
 
 <span class="target" id="link-interfacereference-qualifiedname"></span><dl class="attribute">
 <dt>
-<code class="descname">String[1] qualifiedName</code></dt>
+<code class="sig-name descname">String[1] qualifiedName</code></dt>
 <dd><p><a class="reference internal" href="#link-intermediateinterface-qualifiedname"><span class="std std-ref">Qualified name</span></a> of the
 referenced interface.</p>
 </dd></dl>
 
 <span class="target" id="link-interfacereference-imported"></span><dl class="attribute">
 <dt>
-<code class="descname">boolean imported</code></dt>
+<code class="sig-name descname">boolean imported</code></dt>
 <dd><p>Flag to indicate if the referenced interface was imported from another
 Service Model.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateImport import</code></dt>
-<dd><p>Link to the <a class="reference external" href="../../../../de.fhdo.lemma.data.intermediate.metamodel/doc/build/html/body.html#IntermediateImport" title="(in Intermediate Data Model Format Specification v1.0)"><code class="docutils literal"><span class="pre">IntermediateImport</span></code></a> which points to
+<code class="sig-name descname">IntermediateImport import</code></dt>
+<dd><p>Link to the <code class="xref java java-type docutils literal notranslate"><span class="pre">data_model:IntermediateImport</span></code> which points to
 the imported Service Model. If the
-<a class="reference internal" href="#link-interfacereference-imported"><span class="std std-ref">imported</span></a> flag is <code class="docutils literal"><span class="pre">true</span></code>
-this attribute contains a value. Otherwise it is <code class="docutils literal"><span class="pre">null</span></code>.</p>
+<a class="reference internal" href="#link-interfacereference-imported"><span class="std std-ref">imported</span></a> flag is <code class="docutils literal notranslate"><span class="pre">true</span></code>
+this attribute contains a value. Otherwise it is <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateInterface localInterface</code></dt>
-<dd><p>Link to the referenced <a class="reference internal" href="#IntermediateInterface" title="IntermediateInterface"><code class="xref java java-type docutils literal"><span class="pre">IntermediateInterface</span></code></a> in the same
-Service Model as the <code class="docutils literal"><span class="pre">InterfaceReference</span></code>. If the
-<a class="reference internal" href="#link-interfacereference-imported"><span class="std std-ref">imported</span></a> flag is <code class="docutils literal"><span class="pre">true</span></code>
-this attribute is <code class="docutils literal"><span class="pre">null</span></code>. Otherwise it contains a value.</p>
+<code class="sig-name descname">IntermediateInterface localInterface</code></dt>
+<dd><p>Link to the referenced <a class="reference internal" href="#IntermediateInterface" title="IntermediateInterface"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateInterface</span></code></a> in the same
+Service Model as the <code class="docutils literal notranslate"><span class="pre">InterfaceReference</span></code>. If the
+<a class="reference internal" href="#link-interfacereference-imported"><span class="std std-ref">imported</span></a> flag is <code class="docutils literal notranslate"><span class="pre">true</span></code>
+this attribute is <code class="docutils literal notranslate"><span class="pre">null</span></code>. Otherwise it contains a value.</p>
 <div class="admonition hint">
-<p class="first admonition-title">Hint</p>
-<p class="last">If the attribute is <code class="docutils literal"><span class="pre">null</span></code>, i.e., the referenced interface is
+<p class="admonition-title">Hint</p>
+<p>If the attribute is <code class="docutils literal notranslate"><span class="pre">null</span></code>, i.e., the referenced interface is
 defined in another Service Model, model processors need to retrieve
 details of the referenced interface from the imported Service Model
 themselves. That is, they need to parse the imported model and find
 the referenced interface leveraging the
 <a class="reference internal" href="#link-interfacereference-qualifiedname"><span class="std std-ref">qualified name</span></a> of
-this <code class="docutils literal"><span class="pre">InterfaceReference</span></code> instance.</p>
+this <code class="docutils literal notranslate"><span class="pre">InterfaceReference</span></code> instance.</p>
 </div>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateMicroservice requiringMicroservice</code></dt>
-<dd><p><a class="reference internal" href="#IntermediateMicroservice" title="IntermediateMicroservice"><code class="xref java java-type docutils literal"><span class="pre">IntermediateMicroservice</span></code></a> that
+<code class="sig-name descname">IntermediateMicroservice requiringMicroservice</code></dt>
+<dd><p><a class="reference internal" href="#IntermediateMicroservice" title="IntermediateMicroservice"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateMicroservice</span></code></a> that
 <a class="reference internal" href="#link-intermediatemicroservice-requiredinterfaces"><span class="std std-ref">requires</span></a>
 this interface.</p>
 </dd></dl>
@@ -1480,173 +1469,135 @@ this interface.</p>
 
 <dl class="type">
 <dt id="OperationReference">
- class <code class="descname">OperationReference</code><a class="headerlink" href="#OperationReference" title="Permalink to this definition">¶</a></dt>
+ class <code class="sig-name descname">OperationReference</code><a class="headerlink" href="#OperationReference" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reference to a possibly imported
-<a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal"><span class="pre">operation</span></code></a>.</p>
+<a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal notranslate"><span class="pre">operation</span></code></a>.</p>
 <dl class="attribute">
 <dt>
-<code class="descname">String[1] name</code></dt>
+<code class="sig-name descname">String[1] name</code></dt>
 <dd><p><a class="reference internal" href="#link-intermediateoperation-name"><span class="std std-ref">Name</span></a> of the referenced
 operation.</p>
 </dd></dl>
 
 <span class="target" id="link-operationreference-qualifiedname"></span><dl class="attribute">
 <dt>
-<code class="descname">String[1] qualifiedName</code></dt>
+<code class="sig-name descname">String[1] qualifiedName</code></dt>
 <dd><p><a class="reference internal" href="#link-intermediateoperation-qualifiedname"><span class="std std-ref">Qualified name</span></a> of the
 referenced operation.</p>
 </dd></dl>
 
 <span class="target" id="link-operationreference-imported"></span><dl class="attribute">
 <dt>
-<code class="descname">boolean imported</code></dt>
+<code class="sig-name descname">boolean imported</code></dt>
 <dd><p>Flag to indicate if the referenced operation was imported from another
 Service Model.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateImport import</code></dt>
-<dd><p>Link to the <a class="reference external" href="../../../../de.fhdo.lemma.data.intermediate.metamodel/doc/build/html/body.html#IntermediateImport" title="(in Intermediate Data Model Format Specification v1.0)"><code class="docutils literal"><span class="pre">IntermediateImport</span></code></a> which points to
+<code class="sig-name descname">IntermediateImport import</code></dt>
+<dd><p>Link to the <code class="xref java java-type docutils literal notranslate"><span class="pre">data_model:IntermediateImport</span></code> which points to
 the imported Service Model. If the
-<a class="reference internal" href="#link-operationreference-imported"><span class="std std-ref">imported</span></a> flag is <code class="docutils literal"><span class="pre">true</span></code>
-this attribute contains a value. Otherwise it is <code class="docutils literal"><span class="pre">null</span></code>.</p>
+<a class="reference internal" href="#link-operationreference-imported"><span class="std std-ref">imported</span></a> flag is <code class="docutils literal notranslate"><span class="pre">true</span></code>
+this attribute contains a value. Otherwise it is <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateOperation localOperation</code></dt>
-<dd><p>Link to the referenced <a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal"><span class="pre">IntermediateOperation</span></code></a> in the same
-Service Model as the <code class="docutils literal"><span class="pre">OperationReference</span></code>. If the
-<a class="reference internal" href="#link-operationreference-imported"><span class="std std-ref">imported</span></a> flag is <code class="docutils literal"><span class="pre">true</span></code>
-this attribute is <code class="docutils literal"><span class="pre">null</span></code>. Otherwise it contains a value.</p>
+<code class="sig-name descname">IntermediateOperation localOperation</code></dt>
+<dd><p>Link to the referenced <a class="reference internal" href="#IntermediateOperation" title="IntermediateOperation"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateOperation</span></code></a> in the same
+Service Model as the <code class="docutils literal notranslate"><span class="pre">OperationReference</span></code>. If the
+<a class="reference internal" href="#link-operationreference-imported"><span class="std std-ref">imported</span></a> flag is <code class="docutils literal notranslate"><span class="pre">true</span></code>
+this attribute is <code class="docutils literal notranslate"><span class="pre">null</span></code>. Otherwise it contains a value.</p>
 <div class="admonition hint">
-<p class="first admonition-title">Hint</p>
-<p class="last">If the attribute is <code class="docutils literal"><span class="pre">null</span></code>, i.e., the referenced operation is
+<p class="admonition-title">Hint</p>
+<p>If the attribute is <code class="docutils literal notranslate"><span class="pre">null</span></code>, i.e., the referenced operation is
 defined in another Service Model, model processors need to retrieve
 details of the referenced operation from the imported Service Model
 themselves. That is, they need to parse the imported model and find
 the referenced operation leveraging the
 <a class="reference internal" href="#link-operationreference-qualifiedname"><span class="std std-ref">qualified name</span></a> of
-this <code class="docutils literal"><span class="pre">OperationReference</span></code> instance.</p>
+this <code class="docutils literal notranslate"><span class="pre">OperationReference</span></code> instance.</p>
 </div>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateMicroservice requiringMicroservice</code></dt>
-<dd><p><a class="reference internal" href="#IntermediateMicroservice" title="IntermediateMicroservice"><code class="xref java java-type docutils literal"><span class="pre">IntermediateMicroservice</span></code></a> that
+<code class="sig-name descname">IntermediateMicroservice requiringMicroservice</code></dt>
+<dd><p><a class="reference internal" href="#IntermediateMicroservice" title="IntermediateMicroservice"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateMicroservice</span></code></a> that
 <a class="reference internal" href="#link-intermediatemicroservice-requiredinterfaces"><span class="std std-ref">requires</span></a>
 this operation.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="descname">IntermediateParameter initializedParameter</code></dt>
-<dd><p><a class="reference internal" href="#IntermediateParameter" title="IntermediateParameter"><code class="xref java java-type docutils literal"><span class="pre">IntermediateParameter</span></code></a> that is <a class="reference internal" href="#link-intermediateparameter-initializedbyoperation"><span class="std std-ref">initialized by</span></a>
+<code class="sig-name descname">IntermediateParameter initializedParameter</code></dt>
+<dd><p><a class="reference internal" href="#IntermediateParameter" title="IntermediateParameter"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateParameter</span></code></a> that is <a class="reference internal" href="#link-intermediateparameter-initializedbyoperation"><span class="std std-ref">initialized by</span></a>
 this operation.</p>
 </dd></dl>
 
 </dd></dl>
 
 <p class="rubric">Footnotes</p>
-<table class="docutils footnote" frame="void" id="eclipse" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id5">[1]</a></td><td><a class="reference external" href="https://www.eclipse.org">https://www.eclipse.org</a></td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="xcore" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id6">[2]</a></td><td><a class="reference external" href="https://wiki.eclipse.org/Xcore">https://wiki.eclipse.org/Xcore</a></td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="xtext" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id7">[3]</a></td><td><a class="reference external" href="https://www.eclipse.org/Xtext">https://www.eclipse.org/Xtext</a></td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="emf" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id9">[4]</a></td><td><a class="reference external" href="https://www.eclipse.org/modeling/emf">https://www.eclipse.org/modeling/emf</a></td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="model-export" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id11">[5]</a></td><td>Actually, the models are <em>transformed</em> into the XMI format.
-Please refer to <a class="reference internal" href="#combemale2017" id="id15">[CFJezequel+17]</a> to learn more about <em>model</em>
-<em>transformation</em>.</td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="xmi" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id12">[6]</a></td><td><a class="reference external" href="https://www.omg.org/spec/XMI">https://www.omg.org/spec/XMI</a></td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="mof" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id14">[7]</a></td><td><a class="reference external" href="https://www.omg.org/mof">https://www.omg.org/mof</a></td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="java-type-conversions" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[8]</td><td><a class="reference external" href="https://docs.oracle.com/javase/specs/jls/se11/html/jls-5.html#jls-5.1.2">https://docs.oracle.com/javase/specs/jls/se11/html/jls-5.html#jls-5.1.2</a></td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="golang" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[9]</td><td><a class="reference external" href="https://www.golang.org">https://www.golang.org</a></td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="python" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[10]</td><td><a class="reference external" href="https://www.python.org">https://www.python.org</a></td></tr>
-</tbody>
-</table>
+<dl class="footnote brackets">
+<dt class="label" id="eclipse"><span class="brackets"><a class="fn-backref" href="#id5">1</a></span></dt>
+<dd><p><a class="reference external" href="https://www.eclipse.org">https://www.eclipse.org</a></p>
+</dd>
+<dt class="label" id="xcore"><span class="brackets"><a class="fn-backref" href="#id6">2</a></span></dt>
+<dd><p><a class="reference external" href="https://wiki.eclipse.org/Xcore">https://wiki.eclipse.org/Xcore</a></p>
+</dd>
+<dt class="label" id="xtext"><span class="brackets"><a class="fn-backref" href="#id7">3</a></span></dt>
+<dd><p><a class="reference external" href="https://www.eclipse.org/Xtext">https://www.eclipse.org/Xtext</a></p>
+</dd>
+<dt class="label" id="emf"><span class="brackets"><a class="fn-backref" href="#id9">4</a></span></dt>
+<dd><p><a class="reference external" href="https://www.eclipse.org/modeling/emf">https://www.eclipse.org/modeling/emf</a></p>
+</dd>
+<dt class="label" id="model-export"><span class="brackets"><a class="fn-backref" href="#id11">5</a></span></dt>
+<dd><p>Actually, the models are <em>transformed</em> into the XMI format.
+Please refer to <span id="id15">[<a class="reference internal" href="#id19"><span>CFJezequel+17</span></a>]</span> to learn more about <em>model</em>
+<em>transformation</em>.</p>
+</dd>
+<dt class="label" id="xmi"><span class="brackets"><a class="fn-backref" href="#id12">6</a></span></dt>
+<dd><p><a class="reference external" href="https://www.omg.org/spec/XMI">https://www.omg.org/spec/XMI</a></p>
+</dd>
+<dt class="label" id="mof"><span class="brackets"><a class="fn-backref" href="#id14">7</a></span></dt>
+<dd><p><a class="reference external" href="https://www.omg.org/mof">https://www.omg.org/mof</a></p>
+</dd>
+<dt class="label" id="java-type-conversions"><span class="brackets">8</span></dt>
+<dd><p><a class="reference external" href="https://docs.oracle.com/javase/specs/jls/se11/html/jls-5.html#jls-5.1.2">https://docs.oracle.com/javase/specs/jls/se11/html/jls-5.html#jls-5.1.2</a></p>
+</dd>
+<dt class="label" id="golang"><span class="brackets">9</span></dt>
+<dd><p><a class="reference external" href="https://www.golang.org">https://www.golang.org</a></p>
+</dd>
+<dt class="label" id="python"><span class="brackets">10</span></dt>
+<dd><p><a class="reference external" href="https://www.python.org">https://www.python.org</a></p>
+</dd>
+</dl>
 </div>
 </div>
 <div class="section" id="indices-and-tables">
-<h1>4&nbsp;&nbsp;&nbsp;Indices and Tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<h1><span class="sectnum">4</span> Indices and Tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
-<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
 </ul>
 </div>
 <div class="section" id="id16">
-<h1>5&nbsp;&nbsp;&nbsp;References<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h1>
-<p id="bibtex-bibliography-body-0"><table class="docutils citation" frame="void" id="combemale2017" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[CFJezequel+17]</td><td><em>(<a class="fn-backref" href="#id3">1</a>, <a class="fn-backref" href="#id10">2</a>, <a class="fn-backref" href="#id13">3</a>, <a class="fn-backref" href="#id15">4</a>)</em> Benoit Combemale, Robert&nbsp;B. France, Jean-Marc Jézéquel, Bernhard Rumpe, Jim Steel, and Didier Vojtisek. <em>Engineering Modeling Languages</em>. CRC Press, 2017.</td></tr>
-</tbody>
-</table>
-<table class="docutils citation" frame="void" id="kiczales1997" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id4">[KLM+97]</a></td><td>Gregor Kiczales, John Lamping, Anurag Mendhekar, Chris Maeda, Cristina Lopes, Jean-Marc Loingtier, and John Irwin. Aspect-oriented programming. In <em>Object-Oriented Programming</em>, 220–242. Springer, 1997.</td></tr>
-</tbody>
-</table>
-<table class="docutils citation" frame="void" id="newman2015" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id2">[New15]</a></td><td>Sam Newman. <em>Building Microservices</em>. O’Reilly Media, 2015.</td></tr>
-</tbody>
-</table>
-<table class="docutils citation" frame="void" id="steinberg2011" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id8">[SBPM11]</a></td><td>Dave Steinberg, Frank Budinsky, Marcelo Paternostro, and Ed&nbsp;Merks. <em>EMF–Eclipse Modeling Framework</em>. Pearson Education, 2 edition, 2011.</td></tr>
-</tbody>
-</table>
+<h1><span class="sectnum">5</span> References<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h1>
+<p id="id17"><dl class="citation">
+<dt class="label" id="id19"><span class="brackets">CFJezequel+17</span><span class="fn-backref">(<a href="#id3">1</a>,<a href="#id10">2</a>,<a href="#id13">3</a>,<a href="#id15">4</a>)</span></dt>
+<dd><p>Benoit Combemale, Robert B. France, Jean-Marc Jézéquel, Bernhard Rumpe, Jim Steel, and Didier Vojtisek. <em>Engineering Modeling Languages</em>. CRC Press, 2017.</p>
+</dd>
+<dt class="label" id="id20"><span class="brackets"><a class="fn-backref" href="#id4">KLM+97</a></span></dt>
+<dd><p>Gregor Kiczales, John Lamping, Anurag Mendhekar, Chris Maeda, Cristina Lopes, Jean-Marc Loingtier, and John Irwin. Aspect-oriented programming. In <em>Object-Oriented Programming</em>, 220–242. Springer, 1997.</p>
+</dd>
+<dt class="label" id="id18"><span class="brackets"><a class="fn-backref" href="#id2">New15</a></span></dt>
+<dd><p>Sam Newman. <em>Building Microservices</em>. O'Reilly Media, 2015.</p>
+</dd>
+<dt class="label" id="id21"><span class="brackets"><a class="fn-backref" href="#id8">SBPM11</a></span></dt>
+<dd><p>Dave Steinberg, Frank Budinsky, Marcelo Paternostro, and Ed Merks. <em>EMF–Eclipse Modeling Framework</em>. Pearson Education, 2 edition, 2011.</p>
+</dd>
+</dl>
 </p>
 </div>
 
@@ -1665,15 +1616,15 @@ Please refer to <a class="reference internal" href="#combemale2017" id="id15">[C
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -1682,7 +1633,7 @@ Please refer to <a class="reference internal" href="#combemale2017" id="id15">[C
       &copy;2018, Florian Rademacher.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.7</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.3</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
