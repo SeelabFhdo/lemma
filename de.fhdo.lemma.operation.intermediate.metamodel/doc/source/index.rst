@@ -1,5 +1,5 @@
 Intermediate Operation Model Format Specification
-===============================================
+=================================================
 
 .. toctree::
     :caption: Table of Contents
