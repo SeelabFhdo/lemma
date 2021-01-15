@@ -122,7 +122,7 @@
               <version>${maven-assembly.verion}</version>
               <configuration>
                <appendAssemblyId>false</appendAssemblyId>
-                <finalName>${artifactId}-${project.version}-standalone</finalName>
+                <finalName>${project.artifactId}-${project.version}-standalone</finalName>
                 <archive>
                   <manifest>
                     <mainClass>de.fhdo.lemma.model_processing.code_generation.mongodb.MongoDBGenerator</mainClass>
