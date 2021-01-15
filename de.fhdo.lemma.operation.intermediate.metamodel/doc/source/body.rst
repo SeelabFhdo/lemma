@@ -5,7 +5,7 @@
 Introduction
 ============
 
-This document describes the Intermediate Service Model format of the
+This document describes the Intermediate Operation Model format of the
 `Language Ecosystem for Modeling Microservice Archictecture`_. The project aims
 to facilitate the development of *microservice-based software systems* 
 :cite:`Newman2015` by employing Model-driven Development (MDD) 
@@ -35,8 +35,10 @@ of models, listed in :numref:`tab__model_types`.
                         be used to type operations' parameters. See also the 
                         :doc:`Intermediate Service Model Format Specification 
                         <service_model:index>`.
-    Operation Model     An Operation Model expresses the deployment of 
-                        microservices being imported from Service Models.
+    Operation Model     An Operation Model expresses the deployment and 
+                        operation of microservices being imported from Service 
+                        Models, and the dependencies to infrastructure nodes,
+                        e.g., databases or Service Discoveries.
     Technology Model    A Technology models encapsulates descriptions of 
                         technologies. For instance, certain implementation 
                         technologies, e.g., Java or Go, and protocol 
@@ -337,6 +339,11 @@ Operation Nodes
     This class represents a container as a certain kind of
     :java:type:`operation node <IntermediateOperationNode>`.
 
+    .. py:attribute String qualifiedDeploymentTechnologyName
+
+        Qualified name of the deployment technology, which is used
+        for the deployment of the container. 
+
     .. _link__IntermediateContainer_technologyReference:
 
     .. py:attribute:: IntermediateDeploymentTechnologyReference[1] technologyReference
@@ -351,21 +358,53 @@ Operation Nodes
 
         The operation model to which the container belongs.
 
+    .. _link__IntermediateOperationNodeReference_dependsOnNodes:
+
+    .. py:attribute:: IntermediateOperationNodeReference[*] dependsOnNodes
+
+        A container may depend on other nodes, e.g., service
+        discoveries or databases, for its intended functioning.
+
+    .. _link__IntermediateOperationNodeReference_usedByNodes:
+
+    .. py:attribute:: IntermediateOperationNodeReference[*] usedByNodes
+
+        A container may be used by other nodes that make use of its
+        infrastructure-related capabilities.
+
+        .. NOTE::
+
+            The `\"usedByNodes\"` attribute models the dependency of another
+            node on an infrastructure node. The
+            :ref:`dependsOnNodes <link__IntermediateOperationNodeReference_dependsOnNodes>`
+            takes the opposite perspective and reflects the dependency of an
+            infrastructure node on another node. Bidirectional dependencies
+            (`\"usedByNodes`\" on other node to infrastructure node and
+            `\"dependsOnNodes`\" on infrastructure node to other node) usually
+            do not make sense.
+
+    .. _link__IntermediateOperationNodeReference_reference:
+
 .. java:type:: class IntermediateInfrastructureNode
 
     This class represents an infrastructure node as a certain kind of
     :java:type:`operation node <IntermediateOperationNode>`.
 
-    .. _link__IntermediateInfrastructureNode_dependsOnNodes:
+    .. py:attribute:: String qualifiedInfrastructureTechnologyName
 
-    .. py:attribute:: IntermediateOperationNode[*] dependsOnNodes
+        Qualified infrastructure technology name, which is used by the
+        infrastructure node.
+
+    .. _link__IntermediateOperationNodeReference_dependsOnNodes:
+
+    .. py:attribute:: IntermediateOperationNodeReference[*] dependsOnNodes
 
         An infrastructure node may depend on other nodes, e.g., service
         discoveries or databases, for its intended functioning.
 
-    .. _link__IntermediateInfrastructureNode_usedByNodes:
+    .. _link__IntermediateOperationNodeReference_usedByNodes:
 
-    .. py:attribute:: IntermediateOperationNode[*] usedByNodes
+    .. py:attribute:: IntermediateOperationNodeReference[*] usedByNodes
 
         An infrastructure node may be used by other nodes that make use of its
         infrastructure-related capabilities.
@@ -374,15 +413,14 @@ Operation Nodes
 
             The `\"usedByNodes\"` attribute models the dependency of another
             node on an infrastructure node. The
-            :ref:`dependsOnNodes <link__IntermediateInfrastructureNode_dependsOnNodes>`
+            :ref:`dependsOnNodes <link__IntermediateOperationNodeReference_dependsOnNodes>`
             takes the opposite perspective and reflects the dependency of an
             infrastructure node on another node. Bidirectional dependencies
             (`\"usedByNodes`\" on other node to infrastructure node and
             `\"dependsOnNodes`\" on infrastructure node to other node) usually
-            do not make sense, but may still be supported by certain operation
-            technologies.
+            do not make sense.
 
-    .. _link__IntermediateInfrastructureNode_reference:
+    .. _link__IntermediateOperationNodeReference_reference:
 
     .. py:attribute:: IntermediateInfrastructureTechnologyReference[1] reference
 
@@ -395,6 +433,37 @@ Operation Nodes
     .. py:attribute:: IntermediateOperationModel[1] operationModel
 
         The operation model to which the infrastructure node belongs.
+
+.. java:type:: class IntermediateOperationNodeReference
+
+    This class represents a reference to another operation node as a kind of 
+    :java:type:`operation node <IntermediateOperationNode>`.
+
+    .. py:attribute:: String imported
+
+        Describes if the operation node reference is imported from another operation model or 
+        is located in the same operation model.
+
+    .. py:attribute:: String name
+
+        Name of the referenced operation node. 
+
+    .. py:attribute:: String qualifiedTechnologyName
+
+        Name of the technology the referenced operation node uses.
+
+    .. py:attribute:: IntermediateImport import
+
+        Reference to the operation model, which contains the possibly imported operation node
+        reference.
+
+    .. py:attribute:: IntermediateOperationNode dependsOnNode
+
+        Link to the operation node, which depends on the operation node reference.
+
+    .. py:attribute:: IntermediateOperationNode usedByNode
+
+        Link to the operation node, which uses the operation node reference. 
 
 Operation Technologies
 ----------------------
