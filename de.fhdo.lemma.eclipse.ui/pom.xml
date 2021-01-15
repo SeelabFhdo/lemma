@@ -7,7 +7,7 @@
         <relativePath>../de.fhdo.lemma.eclipse.ui.parent/pom.xml</relativePath>
         <groupId>de.fhdo.lemma.eclipse.ui</groupId>
         <artifactId>parent</artifactId>
-        <version>0.7.0-SNAPSHOT</version>
+        <version>0.8.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>de.fhdo.lemma.eclipse.ui</artifactId>

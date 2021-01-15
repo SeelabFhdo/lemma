@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.fhdo.lemma.model_processing.code_generation.container_base</groupId>
     <artifactId>de.fhdo.lemma.model_processing.code_generation.container_base</artifactId>
-    <version>0.7.0-SNAPSHOT</version>
+    <version>0.8.0-SNAPSHOT</version>
     <name>Docker Code Generator</name>
     <description>A LEMMA code generator for dockerfiles.</description>
 
