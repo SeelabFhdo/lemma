@@ -24,7 +24,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Intermediate Service Model Format Specification" href="index.html" />
+    <link rel="prev" title="Intermediate Operation Model Format Specification" href="index.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -44,7 +44,7 @@
             
   <div class="section" id="introduction">
 <span id="id1"></span><h1>1&nbsp;&nbsp;&nbsp;Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
-<p>This document describes the Intermediate Service Model format of the
+<p>This document describes the Intermediate Operation Model format of the
 <a class="reference external" href="https://github.com/SeelabFhdo/lemma">Language Ecosystem for Modeling Microservice Archictecture</a>. The project aims
 to facilitate the development of <em>microservice-based software systems</em>
 <a class="reference internal" href="#newman2015" id="id2">[New15]</a> by employing Model-driven Development (MDD)
@@ -80,8 +80,11 @@ be used to type operations’ parameters. See also the
 <a class="reference external" href="../../../../de.fhdo.lemma.service.intermediate.metamodel/doc/build/html/index.html" title="(in Intermediate Service Model Format Specification v1.0)"><span class="xref std std-doc">Intermediate Service Model Format Specification</span></a>.</td>
 </tr>
 <tr class="row-odd"><td>Operation Model</td>
-<td>An Operation Model expresses the deployment of
-microservices being imported from Service Models.</td>
+<td>An Operation Model expresses the deployment and
+operation of microservices being imported from Service
+Models, and the dependencies to infrastructure nodes,
+e.g., databases or service discoveries, being imported
+from Operation Models.</td>
 </tr>
 <tr class="row-even"><td>Technology Model</td>
 <td>A Technology models encapsulates descriptions of
@@ -401,36 +404,61 @@ being used by the container.</p>
 <dd><p>The operation model to which the container belongs.</p>
 </dd></dl>
 
+<span class="target" id="link-intermediatecontainer-dependsonnodes"></span><dl class="attribute">
+<dt>
+<code class="descname">IntermediateOperationNodeReference[*] dependsOnNodes</code></dt>
+<dd><p>A container may depend on other nodes, e.g., databases or service
+discoveries that deployed microservices require.</p>
 </dd></dl>
+
+<span class="target" id="link-intermediatecontainer-usedbynodes"></span><dl class="attribute">
+<dt>
+<code class="descname">IntermediateOperationNodeReference[*] usedByNodes</code></dt>
+<dd><p>A container may be used by other nodes that make use of its
+infrastructure-related capabilities.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <cite>“usedByNodes”</cite> attribute models the dependency of another
+node on a container. The
+<a class="reference internal" href="#link-intermediatecontainer-dependsonnodes"><span class="std std-ref">dependsOnNodes</span></a>
+attribute takes the opposite perspective and reflects the dependency
+of a container on another node.</p>
+</div>
+</dd></dl>
+
+<span class="target" id="link-intermediatecontainer-reference"></span></dd></dl>
 
 <dl class="type">
 <dt id="IntermediateInfrastructureNode">
  class <code class="descname">IntermediateInfrastructureNode</code><a class="headerlink" href="#IntermediateInfrastructureNode" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class represents an infrastructure node as a certain kind of
 <a class="reference internal" href="#IntermediateOperationNode" title="IntermediateOperationNode"><code class="xref java java-type docutils literal"><span class="pre">operation</span> <span class="pre">node</span></code></a>.</p>
-<span class="target" id="link-intermediateinfrastructurenode-dependsonnodes"></span><dl class="attribute">
+<dl class="attribute">
 <dt>
-<code class="descname">IntermediateOperationNode[*] dependsOnNodes</code></dt>
+<code class="descname">String qualifiedInfrastructureTechnologyName</code></dt>
+<dd><p>Qualified infrastructure technology name, which is used by the
+infrastructure node.</p>
+</dd></dl>
+
+<span class="target" id="link-intermediateoperationnodereference-dependsonnodes"></span><dl class="attribute">
+<dt>
+<code class="descname">IntermediateOperationNodeReference[*] dependsOnNodes</code></dt>
 <dd><p>An infrastructure node may depend on other nodes, e.g., service
 discoveries or databases, for its intended functioning.</p>
 </dd></dl>
 
 <span class="target" id="link-intermediateinfrastructurenode-usedbynodes"></span><dl class="attribute">
 <dt>
-<code class="descname">IntermediateOperationNode[*] usedByNodes</code></dt>
+<code class="descname">IntermediateOperationNodeReference[*] usedByNodes</code></dt>
 <dd><p>An infrastructure node may be used by other nodes that make use of its
 infrastructure-related capabilities.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">The <cite>“usedByNodes”</cite> attribute models the dependency of another
 node on an infrastructure node. The
-<a class="reference internal" href="#link-intermediateinfrastructurenode-dependsonnodes"><span class="std std-ref">dependsOnNodes</span></a>
+<a class="reference internal" href="#link-intermediateoperationnodereference-dependsonnodes"><span class="std std-ref">dependsOnNodes</span></a>
 takes the opposite perspective and reflects the dependency of an
-infrastructure node on another node. Bidirectional dependencies
-(<cite>“usedByNodes</cite>” on other node to infrastructure node and
-<cite>“dependsOnNodes</cite>” on infrastructure node to other node) usually
-do not make sense, but may still be supported by certain operation
-technologies.</p>
+infrastructure node on another node.</p>
 </div>
 </dd></dl>
 
@@ -446,6 +474,55 @@ being used by the infrastructure node.</p>
 <dt>
 <code class="descname">IntermediateOperationModel[1] operationModel</code></dt>
 <dd><p>The operation model to which the infrastructure node belongs.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="type">
+<dt id="IntermediateOperationNodeReference">
+ class <code class="descname">IntermediateOperationNodeReference</code><a class="headerlink" href="#IntermediateOperationNodeReference" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class represents a reference to an
+<a class="reference internal" href="#IntermediateOperationNode" title="IntermediateOperationNode"><code class="xref java java-type docutils literal"><span class="pre">operation</span> <span class="pre">node</span></code></a>.</p>
+<span class="target" id="link-intermediateoperationnodereference-imported"></span><dl class="attribute">
+<dt>
+<code class="descname">String imported</code></dt>
+<dd><p>This flag indicates whether the operation node reference is imported
+from another operation model or located in the same operation model
+where it occurs.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">String name</code></dt>
+<dd><p>Name of the referenced operation node.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">String qualifiedTechnologyName</code></dt>
+<dd><p>Name of the referenced operation node’s technology.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">IntermediateImport import</code></dt>
+<dd><p>In case the operation node is
+<a class="reference internal" href="#link-intermediateoperationnodereference-imported"><span class="std std-ref">imported</span></a>,
+this attribute points to the <a class="reference external" href="../../../../de.fhdo.lemma.data.intermediate.metamodel/doc/build/html/body.html#IntermediateImport" title="(in Intermediate Data Model Format Specification v1.0)"><code class="xref java java-type docutils literal"><span class="pre">IntermediateImport</span></code></a> instance,
+which identifies the imported model to which the node belongs.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">IntermediateOperationNode dependsOnNode</code></dt>
+<dd><p>Link to the operation node, which depends on the referenced operation
+node.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">IntermediateOperationNode usedByNode</code></dt>
+<dd><p>Link to the operation node, which uses the referenced operation node.</p>
 </dd></dl>
 
 </dd></dl>
@@ -835,7 +912,7 @@ Please refer to <a class="reference internal" href="#combemale2017" id="id15">[C
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="index.html" title="previous chapter">Intermediate Service Model Format Specification</a></li>
+      <li>Previous: <a href="index.html" title="previous chapter">Intermediate Operation Model Format Specification</a></li>
   </ul></li>
 </ul>
 </div>

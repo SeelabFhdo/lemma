@@ -1,7 +1,7 @@
-Intermediate Service Model Format Specification
-===============================================
+Intermediate Operation Model Format Specification
+=================================================
 
-.. toctree:: 
+.. toctree::
     :caption: Table of Contents
     :maxdepth: 2
 
