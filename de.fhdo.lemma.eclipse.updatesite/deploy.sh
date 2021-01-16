@@ -60,7 +60,7 @@ check_env DEPLOY_UPDATESITE_IP
 # Check if the Eclipse Updatesite was already deployed. If that is the case, we
 # only do a re-deploy, if the current LEMMA revision has a release tag. If the
 # Updatesite was not deployed so far, we do a re-deploy.
-if curl --output /dev/null --silent --head --fail "$DEPLOY_UPDATESITE_URL/lemma/p2.index"; then
+if curl --output /dev/null --silent --head --fail --insecure "$DEPLOY_UPDATESITE_URL/lemma/p2.index"; then
     if revision_has_release_tag; then
         echo "Revision has release tag. Deploying..."
         do_updatesite_deploy

@@ -35,3 +35,4 @@ de.fhdo.lemma.eclipse.updatesite/force-deploy.sh
 build/deploy/debug_deploy.sh
 .DS_Store
 __pycache__/
+build/deploy/debug_env.sh
