@@ -15,22 +15,22 @@ RUN mvn install:install-file \
 
 COPY \
     de.fhdo.lemma.model_processing.code_generation.ddd/build/libs/de.fhdo.lemma.model_processing.code_generation.ddd-$LEMMA_VERSION.jar \
-    /home/genlets/ddd.jar
+    /home/genlets/de.fhdo.lemma.model_processing.code_generation.ddd.jar
 
 COPY \
     de.fhdo.lemma.model_processing.code_generation.springcloud/build/libs/de.fhdo.lemma.model_processing.code_generation.springcloud-$LEMMA_VERSION.jar \
-    /home/genlets/springcloud.jar
+    /home/genlets/de.fhdo.lemma.model_processing.code_generation.springcloud.jar
 
 COPY \
     de.fhdo.lemma.model_processing.code_generation.springcloud.cqrs/build/libs/de.fhdo.lemma.model_processing.code_generation.springcloud.cqrs-$LEMMA_VERSION.jar \
-    /home/genlets/cqrs.jar
+    /home/genlets/de.fhdo.lemma.model_processing.code_generation.springcloud.cqrs.jar
 
 COPY \
     de.fhdo.lemma.model_processing.code_generation.springcloud.domain_events/build/libs/de.fhdo.lemma.model_processing.code_generation.springcloud.domain_events-$LEMMA_VERSION.jar \
-    /home/genlets/domain_events.jar
+    /home/genlets/de.fhdo.lemma.model_processing.code_generation.springcloud.domain_events.jar
 
 COPY \
     de.fhdo.lemma.model_processing.code_generation.springcloud.kafka/build/libs/de.fhdo.lemma.model_processing.code_generation.springcloud.kafka-$LEMMA_VERSION.jar \
-    /home/genlets/kafka.jar
+    /home/genlets/de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.jar
 
 ENTRYPOINT ["java", "-jar", "/home/java_base.jar"]
