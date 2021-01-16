@@ -1,6 +1,96 @@
 # Changelog
 All notable changes to [LEMMA](https://github.com/SeelabFhdo/lemma/) will be documented in this file.
 
+## [0.8.0] - 2021-01-16
+### Added
+- Data DSL: Enable other complex types besides data structures to become Parts of an Aggregate.
+- Data DSL: Add extractor plugin.
+- Data DSL: Enable DDD feature specification for enumerations.
+- Documentation: Enable Docker build of documentations for intermediate metamodels.
+- Intermediate Model Transformations: Add intermediate operation model transformation (contributed by [Philip Wizenty](github.com/pwizenty)).
+- Java Base Generator: Add support for Java's `UUID` type.
+- Java Base Generator: Dockerize the generator to make it portable.
+- Java Base Generator: Accompany the generator with a Python script to facilitate its Docker-based execution.
+- Java Base Generator: Support plain serialization of enumerations.
+- Java Base Generator: Add events to inform Genlets that they were loaded and that the overall code generation was finished.
+- Java Base Generator: Add explicitly invoked code generation module `shared` to enable generation of shared libraries from a set of intermediate domain models.
+- Java Base Generator: Add support for custom constructors, deactivation of initializing constructors and adaptation of their visibility.
+- Live Validation Framework: Introduce `--timeout_threshold` commandline option to configure the maximum response time of validation clients.
+- Mapping DSL: Add extractor plugin.
+- Model Processing Framework: Enable implementers to access arguments of validation phases.
+- Model Processing Framework: Introduce `@BeforeCheck` annotation to influence the execution of `@Check` methods in intermediate model validators.
+- Model Processing Framework: Introduce `@RethrowExceptions` annotation for intermediate model validator debugging.
+- Operation DSL: Integrate import concept for operation models (contributed by [Philip Wizenty](github.com/pwizenty)).
+- Releng: Add build scripts for Windows.
+- Releng: Enable Maven build of Eclipse updatesite.
+- Releng: Enable LEMMA modules to provide their own Docker images, e.g., for code generator execution.
+- Service DSL: Allow numbers with trailing periods in API comments.
+- Spring Cloud Genlet: Add `AttributeOverride` as synonym for the `AttributeOverrideColumn` aspect.
+- Spring Cloud Genlet: Generate corresponding Spring annotations for data structure features `Entity`, `Repository`, and `Service`.
+- Spring Cloud Genlet: Add support for `Access`, `Enumerated`, `Transactional`, and `Version` aspects.
+- Spring Cloud Genlet: Add support for `CrudRepository` interfaces.
+- Spring Cloud Genlet: Add `spring-boot-starter-data-jpa` dependency for data structures with `Entity` feature.
+- Spring Cloud Genlet: Add support for new `Application` aspect, which combines Spring Boot application name and port.
+- Spring Cloud Genlet: Add Domain Events sub-Genlet.
+- Spring Cloud Genlet: Add CQRS sub-Genlet.
+- UI: Enable execution of intermediate operation model transformations (contributed by [Philip Wizenty](github.com/pwizenty)).
+- Add code generator to automatically derive Docker containers from operation models (contributed by [Philip Wizenty](github.com/pwizenty)).
+- Add code generator for MariaDB (contributed by [Philip Wizenty](github.com/pwizenty)).
+- Add code generator for MongoDB (contributed by [Philip Wizenty](github.com/pwizenty)).
+- Add code generator for Spring Cloud Zuul (contributed by [Philip Wizenty](github.com/pwizenty)).
+- Add code generator for Spring Cloud Eureka (contributed by [Philip Wizenty](github.com/pwizenty)).
+- Add plugin to generate Apache Avro schema specifications from LEMMA models and vice versa.
+- Add Python script to facilitate the execution of LEMMA model processors within Docker containers.
+- Add Spring Cloud Kafka Genlet.
+- Add Static Analyzer Library and standalone executable Static Analyzer.
+- Support MIME types as data formats.
+
+### Changed
+- Data DSL: Fix range check for Double and Float values in metamodel.
+- DDD Genlet: If target node is interface, extend it with tagging interface.
+- Example 3: Add a more comprehensive and updated version of the example models.
+- Examples: Reorganize and give each example a sensible name.
+- Intermediate Model Transformations: Add missing assignment of `ENUMERATION` kind to intermediate complex types.
+- Intermediate Model Transformations: Remove preceding `#` from enumeration literals when converting them to strings.
+- Intermediate Model Transformations: Preserve original type of parameters in `IntermediateParameter` instances.
+- Java Base Generator: Let Maven dependency serializer also generate `maven.compiler.source` and `maven.compiler.target` properties in `pom.xml`.
+- Java Base Generator: Throw exception when no Java microservice could be found in intermediate service model.
+- Java Base Generator: Don't generate new artifact version in Maven dependency serializer, if passed version is already a valid Maven version.
+- Java Base Generator: Make code generation serializers aware of getter and setter imports in composite classes generated from parameter lists.
+- Java Base Generator: Add event to inform Genlets that the next intermediate `EObject` is about to get processed.
+- Java Base Generator: Let Generation Gap/Extended Generation Gap serializers plain-serialize interfaces.
+- Java Base Generator: Consider imports in Generation Gap/Extended Generation Gap serializers when merging callables of existing classes.
+- Java Base Generator: Don't let serializers add `throw` statement to non-`void` methods if they already contain a `throw` statement.
+- Java Base Generator: Methods of DDD factories become static by default.
+- Java Base Generator: Add support for merging `"repositories` elements from different POM files to Maven serializer.
+- Java Base Generator: Enable Genlets to store and retrieve arbitrary, Genlet-specific values at runtime.
+- Java Base Generator: Enable Genlets to add arbitrary information to generated nodes. Added information are shared across all Genlets.
+- Java Base Generator: Automatically convert relative import URIs to absolute URIs
+- Java Base Generator: Recognize aspects with name `ApplicationProperty` as providers for custom application properties.
+- Mapping DSL: Add missing scoping for types in data operation parameter mappings.
+- Mapping DSL: Fix multiplicity of endpoints in microservice mappings.
+- Mapping DSL: Fix scoping of enumeration fields.
+- Model Processing Framework: Change check for microservice technology to be case-insensitive by default.
+- Model Processing Framework: Introduce `@ExplicitlyInvokedCodeGenerationModule` annotation for code generation modules that need to be explicitly invoked from the commandline.
+- Operation DSL: An operation node may now either be dependent on or used by the same operation node but not both (contributed by [Philip Wizenty](github.com/pwizenty)).
+- Releng: Dockerize LEMMA builds.
+- Releng: Don't clone LEMMA repository twice during builds.
+- Releng: Fix errorlevel checking of batch scripts in Windows build.
+- Releng: Use LEMMA version as actual version of modules.
+- Releng: Enable continuous deployment with Jenkins.
+- Service, Mapping, and Operation DSLs: Fix validations of aspect uniqueness.
+- Spring Cloud Genlet: Support aspects with `Spring` qualifier.
+- Spring Cloud Genlet: Always specify `scanBasePackages` element for `SpringBootApplication` annotations.
+- Spring Cloud Genlet: Always add `spring-boot-starter-web dependency` for generated microservice.
+- UI: Fix information text in service model selection dialog.
+- UI: Enable intermediate model generation in Package Explorer and for Java Projects.
+- UI: Consider file extension when starting intermediate model generation from single model file.
+- Upgrade plugins to Eclipse 4.15 (2020-03) and enable Java 11 Maven/Gradle builds for all projects.
+- Lots of minor technical bugfixes.
+
+### Removed
+- Intermediate Model Transformations: Remove dependencies of intermediate service model on Data, Service, and Technology metamodels.
+
 ## [0.7.0] - 2020-04-04
 ### Added
 - Data DSL: Add primitive type `unspecified` for modeling the intended absence of an explicit type information on data fields.
@@ -18,7 +108,7 @@ All notable changes to [LEMMA](https://github.com/SeelabFhdo/lemma/) will be doc
 - Intermediate Model Transformations: Always assign `originalType` in intermediate data models according to the documentation.
 - Mapping DSL: Turn error on duplicate endpoints into a warning and thus introduce consistency with Service and Operation DSL.
 - Operation DSL: Fix checking of mandatory property values on infrastructure nodes that do not deploy services.
-- Releng: Fix build scripts (kudos to [Philip Wizenty](github.com/pwizenty)).
+- Releng: Fix build scripts (contributed by [Philip Wizenty](github.com/pwizenty)).
 - Releng: Rename `build/languages.sh` to `build/lemma.sh`.
 - Technology DSL: Fix checking of technology-specific primitive type mappings when first technology-specific type mapping is not a default mapping.
 - UI: Display erroneous models in model selection dialog again. They will be filtered and not displayed in the transformation target path specification dialog.
