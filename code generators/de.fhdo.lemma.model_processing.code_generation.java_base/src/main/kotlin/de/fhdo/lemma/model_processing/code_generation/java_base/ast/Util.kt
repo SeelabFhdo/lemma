@@ -1111,7 +1111,7 @@ fun MethodDeclaration.appendStatement(statement: String)
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun MethodDeclaration.insertStatement(code: String, index: Int = 0) {
+fun MethodDeclaration.insertStatement(code: String, index: Int = 0) {
     require(code.isNotEmpty()) { "Code statement to insert must not be empty" }
 
     if (emptyBody) {
