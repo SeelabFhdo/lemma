@@ -6,7 +6,6 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.commandline.Comm
 import de.fhdo.lemma.model_processing.code_generation.java_base.dependencies.DependencyDescription
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.DependencyFragmentProviderI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandlerI
-import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.Genlet
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerResult
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletEvent
@@ -17,6 +16,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.loadGenl
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.buildAspectHandlerQualifiedName
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.findAspectHandlers
 import de.fhdo.lemma.model_processing.code_generation.java_base.eObjectPackageName
+import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.AbstractGenlet
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletEventType
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.LineCountInfo
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.code_generation.CodeGenerationSerializerI
@@ -50,11 +50,11 @@ internal object MainContext {
         private val dependencySerializer: DependencySerializerI<*, *> by inject()
 
         private val collectedDependencies = mutableSetOf<DependencyDescription>()
-        private val aspectHandlers = mutableMapOf<Genlet?, Map<String, Class<AspectHandlerI>>>()
+        private val aspectHandlers = mutableMapOf<AbstractGenlet?, Map<String, Class<AspectHandlerI>>>()
         private val genletCodeGenerationHandlers
-            = mutableMapOf<Genlet, Map<String, Set<Class<GenletCodeGenerationHandlerI<EObject, Node, Any>>>>>()
+            = mutableMapOf<AbstractGenlet, Map<String, Set<Class<GenletCodeGenerationHandlerI<EObject, Node, Any>>>>>()
         private val dependencyFragmentProviders
-            = mutableMapOf<Genlet, List<Class<DependencyFragmentProviderI<Any, Any>>>>()
+            = mutableMapOf<AbstractGenlet, List<Class<DependencyFragmentProviderI<Any, Any>>>>()
         private val generatedFileContents = mutableMapOf<String, Pair<String, Charset>>()
         private val generatedLineCountInfo = mutableSetOf<LineCountInfo>()
 
@@ -63,7 +63,7 @@ internal object MainContext {
         private lateinit var intermediateServiceModelForDomainModels: IntermediateServiceModel
         private lateinit var targetFolderPath: String
         private var lineCountInfoFilePath: String? = null
-        private lateinit var genlets: Map<Genlet, URLClassLoader>
+        private lateinit var genlets: Map<AbstractGenlet, URLClassLoader>
         private lateinit var currentMicroservicePackage: String
 
         lateinit var currentMicroservice: IntermediateMicroservice
@@ -241,19 +241,23 @@ internal object MainContext {
     /**
      * Helper to invoke all aspect handlers for the given [EObject], [Node], and [IntermediateImportedAspect] instances.
      * This may either happen for aspect handlers of the Java base generator itself (parameter [genlet] is null) or for
-     * aspect handlers within a certain [Genlet] (parameter [genlet] set to the respective [Genlet] instance).
+     * aspect handlers within a certain [AbstractGenlet] (parameter [genlet] set to the respective [AbstractGenlet]
+     * instance).
      */
     internal fun invokeAspectHandlers(eObject: EObject, node: Node, aspects: List<IntermediateImportedAspect>,
-        genlet: Genlet?) : Node {
-        val aspectHandlers: Map<Genlet?, Map<String, Class<AspectHandlerI>>> by State
+        genlet: AbstractGenlet?) : Node {
+        val aspectHandlers: Map<AbstractGenlet?, Map<String, Class<AspectHandlerI>>> by State
         val aspectHandlersForGenlet = aspectHandlers[genlet] ?: return node
         var adaptedNode = node
         for (aspect in aspects) {
             // Note that we use the original node instance (not the adapted one), because aspect handlers must not
             // change the runtime type of a node
             val handlerQualifiedName = buildAspectHandlerQualifiedName(eObject, node, aspect)
-            val handler = aspectHandlersForGenlet[handlerQualifiedName] ?: continue
-            adaptedNode = handler.getConstructor().newInstance().invoke(eObject, adaptedNode, aspect)
+            val handlerClass = aspectHandlersForGenlet[handlerQualifiedName] ?: continue
+            val handler = handlerClass.getConstructor().newInstance()
+            adaptedNode = handler.execute(eObject, node, aspect)
+            check(adaptedNode == node) { "Aspect handler for aspect $aspect did not return the same Node instance " +
+                "for EObject type ${eObject::class.java.name} and input Node type ${node::class.java.name}" }
         }
         return adaptedNode
     }
@@ -261,23 +265,23 @@ internal object MainContext {
     /**
      * Convenience function to wrap the invocation of local aspect handlers. Note, that we do not set the "genlet"
      * parameter of [invokeAspectHandlers] to null by default, because we want to force callers to consciously decide
-     * whether the want to invoke local or [Genlet]-specific aspect handlers.
+     * whether the want to invoke local or [AbstractGenlet]-specific aspect handlers.
      */
     internal fun invokeLocalAspectHandlers(eObject: EObject, node: Node, aspects: List<IntermediateImportedAspect>)
         = invokeAspectHandlers(eObject, node, aspects, null)
 
     /**
-     * Get all code generation handlers for the [EObject] within the given [Genlet]
+     * Get all code generation handlers for the [EObject] within the given [AbstractGenlet]
      */
-    internal fun getGenletCodeGenerationHandlers(eObject: EObject, genlet: Genlet)
+    internal fun getGenletCodeGenerationHandlers(eObject: EObject, genlet: AbstractGenlet)
         : Set<Class<GenletCodeGenerationHandlerI<EObject, Node, Any>>> {
         val genletCodeGenerationHandlers:
-            Map<Genlet, Map<String, Set<Class<GenletCodeGenerationHandlerI<EObject, Node, Any>>>>> by State
+            Map<AbstractGenlet, Map<String, Set<Class<GenletCodeGenerationHandlerI<EObject, Node, Any>>>>> by State
         return genletCodeGenerationHandlers[genlet]?.get(eObject.mainInterface.name) ?: emptySet()
     }
 
     /**
-     * Helper to invoke a [Genlet]-specific code generation handler on a given [EObject] and [Node] instance
+     * Helper to invoke a [AbstractGenlet]-specific code generation handler on a given [EObject] and [Node] instance
      */
     internal fun invokeGenletCodeGenerationHandler(eObject: EObject, node: Node, context: Any?,
         handlerClass: Class<GenletCodeGenerationHandlerI<EObject, Node, Any>>)
@@ -286,14 +290,14 @@ internal object MainContext {
         if (!handlerInstance.generatesNodesOfInstance().isAssignableFrom(node::class.java))
             return GenletCodeGenerationHandlerResult(node)
 
-        return handlerInstance.invoke(eObject, node, context) ?: GenletCodeGenerationHandlerResult(node)
+        return handlerInstance.execute(eObject, node, context) ?: GenletCodeGenerationHandlerResult(node)
     }
 
     /**
      * Send an event to all known Genlets
      */
     internal fun sendEventToGenlets(event: GenletEvent) {
-        val genlets: Set<Genlet> by State
+        val genlets: Set<AbstractGenlet> by State
         genlets.forEach { it.sendEvent(event) }
     }
 }

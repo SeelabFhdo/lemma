@@ -7,6 +7,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTarget
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CallableCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
+import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.invokeCodeGenerationHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.setJavaTypeFrom
 
 /**
@@ -27,7 +28,7 @@ internal class DataOperationParameterHandler
          * Convenience companion method to invoke the handler
          */
         fun invoke(parameter: IntermediateDataOperationParameter, method: CallableDeclaration<*>)
-            = DataOperationParameterHandler().invoke(parameter, method)
+            = invokeCodeGenerationHandler(DataOperationParameterHandler(), parameter, method)
     }
 
     /**

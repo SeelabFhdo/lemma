@@ -14,6 +14,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.buildRequiredInp
 import de.fhdo.lemma.model_processing.code_generation.java_base.getRequiredInputParameters
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CallableCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
+import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.invokeCodeGenerationHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.isNullable
 import de.fhdo.lemma.service.intermediate.IntermediateOperation
 import de.fhdo.lemma.service.intermediate.IntermediateParameter
@@ -38,7 +39,7 @@ internal class RequiredInputParametersHandler(private val communicationType: Com
          */
         fun invoke(operation: IntermediateOperation, parentClass: ClassOrInterfaceDeclaration,
             communicationType: CommunicationType)
-                = RequiredInputParametersHandler(communicationType).invoke(operation, parentClass)
+            = invokeCodeGenerationHandler(RequiredInputParametersHandler(communicationType), operation, parentClass)
     }
 
     /**

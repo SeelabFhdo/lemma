@@ -18,6 +18,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setInitializ
 import de.fhdo.lemma.model_processing.code_generation.java_base.fullyQualifiedClassname
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CallableCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
+import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.invokeCodeGenerationHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasAspect
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasFeature
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.TypeMappingDescription
@@ -46,7 +47,7 @@ internal class DataFieldHandler :
          * Convenience companion method to invoke the handler
          */
         fun invoke(field: IntermediateDataField, parentClass: ClassOrInterfaceDeclaration)
-            = DataFieldHandler().invoke(field, parentClass)
+            = invokeCodeGenerationHandler(DataFieldHandler(), field, parentClass)
     }
 
     /**

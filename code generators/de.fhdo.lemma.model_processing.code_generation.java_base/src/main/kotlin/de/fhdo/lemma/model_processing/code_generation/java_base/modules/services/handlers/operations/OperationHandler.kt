@@ -24,6 +24,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.getRequiredInput
 import de.fhdo.lemma.model_processing.code_generation.java_base.getResultParameters
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CallableCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
+import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.invokeCodeGenerationHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasAspect
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasCompositeResult
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasInputParameters
@@ -54,7 +55,7 @@ internal class OperationHandler
          * Convenience companion method to invoke the handler
          */
         fun invoke(operation: IntermediateOperation, parentClass: ClassOrInterfaceDeclaration)
-            = OperationHandler().invoke(operation, parentClass)
+            = invokeCodeGenerationHandler(OperationHandler(), operation, parentClass)
     }
 
     /**

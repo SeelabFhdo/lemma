@@ -3,6 +3,7 @@ package de.fhdo.lemma.model_processing.code_generation.java_base.modules.service
 import com.github.javaparser.ast.Node
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.VisitingCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.findCodeGenerationHandlers
+import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.invokeCodeGenerationHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainCodeGenerationModule
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.services.ServicesContext.State.visitingServicesCodeGenerationHandlers
 import de.fhdo.lemma.model_processing.code_generation.java_base.simpleName
@@ -109,7 +110,8 @@ internal object ServicesContext {
         val handlers = visitingServicesCodeGenerationHandlers[eObject.mainInterface.name] ?: return emptyList()
         val results = mutableListOf<Pair<Node, String?>>()
         handlers.forEach {
-            val handlerResult = it.getConstructor().newInstance().invoke(eObject)
+            val handlerInstance = it.getConstructor().newInstance()
+            val handlerResult = invokeCodeGenerationHandler(handlerInstance, eObject)
             if (handlerResult != null)
                 results.add(handlerResult)
         }

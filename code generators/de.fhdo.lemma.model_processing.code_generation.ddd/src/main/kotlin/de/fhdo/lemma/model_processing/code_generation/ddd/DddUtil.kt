@@ -1,7 +1,10 @@
 package de.fhdo.lemma.model_processing.code_generation.ddd
 
 import com.github.javaparser.ast.Node
-import com.github.javaparser.ast.body.*
+import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
+import com.github.javaparser.ast.body.EnumDeclaration
+import com.github.javaparser.ast.body.FieldDeclaration
+import com.github.javaparser.ast.body.MethodDeclaration
 
 internal fun ClassOrInterfaceDeclaration.getDddElementsForFeatures(features: Set<String>) : DddTaggingElements {
     val taggingInterfaces = mutableMapOf<String, String>()

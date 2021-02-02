@@ -65,9 +65,13 @@ dependencies {
 tasks {
     compileKotlin {
         kotlinOptions.jvmTarget = "11"
+        // Java Base Generator uses @JvmDefault annotation
+        kotlinOptions.freeCompilerArgs = listOf("-Xjvm-default=compatibility")
     }
     compileTestKotlin {
         kotlinOptions.jvmTarget = "11"
+        // Java Base Generator uses @JvmDefault annotation
+        kotlinOptions.freeCompilerArgs = listOf("-Xjvm-default=compatibility")
     }
 }
 

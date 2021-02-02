@@ -1,14 +1,13 @@
 package de.fhdo.lemma.model_processing.code_generation.ddd
 
-import de.fhdo.lemma.model_processing.AbstractModelProcessor
-import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.Genlet
+import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.AbstractGenlet
 import java.util.*
 
 private const val BASE_PACKAGE = "de.fhdo.lemma.model_processing.code_generation.ddd"
 
 internal lateinit var DDD_VERSION : String
 
-class DddGenerator : AbstractModelProcessor(BASE_PACKAGE), Genlet {
+class DddGenerator : AbstractGenlet(BASE_PACKAGE) {
     override fun nameOfCodeGenerationHandlerPackage() = "$BASE_PACKAGE.handlers"
 
     override fun setClassLoader(classLoader: ClassLoader) {

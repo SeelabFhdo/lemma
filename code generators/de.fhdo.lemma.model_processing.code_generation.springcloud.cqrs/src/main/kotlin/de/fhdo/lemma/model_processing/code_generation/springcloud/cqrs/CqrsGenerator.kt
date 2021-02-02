@@ -1,7 +1,7 @@
 package de.fhdo.lemma.model_processing.code_generation.springcloud.cqrs
 
 import de.fhdo.lemma.model_processing.AbstractModelProcessor
-import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.Genlet
+import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.AbstractGenlet
 
 private const val BASE_PACKAGE = "de.fhdo.lemma.model_processing.code_generation.springcloud.cqrs"
 
@@ -11,7 +11,7 @@ private const val BASE_PACKAGE = "de.fhdo.lemma.model_processing.code_generation
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-class CqrsGenerator : AbstractModelProcessor(BASE_PACKAGE), Genlet {
+class CqrsGenerator : AbstractGenlet(BASE_PACKAGE) {
     override fun nameOfCodeGenerationHandlerPackage() = "$BASE_PACKAGE.handlers"
     override fun nameOfAspectHandlerPackage() = "${nameOfCodeGenerationHandlerPackage()}.aspects"
 }

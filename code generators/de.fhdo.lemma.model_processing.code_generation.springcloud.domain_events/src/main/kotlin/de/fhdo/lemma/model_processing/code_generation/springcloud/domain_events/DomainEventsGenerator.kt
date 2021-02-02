@@ -1,7 +1,11 @@
 package de.fhdo.lemma.model_processing.code_generation.springcloud.domain_events
 
 import de.fhdo.lemma.model_processing.AbstractModelProcessor
-import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.*
+import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.AbstractGenlet
+import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletEvent
+import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletEventType
+import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletGeneratedFileContent
+import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletGeneratedNode
 import de.fhdo.lemma.model_processing.code_generation.springcloud.domain_events.state.EventGroups
 
 private const val BASE_PACKAGE = "de.fhdo.lemma.model_processing.code_generation.springcloud.domain_events"
@@ -12,7 +16,7 @@ private const val BASE_PACKAGE = "de.fhdo.lemma.model_processing.code_generation
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-class DomainEventsGenerator : AbstractModelProcessor(BASE_PACKAGE), Genlet {
+class DomainEventsGenerator : AbstractGenlet(BASE_PACKAGE) {
     override fun nameOfCodeGenerationHandlerPackage() = "$BASE_PACKAGE.handlers"
     override fun nameOfAspectHandlerPackage() = "${nameOfCodeGenerationHandlerPackage()}.aspects"
 

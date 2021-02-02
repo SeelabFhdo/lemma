@@ -40,4 +40,6 @@ dependencies {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "11"
+    // Java Base Generator uses @JvmDefault annotation
+    kotlinOptions.freeCompilerArgs = listOf("-Xjvm-default=compatibility")
 }

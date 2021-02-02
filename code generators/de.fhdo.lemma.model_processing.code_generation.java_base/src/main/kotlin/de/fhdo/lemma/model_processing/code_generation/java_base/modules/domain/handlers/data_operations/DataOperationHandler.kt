@@ -9,6 +9,7 @@ import de.fhdo.lemma.data.intermediate.IntermediateDataOperation
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setBody
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CallableCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
+import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.invokeCodeGenerationHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasAspect
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasFeature
 
@@ -29,7 +30,7 @@ internal class DataOperationHandler :
          * Convenience companion method to invoke the handler
          */
         fun invoke(operation: IntermediateDataOperation, parentClass: ClassOrInterfaceDeclaration)
-            = DataOperationHandler().invoke(operation, parentClass)
+            = invokeCodeGenerationHandler(DataOperationHandler(), operation, parentClass)
     }
 
     /**

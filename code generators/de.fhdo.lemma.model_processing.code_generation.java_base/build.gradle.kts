@@ -60,6 +60,8 @@ dependencies {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "11"
+    // Support @JvmDefault annotation
+    kotlinOptions.freeCompilerArgs = listOf("-Xjvm-default=compatibility")
 }
 
 /**

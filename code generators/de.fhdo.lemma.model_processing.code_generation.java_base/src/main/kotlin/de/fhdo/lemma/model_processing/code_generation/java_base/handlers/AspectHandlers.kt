@@ -44,17 +44,6 @@ interface AspectHandlerI {
      * Execution logic of the handler
      */
     fun execute(eObject: EObject, node: Node, aspect: IntermediateImportedAspect) : Node
-
-    /**
-     * Function to execute the handler. Never override or call this directly in case you want to implement an aspect
-     * handler. This will be called automatically.
-     */
-    fun invoke(eObject: EObject, node: Node, aspect: IntermediateImportedAspect) : Node {
-        val adaptedNode = execute(eObject, node, aspect)
-        check(adaptedNode == node) { "Aspect handler for aspect $aspect did not return the same Node instance for " +
-            "EObject type ${eObject::class.java.name} and input Node type ${node::class.java.name}" }
-        return adaptedNode
-    }
 }
 
 /**

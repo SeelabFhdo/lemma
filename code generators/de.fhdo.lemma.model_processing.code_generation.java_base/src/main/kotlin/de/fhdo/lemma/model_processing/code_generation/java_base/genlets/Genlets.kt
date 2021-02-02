@@ -2,6 +2,7 @@ package de.fhdo.lemma.model_processing.code_generation.java_base.genlets
 
 import com.github.javaparser.ast.DataKey
 import com.github.javaparser.ast.Node
+import de.fhdo.lemma.model_processing.AbstractModelProcessor
 import de.fhdo.lemma.model_processing.asFile
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.serialize
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandlerI
@@ -26,36 +27,38 @@ import javax.naming.OperationNotSupportedException
 import kotlin.reflect.KProperty
 
 /**
- * Base interface for Genlets. A Genlet gathers code that can contribute information to generated AST [Node] instances
- * in another JAR archive than that of the Java base generator. For example, Genlets allow to generate Java class
+ * Base class for Genlets. A Genlet gathers code that can contribute information to generated AST [Node] instances in
+ * another JAR archive than that of the Java base generator. For example, Genlets allow to generate Java class
  * attributes with technology-specific types from a Java-based supportive technology such as the Spring framework
  * (Genlet-specific code generation handlers) or reify generated AST [Node] instances with technology-specific
- * annotations (aspect handlers within Genlets).
+ * annotations (aspect handlers within Genlets). Genlets are always [AbstractModelProcessor]s in the sense of LEMMA's
+ * model processing framework.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-interface Genlet {
+abstract class AbstractGenlet(processorImplementationPackage: String)
+    : AbstractModelProcessor(processorImplementationPackage) {
     /**
      * Name of the Genlet package that clusters Genlet-specific code generation handlers
      */
-    fun nameOfCodeGenerationHandlerPackage() : String
+    abstract fun nameOfCodeGenerationHandlerPackage() : String
 
     /**
-     * Name of the Genlet package that clusters aspect handlers. By default, this is the same package as of the Genlet-
+     * Name of the Genlet package that clusters aspect handlers. By default, this is the same package as for the Genlet-
      * specific code generation handlers.
      */
-    fun nameOfAspectHandlerPackage() = nameOfCodeGenerationHandlerPackage()
+    open fun nameOfAspectHandlerPackage() = nameOfCodeGenerationHandlerPackage()
 
     /**
      * Name of the Genlet package that clusters dependency fragment providers. By default, this is the same package as
-     * of the Genlet-specific code generation handlers.
+     * for the Genlet-specific code generation handlers.
      */
-    fun nameOfDependencyFragmentProviderPackage() = nameOfCodeGenerationHandlerPackage()
+    open fun nameOfDependencyFragmentProviderPackage() = nameOfCodeGenerationHandlerPackage()
 
     /**
      * Callback to pass Genlet-specific class loader to Genlet.
      */
-    fun setClassLoader(classLoader: ClassLoader) {}
+    open fun setClassLoader(classLoader: ClassLoader) {}
 
     /**
      * Retrieve Genlet-specific heap.
@@ -63,10 +66,17 @@ interface Genlet {
     fun heap() = GenletHeapManager.getOrAddHeap(this)
 
     /**
-     * Send an event to this Genlet. This function is not meant to be overridden by Genlets. To react to an event,
-     * Genlets should implement [onEvent] instead.
+     * React to a certain event, e.g., the end of the generation process for the current microservice. During events,
+     * Genlets may generate an arbitrary number of new Nodes, adapt existing Nodes, or produce new file contents.
+     * Returned Node instances will be passed to the current serializer, while generated file contents are not
+     * processed, but stored "as is".
      */
-    fun sendEvent(event: GenletEvent) {
+    open fun onEvent(event: GenletEvent) : Pair<Set<GenletGeneratedNode>, Set<GenletGeneratedFileContent>>? = null
+
+    /**
+     * Send an event to this Genlet.
+     */
+    internal fun sendEvent(event: GenletEvent) {
         val generatedNodesAndFiles = onEvent(event) ?: return
         val (generatedNodes, generatedFiles) = generatedNodesAndFiles
 
@@ -84,29 +94,21 @@ interface Genlet {
         // serialization action
         storeGeneratedFileContentsOfGenlet(generatedFiles)
     }
-
-    /**
-     * React to a certain event, e.g., the end of the generation process for the current microservice. During events,
-     * Genlets may generate an arbitrary number of new Nodes, adapt existing Nodes, or produce new file contents.
-     * Returned Node instances will be passed to the current serializer, while generated file contents are not
-     * processed, but stored "as is".
-     */
-    fun onEvent(event: GenletEvent) : Pair<Set<GenletGeneratedNode>, Set<GenletGeneratedFileContent>>? = null
 }
 
 /**
- * Singleton to manage Genlet heaps. A Genlet heap is a [MutableMap], which allows a Genlet for storing and
- * retrieving arbitrary values at any point in its runtime.
+ * Singleton to manage Genlet heaps. A Genlet heap is a [MutableMap], which enables a Genlet to store and retrieve
+ * arbitrary values at any point in its runtime.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 private object GenletHeapManager {
-    val heaps = mutableMapOf<Genlet, MutableMap<String, Any?>>()
+    val heaps = mutableMapOf<AbstractGenlet, MutableMap<String, Any?>>()
 
     /**
      * Get heap for the given Genlet or create and return a new heap
      */
-    fun getOrAddHeap(genlet: Genlet) : MutableMap<String, Any?> {
+    fun getOrAddHeap(genlet: AbstractGenlet) : MutableMap<String, Any?> {
         if (genlet !in heaps)
             heaps[genlet] = mutableMapOf()
         return heaps[genlet]!!
@@ -243,19 +245,12 @@ class GenletGeneratedNode(baseTargetFolderSpecifier: GenletPathSpecifier, val fi
  */
 interface GenletCodeGenerationHandlerI<T: EObject, N: Node, C: Any> : CodeGenerationHandlerI<T, N, C> {
     /**
-     * Function to invoke this Genlet code generation handler. It is not meant to be implemented by concrete handler
-     * implementations. They need to implement [execute] instead. Moreover, never call this function directly. It will
-     * be called automatically.
-     */
-    fun invoke(eObject: T, node: N, context: C? = null) = execute(eObject, node, context)
-
-    /**
      * Function which needs to be realized by concrete Genlet code generation handlers. The context is an optional
      * information that may be passed to a handler, e.g., the previously generated parent [Node] of the yet-to-generate
      * [Node]. Currently, this is not done for Genlet code generation handlers, however.
      *
      * A Genlet code generation handler can either return null (i.e., no AST [Node] was reified at all for the given
-     * [EObject] and context), or an instance of [GenletCodeGenerationHandlerResult].
+     * [EObject] and context) or an instance of [GenletCodeGenerationHandlerResult].
      */
     fun execute(eObject: T, node: N, context: C? = null) : GenletCodeGenerationHandlerResult<N>?
 
@@ -264,10 +259,7 @@ interface GenletCodeGenerationHandlerI<T: EObject, N: Node, C: Any> : CodeGenera
      */
     fun state() = GenletStateAccess
 
-    override fun invoke(eObject: T, context: C?) : Pair<N, String?>? {
-        throw OperationNotSupportedException("Genlet code generation handlers do not support this kind of invocation")
-    }
-
+    @JvmDefault  // Streamline interface usage for Java-based Genlets
     override fun execute(eObject: T, context: C?) : Pair<N, String?>? {
         throw OperationNotSupportedException("Genlet code generation handlers do not support this kind of execution")
     }
@@ -441,7 +433,8 @@ object GenletStateAccess {
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun loadGenlets(genletFilePathsAndClassnames: Map<String, String?>) : Map<Genlet, URLClassLoader> {
+@Suppress("UNCHECKED_CAST")
+internal fun loadGenlets(genletFilePathsAndClassnames: Map<String, String?>) : Map<AbstractGenlet, URLClassLoader> {
     val classLoaders = createGenletClassLoaders(genletFilePathsAndClassnames.keys)
     return genletFilePathsAndClassnames.map { (filePath, explicitlySpecifiedClassname) ->
         val genletClassLoader = classLoaders[filePath]!!
@@ -450,10 +443,10 @@ internal fun loadGenlets(genletFilePathsAndClassnames: Map<String, String?>) : M
 
         // Search Genlet class in JAR archive via Genlet's class loader and based on explicit or default Genlet class
         // name(s)
-        var genletClass: Class<out Genlet>? = null
+        var genletClass: Class<out AbstractGenlet>? = null
         for (classname in genletClassnames) {
             genletClass = try {
-                Class.forName(classname, true, genletClassLoader).asSubclass(Genlet::class.java)
+                Class.forName(classname, true, genletClassLoader) as Class<AbstractGenlet>
             } catch (ex : ClassNotFoundException) {
                 null
             }
@@ -554,30 +547,30 @@ private fun String.underscoreAwareGenletClassname() : String? {
 }
 
 /**
- * Convenience function to find aspect handlers in the context of a given [Genlet].
+ * Convenience function to find aspect handlers in the context of a given [AbstractGenlet].
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun Genlet.findAspectHandlers(classLoader: ClassLoader)
+internal fun AbstractGenlet.findAspectHandlers(classLoader: ClassLoader)
     = baseFindAspectHandlers(nameOfAspectHandlerPackage(), classLoader)
 
 /**
- * Convenience function to find code generation handlers in the context of a given [Genlet].
+ * Convenience function to find code generation handlers in the context of a given [AbstractGenlet].
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun Genlet.findCodeGenerationHandlers(classLoader: ClassLoader)
+internal fun AbstractGenlet.findCodeGenerationHandlers(classLoader: ClassLoader)
     = baseFindCodeGenerationHandlers<GenletCodeGenerationHandlerI<EObject, Node, Any>>(
         nameOfCodeGenerationHandlerPackage(),
         classLoader
     )
 
 /**
- * Convenience function to find dependency fragment providers in the context of a given [Genlet].
+ * Convenience function to find dependency fragment providers in the context of a given [AbstractGenlet].
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun Genlet.findDependencyFragmentProviders(classLoader: ClassLoader,
+internal fun AbstractGenlet.findDependencyFragmentProviders(classLoader: ClassLoader,
     dependencySerializer: DependencySerializerI<*, *>)
     = findDependencyFragmentProviders(nameOfDependencyFragmentProviderPackage(), dependencySerializer, classLoader)
 

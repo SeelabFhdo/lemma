@@ -4,6 +4,7 @@ import com.github.javaparser.ast.Node
 import de.fhdo.lemma.data.intermediate.IntermediateDataModel
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.VisitingCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.findCodeGenerationHandlers
+import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.invokeCodeGenerationHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainCodeGenerationModule
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainContext.State.visitingDomainCodeGenerationHandlers
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainContext.State as MainState
@@ -108,7 +109,7 @@ internal object DomainContext {
         val handlers = visitingDomainCodeGenerationHandlers[eObject.mainInterface.name] ?: return emptyList()
         val results = mutableListOf<Pair<Node, String?>>()
         handlers.forEach {
-            val handlerResult = it.getConstructor().newInstance().invoke(eObject)
+            val handlerResult = invokeCodeGenerationHandler(it.getConstructor().newInstance(), eObject)
             if (handlerResult != null)
                 results.add(handlerResult)
         }
