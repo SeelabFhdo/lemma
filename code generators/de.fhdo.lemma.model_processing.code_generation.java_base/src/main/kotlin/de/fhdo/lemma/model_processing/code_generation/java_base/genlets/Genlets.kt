@@ -257,6 +257,7 @@ interface GenletCodeGenerationHandlerI<T: EObject, N: Node, C: Any> : CodeGenera
     /**
      * Get access to certain state values provided by the Java base generator to the Genlet
      */
+    @JvmDefault  // Streamline interface usage for Java-based Genlets
     fun state() = GenletStateAccess
 
     @JvmDefault  // Streamline interface usage for Java-based Genlets
