@@ -301,8 +301,10 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     this.dataName = this.txtDataModelName.getText();
     this.serviceName = this.txtServiceModelName.getText();
     this.technologyName = this.txtTechnologyModelName.getText();
-    if (((((!this.targetLocation.trim().isEmpty()) && (!this.dataName.trim().isEmpty())) && 
-      (!this.serviceName.trim().isEmpty())) && (!this.technologyName.trim().isEmpty()))) {
+    this.servicePrefix = this.txtServicePrefix.getText();
+    if ((((((!this.targetLocation.trim().isEmpty()) && (!this.dataName.trim().isEmpty())) && 
+      (!this.serviceName.trim().isEmpty())) && (!this.technologyName.trim().isEmpty())) && 
+      (!this.servicePrefix.trim().isEmpty()))) {
       return true;
     } else {
       Shell _shell = this.getShell();

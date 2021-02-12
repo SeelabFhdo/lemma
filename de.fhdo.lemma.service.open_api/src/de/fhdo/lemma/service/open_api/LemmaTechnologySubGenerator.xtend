@@ -128,6 +128,7 @@ class LemmaTechnologySubGenerator {
         httpVerbs.add("TraceMapping".createServiceAspect)
         httpVerbs.add("Unspecified".createServiceAspect)
         myTechModel.serviceAspects.addAll(httpVerbs)
+        myTechModel.serviceAspects.add("RequestBody".createParameterAspect)
     }
 
     def ServiceAspect createServiceAspect(String name) {
@@ -138,6 +139,13 @@ class LemmaTechnologySubGenerator {
         return ret
     }
 
+    def ServiceAspect createParameterAspect(String name) {
+        val ret = TECHNOLOGY_FACTORY.createServiceAspect
+        ret.name = name
+        ret.joinPoints.add(JoinPointType.PARAMETERS)
+        ret.features.add(AspectFeature.SINGLE_VALUED)
+        return ret
+    }
     /** Creates OpenApi data types corresponding to <italic>OpenApi v3.0.3 - Data Types</italic>.
      * OpenApi data type formats are represented as individual types.
      */

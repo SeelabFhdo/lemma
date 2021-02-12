@@ -208,12 +208,21 @@ public class LemmaTechnologySubGenerator {
     httpVerbs.add(this.createServiceAspect("TraceMapping"));
     httpVerbs.add(this.createServiceAspect("Unspecified"));
     this.myTechModel.getServiceAspects().addAll(httpVerbs);
+    this.myTechModel.getServiceAspects().add(this.createParameterAspect("RequestBody"));
   }
   
   public ServiceAspect createServiceAspect(final String name) {
     final ServiceAspect ret = this.TECHNOLOGY_FACTORY.createServiceAspect();
     ret.setName(name);
     ret.getJoinPoints().add(JoinPointType.OPERATIONS);
+    ret.getFeatures().add(AspectFeature.SINGLE_VALUED);
+    return ret;
+  }
+  
+  public ServiceAspect createParameterAspect(final String name) {
+    final ServiceAspect ret = this.TECHNOLOGY_FACTORY.createServiceAspect();
+    ret.setName(name);
+    ret.getJoinPoints().add(JoinPointType.PARAMETERS);
     ret.getFeatures().add(AspectFeature.SINGLE_VALUED);
     return ret;
   }

@@ -241,8 +241,10 @@ class SpecifyUrlDialog extends TitleAreaDialog {
             this.dataName = txtDataModelName.getText
             this.serviceName = txtServiceModelName.getText
             this.technologyName = txtTechnologyModelName.text
+            this.servicePrefix = txtServicePrefix.text
         if(!this.targetLocation.trim.isEmpty && !this.dataName.trim.isEmpty &&
-            !this.serviceName.trim.isEmpty && !this.technologyName.trim.isEmpty
+            !this.serviceName.trim.isEmpty && !this.technologyName.trim.isEmpty &&
+            !this.servicePrefix.trim.isEmpty
         ) {
             return true
         } else {

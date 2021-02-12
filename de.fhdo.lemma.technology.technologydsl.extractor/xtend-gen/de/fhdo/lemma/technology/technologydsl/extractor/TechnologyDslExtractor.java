@@ -130,17 +130,20 @@ public class TechnologyDslExtractor {
         } else {
           _builder.appendImmediate(", ", "");
         }
+        _builder.append("\"");
         String _extractToString = this.extractToString(df);
         _builder.append(_extractToString);
+        _builder.append("\"");
       }
     }
     {
       DataFormat _defaultFormat = protocol.getDefaultFormat();
       boolean _tripleNotEquals = (_defaultFormat != null);
       if (_tripleNotEquals) {
-        _builder.append(" default with format ");
+        _builder.append(" default with format \"");
         String _formatName = protocol.getDefaultFormat().getFormatName();
         _builder.append(_formatName);
+        _builder.append("\"");
       }
     }
     _builder.append(";");

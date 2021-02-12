@@ -74,9 +74,9 @@ class TechnologyDslExtractor {
     def String extractToString(Protocol protocol) {
         return '''«IF (protocol.communicationType == CommunicationType.SYNCHRONOUS)»sync «ELSE
             »async «ENDIF»«protocol.name» data formats «
-            FOR df : protocol.dataFormats SEPARATOR ', '»«df.extractToString»«ENDFOR»«
+            FOR df : protocol.dataFormats SEPARATOR ', '»"«df.extractToString»"«ENDFOR»«
             IF (protocol.defaultFormat !== null)
-            » default with format «protocol.defaultFormat.formatName»«ENDIF
+            » default with format "«protocol.defaultFormat.formatName»"«ENDIF
             »;'''.indent.indent
     }
     /**

@@ -58,6 +58,7 @@ import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
+import org.eclipse.xtext.xbase.lib.IteratorExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
 import org.slf4j.Logger;
@@ -335,9 +336,15 @@ public class LemmaServiceSubGenerator {
    */
   public de.fhdo.lemma.service.Parameter createLemmaInParameterFromMediaTypeValue(final Schema schema) {
     de.fhdo.lemma.service.Parameter newLemmaParam = this.SERVICE_FACTORY.createParameter();
-    newLemmaParam.setName(StringUtils.uncapitalize("bodyRequest"));
+    newLemmaParam.setName(StringUtils.uncapitalize("requestBody"));
     newLemmaParam.setOptional(false);
     newLemmaParam.setExchangePattern(ExchangePattern.IN);
+    final ImportedServiceAspect aspect = this.SERVICE_FACTORY.createImportedServiceAspect();
+    final Function1<ServiceAspect, Boolean> _function = (ServiceAspect it) -> {
+      return Boolean.valueOf(it.getName().equals("RequestBody"));
+    };
+    aspect.setImportedAspect(IteratorExtensions.<ServiceAspect>findFirst(this.techModel.getValue().getServiceAspects().iterator(), _function));
+    newLemmaParam.getAspects().add(aspect);
     boolean _isNullOrEmpty = StringExtensions.isNullOrEmpty(schema.get$ref());
     boolean _not = (!_isNullOrEmpty);
     if (_not) {
@@ -709,6 +716,10 @@ public class LemmaServiceSubGenerator {
    * The service is added to <italic>myServiceModel</italic>
    */
   public Microservice createFunctionalMicroservice(final String name) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("NAME DES MICROSERVICE: ");
+    _builder.append(name);
+    LemmaServiceSubGenerator.logger.info(_builder.toString());
     final Microservice functionalService = this.SERVICE_FACTORY.createMicroservice();
     functionalService.setServiceModel(this.myServiceModel);
     functionalService.setName(name);

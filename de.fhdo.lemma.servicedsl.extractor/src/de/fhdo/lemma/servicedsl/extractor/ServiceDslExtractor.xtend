@@ -125,19 +125,18 @@ class ServiceDslExtractor {
             ---
             «operation.apiOperationComment.comment»
             «FOR param : operation.parameters.filter[!it.isOptional]»
-            @required «param.name»
+            @required «param.name» [INSERT PARAMETER DESC HERE]
             «ENDFOR»
             ---
             '''
         }
-        return '''«comment» «endpoint» «aspects» «operation.name»(«parameters»);'''
+        return '''«comment»«endpoint»«aspects»«operation.name»(«parameters»);'''
     }
 
     private def generate(Parameter parameter) {
-        val preamble = <String>newArrayList
-        preamble.add(parameter.communicationType.generate)
-        preamble.add(parameter.exchangePattern.generate)
-        return '''«String.join(" ", preamble)» «parameter.name» : «parameter.generateType»'''
+        return '''«FOR a : parameter.aspects SEPARATOR ' '»«a.generate»«ENDFOR
+        » «parameter.communicationType.generate» «parameter.exchangePattern.generate» «
+        parameter.name» : «parameter.generateType»'''
     }
 
     private def generate(CommunicationType type) {
@@ -186,7 +185,6 @@ class ServiceDslExtractor {
     private def generate(ImportedType importedType) {
         switch (importedType.import.importType) {
             case ImportType.TECHNOLOGY: {
-                //TODO is this ever triggered?
                 return '''«importedType.import.name»::«importedType.type»'''
             }
             case ImportType.DATATYPES: {

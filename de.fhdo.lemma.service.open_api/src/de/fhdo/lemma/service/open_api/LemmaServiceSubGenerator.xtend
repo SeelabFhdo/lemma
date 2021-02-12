@@ -194,10 +194,17 @@ class LemmaServiceSubGenerator {
      */
     def de.fhdo.lemma.service.Parameter createLemmaInParameterFromMediaTypeValue(Schema schema) {
         var newLemmaParam = SERVICE_FACTORY.createParameter
-        newLemmaParam.name = StringUtils.uncapitalize("bodyRequest")
+        newLemmaParam.name = StringUtils.uncapitalize("requestBody")
         // In case a bodyRequest parameter is encountered it is always required
         newLemmaParam.optional = false
         newLemmaParam.exchangePattern = ExchangePattern.IN
+        //setting the requestBody aspect
+        val aspect = SERVICE_FACTORY.createImportedServiceAspect
+        aspect.importedAspect = techModel.value.serviceAspects.iterator.findFirst[
+            it.name.equals("RequestBody")
+        ]
+        newLemmaParam.aspects.add(aspect)
+        // select proper type
         if (!schema.get$ref.isNullOrEmpty)
             newLemmaParam.importedType = getImportedComplexDataTypeFromRef(schema.get$ref)
         else
@@ -445,6 +452,7 @@ class LemmaServiceSubGenerator {
      * The service is added to <italic>myServiceModel</italic>
      */
     def Microservice createFunctionalMicroservice(String name) {
+        logger.info('''NAME DES MICROSERVICE: «name»''')
         val functionalService = SERVICE_FACTORY.createMicroservice
         functionalService.serviceModel = myServiceModel
         functionalService.name = name

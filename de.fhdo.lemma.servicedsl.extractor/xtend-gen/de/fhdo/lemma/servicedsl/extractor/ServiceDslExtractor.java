@@ -333,6 +333,7 @@ public class ServiceDslExtractor {
           _builder_2.append("@required ");
           String _name = param.getName();
           _builder_2.append(_name);
+          _builder_2.append(" [INSERT PARAMETER DESC HERE]");
           _builder_2.newLineIfNotEmpty();
         }
       }
@@ -343,11 +344,8 @@ public class ServiceDslExtractor {
     final String comment = _xifexpression;
     StringConcatenation _builder_3 = new StringConcatenation();
     _builder_3.append(comment);
-    _builder_3.append(" ");
     _builder_3.append(endpoint);
-    _builder_3.append(" ");
     _builder_3.append(aspects);
-    _builder_3.append(" ");
     String _name_1 = operation.getName();
     _builder_3.append(_name_1);
     _builder_3.append("(");
@@ -357,12 +355,26 @@ public class ServiceDslExtractor {
   }
   
   private String generate(final Parameter parameter) {
-    final ArrayList<String> preamble = CollectionLiterals.<String>newArrayList();
-    preamble.add(this.generate(parameter.getCommunicationType()));
-    preamble.add(this.generate(parameter.getExchangePattern()));
     StringConcatenation _builder = new StringConcatenation();
-    String _join = String.join(" ", preamble);
-    _builder.append(_join);
+    {
+      EList<ImportedServiceAspect> _aspects = parameter.getAspects();
+      boolean _hasElements = false;
+      for(final ImportedServiceAspect a : _aspects) {
+        if (!_hasElements) {
+          _hasElements = true;
+        } else {
+          _builder.appendImmediate(" ", "");
+        }
+        String _generate = this.generate(a);
+        _builder.append(_generate);
+      }
+    }
+    _builder.append(" ");
+    String _generate_1 = this.generate(parameter.getCommunicationType());
+    _builder.append(_generate_1);
+    _builder.append(" ");
+    String _generate_2 = this.generate(parameter.getExchangePattern());
+    _builder.append(_generate_2);
     _builder.append(" ");
     String _name = parameter.getName();
     _builder.append(_name);
