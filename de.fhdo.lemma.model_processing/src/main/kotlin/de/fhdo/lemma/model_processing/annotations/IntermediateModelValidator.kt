@@ -25,3 +25,12 @@ annotation class BeforeCheck
  */
 @Target(AnnotationTarget.FUNCTION)
 annotation class RethrowExceptions
+
+/**
+ * Annotation to constrain the instances of validated objects for a check method in an intermediate model validator to
+ * exactly the type of the method's first parameter.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+@Target(AnnotationTarget.FUNCTION)
+annotation class ExcludeSubtypes

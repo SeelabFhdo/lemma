@@ -3,6 +3,7 @@ package de.fhdo.lemma.model_processing.builtin_phases.intermediate_model_validat
 import de.fhdo.lemma.model_processing.annotations.After
 import de.fhdo.lemma.model_processing.annotations.Before
 import de.fhdo.lemma.model_processing.annotations.BeforeCheck
+import de.fhdo.lemma.model_processing.annotations.ExcludeSubtypes
 import de.fhdo.lemma.model_processing.annotations.RethrowExceptions
 import de.fhdo.lemma.model_processing.annotations.findAnnotatedMethods
 import de.fhdo.lemma.model_processing.builtin_phases.ValidationResult
@@ -21,6 +22,7 @@ import kotlin.reflect.KType
 import kotlin.reflect.full.isSubtypeOf
 import kotlin.reflect.full.starProjectedType
 import kotlin.reflect.jvm.isAccessible
+import kotlin.reflect.jvm.jvmErasure
 
 /**
  * Abstract superclass for all intermediate model validators. Intermediate model validation currently only supports
@@ -33,6 +35,20 @@ import kotlin.reflect.jvm.isAccessible
 abstract class AbstractIntermediateDeclarativeValidator : AbstractDeclarativeValidator() {
     // The currently validated object
     private lateinit var validatedObject: EObject
+
+    // Methods with the @Check annotation in concrete subclasses
+    private val checkMethods = findAnnotatedMethods(Check::class).filter { it.parameters.size == 2 }
+
+    // Methods with the @BeforeCheck annotation in concrete subclasses. These methods have to be executed prior to each
+    // call to a validation method annotated with @Check. An @BeforeCheck method must take a single parameter of type
+    // KFunction, which receives the @Check method to be invoked, and return a boolean value, which indicates whether
+    // the @Check method shall be invoked.
+    private val beforeCheckMethods = findAnnotatedMethods(BeforeCheck::class).filter {
+            // First parameter is Validator instance
+            it.parameters.size == 2 &&
+            it.parameters[1].type == KFunction::class.starProjectedType &&
+            it.returnType == Boolean::class.starProjectedType
+        }
 
     // This attribute must not be of type Kotlin Array. Otherwise the discovery of @Check methods in Java-based concrete
     // validators will fail with a KotlinReflectionInternalError from the mapPropertySignature() method of the
@@ -80,83 +96,69 @@ abstract class AbstractIntermediateDeclarativeValidator : AbstractDeclarativeVal
     }
 
     /**
-     * Perform the actual validations. Basically, validation is consistent with the behavior of
-     * [AbstractDeclarativeValidator]. However, [AbstractDeclarativeValidator] cannot be directly employed, because
-     * intermediate models are not based on Xtext. Therefore, we mimic the behavior of [AbstractDeclarativeValidator] in
-     * that we collect all methods being annotated with [Check] in concrete subclasses and call them by passing model
-     * element instances from intermediate models as their first parameters.
+     * Perform the actual validations. Basically, intermediate model validation is consistent with the behavior of
+     * [AbstractDeclarativeValidator]. However, it is not possible to directly employ [AbstractDeclarativeValidator] for
+     * intermediate modle validations because intermediate models are not based on Xtext. Therefore, we mimic the
+     * behavior of [AbstractDeclarativeValidator] in that we invoke all methods with the [Check] annotation in concrete
+     * subclasses of [AbstractIntermediateDeclarativeValidator] on model elements from intermediate models.
      */
     private fun validate(resource: Resource, relevantModelElements: Collection<EObject>?) {
-        /* Collect all methods in the concrete subclass that are annotated with Check and exhibit only one parameter */
-        // First parameter is Validator instance
-        val checkMethods = this.findAnnotatedMethods(Check::class).filter { it.parameters.size == 2 }
-        val checkMethodsPerInstanceType = HashMap<KType, MutableList<KFunction<*>>>()
-        checkMethods.forEach {
-            val instanceType = it.parameters[1].type
-            var checkMethodsForType = checkMethodsPerInstanceType[instanceType]
-            if (checkMethodsForType == null) {
-                checkMethodsForType = mutableListOf()
-                checkMethodsPerInstanceType[instanceType] = checkMethodsForType
-            }
-            checkMethodsForType.add(it)
-        }
-
-        /*
-         * Collect all relevant model element instances that can be checked by the set of previously collected check
-         * methods
-         */
-        val modelElementInstances = HashMap<KType, MutableList<EObject>>()
+        val checkMethodsPerInstanceType = HashMap<KType, List<KFunction<*>>>()
         val iter = relevantModelElements?.iterator() ?: resource.allContents
         while (iter.hasNext()) {
-            val modelElementInstance = iter.next()
-            val elementType = modelElementInstance::class.starProjectedType
-            val checkedInstanceType =  checkMethodsPerInstanceType.keys.find { elementType.isSubtypeOf(it) }
-            if (checkedInstanceType != null) {
-                var relevantInstancesOfType = modelElementInstances[checkedInstanceType]
-                if (relevantInstancesOfType == null) {
-                    relevantInstancesOfType = mutableListOf()
-                    modelElementInstances[checkedInstanceType] = relevantInstancesOfType
-                }
-                relevantInstancesOfType.add(modelElementInstance)
-            }
-        }
+            val element = iter.next()
+            val elementType = element::class.starProjectedType
+            val elementInterface = element.ecoreMainInterface()
 
-        /* Call the identified check methods on the model element instances */
-        val beforeCheckMethods = findBeforeCheckMethods()
-        checkMethodsPerInstanceType.forEach { (instanceType, checkMethods) ->
-            val instancesToCheck = modelElementInstances[instanceType]
-            instancesToCheck?.forEach { instance ->
-                checkMethods.forEach { checkMethod ->
-                    try {
-                        validatedObject = instance
-                        // Enable invocation of private check methods
-                        checkMethod.isAccessible = true
-                        // Call before-check-methods on check method. If any of the before-check-methods returns false,
-                        // the check method will not be executed.
-                        if (checkMethod.callBeforeCheckMethods(this, beforeCheckMethods))
-                            checkMethod.call(this, instance)
-                    } catch (ex: Exception) {
-                        // Exceptions are swallowed, except when the check method has the @RethrowExceptions annotation
-                        if (checkMethod.annotations.any { it.annotationClass == RethrowExceptions::class })
-                            throw(ex)
-                    }
+            // Find applicable check methods if they have not been identified for the element type already
+            if (elementType !in checkMethodsPerInstanceType)
+                checkMethodsPerInstanceType[elementType] = findApplicableCheckMethods(elementType, elementInterface)
+
+            val checkMethods = checkMethodsPerInstanceType[elementType]!!
+            checkMethods.forEach { checkMethod ->
+                try {
+                    validatedObject = element
+                    // Enable invocation of private check methods
+                    checkMethod.isAccessible = true
+                    // Call before-check-methods on check method. If any of the before-check-methods returns false,
+                    // the check method will not be executed.
+                    if (checkMethod.callBeforeCheckMethods(this, beforeCheckMethods))
+                        checkMethod.call(this, element)
+                } catch (ex: Exception) {
+                    // Exceptions are swallowed, except when the check method has the @RethrowExceptions annotation
+                    if (checkMethod.annotations.any { it.annotationClass == RethrowExceptions::class })
+                        throw(ex)
                 }
             }
         }
     }
 
     /**
-     * Find methods that are annotated with [BeforeCheck] and thus have to be executed prior to each call to a
-     * validation method annotated with [Check]. A [BeforeCheck] method must take a single parameter of type
-     * [KFunction], which receives the [Check] method to be invoked, and return a [Boolean], which indicates whether the
-     * [Check] method shall be invoked.
+     * Retrieve the main interface of this [EObject] instance, which is the first interface of the [EObject] instance
+     * that can be cast to the [EObject] interface
      */
-    private fun findBeforeCheckMethods()
-        = this.findAnnotatedMethods(BeforeCheck::class).filter {
-            // First parameter is Validator instance
-            it.parameters.size == 2 &&
-            it.parameters[1].type == KFunction::class.starProjectedType &&
-            it.returnType == Boolean::class.starProjectedType
+    @Suppress("UNCHECKED_CAST")
+    private fun EObject.ecoreMainInterface()
+        = this::class.java.interfaces.find {
+                (it as? Class<out EObject>) != null
+            } as? Class<out EObject>?
+
+    /**
+     * Find all check methods that are able to validate the given [elementType] or [elementInterface]
+     */
+    private fun findApplicableCheckMethods(elementType: KType, elementInterface: Class<out EObject>?)
+        = checkMethods.filter { method ->
+            val validatedElementType = method.parameters[1].type
+            val validatedElementInterface = validatedElementType.jvmErasure.java
+
+            // A check method is applicable when the type of its first parameter equals or is a subtype of either the
+            // given element type or element interface. However, check methods may use the @ExcludeSubtypes annotation
+            // to ensure that a check method only applies when the type of its first parameter is exactly equal (and not
+            // a subtype) to either the given element type or element interface.
+            elementType == validatedElementType ||
+            elementInterface == validatedElementInterface ||
+                elementType.isSubtypeOf(validatedElementType) &&
+                method.annotations.none { it.annotationClass == ExcludeSubtypes::class }
         }
 
     /**
