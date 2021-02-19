@@ -54,9 +54,9 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'Intermediate Service Model Format Specification'
-copyright = '2018, Florian Rademacher'
-author = 'Florian Rademacher'
+project = 'Intermediate Operation Model Format Specification'
+copyright = '2021, Florian Rademacher, Philip Wizenty'
+author = 'Florian Rademacher, Philip Wizenty'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the

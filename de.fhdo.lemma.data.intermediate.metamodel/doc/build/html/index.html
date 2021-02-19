@@ -1,27 +1,38 @@
 
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Intermediate Data Model Format Specification &#8212; Intermediate Data Model Format Specification 1.0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="1 Introduction" href="body.html" />
+    <link rel="next" title="1   Introduction" href="body.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head><body>
+  </head>
+  <body>
   
 
     <div class="document">
@@ -36,19 +47,19 @@
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Table of Contents</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="body.html"><span class="sectnum">1</span> Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="body.html#model-processing"><span class="sectnum">2</span> Model Processing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="body.html#format-specification"><span class="sectnum">3</span> Format Specification</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="body.html#model-root"><span class="sectnum">3.1</span> Model Root</a></li>
-<li class="toctree-l2"><a class="reference internal" href="body.html#imports"><span class="sectnum">3.2</span> Imports</a></li>
-<li class="toctree-l2"><a class="reference internal" href="body.html#namespace-concepts"><span class="sectnum">3.3</span> Namespace Concepts</a></li>
-<li class="toctree-l2"><a class="reference internal" href="body.html#built-in-type-system"><span class="sectnum">3.4</span> Built-in Type System</a></li>
-<li class="toctree-l2"><a class="reference internal" href="body.html#custom-domain-specific-types"><span class="sectnum">3.5</span> Custom, domain-specific Types</a></li>
-<li class="toctree-l2"><a class="reference internal" href="body.html#technologies"><span class="sectnum">3.6</span> Technologies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="body.html">1&nbsp;&nbsp;&nbsp;Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="body.html#model-processing">2&nbsp;&nbsp;&nbsp;Model Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="body.html#format-specification">3&nbsp;&nbsp;&nbsp;Format Specification</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="body.html#model-root">3.1&nbsp;&nbsp;&nbsp;Model Root</a></li>
+<li class="toctree-l2"><a class="reference internal" href="body.html#imports">3.2&nbsp;&nbsp;&nbsp;Imports</a></li>
+<li class="toctree-l2"><a class="reference internal" href="body.html#namespace-concepts">3.3&nbsp;&nbsp;&nbsp;Namespace Concepts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="body.html#built-in-type-system">3.4&nbsp;&nbsp;&nbsp;Built-in Type System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="body.html#custom-domain-specific-types">3.5&nbsp;&nbsp;&nbsp;Custom, domain-specific Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="body.html#technologies">3.6&nbsp;&nbsp;&nbsp;Technologies</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="body.html#indices-and-tables"><span class="sectnum">4</span> Indices and Tables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="body.html#references"><span class="sectnum">5</span> References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="body.html#indices-and-tables">4&nbsp;&nbsp;&nbsp;Indices and Tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="body.html#references">5&nbsp;&nbsp;&nbsp;References</a></li>
 </ul>
 </div>
 </div>
@@ -63,29 +74,29 @@
 <h3>Related Topics</h3>
 <ul>
   <li><a href="#">Documentation overview</a><ul>
-      <li>Next: <a href="body.html" title="next chapter"><span class="sectnum">1</span> Introduction</a></li>
+      <li>Next: <a href="body.html" title="next chapter">1&nbsp;&nbsp;&nbsp;Introduction</a></li>
   </ul></li>
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
+  <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
     </form>
-    </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2018, Florian Rademacher.
+      &copy;2021, Florian Rademacher.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.7</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

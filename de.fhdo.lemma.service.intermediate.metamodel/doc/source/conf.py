@@ -55,7 +55,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'Intermediate Service Model Format Specification'
-copyright = '2018, Florian Rademacher'
+copyright = '2021, Florian Rademacher'
 author = 'Florian Rademacher'
 
 # The version info for the project you're documenting, acts as replacement for

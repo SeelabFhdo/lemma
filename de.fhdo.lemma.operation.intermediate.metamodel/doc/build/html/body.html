@@ -1,17 +1,27 @@
 
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta charset="utf-8" />
-    <title>1 Introduction &#8212; Intermediate Service Model Format Specification 1.0 documentation</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>1   Introduction &#8212; Intermediate Operation Model Format Specification 1.0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="Intermediate Operation Model Format Specification" href="index.html" />
@@ -21,7 +31,8 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head><body>
+  </head>
+  <body>
   
 
     <div class="document">
@@ -32,121 +43,121 @@
           <div class="body" role="main">
             
   <div class="section" id="introduction">
-<span id="id1"></span><h1><span class="sectnum">1</span> Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h1>1&nbsp;&nbsp;&nbsp;Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
 <p>This document describes the Intermediate Operation Model format of the
 <a class="reference external" href="https://github.com/SeelabFhdo/lemma">Language Ecosystem for Modeling Microservice Archictecture</a>. The project aims
 to facilitate the development of <em>microservice-based software systems</em>
-<span id="id2">[<a class="reference internal" href="#id17"><span>New15</span></a>]</span> by employing Model-driven Development (MDD)
-<span id="id3">[<a class="reference internal" href="#id18"><span>CFJezequel+17</span></a>]</span>.</p>
+<a class="reference internal" href="#newman2015" id="id2">[New15]</a> by employing Model-driven Development (MDD)
+<a class="reference internal" href="#combemale2017" id="id3">[CFJezequel+17]</a>.</p>
 <p>In this context, a microservice architecture consists of several different types
 of models, listed in <a class="reference internal" href="#tab-model-types"><span class="std std-numref">Table 1</span></a>.</p>
-<span id="tab-model-types"></span><table class="docutils align-default" id="id22">
-<caption><span class="caption-number">Table 1 </span><span class="caption-text">Model types</span><a class="headerlink" href="#id22" title="Permalink to this table">¶</a></caption>
+<span id="tab-model-types"></span><table border="1" class="docutils" id="id16">
+<caption><span class="caption-number">Table 1 </span><span class="caption-text">Model types</span><a class="headerlink" href="#id16" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col style="width: 23%" />
-<col style="width: 77%" />
+<col width="23%" />
+<col width="77%" />
 </colgroup>
-<tbody>
-<tr class="row-odd"><td><p><strong>Model Type</strong></p></td>
-<td><p><strong>Description</strong></p></td>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Model Type</strong></td>
+<td><strong>Description</strong></td>
 </tr>
-<tr class="row-even"><td><p>Domain Data Model</p></td>
-<td><p>A Domain Data Model describes the domain-specific data
+<tr class="row-even"><td>Domain Data Model</td>
+<td>A Domain Data Model describes the domain-specific data
 used by a modeled microservice to specify its
 input/output data. See also the
-<span class="xref std std-doc">Intermediate Data Model Format Specification</span>.</p></td>
+<a class="reference external" href="../../../../de.fhdo.lemma.data.intermediate.metamodel/doc/build/html/index.html" title="(in Intermediate Data Model Format Specification v1.0)"><span class="xref std std-doc">Intermediate Data Model Format Specification</span></a>.</td>
 </tr>
-<tr class="row-odd"><td><p>Mapping Model</p></td>
-<td><p>A Mapping Model allows for assigning (alternative)
+<tr class="row-odd"><td>Mapping Model</td>
+<td>A Mapping Model allows for assigning (alternative)
 technologies to, e.g., modeled microservices in a
-Service Model and complex types in a Data Model.</p></td>
+Service Model and complex types in a Data Model.</td>
 </tr>
-<tr class="row-even"><td><p>Service Model</p></td>
-<td><p>A Service Model contains several microservice models,
+<tr class="row-even"><td>Service Model</td>
+<td>A Service Model contains several microservice models,
 their interfaces, and operations. The contents of
 imported Domain Data Models, e.g., data structures, may
 be used to type operations’ parameters. See also the
-<span class="xref std std-doc">Intermediate Service Model Format Specification</span>.</p></td>
+<a class="reference external" href="../../../../de.fhdo.lemma.service.intermediate.metamodel/doc/build/html/index.html" title="(in Intermediate Service Model Format Specification v1.0)"><span class="xref std std-doc">Intermediate Service Model Format Specification</span></a>.</td>
 </tr>
-<tr class="row-odd"><td><p>Operation Model</p></td>
-<td><p>An Operation Model expresses the deployment and
+<tr class="row-odd"><td>Operation Model</td>
+<td>An Operation Model expresses the deployment and
 operation of microservices being imported from Service
 Models, and the dependencies to infrastructure nodes,
 e.g., databases or service discoveries, being imported
-from Operation Models.</p></td>
+from Operation Models.</td>
 </tr>
-<tr class="row-even"><td><p>Technology Model</p></td>
-<td><p>A Technology models encapsulates descriptions of
+<tr class="row-even"><td>Technology Model</td>
+<td>A Technology models encapsulates descriptions of
 technologies. For instance, certain implementation
 technologies, e.g., Java or Go, and protocol
 technologies, e.g., REST or AMQP, may be contained in a
 Technology Model. Moreover, service or operation
-<em>aspects</em> <span id="id4">[<a class="reference internal" href="#id19"><span>KLM+97</span></a>]</span> may be defined, which
+<em>aspects</em> <a class="reference internal" href="#kiczales1997" id="id4">[KLM+97]</a> may be defined, which
 enable to reify technology specifications in Mapping,
-Operation, or Service Models.</p></td>
+Operation, or Service Models.</td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="section" id="model-processing">
-<span id="modelprocessing"></span><h1><span class="sectnum">2</span> Model Processing<a class="headerlink" href="#model-processing" title="Permalink to this headline">¶</a></h1>
-<p>The creation of the models happens within a bundle of Eclipse <a class="footnote-reference brackets" href="#eclipse" id="id5">1</a>
-plugins that are based on Xcore <a class="footnote-reference brackets" href="#xcore" id="id6">2</a> and Xtext <a class="footnote-reference brackets" href="#xtext" id="id7">3</a>. These
-technologies build upon the Ecore metamodeling standard <span id="id8">[<a class="reference internal" href="#id20"><span>SBPM11</span></a>]</span>
-and the Eclipse Modeling Framework (EMF) <a class="footnote-reference brackets" href="#emf" id="id9">4</a>.</p>
+<span id="modelprocessing"></span><h1>2&nbsp;&nbsp;&nbsp;Model Processing<a class="headerlink" href="#model-processing" title="Permalink to this headline">¶</a></h1>
+<p>The creation of the models happens within a bundle of Eclipse <a class="footnote-reference" href="#eclipse" id="id5">[1]</a>
+plugins that are based on Xcore <a class="footnote-reference" href="#xcore" id="id6">[2]</a> and Xtext <a class="footnote-reference" href="#xtext" id="id7">[3]</a>. These
+technologies build upon the Ecore metamodeling standard <a class="reference internal" href="#steinberg2011" id="id8">[SBPM11]</a>
+and the Eclipse Modeling Framework (EMF) <a class="footnote-reference" href="#emf" id="id9">[4]</a>.</p>
 <p>However, to detach the processing of the models from the Eclipse ecosystem and
 allow microservice teams for creating custom model processors like validators
-and <em>code generators</em> <span id="id10">[<a class="reference internal" href="#id18"><span>CFJezequel+17</span></a>]</span> that do not need to depend on EMF,
-the models are exported <a class="footnote-reference brackets" href="#model-export" id="id11">5</a> from Eclipse to the technology-agnostic
-XML Metadata Interchange (XMI) format <a class="footnote-reference brackets" href="#xmi" id="id12">6</a>.</p>
+and <em>code generators</em> <a class="reference internal" href="#combemale2017" id="id10">[CFJezequel+17]</a> that do not need to depend on EMF,
+the models are exported <a class="footnote-reference" href="#model-export" id="id11">[5]</a> from Eclipse to the technology-agnostic
+XML Metadata Interchange (XMI) format <a class="footnote-reference" href="#xmi" id="id12">[6]</a>.</p>
 <p>XMI is based on XML and encodes a model instance, whose <em>metamodel</em>
-<span id="id13">[<a class="reference internal" href="#id18"><span>CFJezequel+17</span></a>]</span> is based on the Meta Object Facility (MOF) <a class="footnote-reference brackets" href="#mof" id="id14">7</a> which
+<a class="reference internal" href="#combemale2017" id="id13">[CFJezequel+17]</a> is based on the Meta Object Facility (MOF) <a class="footnote-reference" href="#mof" id="id14">[7]</a> which
 is generally the case for Ecore metamodels and derived model instances.</p>
 </div>
 <div class="section" id="format-specification">
-<h1><span class="sectnum">3</span> Format Specification<a class="headerlink" href="#format-specification" title="Permalink to this headline">¶</a></h1>
+<h1>3&nbsp;&nbsp;&nbsp;Format Specification<a class="headerlink" href="#format-specification" title="Permalink to this headline">¶</a></h1>
 <p>This document describes the metamodel and thus the structure of XMI files of
 Intermediate Operation Models, i.e., instances of Operation Models that were
-exported from Eclipse (cf. <a class="reference internal" href="#introduction"><span class="std std-ref">1   Introduction</span></a> and <a class="reference internal" href="#modelprocessing"><span class="std std-ref">2   Model Processing</span></a>). It
+exported from Eclipse (cf. <a class="reference internal" href="#introduction"><span class="std std-ref">1&nbsp;&nbsp;&nbsp;Introduction</span></a> and <a class="reference internal" href="#modelprocessing"><span class="std std-ref">2&nbsp;&nbsp;&nbsp;Model Processing</span></a>). It
 may be used as reference, when implementing custom model processors for
 microservice-related Operation Models.</p>
 <p><a class="reference internal" href="#fig-metamodel"><span class="std std-numref">Fig. 1</span></a> shows the structure of the metamodel of the Intermediate
 Operation Models in an object-oriented way in the form of a UML class diagram.
 The modeling concepts, their properties, and relationships are depicted as
 classes, attributes, and associations, respectively.</p>
-<div class="figure align-default" id="id23">
+<div class="figure" id="id17">
 <span id="fig-metamodel"></span><a class="reference external image-reference" href="_images/metamodel.png"><img alt="_images/metamodel.png" src="_images/metamodel.png" /></a>
-<p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">Metamodel of Intermediate Operation Models</span><a class="headerlink" href="#id23" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">Metamodel of Intermediate Operation Models</span></p>
 </div>
 <p>In the following, the document contains a reference of each modeling concept of
 the metamodel depicted in <a class="reference internal" href="#fig-metamodel"><span class="std std-numref">Fig. 1</span></a>.</p>
 <div class="admonition hint">
-<p class="admonition-title">Hint</p>
-<p>Attributes that may contain more than one value but exhibit a <code class="docutils literal notranslate"><span class="pre">*</span></code>
+<p class="first admonition-title">Hint</p>
+<p>Attributes that may contain more than one value but exhibit a <code class="docutils literal"><span class="pre">*</span></code>
 multiplicity, i.e., they may contain an arbitrary number of values or even
-none at all (<code class="docutils literal notranslate"><span class="pre">*</span></code> is shorthand UML notation for <code class="docutils literal notranslate"><span class="pre">0..*</span></code>), are never null.</p>
+none at all (<code class="docutils literal"><span class="pre">*</span></code> is shorthand UML notation for <code class="docutils literal"><span class="pre">0..*</span></code>), are never null.</p>
 <p>In case no multiplicity is stated after the object type of an attribute, the
-attribute may be null. For example, an attribute defined as <code class="docutils literal notranslate"><span class="pre">String</span> <span class="pre">name</span></code>
-implicitly has a multiplicity <code class="docutils literal notranslate"><span class="pre">0..1</span></code> and in the zero-case the String may
+attribute may be null. For example, an attribute defined as <code class="docutils literal"><span class="pre">String</span> <span class="pre">name</span></code>
+implicitly has a multiplicity <code class="docutils literal"><span class="pre">0..1</span></code> and in the zero-case the String may
 be null.</p>
-<p>However, in case the attribute’s type is a built-in primitive Java type,
-e.g. <code class="docutils literal notranslate"><span class="pre">int</span></code>, the attribute will never be null but exhibits the type’s
+<p class="last">However, in case the attribute’s type is a built-in primitive Java type,
+e.g. <code class="docutils literal"><span class="pre">int</span></code>, the attribute will never be null but exhibits the type’s
 default value in case it did not receive an explicit value.</p>
 </div>
 <div class="section" id="model-root">
-<h2><span class="sectnum">3.1</span> Model Root<a class="headerlink" href="#model-root" title="Permalink to this headline">¶</a></h2>
+<h2>3.1&nbsp;&nbsp;&nbsp;Model Root<a class="headerlink" href="#model-root" title="Permalink to this headline">¶</a></h2>
 <dl class="type">
 <dt id="IntermediateOperationModel">
- class <code class="sig-name descname">IntermediateOperationModel</code><a class="headerlink" href="#IntermediateOperationModel" title="Permalink to this definition">¶</a></dt>
+ class <code class="descname">IntermediateOperationModel</code><a class="headerlink" href="#IntermediateOperationModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Root of the Intermediate Operation Model instance.</p>
 <dl class="attribute">
 <dt>
-<code class="sig-name descname">String[1] sourceModelUri</code></dt>
+<code class="descname">String[1] sourceModelUri</code></dt>
 <dd><p><cite>“file”</cite> URI pointing to the source Operation Model file from which
 this model was derived.</p>
 <div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Model processors must not depend on this URI being absolute or
+<p class="first admonition-title">Note</p>
+<p class="last">Model processors must not depend on this URI being absolute or
 relative. Both cases may occur in practice and are totally up to the
 modeler.</p>
 </div>
@@ -154,21 +165,21 @@ modeler.</p>
 
 <dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateImport[*] imports</code></dt>
-<dd><p>References to <code class="xref java java-type docutils literal notranslate"><span class="pre">data_model:IntermediateDataModel</span></code> or
+<code class="descname">IntermediateImport[*] imports</code></dt>
+<dd><p>References to <a class="reference external" href="../../../../de.fhdo.lemma.data.intermediate.metamodel/doc/build/html/body.html#IntermediateDataModel" title="(in Intermediate Data Model Format Specification v1.0)"><code class="docutils literal"><span class="pre">IntermediateDataModel</span></code></a> or
 Technology Model (cf. <a class="reference internal" href="#tab-model-types"><span class="std std-numref">Table 1</span></a>) instances that were
 imported into the source Operation Model
-(cf. <code class="xref java java-type docutils literal notranslate"><span class="pre">data_model:IntermediateImport</span></code>).</p>
+(cf. <a class="reference external" href="../../../../de.fhdo.lemma.data.intermediate.metamodel/doc/build/html/body.html#IntermediateImport" title="(in Intermediate Data Model Format Specification v1.0)"><code class="docutils literal"><span class="pre">IntermediateImport</span></code></a>).</p>
 </dd></dl>
 
 <span class="target" id="link-intermediateoperationmodel-containers"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateContainer[*] containers</code></dt>
-<dd><p>Modeled <a class="reference internal" href="#IntermediateContainer" title="IntermediateContainer"><code class="xref java java-type docutils literal notranslate"><span class="pre">containers</span></code></a> in the source
+<code class="descname">IntermediateContainer[*] containers</code></dt>
+<dd><p>Modeled <a class="reference internal" href="#IntermediateContainer" title="IntermediateContainer"><code class="xref java java-type docutils literal"><span class="pre">containers</span></code></a> in the source
 Operation Model.</p>
 <div class="admonition hint">
-<p class="admonition-title">Hint</p>
-<p>The source Operation Model must not be empty. Consequent, both the
+<p class="first admonition-title">Hint</p>
+<p class="last">The source Operation Model must not be empty. Consequent, both the
 <a class="reference internal" href="#link-intermediateoperationmodel-containers"><span class="std std-ref">containers</span></a>
 and
 <a class="reference internal" href="#link-intermediateoperationmodel-infrastructurenodes"><span class="std std-ref">infrastructureNodes</span></a>
@@ -179,13 +190,13 @@ empty at the same time.</p>
 
 <span class="target" id="link-intermediateoperationmodel-infrastructurenodes"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateInfrastructureNode[*] infrastructureNodes</code></dt>
+<code class="descname">IntermediateInfrastructureNode[*] infrastructureNodes</code></dt>
 <dd><p>Modeled
-<a class="reference internal" href="#IntermediateInfrastructureNode" title="IntermediateInfrastructureNode"><code class="xref java java-type docutils literal notranslate"><span class="pre">infrastructure</span> <span class="pre">nodes</span></code></a>
+<a class="reference internal" href="#IntermediateInfrastructureNode" title="IntermediateInfrastructureNode"><code class="xref java java-type docutils literal"><span class="pre">infrastructure</span> <span class="pre">nodes</span></code></a>
 in the source Operation Model.</p>
 <div class="admonition hint">
-<p class="admonition-title">Hint</p>
-<p>The source Operation Model must not be empty. Consequent, both the
+<p class="first admonition-title">Hint</p>
+<p class="last">The source Operation Model must not be empty. Consequent, both the
 <a class="reference internal" href="#link-intermediateoperationmodel-containers"><span class="std std-ref">containers</span></a>
 and
 <a class="reference internal" href="#link-intermediateoperationmodel-infrastructurenodes"><span class="std std-ref">infrastructureNodes</span></a>
@@ -198,28 +209,28 @@ empty at the same time.</p>
 
 </div>
 <div class="section" id="operation-nodes">
-<h2><span class="sectnum">3.2</span> Operation Nodes<a class="headerlink" href="#operation-nodes" title="Permalink to this headline">¶</a></h2>
+<h2>3.2&nbsp;&nbsp;&nbsp;Operation Nodes<a class="headerlink" href="#operation-nodes" title="Permalink to this headline">¶</a></h2>
 <dl class="type">
 <dt id="IntermediateOperationNode">
- class <code class="sig-name descname">IntermediateOperationNode</code><a class="headerlink" href="#IntermediateOperationNode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Abstract super class of <a class="reference internal" href="#IntermediateContainer" title="IntermediateContainer"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateContainer</span></code></a> and
-<a class="reference internal" href="#IntermediateInfrastructureNode" title="IntermediateInfrastructureNode"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateInfrastructureNode</span></code></a>.</p>
+ class <code class="descname">IntermediateOperationNode</code><a class="headerlink" href="#IntermediateOperationNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Abstract super class of <a class="reference internal" href="#IntermediateContainer" title="IntermediateContainer"><code class="xref java java-type docutils literal"><span class="pre">IntermediateContainer</span></code></a> and
+<a class="reference internal" href="#IntermediateInfrastructureNode" title="IntermediateInfrastructureNode"><code class="xref java java-type docutils literal"><span class="pre">IntermediateInfrastructureNode</span></code></a>.</p>
 <span class="target" id="link-intermediateoperationnode-name"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">String[1] name</code></dt>
+<code class="descname">String[1] name</code></dt>
 <dd><p>Unique name of the operation node.</p>
 </dd></dl>
 
 <span class="target" id="link-intermediateoperationnode-geteffectiveconfigurationvalues"></span><dl class="method">
 <dt id="getEffectiveConfigurationValues">
-<code class="sig-name descname">getEffectiveConfigurationValues</code><span class="sig-paren">(</span><em class="sig-param">service : OperationMicroserviceReference</em><span class="sig-paren">)</span> &#x2192; IntermediateTechnologySpecificPropertyValue[*]<a class="headerlink" href="#getEffectiveConfigurationValues" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getEffectiveConfigurationValues</code><span class="sig-paren">(</span><em>service : OperationMicroserviceReference</em><span class="sig-paren">)</span> &#x2192; IntermediateTechnologySpecificPropertyValue[*]<a class="headerlink" href="#getEffectiveConfigurationValues" title="Permalink to this definition">¶</a></dt>
 <dd><p>Helper to return the effective configuration values on the operation
 node being set for the given
-<a class="reference internal" href="#OperationMicroserviceReference" title="OperationMicroserviceReference"><code class="xref java java-type docutils literal notranslate"><span class="pre">OperationMicroserviceReference</span></code></a>. The effective configuration
+<a class="reference internal" href="#OperationMicroserviceReference" title="OperationMicroserviceReference"><code class="xref java java-type docutils literal"><span class="pre">OperationMicroserviceReference</span></code></a>. The effective configuration
 values consist of the
 <a class="reference internal" href="#link-intermediateoperationnode-defaultvalues"><span class="std std-ref">default values</span></a>
 for the
-<a class="reference internal" href="#IntermediateTechnologySpecificPropertyValue" title="IntermediateTechnologySpecificPropertyValue"><code class="xref java java-type docutils literal notranslate"><span class="pre">technology-specific</span> <span class="pre">properties</span></code></a>
+<a class="reference internal" href="#IntermediateTechnologySpecificPropertyValue" title="IntermediateTechnologySpecificPropertyValue"><code class="xref java java-type docutils literal"><span class="pre">technology-specific</span> <span class="pre">properties</span></code></a>
 on the node and the
 <a class="reference internal" href="#link-intermediateservicedeploymentspecification-propertyvalues"><span class="std std-ref">property values specific to the service’s deployment</span></a>.
 The latter ones may overwrite the default values.</p>
@@ -227,45 +238,45 @@ The latter ones may overwrite the default values.</p>
 
 <span class="target" id="link-intermediateoperationnode-imports"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateImport[1..*] imports</code></dt>
+<code class="descname">IntermediateImport[1..*] imports</code></dt>
 <dd><p>References to Technology Model (cf. <a class="reference internal" href="#tab-model-types"><span class="std std-numref">Table 1</span></a>)
 instances that were imported into the source Operation Model
-(cf. <code class="xref java java-type docutils literal notranslate"><span class="pre">data_model:IntermediateImport</span></code>).</p>
+(cf. <a class="reference external" href="../../../../de.fhdo.lemma.data.intermediate.metamodel/doc/build/html/body.html#IntermediateImport" title="(in Intermediate Data Model Format Specification v1.0)"><code class="docutils literal"><span class="pre">IntermediateImport</span></code></a>).</p>
 </dd></dl>
 
 <span class="target" id="link-intermediateoperationnode-operationenvironment"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateOperationEnvironment[1] operationEnvironment</code></dt>
+<code class="descname">IntermediateOperationEnvironment[1] operationEnvironment</code></dt>
 <dd><p>Intermediate representation of the node’s
-<a class="reference internal" href="#IntermediateOperationEnvironment" title="IntermediateOperationEnvironment"><code class="xref java java-type docutils literal notranslate"><span class="pre">operation</span> <span class="pre">environment</span></code></a>.</p>
+<a class="reference internal" href="#IntermediateOperationEnvironment" title="IntermediateOperationEnvironment"><code class="xref java java-type docutils literal"><span class="pre">operation</span> <span class="pre">environment</span></code></a>.</p>
 </dd></dl>
 
 <span class="target" id="link-intermediateoperationnode-deployedservices"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">OperationMicroserviceReference[*] deployedServices</code></dt>
-<dd><p><a class="reference internal" href="#OperationMicroserviceReference" title="OperationMicroserviceReference"><code class="xref java java-type docutils literal notranslate"><span class="pre">References</span></code></a> to the
+<code class="descname">OperationMicroserviceReference[*] deployedServices</code></dt>
+<dd><p><a class="reference internal" href="#OperationMicroserviceReference" title="OperationMicroserviceReference"><code class="xref java java-type docutils literal"><span class="pre">References</span></code></a> to the
 microservices being associated with the node.</p>
 <div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Despite the name <cite>“deployedServices”</cite>, this attribute also concerns
+<p class="first admonition-title">Note</p>
+<p class="last">Despite the name <cite>“deployedServices”</cite>, this attribute also concerns
 the microservices that <strong>use</strong> the node, in case the concrete
 instance of the node is an
-<a class="reference internal" href="#IntermediateInfrastructureNode" title="IntermediateInfrastructureNode"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateInfrastructureNode</span></code></a>.</p>
+<a class="reference internal" href="#IntermediateInfrastructureNode" title="IntermediateInfrastructureNode"><code class="xref java java-type docutils literal"><span class="pre">IntermediateInfrastructureNode</span></code></a>.</p>
 </div>
 </dd></dl>
 
 <span class="target" id="link-intermediateoperationnode-endpoints"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateOperationEndpoint[1..*] endpoints</code></dt>
+<code class="descname">IntermediateOperationEndpoint[1..*] endpoints</code></dt>
 <dd><p>Intermediate representations of the node’s
-<a class="reference internal" href="#IntermediateOperationEndpoint" title="IntermediateOperationEndpoint"><code class="xref java java-type docutils literal notranslate"><span class="pre">endpoints</span></code></a>.</p>
+<a class="reference internal" href="#IntermediateOperationEndpoint" title="IntermediateOperationEndpoint"><code class="xref java java-type docutils literal"><span class="pre">endpoints</span></code></a>.</p>
 </dd></dl>
 
 <span class="target" id="link-intermediateoperationnode-specifications"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateServiceDeploymentSpecification[*] specifications</code></dt>
+<code class="descname">IntermediateServiceDeploymentSpecification[*] specifications</code></dt>
 <dd><p>Intermediate representations of
-<a class="reference internal" href="#IntermediateServiceDeploymentSpecification" title="IntermediateServiceDeploymentSpecification"><code class="xref java java-type docutils literal notranslate"><span class="pre">service-specific</span> <span class="pre">deployment</span> <span class="pre">specifications</span></code></a>
+<a class="reference internal" href="#IntermediateServiceDeploymentSpecification" title="IntermediateServiceDeploymentSpecification"><code class="xref java java-type docutils literal"><span class="pre">service-specific</span> <span class="pre">deployment</span> <span class="pre">specifications</span></code></a>
 for services being
 <a class="reference internal" href="#link-intermediateoperationnode-deployedservices"><span class="std std-ref">associated</span></a>
 with the node.</p>
@@ -273,15 +284,15 @@ with the node.</p>
 
 <span class="target" id="link-intermediateoperationnode-defaultvalues"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateTechnologySpecificPropertyValue[*] defaultValues</code></dt>
+<code class="descname">IntermediateTechnologySpecificPropertyValue[*] defaultValues</code></dt>
 <dd><p>Default values for
-<a class="reference internal" href="#IntermediateTechnologySpecificPropertyValue" title="IntermediateTechnologySpecificPropertyValue"><code class="xref java java-type docutils literal notranslate"><span class="pre">technology-specific</span> <span class="pre">configuration</span> <span class="pre">property</span> <span class="pre">values</span></code></a>.
+<a class="reference internal" href="#IntermediateTechnologySpecificPropertyValue" title="IntermediateTechnologySpecificPropertyValue"><code class="xref java java-type docutils literal"><span class="pre">technology-specific</span> <span class="pre">configuration</span> <span class="pre">property</span> <span class="pre">values</span></code></a>.
 These values account all services being
 <a class="reference internal" href="#link-intermediateoperationnode-deployedservices"><span class="std std-ref">associated</span></a>
 with the node.</p>
 <div class="admonition hint">
-<p class="admonition-title">Hint</p>
-<p>You may use the <a class="reference internal" href="#link-intermediateoperationnode-geteffectiveconfigurationvalues"><span class="std std-ref">getEffectiveConfigurationValues</span></a>
+<p class="first admonition-title">Hint</p>
+<p class="last">You may use the <a class="reference internal" href="#link-intermediateoperationnode-geteffectiveconfigurationvalues"><span class="std std-ref">getEffectiveConfigurationValues</span></a>
 method to retrieve the effective configuration values of a given
 associated service.</p>
 </div>
@@ -289,9 +300,9 @@ associated service.</p>
 
 <span class="target" id="link-intermediateoperationnode-aspects"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateImportedAspect[*] aspects</code></dt>
+<code class="descname">IntermediateImportedAspect[*] aspects</code></dt>
 <dd><p>Intermediate representations of
-<code class="xref java java-type docutils literal notranslate"><span class="pre">aspects</span></code> being imported from
+<a class="reference external" href="../../../../de.fhdo.lemma.data.intermediate.metamodel/doc/build/html/body.html#IntermediateImportedAspect" title="(in Intermediate Data Model Format Specification v1.0)"><code class="xref java java-type docutils literal"><span class="pre">aspects</span></code></a> being imported from
 Technology Models (cf. <a class="reference internal" href="#tab-model-types"><span class="std std-numref">Table 1</span></a>) and applied to the
 node.</p>
 </dd></dl>
@@ -300,20 +311,20 @@ node.</p>
 
 <dl class="type">
 <dt id="IntermediateOperationEndpoint">
- class <code class="sig-name descname">IntermediateOperationEndpoint</code><a class="headerlink" href="#IntermediateOperationEndpoint" title="Permalink to this definition">¶</a></dt>
+ class <code class="descname">IntermediateOperationEndpoint</code><a class="headerlink" href="#IntermediateOperationEndpoint" title="Permalink to this definition">¶</a></dt>
 <dd><p>Intermediate representation of an endpoint on an
-<a class="reference internal" href="#IntermediateOperationNode" title="IntermediateOperationNode"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateOperationNode</span></code></a>. This representation extends the
-<code class="xref java java-type docutils literal notranslate"><span class="pre">service_model:IntermediateEndpoint</span></code> concept from the
+<a class="reference internal" href="#IntermediateOperationNode" title="IntermediateOperationNode"><code class="xref java java-type docutils literal"><span class="pre">IntermediateOperationNode</span></code></a>. This representation extends the
+<a class="reference external" href="../../../../de.fhdo.lemma.service.intermediate.metamodel/doc/build/html/body.html#IntermediateEndpoint" title="(in Intermediate Service Model Format Specification v1.0)"><code class="docutils literal"><span class="pre">IntermediateEndpoint</span></code></a> concept from the
 Intermediate Service Model specification by the endpoint’s technology.</p>
 <span class="target" id="link-intermediateoperationendpoint-endpointtechnology"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateOperationEndpoint[*] endpointTechnology</code></dt>
+<code class="descname">IntermediateOperationEndpoint[*] endpointTechnology</code></dt>
 <dd><p>Technology used by the endpoint.</p>
 </dd></dl>
 
 <span class="target" id="link-intermediateoperationendpoint-node"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateOperationNode[1] node</code></dt>
+<code class="descname">IntermediateOperationNode[1] node</code></dt>
 <dd><p>Operation node for which the endpoint was specified.</p>
 </dd></dl>
 
@@ -321,15 +332,15 @@ Intermediate Service Model specification by the endpoint’s technology.</p>
 
 <dl class="type">
 <dt id="IntermediateEndpointTechnology">
- class <code class="sig-name descname">IntermediateEndpointTechnology</code><a class="headerlink" href="#IntermediateEndpointTechnology" title="Permalink to this definition">¶</a></dt>
+ class <code class="descname">IntermediateEndpointTechnology</code><a class="headerlink" href="#IntermediateEndpointTechnology" title="Permalink to this definition">¶</a></dt>
 <dd><p>Intermediate representation of the technology used by an
-<a class="reference internal" href="#IntermediateOperationEndpoint" title="IntermediateOperationEndpoint"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateOperationEndpoint</span></code></a>. This representation derives from
-the <code class="xref java java-type docutils literal notranslate"><span class="pre">service_model:IntermediateTechnology</span></code> concept of the
+<a class="reference internal" href="#IntermediateOperationEndpoint" title="IntermediateOperationEndpoint"><code class="xref java java-type docutils literal"><span class="pre">IntermediateOperationEndpoint</span></code></a>. This representation derives from
+the <code class="xref java java-type docutils literal"><span class="pre">IntermediateTechnology</span></code> concept of the
 Intermediate Service Model specification to make endpoint technology
 information specific to Operation Models.</p>
 <span class="target" id="link-intermediateendpointtechnology-endpoint"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateOperationEndpoint[1] endpoint</code></dt>
+<code class="descname">IntermediateOperationEndpoint[1] endpoint</code></dt>
 <dd><p>The endpoint to which this technology was assigned.</p>
 </dd></dl>
 
@@ -337,38 +348,38 @@ information specific to Operation Models.</p>
 
 <dl class="type">
 <dt id="IntermediateTechnologySpecificPropertyValue">
- class <code class="sig-name descname">IntermediateTechnologySpecificPropertyValue</code><a class="headerlink" href="#IntermediateTechnologySpecificPropertyValue" title="Permalink to this definition">¶</a></dt>
+ class <code class="descname">IntermediateTechnologySpecificPropertyValue</code><a class="headerlink" href="#IntermediateTechnologySpecificPropertyValue" title="Permalink to this definition">¶</a></dt>
 <dd><p>Represents the value of a
-<a class="reference internal" href="#IntermediateTechnologySpecificProperty" title="IntermediateTechnologySpecificProperty"><code class="xref java java-type docutils literal notranslate"><span class="pre">technology-specific</span> <span class="pre">property</span></code></a>.</p>
+<a class="reference internal" href="#IntermediateTechnologySpecificProperty" title="IntermediateTechnologySpecificProperty"><code class="xref java java-type docutils literal"><span class="pre">technology-specific</span> <span class="pre">property</span></code></a>.</p>
 <span class="target" id="link-intermediatetechnologyspecificpropertyvalue-value"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">String[1] value</code></dt>
+<code class="descname">String[1] value</code></dt>
 <dd><p>The value of the property.</p>
 <div class="admonition hint">
-<p class="admonition-title">Hint</p>
-<p>The value is represented as a String, but will always be compatible
+<p class="first admonition-title">Hint</p>
+<p class="last">The value is represented as a String, but will always be compatible
 to the
 <a class="reference internal" href="#link-intermediatetechnologyspecificproperty-type"><span class="std std-ref">type</span></a> of
-the <a class="reference internal" href="#IntermediateTechnologySpecificProperty" title="IntermediateTechnologySpecificProperty"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateTechnologySpecificProperty</span></code></a>.</p>
+the <a class="reference internal" href="#IntermediateTechnologySpecificProperty" title="IntermediateTechnologySpecificProperty"><code class="xref java java-type docutils literal"><span class="pre">IntermediateTechnologySpecificProperty</span></code></a>.</p>
 </div>
 </dd></dl>
 
 <span class="target" id="link-intermediatetechnologyspecificpropertyvalue-technologyspecificproperty"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateTechnologySpecificProperty[1] technologySpecificProperty</code></dt>
-<dd><p>The <a class="reference internal" href="#IntermediateTechnologySpecificProperty" title="IntermediateTechnologySpecificProperty"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateTechnologySpecificProperty</span></code></a> to which the
+<code class="descname">IntermediateTechnologySpecificProperty[1] technologySpecificProperty</code></dt>
+<dd><p>The <a class="reference internal" href="#IntermediateTechnologySpecificProperty" title="IntermediateTechnologySpecificProperty"><code class="xref java java-type docutils literal"><span class="pre">IntermediateTechnologySpecificProperty</span></code></a> to which the
 value was assigned.</p>
 </dd></dl>
 
 <span class="target" id="link-intermediatetechnologyspecificpropertyvalue-specification"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateServiceDeploymentSpecification specification</code></dt>
+<code class="descname">IntermediateServiceDeploymentSpecification specification</code></dt>
 <dd><p>The service deployment specification being configured by this value.</p>
 </dd></dl>
 
 <span class="target" id="link-intermediatetechnologyspecificpropertyvalue-operationnode"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateOperationNode operationNode</code></dt>
+<code class="descname">IntermediateOperationNode operationNode</code></dt>
 <dd><p>The operation node being configured by this value.</p>
 </dd></dl>
 
@@ -376,38 +387,38 @@ value was assigned.</p>
 
 <dl class="type">
 <dt id="IntermediateContainer">
- class <code class="sig-name descname">IntermediateContainer</code><a class="headerlink" href="#IntermediateContainer" title="Permalink to this definition">¶</a></dt>
+ class <code class="descname">IntermediateContainer</code><a class="headerlink" href="#IntermediateContainer" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class represents a container as a certain kind of
-<a class="reference internal" href="#IntermediateOperationNode" title="IntermediateOperationNode"><code class="xref java java-type docutils literal notranslate"><span class="pre">operation</span> <span class="pre">node</span></code></a>.</p>
+<a class="reference internal" href="#IntermediateOperationNode" title="IntermediateOperationNode"><code class="xref java java-type docutils literal"><span class="pre">operation</span> <span class="pre">node</span></code></a>.</p>
 <span class="target" id="link-intermediatecontainer-technologyreference"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateDeploymentTechnologyReference[1] technologyReference</code></dt>
+<code class="descname">IntermediateDeploymentTechnologyReference[1] technologyReference</code></dt>
 <dd><p>Intermediate representation of the reference to the
-<a class="reference internal" href="#IntermediateDeploymentTechnologyReference" title="IntermediateDeploymentTechnologyReference"><code class="xref java java-type docutils literal notranslate"><span class="pre">deployment</span> <span class="pre">technology</span></code></a>
+<a class="reference internal" href="#IntermediateDeploymentTechnologyReference" title="IntermediateDeploymentTechnologyReference"><code class="xref java java-type docutils literal"><span class="pre">deployment</span> <span class="pre">technology</span></code></a>
 being used by the container.</p>
 </dd></dl>
 
 <span class="target" id="link-intermediatecontainer-operationmodel"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateOperationModel[1] operationModel</code></dt>
+<code class="descname">IntermediateOperationModel[1] operationModel</code></dt>
 <dd><p>The operation model to which the container belongs.</p>
 </dd></dl>
 
 <span class="target" id="link-intermediatecontainer-dependsonnodes"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateOperationNodeReference[*] dependsOnNodes</code></dt>
+<code class="descname">IntermediateOperationNodeReference[*] dependsOnNodes</code></dt>
 <dd><p>A container may depend on other nodes, e.g., databases or service
 discoveries that deployed microservices require.</p>
 </dd></dl>
 
 <span class="target" id="link-intermediatecontainer-usedbynodes"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateOperationNodeReference[*] usedByNodes</code></dt>
+<code class="descname">IntermediateOperationNodeReference[*] usedByNodes</code></dt>
 <dd><p>A container may be used by other nodes that make use of its
 infrastructure-related capabilities.</p>
 <div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The <cite>“usedByNodes”</cite> attribute models the dependency of another
+<p class="first admonition-title">Note</p>
+<p class="last">The <cite>“usedByNodes”</cite> attribute models the dependency of another
 node on a container. The
 <a class="reference internal" href="#link-intermediatecontainer-dependsonnodes"><span class="std std-ref">dependsOnNodes</span></a>
 attribute takes the opposite perspective and reflects the dependency
@@ -419,31 +430,31 @@ of a container on another node.</p>
 
 <dl class="type">
 <dt id="IntermediateInfrastructureNode">
- class <code class="sig-name descname">IntermediateInfrastructureNode</code><a class="headerlink" href="#IntermediateInfrastructureNode" title="Permalink to this definition">¶</a></dt>
+ class <code class="descname">IntermediateInfrastructureNode</code><a class="headerlink" href="#IntermediateInfrastructureNode" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class represents an infrastructure node as a certain kind of
-<a class="reference internal" href="#IntermediateOperationNode" title="IntermediateOperationNode"><code class="xref java java-type docutils literal notranslate"><span class="pre">operation</span> <span class="pre">node</span></code></a>.</p>
+<a class="reference internal" href="#IntermediateOperationNode" title="IntermediateOperationNode"><code class="xref java java-type docutils literal"><span class="pre">operation</span> <span class="pre">node</span></code></a>.</p>
 <dl class="attribute">
 <dt>
-<code class="sig-name descname">String qualifiedInfrastructureTechnologyName</code></dt>
+<code class="descname">String qualifiedInfrastructureTechnologyName</code></dt>
 <dd><p>Qualified infrastructure technology name, which is used by the
 infrastructure node.</p>
 </dd></dl>
 
 <span class="target" id="link-intermediateoperationnodereference-dependsonnodes"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateOperationNodeReference[*] dependsOnNodes</code></dt>
+<code class="descname">IntermediateOperationNodeReference[*] dependsOnNodes</code></dt>
 <dd><p>An infrastructure node may depend on other nodes, e.g., service
 discoveries or databases, for its intended functioning.</p>
 </dd></dl>
 
 <span class="target" id="link-intermediateinfrastructurenode-usedbynodes"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateOperationNodeReference[*] usedByNodes</code></dt>
+<code class="descname">IntermediateOperationNodeReference[*] usedByNodes</code></dt>
 <dd><p>An infrastructure node may be used by other nodes that make use of its
 infrastructure-related capabilities.</p>
 <div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The <cite>“usedByNodes”</cite> attribute models the dependency of another
+<p class="first admonition-title">Note</p>
+<p class="last">The <cite>“usedByNodes”</cite> attribute models the dependency of another
 node on an infrastructure node. The
 <a class="reference internal" href="#link-intermediateoperationnodereference-dependsonnodes"><span class="std std-ref">dependsOnNodes</span></a>
 takes the opposite perspective and reflects the dependency of an
@@ -453,15 +464,15 @@ infrastructure node on another node.</p>
 
 <span class="target" id="link-intermediateinfrastructurenode-reference"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateInfrastructureTechnologyReference[1] reference</code></dt>
+<code class="descname">IntermediateInfrastructureTechnologyReference[1] reference</code></dt>
 <dd><p>Intermediate representation of the reference to the
-<a class="reference internal" href="#IntermediateInfrastructureTechnologyReference" title="IntermediateInfrastructureTechnologyReference"><code class="xref java java-type docutils literal notranslate"><span class="pre">infrastructure</span> <span class="pre">technology</span></code></a>
+<a class="reference internal" href="#IntermediateInfrastructureTechnologyReference" title="IntermediateInfrastructureTechnologyReference"><code class="xref java java-type docutils literal"><span class="pre">infrastructure</span> <span class="pre">technology</span></code></a>
 being used by the infrastructure node.</p>
 </dd></dl>
 
 <span class="target" id="link-intermediateinfrastructurenode-operationmodel"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateOperationModel[1] operationModel</code></dt>
+<code class="descname">IntermediateOperationModel[1] operationModel</code></dt>
 <dd><p>The operation model to which the infrastructure node belongs.</p>
 </dd></dl>
 
@@ -469,12 +480,12 @@ being used by the infrastructure node.</p>
 
 <dl class="type">
 <dt id="IntermediateOperationNodeReference">
- class <code class="sig-name descname">IntermediateOperationNodeReference</code><a class="headerlink" href="#IntermediateOperationNodeReference" title="Permalink to this definition">¶</a></dt>
+ class <code class="descname">IntermediateOperationNodeReference</code><a class="headerlink" href="#IntermediateOperationNodeReference" title="Permalink to this definition">¶</a></dt>
 <dd><p>This class represents a reference to an
-<a class="reference internal" href="#IntermediateOperationNode" title="IntermediateOperationNode"><code class="xref java java-type docutils literal notranslate"><span class="pre">operation</span> <span class="pre">node</span></code></a>.</p>
+<a class="reference internal" href="#IntermediateOperationNode" title="IntermediateOperationNode"><code class="xref java java-type docutils literal"><span class="pre">operation</span> <span class="pre">node</span></code></a>.</p>
 <span class="target" id="link-intermediateoperationnodereference-imported"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">String imported</code></dt>
+<code class="descname">String imported</code></dt>
 <dd><p>This flag indicates whether the operation node reference is imported
 from another operation model or located in the same operation model
 where it occurs.</p>
@@ -482,35 +493,35 @@ where it occurs.</p>
 
 <dl class="attribute">
 <dt>
-<code class="sig-name descname">String name</code></dt>
+<code class="descname">String name</code></dt>
 <dd><p>Name of the referenced operation node.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="sig-name descname">String qualifiedTechnologyName</code></dt>
+<code class="descname">String qualifiedTechnologyName</code></dt>
 <dd><p>Name of the referenced operation node’s technology.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateImport import</code></dt>
+<code class="descname">IntermediateImport import</code></dt>
 <dd><p>In case the operation node is
 <a class="reference internal" href="#link-intermediateoperationnodereference-imported"><span class="std std-ref">imported</span></a>,
-this attribute points to the <code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateImport</span></code> instance,
+this attribute points to the <a class="reference external" href="../../../../de.fhdo.lemma.data.intermediate.metamodel/doc/build/html/body.html#IntermediateImport" title="(in Intermediate Data Model Format Specification v1.0)"><code class="xref java java-type docutils literal"><span class="pre">IntermediateImport</span></code></a> instance,
 which identifies the imported model to which the node belongs.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateOperationNode dependsOnNode</code></dt>
+<code class="descname">IntermediateOperationNode dependsOnNode</code></dt>
 <dd><p>Link to the operation node, which depends on the referenced operation
 node.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateOperationNode usedByNode</code></dt>
+<code class="descname">IntermediateOperationNode usedByNode</code></dt>
 <dd><p>Link to the operation node, which uses the referenced operation node.</p>
 </dd></dl>
 
@@ -518,27 +529,27 @@ node.</p>
 
 </div>
 <div class="section" id="operation-technologies">
-<h2><span class="sectnum">3.3</span> Operation Technologies<a class="headerlink" href="#operation-technologies" title="Permalink to this headline">¶</a></h2>
+<h2>3.3&nbsp;&nbsp;&nbsp;Operation Technologies<a class="headerlink" href="#operation-technologies" title="Permalink to this headline">¶</a></h2>
 <dl class="type">
 <dt id="IntermediateOperationTechnology">
- class <code class="sig-name descname">IntermediateOperationTechnology</code><a class="headerlink" href="#IntermediateOperationTechnology" title="Permalink to this definition">¶</a></dt>
+ class <code class="descname">IntermediateOperationTechnology</code><a class="headerlink" href="#IntermediateOperationTechnology" title="Permalink to this definition">¶</a></dt>
 <dd><p>Abstract super class for operation technologies.</p>
 <span class="target" id="link-intermediateoperationtechnology-name"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">String[1] name</code></dt>
+<code class="descname">String[1] name</code></dt>
 <dd><p>Name of the operation technology.</p>
 </dd></dl>
 
 <span class="target" id="link-intermediateoperationtechnology-environment"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateOperationEnvironment[1] environment</code></dt>
-<dd><p>The <a class="reference internal" href="#IntermediateOperationEnvironment" title="IntermediateOperationEnvironment"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateOperationEnvironment</span></code></a> of the technology.</p>
+<code class="descname">IntermediateOperationEnvironment[1] environment</code></dt>
+<dd><p>The <a class="reference internal" href="#IntermediateOperationEnvironment" title="IntermediateOperationEnvironment"><code class="xref java java-type docutils literal"><span class="pre">IntermediateOperationEnvironment</span></code></a> of the technology.</p>
 </dd></dl>
 
 <span class="target" id="link-intermediateoperationtechnology-properties"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateTechnologySpecificProperty[*] properties</code></dt>
-<dd><p><a class="reference internal" href="#IntermediateTechnologySpecificProperty" title="IntermediateTechnologySpecificProperty"><code class="xref java java-type docutils literal notranslate"><span class="pre">Technology-specific</span> <span class="pre">properties</span></code></a>
+<code class="descname">IntermediateTechnologySpecificProperty[*] properties</code></dt>
+<dd><p><a class="reference internal" href="#IntermediateTechnologySpecificProperty" title="IntermediateTechnologySpecificProperty"><code class="xref java java-type docutils literal"><span class="pre">Technology-specific</span> <span class="pre">properties</span></code></a>
 provided by the operation technology.</p>
 </dd></dl>
 
@@ -546,7 +557,7 @@ provided by the operation technology.</p>
 
 <dl class="type">
 <dt id="IntermediateOperationEnvironment">
- class <code class="sig-name descname">IntermediateOperationEnvironment</code><a class="headerlink" href="#IntermediateOperationEnvironment" title="Permalink to this definition">¶</a></dt>
+ class <code class="descname">IntermediateOperationEnvironment</code><a class="headerlink" href="#IntermediateOperationEnvironment" title="Permalink to this definition">¶</a></dt>
 <dd><p>The operation environment of a certain operation technology. Operation
 environments may refer to technology that is mandatory to execute modeled
 operation nodes with its defining operation technology. For example, an
@@ -554,20 +565,20 @@ operation environment may identify a the version or peculiarity of a
 capability of a certain operation technology.</p>
 <span class="target" id="link-intermediateoperationenvironment-environmentname"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">String[1] environmentName</code></dt>
+<code class="descname">String[1] environmentName</code></dt>
 <dd><p>The name of the operation environment.</p>
 </dd></dl>
 
 <span class="target" id="link-intermediateoperationenvironment-default"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">Boolean[1] default</code></dt>
+<code class="descname">Boolean[1] default</code></dt>
 <dd><p>Flag to indicate whether this is the default operation environment of
 an operation technology or not.</p>
 </dd></dl>
 
 <span class="target" id="link-intermediateoperationenvironment-operationtechnology"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateOperationTechnology[1] operationTechnology</code></dt>
+<code class="descname">IntermediateOperationTechnology[1] operationTechnology</code></dt>
 <dd><p>The operation technology to which this environment belongs.</p>
 </dd></dl>
 
@@ -575,41 +586,41 @@ an operation technology or not.</p>
 
 <dl class="type">
 <dt id="IntermediateTechnologySpecificProperty">
- class <code class="sig-name descname">IntermediateTechnologySpecificProperty</code><a class="headerlink" href="#IntermediateTechnologySpecificProperty" title="Permalink to this definition">¶</a></dt>
+ class <code class="descname">IntermediateTechnologySpecificProperty</code><a class="headerlink" href="#IntermediateTechnologySpecificProperty" title="Permalink to this definition">¶</a></dt>
 <dd><p>A property of a certain operation technology.</p>
 <span class="target" id="link-intermediatetechnologyspecificproperty-name"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">String[1] name</code></dt>
+<code class="descname">String[1] name</code></dt>
 <dd><p>The name of the property.</p>
 </dd></dl>
 
 <span class="target" id="link-intermediatetechnologyspecificproperty-type"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">String[1] type</code></dt>
+<code class="descname">String[1] type</code></dt>
 <dd><p>Name of the
-<span class="xref std std-ref">primitive type</span> of
+<a class="reference external" href="../../../../de.fhdo.lemma.data.intermediate.metamodel/doc/build/html/body.html#link-intermediateprimitivetype" title="(in Intermediate Data Model Format Specification v1.0)"><span class="xref std std-ref">primitive type</span></a> of
 the property. This can be one of the values:</p>
 <ul class="simple">
-<li><p>“boolean”</p></li>
-<li><p>“byte”</p></li>
-<li><p>“char”</p></li>
-<li><p>“date”</p></li>
-<li><p>“double”</p></li>
-<li><p>“float”</p></li>
-<li><p>“int”</p></li>
-<li><p>“long”</p></li>
-<li><p>“short”</p></li>
-<li><p>“string”</p></li>
+<li>“boolean”</li>
+<li>“byte”</li>
+<li>“char”</li>
+<li>“date”</li>
+<li>“double”</li>
+<li>“float”</li>
+<li>“int”</li>
+<li>“long”</li>
+<li>“short”</li>
+<li>“string”</li>
 </ul>
 <div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>A property cannot be of the built-in primitive type <code class="docutils literal notranslate"><span class="pre">unspecified</span></code>.</p>
+<p class="first admonition-title">Note</p>
+<p class="last">A property cannot be of the built-in primitive type <code class="docutils literal"><span class="pre">unspecified</span></code>.</p>
 </div>
 </dd></dl>
 
 <span class="target" id="link-intermediatetechnologyspecificproperty-defaultvalue"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">String defaultValue</code></dt>
+<code class="descname">String defaultValue</code></dt>
 <dd><p>If the property has a default value, it is encoded in this String
 attribute. However, it is guaranteed that the default value fits the
 <a class="reference internal" href="#link-intermediatetechnologyspecificproperty-type"><span class="std std-ref">type</span></a> of the
@@ -618,28 +629,28 @@ property.</p>
 
 <span class="target" id="link-intermediatetechnologyspecificproperty-featurenames"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">String[*] featureNames</code></dt>
+<code class="descname">String[*] featureNames</code></dt>
 <dd><p>This attribute contains the names of all features specified for the
 property. The following values are possible:</p>
-<table class="docutils align-default">
+<table border="1" class="docutils">
 <colgroup>
-<col style="width: 25%" />
-<col style="width: 75%" />
+<col width="25%" />
+<col width="75%" />
 </colgroup>
-<tbody>
-<tr class="row-odd"><td><p><strong>Feature Name</strong></p></td>
-<td><p><strong>Description</strong></p></td>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Feature Name</strong></td>
+<td><strong>Description</strong></td>
 </tr>
-<tr class="row-even"><td><p>MANDATORY</p></td>
-<td><p>Flag to indicate if the property needs to receive a
+<tr class="row-even"><td>MANDATORY</td>
+<td>Flag to indicate if the property needs to receive a
 value. It is guaranteed by the validator of the
 Operation Modeling Language that all mandatory
-values of a property receive a value.</p></td>
+values of a property receive a value.</td>
 </tr>
-<tr class="row-odd"><td><p>SINGE_VALUED</p></td>
-<td><p>Flag to indicate that a property may only receive a
+<tr class="row-odd"><td>SINGE_VALUED</td>
+<td>Flag to indicate that a property may only receive a
 value once, which is guaranteed by the validator of
-the Operation Modeling Language.</p></td>
+the Operation Modeling Language.</td>
 </tr>
 </tbody>
 </table>
@@ -647,7 +658,7 @@ the Operation Modeling Language.</p></td>
 
 <span class="target" id="link-intermediatetechnologyspecificproperty-operationtechnology"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateOperationTechnology operationTechnology</code></dt>
+<code class="descname">IntermediateOperationTechnology operationTechnology</code></dt>
 <dd><p>The operation technology to which the property belongs.</p>
 </dd></dl>
 
@@ -655,12 +666,12 @@ the Operation Modeling Language.</p></td>
 
 <dl class="type">
 <dt id="IntermediateDeploymentTechnology">
- class <code class="sig-name descname">IntermediateDeploymentTechnology</code><a class="headerlink" href="#IntermediateDeploymentTechnology" title="Permalink to this definition">¶</a></dt>
+ class <code class="descname">IntermediateDeploymentTechnology</code><a class="headerlink" href="#IntermediateDeploymentTechnology" title="Permalink to this definition">¶</a></dt>
 <dd><p>A concrete operation technology that represents a deployment technology.</p>
 <span class="target" id="link-intermediatedeploymenttechnology-reference"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateDeploymentTechnologyReference[1] reference</code></dt>
-<dd><p>The <a class="reference internal" href="#IntermediateDeploymentTechnologyReference" title="IntermediateDeploymentTechnologyReference"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateDeploymentTechnologyReference</span></code></a> that points
+<code class="descname">IntermediateDeploymentTechnologyReference[1] reference</code></dt>
+<dd><p>The <a class="reference internal" href="#IntermediateDeploymentTechnologyReference" title="IntermediateDeploymentTechnologyReference"><code class="xref java java-type docutils literal"><span class="pre">IntermediateDeploymentTechnologyReference</span></code></a> that points
 to this deployment technology.</p>
 </dd></dl>
 
@@ -668,26 +679,26 @@ to this deployment technology.</p>
 
 <dl class="type">
 <dt id="IntermediateDeploymentTechnologyReference">
- class <code class="sig-name descname">IntermediateDeploymentTechnologyReference</code><a class="headerlink" href="#IntermediateDeploymentTechnologyReference" title="Permalink to this definition">¶</a></dt>
+ class <code class="descname">IntermediateDeploymentTechnologyReference</code><a class="headerlink" href="#IntermediateDeploymentTechnologyReference" title="Permalink to this definition">¶</a></dt>
 <dd><p>A reference to a deployment technology.</p>
 <span class="target" id="link-intermediatedeploymenttechnologyreference-import"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateImport[1] import</code></dt>
+<code class="descname">IntermediateImport[1] import</code></dt>
 <dd><p>The import of the technology model, which defines the referenced
 deployment technology.</p>
 </dd></dl>
 
 <span class="target" id="link-intermediatedeploymenttechnologyreference-technology"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateDeploymentTechnology[1] technology</code></dt>
+<code class="descname">IntermediateDeploymentTechnology[1] technology</code></dt>
 <dd><p>The referenced
-<a class="reference internal" href="#IntermediateDeploymentTechnology" title="IntermediateDeploymentTechnology"><code class="xref java java-type docutils literal notranslate"><span class="pre">deployment</span> <span class="pre">technology</span></code></a>.</p>
+<a class="reference internal" href="#IntermediateDeploymentTechnology" title="IntermediateDeploymentTechnology"><code class="xref java java-type docutils literal"><span class="pre">deployment</span> <span class="pre">technology</span></code></a>.</p>
 </dd></dl>
 
 <span class="target" id="link-intermediatedeploymenttechnologyreference-container"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateContainer[1] container</code></dt>
-<dd><p>The <a class="reference internal" href="#IntermediateContainer" title="IntermediateContainer"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateContainer</span></code></a> that uses the deployment
+<code class="descname">IntermediateContainer[1] container</code></dt>
+<dd><p>The <a class="reference internal" href="#IntermediateContainer" title="IntermediateContainer"><code class="xref java java-type docutils literal"><span class="pre">IntermediateContainer</span></code></a> that uses the deployment
 technology.</p>
 </dd></dl>
 
@@ -695,13 +706,13 @@ technology.</p>
 
 <dl class="type">
 <dt id="IntermediateInfrastructureTechnology">
- class <code class="sig-name descname">IntermediateInfrastructureTechnology</code><a class="headerlink" href="#IntermediateInfrastructureTechnology" title="Permalink to this definition">¶</a></dt>
+ class <code class="descname">IntermediateInfrastructureTechnology</code><a class="headerlink" href="#IntermediateInfrastructureTechnology" title="Permalink to this definition">¶</a></dt>
 <dd><p>A concrete operation technology that represents an infrastructure
 technology.</p>
 <span class="target" id="link-intermediateinfrastructuretechnology-reference"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateInfrastructureTechnologyReference[1] reference</code></dt>
-<dd><p>The <a class="reference internal" href="#IntermediateInfrastructureTechnologyReference" title="IntermediateInfrastructureTechnologyReference"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateInfrastructureTechnologyReference</span></code></a> that
+<code class="descname">IntermediateInfrastructureTechnologyReference[1] reference</code></dt>
+<dd><p>The <a class="reference internal" href="#IntermediateInfrastructureTechnologyReference" title="IntermediateInfrastructureTechnologyReference"><code class="xref java java-type docutils literal"><span class="pre">IntermediateInfrastructureTechnologyReference</span></code></a> that
 points to this infrastructure technology.</p>
 </dd></dl>
 
@@ -709,26 +720,26 @@ points to this infrastructure technology.</p>
 
 <dl class="type">
 <dt id="IntermediateInfrastructureTechnologyReference">
- class <code class="sig-name descname">IntermediateInfrastructureTechnologyReference</code><a class="headerlink" href="#IntermediateInfrastructureTechnologyReference" title="Permalink to this definition">¶</a></dt>
+ class <code class="descname">IntermediateInfrastructureTechnologyReference</code><a class="headerlink" href="#IntermediateInfrastructureTechnologyReference" title="Permalink to this definition">¶</a></dt>
 <dd><p>A reference to an infrastructure technology.</p>
 <span class="target" id="link-intermediateinfrastructuretechnologyreference-import"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateImport[1] import</code></dt>
+<code class="descname">IntermediateImport[1] import</code></dt>
 <dd><p>The import of the technology model, which defines the referenced
 infrastructure technology.</p>
 </dd></dl>
 
 <span class="target" id="link-intermediateinfrastructuretechnologyreference-technology"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateInfrastructureTechnology[1] technology</code></dt>
+<code class="descname">IntermediateInfrastructureTechnology[1] technology</code></dt>
 <dd><p>The referenced
-<a class="reference internal" href="#IntermediateInfrastructureTechnology" title="IntermediateInfrastructureTechnology"><code class="xref java java-type docutils literal notranslate"><span class="pre">infrastructure</span> <span class="pre">technology</span></code></a>.</p>
+<a class="reference internal" href="#IntermediateInfrastructureTechnology" title="IntermediateInfrastructureTechnology"><code class="xref java java-type docutils literal"><span class="pre">infrastructure</span> <span class="pre">technology</span></code></a>.</p>
 </dd></dl>
 
 <span class="target" id="link-intermediateinfrastructuretechnologyreference-infrastructurenode"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateInfrastructureNode[1] infrastructureNode</code></dt>
-<dd><p>The <a class="reference internal" href="#IntermediateInfrastructureNode" title="IntermediateInfrastructureNode"><code class="xref java java-type docutils literal notranslate"><span class="pre">IntermediateInfrastructureNode</span></code></a> that uses the
+<code class="descname">IntermediateInfrastructureNode[1] infrastructureNode</code></dt>
+<dd><p>The <a class="reference internal" href="#IntermediateInfrastructureNode" title="IntermediateInfrastructureNode"><code class="xref java java-type docutils literal"><span class="pre">IntermediateInfrastructureNode</span></code></a> that uses the
 infrastructure technology.</p>
 </dd></dl>
 
@@ -736,32 +747,32 @@ infrastructure technology.</p>
 
 </div>
 <div class="section" id="service-deployment-specifications">
-<h2><span class="sectnum">3.4</span> Service Deployment Specifications<a class="headerlink" href="#service-deployment-specifications" title="Permalink to this headline">¶</a></h2>
+<h2>3.4&nbsp;&nbsp;&nbsp;Service Deployment Specifications<a class="headerlink" href="#service-deployment-specifications" title="Permalink to this headline">¶</a></h2>
 <dl class="type">
 <dt id="IntermediateServiceDeploymentSpecification">
- class <code class="sig-name descname">IntermediateServiceDeploymentSpecification</code><a class="headerlink" href="#IntermediateServiceDeploymentSpecification" title="Permalink to this definition">¶</a></dt>
+ class <code class="descname">IntermediateServiceDeploymentSpecification</code><a class="headerlink" href="#IntermediateServiceDeploymentSpecification" title="Permalink to this definition">¶</a></dt>
 <dd><p>Specification of a microservice’s deployment/usage of an operation node.</p>
 <span class="target" id="link-intermediateservicedeploymentspecification-operationmicroservicereference"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">OperationMicroserviceReference[1] operationMicroserviceReference</code></dt>
+<code class="descname">OperationMicroserviceReference[1] operationMicroserviceReference</code></dt>
 <dd><p>The microservice targeted by the specification.</p>
 </dd></dl>
 
 <span class="target" id="link-intermediateservicedeploymentspecification-endpoints"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateOperationEndpoint[*] endpoints</code></dt>
+<code class="descname">IntermediateOperationEndpoint[*] endpoints</code></dt>
 <dd><p>Specific endpoints for the microservice.</p>
 </dd></dl>
 
 <span class="target" id="link-intermediateservicedeploymentspecification-propertyvalues"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateTechnologySpecificPropertyValue[*] propertyValues</code></dt>
+<code class="descname">IntermediateTechnologySpecificPropertyValue[*] propertyValues</code></dt>
 <dd><p>Configuration values specific to the microservice.</p>
 </dd></dl>
 
 <span class="target" id="link-intermediateoperationnode-operationnode"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateOperationNode[1] operationNode</code></dt>
+<code class="descname">IntermediateOperationNode[1] operationNode</code></dt>
 <dd><p>The operation node to which the microservice is assigned.</p>
 </dd></dl>
 
@@ -769,7 +780,7 @@ infrastructure technology.</p>
 
 <dl class="type">
 <dt id="OperationMicroserviceReference">
- class <code class="sig-name descname">OperationMicroserviceReference</code><a class="headerlink" href="#OperationMicroserviceReference" title="Permalink to this definition">¶</a></dt>
+ class <code class="descname">OperationMicroserviceReference</code><a class="headerlink" href="#OperationMicroserviceReference" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reference to a microservice imported from an Intermediate Service Model
 (cf. <a class="reference internal" href="#tab-model-types"><span class="std std-numref">Table 1</span></a>). The concept extends the
 java:type:<cite>service_model:MicroserviceReference</cite> from the Intermediate
@@ -777,31 +788,31 @@ Service Model specification and adds information relevant to Intermediate
 Operation Models.</p>
 <span class="target" id="link-operationmicroservicereference-effectivelyimplemented"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">Boolean[1] effectivelyImplemented</code></dt>
+<code class="descname">Boolean[1] effectivelyImplemented</code></dt>
 <dd><p>The
-<span class="xref std std-ref">effectivelyImplemented</span>
+<a class="reference external" href="../../../../de.fhdo.lemma.service.intermediate.metamodel/doc/build/html/body.html#link-intermediatemicroservice-effectivelyimplemented" title="(in Intermediate Service Model Format Specification v1.0)"><span class="xref std std-ref">effectivelyImplemented</span></a>
 flag of the referenced microservice.</p>
 </dd></dl>
 
 <span class="target" id="link-operationmicroservicereference-microservicetype"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">String[1] microserviceType</code></dt>
+<code class="descname">String[1] microserviceType</code></dt>
 <dd><p>The
-<span class="xref std std-ref">type</span> of the
+<a class="reference external" href="../../../../de.fhdo.lemma.service.intermediate.metamodel/doc/build/html/body.html#link-intermediatemicroservice-type" title="(in Intermediate Service Model Format Specification v1.0)"><span class="xref std std-ref">type</span></a> of the
 referenced microservice.</p>
 </dd></dl>
 
 <span class="target" id="link-operationmicroservicereference-visibility"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">String[1] visibility</code></dt>
+<code class="descname">String[1] visibility</code></dt>
 <dd><p>The
-<span class="xref std std-ref">visibility</span>
+<a class="reference external" href="../../../../de.fhdo.lemma.service.intermediate.metamodel/doc/build/html/body.html#link-intermediatemicroservice-visibility" title="(in Intermediate Service Model Format Specification v1.0)"><span class="xref std std-ref">visibility</span></a>
 of the referenced microservice.</p>
 </dd></dl>
 
 <span class="target" id="link-operationmicroservicereference-node"></span><dl class="attribute">
 <dt>
-<code class="sig-name descname">IntermediateOperationNode[1] node</code></dt>
+<code class="descname">IntermediateOperationNode[1] node</code></dt>
 <dd><p>The java:type`IntermediateOperationNode` to which the referenced
 microservice is deployed or that it used by the microservice.</p>
 </dd></dl>
@@ -809,56 +820,85 @@ microservice is deployed or that it used by the microservice.</p>
 </dd></dl>
 
 <p class="rubric">Footnotes</p>
-<dl class="footnote brackets">
-<dt class="label" id="eclipse"><span class="brackets"><a class="fn-backref" href="#id5">1</a></span></dt>
-<dd><p><a class="reference external" href="https://www.eclipse.org">https://www.eclipse.org</a></p>
-</dd>
-<dt class="label" id="xcore"><span class="brackets"><a class="fn-backref" href="#id6">2</a></span></dt>
-<dd><p><a class="reference external" href="https://wiki.eclipse.org/Xcore">https://wiki.eclipse.org/Xcore</a></p>
-</dd>
-<dt class="label" id="xtext"><span class="brackets"><a class="fn-backref" href="#id7">3</a></span></dt>
-<dd><p><a class="reference external" href="https://www.eclipse.org/Xtext">https://www.eclipse.org/Xtext</a></p>
-</dd>
-<dt class="label" id="emf"><span class="brackets"><a class="fn-backref" href="#id9">4</a></span></dt>
-<dd><p><a class="reference external" href="https://www.eclipse.org/modeling/emf">https://www.eclipse.org/modeling/emf</a></p>
-</dd>
-<dt class="label" id="model-export"><span class="brackets"><a class="fn-backref" href="#id11">5</a></span></dt>
-<dd><p>Actually, the models are <em>transformed</em> into the XMI format.
-Please refer to <span id="id15">[<a class="reference internal" href="#id18"><span>CFJezequel+17</span></a>]</span> to learn more about <em>model</em>
-<em>transformation</em>.</p>
-</dd>
-<dt class="label" id="xmi"><span class="brackets"><a class="fn-backref" href="#id12">6</a></span></dt>
-<dd><p><a class="reference external" href="https://www.omg.org/spec/XMI">https://www.omg.org/spec/XMI</a></p>
-</dd>
-<dt class="label" id="mof"><span class="brackets"><a class="fn-backref" href="#id14">7</a></span></dt>
-<dd><p><a class="reference external" href="https://www.omg.org/mof">https://www.omg.org/mof</a></p>
-</dd>
-</dl>
+<table class="docutils footnote" frame="void" id="eclipse" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5">[1]</a></td><td><a class="reference external" href="https://www.eclipse.org">https://www.eclipse.org</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="xcore" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id6">[2]</a></td><td><a class="reference external" href="https://wiki.eclipse.org/Xcore">https://wiki.eclipse.org/Xcore</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="xtext" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id7">[3]</a></td><td><a class="reference external" href="https://www.eclipse.org/Xtext">https://www.eclipse.org/Xtext</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="emf" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id9">[4]</a></td><td><a class="reference external" href="https://www.eclipse.org/modeling/emf">https://www.eclipse.org/modeling/emf</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="model-export" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id11">[5]</a></td><td>Actually, the models are <em>transformed</em> into the XMI format.
+Please refer to <a class="reference internal" href="#combemale2017" id="id15">[CFJezequel+17]</a> to learn more about <em>model</em>
+<em>transformation</em>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="xmi" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id12">[6]</a></td><td><a class="reference external" href="https://www.omg.org/spec/XMI">https://www.omg.org/spec/XMI</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="mof" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id14">[7]</a></td><td><a class="reference external" href="https://www.omg.org/mof">https://www.omg.org/mof</a></td></tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="section" id="indices-and-tables">
-<h1><span class="sectnum">4</span> Indices and Tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<h1>4&nbsp;&nbsp;&nbsp;Indices and Tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
-<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
 </ul>
 </div>
 <div class="section" id="references">
-<h1><span class="sectnum">5</span> References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h1>
-<p id="id16"><dl class="citation">
-<dt class="label" id="id18"><span class="brackets">CFJezequel+17</span><span class="fn-backref">(<a href="#id3">1</a>,<a href="#id10">2</a>,<a href="#id13">3</a>,<a href="#id15">4</a>)</span></dt>
-<dd><p>Benoit Combemale, Robert B. France, Jean-Marc Jézéquel, Bernhard Rumpe, Jim Steel, and Didier Vojtisek. <em>Engineering Modeling Languages</em>. CRC Press, 2017.</p>
-</dd>
-<dt class="label" id="id19"><span class="brackets"><a class="fn-backref" href="#id4">KLM+97</a></span></dt>
-<dd><p>Gregor Kiczales, John Lamping, Anurag Mendhekar, Chris Maeda, Cristina Lopes, Jean-Marc Loingtier, and John Irwin. Aspect-oriented programming. In <em>Object-Oriented Programming</em>, 220–242. Springer, 1997.</p>
-</dd>
-<dt class="label" id="id17"><span class="brackets"><a class="fn-backref" href="#id2">New15</a></span></dt>
-<dd><p>Sam Newman. <em>Building Microservices</em>. O'Reilly Media, 2015.</p>
-</dd>
-<dt class="label" id="id20"><span class="brackets"><a class="fn-backref" href="#id8">SBPM11</a></span></dt>
-<dd><p>Dave Steinberg, Frank Budinsky, Marcelo Paternostro, and Ed Merks. <em>EMF–Eclipse Modeling Framework</em>. Pearson Education, 2 edition, 2011.</p>
-</dd>
-</dl>
+<h1>5&nbsp;&nbsp;&nbsp;References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h1>
+<p id="bibtex-bibliography-body-0"><table class="docutils citation" frame="void" id="combemale2017" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[CFJezequel+17]</td><td><em>(<a class="fn-backref" href="#id3">1</a>, <a class="fn-backref" href="#id10">2</a>, <a class="fn-backref" href="#id13">3</a>, <a class="fn-backref" href="#id15">4</a>)</em> Benoit Combemale, Robert&nbsp;B. France, Jean-Marc Jézéquel, Bernhard Rumpe, Jim Steel, and Didier Vojtisek. <em>Engineering Modeling Languages</em>. CRC Press, 2017.</td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="kiczales1997" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[KLM+97]</a></td><td>Gregor Kiczales, John Lamping, Anurag Mendhekar, Chris Maeda, Cristina Lopes, Jean-Marc Loingtier, and John Irwin. Aspect-oriented programming. In <em>Object-Oriented Programming</em>, 220–242. Springer, 1997.</td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="newman2015" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[New15]</a></td><td>Sam Newman. <em>Building Microservices</em>. O’Reilly Media, 2015.</td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="steinberg2011" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id8">[SBPM11]</a></td><td>Dave Steinberg, Frank Budinsky, Marcelo Paternostro, and Ed&nbsp;Merks. <em>EMF–Eclipse Modeling Framework</em>. Pearson Education, 2 edition, 2011.</td></tr>
+</tbody>
+</table>
 </p>
 </div>
 
@@ -877,24 +917,24 @@ Please refer to <span id="id15">[<a class="reference internal" href="#id18"><spa
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
+  <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
     </form>
-    </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2018, Florian Rademacher.
+      &copy;2021, Florian Rademacher, Philip Wizenty.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.7</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
