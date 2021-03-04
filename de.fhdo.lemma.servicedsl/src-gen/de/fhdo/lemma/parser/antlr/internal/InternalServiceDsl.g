@@ -134,71 +134,165 @@ ruleImport returns [EObject current=null]
 	leaveRule();
 }:
 	(
-		otherlv_0='import'
-		{
-			newLeafNode(otherlv_0, grammarAccess.getImportAccess().getImportKeyword_0());
-		}
 		(
+			otherlv_0='import'
+			{
+				newLeafNode(otherlv_0, grammarAccess.getImportAccess().getImportKeyword_0_0());
+			}
 			(
-				{
-					newCompositeNode(grammarAccess.getImportAccess().getImportTypeImportTypeEnumRuleCall_1_0());
-				}
-				lv_importType_1_0=ruleImportType
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getImportRule());
+				(
+					{
+						newCompositeNode(grammarAccess.getImportAccess().getImportTypeImportTypeEnumRuleCall_0_1_0());
 					}
-					set(
-						$current,
-						"importType",
-						lv_importType_1_0,
-						"de.fhdo.lemma.ServiceDsl.ImportType");
-					afterParserOrEnumRuleCall();
-				}
+					lv_importType_1_0=ruleImportType
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getImportRule());
+						}
+						set(
+							$current,
+							"importType",
+							lv_importType_1_0,
+							"de.fhdo.lemma.ServiceDsl.ImportType");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			otherlv_2='from'
+			{
+				newLeafNode(otherlv_2, grammarAccess.getImportAccess().getFromKeyword_0_2());
+			}
+			(
+				(
+					lv_importURI_3_0=RULE_STRING
+					{
+						newLeafNode(lv_importURI_3_0, grammarAccess.getImportAccess().getImportURISTRINGTerminalRuleCall_0_3_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getImportRule());
+						}
+						setWithLastConsumed(
+							$current,
+							"importURI",
+							lv_importURI_3_0,
+							"de.fhdo.lemma.ServiceDsl.STRING");
+					}
+				)
+			)
+			otherlv_4='as'
+			{
+				newLeafNode(otherlv_4, grammarAccess.getImportAccess().getAsKeyword_0_4());
+			}
+			(
+				(
+					lv_name_5_0=RULE_ID
+					{
+						newLeafNode(lv_name_5_0, grammarAccess.getImportAccess().getNameIDTerminalRuleCall_0_5_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getImportRule());
+						}
+						setWithLastConsumed(
+							$current,
+							"name",
+							lv_name_5_0,
+							"org.eclipse.xtext.common.Terminals.ID");
+					}
+				)
 			)
 		)
-		otherlv_2='from'
-		{
-			newLeafNode(otherlv_2, grammarAccess.getImportAccess().getFromKeyword_2());
-		}
+		    |
 		(
+			otherlv_6='import'
+			{
+				newLeafNode(otherlv_6, grammarAccess.getImportAccess().getImportKeyword_1_0());
+			}
 			(
-				lv_importURI_3_0=RULE_STRING
-				{
-					newLeafNode(lv_importURI_3_0, grammarAccess.getImportAccess().getImportURISTRINGTerminalRuleCall_3_0());
-				}
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getImportRule());
+				(
+					{
+						newCompositeNode(grammarAccess.getImportAccess().getImportTypeImportTypeEnumRuleCall_1_1_0());
 					}
-					setWithLastConsumed(
-						$current,
-						"importURI",
-						lv_importURI_3_0,
-						"de.fhdo.lemma.ServiceDsl.STRING");
-				}
+					lv_importType_7_0=ruleImportType
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getImportRule());
+						}
+						set(
+							$current,
+							"importType",
+							lv_importType_7_0,
+							"de.fhdo.lemma.ServiceDsl.ImportType");
+						afterParserOrEnumRuleCall();
+					}
+				)
 			)
-		)
-		otherlv_4='as'
-		{
-			newLeafNode(otherlv_4, grammarAccess.getImportAccess().getAsKeyword_4());
-		}
-		(
+			otherlv_8='from'
+			{
+				newLeafNode(otherlv_8, grammarAccess.getImportAccess().getFromKeyword_1_2());
+			}
 			(
-				lv_name_5_0=RULE_ID
-				{
-					newLeafNode(lv_name_5_0, grammarAccess.getImportAccess().getNameIDTerminalRuleCall_5_0());
-				}
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getImportRule());
+				(
+					lv_externalURI_9_0=RULE_STRING
+					{
+						newLeafNode(lv_externalURI_9_0, grammarAccess.getImportAccess().getExternalURISTRINGTerminalRuleCall_1_3_0());
 					}
-					setWithLastConsumed(
-						$current,
-						"name",
-						lv_name_5_0,
-						"org.eclipse.xtext.common.Terminals.ID");
-				}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getImportRule());
+						}
+						setWithLastConsumed(
+							$current,
+							"externalURI",
+							lv_externalURI_9_0,
+							"de.fhdo.lemma.ServiceDsl.STRING");
+					}
+				)
+			)
+			otherlv_10='to'
+			{
+				newLeafNode(otherlv_10, grammarAccess.getImportAccess().getToKeyword_1_4());
+			}
+			(
+				(
+					lv_importURI_11_0=RULE_STRING
+					{
+						newLeafNode(lv_importURI_11_0, grammarAccess.getImportAccess().getImportURISTRINGTerminalRuleCall_1_5_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getImportRule());
+						}
+						setWithLastConsumed(
+							$current,
+							"importURI",
+							lv_importURI_11_0,
+							"de.fhdo.lemma.ServiceDsl.STRING");
+					}
+				)
+			)
+			otherlv_12='as'
+			{
+				newLeafNode(otherlv_12, grammarAccess.getImportAccess().getAsKeyword_1_6());
+			}
+			(
+				(
+					lv_name_13_0=RULE_ID
+					{
+						newLeafNode(lv_name_13_0, grammarAccess.getImportAccess().getNameIDTerminalRuleCall_1_7_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getImportRule());
+						}
+						setWithLastConsumed(
+							$current,
+							"name",
+							lv_name_13_0,
+							"org.eclipse.xtext.common.Terminals.ID");
+					}
+				)
 			)
 		)
 	)

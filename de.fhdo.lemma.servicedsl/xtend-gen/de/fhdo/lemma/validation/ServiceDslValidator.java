@@ -71,9 +71,12 @@ import org.eclipse.xtext.xbase.lib.ListExtensions;
  * This class contains custom validation rules for service models.
  * 
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
+ * @author <a href="mailto:jonas.sorgalla@fh-dortmund.de">Jonas Sorgalla</a>
  */
 @SuppressWarnings("all")
 public class ServiceDslValidator extends AbstractServiceDslValidator {
+  public static final String UNRESOLVED_EXTERNAL_REFERENCE = "unresolvedExternalReference";
+  
   @Inject
   private ServiceDslQualifiedNameProvider nameProvider;
   
@@ -85,7 +88,29 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
     boolean _importFileExists = LemmaUtils.importFileExists(import_.eResource(), import_.getImportURI());
     boolean _not = (!_importFileExists);
     if (_not) {
-      this.error("File not found", ServicePackage.Literals.IMPORT__IMPORT_URI);
+      boolean _isEmpty = import_.getExternalURI().trim().isEmpty();
+      if (_isEmpty) {
+        this.error("File not found", ServicePackage.Literals.IMPORT__IMPORT_URI);
+      }
+    }
+  }
+  
+  /**
+   * Check if an external imported file exists
+   */
+  @Check
+  public void checkExternalImportNotResolved(final Import import_) {
+    boolean _importFileExists = LemmaUtils.importFileExists(import_.eResource(), import_.getImportURI());
+    boolean _not = (!_importFileExists);
+    if (_not) {
+      boolean _isEmpty = import_.getExternalURI().trim().isEmpty();
+      boolean _not_1 = (!_isEmpty);
+      if (_not_1) {
+        this.warning(
+          "File location is external and not resolved.", import_, 
+          ServicePackage.Literals.IMPORT__EXTERNAL_URI, 
+          ServiceDslValidator.UNRESOLVED_EXTERNAL_REFERENCE);
+      }
     }
   }
   
@@ -138,15 +163,18 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
     } else {
       return;
     }
-    boolean _isImportOfType = LemmaUtils.isImportOfType(import_.eResource(), import_.getImportURI(), expectedModelType);
-    boolean _not = (!_isImportOfType);
-    if (_not) {
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append("File does not contain a ");
-      _builder.append(expectedModelTypeName);
-      _builder.append(" model definition");
-      this.error(_builder.toString(), import_, 
-        ServicePackage.Literals.IMPORT__IMPORT_URI);
+    boolean _importFileExists = LemmaUtils.importFileExists(import_.eResource(), import_.getImportURI());
+    if (_importFileExists) {
+      boolean _isImportOfType = LemmaUtils.isImportOfType(import_.eResource(), import_.getImportURI(), expectedModelType);
+      boolean _not = (!_isImportOfType);
+      if (_not) {
+        StringConcatenation _builder = new StringConcatenation();
+        _builder.append("File does not contain a ");
+        _builder.append(expectedModelTypeName);
+        _builder.append(" model definition");
+        this.error(_builder.toString(), import_, 
+          ServicePackage.Literals.IMPORT__IMPORT_URI);
+      }
     }
   }
   

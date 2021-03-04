@@ -92,6 +92,7 @@ class Import {
 
     String name
     String importURI
+    String externalURI
     ImportType importType
 
     container ServiceModel serviceModel opposite imports

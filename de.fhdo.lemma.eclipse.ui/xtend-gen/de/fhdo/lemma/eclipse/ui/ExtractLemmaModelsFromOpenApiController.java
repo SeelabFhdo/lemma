@@ -1,11 +1,9 @@
 package de.fhdo.lemma.eclipse.ui;
 
-import de.fhdo.lemma.eclipse.ui.specify_url_dialog.commands.SpecifyUrlHandler;
+import de.fhdo.lemma.eclipse.ui.specify_openapi_dialog.commands.SpecifyOpenApiHandler;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PlatformUI;
 
 /**
  * Controller for handling the extraction of lemma models from openapi specifications in the UI.
@@ -14,14 +12,12 @@ import org.eclipse.ui.PlatformUI;
  */
 @SuppressWarnings("all")
 public class ExtractLemmaModelsFromOpenApiController extends AbstractHandler {
-  private final Shell SHELL = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-  
-  private SpecifyUrlHandler specifyUrlHandler;
+  private SpecifyOpenApiHandler specifyUrlHandler;
   
   @Override
   public Object execute(final ExecutionEvent event) throws ExecutionException {
-    SpecifyUrlHandler _specifyUrlHandler = new SpecifyUrlHandler();
-    this.specifyUrlHandler = _specifyUrlHandler;
+    SpecifyOpenApiHandler _specifyOpenApiHandler = new SpecifyOpenApiHandler();
+    this.specifyUrlHandler = _specifyOpenApiHandler;
     final Object specifyUrlResult = this.specifyUrlHandler.execute(event);
     if ((specifyUrlResult == null)) {
       return null;

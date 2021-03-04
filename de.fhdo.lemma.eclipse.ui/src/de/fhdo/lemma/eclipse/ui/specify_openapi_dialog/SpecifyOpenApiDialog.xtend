@@ -1,4 +1,4 @@
-package de.fhdo.lemma.eclipse.ui.specify_url_dialog
+package de.fhdo.lemma.eclipse.ui.specify_openapi_dialog
 
 import org.eclipse.swt.widgets.Shell
 import org.eclipse.jface.dialogs.TitleAreaDialog
@@ -19,8 +19,9 @@ import java.net.URL
 import java.net.MalformedURLException
 import org.eclipse.core.resources.ResourcesPlugin
 import de.fhdo.lemma.service.open_api.LemmaGenerator
+import org.eclipse.swt.widgets.Display
 
-class SpecifyUrlDialog extends TitleAreaDialog {
+class SpecifyOpenApiDialog extends TitleAreaDialog {
     static val MIN_DIALOG_WIDTH = 500
     static val MIN_DIALOG_HEIGHT = 250
     Text txtUrl
@@ -29,7 +30,7 @@ class SpecifyUrlDialog extends TitleAreaDialog {
 
     Text txtDataModelName
 
-    Text txtServiceModelName
+    Text txtServModelName
 
     Text txtTechnologyModelName
 
@@ -44,8 +45,24 @@ class SpecifyUrlDialog extends TitleAreaDialog {
 
     Text txtServicePrefix
 
+    String externalFetchUrl
+
+    String externalServiceName
+
+    String externalTargetLocation
+
     new(Shell parentShell) {
         super(parentShell)
+        externalFetchUrl = ""
+        externalServiceName = ""
+        externalTargetLocation = ""
+    }
+
+    new(Shell parentShell, String fetchUrl, String serviceName, String targetLocation) {
+        super(parentShell)
+        this.externalFetchUrl = fetchUrl
+        this.externalServiceName = serviceName
+        this.externalTargetLocation = targetLocation
     }
 
     /**
@@ -134,7 +151,14 @@ class SpecifyUrlDialog extends TitleAreaDialog {
 
         txtUrl = new Text(container, SWT.SINGLE)
         txtUrl.message = "e.g. https://petstore3.swagger.io/api/v3/openapi.json"
+        // if the windows is called through the quickfix resolve mechanism the url is fixed
+        if(!this.externalFetchUrl.isEmpty) {
+            txtUrl.text = this.externalFetchUrl
+            txtUrl.enabled = false
+            txtUrl.background = Display.getDefault().getSystemColor(SWT.COLOR_DARK_GRAY)
+        }
         txtUrl.setLayoutData(dataUrl)
+
 
     }
 
@@ -167,6 +191,12 @@ class SpecifyUrlDialog extends TitleAreaDialog {
             val selectedDir = dirDialog.open()
             txtTargetLocation.text = selectedDir
         ]))
+        // if the windows is called through the quickfix resolve mechanism the url is fixed
+        if(!this.externalTargetLocation.isEmpty) {
+            txtTargetLocation.text = this.externalTargetLocation
+            btnBrowseLocation.enabled = false
+            txtTargetLocation.background = Display.getDefault().getSystemColor(SWT.COLOR_DARK_GRAY)
+        }
     }
 
     private def createDataModelName(Composite container) {
@@ -192,9 +222,15 @@ class SpecifyUrlDialog extends TitleAreaDialog {
         dataServiceModelName.horizontalAlignment = GridData.FILL
         dataServiceModelName.horizontalSpan = 3
 
-        txtServiceModelName = new Text(container, SWT.SINGLE)
-        txtServiceModelName.message = "MyServiceService"
-        txtServiceModelName.setLayoutData(dataServiceModelName)
+        txtServModelName = new Text(container, SWT.SINGLE)
+        txtServModelName.message = "MyServiceService"
+        txtServModelName.setLayoutData(dataServiceModelName)
+        // if the windows is called through the quickfix resolve mechanism the url is fixed
+        if(!this.externalServiceName.isEmpty) {
+            txtServModelName.text = this.externalServiceName
+            txtServModelName.enabled = false
+            txtServModelName.background = Display.getDefault().getSystemColor(SWT.COLOR_DARK_GRAY)
+        }
     }
     private def createServicePrefix(Composite container) {
         val lblServicePrefix = new Label(container, SWT.NONE)
@@ -220,7 +256,7 @@ class SpecifyUrlDialog extends TitleAreaDialog {
         dataTechnologyModelName.horizontalSpan = 3
 
         txtTechnologyModelName = new Text(container, SWT.SINGLE)
-        txtTechnologyModelName.message = "OpenApi"
+        txtTechnologyModelName.text = "OpenApi"
         txtTechnologyModelName.setLayoutData(dataTechnologyModelName)
     }
 
@@ -239,7 +275,7 @@ class SpecifyUrlDialog extends TitleAreaDialog {
         }
             this.targetLocation = txtTargetLocation.getText
             this.dataName = txtDataModelName.getText
-            this.serviceName = txtServiceModelName.getText
+            this.serviceName = txtServModelName.getText
             this.technologyName = txtTechnologyModelName.text
             this.servicePrefix = txtServicePrefix.text
         if(!this.targetLocation.trim.isEmpty && !this.dataName.trim.isEmpty &&

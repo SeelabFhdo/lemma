@@ -3,13 +3,184 @@
  */
 package de.fhdo.lemma.ui.quickfix;
 
+import com.google.inject.Inject;
+import de.fhdo.lemma.service.Import;
+import de.fhdo.lemma.service.ImportType;
+import de.fhdo.lemma.validation.ServiceDslValidator;
+import java.io.File;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.eclipse.core.commands.Command;
+import org.eclipse.core.commands.IParameter;
+import org.eclipse.core.commands.Parameterization;
+import org.eclipse.core.commands.ParameterizedCommand;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.MultiStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.commands.ICommandService;
+import org.eclipse.ui.handlers.IHandlerService;
+import org.eclipse.ui.services.IServiceLocator;
+import org.eclipse.xtext.ui.editor.model.edit.IModificationContext;
+import org.eclipse.xtext.ui.editor.model.edit.ISemanticModification;
 import org.eclipse.xtext.ui.editor.quickfix.DefaultQuickfixProvider;
+import org.eclipse.xtext.ui.editor.quickfix.Fix;
+import org.eclipse.xtext.ui.editor.quickfix.IssueResolutionAcceptor;
+import org.eclipse.xtext.validation.Issue;
+import org.eclipse.xtext.xbase.lib.Conversions;
+import org.eclipse.xtext.xbase.lib.Exceptions;
 
 /**
- * Custom quickfixes.
+ * This class provides custom quickfixes for errors defined in the ServiceDslValidator.
+ * It is provided by <i>ui.quickfix.QuickfixProviderFragment2</i> in the mwe2 dsl generation.
  * 
  * See https://www.eclipse.org/Xtext/documentation/310_eclipse_support.html#quick-fixes
+ * 
+ * @author <a href="mailto:jonas.sorgalla@fh-dortmund.de">Jonas Sorgalla</a>
  */
 @SuppressWarnings("all")
 public class ServiceDslQuickfixProvider extends DefaultQuickfixProvider {
+  @Inject
+  private IWorkbench workbench;
+  
+  private IPath workspacePath;
+  
+  private String platformDirPath;
+  
+  private File targetFile;
+  
+  /**
+   * This quickfix aims to resolve external references in import statement in service models.
+   * For resolving a two staged approach is used: 1) the external resource is downloaded into a
+   * new <b>temp</b> folder which is created in the respective project root dir; 2) if the import
+   * is a microservice type the OpenAPI import window is opened with predefined settings.
+   */
+  @Fix(ServiceDslValidator.UNRESOLVED_EXTERNAL_REFERENCE)
+  public void resolveReference(final Issue issue, final IssueResolutionAcceptor acceptor) {
+    final ISemanticModification _function = (EObject element, IModificationContext context) -> {
+      final Import externalImport = ((Import) element);
+      this.workspacePath = ResourcesPlugin.getWorkspace().getRoot().getLocation();
+      final String platformFilePath = externalImport.eResource().getURI().toPlatformString(true);
+      this.platformDirPath = StringUtils.substringBeforeLast(platformFilePath, "/");
+      this.downloadExternalResource(externalImport);
+      boolean _equals = externalImport.getImportType().equals(ImportType.MICROSERVICES);
+      if (_equals) {
+        this.transformOpenApiFilesToLemma(externalImport);
+      }
+    };
+    acceptor.accept(issue, "Unresolved external reference", 
+      "Resolve the reference.", 
+      "upcase.png", _function);
+  }
+  
+  public Object transformOpenApiFilesToLemma(final Import externalImport) {
+    Object _xblockexpression = null;
+    {
+      final IHandlerService handlerService = ((IServiceLocator) this.workbench).<IHandlerService>getService(IHandlerService.class);
+      final ICommandService commandService = ((IServiceLocator) this.workbench).<ICommandService>getService(ICommandService.class);
+      final Command cmd = commandService.getCommand(
+        "de.fhdo.lemma.eclipse.ui.commands.extractLemmaModelsFromOpenApi");
+      Object _xtrycatchfinallyexpression = null;
+      try {
+        Object _xblockexpression_1 = null;
+        {
+          IParameter _parameter = cmd.getParameter(
+            "de.fhdo.lemma.eclipse.ui.commands.parameters.openApiExternalResolve");
+          Parameterization _parameterization = new Parameterization(_parameter, "true");
+          IParameter _parameter_1 = cmd.getParameter(
+            "de.fhdo.lemma.eclipse.ui.commands.parameters.openApiExternalUrl");
+          String _string = this.targetFile.toURI().toString();
+          Parameterization _parameterization_1 = new Parameterization(_parameter_1, _string);
+          IParameter _parameter_2 = cmd.getParameter(
+            "de.fhdo.lemma.eclipse.ui.commands.parameters.openApiExternalService");
+          String _substringBeforeLast = StringUtils.substringBeforeLast(externalImport.getImportURI(), ".");
+          Parameterization _parameterization_2 = new Parameterization(_parameter_2, _substringBeforeLast);
+          IParameter _parameter_3 = cmd.getParameter(
+            "de.fhdo.lemma.eclipse.ui.commands.parameters.openApiExternalTargetLocation");
+          String _plus = (this.workspacePath + this.platformDirPath);
+          Parameterization _parameterization_3 = new Parameterization(_parameter_3, _plus);
+          final Parameterization[] params = new Parameterization[] { _parameterization, _parameterization_1, _parameterization_2, _parameterization_3 };
+          final ParameterizedCommand parametrizedCommand = new ParameterizedCommand(cmd, params);
+          _xblockexpression_1 = handlerService.executeCommand(parametrizedCommand, null);
+        }
+        _xtrycatchfinallyexpression = _xblockexpression_1;
+      } catch (final Throwable _t) {
+        if (_t instanceof Exception) {
+          final Exception ex = (Exception)_t;
+          int _xblockexpression_2 = (int) 0;
+          {
+            final Shell shell = this.workbench.getActiveWorkbenchWindow().getShell();
+            final MultiStatus status = this.createMultiStatus(ex.getLocalizedMessage(), ex);
+            _xblockexpression_2 = ErrorDialog.openError(shell, "Error during resolving", 
+              ("Resolving failed. Was not able to send and open" + 
+                " the window for importing the OpenAPI model."), status);
+          }
+          _xtrycatchfinallyexpression = Integer.valueOf(_xblockexpression_2);
+        } else {
+          throw Exceptions.sneakyThrow(_t);
+        }
+      }
+      _xblockexpression = _xtrycatchfinallyexpression;
+    }
+    return _xblockexpression;
+  }
+  
+  public Integer downloadExternalResource(final Import externalImport) {
+    int _xtrycatchfinallyexpression = (int) 0;
+    try {
+      String _externalURI = externalImport.getExternalURI();
+      final URL downloadUrl = new URL(_externalURI);
+      String _externalURI_1 = externalImport.getExternalURI();
+      int _lastIndexOf = externalImport.getExternalURI().lastIndexOf("/");
+      int _plus = (_lastIndexOf + 1);
+      final String filename = _externalURI_1.substring(_plus);
+      String _plus_1 = (this.workspacePath + this.platformDirPath);
+      String _plus_2 = (_plus_1 + "/temp/");
+      final String targetLocation = (_plus_2 + filename);
+      File _file = new File(targetLocation);
+      this.targetFile = _file;
+      FileUtils.copyURLToFile(downloadUrl, this.targetFile, 500, 1000);
+    } catch (final Throwable _t) {
+      if (_t instanceof Exception) {
+        final Exception e = (Exception)_t;
+        int _xblockexpression = (int) 0;
+        {
+          final Shell shell = this.workbench.getActiveWorkbenchWindow().getShell();
+          final MultiStatus status = this.createMultiStatus(e.getLocalizedMessage(), e);
+          _xblockexpression = ErrorDialog.openError(shell, 
+            "Error during resolving", 
+            ("Resolving failed. Might be an invalid URL or a " + 
+              "problem with the internet connection."), status);
+        }
+        _xtrycatchfinallyexpression = _xblockexpression;
+      } else {
+        throw Exceptions.sneakyThrow(_t);
+      }
+    }
+    return Integer.valueOf(_xtrycatchfinallyexpression);
+  }
+  
+  public MultiStatus createMultiStatus(final String msg, final Throwable t) {
+    final ArrayList<Status> childStatuses = new ArrayList<Status>();
+    final StackTraceElement[] stackTraces = Thread.currentThread().getStackTrace();
+    final Consumer<StackTraceElement> _function = (StackTraceElement it) -> {
+      String _string = it.toString();
+      final Status status = new Status(IStatus.ERROR, "de.fhdo.lemma.ui", _string);
+      childStatuses.add(status);
+    };
+    ((List<StackTraceElement>)Conversions.doWrapArray(stackTraces)).forEach(_function);
+    IStatus[] _array = childStatuses.<IStatus>toArray(new IStatus[0]);
+    String _string = t.toString();
+    final MultiStatus ms = new MultiStatus("de.fhdo.lemma.ui", IStatus.ERROR, _array, _string, t);
+    return ms;
+  }
 }

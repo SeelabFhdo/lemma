@@ -332,22 +332,10 @@ public class ServiceDslSemanticSequencer extends TechnologyDslSemanticSequencer 
 	 *     Import returns Import
 	 *
 	 * Constraint:
-	 *     (importType=ImportType importURI=STRING name=ID)
+	 *     ((importType=ImportType importURI=STRING name=ID) | (importType=ImportType externalURI=STRING importURI=STRING name=ID))
 	 */
 	protected void sequence_Import(ISerializationContext context, Import semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, ServicePackage.Literals.IMPORT__IMPORT_TYPE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ServicePackage.Literals.IMPORT__IMPORT_TYPE));
-			if (transientValues.isValueTransient(semanticObject, ServicePackage.Literals.IMPORT__IMPORT_URI) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ServicePackage.Literals.IMPORT__IMPORT_URI));
-			if (transientValues.isValueTransient(semanticObject, ServicePackage.Literals.IMPORT__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ServicePackage.Literals.IMPORT__NAME));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getImportAccess().getImportTypeImportTypeEnumRuleCall_1_0(), semanticObject.getImportType());
-		feeder.accept(grammarAccess.getImportAccess().getImportURISTRINGTerminalRuleCall_3_0(), semanticObject.getImportURI());
-		feeder.accept(grammarAccess.getImportAccess().getNameIDTerminalRuleCall_5_0(), semanticObject.getName());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	

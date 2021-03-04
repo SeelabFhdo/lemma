@@ -52,6 +52,8 @@ import de.fhdo.lemma.utils.LemmaUtils
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
+    //TODO Darf nicht kaputtgehen wenn es das Modell (noch) nicht gibt!
+    //
     // TODO: Inheritance of microservices
     //@Inject
     //private ServiceDslQualifiedNameProvider nameProvider
@@ -74,6 +76,7 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
             Operation: context.getScope(reference)
 
             /* Possibly imported microservices */
+            // TODO hier aufruf
             PossiblyImportedMicroservice: context.getScope(reference)
 
             /* Possibly imported interfaces */
@@ -688,6 +691,7 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
             return IScope.NULLSCOPE
 
         /* Determine relevant microservice */
+        //TODO jonas
         val microservice =
             switch (context) {
                 Microservice: context as Microservice

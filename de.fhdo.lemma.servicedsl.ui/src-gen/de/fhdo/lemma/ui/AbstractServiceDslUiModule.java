@@ -212,11 +212,6 @@ public abstract class AbstractServiceDslUiModule extends DefaultUiModule {
 		return ServiceDslOutlineTreeProvider.class;
 	}
 	
-	// contributed by org.eclipse.xtext.xtext.generator.ui.quickfix.QuickfixProviderFragment2
-	public Class<? extends IssueResolutionProvider> bindIssueResolutionProvider() {
-		return ServiceDslQuickfixProvider.class;
-	}
-	
 	// contributed by org.eclipse.xtext.xtext.generator.ui.contentAssist.ContentAssistFragment2
 	public Class<? extends IContentProposalProvider> bindIContentProposalProvider() {
 		return ServiceDslProposalProvider.class;
@@ -288,6 +283,11 @@ public abstract class AbstractServiceDslUiModule extends DefaultUiModule {
 	// contributed by org.eclipse.xtext.xtext.generator.ui.compare.CompareFragment2
 	public void configureCompareViewerTitle(Binder binder) {
 		binder.bind(String.class).annotatedWith(Names.named(UIBindings.COMPARE_VIEWER_TITLE)).toInstance("ServiceDsl Compare");
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.ui.quickfix.QuickfixProviderFragment2
+	public Class<? extends IssueResolutionProvider> bindIssueResolutionProvider() {
+		return ServiceDslQuickfixProvider.class;
 	}
 	
 }

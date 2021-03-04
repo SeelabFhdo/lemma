@@ -1,4 +1,4 @@
-package de.fhdo.lemma.eclipse.ui.specify_url_dialog;
+package de.fhdo.lemma.eclipse.ui.specify_openapi_dialog;
 
 import de.fhdo.lemma.service.open_api.LemmaGenerator;
 import java.net.MalformedURLException;
@@ -20,6 +20,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DirectoryDialog;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
@@ -27,7 +28,7 @@ import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 
 @SuppressWarnings("all")
-public class SpecifyUrlDialog extends TitleAreaDialog {
+public class SpecifyOpenApiDialog extends TitleAreaDialog {
   private static final int MIN_DIALOG_WIDTH = 500;
   
   private static final int MIN_DIALOG_HEIGHT = 250;
@@ -38,7 +39,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
   
   private Text txtDataModelName;
   
-  private Text txtServiceModelName;
+  private Text txtServModelName;
   
   private Text txtTechnologyModelName;
   
@@ -58,8 +59,24 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
   
   private Text txtServicePrefix;
   
-  public SpecifyUrlDialog(final Shell parentShell) {
+  private String externalFetchUrl;
+  
+  private String externalServiceName;
+  
+  private String externalTargetLocation;
+  
+  public SpecifyOpenApiDialog(final Shell parentShell) {
     super(parentShell);
+    this.externalFetchUrl = "";
+    this.externalServiceName = "";
+    this.externalTargetLocation = "";
+  }
+  
+  public SpecifyOpenApiDialog(final Shell parentShell, final String fetchUrl, final String serviceName, final String targetLocation) {
+    super(parentShell);
+    this.externalFetchUrl = fetchUrl;
+    this.externalServiceName = serviceName;
+    this.externalTargetLocation = targetLocation;
   }
   
   /**
@@ -189,6 +206,13 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     Text _text = new Text(container, SWT.SINGLE);
     this.txtUrl = _text;
     this.txtUrl.setMessage("e.g. https://petstore3.swagger.io/api/v3/openapi.json");
+    boolean _isEmpty = this.externalFetchUrl.isEmpty();
+    boolean _not = (!_isEmpty);
+    if (_not) {
+      this.txtUrl.setText(this.externalFetchUrl);
+      this.txtUrl.setEnabled(false);
+      this.txtUrl.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_DARK_GRAY));
+    }
     this.txtUrl.setLayoutData(dataUrl);
   }
   
@@ -220,6 +244,13 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
       this.txtTargetLocation.setText(selectedDir);
     };
     this.btnBrowseLocation.addSelectionListener(SelectionListener.widgetSelectedAdapter(_function));
+    boolean _isEmpty = this.externalTargetLocation.isEmpty();
+    boolean _not = (!_isEmpty);
+    if (_not) {
+      this.txtTargetLocation.setText(this.externalTargetLocation);
+      this.btnBrowseLocation.setEnabled(false);
+      this.txtTargetLocation.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_DARK_GRAY));
+    }
   }
   
   private void createDataModelName(final Composite container) {
@@ -243,9 +274,16 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     dataServiceModelName.horizontalAlignment = GridData.FILL;
     dataServiceModelName.horizontalSpan = 3;
     Text _text = new Text(container, SWT.SINGLE);
-    this.txtServiceModelName = _text;
-    this.txtServiceModelName.setMessage("MyServiceService");
-    this.txtServiceModelName.setLayoutData(dataServiceModelName);
+    this.txtServModelName = _text;
+    this.txtServModelName.setMessage("MyServiceService");
+    this.txtServModelName.setLayoutData(dataServiceModelName);
+    boolean _isEmpty = this.externalServiceName.isEmpty();
+    boolean _not = (!_isEmpty);
+    if (_not) {
+      this.txtServModelName.setText(this.externalServiceName);
+      this.txtServModelName.setEnabled(false);
+      this.txtServModelName.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_DARK_GRAY));
+    }
   }
   
   private void createServicePrefix(final Composite container) {
@@ -270,7 +308,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     dataTechnologyModelName.horizontalSpan = 3;
     Text _text = new Text(container, SWT.SINGLE);
     this.txtTechnologyModelName = _text;
-    this.txtTechnologyModelName.setMessage("OpenApi");
+    this.txtTechnologyModelName.setText("OpenApi");
     this.txtTechnologyModelName.setLayoutData(dataTechnologyModelName);
   }
   
@@ -299,7 +337,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     this.fetchUrl = _xtrycatchfinallyexpression;
     this.targetLocation = this.txtTargetLocation.getText();
     this.dataName = this.txtDataModelName.getText();
-    this.serviceName = this.txtServiceModelName.getText();
+    this.serviceName = this.txtServModelName.getText();
     this.technologyName = this.txtTechnologyModelName.getText();
     this.servicePrefix = this.txtServicePrefix.getText();
     if ((((((!this.targetLocation.trim().isEmpty()) && (!this.dataName.trim().isEmpty())) && 
@@ -329,8 +367,8 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
   @Override
   public Point getInitialSize() {
     final Point shellSize = super.getInitialSize();
-    int _max = Math.max(this.convertHorizontalDLUsToPixels(SpecifyUrlDialog.MIN_DIALOG_WIDTH), shellSize.x);
-    int _max_1 = Math.max(this.convertVerticalDLUsToPixels(SpecifyUrlDialog.MIN_DIALOG_HEIGHT), shellSize.y);
+    int _max = Math.max(this.convertHorizontalDLUsToPixels(SpecifyOpenApiDialog.MIN_DIALOG_WIDTH), shellSize.x);
+    int _max_1 = Math.max(this.convertVerticalDLUsToPixels(SpecifyOpenApiDialog.MIN_DIALOG_HEIGHT), shellSize.y);
     return new Point(_max, _max_1);
   }
 }

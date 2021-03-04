@@ -31,6 +31,26 @@
             categoryId="de.fhdo.lemma.eclipse.ui.category.lemmaCommands"
             id="de.fhdo.lemma.eclipse.ui.commands.extractLemmaModelsFromOpenApi"
             name="Extract Lemma Models from OpenAPI">
+         <commandParameter
+               id="de.fhdo.lemma.eclipse.ui.commands.parameters.openApiExternalResolve"
+               name="If set the URL as well as the target location is uneditable pre set in the OpenAPI importer window."
+               optional="true">
+         </commandParameter>
+         <commandParameter
+               id="de.fhdo.lemma.eclipse.ui.commands.parameters.openApiExternalUrl"
+               name="Url which points to an OpenAPI file."
+               optional="true">
+         </commandParameter>
+         <commandParameter
+               id="de.fhdo.lemma.eclipse.ui.commands.parameters.openApiExternalService"
+               name="Name of the service model which is created during the OpenAPI import mechanism."
+               optional="true">
+         </commandParameter>
+         <commandParameter
+               id="de.fhdo.lemma.eclipse.ui.commands.parameters.openApiExternalTargetLocation"
+               name="Location where the transformed files are persisted."
+               optional="true">
+         </commandParameter>
       </command>
       <command
             name="About"
@@ -118,6 +138,10 @@
                   icon="icons/extractLemmaModelsFromOpenApi.gif"
                   id="de.fhdo.lemma.eclipse.ui.lemmaMenu.extractLemmaModelsFromOpenApi"
                   label="Extract Lemma Models from OpenApi URL...">
+               <parameter
+                     name="de.fhdo.lemma.eclipse.ui.commands.parameters.openApiExternalResolve"
+                     value="false">
+               </parameter>
             </command>
             <separator
                   name="aboutSeparator"
@@ -164,6 +188,10 @@
                   icon="icons/extractLemmaModelsFromOpenApi.gif"
                   id="de.fhdo.lemma.eclipse.ui.toolbars.extractLemmaModelsFromOpenApi"
                   tooltip="Extract Lemma Models from OpenAPI Spec">
+               <parameter
+                     name="de.fhdo.lemma.eclipse.ui.commands.parameters.openApiExternalResolve"
+                     value="false">
+               </parameter>
             </command>
          </toolbar>
       </menuContribution>

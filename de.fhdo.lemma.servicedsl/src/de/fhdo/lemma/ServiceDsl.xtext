@@ -13,8 +13,18 @@ ServiceModel returns ServiceModel:
     microservices+=Microservice+
 ;
 
+
+// TODO jonas | Op und mapping DSL noch separat bauen
+// Import ist hier schon erweitert, aber es werden ggf. Fehlermeldungen kommen da importURI nicht aufgelöst werden kann
+// Diese Checks müssen noch angepasst / erweitert werden
+// Checks sind in ServiceDSLValidator (STRG+Shift+R)
+// Nach Anpassung der Checks kann es nötig sein den ScopeProvider zu erweitern (ServiceDslScopeProvider)
+// Dieser ist dafür zuständig bspw. autovervollständigung etc. aus dem "as" Part zu ziehen.
+// perspektivisch wäre es gut ein warning zum automatischen DL o.ä. anzubieten, so dass die externalURIs automatisch das Modell importen
+// noch weiter perspektivisch wäre es nice, wenn das zur modellierungslaufzeit schon asynchron umgesetzt wird
 Import returns Import:
-    'import' importType=ImportType 'from' importURI=STRING 'as' name=ID
+    'import' importType=ImportType 'from' importURI=STRING 'as' name=ID |
+    'import' importType=ImportType 'from' externalURI=STRING 'to' importURI=STRING 'as' name=ID
 ;
 
 enum ImportType returns ImportType:

@@ -6,6 +6,7 @@ import org.eclipse.core.resources.IFile
 import de.fhdo.lemma.intermediate.transformations.AbstractIntermediateModelTransformationStrategy
 import java.util.LinkedHashMap
 import java.util.LinkedList
+import java.lang.Enum
 
 /**
  * Abstract strategy for preparing, displaying and controlling intermediate models' transformation

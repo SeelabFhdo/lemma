@@ -31,6 +31,7 @@ public class ServiceDslParser extends AbstractContentAssistParser {
 		}
 		
 		private static void init(ImmutableMap.Builder<AbstractElement, String> builder, ServiceDslGrammarAccess grammarAccess) {
+			builder.put(grammarAccess.getImportAccess().getAlternatives(), "rule__Import__Alternatives");
 			builder.put(grammarAccess.getApiParameterCommentAccess().getAlternatives_0(), "rule__ApiParameterComment__Alternatives_0");
 			builder.put(grammarAccess.getParameterAccess().getAlternatives_7(), "rule__Parameter__Alternatives_7");
 			builder.put(grammarAccess.getImportedServiceAspectAccess().getAlternatives_4_1(), "rule__ImportedServiceAspect__Alternatives_4_1");
@@ -65,7 +66,8 @@ public class ServiceDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getDataFieldFeatureAccess().getAlternatives(), "rule__DataFieldFeature__Alternatives");
 			builder.put(grammarAccess.getDataOperationFeatureAccess().getAlternatives(), "rule__DataOperationFeature__Alternatives");
 			builder.put(grammarAccess.getServiceModelAccess().getGroup(), "rule__ServiceModel__Group__0");
-			builder.put(grammarAccess.getImportAccess().getGroup(), "rule__Import__Group__0");
+			builder.put(grammarAccess.getImportAccess().getGroup_0(), "rule__Import__Group_0__0");
+			builder.put(grammarAccess.getImportAccess().getGroup_1(), "rule__Import__Group_1__0");
 			builder.put(grammarAccess.getMicroserviceAccess().getGroup(), "rule__Microservice__Group__0");
 			builder.put(grammarAccess.getMicroserviceAccess().getGroup_1(), "rule__Microservice__Group_1__0");
 			builder.put(grammarAccess.getMicroserviceAccess().getGroup_2(), "rule__Microservice__Group_2__0");
@@ -215,9 +217,13 @@ public class ServiceDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getQualifiedNameAccess().getGroup_1(), "rule__QualifiedName__Group_1__0");
 			builder.put(grammarAccess.getServiceModelAccess().getImportsAssignment_0(), "rule__ServiceModel__ImportsAssignment_0");
 			builder.put(grammarAccess.getServiceModelAccess().getMicroservicesAssignment_1(), "rule__ServiceModel__MicroservicesAssignment_1");
-			builder.put(grammarAccess.getImportAccess().getImportTypeAssignment_1(), "rule__Import__ImportTypeAssignment_1");
-			builder.put(grammarAccess.getImportAccess().getImportURIAssignment_3(), "rule__Import__ImportURIAssignment_3");
-			builder.put(grammarAccess.getImportAccess().getNameAssignment_5(), "rule__Import__NameAssignment_5");
+			builder.put(grammarAccess.getImportAccess().getImportTypeAssignment_0_1(), "rule__Import__ImportTypeAssignment_0_1");
+			builder.put(grammarAccess.getImportAccess().getImportURIAssignment_0_3(), "rule__Import__ImportURIAssignment_0_3");
+			builder.put(grammarAccess.getImportAccess().getNameAssignment_0_5(), "rule__Import__NameAssignment_0_5");
+			builder.put(grammarAccess.getImportAccess().getImportTypeAssignment_1_1(), "rule__Import__ImportTypeAssignment_1_1");
+			builder.put(grammarAccess.getImportAccess().getExternalURIAssignment_1_3(), "rule__Import__ExternalURIAssignment_1_3");
+			builder.put(grammarAccess.getImportAccess().getImportURIAssignment_1_5(), "rule__Import__ImportURIAssignment_1_5");
+			builder.put(grammarAccess.getImportAccess().getNameAssignment_1_7(), "rule__Import__NameAssignment_1_7");
 			builder.put(grammarAccess.getMicroserviceAccess().getTechnologyReferencesAssignment_0(), "rule__Microservice__TechnologyReferencesAssignment_0");
 			builder.put(grammarAccess.getMicroserviceAccess().getProtocolsAssignment_1_0(), "rule__Microservice__ProtocolsAssignment_1_0");
 			builder.put(grammarAccess.getMicroserviceAccess().getProtocolsAssignment_1_1(), "rule__Microservice__ProtocolsAssignment_1_1");

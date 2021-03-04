@@ -58,50 +58,116 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	public class ImportElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.ServiceDsl.Import");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cImportKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cImportTypeAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cImportTypeImportTypeEnumRuleCall_1_0 = (RuleCall)cImportTypeAssignment_1.eContents().get(0);
-		private final Keyword cFromKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cImportURIAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cImportURISTRINGTerminalRuleCall_3_0 = (RuleCall)cImportURIAssignment_3.eContents().get(0);
-		private final Keyword cAsKeyword_4 = (Keyword)cGroup.eContents().get(4);
-		private final Assignment cNameAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final RuleCall cNameIDTerminalRuleCall_5_0 = (RuleCall)cNameAssignment_5.eContents().get(0);
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
+		private final Keyword cImportKeyword_0_0 = (Keyword)cGroup_0.eContents().get(0);
+		private final Assignment cImportTypeAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
+		private final RuleCall cImportTypeImportTypeEnumRuleCall_0_1_0 = (RuleCall)cImportTypeAssignment_0_1.eContents().get(0);
+		private final Keyword cFromKeyword_0_2 = (Keyword)cGroup_0.eContents().get(2);
+		private final Assignment cImportURIAssignment_0_3 = (Assignment)cGroup_0.eContents().get(3);
+		private final RuleCall cImportURISTRINGTerminalRuleCall_0_3_0 = (RuleCall)cImportURIAssignment_0_3.eContents().get(0);
+		private final Keyword cAsKeyword_0_4 = (Keyword)cGroup_0.eContents().get(4);
+		private final Assignment cNameAssignment_0_5 = (Assignment)cGroup_0.eContents().get(5);
+		private final RuleCall cNameIDTerminalRuleCall_0_5_0 = (RuleCall)cNameAssignment_0_5.eContents().get(0);
+		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
+		private final Keyword cImportKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cImportTypeAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cImportTypeImportTypeEnumRuleCall_1_1_0 = (RuleCall)cImportTypeAssignment_1_1.eContents().get(0);
+		private final Keyword cFromKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
+		private final Assignment cExternalURIAssignment_1_3 = (Assignment)cGroup_1.eContents().get(3);
+		private final RuleCall cExternalURISTRINGTerminalRuleCall_1_3_0 = (RuleCall)cExternalURIAssignment_1_3.eContents().get(0);
+		private final Keyword cToKeyword_1_4 = (Keyword)cGroup_1.eContents().get(4);
+		private final Assignment cImportURIAssignment_1_5 = (Assignment)cGroup_1.eContents().get(5);
+		private final RuleCall cImportURISTRINGTerminalRuleCall_1_5_0 = (RuleCall)cImportURIAssignment_1_5.eContents().get(0);
+		private final Keyword cAsKeyword_1_6 = (Keyword)cGroup_1.eContents().get(6);
+		private final Assignment cNameAssignment_1_7 = (Assignment)cGroup_1.eContents().get(7);
+		private final RuleCall cNameIDTerminalRuleCall_1_7_0 = (RuleCall)cNameAssignment_1_7.eContents().get(0);
 		
+		//// TODO jonas | Op und mapping DSL noch separat bauen
+		//// Import ist hier schon erweitert, aber es werden ggf. Fehlermeldungen kommen da importURI nicht aufgelöst werden kann
+		//// Diese Checks müssen noch angepasst / erweitert werden
+		//// Checks sind in ServiceDSLValidator (STRG+Shift+R)
+		//// Nach Anpassung der Checks kann es nötig sein den ScopeProvider zu erweitern (ServiceDslScopeProvider)
+		//// Dieser ist dafür zuständig bspw. autovervollständigung etc. aus dem "as" Part zu ziehen.
+		//// perspektivisch wäre es gut ein warning zum automatischen DL o.ä. anzubieten, so dass die externalURIs automatisch das Modell importen
+		//// noch weiter perspektivisch wäre es nice, wenn das zur modellierungslaufzeit schon asynchron umgesetzt wird
 		//Import:
-		//	'import' importType=ImportType 'from' importURI=STRING 'as' name=ID;
+		//	'import' importType=ImportType 'from' importURI=STRING 'as' name=ID |
+		//	'import' importType=ImportType 'from' externalURI=STRING 'to' importURI=STRING 'as' name=ID;
 		@Override public ParserRule getRule() { return rule; }
 		
+		//'import' importType=ImportType 'from' importURI=STRING 'as' name=ID | 'import' importType=ImportType 'from'
+		//externalURI=STRING 'to' importURI=STRING 'as' name=ID
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
 		//'import' importType=ImportType 'from' importURI=STRING 'as' name=ID
-		public Group getGroup() { return cGroup; }
+		public Group getGroup_0() { return cGroup_0; }
 		
 		//'import'
-		public Keyword getImportKeyword_0() { return cImportKeyword_0; }
+		public Keyword getImportKeyword_0_0() { return cImportKeyword_0_0; }
 		
 		//importType=ImportType
-		public Assignment getImportTypeAssignment_1() { return cImportTypeAssignment_1; }
+		public Assignment getImportTypeAssignment_0_1() { return cImportTypeAssignment_0_1; }
 		
 		//ImportType
-		public RuleCall getImportTypeImportTypeEnumRuleCall_1_0() { return cImportTypeImportTypeEnumRuleCall_1_0; }
+		public RuleCall getImportTypeImportTypeEnumRuleCall_0_1_0() { return cImportTypeImportTypeEnumRuleCall_0_1_0; }
 		
 		//'from'
-		public Keyword getFromKeyword_2() { return cFromKeyword_2; }
+		public Keyword getFromKeyword_0_2() { return cFromKeyword_0_2; }
 		
 		//importURI=STRING
-		public Assignment getImportURIAssignment_3() { return cImportURIAssignment_3; }
+		public Assignment getImportURIAssignment_0_3() { return cImportURIAssignment_0_3; }
 		
 		//STRING
-		public RuleCall getImportURISTRINGTerminalRuleCall_3_0() { return cImportURISTRINGTerminalRuleCall_3_0; }
+		public RuleCall getImportURISTRINGTerminalRuleCall_0_3_0() { return cImportURISTRINGTerminalRuleCall_0_3_0; }
 		
 		//'as'
-		public Keyword getAsKeyword_4() { return cAsKeyword_4; }
+		public Keyword getAsKeyword_0_4() { return cAsKeyword_0_4; }
 		
 		//name=ID
-		public Assignment getNameAssignment_5() { return cNameAssignment_5; }
+		public Assignment getNameAssignment_0_5() { return cNameAssignment_0_5; }
 		
 		//ID
-		public RuleCall getNameIDTerminalRuleCall_5_0() { return cNameIDTerminalRuleCall_5_0; }
+		public RuleCall getNameIDTerminalRuleCall_0_5_0() { return cNameIDTerminalRuleCall_0_5_0; }
+		
+		//'import' importType=ImportType 'from' externalURI=STRING 'to' importURI=STRING 'as' name=ID
+		public Group getGroup_1() { return cGroup_1; }
+		
+		//'import'
+		public Keyword getImportKeyword_1_0() { return cImportKeyword_1_0; }
+		
+		//importType=ImportType
+		public Assignment getImportTypeAssignment_1_1() { return cImportTypeAssignment_1_1; }
+		
+		//ImportType
+		public RuleCall getImportTypeImportTypeEnumRuleCall_1_1_0() { return cImportTypeImportTypeEnumRuleCall_1_1_0; }
+		
+		//'from'
+		public Keyword getFromKeyword_1_2() { return cFromKeyword_1_2; }
+		
+		//externalURI=STRING
+		public Assignment getExternalURIAssignment_1_3() { return cExternalURIAssignment_1_3; }
+		
+		//STRING
+		public RuleCall getExternalURISTRINGTerminalRuleCall_1_3_0() { return cExternalURISTRINGTerminalRuleCall_1_3_0; }
+		
+		//'to'
+		public Keyword getToKeyword_1_4() { return cToKeyword_1_4; }
+		
+		//importURI=STRING
+		public Assignment getImportURIAssignment_1_5() { return cImportURIAssignment_1_5; }
+		
+		//STRING
+		public RuleCall getImportURISTRINGTerminalRuleCall_1_5_0() { return cImportURISTRINGTerminalRuleCall_1_5_0; }
+		
+		//'as'
+		public Keyword getAsKeyword_1_6() { return cAsKeyword_1_6; }
+		
+		//name=ID
+		public Assignment getNameAssignment_1_7() { return cNameAssignment_1_7; }
+		
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_1_7_0() { return cNameIDTerminalRuleCall_1_7_0; }
 	}
 	public class MicroserviceElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.ServiceDsl.Microservice");
@@ -2481,8 +2547,17 @@ public class ServiceDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getServiceModelAccess().getRule();
 	}
 	
+	//// TODO jonas | Op und mapping DSL noch separat bauen
+	//// Import ist hier schon erweitert, aber es werden ggf. Fehlermeldungen kommen da importURI nicht aufgelöst werden kann
+	//// Diese Checks müssen noch angepasst / erweitert werden
+	//// Checks sind in ServiceDSLValidator (STRG+Shift+R)
+	//// Nach Anpassung der Checks kann es nötig sein den ScopeProvider zu erweitern (ServiceDslScopeProvider)
+	//// Dieser ist dafür zuständig bspw. autovervollständigung etc. aus dem "as" Part zu ziehen.
+	//// perspektivisch wäre es gut ein warning zum automatischen DL o.ä. anzubieten, so dass die externalURIs automatisch das Modell importen
+	//// noch weiter perspektivisch wäre es nice, wenn das zur modellierungslaufzeit schon asynchron umgesetzt wird
 	//Import:
-	//	'import' importType=ImportType 'from' importURI=STRING 'as' name=ID;
+	//	'import' importType=ImportType 'from' importURI=STRING 'as' name=ID |
+	//	'import' importType=ImportType 'from' externalURI=STRING 'to' importURI=STRING 'as' name=ID;
 	public ImportElements getImportAccess() {
 		return pImport;
 	}

@@ -4,21 +4,146 @@
 package de.fhdo.lemma.ui.quickfix
 
 import org.eclipse.xtext.ui.editor.quickfix.DefaultQuickfixProvider
+import org.eclipse.xtext.ui.editor.quickfix.Fix
+import de.fhdo.lemma.validation.ServiceDslValidator
+import org.eclipse.xtext.ui.editor.quickfix.IssueResolutionAcceptor
+import org.eclipse.xtext.validation.Issue
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.ui.editor.model.edit.IModificationContext
+import de.fhdo.lemma.service.Import
+import java.net.URL
+import java.io.File
+import org.apache.commons.io.FileUtils
+import org.eclipse.core.resources.ResourcesPlugin
+import org.apache.commons.lang3.StringUtils
+import org.eclipse.ui.IWorkbench
+import com.google.inject.Inject
+import org.eclipse.jface.dialogs.ErrorDialog
+import org.eclipse.core.runtime.MultiStatus
+import java.util.ArrayList
+import org.eclipse.core.runtime.IStatus
+import org.eclipse.core.runtime.Status
+import org.eclipse.ui.handlers.IHandlerService
+import org.eclipse.ui.services.IServiceLocator
+import org.eclipse.ui.commands.ICommandService
+import de.fhdo.lemma.service.ImportType
+import org.eclipse.core.commands.Parameterization
+import org.eclipse.core.commands.ParameterizedCommand
+import org.eclipse.core.runtime.IPath
+import java.net.URI
 
 /**
- * Custom quickfixes.
+ * This class provides custom quickfixes for errors defined in the ServiceDslValidator.
+ * It is provided by <i>ui.quickfix.QuickfixProviderFragment2</i> in the mwe2 dsl generation.
  *
  * See https://www.eclipse.org/Xtext/documentation/310_eclipse_support.html#quick-fixes
+ *
+ * @author <a href="mailto:jonas.sorgalla@fh-dortmund.de">Jonas Sorgalla</a>
  */
 class ServiceDslQuickfixProvider extends DefaultQuickfixProvider {
+    // This workbench might be used to get access to the shell and thus print MessageDialogs etc.
+    @Inject
+    IWorkbench workbench
 
-//	@Fix(ServiceDslValidator.INVALID_NAME)
-//	def capitalizeName(Issue issue, IssueResolutionAcceptor acceptor) {
-//		acceptor.accept(issue, 'Capitalize name', 'Capitalize the name.', 'upcase.png') [
-//			context |
-//			val xtextDocument = context.xtextDocument
-//			val firstLetter = xtextDocument.get(issue.offset, 1)
-//			xtextDocument.replace(issue.offset, 1, firstLetter.toUpperCase)
-//		]
-//	}
+    IPath workspacePath
+
+    String platformDirPath
+
+    File targetFile
+
+    /**
+     * This quickfix aims to resolve external references in import statement in service models.
+     * For resolving a two staged approach is used: 1) the external resource is downloaded into a
+     * new <b>temp</b> folder which is created in the respective project root dir; 2) if the import
+     * is a microservice type the OpenAPI import window is opened with predefined settings.
+     */
+    @Fix(ServiceDslValidator.UNRESOLVED_EXTERNAL_REFERENCE)
+    def resolveReference(Issue issue, IssueResolutionAcceptor acceptor) {
+        acceptor.accept(issue, 'Unresolved external reference', // label
+        'Resolve the reference.', // desc of the quickfix
+        'upcase.png') // icon
+        [ // also possible to only use the context without element
+        // see https://www.eclipse.org/Xtext/documentation/310_eclipse_support.html#quickfix
+        EObject element, IModificationContext context |
+            val externalImport = (element as Import)
+            // Getting the path to the current eclipse project in which the fix is triggered
+            workspacePath = ResourcesPlugin.getWorkspace().getRoot().location
+            val platformFilePath = externalImport.eResource.URI.toPlatformString(true)
+            platformDirPath = StringUtils.substringBeforeLast(platformFilePath, '/')
+            // Step 1
+            downloadExternalResource(externalImport)
+            // Step 2
+            if (externalImport.importType.equals(ImportType.MICROSERVICES))
+                transformOpenApiFilesToLemma(externalImport)
+        ]
+    }
+
+    def transformOpenApiFilesToLemma(Import externalImport) {
+        // see https://stackoverflow.com/questions/34182727/
+        // how-can-i-unit-test-eclipse-command-handlers
+        val handlerService = (workbench as IServiceLocator).getService(IHandlerService)
+        val commandService = (workbench as IServiceLocator).getService(ICommandService)
+        val cmd = commandService.getCommand(
+            "de.fhdo.lemma.eclipse.ui.commands.extractLemmaModelsFromOpenApi")
+        try {
+            val Parameterization[] params = #[
+                new Parameterization(cmd.getParameter(
+                    "de.fhdo.lemma.eclipse.ui.commands.parameters.openApiExternalResolve"), "true"),
+                new Parameterization(cmd.getParameter(
+                    "de.fhdo.lemma.eclipse.ui.commands.parameters.openApiExternalUrl"),
+                    targetFile.toURI.toString),
+                new Parameterization(cmd.getParameter(
+                    "de.fhdo.lemma.eclipse.ui.commands.parameters.openApiExternalService"),
+                    StringUtils.substringBeforeLast(externalImport.importURI, '.')),
+                new Parameterization(cmd.getParameter(
+                    "de.fhdo.lemma.eclipse.ui.commands.parameters.openApiExternalTargetLocation"),
+                    workspacePath + platformDirPath)
+            ]
+            val parametrizedCommand = new ParameterizedCommand(cmd, params)
+            handlerService.executeCommand(parametrizedCommand, null)
+
+        } catch (Exception ex) {
+            val shell = workbench.getActiveWorkbenchWindow().getShell()
+            val status = createMultiStatus(ex.getLocalizedMessage(), ex)
+            ErrorDialog.openError(shell, "Error during resolving",
+                "Resolving failed. Was not able to send and open" +
+                " the window for importing the OpenAPI model.", status)
+        }
+    }
+
+    def downloadExternalResource(Import externalImport) {
+        try {
+            val downloadUrl = new URL(externalImport.externalURI)
+            val filename = externalImport.externalURI.substring(
+                externalImport.externalURI.lastIndexOf('/') + 1
+            )
+            val targetLocation = workspacePath + platformDirPath + "/temp/" + filename
+            targetFile = new File(targetLocation)
+            FileUtils.copyURLToFile(downloadUrl, targetFile, 500, 1000)
+        } catch (Exception e) {
+            val shell = workbench.getActiveWorkbenchWindow().getShell()
+            val status = createMultiStatus(e.getLocalizedMessage(), e)
+            ErrorDialog.openError(
+                shell,
+                "Error during resolving",
+                "Resolving failed. Might be an invalid URL or a " +
+                "problem with the internet connection.",
+                status
+            )
+        }
+    }
+
+    def MultiStatus createMultiStatus(String msg, Throwable t) {
+        val childStatuses = new ArrayList()
+        val stackTraces = Thread.currentThread().getStackTrace();
+        stackTraces.forEach [
+            val status = new Status(IStatus.ERROR, "de.fhdo.lemma.ui", it.toString())
+            childStatuses.add(status)
+        ]
+        val ms = new MultiStatus("de.fhdo.lemma.ui", IStatus.ERROR,
+            childStatuses.toArray(newArrayOfSize(0)),
+            t.toString(), t)
+        return ms
+    }
+
 }

@@ -47,8 +47,14 @@ import de.fhdo.lemma.data.PrimitiveUnspecified
  * This class contains custom validation rules for service models.
  *
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
+ * @author <a href="mailto:jonas.sorgalla@fh-dortmund.de">Jonas Sorgalla</a>
  */
 class ServiceDslValidator extends AbstractServiceDslValidator {
+
+    //Set of errortypes which can be identified and acted on by the ServiceDslQuickfixProvider
+    public static final String UNRESOLVED_EXTERNAL_REFERENCE = "unresolvedExternalReference";
+
+
     @Inject
     ServiceDslQualifiedNameProvider nameProvider
 
@@ -57,9 +63,32 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
      */
     @Check
     def checkImportFileExists(Import ^import) {
-        if (!LemmaUtils.importFileExists(^import.eResource, import.importURI))
-            error("File not found", ServicePackage::Literals.IMPORT__IMPORT_URI)
+        if (!LemmaUtils.importFileExists(^import.eResource, import.importURI)) {
+             if(^import.externalURI.trim.isEmpty) {
+                error("File not found", ServicePackage::Literals.IMPORT__IMPORT_URI)
+            }
+        }
     }
+
+    /**
+     * Check if an external imported file exists
+     */
+     //TODO jonas ggf. check noch schreiben und checken ob obiger check nich aufgeteilt in eigenen check werden kann?
+
+    @Check
+    def checkExternalImportNotResolved(Import ^import) {
+        if (!LemmaUtils.importFileExists(^import.eResource, import.importURI)) {
+             if(!^import.externalURI.trim.isEmpty) {
+                warning(
+                    "File location is external and not resolved.",
+                    ^import,
+                    ServicePackage::Literals.IMPORT__EXTERNAL_URI,
+                    UNRESOLVED_EXTERNAL_REFERENCE
+                )
+            }
+        }
+    }
+
 
     /**
      * Check import aliases for uniqueness
@@ -99,10 +128,13 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
             default:
                 return
         }
-
-        if (!LemmaUtils.isImportOfType(import.eResource, import.importURI, expectedModelType))
-            error('''File does not contain a «expectedModelTypeName» model definition''', import,
-                ServicePackage::Literals.IMPORT__IMPORT_URI)
+         //error only given if an actual file exists in order to deal with unresolved
+         //external references
+        if(LemmaUtils.importFileExists(^import.eResource, import.importURI)) {
+            if (!LemmaUtils.isImportOfType(import.eResource, import.importURI, expectedModelType))
+                error('''File does not contain a «expectedModelTypeName» model definition''', import,
+                    ServicePackage::Literals.IMPORT__IMPORT_URI)
+        }
     }
 
     /**
