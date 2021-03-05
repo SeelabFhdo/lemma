@@ -31,64 +31,64 @@ import org.eclipse.emf.ecore.EObject;
  * @generated
  */
 public interface MappedDataOperationReturnType extends EObject {
-	/**
-	 * Returns the value of the '<em><b>Mapped Type</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Mapped Type</em>' containment reference.
-	 * @see #setMappedType(ImportedType)
-	 * @see de.fhdo.lemma.service.ServicePackage#getMappedDataOperationReturnType_MappedType()
-	 * @model containment="true"
-	 * @generated
-	 */
-	ImportedType getMappedType();
+    /**
+     * Returns the value of the '<em><b>Mapped Type</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Mapped Type</em>' containment reference.
+     * @see #setMappedType(ImportedType)
+     * @see de.fhdo.lemma.service.ServicePackage#getMappedDataOperationReturnType_MappedType()
+     * @model containment="true"
+     * @generated
+     */
+    ImportedType getMappedType();
 
-	/**
-	 * Sets the value of the '{@link de.fhdo.lemma.service.MappedDataOperationReturnType#getMappedType <em>Mapped Type</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Mapped Type</em>' containment reference.
-	 * @see #getMappedType()
-	 * @generated
-	 */
-	void setMappedType(ImportedType value);
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.service.MappedDataOperationReturnType#getMappedType <em>Mapped Type</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Mapped Type</em>' containment reference.
+     * @see #getMappedType()
+     * @generated
+     */
+    void setMappedType(ImportedType value);
 
-	/**
-	 * Returns the value of the '<em><b>Aspects</b></em>' containment reference list.
-	 * The list contents are of type {@link de.fhdo.lemma.service.ImportedServiceAspect}.
-	 * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.ImportedServiceAspect#getMappedDataOperationReturnType <em>Mapped Data Operation Return Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Aspects</em>' containment reference list.
-	 * @see de.fhdo.lemma.service.ServicePackage#getMappedDataOperationReturnType_Aspects()
-	 * @see de.fhdo.lemma.service.ImportedServiceAspect#getMappedDataOperationReturnType
-	 * @model opposite="mappedDataOperationReturnType" containment="true"
-	 * @generated
-	 */
-	EList<ImportedServiceAspect> getAspects();
+    /**
+     * Returns the value of the '<em><b>Aspects</b></em>' containment reference list.
+     * The list contents are of type {@link de.fhdo.lemma.service.ImportedServiceAspect}.
+     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.ImportedServiceAspect#getMappedDataOperationReturnType <em>Mapped Data Operation Return Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Aspects</em>' containment reference list.
+     * @see de.fhdo.lemma.service.ServicePackage#getMappedDataOperationReturnType_Aspects()
+     * @see de.fhdo.lemma.service.ImportedServiceAspect#getMappedDataOperationReturnType
+     * @model opposite="mappedDataOperationReturnType" containment="true"
+     * @generated
+     */
+    EList<ImportedServiceAspect> getAspects();
 
-	/**
-	 * Returns the value of the '<em><b>Mapped Operation</b></em>' container reference.
-	 * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.MappedDataOperation#getMappedReturnType <em>Mapped Return Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Mapped Operation</em>' container reference.
-	 * @see #setMappedOperation(MappedDataOperation)
-	 * @see de.fhdo.lemma.service.ServicePackage#getMappedDataOperationReturnType_MappedOperation()
-	 * @see de.fhdo.lemma.service.MappedDataOperation#getMappedReturnType
-	 * @model opposite="mappedReturnType" transient="false"
-	 * @generated
-	 */
-	MappedDataOperation getMappedOperation();
+    /**
+     * Returns the value of the '<em><b>Mapped Operation</b></em>' container reference.
+     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.service.MappedDataOperation#getMappedReturnType <em>Mapped Return Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Mapped Operation</em>' container reference.
+     * @see #setMappedOperation(MappedDataOperation)
+     * @see de.fhdo.lemma.service.ServicePackage#getMappedDataOperationReturnType_MappedOperation()
+     * @see de.fhdo.lemma.service.MappedDataOperation#getMappedReturnType
+     * @model opposite="mappedReturnType" transient="false"
+     * @generated
+     */
+    MappedDataOperation getMappedOperation();
 
-	/**
-	 * Sets the value of the '{@link de.fhdo.lemma.service.MappedDataOperationReturnType#getMappedOperation <em>Mapped Operation</em>}' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Mapped Operation</em>' container reference.
-	 * @see #getMappedOperation()
-	 * @generated
-	 */
-	void setMappedOperation(MappedDataOperation value);
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.service.MappedDataOperationReturnType#getMappedOperation <em>Mapped Operation</em>}' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Mapped Operation</em>' container reference.
+     * @see #getMappedOperation()
+     * @generated
+     */
+    void setMappedOperation(MappedDataOperation value);
 
 } // MappedDataOperationReturnType
