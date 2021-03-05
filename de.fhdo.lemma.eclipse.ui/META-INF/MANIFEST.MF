@@ -25,3 +25,5 @@ Require-Bundle: org.eclipse.ui,
  org.slf4j.api;bundle-version="1.7.2"
 Automatic-Module-Name: de.fhdo.lemma.eclipse.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: de.fhdo.lemma.eclipse.ui.specify_openapi_dialog;uses:="org.eclipse.swt.graphics,org.eclipse.swt.widgets,org.eclipse.jface.dialogs",
+ de.fhdo.lemma.eclipse.ui.specify_openapi_dialog.commands;uses:="org.eclipse.core.commands"

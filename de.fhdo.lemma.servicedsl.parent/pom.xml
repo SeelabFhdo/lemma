@@ -19,6 +19,7 @@
         -->
         <!-- <module>../de.fhdo.lemma.servicedsl.ui</module>
         <module>../de.fhdo.lemma.servicedsl.ui.tests</module>-->
+        <module>../de.fhdo.lemma.servicedsl.ui</module>
         <module>../de.fhdo.lemma.servicedsl.tests</module>
         <module>../de.fhdo.lemma.technology.technologydsl.metamodel</module>
     </modules>

@@ -3026,7 +3026,7 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
                     					if (current==null) {
                     						current = createModelElement(grammarAccess.getInterfaceRule());
                     					}
-                    					setWithLastConsumed(current, "notImplemented", lv_notImplemented_13_0 != null, "noimpl");
+                    					setWithLastConsumed(current, "notImplemented", true, "noimpl");
                     				
 
                     }
@@ -3547,7 +3547,7 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
                     						if (current==null) {
                     							current = createModelElement(grammarAccess.getApiParameterCommentRule());
                     						}
-                    						setWithLastConsumed(current, "required", lv_required_1_0 != null, "@required");
+                    						setWithLastConsumed(current, "required", true, "@required");
                     					
 
                     }
@@ -4116,7 +4116,7 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
                     					if (current==null) {
                     						current = createModelElement(grammarAccess.getOperationRule());
                     					}
-                    					setWithLastConsumed(current, "notImplemented", lv_notImplemented_14_0 != null, "noimpl");
+                    					setWithLastConsumed(current, "notImplemented", true, "noimpl");
                     				
 
                     }
@@ -5006,7 +5006,7 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
                     					if (current==null) {
                     						current = createModelElement(grammarAccess.getParameterRule());
                     					}
-                    					setWithLastConsumed(current, "communicatesFault", lv_communicatesFault_3_0 != null, "fault");
+                    					setWithLastConsumed(current, "communicatesFault", true, "fault");
                     				
 
                     }
@@ -5065,7 +5065,7 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
                     					if (current==null) {
                     						current = createModelElement(grammarAccess.getParameterRule());
                     					}
-                    					setWithLastConsumed(current, "optional", lv_optional_5_0 != null, "?");
+                    					setWithLastConsumed(current, "optional", true, "?");
                     				
 
                     }
@@ -9099,7 +9099,7 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
                     						if (current==null) {
                     							current = createModelElement(grammarAccess.getProtocolRule());
                     						}
-                    						setWithLastConsumed(current, "default", lv_default_7_0 != null, "default");
+                    						setWithLastConsumed(current, "default", true, "default");
                     					
 
                     }
@@ -9492,7 +9492,7 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
                             						if (current==null) {
                             							current = createModelElement(grammarAccess.getTechnologySpecificPrimitiveTypeRule());
                             						}
-                            						setWithLastConsumed(current, "default", lv_default_8_0 != null, "default");
+                            						setWithLastConsumed(current, "default", true, "default");
                             					
 
                             }
@@ -10897,7 +10897,7 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
                     					if (current==null) {
                     						current = createModelElement(grammarAccess.getOperationEnvironmentRule());
                     					}
-                    					setWithLastConsumed(current, "default", lv_default_1_0 != null, "default");
+                    					setWithLastConsumed(current, "default", true, "default");
                     				
 
                     }
@@ -11360,7 +11360,7 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
                     						if (current==null) {
                     							current = createModelElement(grammarAccess.getServiceAspectPointcutRule());
                     						}
-                    						setWithLastConsumed(current, "forExchangePattern", lv_forExchangePattern_0_0 != null, "exchange_pattern");
+                    						setWithLastConsumed(current, "forExchangePattern", true, "exchange_pattern");
                     					
 
                     }
@@ -11429,7 +11429,7 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
                     						if (current==null) {
                     							current = createModelElement(grammarAccess.getServiceAspectPointcutRule());
                     						}
-                    						setWithLastConsumed(current, "forCommunicationType", lv_forCommunicationType_3_0 != null, "communication_type");
+                    						setWithLastConsumed(current, "forCommunicationType", true, "communication_type");
                     					
 
                     }
@@ -11498,7 +11498,7 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
                     						if (current==null) {
                     							current = createModelElement(grammarAccess.getServiceAspectPointcutRule());
                     						}
-                    						setWithLastConsumed(current, "forProtocol", lv_forProtocol_6_0 != null, "protocol");
+                    						setWithLastConsumed(current, "forProtocol", true, "protocol");
                     					
 
                     }
@@ -11557,7 +11557,7 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
                     						if (current==null) {
                     							current = createModelElement(grammarAccess.getServiceAspectPointcutRule());
                     						}
-                    						setWithLastConsumed(current, "forDataFormat", lv_forDataFormat_9_0 != null, "data_format");
+                    						setWithLastConsumed(current, "forDataFormat", true, "data_format");
                     					
 
                     }
@@ -12359,7 +12359,7 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
             					if (current==null) {
             						current = createModelElement(grammarAccess.getOperationAspectPointcutRule());
             					}
-            					setWithLastConsumed(current, "forTechnology", lv_forTechnology_0_0 != null, "technology");
+            					setWithLastConsumed(current, "forTechnology", true, "technology");
             				
 
             }
@@ -14819,7 +14819,7 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
                     					if (current==null) {
                     						current = createModelElement(grammarAccess.getDataFieldRule());
                     					}
-                    					setWithLastConsumed(current, "hidden", lv_hidden_0_0 != null, "hide");
+                    					setWithLastConsumed(current, "hidden", true, "hide");
                     				
 
                     }
@@ -14852,7 +14852,7 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
                     					if (current==null) {
                     						current = createModelElement(grammarAccess.getDataFieldRule());
                     					}
-                    					setWithLastConsumed(current, "immutable", lv_immutable_1_0 != null, "immutable");
+                    					setWithLastConsumed(current, "immutable", true, "immutable");
                     				
 
                     }
@@ -15797,7 +15797,7 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
                     					if (current==null) {
                     						current = createModelElement(grammarAccess.getDataOperationRule());
                     					}
-                    					setWithLastConsumed(current, "hidden", lv_hidden_0_0 != null, "hide");
+                    					setWithLastConsumed(current, "hidden", true, "hide");
                     				
 
                     }
@@ -15842,7 +15842,7 @@ public class InternalServiceDslParser extends AbstractInternalAntlrParser {
                     						if (current==null) {
                     							current = createModelElement(grammarAccess.getDataOperationRule());
                     						}
-                    						setWithLastConsumed(current, "hasNoReturnType", lv_hasNoReturnType_1_0 != null, "procedure");
+                    						setWithLastConsumed(current, "hasNoReturnType", true, "procedure");
                     					
 
                     }
