@@ -47,7 +47,7 @@ pipeline {
                     }
                 }
 
-                stage("Build in Windows") {
+                /*stage("Build in Windows") {
                     steps {
                         dir("build") {
                             script {
@@ -60,7 +60,7 @@ pipeline {
                             }
                         }
                     }
-                }
+                }*/
             }
 
             post {
@@ -138,7 +138,7 @@ pipeline {
                     }
                 }
 
-                stage("Eclipse Updatesite: Build and Push Docker Updatesite Image") {
+                /*stage("Eclipse Updatesite: Build and Push Docker Updatesite Image") {
                     steps {
                         script {
                             updatesiteImage = docker.build BUILD_UPDATESITE_IMAGE,
@@ -153,9 +153,9 @@ pipeline {
                             }
                         }
                     }
-                }
+                }*/
 
-                stage("Eclipse Updatesite: Build in Docker Updatesite Image") {
+                /*stage("Eclipse Updatesite: Build in Docker Updatesite Image") {
                     agent {
                         docker {
                             image BUILD_UPDATESITE_IMAGE
@@ -166,9 +166,9 @@ pipeline {
                     steps {
                         sh "cd build/updatesite/ && ./lemma-updatesite.sh"
                     }
-                }
+                }*/
 
-                stage("Deployment: Build and Push Docker Deployment Image") {
+                /*stage("Deployment: Build and Push Docker Deployment Image") {
                     steps {
                         script {
                             // We need to build the image in any case, otherwise the subsequent stage will fail,
@@ -192,9 +192,9 @@ pipeline {
                             }
                         }
                     }
-                }
+                }*/
 
-                stage("Deployment: Deployment via Docker Deployment Image") {
+                /*stage("Deployment: Deployment via Docker Deployment Image") {
                     agent {
                         docker {
                             image DEPLOY_IMAGE
@@ -220,9 +220,9 @@ pipeline {
                     steps {
                         sh "cd build/deploy/ && ./lemma-deploy.sh /usr/share/maven/conf/settings.xml"
                     }
-                }
+                }*/
 
-                stage("Docker: Build and Publish Docker Images") {
+                /*stage("Docker: Build and Publish Docker Images") {
                     steps {
                         script {
                             if (env.BRANCH_NAME == 'master') {
@@ -238,7 +238,7 @@ pipeline {
                                 sh "cd build/docker-images-push && ./docker-images-push.sh"
                         }
                     }
-                }
+                }*/
             }
 
             post {

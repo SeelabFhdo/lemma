@@ -21,18 +21,9 @@ Require-Bundle: org.eclipse.ui,
  de.fhdo.lemma.technology.mappingdsl.metamodel,
  de.fhdo.lemma.eclipse.ui.utils,
  de.fhdo.lemma.operationdsl.metamodel,
- de.fhdo.lemma.service.open_api;bundle-version="0.8.0",
+ de.fhdo.lemma.service.open_api,
  org.slf4j.api;bundle-version="1.7.2"
 Automatic-Module-Name: de.fhdo.lemma.eclipse.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: de.fhdo.lemma.eclipse.ui,
- de.fhdo.lemma.eclipse.ui.about_dialog,
- de.fhdo.lemma.eclipse.ui.file_container_selection_dialog,
- de.fhdo.lemma.eclipse.ui.select_models_dialog,
- de.fhdo.lemma.eclipse.ui.select_models_dialog.commands,
- de.fhdo.lemma.eclipse.ui.specify_openapi_dialog,
- de.fhdo.lemma.eclipse.ui.specify_openapi_dialog.commands,
- de.fhdo.lemma.eclipse.ui.specify_paths_dialog,
- de.fhdo.lemma.eclipse.ui.specify_paths_dialog.commands,
- de.fhdo.lemma.eclipse.ui.transformation_dialog,
- de.fhdo.lemma.eclipse.ui.transformation_dialog.commands
+Export-Package: de.fhdo.lemma.eclipse.ui.specify_openapi_dialog,
+ de.fhdo.lemma.eclipse.ui.specify_openapi_dialog.commands

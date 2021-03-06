@@ -18,7 +18,7 @@
         <dependency>
             <groupId>de.fhdo.lemma.eclipse.ui</groupId>
             <artifactId>de.fhdo.lemma.eclipse.ui</artifactId>
-            <version>${lemma-ui-version}</version>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 

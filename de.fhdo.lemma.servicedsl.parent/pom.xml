@@ -19,7 +19,6 @@
         -->
         <!-- <module>../de.fhdo.lemma.servicedsl.ui</module>
         <module>../de.fhdo.lemma.servicedsl.ui.tests</module>-->
-        <module>../de.fhdo.lemma.servicedsl.ui</module>
         <module>../de.fhdo.lemma.servicedsl.tests</module>
         <module>../de.fhdo.lemma.technology.technologydsl.metamodel</module>
     </modules>
@@ -75,7 +74,6 @@
         <maven-clean-plugin-version>3.1.0</maven-clean-plugin-version>
         <maven-compiler-plugin-version>3.8.1</maven-compiler-plugin-version>
         <metamodel-version>${project.version}</metamodel-version>
-        <lemma-ui-version>${project.version}</lemma-ui-version>
         <org-eclipse-emf-mwe2-launch-version>2.11.2</org-eclipse-emf-mwe2-launch-version>
         <technologydsl-version>${project.version}</technologydsl-version>
         <tycho-version>1.7.0</tycho-version>

@@ -21,11 +21,11 @@ Require-Bundle: de.fhdo.lemma.servicedsl,
  de.fhdo.lemma.data.datadsl.ui,
  de.fhdo.lemma.data.datadsl,
  de.fhdo.lemma.data.datadsl.ide,
+ de.fhdo.lemma.eclipse.ui,
  de.fhdo.lemma.technology.technologydsl,
  de.fhdo.lemma.technology.technologydsl.ide,
  de.fhdo.lemma.technology.technologydsl.ui,
- org.apache.commons.io;bundle-version="2.6.0",
- de.fhdo.lemma.eclipse.ui;bundle-version="0.8.0"
+ org.apache.commons.io;bundle-version="2.6.0"
 Bundle-ClassPath: .,
  lib/commons-lang3-3.7.jar
 Import-Package: org.apache.log4j
