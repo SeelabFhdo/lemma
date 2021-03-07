@@ -218,6 +218,7 @@ rule IntermediateImport {
         t : Intermediate!IntermediateImport(
             name <- i.name,
             importUri <- i.importURI,
+            externalUri <- i.externalURI,
             -- Note that normally this would be a direct mapping between the source and the target
             -- importType. However, the XMI serlializer seems to be bugged. See the comments in the
             -- metamodel on why here the name of the import type is used instead.

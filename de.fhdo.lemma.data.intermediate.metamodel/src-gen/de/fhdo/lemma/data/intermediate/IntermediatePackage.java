@@ -160,13 +160,22 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_IMPORT__IMPORT_URI = 1;
 
     /**
+     * The feature id for the '<em><b>External Uri</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_IMPORT__EXTERNAL_URI = 2;
+
+    /**
      * The feature id for the '<em><b>Import Type Name</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_IMPORT__IMPORT_TYPE_NAME = 2;
+    int INTERMEDIATE_IMPORT__IMPORT_TYPE_NAME = 3;
 
     /**
      * The feature id for the '<em><b>Data Model</b></em>' container reference.
@@ -175,7 +184,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_IMPORT__DATA_MODEL = 3;
+    int INTERMEDIATE_IMPORT__DATA_MODEL = 4;
 
     /**
      * The feature id for the '<em><b>Import Type Name For Datatypes</b></em>' attribute.
@@ -184,7 +193,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_IMPORT__IMPORT_TYPE_NAME_FOR_DATATYPES = 4;
+    int INTERMEDIATE_IMPORT__IMPORT_TYPE_NAME_FOR_DATATYPES = 5;
 
     /**
      * The number of structural features of the '<em>Import</em>' class.
@@ -193,7 +202,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_IMPORT_FEATURE_COUNT = 5;
+    int INTERMEDIATE_IMPORT_FEATURE_COUNT = 6;
 
     /**
      * The number of operations of the '<em>Import</em>' class.
@@ -2222,6 +2231,17 @@ public interface IntermediatePackage extends EPackage {
     EAttribute getIntermediateImport_ImportUri();
 
     /**
+     * Returns the meta object for the attribute '{@link de.fhdo.lemma.data.intermediate.IntermediateImport#getExternalUri <em>External Uri</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>External Uri</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateImport#getExternalUri()
+     * @see #getIntermediateImport()
+     * @generated
+     */
+    EAttribute getIntermediateImport_ExternalUri();
+
+    /**
      * Returns the meta object for the attribute '{@link de.fhdo.lemma.data.intermediate.IntermediateImport#getImportTypeName <em>Import Type Name</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3574,6 +3594,14 @@ public interface IntermediatePackage extends EPackage {
          * @generated
          */
         EAttribute INTERMEDIATE_IMPORT__IMPORT_URI = eINSTANCE.getIntermediateImport_ImportUri();
+
+        /**
+         * The meta object literal for the '<em><b>External Uri</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERMEDIATE_IMPORT__EXTERNAL_URI = eINSTANCE.getIntermediateImport_ExternalUri();
 
         /**
          * The meta object literal for the '<em><b>Import Type Name</b></em>' attribute feature.

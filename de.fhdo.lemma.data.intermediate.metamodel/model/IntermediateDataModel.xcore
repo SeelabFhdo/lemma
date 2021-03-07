@@ -25,6 +25,7 @@ class IntermediateDataModel {
 class IntermediateImport {
     String name
     String importUri
+    String externalUri
     // Note that this would normally be a field of type de.fhdo.lemma.service.ImportType. However,
     // the XMI serializer seems to refuse to write the first constant of an enum (DATATYPES in this
     // case) to the target file. This seems to be a bug. However, we don't want to extend the source

@@ -358,7 +358,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
-    public EAttribute getIntermediateImport_ImportTypeName() {
+    public EAttribute getIntermediateImport_ExternalUri() {
         return (EAttribute)intermediateImportEClass.getEStructuralFeatures().get(2);
     }
 
@@ -368,8 +368,18 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     @Override
+    public EAttribute getIntermediateImport_ImportTypeName() {
+        return (EAttribute)intermediateImportEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EReference getIntermediateImport_DataModel() {
-        return (EReference)intermediateImportEClass.getEStructuralFeatures().get(3);
+        return (EReference)intermediateImportEClass.getEStructuralFeatures().get(4);
     }
 
     /**
@@ -379,7 +389,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      */
     @Override
     public EAttribute getIntermediateImport_ImportTypeNameForDatatypes() {
-        return (EAttribute)intermediateImportEClass.getEStructuralFeatures().get(4);
+        return (EAttribute)intermediateImportEClass.getEStructuralFeatures().get(5);
     }
 
     /**
@@ -1551,6 +1561,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
         intermediateImportEClass = createEClass(INTERMEDIATE_IMPORT);
         createEAttribute(intermediateImportEClass, INTERMEDIATE_IMPORT__NAME);
         createEAttribute(intermediateImportEClass, INTERMEDIATE_IMPORT__IMPORT_URI);
+        createEAttribute(intermediateImportEClass, INTERMEDIATE_IMPORT__EXTERNAL_URI);
         createEAttribute(intermediateImportEClass, INTERMEDIATE_IMPORT__IMPORT_TYPE_NAME);
         createEReference(intermediateImportEClass, INTERMEDIATE_IMPORT__DATA_MODEL);
         createEAttribute(intermediateImportEClass, INTERMEDIATE_IMPORT__IMPORT_TYPE_NAME_FOR_DATATYPES);
@@ -1739,6 +1750,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
         initEClass(intermediateImportEClass, IntermediateImport.class, "IntermediateImport", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getIntermediateImport_Name(), theEcorePackage.getEString(), "name", null, 0, 1, IntermediateImport.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getIntermediateImport_ImportUri(), theEcorePackage.getEString(), "importUri", null, 0, 1, IntermediateImport.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getIntermediateImport_ExternalUri(), theEcorePackage.getEString(), "externalUri", null, 0, 1, IntermediateImport.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getIntermediateImport_ImportTypeName(), theEcorePackage.getEString(), "importTypeName", null, 0, 1, IntermediateImport.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getIntermediateImport_DataModel(), this.getIntermediateDataModel(), this.getIntermediateDataModel_Imports(), "dataModel", null, 0, 1, IntermediateImport.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getIntermediateImport_ImportTypeNameForDatatypes(), theEcorePackage.getEString(), "importTypeNameForDatatypes", null, 0, 1, IntermediateImport.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);

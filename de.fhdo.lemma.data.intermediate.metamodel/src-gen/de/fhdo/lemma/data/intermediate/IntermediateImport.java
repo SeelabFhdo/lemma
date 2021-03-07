@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateImport#getName <em>Name</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateImport#getImportUri <em>Import Uri</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateImport#getExternalUri <em>External Uri</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateImport#getImportTypeName <em>Import Type Name</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateImport#getDataModel <em>Data Model</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateImport#getImportTypeNameForDatatypes <em>Import Type Name For Datatypes</em>}</li>
@@ -73,6 +74,28 @@ public interface IntermediateImport extends EObject {
      * @generated
      */
     void setImportUri(String value);
+
+    /**
+     * Returns the value of the '<em><b>External Uri</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>External Uri</em>' attribute.
+     * @see #setExternalUri(String)
+     * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateImport_ExternalUri()
+     * @model unique="false"
+     * @generated
+     */
+    String getExternalUri();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.data.intermediate.IntermediateImport#getExternalUri <em>External Uri</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>External Uri</em>' attribute.
+     * @see #getExternalUri()
+     * @generated
+     */
+    void setExternalUri(String value);
 
     /**
      * Returns the value of the '<em><b>Import Type Name</b></em>' attribute.

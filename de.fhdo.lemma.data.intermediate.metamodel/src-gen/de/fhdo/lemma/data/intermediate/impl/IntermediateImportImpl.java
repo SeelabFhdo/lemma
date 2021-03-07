@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <ul>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateImportImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateImportImpl#getImportUri <em>Import Uri</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateImportImpl#getExternalUri <em>External Uri</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateImportImpl#getImportTypeName <em>Import Type Name</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateImportImpl#getDataModel <em>Data Model</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateImportImpl#getImportTypeNameForDatatypes <em>Import Type Name For Datatypes</em>}</li>
@@ -76,6 +77,26 @@ public class IntermediateImportImpl extends MinimalEObjectImpl.Container impleme
      * @ordered
      */
     protected String importUri = IMPORT_URI_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getExternalUri() <em>External Uri</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getExternalUri()
+     * @generated
+     * @ordered
+     */
+    protected static final String EXTERNAL_URI_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getExternalUri() <em>External Uri</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getExternalUri()
+     * @generated
+     * @ordered
+     */
+    protected String externalUri = EXTERNAL_URI_EDEFAULT;
 
     /**
      * The default value of the '{@link #getImportTypeName() <em>Import Type Name</em>}' attribute.
@@ -170,6 +191,29 @@ public class IntermediateImportImpl extends MinimalEObjectImpl.Container impleme
         importUri = newImportUri;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_IMPORT__IMPORT_URI, oldImportUri, importUri));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String getExternalUri() {
+        return externalUri;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setExternalUri(String newExternalUri) {
+        String oldExternalUri = externalUri;
+        externalUri = newExternalUri;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_IMPORT__EXTERNAL_URI, oldExternalUri, externalUri));
     }
 
     /**
@@ -314,6 +358,8 @@ public class IntermediateImportImpl extends MinimalEObjectImpl.Container impleme
                 return getName();
             case IntermediatePackage.INTERMEDIATE_IMPORT__IMPORT_URI:
                 return getImportUri();
+            case IntermediatePackage.INTERMEDIATE_IMPORT__EXTERNAL_URI:
+                return getExternalUri();
             case IntermediatePackage.INTERMEDIATE_IMPORT__IMPORT_TYPE_NAME:
                 return getImportTypeName();
             case IntermediatePackage.INTERMEDIATE_IMPORT__DATA_MODEL:
@@ -339,6 +385,9 @@ public class IntermediateImportImpl extends MinimalEObjectImpl.Container impleme
             case IntermediatePackage.INTERMEDIATE_IMPORT__IMPORT_URI:
                 setImportUri((String)newValue);
                 return;
+            case IntermediatePackage.INTERMEDIATE_IMPORT__EXTERNAL_URI:
+                setExternalUri((String)newValue);
+                return;
             case IntermediatePackage.INTERMEDIATE_IMPORT__IMPORT_TYPE_NAME:
                 setImportTypeName((String)newValue);
                 return;
@@ -363,6 +412,9 @@ public class IntermediateImportImpl extends MinimalEObjectImpl.Container impleme
             case IntermediatePackage.INTERMEDIATE_IMPORT__IMPORT_URI:
                 setImportUri(IMPORT_URI_EDEFAULT);
                 return;
+            case IntermediatePackage.INTERMEDIATE_IMPORT__EXTERNAL_URI:
+                setExternalUri(EXTERNAL_URI_EDEFAULT);
+                return;
             case IntermediatePackage.INTERMEDIATE_IMPORT__IMPORT_TYPE_NAME:
                 setImportTypeName(IMPORT_TYPE_NAME_EDEFAULT);
                 return;
@@ -385,6 +437,8 @@ public class IntermediateImportImpl extends MinimalEObjectImpl.Container impleme
                 return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
             case IntermediatePackage.INTERMEDIATE_IMPORT__IMPORT_URI:
                 return IMPORT_URI_EDEFAULT == null ? importUri != null : !IMPORT_URI_EDEFAULT.equals(importUri);
+            case IntermediatePackage.INTERMEDIATE_IMPORT__EXTERNAL_URI:
+                return EXTERNAL_URI_EDEFAULT == null ? externalUri != null : !EXTERNAL_URI_EDEFAULT.equals(externalUri);
             case IntermediatePackage.INTERMEDIATE_IMPORT__IMPORT_TYPE_NAME:
                 return IMPORT_TYPE_NAME_EDEFAULT == null ? importTypeName != null : !IMPORT_TYPE_NAME_EDEFAULT.equals(importTypeName);
             case IntermediatePackage.INTERMEDIATE_IMPORT__DATA_MODEL:
@@ -409,6 +463,8 @@ public class IntermediateImportImpl extends MinimalEObjectImpl.Container impleme
         result.append(name);
         result.append(", importUri: ");
         result.append(importUri);
+        result.append(", externalUri: ");
+        result.append(externalUri);
         result.append(", importTypeName: ");
         result.append(importTypeName);
         result.append(')');
