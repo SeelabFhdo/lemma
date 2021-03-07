@@ -64,6 +64,9 @@ REM Analyzer
 set modules=%modules%;de.fhdo.lemma.analyzer.lib
 set modules=%modules%;de.fhdo.lemma.analyzer
 
+REM Visualizer
+set modules=%modules%;de.fhdo.lemma.visualizer
+
 REM Initialize colors for colorEcho
 for /F "tokens=1,2 delims=#" %%a in ('"prompt #$H#$E# & echo on & for %%b in (1) do     rem"') do (
   set "DEL=%%a"

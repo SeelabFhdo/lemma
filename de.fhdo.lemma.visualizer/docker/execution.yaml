@@ -1,0 +1,61 @@
+- processor:
+  - description: "LEMMA Static Analyzer"
+  - docker:
+    - image: "lemma/static_analyzer:latest"
+    - repository: "repository.seelab.fh-dortmund.de:51900"
+    - buildscript: "./build.sh"
+    - lemma_version_file: "../gradle.properties"
+  - execution_steps:
+    - --invoke_only_specified_phases intermediate_model_validation
+    - --additional_intermediate_model=args.additionalIntermediateModel*
+    - --analysis_module=args.analysisModule*
+    - --csv_file=args.csvFile?
+    - --csv_column_prefix=args.csvColumnPrefix?
+    - --csv_variable_separator=args.csvVariableSeparator?
+    - --print_value_store?
+    - args.remainder
+
+- required_args:
+  - builtin:
+    - source_model: "path to source model (must be relative to model base path)"
+    - intermediate_model: "path to intermediate model (must be relative to model base path)"
+
+- optional_args:
+  - custom:
+    - analysisModule:
+        - option: "--analysis_module"
+        - type: "str"
+        - action: "append"
+        - help: "selected analysis module (can be passed multiple times)"
+
+    - additionalIntermediateModel:
+        - option: "--additional_intermediate_model"
+        - type: "str"
+        - action: "append"
+        - help: "additional intermediate model (can be passed multiple times)"
+        - execution:
+          - filesystem_element: "file"
+          - is_relative_to_base_path: true
+          - must_exist: true
+
+    - csvFile:
+        - option: "--csv_file"
+        - type: "str"
+        - help: "CSV file to write results to"
+        - execution:
+          - filesystem_element: "file"
+          - parent_must_exist: true
+
+    - csvColumnPrefix:
+        - option: "--csv_column_prefix"
+        - type: "str"
+        - help: "prefix for column headings in CSV file"
+
+    - csvVariableSeparator:
+        - option: "--csv_variable_separator"
+        - type: "str"
+        - help: "separator for static and variable parts of a CSV column"
+
+    - printValueStore:
+        - option: "--print_value_store"
+        - help: "print collected values to stdout"
