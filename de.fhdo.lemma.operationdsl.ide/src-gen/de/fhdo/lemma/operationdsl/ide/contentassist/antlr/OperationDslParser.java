@@ -162,7 +162,6 @@ public class OperationDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getImportedServiceAspectAccess().getGroup_4_1_1(), "rule__ImportedServiceAspect__Group_4_1_1__0");
 			builder.put(grammarAccess.getImportedServiceAspectAccess().getGroup_4_1_1_1(), "rule__ImportedServiceAspect__Group_4_1_1_1__0");
 			builder.put(grammarAccess.getQualifiedNameWithAtLeastOneLevelAccess().getGroup(), "rule__QualifiedNameWithAtLeastOneLevel__Group__0");
-			builder.put(grammarAccess.getAnythingAccess().getGroup_66(), "rule__Anything__Group_66__0");
 			builder.put(grammarAccess.getTechnologyAccess().getGroup(), "rule__Technology__Group__0");
 			builder.put(grammarAccess.getTechnologyAccess().getGroup_4(), "rule__Technology__Group_4__0");
 			builder.put(grammarAccess.getTechnologyAccess().getGroup_4_3(), "rule__Technology__Group_4_3__0");

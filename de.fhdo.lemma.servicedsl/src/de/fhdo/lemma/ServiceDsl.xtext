@@ -203,7 +203,7 @@ Anything:
         '<->' | 'environments' | 'properties' | 'mandatory' | 'singleval' | 'microservices' |
         'interfaces' | 'operations' | 'parameters' | 'fields' | 'exchange_pattern' |
         'communication_type' | 'protocol' | 'data_format' | 'aspect' | 'for' | 'containers' |
-        'selector'
+        'selector' |
 
         // All keywords of the Data DSL (from which the Service DSL inherits). If we don't specify
         // them here, they will be recognized as regular grammar tokens in the Anything string.
@@ -218,7 +218,7 @@ Anything:
         // as regular grammar tokens in the Anything string.
         'internal' | 'architecture' | 'public' | 'endpoints' | 'microservice' | 'required' |
         'typedef' | 'noimpl' | 'interface' | 'param' | 'refers' | 'fault' | 'functional' |
-        'utility' |
+        'utility' | 'to' |
 
         // All other terminal rules of the Service and the Data DSL (from which the Service DSL
         // inherits). If we don't specify them here, they will be recognized as regular grammar

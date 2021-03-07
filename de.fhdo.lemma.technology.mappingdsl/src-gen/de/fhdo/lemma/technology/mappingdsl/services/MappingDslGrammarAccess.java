@@ -2578,7 +2578,7 @@ public class MappingDslGrammarAccess extends AbstractElementFinder.AbstractGramm
 	//	'<->' | 'environments' | 'properties' | 'mandatory' | 'singleval' | 'microservices' |
 	//	'interfaces' | 'operations' | 'parameters' | 'fields' | 'exchange_pattern' |
 	//	'communication_type' | 'protocol' | 'data_format' | 'aspect' | 'for' | 'containers' |
-	//	'selector'
+	//	'selector' |
 	//	// All keywords of the Data DSL (from which the Service DSL inherits). If we don't specify
 	//	// them here, they will be recognized as regular grammar tokens in the Anything string.
 	//	'datatypes' | 'version' | 'context' | 'aggregate' | 'applicationService' | 'domainEvent' |
@@ -2591,7 +2591,7 @@ public class MappingDslGrammarAccess extends AbstractElementFinder.AbstractGramm
 	//	// as regular grammar tokens in the Anything string.
 	//	'internal' | 'architecture' | 'public' | 'endpoints' | 'microservice' | 'required' |
 	//	'typedef' | 'noimpl' | 'interface' | 'param' | 'refers' | 'fault' | 'functional' |
-	//	'utility' | BOOLEAN | NUMBER_WITH_TRAILING_PERIOD | BIG_DECIMAL | ID | super::STRING | ANY_OTHER)+;
+	//	'utility' | 'to' | BOOLEAN | NUMBER_WITH_TRAILING_PERIOD | BIG_DECIMAL | ID | super::STRING | ANY_OTHER)+;
 	public ServiceDslGrammarAccess.AnythingElements getAnythingAccess() {
 		return gaServiceDsl.getAnythingAccess();
 	}
