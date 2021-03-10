@@ -21,6 +21,7 @@ buildscript {
     extra.set("modelProcessingVersion", version)
     extra.set("picocliVersion", "3.9.3")
     extra.set("xtextVersion", "2.21.0")
+    extra.set("graphvizVersion", "0.18.1")
 }
 
 dependencies {
@@ -32,6 +33,7 @@ dependencies {
     val modelProcessingVersion: String by rootProject.extra
     val picocliVersion: String by rootProject.extra
     val xtextVersion: String by rootProject.extra
+    val graphvizVersion: String by rootProject.extra
 
     implementation(kotlin("stdlib"))
     implementation(kotlin("reflect"))
@@ -47,10 +49,16 @@ dependencies {
     implementation("info.picocli:picocli:$picocliVersion")
     implementation("io.github.classgraph:classgraph:$classgraphVersion")
     implementation("org.jgrapht:jgrapht-core:$jgraphtVersion")
+    implementation("org.jgrapht:jgrapht-ext:$jgraphtVersion")
+    implementation("org.jgrapht:jgrapht-io:$jgraphtVersion")
     implementation("org.eclipse.lsp4j:org.eclipse.lsp4j:$lsp4jVersion")
     implementation("org.eclipse.lsp4j:org.eclipse.lsp4j.jsonrpc:$lsp4jVersion")
     implementation("org.eclipse.xtext:org.eclipse.xtext.ecore:$xtextVersion")
     implementation("org.fusesource.jansi:jansi:$jansiVersion")
+    // https://mvnrepository.com/artifact/guru.nidi/graphviz-java
+    implementation("guru.nidi:graphviz-java:$graphvizVersion")
+
+
 }
 
 tasks.withType<KotlinCompile> {
