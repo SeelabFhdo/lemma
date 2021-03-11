@@ -4,8 +4,8 @@ import de.fhdo.lemma.service.MicroserviceType
 import de.fhdo.lemma.visualizer.model.MicroserviceEdge
 import de.fhdo.lemma.visualizer.model.MicroserviceVertex
 import org.jgrapht.Graph
-import org.jgrapht.graph.SimpleGraph
 import org.jgrapht.nio.Attribute
+import org.jgrapht.nio.AttributeType
 import org.jgrapht.nio.DefaultAttribute
 import java.io.StringWriter
 import org.jgrapht.nio.dot.DOTExporter
@@ -19,22 +19,43 @@ class GraphUtil {
                 {v -> v.name}
             )
             //Lambda for decorating the vertices with attributes
-            val vertexAttributeProvider : (MicroserviceVertex) -> Map<String, Attribute> = {
-                val attributes = LinkedHashMap<String, Attribute>()
+            val vertexAttributeProvider : (MicroserviceVertex) -> MutableMap<String, Attribute> = {
+                val attributes = mutableMapOf<String, Attribute>()
+                attributes.put("label", DefaultAttribute(("<i>&laquo;${it.type.toString()}&raquo;</i><br/><b>${it.name}</b>"), AttributeType.HTML))
                 attributes.put("type", DefaultAttribute.createAttribute(it.type.toString()))
-                attributes.put("anotherTest", DefaultAttribute.createAttribute("justtesting"))
+                attributes.put("shape", DefaultAttribute.createAttribute("rectangle"))
+                attributes.put("style", DefaultAttribute.createAttribute("solid"))
+                val color = when(it.type) {
+                    MicroserviceType.FUNCTIONAL -> "blue"
+                    MicroserviceType.INFRASTRUCTURE -> "deeppink"
+                    MicroserviceType.UTILITY -> "purple"
+                }
+                attributes.put("color", DefaultAttribute.createAttribute(color))
+                //attributes.put("fontsize", DefaultAttribute.createAttribute(12))
+                // Sadly the chosen font name is plattform dependent
+                // See https://graphviz.org/doc/info/attrs.html#d:fontname
+                // On UNIX and Mac systems the default should be Quartz
+                attributes.put("fontname", DefaultAttribute.createAttribute("Roboto"))
                 //last part of a lambda is always considered its return value
                 attributes }
+
             //Lambda for decorating the edges with attributes
-            val edgeAttributeProvider : (MicroserviceEdge) -> Map<String, Attribute> = {
-                val attributes = LinkedHashMap<String, Attribute>()
+            val edgeAttributeProvider : (MicroserviceEdge) -> MutableMap<String, Attribute> = {
+                val attributes = mutableMapOf<String, Attribute>()
                 attributes.put("type", DefaultAttribute.createAttribute(it.label))
                 //last part of a lambda is always considered its return value
                 attributes }
 
+            //Lambda for decorating the graph with attributes
+            val graphAttributeProvider : () -> MutableMap<String, Attribute> = {
+                val attributes = mutableMapOf<String, Attribute>()
+                attributes.put("rankdir", DefaultAttribute.createAttribute("LR"))
+                //last part of a lambda is always considered its return value
+                attributes }
             //TODO Es gibt auch ID Provider die ich für edges nutzen könnte
             exporter.setVertexAttributeProvider(vertexAttributeProvider)
             exporter.setEdgeAttributeProvider(edgeAttributeProvider)
+            exporter.setGraphAttributeProvider(graphAttributeProvider)
             val writer: Writer = StringWriter()
             exporter.exportGraph(serviceGraph, writer)
             return writer.toString()

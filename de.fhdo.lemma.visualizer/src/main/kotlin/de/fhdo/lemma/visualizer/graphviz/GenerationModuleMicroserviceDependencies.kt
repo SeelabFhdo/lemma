@@ -9,6 +9,7 @@ import de.fhdo.lemma.service.MicroserviceType
 import de.fhdo.lemma.service.intermediate.IntermediateServiceModel
 import de.fhdo.lemma.visualizer.model.MicroserviceEdge
 import de.fhdo.lemma.visualizer.model.MicroserviceVertex
+import de.fhdo.lemma.visualizer.processor.GraphCollector
 import guru.nidi.graphviz.engine.Format
 import org.jgrapht.Graph
 import java.nio.charset.Charset
@@ -23,8 +24,6 @@ import java.io.File
  * TODO documentation
  * TODO How to call multiple models into the process?! -> Maybe invoke the model processor FOR EACH MODEL and collect all the resulting vertices and edges as return values?
  * TODO build a graph of the services and their dependencies using JGraphT (cf. https://jgrapht.org/guide/HelloJGraphT)
- * TODO By calling the toString() method on the graph a DOT-String (Graph desc language) can be created
- * TODO This string should be readable by GraphViz and thus easily create a Graph
  * TODO it would be nice to embed the resulting image into an html view
  * TODO (for future work maybe provide a complete dashboard e.g. using thymeleaf and spring)
  */
@@ -52,9 +51,10 @@ class GenerationModuleMicroserviceNames : AbstractCodeGenerationModule() {
 
         var serviceGraph = createMicroserviceGraph()
         serviceGraph = enrichGraph(serviceGraph!!)
+
         val dotGraph = GraphUtil.exportDotFromGraph(serviceGraph)
         print(dotGraph)
-        Graphviz.fromString(dotGraph).render(Format.PNG).toFile(File("target/test.png"))
+        Graphviz.fromString(dotGraph).height(750).render(Format.PNG).toFile(File("target/test.png"))
 
         /* Create sample result files' contents */try {
             resultFiles.put(targetFilePath, createSampleOutput())
@@ -89,7 +89,33 @@ class GenerationModuleMicroserviceNames : AbstractCodeGenerationModule() {
      *
      * @return a graph based on MicroserviceVertex objects.
      */
+    //TODO im prinzip tiefensuche durch den jeweiligen service
+    // TODO ggf. müssen servicemodelle nachgeladen werden von der platte!
     fun createMicroserviceGraph(): Graph<MicroserviceVertex, MicroserviceEdge>? {
+
+        val v1 = MicroserviceVertex("Service1", MicroserviceType.FUNCTIONAL)
+        val v2 = MicroserviceVertex("Service2", MicroserviceType.FUNCTIONAL)
+        val v3 = MicroserviceVertex("Service3", MicroserviceType.INFRASTRUCTURE)
+        val v4 = MicroserviceVertex("Service4", MicroserviceType.FUNCTIONAL)
+        val v6 = MicroserviceVertex("Service6", MicroserviceType.FUNCTIONAL)
+        val v7 = MicroserviceVertex("Service7", MicroserviceType.INFRASTRUCTURE)
+        val v8 = MicroserviceVertex("Service8", MicroserviceType.FUNCTIONAL)
+        val v9 = MicroserviceVertex("Service9", MicroserviceType.UTILITY)
+        GraphCollector.addMicroserviceVertex(v1)
+        GraphCollector.addMicroserviceVertex(v2)
+        GraphCollector.addMicroserviceVertex(v3)
+        GraphCollector.addMicroserviceVertex(v4)
+        GraphCollector.addMicroserviceVertex(v6)
+        GraphCollector.addMicroserviceVertex(v7)
+        GraphCollector.addMicroserviceVertex(v8)
+        GraphCollector.addMicroserviceVertex(v9)
+        GraphCollector.addMicroserviceEdge(v1, v2, MicroserviceEdge("TestEdge1"))
+        GraphCollector.addMicroserviceEdge(v2, v3, MicroserviceEdge("TestEdge2"))
+        GraphCollector.addMicroserviceEdge(v3, v4, MicroserviceEdge("TestEdge3"))
+        GraphCollector.addMicroserviceEdge(v4, v1, MicroserviceEdge("TestEdge4"))
+
+        return GraphCollector.microserviceGraph
+        /*
         val g: Graph<MicroserviceVertex, MicroserviceEdge> = SimpleGraph(MicroserviceEdge::class.java)
         val v1 = MicroserviceVertex("Service1", MicroserviceType.FUNCTIONAL)
         val v2 = MicroserviceVertex("Service2", MicroserviceType.FUNCTIONAL)
@@ -108,6 +134,7 @@ class GenerationModuleMicroserviceNames : AbstractCodeGenerationModule() {
         g.addEdge(v3, v4, MicroserviceEdge("TestEdge3"))
         g.addEdge(v4, v1, MicroserviceEdge("TestEdge4"))
         return g
+         */
     }
 
     /**
