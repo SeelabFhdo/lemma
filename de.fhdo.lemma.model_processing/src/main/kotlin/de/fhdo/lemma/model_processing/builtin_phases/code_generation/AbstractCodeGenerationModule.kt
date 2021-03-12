@@ -37,11 +37,6 @@ abstract class AbstractCodeGenerationModule {
     abstract fun getLanguageDescription() : LanguageDescription
 
     /**
-     * Flag to indicate if this module accepts its own module-specific arguments
-     */
-    protected fun acceptsModuleSpecificArguments() = false
-
-    /**
      * Implementation of the actual code generation. The arguments of the [CodeGenerationPhase] invocation will be
      * passed within the [phaseArguments]. If the module accepts its own specific arguments, these will be passed within
      * the [moduleArguments]. The code generation implementation is expected to return a map consisting of the target
