@@ -1,4 +1,4 @@
-package de.fhdo.lemma.visualizer.graphviz
+package de.fhdo.lemma.visualizer.processor
 
 import de.fhdo.lemma.service.MicroserviceType
 import de.fhdo.lemma.visualizer.model.MicroserviceEdge
@@ -10,13 +10,14 @@ import org.jgrapht.nio.DefaultAttribute
 import java.io.StringWriter
 import org.jgrapht.nio.dot.DOTExporter
 import java.io.Writer
+import java.util.*
 
 class GraphUtil {
     companion object {
         fun exportDotFromGraph(serviceGraph: Graph<MicroserviceVertex, MicroserviceEdge>): String {
             val exporter: DOTExporter<MicroserviceVertex, MicroserviceEdge> = DOTExporter(
                 //Lambda which functions as id provider for the vertexes
-                {v -> v.name}
+                {v -> "\"${v.name}\""}
             )
             //Lambda for decorating the vertices with attributes
             val vertexAttributeProvider : (MicroserviceVertex) -> MutableMap<String, Attribute> = {
@@ -26,9 +27,10 @@ class GraphUtil {
                 attributes.put("shape", DefaultAttribute.createAttribute("rectangle"))
                 attributes.put("style", DefaultAttribute.createAttribute("solid"))
                 val color = when(it.type) {
-                    MicroserviceType.FUNCTIONAL -> "blue"
-                    MicroserviceType.INFRASTRUCTURE -> "deeppink"
-                    MicroserviceType.UTILITY -> "purple"
+                    "FUNCTIONAL" -> "blue"
+                    "INFRASTRUCTURE" -> "deeppink"
+                    "UTILITY" -> "purple"
+                    else -> "red"
                 }
                 attributes.put("color", DefaultAttribute.createAttribute(color))
                 //attributes.put("fontsize", DefaultAttribute.createAttribute(12))
@@ -53,6 +55,7 @@ class GraphUtil {
                 //last part of a lambda is always considered its return value
                 attributes }
             //TODO Es gibt auch ID Provider die ich für edges nutzen könnte
+            // Settings the previously defined functions as new providers for the exporter
             exporter.setVertexAttributeProvider(vertexAttributeProvider)
             exporter.setEdgeAttributeProvider(edgeAttributeProvider)
             exporter.setGraphAttributeProvider(graphAttributeProvider)

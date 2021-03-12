@@ -10,14 +10,13 @@ import de.fhdo.lemma.service.intermediate.IntermediateServiceModel
 import de.fhdo.lemma.visualizer.model.MicroserviceEdge
 import de.fhdo.lemma.visualizer.model.MicroserviceVertex
 import de.fhdo.lemma.visualizer.processor.GraphCollector
+import de.fhdo.lemma.visualizer.processor.GraphUtil
 import guru.nidi.graphviz.engine.Format
 import org.jgrapht.Graph
 import java.nio.charset.Charset
 import java.util.stream.Collectors
 import kotlin.Pair
-import org.jgrapht.graph.DefaultEdge
 import guru.nidi.graphviz.engine.Graphviz
-import org.jgrapht.graph.SimpleGraph
 import java.io.File
 
 /**
@@ -49,18 +48,11 @@ class GenerationModuleMicroserviceNames : AbstractCodeGenerationModule() {
         val targetFilePath: String = targetFolder.toString() + java.io.File.separator + "microservice_names.result"
         val resultFiles: MutableMap<String, String> = HashMap<String, String>()
 
-        var serviceGraph = createMicroserviceGraph()
-        serviceGraph = enrichGraph(serviceGraph!!)
-
-        val dotGraph = GraphUtil.exportDotFromGraph(serviceGraph)
-        print(dotGraph)
-        Graphviz.fromString(dotGraph).height(750).render(Format.PNG).toFile(File("target/test.png"))
-
-        /* Create sample result files' contents */try {
-            resultFiles.put(targetFilePath, createSampleOutput())
-        } catch (ex: ClassCastException) {
-            // NOOP: May happen if passed intermediate model does not have the expected type
-        }
+        // Creates the Microservice Graph and stores it in the GraphCollector Singleton
+        //Toy example for visualization
+        GraphCollector.imageConfig = GraphCollector.ImageConfig(height = 500)
+        //createExampleMicroserviceGraph()
+        createMicroserviceGraph()
 
         // You can use the withCharset() utility method to assign a charset to all items in a Map
         // that assigns file contents (value String) to file paths (key String)
@@ -68,80 +60,61 @@ class GenerationModuleMicroserviceNames : AbstractCodeGenerationModule() {
     }
 
     /**
-     * Create some sample code generation output. In this case, the input model will be traversed
-     * for the names of all contained microservices.
+     * Create a toy graph based on MicroserviceVertex objects.
+     *
+     * @return a graph based on MicroserviceVertex objects.
      */
-    private fun createSampleOutput(): String {
-        // You can retrieve the input model's EMF Resource via getIntermediateModelResource()
+    fun createMicroserviceGraph() {
         val modelRoot: IntermediateServiceModel = intermediateModelResource
             .getContents()
             .get(0) as IntermediateServiceModel
-        val modeledMicroserviceNames: List<String> = modelRoot.getMicroservices()
-            .stream()
-            .map { s -> s.getName() }
-            .sorted()
-            .collect(Collectors.toList())
-        return modeledMicroserviceNames.stream().collect(Collectors.joining("\n"))
+        // Creates a new vertex for each defined microservice in the modelRoot
+        modelRoot.microservices.forEach({
+            val vertex = MicroserviceVertex(it.name, it.qualifiedName, it.type)
+            GraphCollector.addMicroserviceVertex(vertex)
+            print(GraphCollector.createDotRepresentation())
+            print(GraphCollector.createImageRepresentation(File("target/test.png")))
+        })
     }
+
+
 
     /**
      * Create a toy graph based on MicroserviceVertex objects.
      *
      * @return a graph based on MicroserviceVertex objects.
      */
-    //TODO im prinzip tiefensuche durch den jeweiligen service
-    // TODO ggf. müssen servicemodelle nachgeladen werden von der platte!
-    fun createMicroserviceGraph(): Graph<MicroserviceVertex, MicroserviceEdge>? {
-
-        val v1 = MicroserviceVertex("Service1", MicroserviceType.FUNCTIONAL)
-        val v2 = MicroserviceVertex("Service2", MicroserviceType.FUNCTIONAL)
-        val v3 = MicroserviceVertex("Service3", MicroserviceType.INFRASTRUCTURE)
-        val v4 = MicroserviceVertex("Service4", MicroserviceType.FUNCTIONAL)
-        val v6 = MicroserviceVertex("Service6", MicroserviceType.FUNCTIONAL)
-        val v7 = MicroserviceVertex("Service7", MicroserviceType.INFRASTRUCTURE)
-        val v8 = MicroserviceVertex("Service8", MicroserviceType.FUNCTIONAL)
-        val v9 = MicroserviceVertex("Service9", MicroserviceType.UTILITY)
+    fun createExampleMicroserviceGraph() {
+        val v1 = MicroserviceVertex("Service1","qService1","FUNCTIONAL")
+        val v2 = MicroserviceVertex("Service2","qService2","FUNCTIONAL")
+        val v3 = MicroserviceVertex("Service3","qService3","INFRASTRUCTURE")
+        val v4 = MicroserviceVertex("Service4","qService4","FUNCTIONAL")
+        val v5 = MicroserviceVertex("Service5","qService5","FUNCTIONAL")
+        val v6 = MicroserviceVertex("Service6","qService6","INFRASTRUCTURE")
+        val v7 = MicroserviceVertex("Service7","qService7","FUNCTIONAL")
+        val v8 = MicroserviceVertex("Service8","qService8","UTILITY")
         GraphCollector.addMicroserviceVertex(v1)
         GraphCollector.addMicroserviceVertex(v2)
         GraphCollector.addMicroserviceVertex(v3)
         GraphCollector.addMicroserviceVertex(v4)
+        GraphCollector.addMicroserviceVertex(v5)
         GraphCollector.addMicroserviceVertex(v6)
         GraphCollector.addMicroserviceVertex(v7)
         GraphCollector.addMicroserviceVertex(v8)
-        GraphCollector.addMicroserviceVertex(v9)
         GraphCollector.addMicroserviceEdge(v1, v2, MicroserviceEdge("TestEdge1"))
         GraphCollector.addMicroserviceEdge(v2, v3, MicroserviceEdge("TestEdge2"))
         GraphCollector.addMicroserviceEdge(v3, v4, MicroserviceEdge("TestEdge3"))
         GraphCollector.addMicroserviceEdge(v4, v1, MicroserviceEdge("TestEdge4"))
 
-        return GraphCollector.microserviceGraph
-        /*
-        val g: Graph<MicroserviceVertex, MicroserviceEdge> = SimpleGraph(MicroserviceEdge::class.java)
-        val v1 = MicroserviceVertex("Service1", MicroserviceType.FUNCTIONAL)
-        val v2 = MicroserviceVertex("Service2", MicroserviceType.FUNCTIONAL)
-        val v3 = MicroserviceVertex("Service3", MicroserviceType.INFRASTRUCTURE)
-        val v4 = MicroserviceVertex("Service4", MicroserviceType.FUNCTIONAL)
-
-        // add the vertices
-        g.addVertex(v1)
-        g.addVertex(v2)
-        g.addVertex(v3)
-        g.addVertex(v4)
-
-        // add edges to create a circuit
-        g.addEdge(v1, v2, MicroserviceEdge("TestEdge1"))
-        g.addEdge(v2, v3, MicroserviceEdge("TestEdge2"))
-        g.addEdge(v3, v4, MicroserviceEdge("TestEdge3"))
-        g.addEdge(v4, v1, MicroserviceEdge("TestEdge4"))
-        return g
-         */
+        print(GraphCollector.createDotRepresentation())
+        GraphCollector.createImageRepresentation(File("target/test.png"))
     }
 
     /**
      * Enriches the given serviceGraph with the accessible microservices from the service file of this model processing
      * as well as draws crresponding edges between vertices, i.e., microservices, based on <b>required</b> services
      * as well as imported services in the service model.
-     */
+
     private fun enrichGraph(serviceGraph: Graph<MicroserviceVertex, MicroserviceEdge>): Graph<MicroserviceVertex, MicroserviceEdge> {
         val test = MicroserviceVertex("Service5", MicroserviceType.UTILITY)
         serviceGraph.addVertex(test)
@@ -149,10 +122,5 @@ class GenerationModuleMicroserviceNames : AbstractCodeGenerationModule() {
         serviceGraph.addEdge(filterVertex, test, MicroserviceEdge("hihiyolo"))
         return serviceGraph
     }
-
-
-
-
-
-
+     */
 }

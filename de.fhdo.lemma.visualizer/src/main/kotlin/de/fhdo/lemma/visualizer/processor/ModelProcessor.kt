@@ -16,6 +16,7 @@ import de.fhdo.lemma.model_processing.AbstractModelProcessor
  *   - "--invoke_only_specified_phases": Invoke only those model processing phases explicitly
  *      specified via the commandline.
  *   - "--exit_on_error": Exit on any error occurring during model processing in any phase.
+ *
  * Commands can be used like "-s=/my/absolute/path/to/file.xmi" (due to picocli used for the processor framework)
  * @author [Jonas Sorgalla](mailto:jonas.sorgalla@fh-dortmund.de)
  */
