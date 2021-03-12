@@ -88,7 +88,7 @@ object BasicCommandLine {
         names = ["--exit_on_error"],
         description = ["exit model processor when errors occur in a phase"]
     )
-    var exitOnError: Boolean = false
+    var exitOnError: Boolean = true
 
     private var parsedCommandLine: CommandLine? = null
     private var parsedOptions: List<CommandLine.Model.OptionSpec> = emptyList()
