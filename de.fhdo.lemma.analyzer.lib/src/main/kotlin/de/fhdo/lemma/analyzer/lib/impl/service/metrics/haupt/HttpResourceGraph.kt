@@ -273,8 +273,8 @@ class HttpResourceGraph(
         = httpMethods.mapNotNull { this[it] }.flatten().map { it.qualifiedName }.toSet()
 
     /**
-     * Find the longest path of vertices in the [HttpResourceGraph] In case there are longest paths with the same number
-     * of vertices, the method will only return one of them.
+     * Find the longest path of vertices in the [HttpResourceGraph]. In case there are longest paths with the same
+     * number of vertices, the method will only return one of them.
      */
     private fun longestPath() : GraphPath<ResourceGraphVertex, DefaultEdge>? {
         val roots = getRoots().toSet()

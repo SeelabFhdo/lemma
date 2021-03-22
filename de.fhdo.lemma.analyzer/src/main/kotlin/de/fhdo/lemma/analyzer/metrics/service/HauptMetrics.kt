@@ -114,7 +114,9 @@ internal class HauptMetrics : AbstractAnalysisModule<IntermediateServiceModel>()
         val rootResourcesCount = rootResources.count()
         val resourceLinkCount = analyzer.getResourceLinkCount(microservice)
         val longestResourcePath = analyzer.getLongestResourcePath(microservice)
-        val longestResourcePathDepth = longestResourcePath.size
+        // The Max Depth metric concerns the length of the longest path in the resource graph, which is the number of
+        // edges in the path and not the number of vertices returned by getLongestResourcePath()
+        val longestResourcePathDepth = if (longestResourcePath.isNotEmpty()) longestResourcePath.size - 1 else 0
 
         blankLine()
         item("Resource Characterization:")
