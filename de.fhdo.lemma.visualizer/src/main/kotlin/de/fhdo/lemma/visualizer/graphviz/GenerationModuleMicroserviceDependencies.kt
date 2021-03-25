@@ -24,17 +24,16 @@ import java.nio.file.Paths
 import kotlin.collections.HashMap
 
 /**
- * TODO documentation
- * TODO How to call multiple models into the process?! -> Maybe invoke the model processor FOR EACH MODEL and collect all the resulting vertices and edges as return values?
- * TODO build a graph of the services and their dependencies using JGraphT (cf. https://jgrapht.org/guide/HelloJGraphT)
- * TODO it would be nice to embed the resulting image into an html view
- * TODO (for future work maybe provide a complete dashboard e.g. using thymeleaf and spring)
+ * CodeGenerationModule which is invoced by the lemma model processor to
+ * create a visualization of the given service models.
  *
- * TODO How to connect subgraphs: https://stackoverflow.com/questions/2012036/graphviz-how-to-connect-subgraphs
- * PROBLEM DOTExporter of JGraphT does not allow Subgraphs which would be needed to model e.g. interfaces as seperate entities
- * Possible way to fix this is to exchange JGraphT or change the visualization.
- * https://stackoverflow.com/questions/57820898/creating-graph-with-clusters-using-jgrapht
+ * @author [Jonas Sorgalla](mailto:jonas.sorgalla@fh-dortmund.de)
  */
+/* TODO ISSUE DOTExporter of JGraphT does not allow Subgraphs
+* which would be needed to model e.g. interfaces as seperate entities
+* Possible way to fix this is to exchange JGraphT or change the visualization.
+* https://stackoverflow.com/questions/57820898/creating-graph-with-clusters-using-jgrapht
+*/
 @CodeGenerationModule(name = "ServicesToGraphVizGenerator")
 class GenerationModuleMicroserviceNames : AbstractCodeGenerationModule() {
 
@@ -52,21 +51,10 @@ class GenerationModuleMicroserviceNames : AbstractCodeGenerationModule() {
         return LanguageDescriptions.getLanguageDescription(IntermediatePackage.eNS_URI)!!
     }
 
-    /**
-     * This method implements the module's core logic. It has to return a (possibly empty) Map that
-     * assigns a charset and file contents (value Pair) to file paths (key String).
-     */
     override fun execute(
         phaseArguments: Array<String>,
         moduleArguments: Array<String>
     ): Map<String, Pair<String, Charset>> {
-        // Build target file name. This has to be preceded by the specified target folder in case
-        // the code generation phase is not invoked with the
-        // "--allow_code_generation_outside_target_folder" commandline argument (see above).
-        // getTargetFolder() retrieves the value of the "--t" commandline argument passed to an
-        // AbstractModelProcessor.
-        val targetFilePath: String = targetFolder.toString() + java.io.File.separator + "microservice_names.result"
-        val resultFiles: MutableMap<String, String> = HashMap()
         with(ModuleCommandLine) {
             try {
                 invoke(moduleArguments)
@@ -75,9 +63,9 @@ class GenerationModuleMicroserviceNames : AbstractCodeGenerationModule() {
             }
         }
 
-        //Toy example for visualization
-        createExampleMicroserviceGraph()
-
+        //Toy example for visualization - uncomment to see a programmatically created drawing
+        //createExampleMicroserviceGraph()
+        println("### LEMMA SYSTEM MODEL VISUALIZATION ###")
         //Initial parsing run where the intermediateModelResource from the code generation phase
         //is added to the graph
         val initialModel: IntermediateServiceModel = intermediateModelResource
@@ -85,6 +73,7 @@ class GenerationModuleMicroserviceNames : AbstractCodeGenerationModule() {
             .get(0) as IntermediateServiceModel
 
         // Populates the Microservice Graph with values from initialModel
+        println("Populating graph with inital model...")
         populateMicroserviceGraph(initialModel)
         // if there are service files which were not reached through the recursion
         // in createMicroserviceGraph() those are treated here
@@ -93,16 +82,28 @@ class GenerationModuleMicroserviceNames : AbstractCodeGenerationModule() {
             val resource = str.asXmiResource()
             val model = resource.contents.get(0) as IntermediateServiceModel
             if (!processedServiceModels.contains(model.sourceModelUri)) {
+                println("Populating graph with additional intermediate model...")
                 populateMicroserviceGraph(model)
             }
         }
         //Draws the discovered edges during the popluateGraph stage.
         //Currently only required microservices of a microservice are discovered as edges.
+        println("Drawing edges...")
         drawEdges()
-        println(createDotRepresentation(DetailLevel.SERVICES))
-        createImageRepresentation(ImageConfig(height = 2000, format = Format.PNG), File("target/test.png"), DetailLevel.OPERATIONS)
-        // You can use the withCharset() utility method to assign a charset to all items in a Map
-        // that assigns file contents (value String) to file paths (key String)
+        //
+        val targetFilePath: String = targetFolder + File.separator + "system_model.dot"
+        val resultFiles: MutableMap<String, String> = HashMap()
+        println("Creating DOT representation of graph...")
+        resultFiles.put(targetFilePath, createDotRepresentation(ModuleCommandLine.detailLevel))
+        // create image in targe
+        println("Creating graphical representation of graph...")
+        createImageRepresentation(
+            ImageConfig(height = ModuleCommandLine.height, format = Format.PNG),
+            File(targetFolder + File.separator + "system_model.png"),
+            ModuleCommandLine.detailLevel
+        )
+        println("Success!")
+        println("Generated artifacts can be found at "+targetFolder)
         return withCharset(resultFiles, java.nio.charset.StandardCharsets.UTF_8.name())
     }
 
@@ -141,9 +142,6 @@ class GenerationModuleMicroserviceNames : AbstractCodeGenerationModule() {
     }
 
     private fun recursiveImportProcessing(intermediateImport: IntermediateImport) {
-        // Apparently there is some kind of bug going when the importUri already starts with the file:// and contains
-        // a whitespace. In such cases the Uri is parsed as a relative uri instead of an absolute one.
-        // Therefore, the first 7 chars are manually removed.
         val resource = intermediateImport.importUri.removeRange(0, 7).asXmiResource()
         val model = resource.contents.get(0) as IntermediateServiceModel
         if (!processedServiceModels.contains(model.sourceModelUri)) {
@@ -227,15 +225,13 @@ class GenerationModuleMicroserviceNames : AbstractCodeGenerationModule() {
                 .render(imageConfig.format).toFile(path)
         if (imageConfig.height != null && imageConfig.width != null)
             Graphviz.fromString(createDotRepresentation(details))
-                .height(imageConfig.height!!).width(imageConfig.width!!).render(imageConfig.format).toFile(path)
+                .height(imageConfig.height).width(imageConfig.width).render(imageConfig.format).toFile(path)
         if (imageConfig.height != null && imageConfig.width == null)
-            Graphviz.fromString(createDotRepresentation(details)).height(imageConfig.height!!)
+            Graphviz.fromString(createDotRepresentation(details)).height(imageConfig.height)
                 .render(imageConfig.format).toFile(path)
         if (imageConfig.height == null && imageConfig.width != null)
-            Graphviz.fromString(createDotRepresentation(details)).width(imageConfig.width!!)
+            Graphviz.fromString(createDotRepresentation(details)).width(imageConfig.width)
                 .render(imageConfig.format).toFile(path)
     }
-
-
 }
 

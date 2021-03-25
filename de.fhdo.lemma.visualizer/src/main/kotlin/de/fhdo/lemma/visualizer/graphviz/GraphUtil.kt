@@ -11,6 +11,11 @@ import org.jgrapht.nio.DefaultAttribute
 import java.io.StringWriter
 import org.jgrapht.nio.dot.DOTExporter
 
+/**
+ * Static Utility class which configures the DotExporter of JGraphT through functions.
+ *
+ * @author [Jonas Sorgalla](mailto:jonas.sorgalla@fh-dortmund.de)
+ */
 class GraphUtil {
     companion object {
         var details = DetailLevel.SERVICES
@@ -72,7 +77,6 @@ class GraphUtil {
         }
         // TODO Make the visualization more appealing.
         private fun htmlLabel(it: MicroserviceVertex): String {
-
             //HTML template to display the Service vertices
             return "<table bgcolor='azure2' border='1' cellborder='0'>" +
                     "<tr><td><i>&laquo;${it.type.toString().toLowerCase().capitalize()} Service&raquo;</i></td></tr>" +

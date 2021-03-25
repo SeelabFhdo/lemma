@@ -1,5 +1,6 @@
 package de.fhdo.lemma.visualizer.graphviz.commandline
 
+import de.fhdo.lemma.visualizer.model.DetailLevel
 import picocli.CommandLine
 import java.io.File
 import java.nio.file.Path
@@ -18,15 +19,32 @@ internal object ModuleCommandLine {
     @CommandLine.Option(
         names = ["-asm", "--additionalSpecificModels"],
         paramLabel = "SPECIFICDIR",
-        description = ["Absolute path to the dir where the additional specific service models are located"]
+        description = ["Absolute path to the dir where the additional specific service models are located."]
     )
     var specificPath: Path? = null
 
     // Specific Models
     @CommandLine.Option(
+        names = ["-lvl", "--detailLevel"],
+        paramLabel = "DETAILLVL",
+        description = ["Level of detail which is shown on the visualization. Valid values are SERVICES, INTERFACES, " +
+                "OPERATIONS, and SIGNATURES"]
+    )
+    var detailLevel: DetailLevel = DetailLevel.INTERFACES
+
+    // Height of the generated image
+    @CommandLine.Option(
+        names = ["-height"],
+        paramLabel = "HEIGHT",
+        description = ["Height of the generated image."]
+    )
+    var height: Int = 2000
+
+    // Specific Models
+    @CommandLine.Option(
         names = ["-aim", "--additionalModels"],
         paramLabel = "INTERMEDIATEDIR",
-        description = ["Absolute path to the dir where the additional intermediate service models are located"]
+        description = ["Absolute path to the dir where the additional intermediate service models are located."]
     )
     var intermediatePath: Path? = null
 

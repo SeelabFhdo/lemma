@@ -22,6 +22,7 @@ buildscript {
     extra.set("picocliVersion", "3.9.3")
     extra.set("xtextVersion", "2.21.0")
     extra.set("graphvizVersion", "0.18.1")
+    extra.set("slf4jVersion", "1.7.29")
 }
 
 dependencies {
@@ -34,9 +35,11 @@ dependencies {
     val picocliVersion: String by rootProject.extra
     val xtextVersion: String by rootProject.extra
     val graphvizVersion: String by rootProject.extra
+    val slf4jVersion: String by rootProject.extra
 
     implementation(kotlin("stdlib"))
     implementation(kotlin("reflect"))
+    implementation("org.slf4j:slf4j-simple:$slf4jVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3")
     implementation("de.fhdo.lemma.data.datadsl:de.fhdo.lemma.data.datadsl:$lemmaEclipsePluginsVersion")
     implementation("de.fhdo.lemma.intermediate:de.fhdo.lemma.data.intermediate.metamodel:$lemmaEclipsePluginsVersion")
@@ -72,7 +75,7 @@ tasks.withType<Jar> {
 }
 
 /**
- * standalone task to create a standalone runnable JAR of the Static Analyzer
+ * standalone task to create a standalone runnable JAR of the Visualizer
  */
 val standalone = task("standalone", type = Jar::class) {
     archiveClassifier.set("standalone")
