@@ -19,6 +19,7 @@ import org.jgrapht.Graph
 import org.jgrapht.graph.DefaultDirectedGraph
 import java.io.File
 import java.net.URI
+import java.net.URLEncoder
 import java.nio.charset.Charset
 import java.nio.file.Paths
 import kotlin.collections.HashMap
@@ -81,7 +82,7 @@ class GenerationModuleMicroserviceNames : AbstractCodeGenerationModule() {
             val str = Paths.get(ModuleCommandLine.intermediatePath.toString(), it.toString()).toString()
             val resource = str.asXmiResource()
             val model = resource.contents.get(0) as IntermediateServiceModel
-            if (!processedServiceModels.contains(model.sourceModelUri)) {
+            if (!processedServiceModels.contains(URLEncoder.encode(model.sourceModelUri, "utf-8"))) {
                 println("Populating graph with additional intermediate model...")
                 populateMicroserviceGraph(model)
             }
@@ -125,9 +126,9 @@ class GenerationModuleMicroserviceNames : AbstractCodeGenerationModule() {
      * @return a graph based on MicroserviceVertex objects.
      */
     private fun populateMicroserviceGraph(modelRoot : IntermediateServiceModel) {
-        if (!processedServiceModels.contains(modelRoot.sourceModelUri)) {
+        if (!processedServiceModels.contains(URLEncoder.encode(modelRoot.sourceModelUri, "utf-8"))) {
             // mark as already processed
-            processedServiceModels.add(URI(modelRoot.sourceModelUri))
+            processedServiceModels.add(URI(URLEncoder.encode(modelRoot.sourceModelUri, "utf-8")))
             //traverse services of model file
             modelRoot.microservices.forEach({
                 if (!visitedMicroservices.contains(it.qualifiedName)) {
@@ -144,11 +145,11 @@ class GenerationModuleMicroserviceNames : AbstractCodeGenerationModule() {
     private fun recursiveImportProcessing(intermediateImport: IntermediateImport) {
         val resource = intermediateImport.importUri.removeRange(0, 7).asXmiResource()
         val model = resource.contents.get(0) as IntermediateServiceModel
-        if (!processedServiceModels.contains(model.sourceModelUri)) {
+        if (!processedServiceModels.contains(URLEncoder.encode(model.sourceModelUri, "utf-8"))) {
             model.microservices.forEach({
                 visitMicroserviceVertex(it)
             })
-            processedServiceModels.add(URI(model.sourceModelUri))
+            processedServiceModels.add(URI(URLEncoder.encode(model.sourceModelUri, "utf-8")))
             model.imports.filter { it.importTypeName == "MICROSERVICES" }.forEach({
                 // traverse each microservice import
                 recursiveImportProcessing(it)
