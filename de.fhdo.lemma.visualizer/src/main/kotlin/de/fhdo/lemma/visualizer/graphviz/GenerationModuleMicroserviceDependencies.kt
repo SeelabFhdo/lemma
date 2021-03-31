@@ -7,10 +7,12 @@ import de.fhdo.lemma.model_processing.asXmiResource
 import de.fhdo.lemma.model_processing.builtin_phases.code_generation.AbstractCodeGenerationModule
 import de.fhdo.lemma.model_processing.languages.LanguageDescription
 import de.fhdo.lemma.model_processing.languages.LanguageDescriptions
+import de.fhdo.lemma.model_processing.utils.loadModelRootRelative
 import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
 import de.fhdo.lemma.service.intermediate.IntermediateServiceModel
 import de.fhdo.lemma.visualizer.fullyQualifiedName
 import de.fhdo.lemma.visualizer.graphviz.commandline.ModuleCommandLine
+import de.fhdo.lemma.visualizer.graphviz.commandline.ModuleCommandLine.intermediatePath
 import de.fhdo.lemma.visualizer.graphviz.exceptions.ModuleException
 import de.fhdo.lemma.visualizer.model.*
 import guru.nidi.graphviz.engine.Format
@@ -21,6 +23,7 @@ import java.io.File
 import java.net.URI
 import java.net.URLEncoder
 import java.nio.charset.Charset
+import java.nio.file.Path
 import java.nio.file.Paths
 import kotlin.collections.HashMap
 
@@ -72,6 +75,17 @@ class GenerationModuleMicroserviceNames : AbstractCodeGenerationModule() {
         val initialModel: IntermediateServiceModel = intermediateModelResource
             .getContents()
             .get(0) as IntermediateServiceModel
+
+        println("InitialModel "+initialModel.sourceModelUri)
+        val absoluteIntermediateModelFilePath = intermediatePath!!.toFile().canonicalPath
+
+        //val newmodel = loadModelRootRelative(initialModel.sourceModelUri, absoluteIntermediateModelFilePath) as IntermediateServiceModel
+        //val modelRoot = intermediateModelResource.contents.get(0) as IntermediateServiceModel
+        //modelRoot.imports.forEach {
+        //    val importedModel = loadModelRootRelative(it.importUri,    absoluteIntermediateModelFilePath) as IntermediateServiceModel
+         //  println("CrazyModel "+importedModel.sourceModelUri)
+        //}
+
 
         // Populates the Microservice Graph with values from initialModel
         println("Populating graph with inital model...")
@@ -143,7 +157,18 @@ class GenerationModuleMicroserviceNames : AbstractCodeGenerationModule() {
     }
 
     private fun recursiveImportProcessing(intermediateImport: IntermediateImport) {
-        val resource = intermediateImport.importUri.removeRange(0, 7).asXmiResource()
+        //println(File(absoluteIntermediateModelFilePath+initialModel.sourceModelUri).canonicalPath)
+        var importStr = ""
+        if(!File(intermediateImport.importUri).isAbsolute) {
+            //TODO this can definitly be implemented in a better way
+            importStr = Paths.get(
+                intermediatePath.toString(), Paths.get(intermediateImport.importUri).fileName.toString()
+            ).toFile().absolutePath
+        } else {
+            Paths.get(importStr).fileName.toString()
+        }
+        val resource = importStr.asXmiResource()
+
         val model = resource.contents.get(0) as IntermediateServiceModel
         if (!processedServiceModels.contains(URLEncoder.encode(model.sourceModelUri, "utf-8"))) {
             model.microservices.forEach({

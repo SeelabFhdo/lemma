@@ -10,6 +10,7 @@ import de.fhdo.lemma.visualizer.languages.DATA_DSL_LANGUAGE_DESCRIPTION
 import de.fhdo.lemma.visualizer.languages.SERVICE_DSL_LANGUAGE_DESCRIPTION
 import org.eclipse.emf.ecore.EObject
 import java.lang.IllegalArgumentException
+import java.nio.file.Paths
 
 /*
  * This file comprises multiple utility functions which are taken from the Java Base Code Generator written
@@ -38,7 +39,8 @@ fun IntermediateMicroservice.fullyQualifiedName() : String {
  * @author [Jonas Sorgalla](mailto:jonas.sorgalla@fh-dortmund.de)
  */
 fun MicroserviceReference.fullyQualifiedName(): String {
-    return this.import.importUri.removeRange(0, 7).asFile().nameWithoutExtension+"::"+this.qualifiedName
+    //val test = Paths.get(this.import.importUri).fileName.toString()
+    return Paths.get(this.import.importUri).fileName.toString().asFile().nameWithoutExtension+"::"+this.qualifiedName
 }
 
 /**

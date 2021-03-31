@@ -63,7 +63,7 @@ class GraphUtil {
             //Lambda for decorating the graph with attributes
             val graphAttributeProvider : () -> MutableMap<String, Attribute> = {
                 val attributes = mutableMapOf<String, Attribute>()
-                attributes["rankdir"] = DefaultAttribute.createAttribute("LR")
+                //attributes["rankdir"] = DefaultAttribute.createAttribute("LR")
                 //last part of a lambda is always considered its return value
                 attributes }
 
@@ -80,7 +80,7 @@ class GraphUtil {
             //HTML template to display the Service vertices
             return "<table bgcolor='azure2' border='1' cellborder='0'>" +
                     "<tr><td><i>&laquo;${it.type.toString().toLowerCase().capitalize()} Service&raquo;</i></td></tr>" +
-                    "<tr><td>${it.visibility.visibilityHtml()} <b>${it.qualifiedName}</b></td></tr>" +
+                    "<tr><td>${it.visibility.visibilityHtml()} <b>${it.qualifiedName.substring(it.qualifiedName.lastIndexOf('.') + 1)}</b></td></tr>" +
                     "${if (it.technology != null) "<tr><td>service technology {${it.technology}}</td></tr>" else ""}" +
                     (if (details.ordinal >= DetailLevel.INTERFACES.ordinal) it.interfacesHtml() else "") +
             "</table>"
