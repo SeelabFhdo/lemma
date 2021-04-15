@@ -1,0 +1,13 @@
+version v01 {
+    /*  Common domain concepts */
+    context Common {
+    	structure Money {
+    		//actually this is BigDecimal
+    		double amount,
+    		function Money add(Money delta),
+    		function long asLong(),
+    		function Money multiply(int x),
+    		function boolean isGreaterThanOrEqual(Money other)    		
+		}
+	}
+}
