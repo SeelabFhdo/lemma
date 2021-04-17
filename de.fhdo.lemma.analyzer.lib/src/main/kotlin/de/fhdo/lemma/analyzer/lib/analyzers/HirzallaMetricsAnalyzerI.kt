@@ -46,10 +46,10 @@ interface HirzallaMetricsAnalyzerI : AnalyzerI {
 
     /**
      * Calculate the Weighted Service Interface Count metric. The method will invoke the provided
-     * [calculateWeightMeasure] lambda to calculate the weight.
+     * [calculateWeightValue] lambda to calculate the weight.
      */
     fun weightedInterfaceCount(microservice: IntermediateMicroservice,
-        calculateWeightMeasure: (IntermediateMicroservice) -> Double) : Double
+        calculateWeightValue: (IntermediateMicroservice) -> Double) : Double
 
     /**
      * Calculate the Weighted Service Interface Count metric, but for microservice operations. This method does not
@@ -60,8 +60,8 @@ interface HirzallaMetricsAnalyzerI : AnalyzerI {
 
     /**
      * Calculate the Weighted Service Interface Count metric, but for microservice operations. The method will invoke
-     * the provided [calculateWeightMeasure] lambda to calculate the weight.
+     * the provided [calculateWeightValue] lambda to calculate the weight.
      */
     fun weightedOperationCount(microservice: IntermediateMicroservice,
-        calculateWeightMeasure: (IntermediateMicroservice) -> Double) : Double
+        calculateWeightValue: (IntermediateMicroservice) -> Double) : Double
 }

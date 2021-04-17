@@ -35,7 +35,7 @@ internal class AthanasopoulosMetricsAnalyzer
         }
 
     /**
-     * Helper to calculate a similarity measure between two [IntermediateOperation]s based on their parameters with the
+     * Helper to calculate a similarity value between two [IntermediateOperation]s based on their parameters with the
      * given [communicationType]. The [similarityFunction] lambda implements the similarity calculation.
      */
     private fun calculateSimilarity(op1: IntermediateOperation, op2: IntermediateOperation,
@@ -55,7 +55,7 @@ internal class AthanasopoulosMetricsAnalyzer
         graphs.add(outputGraph1)
         graphs.add(outputGraph2)
 
-        // Calculate the similarity measure of both operations as the average of their input and output similarity
+        // Calculate the similarity value of both operations as the average of their input and output similarity
         val similarity = (inputSimilarity + outputSimilarity) / 2.0
         return similarity to graphs
     }
@@ -78,8 +78,8 @@ internal class AthanasopoulosMetricsAnalyzer
         val maximumSubgraphVertexCount = inspector.mappings.asSequence().maximumMappingVertexCount(graph1)
 
         /*
-         * The similarity measure is the vertex count of the largest isomorphism subgraph mapping divided by the number
-         * of all unique vertices in the message-level graphs. In fact, the measure constitutes the share of isomorphic
+         * The similarity value is the vertex count of the largest isomorphism subgraph mapping divided by the number of
+         * all unique vertices in the message-level graphs. In fact, the value constitutes the share of isomorphic
          * vertices in all message-level graph vertices.
          */
         val uniqueVertices = graph1.vertexSet().map { it.label }.toMutableSet()

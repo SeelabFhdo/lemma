@@ -177,8 +177,8 @@ internal class HirzallaMetricsAnalyzer
         }.toDouble()
 
     override fun weightedInterfaceCount(microservice: IntermediateMicroservice,
-        calculateWeightMeasure: (IntermediateMicroservice) -> Double)
-        = weightedInterfaceCount(microservice) / calculateWeightMeasure(microservice)
+        calculateWeightValue: (IntermediateMicroservice) -> Double)
+        = weightedInterfaceCount(microservice) / calculateWeightValue(microservice)
 
     override fun weightedOperationCount(microservice: IntermediateMicroservice)
         = microservice.interfaces.map{ it.operations }.flatten().count {
@@ -186,6 +186,6 @@ internal class HirzallaMetricsAnalyzer
         }.toDouble()
 
     override fun weightedOperationCount(microservice: IntermediateMicroservice,
-        calculateWeightMeasure: (IntermediateMicroservice) -> Double)
-        = weightedOperationCount(microservice) / calculateWeightMeasure(microservice)
+        calculateWeightValue: (IntermediateMicroservice) -> Double)
+        = weightedOperationCount(microservice) / calculateWeightValue(microservice)
 }
