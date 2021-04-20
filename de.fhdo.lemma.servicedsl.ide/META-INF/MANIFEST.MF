@@ -14,7 +14,7 @@ Require-Bundle: de.fhdo.lemma.servicedsl,
  de.fhdo.lemma.data.datadsl,
  de.fhdo.lemma.technology.technologydsl,
  de.fhdo.lemma.technology.technologydsl.ide
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: de.fhdo.lemma.ide.contentassist.antlr.internal,
  de.fhdo.lemma.ide.contentassist.antlr
 Automatic-Module-Name: de.fhdo.lemma.servicedsl.ide

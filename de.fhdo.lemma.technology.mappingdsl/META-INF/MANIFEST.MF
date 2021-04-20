@@ -19,7 +19,7 @@ Require-Bundle: de.fhdo.lemma.technology.mappingdsl.metamodel,
  de.fhdo.lemma.utils,
  de.fhdo.lemma.typechecking,
  org.eclipse.core.resources;bundle-version="3.13.700"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: de.fhdo.lemma.technology.mappingdsl.serializer,
  de.fhdo.lemma.technology.mappingdsl.generator,
  de.fhdo.lemma.technology.mappingdsl.parser.antlr,

@@ -11,7 +11,7 @@ Require-Bundle: de.fhdo.lemma.data.datadsl,
  org.eclipse.xtext.testing,
  org.eclipse.xtext.xbase.testing,
  org.eclipse.xtext.xbase.lib;bundle-version="2.21.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: de.fhdo.lemma.data.tests;x-internal=true
 Import-Package: org.hamcrest.core,
  org.junit;version="4.13.0",

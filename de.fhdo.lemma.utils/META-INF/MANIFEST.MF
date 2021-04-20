@@ -14,5 +14,5 @@ Require-Bundle: org.eclipse.emf.ecore,
  org.eclipse.core.resources;bundle-version="3.13.700",
  org.eclipse.core.runtime;bundle-version="3.17.100"
 Export-Package: de.fhdo.lemma.utils
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Automatic-Module-Name: de.fhdo.lemma.utils

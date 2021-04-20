@@ -16,7 +16,7 @@ Require-Bundle: de.fhdo.lemma.technology.technologydsl.metamodel,
  org.eclipse.xtend.lib;bundle-version="2.21.0",
  de.fhdo.lemma.typechecking,
  de.fhdo.lemma.utils
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: de.fhdo.lemma.technology.parser.antlr,
  de.fhdo.lemma.technology.formatting2,
  de.fhdo.lemma.technology.scoping,

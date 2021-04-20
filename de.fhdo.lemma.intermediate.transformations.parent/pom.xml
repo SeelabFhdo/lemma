@@ -25,8 +25,6 @@
                 </property>
             </activation>
             <properties>
-                <maven.compiler.source>8</maven.compiler.source>
-                <maven.compiler.target>8</maven.compiler.target>
                 <skipTests>true</skipTests>
             </properties>
         </profile>

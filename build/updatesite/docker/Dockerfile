@@ -1,4 +1,4 @@
-FROM maven:3.6.3-openjdk-8-slim
+FROM maven:3.6.3-openjdk-11-slim
 
 # Point to Maven repository
 COPY settings.xml /usr/share/maven/conf/

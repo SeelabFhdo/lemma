@@ -107,11 +107,11 @@ platform {
 tasks {
     compileKotlin {
         // The JVM target must match the execution environment of the de.fhdo.lemma.eclipse.ui.editor Eclipse plugin
-        kotlinOptions.jvmTarget = "10"
+        kotlinOptions.jvmTarget = "11"
     }
     compileTestKotlin {
         // The JVM target must match the execution environment of the de.fhdo.lemma.eclipse.ui.editor Eclipse plugin
-        kotlinOptions.jvmTarget = "10"
+        kotlinOptions.jvmTarget = "11"
     }
 }
 

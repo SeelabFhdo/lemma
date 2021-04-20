@@ -14,7 +14,7 @@ Require-Bundle: de.fhdo.lemma.data.datadsl.metamodel,
  org.eclipse.xtext.util,
  org.eclipse.xtend.lib;bundle-version="2.21.0",
  de.fhdo.lemma.utils
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: de.fhdo.lemma.data, 
  de.fhdo.lemma.data.formatting2,
  de.fhdo.lemma.data.generator,
