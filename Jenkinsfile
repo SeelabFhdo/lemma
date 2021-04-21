@@ -2,7 +2,7 @@ pipeline {
     agent none
 
     environment {
-        MATTERMOST_CHANNEL = credentials("lemma-builds-mattermost-channel")
+        DISCORD_WEBHOOK = credentials("lemma-builds-discord-webhook-url")
         BASE_BRANCH_URL = "https://github.com/SeelabFhdo/lemma"
         RELEASE_TAG_PATTERN = /^v[0-9]+\.[0-9]+(\.[0-9]+)?/
 
@@ -71,7 +71,7 @@ pipeline {
                 failure {
                     script {
                         def postMessageBranchUrl = "${env.BASE_BRANCH_URL}/tree/${env.BRANCH_NAME}"
-                        def postMessageBranch = env.BRANCH_NAME ? "\n\tBranch: <${postMessageBranchUrl}|${env.BRANCH_NAME}>" : ""
+                        def postMessageBranch = env.BRANCH_NAME ? "\n\tBranch: [${env.BRANCH_NAME}](${postMessageBranchUrl})" : ""
 
                         def postMessageCommitAuthor = bat(
                                 script: "${WINDOWS_RUN_GIT_COMMAND} \"git --no-pager show -s --format='%%an' > __windows_out\" && type __windows_out && del __windows_out",
@@ -87,17 +87,17 @@ pipeline {
 
                         def postMessageCommitUrl = "${env.BASE_BRANCH_URL}/commit/${env.GIT_COMMIT}"
                         def postMessageCommitInfo = "(\"${postMessageCommitMessage}\") by *${postMessageCommitAuthor}*"
-                        def postMessageCommit = env.GIT_COMMIT ? "\n\tCommit: <${postMessageCommitUrl}|${env.GIT_COMMIT}> ${postMessageCommitInfo}" : ""
+                        def postMessageCommit = env.GIT_COMMIT ? "\n\tCommit: [${env.GIT_COMMIT}](${postMessageCommitUrl}) ${postMessageCommitInfo}" : ""
                         def postMessageBody = "\n\tJob: ${env.JOB_NAME}" +
                             "${postMessageBranch}" +
                             "${postMessageCommit}" +
                             "\n\tStatus: ${currentBuild.result}" +
-                            "\n\tBuild: <${env.BUILD_URL}|#${env.BUILD_NUMBER}>"
+                            "\n\tBuild: [#${env.BUILD_NUMBER}](${env.BUILD_URL})"
 
-                        mattermostSend (
-                            color: "danger",
-                            message: "LEMMA Build FAILURE: ${postMessageBody}",
-                            channel: MATTERMOST_CHANNEL
+                        discordSend(
+                            result: currentBuild.currentResult,
+                            description: "LEMMA Build ${currentBuild.result}: ${postMessageBody}",
+                            webhookURL: DISCORD_WEBHOOK
                         )
                     }
                 }
@@ -245,33 +245,27 @@ pipeline {
                 always {
                     script {
                         def postMessageBranchUrl = "${env.BASE_BRANCH_URL}/tree/${env.BRANCH_NAME}"
-                        def postMessageBranch = env.BRANCH_NAME ? "\n\tBranch: <${postMessageBranchUrl}|${env.BRANCH_NAME}>" : ""
+                        def postMessageBranch = env.BRANCH_NAME ? "\n\tBranch: [${env.BRANCH_NAME}](${postMessageBranchUrl})" : ""
                         def postMessageCommitAuthor = sh(script: "git --no-pager show -s --format='%an'", returnStdout: true).trim()
                         def postMessageCommitMessage = sh(script: "git log --format=%B -n 1 ${GIT_COMMIT}", returnStdout: true).trim()
                         def postMessageCommitUrl = "${env.BASE_BRANCH_URL}/commit/${env.GIT_COMMIT}"
                         def postMessageCommitInfo = "(\"${postMessageCommitMessage}\") by *${postMessageCommitAuthor}*"
-                        def postMessageCommit = env.GIT_COMMIT ? "\n\tCommit: <${postMessageCommitUrl}|${env.GIT_COMMIT}> ${postMessageCommitInfo}" : ""
+                        def postMessageCommit = env.GIT_COMMIT ? "\n\tCommit: [${env.GIT_COMMIT}](${postMessageCommitUrl}) ${postMessageCommitInfo}" : ""
                         def postMessageBody = "\n\tJob: ${env.JOB_NAME}" +
                             "${postMessageBranch}" +
                             "${postMessageCommit}" +
                             "\n\tStatus: ${currentBuild.result}" +
-                            "\n\tBuild: <${env.BUILD_URL}|#${env.BUILD_NUMBER}>"
+                            "\n\tBuild: [#${env.BUILD_NUMBER}](${env.BUILD_URL})"
 
+                        discordSend(
+                            result: currentBuild.currentResult,
+                            description: "LEMMA Build ${currentBuild.result}: ${postMessageBody}",
+                            webhookURL: DISCORD_WEBHOOK
+                        )
+
+                        // Clean workspace upon success
                         if(currentBuild.result != "FAILURE") {
-                            mattermostSend (
-                                color: "good",
-                                message: "LEMMA Build SUCCESS: ${postMessageBody}",
-                                channel: MATTERMOST_CHANNEL
-                            )
-
-                            // Clean workspace upon success
                             cleanWs()
-                        } else {
-                            mattermostSend (
-                                color: "danger",
-                                message: "LEMMA Build FAILURE: ${postMessageBody}",
-                                channel: MATTERMOST_CHANNEL
-                            )
                         }
                     }
                 }
