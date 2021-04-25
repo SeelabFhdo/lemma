@@ -31,8 +31,7 @@ def identifier_from_maven_pom(filepath):
     try:
         return pomXml.findall('/{%s}version' % MAVEN_POM_NAMESPACE)[0].text
     except IndexError:
-        raise IndexError('"version" XML element not found in POM file' % \
-            withNamespace)
+        raise IndexError('"version" XML element not found in POM file')
 
 def find_parser_function(filepath):
     """Find parser function for given filepath."""
