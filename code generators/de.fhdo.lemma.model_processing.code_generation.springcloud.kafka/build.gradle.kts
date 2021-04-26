@@ -12,6 +12,7 @@ repositories {
 
 buildscript {
     extra.set("commonsVersion", "3.5")
+    extra.set("coroutinesVersion", "1.1.1")
     extra.set("jansiVersion", "1.17.1")
     extra.set("javaBaseGeneratorVersion", version)
     extra.set("javaParserVersion", "3.14.10")
@@ -24,6 +25,7 @@ buildscript {
 
 dependencies {
     val commonsVersion: String by rootProject.extra
+    val coroutinesVersion: String by rootProject.extra
     val jansiVersion: String by rootProject.extra
     val javaBaseGeneratorVersion: String by rootProject.extra
     val javaParserVersion: String by rootProject.extra
@@ -42,7 +44,6 @@ dependencies {
     implementation("de.fhdo.lemma.intermediate:de.fhdo.lemma.data.intermediate.metamodel:$lemmaEclipsePluginsVersion")
     implementation("de.fhdo.lemma.intermediate:de.fhdo.lemma.service.intermediate.metamodel:" +
         lemmaEclipsePluginsVersion)
-    implementation("de.fhdo.lemma.live_validation:de.fhdo.lemma.live_validation:$lemmaEclipsePluginsVersion")
     implementation("de.fhdo.lemma.model_processing:de.fhdo.lemma.model_processing:$modelProcessingVersion")
     implementation("de.fhdo.lemma.model_processing.code_generation.java_base:" +
         "de.fhdo.lemma.model_processing.code_generation.java_base:$javaBaseGeneratorVersion")
@@ -62,6 +63,7 @@ dependencies {
     implementation("org.fusesource.jansi:jansi:$jansiVersion")
     implementation("org.eclipse.lsp4j:org.eclipse.lsp4j:$lsp4jVersion")
     implementation("org.eclipse.lsp4j:org.eclipse.lsp4j.jsonrpc:$lsp4jVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
     implementation("org.redundent:kotlin-xml-builder:$xmlBuilderVersion")
 }
 
@@ -94,4 +96,8 @@ val standalone = task("standalone", type = Jar::class) {
         // Prevent security exception from JAR verifier
         exclude("META-INF/*.DSA", "META-INF/*.RSA", "META-INF/*.SF")
     }
+}
+
+artifacts {
+    add("archives", standalone)
 }

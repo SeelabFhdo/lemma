@@ -1,7 +1,7 @@
 package de.fhdo.lemma.model_processing.builtin_phases.live_validation
 
-import de.fhdo.lemma.live_validation.clients.AbstractLiveValidator
-import de.fhdo.lemma.live_validation.common.IssueDiagnostic
+import de.fhdo.lemma.live_validation.client.AbstractLiveValidator
+import de.fhdo.lemma.live_validation.model.IssueDiagnostic
 import de.fhdo.lemma.model_processing.asFile
 import de.fhdo.lemma.model_processing.builtin_phases.source_model_validation.SourceModelValidationPhase
 import de.fhdo.lemma.model_processing.builtin_phases.ValidationResultType

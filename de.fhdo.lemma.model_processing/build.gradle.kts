@@ -39,7 +39,10 @@ dependencies {
 
     implementation(kotlin("stdlib"))
     implementation(kotlin("reflect"))
-    implementation("de.fhdo.lemma.live_validation:de.fhdo.lemma.live_validation:$lemmaEclipsePluginsVersion")
+    implementation("de.fhdo.lemma.live_validation:de.fhdo.lemma.live_validation.util:$lemmaEclipsePluginsVersion")
+    implementation("de.fhdo.lemma.live_validation:de.fhdo.lemma.live_validation.model:$lemmaEclipsePluginsVersion")
+    implementation("de.fhdo.lemma.live_validation:de.fhdo.lemma.live_validation.protocol:$lemmaEclipsePluginsVersion")
+    implementation("de.fhdo.lemma.live_validation:de.fhdo.lemma.live_validation.client:$lemmaEclipsePluginsVersion")
     implementation("de.fhdo.lemma.ocl:de.fhdo.lemma.ocl:$oclVersion:all-dependencies-no-kotlin")
     implementation("de.fhdo.lemma:de.fhdo.lemma.utils:$lemmaEclipsePluginsVersion")
     implementation("org.eclipse.lsp4j:org.eclipse.lsp4j:$lsp4jVersion")

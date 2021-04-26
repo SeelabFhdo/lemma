@@ -13,12 +13,14 @@ repositories {
 buildscript {
     extra.set("javaBaseGeneratorVersion", version)
     extra.set("javaParserVersion", "3.14.10")
+    extra.set("coroutinesVersion", "1.1.1")
     extra.set("lemmaEclipsePluginsVersion", version)
     extra.set("modelProcessingVersion", version)
 }
 
 dependencies {
     val javaBaseGeneratorVersion: String by rootProject.extra
+    val coroutinesVersion: String by rootProject.extra
     val lemmaEclipsePluginsVersion: String by rootProject.extra
     val modelProcessingVersion: String by rootProject.extra
 
@@ -29,8 +31,6 @@ dependencies {
             lemmaEclipsePluginsVersion)
     implementation("de.fhdo.lemma.data.datadsl:de.fhdo.lemma.data.datadsl.metamodel:" +
             lemmaEclipsePluginsVersion)
-    implementation("de.fhdo.lemma.live_validation:de.fhdo.lemma.live_validation:" +
-            lemmaEclipsePluginsVersion)
     implementation("de.fhdo.lemma.model_processing:de.fhdo.lemma.model_processing:" +
             "$modelProcessingVersion:all-dependencies-no-kotlin")
     implementation("de.fhdo.lemma.model_processing.code_generation.java_base:" +
@@ -38,6 +38,7 @@ dependencies {
     implementation("de.fhdo.lemma.model_processing.utils:de.fhdo.lemma.model_processing.utils:" +
             modelProcessingVersion)
     implementation("de.fhdo.lemma.servicedsl:de.fhdo.lemma.servicedsl:$lemmaEclipsePluginsVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
 }
 
 tasks {
@@ -69,4 +70,8 @@ val standalone = task("standalone", type = Jar::class) {
         // Prevent security exception from JAR verifier
         exclude("META-INF/*.DSA", "META-INF/*.RSA", "META-INF/*.SF")
     }
+}
+
+artifacts {
+    add("archives", standalone)
 }
