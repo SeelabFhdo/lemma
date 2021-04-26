@@ -41,7 +41,7 @@ internal class SourceModelValidationPhase : AbstractModelProcessingPhase() {
      * Static companion methods
      */
     companion object {
-        internal lateinit var phaseArguments: Array<String>
+        internal var phaseArguments = emptyArray<String>()
 
         /**
          * Execute validator targeting basic model validation. Compared to an Xtext-supporting source model validator, a
@@ -68,7 +68,7 @@ internal class SourceModelValidationPhase : AbstractModelProcessingPhase() {
          * element instances passed to methods annotated with [org.eclipse.xtext.validation.Check].
          */
         internal fun executeXtextValidator(validatorInfo: ClassInfo, documentUri: String, inputStream: InputStream)
-                : List<ValidationResult> {
+            : List<ValidationResult> {
             validatorInfo.extendsImplementsOrException(
                 "Designated source model validator",
                 expectedSuperclass = AbstractXtextSourceModelValidator::class
