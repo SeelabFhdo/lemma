@@ -15,7 +15,8 @@ import yaml
 
 class BuiltinArgument():
     """A built-in argument originating from LEMMA's Model Processing
-    framework."""
+    framework.
+    """
 
     def __init__(self, name, option, destination, type, execution=None,
         required=False, help=None, alwaysAddAsIs=False):
