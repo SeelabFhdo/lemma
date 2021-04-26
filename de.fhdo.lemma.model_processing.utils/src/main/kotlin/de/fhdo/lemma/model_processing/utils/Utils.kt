@@ -21,6 +21,8 @@ import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource
 import java.io.File
+import java.net.URLDecoder
+import java.nio.charset.StandardCharsets
 import java.util.LinkedList
 import java.util.regex.Pattern
 
@@ -335,7 +337,8 @@ fun IntermediateMicroservice.hasTechnology(technologyName: String, ignoreCase: B
  */
 fun List<TechnologyReference>.findAliasForTechnology(technologyName: String)
     = find {
-        val technologyModelFilepath = it.technology.importURI.removePrefix("file://")
+        val technologyModelFilepath = URLDecoder.decode(it.technology.importURI, StandardCharsets.UTF_8)
+            .removePrefix("file://")
         val absoluteTechnologyModelFilepath = if (LemmaUtils.representsAbsolutePath(technologyModelFilepath))
                 technologyModelFilepath
             else {
