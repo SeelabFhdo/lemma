@@ -10,11 +10,11 @@ group = "de.fhdo.lemma.model_processing.code_generation.java_base"
 repositories {
     mavenCentral()
     mavenLocal()
-    jcenter()
 }
 
 buildscript {
     extra.set("classgraphVersion", "4.8.35")
+    extra.set("commonsVersion", "3.5")
     extra.set("jansiVersion", "1.17.1")
     extra.set("javaParserVersion", "3.14.10")
     extra.set("koinVersion", "2.0.1")
@@ -22,11 +22,12 @@ buildscript {
     extra.set("lsp4jVersion", "0.9.0")
     extra.set("modelProcessingVersion", version)
     extra.set("picocliVersion", "3.9.3")
-    extra.set("xmlBuilderVersion", "1.5.2")
+    extra.set("xmlBuilderVersion", "1.7.2")
 }
 
 dependencies {
     val classgraphVersion: String by rootProject.extra
+    val commonsVersion: String by rootProject.extra
     val javaParserVersion: String by rootProject.extra
     val jansiVersion: String by rootProject.extra
     val koinVersion: String by rootProject.extra
@@ -51,10 +52,12 @@ dependencies {
     implementation("de.fhdo.lemma.servicedsl:de.fhdo.lemma.servicedsl:$lemmaEclipsePluginsVersion")
     implementation("info.picocli:picocli:$picocliVersion")
     implementation("io.github.classgraph:classgraph:$classgraphVersion")
+    implementation("io.insert-koin:koin-core:$koinVersion")
+    // Required by kotlin-xml-builder
+    implementation("org.apache.commons:commons-lang3:$commonsVersion")
     implementation("org.eclipse.lsp4j:org.eclipse.lsp4j:$lsp4jVersion")
     implementation("org.eclipse.lsp4j:org.eclipse.lsp4j.jsonrpc:$lsp4jVersion")
     implementation("org.fusesource.jansi:jansi:$jansiVersion")
-    implementation("org.koin:koin-core:$koinVersion")
     implementation("org.redundent:kotlin-xml-builder:$xmlBuilderVersion")
 }
 

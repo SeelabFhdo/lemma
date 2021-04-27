@@ -10,7 +10,6 @@ group = "de.fhdo.lemma.model_processing.code_generation.ddd"
 repositories {
     mavenCentral()
     mavenLocal()
-    jcenter()
 }
 
 buildscript {
@@ -35,7 +34,7 @@ dependencies {
         "de.fhdo.lemma.model_processing.code_generation.java_base:$javaBaseGeneratorVersion")
     implementation("de.fhdo.lemma.model_processing:de.fhdo.lemma.model_processing:$modelProcessingVersion")
     implementation("de.fhdo.lemma.model_processing.utils:de.fhdo.lemma.model_processing.utils:$modelProcessingVersion")
-    implementation("org.koin:koin-core:$koinVersion")
+    implementation("io.insert-koin:koin-core:$koinVersion")
 }
 
 tasks.withType<KotlinCompile> {

@@ -10,20 +10,21 @@ group = "de.fhdo.lemma.model_processing.code_generation.springcloud"
 repositories {
     mavenCentral()
     mavenLocal()
-    jcenter()
 }
 
 buildscript {
     extra.set("classgraphVersion", "4.8.35")
+    extra.set("commonsVersion", "3.5")
     extra.set("javaBaseGeneratorVersion", version)
     extra.set("javaParserVersion", "3.14.10")
     extra.set("lemmaEclipsePluginsVersion", version)
     extra.set("modelProcessingVersion", version)
-    extra.set("xmlBuilderVersion", "1.5.2")
+    extra.set("xmlBuilderVersion", "1.7.2")
 }
 
 dependencies {
     val classgraphVersion: String by rootProject.extra
+    val commonsVersion: String by rootProject.extra
     val javaBaseGeneratorVersion: String by rootProject.extra
     val javaParserVersion: String by rootProject.extra
     val lemmaEclipsePluginsVersion: String by rootProject.extra
@@ -43,6 +44,8 @@ dependencies {
     implementation("de.fhdo.lemma.model_processing.utils:de.fhdo.lemma.model_processing.utils:$modelProcessingVersion")
     implementation("de.fhdo.lemma.servicedsl:de.fhdo.lemma.servicedsl:$lemmaEclipsePluginsVersion")
     implementation("io.github.classgraph:classgraph:$classgraphVersion")
+    // Required by kotlin-xml-builder
+    implementation("org.apache.commons:commons-lang3:$commonsVersion")
     implementation("org.redundent:kotlin-xml-builder:$xmlBuilderVersion")
 }
 

@@ -8,10 +8,10 @@ group = "de.fhdo.lemma.model_processing.code_generation.springcloud.kafka"
 repositories {
     mavenCentral()
     mavenLocal()
-    jcenter()
 }
 
 buildscript {
+    extra.set("commonsVersion", "3.5")
     extra.set("jansiVersion", "1.17.1")
     extra.set("javaBaseGeneratorVersion", version)
     extra.set("javaParserVersion", "3.14.10")
@@ -19,10 +19,11 @@ buildscript {
     extra.set("lsp4jVersion", "0.9.0")
     extra.set("modelProcessingVersion", version)
     extra.set("picocliVersion", "3.9.3")
-    extra.set("xmlBuilderVersion", "1.5.2")
+    extra.set("xmlBuilderVersion", "1.7.2")
 }
 
 dependencies {
+    val commonsVersion: String by rootProject.extra
     val jansiVersion: String by rootProject.extra
     val javaBaseGeneratorVersion: String by rootProject.extra
     val javaParserVersion: String by rootProject.extra
@@ -56,6 +57,8 @@ dependencies {
     implementation("de.fhdo.lemma.technology.technologydsl:de.fhdo.lemma.technology.technologydsl.metamodel:" +
         lemmaEclipsePluginsVersion)
     implementation("info.picocli:picocli:$picocliVersion")
+    // Required by kotlin-xml-builder
+    implementation("org.apache.commons:commons-lang3:$commonsVersion")
     implementation("org.fusesource.jansi:jansi:$jansiVersion")
     implementation("org.eclipse.lsp4j:org.eclipse.lsp4j:$lsp4jVersion")
     implementation("org.eclipse.lsp4j:org.eclipse.lsp4j.jsonrpc:$lsp4jVersion")
