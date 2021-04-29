@@ -1,0 +1,24 @@
+technology Spring {
+    protocols {
+        sync rest data formats "application/json" default with format "application/json";
+    }
+
+    service aspects {
+        aspect Transactional<singleval> for types;
+        aspect Get<singleval> for operations {
+            selector(protocol = rest);
+        }
+        aspect Post<singleval> for operations {
+            selector(protocol = rest);
+        }
+        aspect PathVariable<singleval> for parameters {
+            selector(protocol = rest, exchange_pattern = in);
+        }
+        aspect ResponseEntity<singleval> for parameters {
+            selector(protocol = rest, exchange_pattern = out);
+        }
+        aspect HttpNotFound<singleval> for parameters {
+            selector(protocol = rest, exchange_pattern = out);
+        }
+    }
+}

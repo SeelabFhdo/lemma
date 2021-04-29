@@ -1,0 +1,31 @@
+technology Kafka {
+    protocols {
+        async kafka data formats "binary" default with format "binary";
+        async zookeeper data formats "zookeeper" default with format "zookeeper";
+    }
+
+    service aspects {
+    	aspect BootstrapAddress<singleval> for microservices {
+			string address<mandatory>;
+		}
+        aspect KafkaListener<singleval> for operations {
+            selector(protocol = kafka);
+            string group;
+            string topic;
+        }
+    }
+
+    infrastructure technologies {
+        Kafka {
+            operation environments = "bitnami/kafka:latest" default;
+
+            service properties {
+                string zooKeeperServer;
+            }
+        }
+
+        ZooKeeper {
+            operation environments = "bitnami/zookeeper:latest" default;
+        }
+    }
+}

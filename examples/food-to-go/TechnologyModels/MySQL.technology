@@ -1,0 +1,17 @@
+technology MySQL {
+    protocols {
+        sync connectorJ data formats "jdbc_enabled" default with format "jdbc_enabled";
+    }
+
+    infrastructure technologies {
+        MySQL {
+            operation environments = "mysql:5.7.13" default;
+
+            service properties {
+                string rootPassword<mandatory, singleval>;
+                string mySqlUser<mandatory, singleval>;
+                string mySqlPassword<mandatory, singleval>;
+            }
+        }
+    }
+}

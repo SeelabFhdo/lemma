@@ -1,0 +1,7 @@
+structure Money<valueObject> {
+    immutable double amount,
+    function Money add(Money delta),
+    function boolean isGreaterThanOrEqual(Money other),
+    function string asString,
+    function Money multiply(int x)
+}

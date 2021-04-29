@@ -1,0 +1,98 @@
+import datatypes from "../Common/Common.data" as Common
+
+context Order {
+    structure Order<aggregate, entity> {
+        long id<identifier>,
+        immutable long ^version,
+        immutable OrderState state,
+        long consumerId = -1,
+        long restaurantId = -1,
+        immutable OrderLineItems orderLineItems<part>,
+        hide immutable DeliveryInformation deliveryInformation<part>,
+        hide immutable PaymentInformation paymentInformation<part>,
+        hide immutable Common::Money orderMinimum<part>,
+        function Common::Money getOrderTotal()
+    }
+
+    enum OrderState {
+        APPROVED,
+        APPROVAL_PENDING,
+        REJECTED,
+        REVISION_PENDING
+    }
+
+    structure OrderLineItem<valueObject> {
+        int quantity,
+        string menuItemId,
+        string name,
+        Common::Money price,
+        function Common::Money deltaForChangedQuantity(int newQuantity),
+        function Common::Money getTotal
+    }
+
+    structure OrderLineItems<valueObject> {
+        OrderLineItemsType lineItems,
+        function OrderLineItem findOrderLineItem(string lineItemId),
+        function Common::Money orderTotal
+    }
+
+    list OrderLineItemsType { OrderLineItem i }
+
+    structure DeliveryInformation<valueObject> {
+        date deliveryTime,
+        Address deliveryAddress
+    }
+
+    structure Address<valueObject> {
+        immutable string street1,
+        immutable string street2,
+        immutable string city,
+        immutable string state,
+        immutable string zip
+    }
+
+    structure PaymentInformation<valueObject> {
+        string paymentToken
+    }
+
+    structure OrderService<service> {
+        function Order createOrder(long consumerId, long restaurantId,
+            MenuItemIdAndQuantityList lineItems),
+        function Order updateOrder(long orderId, Order order),
+        function Order cancel(long orderId),
+        procedure approveOrder(long orderId),
+        procedure rejectOrder(long orderId)
+    }
+
+    structure MenuItemIdAndQuantity {
+        string menuItemId,
+        immutable int quantity
+    }
+
+    list MenuItemIdAndQuantityList { MenuItemIdAndQuantity itemQuantity }
+}
+
+context API {
+    structure CreateOrderRequest<valueObject> {
+        long consumerId,
+        long restaurantId,
+        LineItems lineItems
+    }
+
+    structure LineItem {
+        string menuItemId,
+        int quantity
+    }
+
+    list LineItems { LineItem i }
+
+    structure CreateOrderResponse<valueObject> {
+        long orderId
+    }
+
+    structure GetOrderResponse<valueObject> {
+        long orderId,
+        string state,
+        Common::Money orderTotal
+    }
+}

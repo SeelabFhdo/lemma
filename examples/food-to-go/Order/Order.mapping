@@ -1,0 +1,35 @@
+import microservices from "Order.services" as OrderServices
+import technology from "../TechnologyModels/Java.technology" as Java
+import technology from "../TechnologyModels/Spring.technology" as Spring
+
+@technology(Java)
+type OrderServices::OrderDomain::Order.Order {
+    aspects {
+        Java::_aspects.Table("orders");
+        Java::_aspects.Access;
+    }
+
+    ^version { aspects { Java::_aspects.Version; } }
+
+    state { aspects { Java::_aspects.Enumerated; } }
+}
+
+@technology(Java)
+type OrderServices::Common::Money {
+    amount : Java::_types.BigDecimal;
+}
+
+@technology(Java)
+type OrderServices::OrderDomain::Order.OrderLineItem {
+    price {
+        aspects {
+            Java::_aspects.Embedded;
+            Java::_aspects.AttributeOverride(name="amount", column="price");
+        }
+    }
+}
+
+@technology(Spring)
+type OrderServices::OrderDomain::Order.OrderService {
+    aspects { Spring::_aspects.Transactional; }
+}

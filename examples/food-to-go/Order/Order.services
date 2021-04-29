@@ -1,0 +1,68 @@
+import datatypes from "../Common/Common.data" as Common
+import datatypes from "Order.data" as OrderDomain
+import datatypes from "../Restaurant/Restaurant.data" as RestaurantDomain
+import technology from "../TechnologyModels/Java.technology" as Java
+import technology from "../TechnologyModels/Kafka.technology" as Kafka
+import technology from "../TechnologyModels/Spring.technology" as Spring
+
+@technology(Java)
+@technology(Kafka)
+@technology(Spring)
+@async(Kafka::_protocols.kafka)
+@sync(Spring::_protocols.rest)
+@Kafka::_aspects.BootstrapAddress("localhost:9092")
+functional microservice org.example.OrderService {
+    @endpoints(Spring::_protocols.rest: "/orders";)
+    interface Orders {
+        ---
+        Create order
+        @required request Request
+        ---
+        @Spring::_aspects.Post
+        create(
+            sync in request : OrderDomain::API.CreateOrderRequest,
+            sync out response : OrderDomain::API.CreateOrderResponse
+        );
+
+        ---
+        Get order
+        @required orderId ID of the order to retrieve
+        ---
+        @endpoints(Spring::_protocols.rest: "/{orderId}";)
+        @Spring::_aspects.Get
+        getOrder(
+            @Spring::_aspects.PathVariable
+            sync in orderId : long,
+
+            @Spring::_aspects.ResponseEntity
+            sync out response : OrderDomain::API.GetOrderResponse
+        );
+
+        ---
+        Cancel order
+        @required orderId ID of the order to cancel
+        ---
+        @endpoints(Spring::_protocols.rest: "/{orderId}/cancel";)
+        @Spring::_aspects.Post
+        cancel(
+            @Spring::_aspects.PathVariable
+            sync in orderId : long,
+
+            @Spring::_aspects.ResponseEntity
+            sync out response : OrderDomain::API.GetOrderResponse,
+
+            @Spring::_aspects.HttpNotFound
+            sync out fault notFound : int
+        );
+    }
+
+    interface OrderEventConsumer {
+        ---
+        Listen for a menu to be created
+        @required menuCreated Menu was created (uses RestaurantCreated as its envelope
+            to also get the name of the restaurant, for which the menu was created)
+        ---
+        @Kafka::_aspects.KafkaListener(group = "ftgo", topic = "ftgoTopic")
+        listenCreateMenu(async in menuCreated : RestaurantDomain::Restaurant.RestaurantCreated);
+    }
+}

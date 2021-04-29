@@ -1,0 +1,20 @@
+import datatypes from "../Common/Common.data" as Common
+
+context Restaurant {
+    structure RestaurantCreated<domainEvent, valueObject> {
+        string name,
+        RestaurantMenu menu
+    }
+
+    structure RestaurantMenu<valueObject> {
+        MenuItems menuItems
+    }
+
+	list MenuItems { MenuItem i }
+
+    structure MenuItem<valueObject> {
+        string id,
+        string name,
+        Common::Money price
+    }
+}
