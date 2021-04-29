@@ -1,0 +1,44 @@
+import datatypes from "Order.data" as OrderDomain
+import datatypes from "../Common/Common.data" as Common
+import datatypes from "../Restaurant/Restaurant.data" as RestaurantDomain
+
+functional microservice org.example.OrderService {
+    interface Orders {
+        ---
+        Create order
+        @required request Request
+        ---
+        create(
+            sync in request : OrderDomain::API.CreateOrderRequest,
+            sync out response : OrderDomain::API.CreateOrderResponse
+        );
+
+        ---
+        Get order
+        @required orderId ID of the order to retrieve
+        ---
+        getOrder(
+            sync in orderId : long,
+            sync out response : OrderDomain::API.GetOrderResponse
+        );
+
+        ---
+        Cancel order
+        @required orderId ID of the order to cancel
+        ---
+        cancel(
+            sync in orderId : long,
+            sync out response : OrderDomain::API.GetOrderResponse,
+            sync out fault notFound : int
+        );
+    }
+
+    interface OrderEventConsumer {
+        ---
+        Listen for a menu to be created
+        @required menuCreated Menu was created (uses RestaurantCreated as its envelope
+            to also get the name of the restaurant, for which the menu was created)
+        ---
+        listenCreateMenu(async in menuCreated : RestaurantDomain::Restaurant.RestaurantCreated);
+    }
+}

@@ -1,0 +1,12 @@
+technology Docker {
+    deployment technologies {
+        Docker {
+            operation environments = "docker:19_03_8" default;
+
+            service properties {
+                string image = "openjdk:8u171-jre-alpine"<singleval>;
+                string Dockerfile<mandatory, singleval>;
+            }
+        }
+    }
+}
