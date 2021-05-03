@@ -172,6 +172,5 @@ task("fullBuild") {
     dependsOn(tasks["clean"])
     dependsOn(tasks["jar"])
     dependsOn(tasks["runnableJar"])
-    dependsOn(tasks["updateSite"])
     dependsOn(tasks["install"])
 }

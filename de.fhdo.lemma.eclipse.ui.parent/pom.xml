@@ -59,13 +59,6 @@
     </properties>
 
     <repositories>
-        <!-- Currently, LEMMA's Live Validation Framework is only available locally -->
-        <repository>
-            <id>live_validation</id>
-            <layout>p2</layout>
-            <url>${project.baseUri}/../de.fhdo.lemma.live_validation/build/updatesite/</url>
-        </repository>
-
         <repository>
             <id>eclipse</id>
             <layout>p2</layout>
