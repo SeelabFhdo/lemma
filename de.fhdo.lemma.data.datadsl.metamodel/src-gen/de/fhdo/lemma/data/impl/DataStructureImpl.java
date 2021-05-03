@@ -105,7 +105,6 @@ public class DataStructureImpl extends ComplexTypeImpl implements DataStructure 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public DataStructure getSuper() {
         if (super_ != null && super_.eIsProxy()) {
             InternalEObject oldSuper = (InternalEObject)super_;
@@ -132,7 +131,6 @@ public class DataStructureImpl extends ComplexTypeImpl implements DataStructure 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setSuper(DataStructure newSuper) {
         DataStructure oldSuper = super_;
         super_ = newSuper;
@@ -145,7 +143,6 @@ public class DataStructureImpl extends ComplexTypeImpl implements DataStructure 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<DataField> getDataFields() {
         if (dataFields == null) {
             dataFields = new EObjectContainmentWithInverseEList<DataField>(DataField.class, this, DataPackage.DATA_STRUCTURE__DATA_FIELDS, DataPackage.DATA_FIELD__DATA_STRUCTURE);
@@ -158,7 +155,6 @@ public class DataStructureImpl extends ComplexTypeImpl implements DataStructure 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<DataOperation> getOperations() {
         if (operations == null) {
             operations = new EObjectContainmentWithInverseEList<DataOperation>(DataOperation.class, this, DataPackage.DATA_STRUCTURE__OPERATIONS, DataPackage.DATA_OPERATION__DATA_STRUCTURE);
@@ -171,7 +167,6 @@ public class DataStructureImpl extends ComplexTypeImpl implements DataStructure 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<DataField> getEffectiveFields() {
         final ArrayList<DataField> effectiveFields = CollectionLiterals.<DataField>newArrayList();
         final HashSet<String> hiddenFields = CollectionLiterals.<String>newHashSet();
@@ -226,7 +221,6 @@ public class DataStructureImpl extends ComplexTypeImpl implements DataStructure 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<DataOperation> getEffectiveOperations() {
         final ArrayList<DataOperation> effectiveOperations = CollectionLiterals.<DataOperation>newArrayList();
         final HashSet<String> hiddenOperations = CollectionLiterals.<String>newHashSet();
@@ -281,7 +275,6 @@ public class DataStructureImpl extends ComplexTypeImpl implements DataStructure 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public boolean isExtensionOf(final DataStructure structure) {
         if ((structure == null)) {
             return false;
@@ -305,7 +298,6 @@ public class DataStructureImpl extends ComplexTypeImpl implements DataStructure 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public int compareFieldCounts(final DataStructure structureToCompare) {
         if ((structureToCompare == null)) {
             return 1;

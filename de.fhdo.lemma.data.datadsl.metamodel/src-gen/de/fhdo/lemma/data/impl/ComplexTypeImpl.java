@@ -157,7 +157,6 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getName() {
         return name;
     }
@@ -167,7 +166,6 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -180,7 +178,6 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<ComplexTypeFeature> getFeatures() {
         if (features == null) {
             features = new EDataTypeEList<ComplexTypeFeature>(ComplexTypeFeature.class, this, DataPackage.COMPLEX_TYPE__FEATURES);
@@ -193,7 +190,6 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public DataModel getDataModel() {
         if (eContainerFeatureID() != DataPackage.COMPLEX_TYPE__DATA_MODEL) return null;
         return (DataModel)eContainer();
@@ -224,7 +220,6 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setDataModel(DataModel newDataModel) {
         if (newDataModel != eInternalContainer() || (eContainerFeatureID() != DataPackage.COMPLEX_TYPE__DATA_MODEL && newDataModel != null)) {
             if (EcoreUtil.isAncestor(this, newDataModel))
@@ -246,7 +241,6 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Version getVersion() {
         if (eContainerFeatureID() != DataPackage.COMPLEX_TYPE__VERSION) return null;
         return (Version)eContainer();
@@ -277,7 +271,6 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setVersion(Version newVersion) {
         if (newVersion != eInternalContainer() || (eContainerFeatureID() != DataPackage.COMPLEX_TYPE__VERSION && newVersion != null)) {
             if (EcoreUtil.isAncestor(this, newVersion))
@@ -299,7 +292,6 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Context getContext() {
         if (eContainerFeatureID() != DataPackage.COMPLEX_TYPE__CONTEXT) return null;
         return (Context)eContainer();
@@ -330,7 +322,6 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setContext(Context newContext) {
         if (newContext != eInternalContainer() || (eContainerFeatureID() != DataPackage.COMPLEX_TYPE__CONTEXT && newContext != null)) {
             if (EcoreUtil.isAncestor(this, newContext))
@@ -352,7 +343,6 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public boolean isIsStructure() {
         return (this instanceof DataStructure);
     }
@@ -362,7 +352,6 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public boolean isIsPrimitiveList() {
         if ((!(this instanceof ListType))) {
             return false;
@@ -376,7 +365,6 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public boolean isIsStructuredList() {
         if ((!(this instanceof ListType))) {
             return false;
@@ -390,7 +378,6 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public boolean isIsEnumeration() {
         return (this instanceof Enumeration);
     }
@@ -400,7 +387,6 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<String> getQualifiedNameParts() {
         EList<String> _xblockexpression = null;
         {
@@ -429,7 +415,6 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String buildQualifiedName(final String separator) {
         if ((separator == null)) {
             return null;
@@ -453,17 +438,18 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Object getClosestNamespace() {
         EObject _xifexpression = null;
-        if (((this.getVersion() != null) && (this.getContext() != null))) {
+        Context _context = this.getContext();
+        boolean _tripleNotEquals = (_context != null);
+        if (_tripleNotEquals) {
             _xifexpression = this.getContext();
         }
         else {
             EObject _xifexpression_1 = null;
             Version _version = this.getVersion();
-            boolean _tripleNotEquals = (_version != null);
-            if (_tripleNotEquals) {
+            boolean _tripleNotEquals_1 = (_version != null);
+            if (_tripleNotEquals_1) {
                 _xifexpression_1 = this.getVersion();
             }
             else {
@@ -479,7 +465,6 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public int compareFieldCounts(final EList<DataField> fields, final EList<DataField> fieldsToCompare) {
         if (((fields == null) && (fieldsToCompare == null))) {
             return 0;
@@ -556,7 +541,6 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<ComplexTypeFeature> getAllDomainFeatures() {
         return ECollections.<ComplexTypeFeature>toEList(java.util.Collections.<ComplexTypeFeature>unmodifiableList(org.eclipse.xtext.xbase.lib.CollectionLiterals.<ComplexTypeFeature>newArrayList(ComplexTypeFeature.AGGREGATE, ComplexTypeFeature.APPLICATION_SERVICE, ComplexTypeFeature.DOMAIN_EVENT, ComplexTypeFeature.DOMAIN_SERVICE, ComplexTypeFeature.ENTITY, ComplexTypeFeature.FACTORY, ComplexTypeFeature.INFRASTRUCTURE_SERVICE, ComplexTypeFeature.REPOSITORY, ComplexTypeFeature.SERVICE, ComplexTypeFeature.SPECIFICATION, ComplexTypeFeature.VALUE_OBJECT)));
     }
@@ -566,7 +550,6 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public boolean hasFeature(final ComplexTypeFeature feature) {
         return this.getFeatures().contains(feature);
     }

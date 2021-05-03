@@ -198,7 +198,6 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getName() {
         return name;
     }
@@ -208,7 +207,6 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -221,7 +219,6 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public boolean isHidden() {
         return hidden;
     }
@@ -231,7 +228,6 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setHidden(boolean newHidden) {
         boolean oldHidden = hidden;
         hidden = newHidden;
@@ -244,7 +240,6 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public boolean isImmutable() {
         return immutable;
     }
@@ -254,7 +249,6 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setImmutable(boolean newImmutable) {
         boolean oldImmutable = immutable;
         immutable = newImmutable;
@@ -267,7 +261,6 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public ComplexType getComplexType() {
         if (complexType != null && complexType.eIsProxy()) {
             InternalEObject oldComplexType = (InternalEObject)complexType;
@@ -294,7 +287,6 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setComplexType(ComplexType newComplexType) {
         ComplexType oldComplexType = complexType;
         complexType = newComplexType;
@@ -307,7 +299,6 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public ImportedComplexType getImportedComplexType() {
         return importedComplexType;
     }
@@ -332,7 +323,6 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setImportedComplexType(ImportedComplexType newImportedComplexType) {
         if (newImportedComplexType != importedComplexType) {
             NotificationChain msgs = null;
@@ -352,7 +342,6 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public PrimitiveType getPrimitiveType() {
         return primitiveType;
     }
@@ -377,7 +366,6 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setPrimitiveType(PrimitiveType newPrimitiveType) {
         if (newPrimitiveType != primitiveType) {
             NotificationChain msgs = null;
@@ -397,7 +385,6 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public PrimitiveValue getInitializationValue() {
         return initializationValue;
     }
@@ -422,7 +409,6 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setInitializationValue(PrimitiveValue newInitializationValue) {
         if (newInitializationValue != initializationValue) {
             NotificationChain msgs = null;
@@ -442,7 +428,6 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<DataFieldFeature> getFeatures() {
         if (features == null) {
             features = new EDataTypeEList<DataFieldFeature>(DataFieldFeature.class, this, DataPackage.DATA_FIELD__FEATURES);
@@ -455,7 +440,6 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public DataStructure getDataStructure() {
         if (eContainerFeatureID() != DataPackage.DATA_FIELD__DATA_STRUCTURE) return null;
         return (DataStructure)eContainer();
@@ -486,7 +470,6 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setDataStructure(DataStructure newDataStructure) {
         if (newDataStructure != eInternalContainer() || (eContainerFeatureID() != DataPackage.DATA_FIELD__DATA_STRUCTURE && newDataStructure != null)) {
             if (EcoreUtil.isAncestor(this, newDataStructure))
@@ -508,7 +491,6 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public ListType getListType() {
         if (eContainerFeatureID() != DataPackage.DATA_FIELD__LIST_TYPE) return null;
         return (ListType)eContainer();
@@ -539,7 +521,6 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setListType(ListType newListType) {
         if (newListType != eInternalContainer() || (eContainerFeatureID() != DataPackage.DATA_FIELD__LIST_TYPE && newListType != null)) {
             if (EcoreUtil.isAncestor(this, newListType))
@@ -561,7 +542,6 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Type getEffectiveType() {
         Type _xifexpression = null;
         PrimitiveType _primitiveType = this.getPrimitiveType();
@@ -598,7 +578,6 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<String> getQualifiedNameParts() {
         EList<String> _xblockexpression = null;
         {
@@ -629,7 +608,6 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String buildQualifiedName(final String separator) {
         if ((separator == null)) {
             return null;
@@ -653,7 +631,6 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public DataField findEponymousSuperField() {
         DataStructure _dataStructure = this.getDataStructure();
         boolean _tripleEquals = (_dataStructure == null);
@@ -690,7 +667,6 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public boolean hasFeature(final DataFieldFeature feature) {
         return this.getFeatures().contains(feature);
     }

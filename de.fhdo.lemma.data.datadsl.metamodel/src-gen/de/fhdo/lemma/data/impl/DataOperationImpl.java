@@ -219,7 +219,6 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getName() {
         return name;
     }
@@ -229,7 +228,6 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -242,7 +240,6 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public boolean isHidden() {
         return hidden;
     }
@@ -252,7 +249,6 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setHidden(boolean newHidden) {
         boolean oldHidden = hidden;
         hidden = newHidden;
@@ -265,7 +261,6 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public boolean isHasNoReturnType() {
         return hasNoReturnType;
     }
@@ -275,7 +270,6 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setHasNoReturnType(boolean newHasNoReturnType) {
         boolean oldHasNoReturnType = hasNoReturnType;
         hasNoReturnType = newHasNoReturnType;
@@ -288,7 +282,6 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<DataOperationFeature> getFeatures() {
         if (features == null) {
             features = new EDataTypeEList<DataOperationFeature>(DataOperationFeature.class, this, DataPackage.DATA_OPERATION__FEATURES);
@@ -301,7 +294,6 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public ComplexType getComplexReturnType() {
         if (complexReturnType != null && complexReturnType.eIsProxy()) {
             InternalEObject oldComplexReturnType = (InternalEObject)complexReturnType;
@@ -328,7 +320,6 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setComplexReturnType(ComplexType newComplexReturnType) {
         ComplexType oldComplexReturnType = complexReturnType;
         complexReturnType = newComplexReturnType;
@@ -341,7 +332,6 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public ImportedComplexType getImportedComplexReturnType() {
         return importedComplexReturnType;
     }
@@ -366,7 +356,6 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setImportedComplexReturnType(ImportedComplexType newImportedComplexReturnType) {
         if (newImportedComplexReturnType != importedComplexReturnType) {
             NotificationChain msgs = null;
@@ -386,7 +375,6 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public PrimitiveType getPrimitiveReturnType() {
         return primitiveReturnType;
     }
@@ -411,7 +399,6 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setPrimitiveReturnType(PrimitiveType newPrimitiveReturnType) {
         if (newPrimitiveReturnType != primitiveReturnType) {
             NotificationChain msgs = null;
@@ -431,7 +418,6 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<DataOperationParameter> getParameters() {
         if (parameters == null) {
             parameters = new EObjectContainmentWithInverseEList<DataOperationParameter>(DataOperationParameter.class, this, DataPackage.DATA_OPERATION__PARAMETERS, DataPackage.DATA_OPERATION_PARAMETER__OPERATION);
@@ -444,7 +430,6 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public DataStructure getDataStructure() {
         if (eContainerFeatureID() != DataPackage.DATA_OPERATION__DATA_STRUCTURE) return null;
         return (DataStructure)eContainer();
@@ -475,7 +460,6 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setDataStructure(DataStructure newDataStructure) {
         if (newDataStructure != eInternalContainer() || (eContainerFeatureID() != DataPackage.DATA_OPERATION__DATA_STRUCTURE && newDataStructure != null)) {
             if (EcoreUtil.isAncestor(this, newDataStructure))
@@ -497,7 +481,6 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public boolean isLacksReturnTypeSpecification() {
         return ((!this.isHasNoReturnType()) && (this.getPrimitiveOrComplexReturnType() == null));
     }
@@ -507,7 +490,6 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public boolean isInherited() {
         DataOperation _findEponymousSuperOperation = this.findEponymousSuperOperation();
         return (_findEponymousSuperOperation != null);
@@ -518,7 +500,6 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<String> getQualifiedNameParts() {
         EList<String> _xblockexpression = null;
         {
@@ -537,7 +518,6 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String buildQualifiedName(final String separator) {
         if ((separator == null)) {
             return null;
@@ -561,7 +541,6 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public DataOperation findEponymousSuperOperation() {
         DataStructure _dataStructure = this.getDataStructure();
         boolean _tripleEquals = (_dataStructure == null);
@@ -598,7 +577,6 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Type getPrimitiveOrComplexReturnType() {
         Type _xifexpression = null;
         PrimitiveType _primitiveReturnType = this.getPrimitiveReturnType();
@@ -635,7 +613,6 @@ public class DataOperationImpl extends MinimalEObjectImpl.Container implements D
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public boolean hasFeature(final DataOperationFeature feature) {
         return this.getFeatures().contains(feature);
     }
