@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.3.72"
-    id("com.diffplug.p2.asmaven") version "3.22.0"
+    id("com.diffplug.p2.asmaven") version "3.27.0"
     maven
 }
 
