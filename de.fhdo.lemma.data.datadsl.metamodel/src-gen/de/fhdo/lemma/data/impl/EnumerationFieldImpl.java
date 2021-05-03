@@ -95,7 +95,6 @@ public class EnumerationFieldImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getName() {
         return name;
     }
@@ -105,7 +104,6 @@ public class EnumerationFieldImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -118,7 +116,6 @@ public class EnumerationFieldImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public PrimitiveValue getInitializationValue() {
         return initializationValue;
     }
@@ -143,7 +140,6 @@ public class EnumerationFieldImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setInitializationValue(PrimitiveValue newInitializationValue) {
         if (newInitializationValue != initializationValue) {
             NotificationChain msgs = null;
@@ -163,7 +159,6 @@ public class EnumerationFieldImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Enumeration getEnumeration() {
         if (eContainerFeatureID() != DataPackage.ENUMERATION_FIELD__ENUMERATION) return null;
         return (Enumeration)eContainer();
@@ -194,7 +189,6 @@ public class EnumerationFieldImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setEnumeration(Enumeration newEnumeration) {
         if (newEnumeration != eInternalContainer() || (eContainerFeatureID() != DataPackage.ENUMERATION_FIELD__ENUMERATION && newEnumeration != null)) {
             if (EcoreUtil.isAncestor(this, newEnumeration))
@@ -216,7 +210,6 @@ public class EnumerationFieldImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<String> getQualifiedNameParts() {
         EList<String> _xblockexpression = null;
         {
@@ -235,7 +228,6 @@ public class EnumerationFieldImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String buildQualifiedName(final String separator) {
         if ((separator == null)) {
             return null;

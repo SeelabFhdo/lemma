@@ -139,7 +139,6 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public DataModel createDataModel() {
         DataModelImpl dataModel = new DataModelImpl();
         return dataModel;
@@ -150,7 +149,6 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public ComplexTypeImport createComplexTypeImport() {
         ComplexTypeImportImpl complexTypeImport = new ComplexTypeImportImpl();
         return complexTypeImport;
@@ -161,7 +159,6 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Version createVersion() {
         VersionImpl version = new VersionImpl();
         return version;
@@ -172,7 +169,6 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Context createContext() {
         ContextImpl context = new ContextImpl();
         return context;
@@ -183,7 +179,6 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public PrimitiveBoolean createPrimitiveBoolean() {
         PrimitiveBooleanImpl primitiveBoolean = new PrimitiveBooleanImpl();
         return primitiveBoolean;
@@ -194,7 +189,6 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public PrimitiveByte createPrimitiveByte() {
         PrimitiveByteImpl primitiveByte = new PrimitiveByteImpl();
         return primitiveByte;
@@ -205,7 +199,6 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public PrimitiveCharacter createPrimitiveCharacter() {
         PrimitiveCharacterImpl primitiveCharacter = new PrimitiveCharacterImpl();
         return primitiveCharacter;
@@ -216,7 +209,6 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public PrimitiveDate createPrimitiveDate() {
         PrimitiveDateImpl primitiveDate = new PrimitiveDateImpl();
         return primitiveDate;
@@ -227,7 +219,6 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public PrimitiveDouble createPrimitiveDouble() {
         PrimitiveDoubleImpl primitiveDouble = new PrimitiveDoubleImpl();
         return primitiveDouble;
@@ -238,7 +229,6 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public PrimitiveFloat createPrimitiveFloat() {
         PrimitiveFloatImpl primitiveFloat = new PrimitiveFloatImpl();
         return primitiveFloat;
@@ -249,7 +239,6 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public PrimitiveInteger createPrimitiveInteger() {
         PrimitiveIntegerImpl primitiveInteger = new PrimitiveIntegerImpl();
         return primitiveInteger;
@@ -260,7 +249,6 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public PrimitiveLong createPrimitiveLong() {
         PrimitiveLongImpl primitiveLong = new PrimitiveLongImpl();
         return primitiveLong;
@@ -271,7 +259,6 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public PrimitiveShort createPrimitiveShort() {
         PrimitiveShortImpl primitiveShort = new PrimitiveShortImpl();
         return primitiveShort;
@@ -282,7 +269,6 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public PrimitiveString createPrimitiveString() {
         PrimitiveStringImpl primitiveString = new PrimitiveStringImpl();
         return primitiveString;
@@ -293,7 +279,6 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public PrimitiveUnspecified createPrimitiveUnspecified() {
         PrimitiveUnspecifiedImpl primitiveUnspecified = new PrimitiveUnspecifiedImpl();
         return primitiveUnspecified;
@@ -304,7 +289,6 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public ImportedComplexType createImportedComplexType() {
         ImportedComplexTypeImpl importedComplexType = new ImportedComplexTypeImpl();
         return importedComplexType;
@@ -315,7 +299,6 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public DataStructure createDataStructure() {
         DataStructureImpl dataStructure = new DataStructureImpl();
         return dataStructure;
@@ -326,7 +309,6 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public DataOperation createDataOperation() {
         DataOperationImpl dataOperation = new DataOperationImpl();
         return dataOperation;
@@ -337,7 +319,6 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public DataOperationParameter createDataOperationParameter() {
         DataOperationParameterImpl dataOperationParameter = new DataOperationParameterImpl();
         return dataOperationParameter;
@@ -348,7 +329,6 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public ListType createListType() {
         ListTypeImpl listType = new ListTypeImpl();
         return listType;
@@ -359,7 +339,6 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public DataField createDataField() {
         DataFieldImpl dataField = new DataFieldImpl();
         return dataField;
@@ -370,7 +349,6 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Enumeration createEnumeration() {
         EnumerationImpl enumeration = new EnumerationImpl();
         return enumeration;
@@ -381,7 +359,6 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EnumerationField createEnumerationField() {
         EnumerationFieldImpl enumerationField = new EnumerationFieldImpl();
         return enumerationField;
@@ -392,7 +369,6 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public PrimitiveValue createPrimitiveValue() {
         PrimitiveValueImpl primitiveValue = new PrimitiveValueImpl();
         return primitiveValue;
@@ -502,7 +478,6 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public DataPackage getDataPackage() {
         return (DataPackage)getEPackage();
     }

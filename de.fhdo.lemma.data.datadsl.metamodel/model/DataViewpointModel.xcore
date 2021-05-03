@@ -477,7 +477,7 @@ abstract class ComplexType extends Type {
      * Get closest encompassing namespace
      */
     op Object getClosestNamespace() {
-        return if (version !== null && context !== null)
+        return if (context !== null)
                 context
             else if (version !== null)
                 version

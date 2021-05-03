@@ -121,7 +121,6 @@ public class DataOperationParameterImpl extends MinimalEObjectImpl.Container imp
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getName() {
         return name;
     }
@@ -131,7 +130,6 @@ public class DataOperationParameterImpl extends MinimalEObjectImpl.Container imp
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -144,7 +142,6 @@ public class DataOperationParameterImpl extends MinimalEObjectImpl.Container imp
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public ComplexType getComplexType() {
         if (complexType != null && complexType.eIsProxy()) {
             InternalEObject oldComplexType = (InternalEObject)complexType;
@@ -171,7 +168,6 @@ public class DataOperationParameterImpl extends MinimalEObjectImpl.Container imp
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setComplexType(ComplexType newComplexType) {
         ComplexType oldComplexType = complexType;
         complexType = newComplexType;
@@ -184,7 +180,6 @@ public class DataOperationParameterImpl extends MinimalEObjectImpl.Container imp
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public ImportedComplexType getImportedComplexType() {
         return importedComplexType;
     }
@@ -209,7 +204,6 @@ public class DataOperationParameterImpl extends MinimalEObjectImpl.Container imp
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setImportedComplexType(ImportedComplexType newImportedComplexType) {
         if (newImportedComplexType != importedComplexType) {
             NotificationChain msgs = null;
@@ -229,7 +223,6 @@ public class DataOperationParameterImpl extends MinimalEObjectImpl.Container imp
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public PrimitiveType getPrimitiveType() {
         return primitiveType;
     }
@@ -254,7 +247,6 @@ public class DataOperationParameterImpl extends MinimalEObjectImpl.Container imp
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setPrimitiveType(PrimitiveType newPrimitiveType) {
         if (newPrimitiveType != primitiveType) {
             NotificationChain msgs = null;
@@ -274,7 +266,6 @@ public class DataOperationParameterImpl extends MinimalEObjectImpl.Container imp
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public DataOperation getOperation() {
         if (eContainerFeatureID() != DataPackage.DATA_OPERATION_PARAMETER__OPERATION) return null;
         return (DataOperation)eContainer();
@@ -305,7 +296,6 @@ public class DataOperationParameterImpl extends MinimalEObjectImpl.Container imp
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setOperation(DataOperation newOperation) {
         if (newOperation != eInternalContainer() || (eContainerFeatureID() != DataPackage.DATA_OPERATION_PARAMETER__OPERATION && newOperation != null)) {
             if (EcoreUtil.isAncestor(this, newOperation))
@@ -327,7 +317,6 @@ public class DataOperationParameterImpl extends MinimalEObjectImpl.Container imp
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<String> getQualifiedNameParts() {
         EList<String> _xblockexpression = null;
         {
@@ -346,7 +335,6 @@ public class DataOperationParameterImpl extends MinimalEObjectImpl.Container imp
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String buildQualifiedName(final String separator) {
         if ((separator == null)) {
             return null;
@@ -370,7 +358,6 @@ public class DataOperationParameterImpl extends MinimalEObjectImpl.Container imp
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Type getEffectiveType() {
         Type _xifexpression = null;
         PrimitiveType _primitiveType = this.getPrimitiveType();

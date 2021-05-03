@@ -66,7 +66,6 @@ public class EnumerationImpl extends ComplexTypeImpl implements Enumeration {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<EnumerationField> getFields() {
         if (fields == null) {
             fields = new EObjectContainmentWithInverseEList<EnumerationField>(EnumerationField.class, this, DataPackage.ENUMERATION__FIELDS, DataPackage.ENUMERATION_FIELD__ENUMERATION);

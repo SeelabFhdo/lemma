@@ -83,7 +83,6 @@ public class ImportedComplexTypeImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public ComplexTypeImport getImport() {
         if (import_ != null && import_.eIsProxy()) {
             InternalEObject oldImport = (InternalEObject)import_;
@@ -110,7 +109,6 @@ public class ImportedComplexTypeImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setImport(ComplexTypeImport newImport) {
         ComplexTypeImport oldImport = import_;
         import_ = newImport;
@@ -123,7 +121,6 @@ public class ImportedComplexTypeImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Type getImportedType() {
         if (importedType != null && importedType.eIsProxy()) {
             InternalEObject oldImportedType = (InternalEObject)importedType;
@@ -150,7 +147,6 @@ public class ImportedComplexTypeImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setImportedType(Type newImportedType) {
         Type oldImportedType = importedType;
         importedType = newImportedType;
@@ -163,7 +159,6 @@ public class ImportedComplexTypeImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public DataField getDataField() {
         if (eContainerFeatureID() != DataPackage.IMPORTED_COMPLEX_TYPE__DATA_FIELD) return null;
         return (DataField)eContainer();
@@ -194,7 +189,6 @@ public class ImportedComplexTypeImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setDataField(DataField newDataField) {
         if (newDataField != eInternalContainer() || (eContainerFeatureID() != DataPackage.IMPORTED_COMPLEX_TYPE__DATA_FIELD && newDataField != null)) {
             if (EcoreUtil.isAncestor(this, newDataField))
@@ -216,7 +210,6 @@ public class ImportedComplexTypeImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public DataOperation getOperation() {
         if (eContainerFeatureID() != DataPackage.IMPORTED_COMPLEX_TYPE__OPERATION) return null;
         return (DataOperation)eContainer();
@@ -247,7 +240,6 @@ public class ImportedComplexTypeImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setOperation(DataOperation newOperation) {
         if (newOperation != eInternalContainer() || (eContainerFeatureID() != DataPackage.IMPORTED_COMPLEX_TYPE__OPERATION && newOperation != null)) {
             if (EcoreUtil.isAncestor(this, newOperation))
@@ -269,7 +261,6 @@ public class ImportedComplexTypeImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public DataOperationParameter getParameter() {
         if (eContainerFeatureID() != DataPackage.IMPORTED_COMPLEX_TYPE__PARAMETER) return null;
         return (DataOperationParameter)eContainer();
@@ -300,7 +291,6 @@ public class ImportedComplexTypeImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setParameter(DataOperationParameter newParameter) {
         if (newParameter != eInternalContainer() || (eContainerFeatureID() != DataPackage.IMPORTED_COMPLEX_TYPE__PARAMETER && newParameter != null)) {
             if (EcoreUtil.isAncestor(this, newParameter))
