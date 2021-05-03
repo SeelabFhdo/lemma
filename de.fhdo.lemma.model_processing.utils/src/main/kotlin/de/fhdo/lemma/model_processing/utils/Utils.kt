@@ -15,6 +15,7 @@ import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
 import de.fhdo.lemma.technology.CommunicationType
 import de.fhdo.lemma.technology.ExchangePattern
 import de.fhdo.lemma.technology.mapping.ComplexTypeMapping
+import de.fhdo.lemma.technology.mapping.DataOperationMapping
 import de.fhdo.lemma.technology.mapping.TechnologySpecificFieldMapping
 import de.fhdo.lemma.technology.mapping.TechnologySpecificImportedServiceAspect
 import org.eclipse.emf.common.util.EList
@@ -474,6 +475,7 @@ private fun EObject.serviceAspects()
 private fun EObject.mappingAspects()
     = when(this) {
         is ComplexTypeMapping -> aspects
+        is DataOperationMapping -> aspects
         is TechnologySpecificFieldMapping -> aspects
         else -> throw IllegalStateException("EObject of type ${javaClass.simpleName} does not have aspects in a " +
             "technology mapping context")
