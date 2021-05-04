@@ -3,12 +3,18 @@
  */
 package de.fhdo.lemma.technology.mappingdsl.ui;
 
+import de.fhdo.lemma.eclipse.ui.editor.LiveValidationCapableXtextEditor;
+import de.fhdo.lemma.eclipse.ui.editor.LiveValidationXtextDocumentProvider;
+import de.fhdo.lemma.eclipse.ui.editor.server.ServerConnection;
 import de.fhdo.lemma.technology.mappingdsl.ui.AbstractMappingDslUiModule;
 import de.fhdo.lemma.technology.mappingdsl.ui.highlighting.HighlightingCalculator;
 import de.fhdo.lemma.technology.mappingdsl.ui.highlighting.HighlightingConfiguration;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor;
 import org.eclipse.xtext.ide.editor.syntaxcoloring.ISemanticHighlightingCalculator;
+import org.eclipse.xtext.service.SingletonBinding;
+import org.eclipse.xtext.ui.editor.XtextEditor;
+import org.eclipse.xtext.ui.editor.model.XtextDocumentProvider;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration;
 
 /**
@@ -19,20 +25,19 @@ import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration;
 @FinalFieldsConstructor
 @SuppressWarnings("all")
 public class MappingDslUiModule extends AbstractMappingDslUiModule {
-  /**
-   * def Class<? extends XtextEditor> bindXtextEditor() {
-   * LiveValidationCapableXtextEditor
-   * }
-   * 
-   * def Class<? extends XtextDocumentProvider> bindXtextDocumentProvider() {
-   * LiveValidationXtextDocumentProvider
-   * }
-   * 
-   * @SingletonBinding(eager=true)
-   * def ServerConnection bindServerConnection() {
-   * return ServerConnection.instance
-   * }
-   */
+  public Class<? extends XtextEditor> bindXtextEditor() {
+    return LiveValidationCapableXtextEditor.class;
+  }
+  
+  public Class<? extends XtextDocumentProvider> bindXtextDocumentProvider() {
+    return LiveValidationXtextDocumentProvider.class;
+  }
+  
+  @SingletonBinding(eager = true)
+  public ServerConnection bindServerConnection() {
+    return ServerConnection.instance();
+  }
+  
   public Class<? extends IHighlightingConfiguration> bindIHighlightingConfiguration() {
     return HighlightingConfiguration.class;
   }
