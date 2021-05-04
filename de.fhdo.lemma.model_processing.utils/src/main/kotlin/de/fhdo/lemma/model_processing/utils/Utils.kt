@@ -518,7 +518,7 @@ fun EObject.getAllMappingAspects(alias: String, name: String)
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 fun ImportedServiceAspect.getPropertyValue(name: String)
-    = if (singlePropertyValue != null)
+    = if (singlePropertyValue != null && importedAspect.properties.any { it.name == name })
         singlePropertyValue.valueAsString()
     else
         values.find { it.property.name == name }?.value?.valueAsString()
@@ -530,7 +530,7 @@ fun ImportedServiceAspect.getPropertyValue(name: String)
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 fun TechnologySpecificImportedServiceAspect.getPropertyValue(name: String)
-    = if (singlePropertyValue != null)
+    = if (singlePropertyValue != null && aspect.properties.any { it.name == name })
         singlePropertyValue.valueAsString()
     else
         values.find { it.property.name == name }?.value?.valueAsString()
