@@ -261,7 +261,8 @@ internal fun readModelingNamespacesFromXmi(xmiFile: String) : Set<String> {
 internal infix fun String.isChildPathOf(parent: String) = Paths.get(this).startsWith(Paths.get(parent).normalize())
 
 /**
- * Load a file as an Xtext resource.
+ * Load a file as an Xtext resource. The contents of the Xtext resource will originate from the given [inputStream] and
+ * the path of the resource will be the URI of the given [filepath].
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
@@ -272,6 +273,16 @@ fun loadXtextResource(languageSetup: ISetup, filepath: String, inputStream: Inpu
     val resource = resourceSet.createResource(filepath.toFileUri())
     resource.load(inputStream, resourceSet.loadOptions)
     return resource as XtextResource
+}
+
+/**
+ * Load a file as an Xtext resource.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun loadXtextResource(languageSetup: ISetup, filepath: String) : XtextResource {
+    val inputStream = File(LemmaUtils.removeFileUri(filepath).removePrefix("//")).inputStream()
+    return loadXtextResource(languageSetup, filepath, inputStream)
 }
 
 /**
