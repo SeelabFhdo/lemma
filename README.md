@@ -53,7 +53,7 @@
 - **model-driven:** abstract the complexity of microservice architectures with the power of [Model-driven Engineering](https://en.wikipedia.org/wiki/Model-driven_engineering)
 - **collaborative:** provide concern-oriented, integrated modeling languages for stakeholder groups of microservice architectures ranging from domain experts to microservice developers and operators
 - **practice-oriented:** aligned to the requirements of real-world microservice architectures including distributed development, DevOps-based teams, and technology heterogeneity
-- **broad applicability:** LEMMA has been used to translate [domain-driven microservice designs into implementations](https://ieeexplore.ieee.org/document/9226287), [architecture recovery and quality attribute analysis](https://link.springer.com/chapter/10.1007/978-3-030-49418-6_21), and [microservice code generation](https://link.springer.com/chapter/10.1007/978-3-030-31646-4_7)
+- **broad applicability:** LEMMA has been used for, e.g., (i) the translation of [domain-driven microservice designs into implementations](https://ieeexplore.ieee.org/document/9226287); (ii) [architecture recovery and quality attribute analysis](https://link.springer.com/chapter/10.1007/978-3-030-49418-6_21); and (iii) [microservice code generation](https://link.springer.com/chapter/10.1007/978-3-030-31646-4_7)
 - **IDE support:** thanks to the [Eclipse ecosystem](https://www.eclipse.org) LEMMA comes with dedicated editors including syntax highlighting, code completion, and as-you-type validation
 - **designed for extensibility:** interested in extending LEMMA with your own super cool framework for microservice development or deployment? drop us an [e-mail](mailto:florian.rademacher@fh-dortmund.de)
 
