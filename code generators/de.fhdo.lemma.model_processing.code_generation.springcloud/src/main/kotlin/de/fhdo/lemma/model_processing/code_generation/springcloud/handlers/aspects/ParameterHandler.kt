@@ -12,10 +12,9 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.getPropertyValue
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.combinations
-import de.fhdo.lemma.model_processing.code_generation.springcloud.spring.HttpStatus
+import de.fhdo.lemma.model_processing.code_generation.springcloud.spring.addResponseStatusAnnotation
 import de.fhdo.lemma.service.intermediate.IntermediateParameter
 import org.eclipse.emf.ecore.EObject
-import java.lang.IllegalArgumentException
 
 /**
  * Handler for [IntermediateParameter] aspects.
@@ -61,35 +60,11 @@ internal class ParameterHandler : AspectHandlerI {
     }
 
     /**
-     * Execution logic for when the generated Node is a [ClassOrInterfaceDeclaration].
+     * Execution logic for when the generated Node is a [ClassOrInterfaceDeclaration]
      */
     private fun execute(generatedClass: ClassOrInterfaceDeclaration, aspect: IntermediateImportedAspect) : Node {
         /* The aspect must be ResponseStatus according to handlesEObjectNodeCombinations() */
-        generatedClass.addImport("org.springframework.http.HttpStatus", ImportTargetElementType.ANNOTATION)
-        generatedClass.addImport("org.springframework.web.bind.annotation.ResponseStatus",
-            ImportTargetElementType.ANNOTATION)
-
-        /*
-         * Determine the value of the "status" property of the ResponseStatus annotation starting from Spring's
-         * HttpStatus enumeration. First, it is tried to map the aspect's value for "status" directly to a value of
-         * HttpStatus, i.e., the number of the HTTP status. If no such number exists, it is tried to interpret the value
-         * of the aspect's "status" property either as HTTP reason phrase, e.g., "No Content", or raw constant
-         * identifier, e.g., "NO_CONTENT". If this still does not work, use "Internal Server Error" as default HTTP
-         * status code.
-         */
-        val aspectStatus = aspect.getPropertyValue("status")
-        val statusName = try {
-            HttpStatus.valueOf(aspectStatus!!).toString()
-        } catch (ex: IllegalArgumentException) {
-            HttpStatus.values()
-                .firstOrNull { it.reasonPhrase == aspectStatus || it.value.toString() == aspectStatus }
-                ?.toString()
-                ?: HttpStatus.INTERNAL_SERVER_ERROR.toString()
-        }
-
-        /* Add the annotation together with the determined HTTP status */
-        val annotation = generatedClass.addAndGetAnnotation("ResponseStatus")
-        annotation.addPair("value", "HttpStatus.$statusName")
+        generatedClass.addResponseStatusAnnotation(aspect)
         return generatedClass
     }
 

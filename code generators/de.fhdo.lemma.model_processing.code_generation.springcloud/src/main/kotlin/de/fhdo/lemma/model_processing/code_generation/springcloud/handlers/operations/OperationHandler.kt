@@ -11,10 +11,13 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
 import de.fhdo.lemma.model_processing.code_generation.java_base.fullyQualifiedClassname
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerResult
+import de.fhdo.lemma.model_processing.code_generation.java_base.getAspect
 import de.fhdo.lemma.model_processing.code_generation.java_base.getInputParameters
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasAspect
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasInputParameters
+import de.fhdo.lemma.model_processing.code_generation.java_base.isResultParameter
+import de.fhdo.lemma.model_processing.code_generation.springcloud.spring.addResponseStatusAnnotation
 import de.fhdo.lemma.model_processing.code_generation.springcloud.Context.State as State
 import de.fhdo.lemma.service.intermediate.IntermediateOperation
 import de.fhdo.lemma.technology.CommunicationType
@@ -48,7 +51,8 @@ internal class OperationHandler
             apiOperationAnnotation.addPair("value", "\"${eObject.apiOperationComment.comment}\"")
         }
 
-        /* In case any of the operation's parameters exhibits the ResponseEntity aspect, the return type of the
+        /*
+         * In case any of the operation's parameters exhibits the ResponseEntity aspect, the return type of the
          * generated method will be adapted to be ResponseEntity with the current return type as type argument. This,
          * however, is only possible when the return type is a ClassOrInterfaceType.
          */
@@ -62,6 +66,19 @@ internal class OperationHandler
                 node.setType("ResponseEntity<$currentReturnType>")
             }
         }
+
+        /*
+         * Handle ResponseStatus aspect on parameters. In case a synchronous outgoing parameter exhibits the aspect, we
+         * add the corresponding annotation to the generated Java method. Note that if two outgoing parameters have the
+         * aspect, only the status of the first one will be considered.
+         */
+        val responseStatusAnnotation = eObject.parameters.first() {
+            it.isResultParameter &&
+            it.communicationType == CommunicationType.SYNCHRONOUS.name &&
+            it.hasAspect("java.ResponseStatus", "Spring.ResponseStatus")
+        }?.getAspect("java.ResponseStatus", "Spring.ResponseStatus")
+        if (responseStatusAnnotation != null)
+            node.addResponseStatusAnnotation(responseStatusAnnotation)
 
         /*
          * Gather asynchronous input parameters in the Genlet's state to later handle them after generation of the

@@ -1,9 +1,49 @@
 package de.fhdo.lemma.model_processing.code_generation.springcloud.spring
 
+import com.github.javaparser.ast.Node
+import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
+import com.github.javaparser.ast.nodeTypes.NodeWithAnnotations
+import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.findParentNode
+import de.fhdo.lemma.model_processing.code_generation.java_base.getPropertyValue
+
+/**
+ * Add the ResponseStatus annotation to this [Node] based on the given [responseStatusAspect]
+ */
+internal fun Node.addResponseStatusAnnotation(responseStatusAspect: IntermediateImportedAspect) {
+    val targetClass = if (this is ClassOrInterfaceDeclaration) this else this.findParentNode()!!
+    targetClass.addImport("org.springframework.http.HttpStatus", ImportTargetElementType.ANNOTATION)
+    targetClass.addImport("org.springframework.web.bind.annotation.ResponseStatus",
+        ImportTargetElementType.ANNOTATION)
+
+    /*
+     * Determine the value of the "status" property of the ResponseStatus annotation starting from Spring's
+     * HttpStatus enumeration. First, we try to map the aspect's value for "status" directly to a value of HttpStatus,
+     * i.e., the number of the HTTP status. If no such number exists, we try to interpret the value of the aspect's
+     * "status" property either as HTTP reason phrase, e.g., "No Content", or raw constant identifier, e.g.,
+     * "NO_CONTENT". If this still does not work, use "Internal Server Error" as default HTTP status code.
+     */
+    val aspectStatus = responseStatusAspect.getPropertyValue("status")
+    val statusName = try {
+        HttpStatus.valueOf(aspectStatus!!).toString()
+    } catch (ex: IllegalArgumentException) {
+        HttpStatus.values()
+            .firstOrNull { it.reasonPhrase == aspectStatus || it.value.toString() == aspectStatus }
+            ?.toString()
+            ?: HttpStatus.INTERNAL_SERVER_ERROR.toString()
+    }
+
+    /* Add the annotation together with the determined HTTP status */
+    val annotation = (this as NodeWithAnnotations<*>).addAndGetAnnotation("ResponseStatus")
+    annotation.addPair("value", "HttpStatus.$statusName")
+}
+
 /*
- * Needed by ParameterHandler. See
+ * The below enumeration is needed by addResponseStatusAnnotation() to identify modeled HTTP status codes. See
  *      https://github.com/spring-projects/spring-framework/blob/master/spring-web/src/main/java/org/springframework/http/HttpStatus.java
- * for the original code.
+ * for the enumeration's original code.
  */
 
 /*
@@ -39,7 +79,7 @@ package de.fhdo.lemma.model_processing.code_generation.springcloud.spring
  * @see [List of HTTP status codes - Wikipedia](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes)
  */
 @Suppress("KDocUnresolvedReference", "unused")
-internal enum class HttpStatus(
+private enum class HttpStatus(
     val value: Int,
     /**
      * Return the reason phrase of this status code.

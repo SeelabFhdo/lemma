@@ -546,7 +546,7 @@ fun IntermediateOperation.hasInputParameters(communicationType: CommunicationTyp
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-private val IntermediateParameter.isInputParameter
+val IntermediateParameter.isInputParameter
     get() = !isCommunicatesFault &&
             (exchangePattern == ExchangePattern.INOUT.name || exchangePattern == ExchangePattern.IN.name)
 
@@ -593,7 +593,7 @@ fun IntermediateOperation.hasResultParameters(communicationType: CommunicationTy
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-private val IntermediateParameter.isResultParameter
+val IntermediateParameter.isResultParameter
     get() = !isCommunicatesFault &&
             (exchangePattern == ExchangePattern.INOUT.name || exchangePattern == ExchangePattern.OUT.name)
 
