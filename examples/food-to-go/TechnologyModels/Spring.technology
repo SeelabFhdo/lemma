@@ -5,6 +5,7 @@ technology Spring {
 
     service aspects {
         aspect Transactional<singleval> for types;
+        aspect Transactional<singleval> for domainOperations; 
         aspect Get<singleval> for operations {
             selector(protocol = rest);
         }
@@ -12,6 +13,9 @@ technology Spring {
             selector(protocol = rest);
         }
         aspect PathVariable<singleval> for parameters {
+            selector(protocol = rest, exchange_pattern = in);
+        }
+        aspect RequestBody<singleval> for parameters {
             selector(protocol = rest, exchange_pattern = in);
         }
         aspect ResponseEntity<singleval> for parameters {

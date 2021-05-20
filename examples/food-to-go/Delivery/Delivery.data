@@ -1,0 +1,107 @@
+import datatypes from "../Common/Common.data" as Common
+
+context Delivery {
+    structure Courier<aggregate, entity> {
+        long id<identifier>,
+		Plan plan<part>,
+		boolean available,
+		function ActionList actionsForDelivery(long deliveryId),
+		procedure noteAvailable(),
+        procedure addAction(Action action),
+        procedure cancelDelivery(long deliveryId),
+        function Courier create(long courierId)  //STATIC    
+    }
+
+	structure Action<valueObject> {
+	  API.DeliveryActionType type,
+	  Common::Common.Address address,
+	  date time,
+	  long deliveryId,
+	  function boolean actionFor(long deliveryId),
+	  function Action makePickup(long deliveryId, Common::Common.Address pickupAddress, date pickupTime), //STATIC
+	  function Action makeDropoff(long deliveryId, Common::Common.Address deliveryAddress, date deliveryTime) //STATIC	
+	}
+	
+	list ActionList {Action action}
+
+    structure Plan<valueObject> {
+        hide ActionList actions,
+        procedure add(Action action),
+        procedure removeDelivery(long deliveryId),
+        function ActionList actionsForDelivery(long deliveryId)
+    }
+
+	structure Delivery<entity> {
+		long id<identifier>,
+		Common::Common.Address pickupAddress,
+		API.DeliveryState state,
+		long restaurantId,
+		date pickUpTime,
+		Common::Common.Address deliveryAddress,
+		date deliveryTime,
+		long assignedCourier,
+		date readyBy,
+		function Delivery create(long orderId, long restaurantId, Common::Common.Address pickupAddress, Common::Common.Address deliveryAddress), //static
+		procedure schedule(date readyBy, long assignedCourier),
+		procedure cancel()	
+	}
+	structure Restaurant<entity> {
+		long id<identifier>,
+		string restaurantName,
+		Common::Common.Address address,
+		function Restaurant create(long restaurantId, string restaurantName, Common::Common.Address address)//static 
+	}
+	
+	structure DeliveryService<service> {
+		procedure createRestaurant(long restaurantId, string restaurantName, Common::Common.Address address),
+		procedure createDelivery(long orderId, long restaurantId, Common::Common.Address deliveryAddress),
+		procedure scheduleDelivery(long orderId, date readyBy),
+		procedure cancelDelivery(long orderId),
+		procedure noteAvailable(long courierId),
+		procedure noteUnavailable(long courierId),
+		function Courier findOrCreateCourier(long courierId),
+		procedure updateAvailability(long courierId, boolean available),
+		function API.DeliveryStatus getDeliveryInfo(long deliveryId),  //DELIVERYSTATUS IS OPTIONAL
+		function API.DeliveryStatus makeDeliveryStatus(Delivery delivery, long assignedCourier, ActionList courierActions),
+		function API.DeliveryInfo makeDeliveryInfo(Delivery delivery),
+		function API.ActionInfo makeActionInfo(Action action)
+	}
+}
+
+
+
+context API {
+    structure ActionInfo {
+		DeliveryActionType type
+    }
+
+    structure CourierAvailability {
+		boolean available
+    }
+
+    enum DeliveryActionType {
+		PICKUP,
+		DROPOFF
+    }
+    
+    structure DeliveryInfo {
+		long id,
+  		DeliveryState state
+    }
+    
+    enum DeliveryState {
+    	CANCELLED, 
+    	SCHEDULED, 
+    	PENDING    	
+    }
+    
+    structure DeliveryStatus {
+   		DeliveryInfo deliveryInfo,
+  		long assignedCourier,
+  		ActionInfoList courierActions   	
+    }
+    
+    list ActionInfoList {
+    	ActionInfo infos
+    }    
+}

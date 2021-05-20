@@ -1,0 +1,7 @@
+import microservices from "Account.services" as AccountServices
+import technology from "../TechnologyModels/Java.technology" as Java
+
+@technology(Java)
+type AccountServices::Common::Common.Money {
+    amount : Java::_types.BigDecimal;
+}

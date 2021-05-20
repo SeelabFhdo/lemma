@@ -1,5 +1,6 @@
 import datatypes from "../Common/Common.data" as Common
 import datatypes from "Order.data" as OrderDomain
+import datatypes from "OrderAPI.data" as OrderAPI
 import datatypes from "../Restaurant/Restaurant.data" as RestaurantDomain
 import technology from "../TechnologyModels/Java.technology" as Java
 import technology from "../TechnologyModels/Kafka.technology" as Kafka
@@ -20,8 +21,8 @@ functional microservice org.example.OrderService {
         ---
         @Spring::_aspects.Post
         create(
-            sync in request : OrderDomain::API.CreateOrderRequest,
-            sync out response : OrderDomain::API.CreateOrderResponse
+            sync in request : OrderAPI::web.CreateOrderRequest,
+            sync out response : OrderAPI::web.CreateOrderResponse
         );
 
         ---
@@ -35,7 +36,7 @@ functional microservice org.example.OrderService {
             sync in orderId : long,
 
             @Spring::_aspects.ResponseEntity
-            sync out response : OrderDomain::API.GetOrderResponse
+            sync out response : OrderAPI::web.GetOrderResponse
         );
 
         ---
@@ -49,13 +50,13 @@ functional microservice org.example.OrderService {
             sync in orderId : long,
 
             @Spring::_aspects.ResponseEntity
-            sync out response : OrderDomain::API.GetOrderResponse,
+            sync out response : OrderAPI::web.GetOrderResponse,
 
             @Spring::_aspects.HttpNotFound
             sync out fault notFound : int
         );
     }
-
+	//TODO THIS SHOULD BE EVENTUATE
     interface OrderEventConsumer {
         ---
         Listen for a menu to be created

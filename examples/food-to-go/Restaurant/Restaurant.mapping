@@ -1,0 +1,15 @@
+import microservices from "Restaurant.services" as RestaurantServices
+import technology from "../TechnologyModels/Java.technology" as Java
+import technology from "../TechnologyModels/Spring.technology" as Spring
+import technology from "../TechnologyModels/Eventuate.technology" as Event
+
+@technology(Event)
+type RestaurantServices::RestaurantAPI::events.RestaurantCreated {
+	aspects {Event::_aspects.DomainEvent;}
+}
+ 
+@technology(Event)
+type RestaurantServices::RestaurantAPI::events.RestaurantMenuRevised {
+	aspects {Event::_aspects.DomainEvent;}
+} 
+ 

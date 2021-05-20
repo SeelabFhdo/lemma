@@ -1,0 +1,26 @@
+import datatypes from "../Common/Common.data" as Common
+import datatypes from "Account.data" as AccountDomain
+import technology from "../TechnologyModels/Java.technology" as Java
+import technology from "../TechnologyModels/Spring.technology" as Spring
+
+@technology(Java)
+@technology(Spring)
+@sync(Spring::_protocols.rest)
+functional microservice org.example.AccountService {
+    @endpoints(Spring::_protocols.rest: "/accounts";)
+    interface Accounts {
+        ---
+        Get account
+        @required accountId ID of the consumer to retrieve
+        ---
+        @endpoints(Spring::_protocols.rest: "/{accountId}";)
+        @Spring::_aspects.Get
+        getAccount(
+            @Spring::_aspects.PathVariable
+            sync in accountId : long,
+ 
+            @Spring::_aspects.ResponseEntity
+            sync out response : AccountDomain::Web.GetAccountResponse
+        );
+    }
+}

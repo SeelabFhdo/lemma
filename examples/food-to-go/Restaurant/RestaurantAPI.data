@@ -1,0 +1,17 @@
+import datatypes from "../Common/Common.data" as Common
+import datatypes from "Restaurant.data" as RestaurantDomain
+
+context events {
+	structure RestaurantServiceChannels {
+		immutable string RESTAURANT_EVENT_CHANNEL = "net.chrisrichardson.ftgo.restaurantservice.domain.Restaurant"
+	}
+	
+	structure RestaurantCreated {
+		string name,
+		Common::Common.Address address,
+		RestaurantDomain::Restaurant.RestaurantMenu menu
+	} 
+	structure RestaurantMenuRevised {
+		RestaurantDomain::Restaurant.RestaurantMenu menu
+	}
+}

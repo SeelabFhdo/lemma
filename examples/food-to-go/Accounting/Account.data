@@ -1,0 +1,11 @@
+import datatypes from "../Common/Common.data" as Common
+
+context Account {
+    structure Account {}
+}
+
+context Web {	    
+    structure GetAccountResponse {
+    	string accountId
+    }   	
+}

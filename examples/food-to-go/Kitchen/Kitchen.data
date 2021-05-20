@@ -1,0 +1,8 @@
+import datatypes from "../Common/Common.data" as Common
+
+context Kitchen {
+ structure Dummy {
+ 	
+ }
+}
+

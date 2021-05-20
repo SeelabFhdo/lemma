@@ -1,9 +1,15 @@
 # LEMMA Insurance Company Example
 
-This modeling example for the [Language Ecosystem for Modeling Microservice Architecture (LEMMA)](https://github.com/SeelabFhdo/lemma/) contains models that reconstruct [1] the software architecture of [FTGO](https://github.com/microservices-patterns/ftgo-application/). FTGO is an example application created and used by [Chris Richards](https://www.chrisrichardson.net/) in his book [Microservices Patterns](https://www.manning.com/books/microservices-patterns) [2]. The models are based on the latest master branch commit [#a835e](https://github.com/microservices-patterns/ftgo-application/commit/a835e23bb0f3bc92dd712ff48a1510496ecb10fa) from April 2021.
+This modeling example for the [Language Ecosystem for Modeling Microservice Architecture (LEMMA)](https://github.com/SeelabFhdo/lemma/) contains models that reconstruct [1] the software architecture of [FTGO](https://github.com/microservices-patterns/ftgo-application/). FTGO is an example application centered around a food company named 'Food To Go' created and used by [Chris Richards](https://www.chrisrichardson.net/) in his book [Microservices Patterns](https://www.manning.com/books/microservices-patterns) [2] to illustrate various concepts and methods regarding the microservice architecture style. The models are based on the latest master branch commit [#a835e](https://github.com/microservices-patterns/ftgo-application/commit/a835e23bb0f3bc92dd712ff48a1510496ecb10fa) as of April 2021.
 
-The following components of Lakeside Mutual were reconstructed leveraging LEMMA:
-- `restaurant-service` [link](https://github.com/microservices-patterns/ftgo-application/tree/master/ftgo-restaurant-service/src/main/java/net/chrisrichardson/ftgo/restaurantservice)
+The following components of FTGO were reconstructed leveraging LEMMA:
+- `accounting-service` [link](https://github.com/microservices-patterns/ftgo-application/tree/master/ftgo-accounting-service)
+- `consumer-service` [link](https://github.com/microservices-patterns/ftgo-application/tree/master/ftgo-consumer-service)
+- `delivery-service` [link](https://github.com/microservices-patterns/ftgo-application/tree/master/ftgo-delivery-service)
+- `kitchen-service` [link](https://github.com/microservices-patterns/ftgo-application/tree/master/ftgo-kitchen-service)
+- `order-service` [link](https://github.com/microservices-patterns/ftgo-application/tree/master/ftgo-order-service)
+- `order-service` [link](https://github.com/microservices-patterns/ftgo-application/tree/master/ftgo-order-service)
+- `restaurant-service` [link](https://github.com/microservices-patterns/ftgo-application/tree/master/ftgo-restaurant-service)
 
 Moreover, technology models were created with LEMMA's Technology Modeling Language [3] for the following technologies being employed by Lakeside Mutual:
 - [ActiveMQ](https://activemq.apache.org/)

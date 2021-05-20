@@ -1,0 +1,4 @@
+context events {	
+    structure TicketAcceptedEvent {date readyBy}    
+    structure TicketCancelled {}
+}

@@ -1,0 +1,16 @@
+import microservices from "Consumer.services" as ConsumerServices
+import technology from "../TechnologyModels/Java.technology" as Java
+import technology from "../TechnologyModels/Spring.technology" as Spring
+
+@technology(Java)
+type ConsumerServices::ConsumerDomain::Consumer.Consumer {
+    aspects {
+        Java::_aspects.Table("consumers");
+        Java::_aspects.Access;
+    }
+}
+
+@technology(Java)
+type ConsumerServices::Common::Common.Money {
+    amount : Java::_types.BigDecimal;
+}

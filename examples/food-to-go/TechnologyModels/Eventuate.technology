@@ -1,0 +1,13 @@
+technology Eventuate {
+	
+	protocols {
+        async eventuate data formats "application/json" default with format "application/json";
+    }
+		
+    service aspects {
+        aspect DomainEventEnvelope<singleval> for parameters{
+        	selector(protocol = eventuate);
+        }
+        aspect DomainEvent<singleval> for types{}
+    }
+}

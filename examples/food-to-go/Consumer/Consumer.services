@@ -1,0 +1,40 @@
+import datatypes from "../Common/Common.data" as Common
+import datatypes from "Consumer.data" as ConsumerDomain
+import technology from "../TechnologyModels/Java.technology" as Java
+import technology from "../TechnologyModels/Kafka.technology" as Kafka
+import technology from "../TechnologyModels/Spring.technology" as Spring
+
+@technology(Java)
+@technology(Kafka)
+@technology(Spring)
+@async(Kafka::_protocols.kafka)
+@sync(Spring::_protocols.rest)
+@Kafka::_aspects.BootstrapAddress("localhost:9092")
+functional microservice org.example.ConsumerService {
+    @endpoints(Spring::_protocols.rest: "/consumers";)
+    interface Consumers {
+        ---
+        Create consumer
+        @required request Request
+        ---
+        @Spring::_aspects.Post
+        create(
+            sync in request : ConsumerDomain::Web.CreateConsumerRequest,
+            sync out response : ConsumerDomain::Web.CreateConsumerResponse
+        );
+
+        ---
+        Get consumer
+        @required consumerId ID of the consumer to retrieve
+        ---
+        @endpoints(Spring::_protocols.rest: "/{consumerId}";)
+        @Spring::_aspects.Get
+        get(
+            @Spring::_aspects.PathVariable
+            sync in consumerId : long,
+
+            @Spring::_aspects.ResponseEntity
+            sync out response : ConsumerDomain::Web.GetConsumerResponse
+        );
+    }
+}

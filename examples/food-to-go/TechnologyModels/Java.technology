@@ -12,12 +12,14 @@ technology Java {
         primitive type String based on string default;
         primitive type Object based on unspecified default;
         primitive type BigDecimal;
+        primitive type LocalDateTime;
 
         compatibility matrix {
             Double -> BigDecimal;
+            Date -> LocalDateTime;
         }
     }
-
+	
     service aspects {
         aspect Table<singleval> for types {
             string name<mandatory>;
@@ -34,5 +36,7 @@ technology Java {
             string name<mandatory>;
             string column<mandatory>;
         }
+        aspect Static<singleval> for domainOperations;
+        aspect Optional<singleval> for domainParameters;
     }
 }

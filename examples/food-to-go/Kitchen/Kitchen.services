@@ -1,0 +1,16 @@
+import datatypes from "../Common/Common.data" as Common
+import datatypes from "Kitchen.data" as KitchenDomain
+import datatypes from "KitchenAPI.data" as KitchenAPI
+import technology from "../TechnologyModels/Java.technology" as Java
+import technology from "../TechnologyModels/Kafka.technology" as Kafka
+import technology from "../TechnologyModels/Spring.technology" as Spring
+
+@technology(Java)
+@technology(Spring)
+@sync(Spring::_protocols.rest)
+functional microservice org.example.KitchenService {
+
+    interface kitchen {
+        test();
+	}
+}
