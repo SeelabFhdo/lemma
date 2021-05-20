@@ -1,0 +1,24 @@
+import microservices from "Delivery.services" as DeliveryServices
+import technology from "../TechnologyModels/Java.technology" as Java
+import technology from "../TechnologyModels/Spring.technology" as Spring
+
+@technology(Java)
+type DeliveryServices::Common::Common.Money {
+    amount : Java::_types.BigDecimal;
+}
+
+@technology(Java)
+type DeliveryServices::DeliveryDomain::Delivery.Action {
+    op makePickup { aspects { Java::_aspects.Static; } }
+    op makeDropoff { aspects { Java::_aspects.Static; } }
+}
+ 
+@technology(Java)
+@technology(Spring)
+type DeliveryServices::DeliveryDomain::Delivery.DeliveryService {
+    op updateAvailability { aspects { Spring::_aspects.Transactional; } }
+    op getDeliveryInfo { 
+    	aspects { Spring::_aspects.Transactional; }
+    	return type { aspects {Java::_aspects.Optional;}}
+    }
+} 

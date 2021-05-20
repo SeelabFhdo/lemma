@@ -15,7 +15,7 @@ type OrderServices::OrderDomain::Order.Order {
 }
 
 @technology(Java)
-type OrderServices::Common::Money {
+type OrderServices::Common::Common.Money {
     amount : Java::_types.BigDecimal;
 }
 

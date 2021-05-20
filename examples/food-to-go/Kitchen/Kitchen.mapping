@@ -1,0 +1,18 @@
+import microservices from "Kitchen.services" as KitchenServices
+import technology from "../TechnologyModels/Java.technology" as Java
+import technology from "../TechnologyModels/Spring.technology" as Spring
+import technology from "../TechnologyModels/Eventuate.technology" as Event
+
+
+@technology(Event)
+@technology(Java)
+type KitchenServices::KitchenAPI::events.TicketAcceptedEvent {
+	aspects {Event::_aspects.DomainEvent;}
+	readyBy : Java::_types.LocalDateTime;
+}
+
+@technology(Event)
+type KitchenServices::KitchenAPI::events.TicketCancelled {
+	aspects {Event::_aspects.DomainEvent;}
+}
+ 

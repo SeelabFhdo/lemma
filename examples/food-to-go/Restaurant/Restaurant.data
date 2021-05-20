@@ -15,6 +15,25 @@ context Restaurant {
     structure MenuItem<valueObject> {
         string id,
         string name,
-        Common::Money price
+        Common::Common.Money price
     }
+    
+    
+
+
+
+
+
+
+// TODO CHECK FOR EVENT CREATION
+// RestaurantDomainEventPublisher.java
+// RestaurantRepository.java
+// RestaurantServiceDomainConfiguration.java
+// RestaurantService.java
+// CreateRestaurantRequest.java
+
+
+
+    
+    
 }

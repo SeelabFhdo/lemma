@@ -10,8 +10,8 @@ context Order {
         immutable OrderLineItems orderLineItems<part>,
         hide immutable DeliveryInformation deliveryInformation<part>,
         hide immutable PaymentInformation paymentInformation<part>,
-        hide immutable Common::Money orderMinimum<part>,
-        function Common::Money getOrderTotal()
+        hide immutable Common::Common.Money orderMinimum<part>,
+        function Common::Common.Money getOrderTotal()
     }
 
     enum OrderState {
@@ -25,15 +25,15 @@ context Order {
         int quantity,
         string menuItemId,
         string name,
-        Common::Money price,
-        function Common::Money deltaForChangedQuantity(int newQuantity),
-        function Common::Money getTotal
+        Common::Common.Money price,
+        function Common::Common.Money deltaForChangedQuantity(int newQuantity),
+        function Common::Common.Money getTotal
     }
 
     structure OrderLineItems<valueObject> {
         OrderLineItemsType lineItems,
         function OrderLineItem findOrderLineItem(string lineItemId),
-        function Common::Money orderTotal
+        function Common::Common.Money orderTotal
     }
 
     list OrderLineItemsType { OrderLineItem i }
@@ -70,29 +70,4 @@ context Order {
     }
 
     list MenuItemIdAndQuantityList { MenuItemIdAndQuantity itemQuantity }
-}
-
-context API {
-    structure CreateOrderRequest<valueObject> {
-        long consumerId,
-        long restaurantId,
-        LineItems lineItems
-    }
-
-    structure LineItem {
-        string menuItemId,
-        int quantity
-    }
-
-    list LineItems { LineItem i }
-
-    structure CreateOrderResponse<valueObject> {
-        long orderId
-    }
-
-    structure GetOrderResponse<valueObject> {
-        long orderId,
-        string state,
-        Common::Money orderTotal
-    }
 }
