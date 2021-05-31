@@ -44,6 +44,7 @@
 - [Features](#features)
 - [Installation](#installation)
 - [Examples](#examples)
+- [Documentation](#documentation)
 - [Changelog](#changelog)
 - [Science](#science)
 - [Contributors](#contributors)
@@ -64,7 +65,7 @@ LEMMA works with any Eclipse version greater or equal 2020-03. However, your Ecl
 - Optional: To leverage LEMMA's model processors, LEMMA requires the installation of the Eclipse plugins for the [ATL Transformation Language and EMFTVM](https://www.eclipse.org/atl/). You may install `ATL/EMFTVM`, e.g., from the [Eclipse Marketplace](https://marketplace.eclipse.org/content/atlemftvm).
 
 ### Updatesite
-You can install LEMMA from a running Eclipse instance via the following Eclipse updatesite: https://microservices.fh-dortmund.de/lemma/.
+You can install LEMMA from a running Eclipse instance via the following Eclipse updatesite: [https://microservices.fh-dortmund.de/lemma/](https://microservices.fh-dortmund.de/lemma/).
 
 ### Dropins
 As an alternative to the Eclipse updatesite, you may also download the LEMMA Eclipse plugins for its latest release as a set of Eclipse dropins. You can find these dropins as an asset of [LEMMA's latest release on GitHub](https://github.com/SeelabFhdo/lemma/releases).
@@ -75,7 +76,8 @@ We provide three examples in the form of a set of LEMMA models that describe coh
 - [E-Vehicle Charging Example](https://github.com/SeelabFhdo/lemma/tree/master/examples/e-vehicle-charging)
 - [Insurance Company Example](https://github.com/SeelabFhdo/lemma/tree/master/examples/insurance-company)
 
-We are also currently working on a comprehensive documentation for LEMMA not only including the application of its modeling languages but also the usage and development of custom model processors. Stay tuned! :guitar:
+## Documentation
+The LEMMA documentation can be found at [https://seelabfhdo.github.io/lemma-docs](https://seelabfhdo.github.io/lemma-docs). The documentation is currently work in progress but will receive updates on a regular basis. For example, it already contains a comprehensive installation guideline and a quick tour!
 
 ## Changelog
 For information about the current version of LEMMA please refer to its [Changelog](https://github.com/SeelabFhdo/lemma/blob/master/CHANGELOG.md).
