@@ -18,7 +18,7 @@
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <eclipse-version>2020-03</eclipse-version>
+        <eclipse-version>2021-03</eclipse-version>
         <tycho-version>1.7.0</tycho-version>
     </properties>
 

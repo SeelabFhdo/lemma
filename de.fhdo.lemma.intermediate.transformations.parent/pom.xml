@@ -52,7 +52,7 @@
 
         <build-helper-maven-plugin-version>3.1.0</build-helper-maven-plugin-version>
         <data-viewpoint-metamodel-version>${project.version}</data-viewpoint-metamodel-version>
-        <eclipse-version>2020-03</eclipse-version>
+        <eclipse-version>2021-03</eclipse-version>
         <intermediate-data-metamodel-version>${project.version}</intermediate-data-metamodel-version>
         <intermediate-service-metamodel-version>${project.version}</intermediate-service-metamodel-version>
         <maven-clean-plugin-version>3.1.0</maven-clean-plugin-version>

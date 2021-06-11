@@ -50,7 +50,7 @@
         <build-helper-maven-plugin-version>3.1.0</build-helper-maven-plugin-version>
         <data-extractor-version>${project.version}</data-extractor-version>
         <data-metamodel-version>${project.version}</data-metamodel-version>
-        <eclipse-version>2020-03</eclipse-version>
+        <eclipse-version>2021-03</eclipse-version>
         <intermediate-data-metamodel-version>${project.version}</intermediate-data-metamodel-version>
         <lemma-utils-version>${project.version}</lemma-utils-version>
         <lemma-ui-utils-version>${project.version}</lemma-ui-utils-version>
