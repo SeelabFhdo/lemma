@@ -33,7 +33,7 @@ p2AsMaven {
     val eclipseOclVersion: String by rootProject.extra
 
     group("eclipse-deps") {
-        repo("https://download.eclipse.org/modeling/mdt/ocl/updates/releases/$eclipseOclVersion/")
+        repo("https://archive.eclipse.org/modeling/mdt/ocl/updates/releases/$eclipseOclVersion/")
         iu("org.eclipse.ocl.ecore")
 
         repoEclipse(eclipseVersion)
