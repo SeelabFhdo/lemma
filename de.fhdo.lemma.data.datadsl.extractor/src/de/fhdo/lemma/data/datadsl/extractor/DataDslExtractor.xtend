@@ -22,6 +22,7 @@ import de.fhdo.lemma.data.Version
  * Model-to-text extractor for the Data DSL.
  *
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
+ * @author <a href="mailto:jonas.sorgalla@fh-dortmund.de">Jonas Sorgalla</a>
  */
 class DataDslExtractor {
     /**

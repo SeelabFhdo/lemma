@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="code generators/de.fhdo.lemma.ddd/src/main/java"/>
+	<classpathentry kind="src" path="code generators/de.fhdo.lemma.model_processing.code_generation.java_base/src/main/java"/>
+	<classpathentry kind="src" path="code generators/de.fhdo.lemma.msa/src/main/java"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.data.avro/xtend-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.data.datadsl.extractor/xtend-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.data.datadsl.ide/src-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.data.datadsl.ide/xtend-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.data.datadsl.metamodel/src-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.data.datadsl.metamodel/xtend-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.data.datadsl.tests/src-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.data.datadsl.tests/xtend-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.data.datadsl.ui.tests/src-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.data.datadsl.ui/src-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.data.datadsl.ui/xtend-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.data.datadsl/src-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.data.datadsl/xtend-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.data.intermediate.metamodel/src-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.eclipse.ui.utils/xtend-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.eclipse.ui/xtend-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.intermediate.transformations/xtend-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.operationdsl.ide/src-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.operationdsl.ide/xtend-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.operationdsl.metamodel/src-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.operationdsl.tests/src-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.operationdsl.tests/xtend-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.operationdsl.ui.tests/src-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.operationdsl.ui/src-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.operationdsl.ui/xtend-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.operationdsl/src-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.operationdsl/xtend-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.service.intermediate.metamodel/src-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.service.open_api/xtend-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.servicedsl.ide/src-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.servicedsl.ide/xtend-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.servicedsl.metamodel/src-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.servicedsl.tests/src-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.servicedsl.tests/xtend-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.servicedsl.ui.tests/src-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.servicedsl.ui/src-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.servicedsl.ui/xtend-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.servicedsl/src-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.servicedsl/xtend-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.technology.mappingdsl.extractor/xtend-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.technology.mappingdsl.ide/src-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.technology.mappingdsl.ide/xtend-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.technology.mappingdsl.metamodel/src-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.technology.mappingdsl.tests/src-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.technology.mappingdsl.tests/xtend-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.technology.mappingdsl.ui.tests/src-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.technology.mappingdsl.ui/src-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.technology.mappingdsl.ui/xtend-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.technology.mappingdsl/src-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.technology.mappingdsl/xtend-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.technology.technologydsl.ide/src-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.technology.technologydsl.ide/xtend-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.technology.technologydsl.metamodel/src-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.technology.technologydsl.tests/src-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.technology.technologydsl.tests/xtend-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.technology.technologydsl.ui.tests/src-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.technology.technologydsl.ui/src-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.technology.technologydsl.ui/xtend-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.technology.technologydsl/src-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.technology.technologydsl/xtend-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.typechecking/xtend-gen"/>
+	<classpathentry kind="src" path="de.fhdo.lemma.utils/xtend-gen"/>
+	<classpathentry kind="lib" path="code generators/de.fhdo.lemma.model_processing.code_generation.ddd/gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="lib" path="code generators/de.fhdo.lemma.model_processing.code_generation.java_base/gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="lib" path="code generators/de.fhdo.lemma.model_processing.code_generation.lakeside_mutual/gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="lib" path="code generators/de.fhdo.lemma.model_processing.code_generation.springcloud.cqrs/gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="lib" path="code generators/de.fhdo.lemma.model_processing.code_generation.springcloud.domain_events/gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="lib" path="code generators/de.fhdo.lemma.model_processing.code_generation.springcloud.kafka/gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="lib" path="code generators/de.fhdo.lemma.model_processing.code_generation.springcloud/gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.data.avro/lib/avro-1.10.0.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.data.avro/lib/jackson-annotations-2.11.0.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.data.avro/lib/jackson-core-2.11.0.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.data.avro/lib/jackson-databind-2.11.0.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.data.datadsl/.antlr-generator-3.2.0-patch.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.live_validation/gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.model_processing.utils/gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.model_processing/gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.ocl/gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.operationdsl/.antlr-generator-3.2.0-patch.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.service.open_api/lib/bsh-2.0b4.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.service.open_api/lib/commons-io-2.6.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.service.open_api/lib/commons-lang3-3.7.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.service.open_api/lib/hamcrest-core-1.3.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.service.open_api/lib/jackson-annotations-2.11.1.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.service.open_api/lib/jackson-core-2.11.1.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.service.open_api/lib/jackson-databind-2.11.1.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.service.open_api/lib/jackson-dataformat-yaml-2.11.1.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.service.open_api/lib/jackson-datatype-jsr310-2.11.1.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.service.open_api/lib/jakarta.activation-api-1.2.1.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.service.open_api/lib/jakarta.validation-api-2.0.2.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.service.open_api/lib/jakarta.xml.bind-api-2.3.2.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.service.open_api/lib/jcommander-1.48.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.service.open_api/lib/jmockit-1.35.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.service.open_api/lib/junit-4.13.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.service.open_api/lib/slf4j-api-1.7.25.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.service.open_api/lib/slf4j-simple-1.7.30.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.service.open_api/lib/snakeyaml-1.26.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.service.open_api/lib/swagger-annotations-2.1.4.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.service.open_api/lib/swagger-core-2.1.4.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.service.open_api/lib/swagger-jaxrs2-2.1.4.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.service.open_api/lib/swagger-models-2.1.4.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.service.open_api/lib/swagger-parser-2.0.21.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.service.open_api/lib/swagger-parser-core-2.0.21.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.service.open_api/lib/swagger-parser-v2-converter-2.0.21.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.service.open_api/lib/swagger-parser-v3-2.0.21.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.service.open_api/lib/testng-6.9.10.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.service.open_api/lib/wiremock-1.57-standalone.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.servicedsl/.antlr-generator-3.2.0-patch.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.technology.mappingdsl/.antlr-generator-3.2.0-patch.jar"/>
+	<classpathentry kind="lib" path="de.fhdo.lemma.technology.technologydsl/.antlr-generator-3.2.0-patch.jar"/>
+	<classpathentry kind="output" path="de.fhdo.lemma.data.avro/bin"/>
+</classpath>

@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Logger;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
@@ -38,8 +39,6 @@ import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @SuppressWarnings("all")
 public class TransformationDialog extends TitleAreaDialog {
@@ -49,7 +48,7 @@ public class TransformationDialog extends TitleAreaDialog {
   
   private static final String PROGRESS_TITLE_TEXT = "Performing intermediate model transformations";
   
-  private static final Logger LOGGER = LoggerFactory.getLogger(TransformationDialog.class);
+  private static final Logger LOGGER = Logger.getLogger("TransformationDialog");
   
   private LinkedList<ModelFile> filesToTransform;
   
@@ -293,7 +292,7 @@ public class TransformationDialog extends TitleAreaDialog {
         final PrintWriter printWriter = new PrintWriter(stringWriter);
         exception.printStackTrace(printWriter);
         final String stackTraceString = stringWriter.toString();
-        TransformationDialog.LOGGER.error(stackTraceString);
+        TransformationDialog.LOGGER.severe(stackTraceString);
         _xblockexpression = ("Unexpected transformation exception. Please consult the Eclipse log file for " + 
           "the detailed stack trace.");
       }
