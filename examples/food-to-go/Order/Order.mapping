@@ -3,18 +3,6 @@ import technology from "../TechnologyModels/Java.technology" as Java
 import technology from "../TechnologyModels/Spring.technology" as Spring
 
 @technology(Java)
-type OrderServices::OrderDomain::Order.Order {
-    aspects {
-        Java::_aspects.Table("orders");
-        Java::_aspects.Access;
-    }
-
-    ^version { aspects { Java::_aspects.Version; } }
-
-    state { aspects { Java::_aspects.Enumerated; } }
-}
-
-@technology(Java)
 type OrderServices::Common::Common.Money {
     amount : Java::_types.BigDecimal;
 }

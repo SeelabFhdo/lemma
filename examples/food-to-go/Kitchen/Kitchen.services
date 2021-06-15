@@ -1,16 +1,80 @@
 import datatypes from "../Common/Common.data" as Common
+
 import datatypes from "Kitchen.data" as KitchenDomain
 import datatypes from "KitchenAPI.data" as KitchenAPI
+
+import datatypes from "../Restaurant/RestaurantAPI.data" as RestaurantAPI
+import datatypes from "../Restaurant/Restaurant.data" as RestaurantDomain
+
+import microservices from "../Restaurant/Restaurant.services" as Restaurant
+
 import technology from "../TechnologyModels/Java.technology" as Java
-import technology from "../TechnologyModels/Kafka.technology" as Kafka
 import technology from "../TechnologyModels/Spring.technology" as Spring
+import technology from "../TechnologyModels/Eventuate.technology" as Event
 
 @technology(Java)
 @technology(Spring)
-@sync(Spring::_protocols.rest)
+@technology(Event)
 functional microservice org.example.KitchenService {
 
-    interface kitchen {
-        test();
-	}
+    required microservices {Restaurant::org.example.RestaurantService}
+
+    @sync(Spring::_protocols.rest)
+    @endpoints(Spring::_protocols.rest: "/restaurants";)
+    interface Restaurant {
+        ---
+        Get Restaurant
+        @required restaurantId ID of the restaurant to retrieve
+        ---
+        @endpoints(Spring::_protocols.rest: "/{restaurantId}";)
+        @Spring::_aspects.Get
+        getRestaurant(
+            @Spring::_aspects.PathVariable
+            sync in restaurantId : long,
+
+            @Spring::_aspects.ResponseEntity
+            sync out response : KitchenDomain::Web.GetRestaurantResponse
+        );
+    }
+
+    @sync(Spring::_protocols.rest)
+    interface Kitchen {
+        ---
+        Accept Ticket
+        @required ticketId ID of the ticket which is to accept
+        @required ticketAcceptance Body of the ticket to accept
+        ---
+        @endpoints(Spring::_protocols.rest: "/tickets/{ticketId}/accept";)
+        @Spring::_aspects.Post
+        acceptTicket(
+            @Spring::_aspects.PathVariable
+            sync in ticketId : long,
+
+            @Spring::_aspects.RequestBody
+            sync in ticketAcceptance : KitchenAPI::Web.TicketAcceptance
+        );
+    }
+
+    // derived from KitchenServiceEventConsumer.java
+    @async(Event::_protocols.eventuate)
+    @endpoints(Event::_protocols.eventuate: "net.chrisrichardson.ftgo.restaurantservice.domain.Restaurant";)
+    interface KitchenServiceEventConsumer {
+        createMenu(@Event::_aspects.DomainEventEnvelope async in de : RestaurantDomain::API.RestaurantCreated);
+        reviseMenu(@Event::_aspects.DomainEventEnvelope async in de : RestaurantDomain::API.RestaurantMenuRevised);
+    }
+
+    // derived from KitchenServiceEventConsumer.java
+    @async(Event::_protocols.eventuateSaga)
+    @endpoints(Event::_protocols.eventuateSaga: "kitchenService";)
+    interface KitchenServiceCommandHandler {
+        createTicket(@Event::_aspects.CommandMessage async in cm : KitchenAPI::Commands.CreateTicket, async out msg : Java::_types.Message);
+        confirmCreateTicket(@Event::_aspects.CommandMessage async in cm : KitchenAPI::Commands.ConfirmCreateTicket, async out msg : Java::_types.Message);
+        cancelCreateTicket(@Event::_aspects.CommandMessage async in cm : KitchenAPI::Commands.CancelCreateTicket, async out msg : Java::_types.Message);
+        beginCancelTicket(@Event::_aspects.CommandMessage async in cm : KitchenAPI::Commands.BeginCancelTicketCommand, async out msg : Java::_types.Message);
+        confirmCancelTicket(@Event::_aspects.CommandMessage async in cm : KitchenAPI::Commands.ConfirmCancelTicketCommand, async out msg : Java::_types.Message);
+        undoBeginCancelTicket(@Event::_aspects.CommandMessage async in cm : KitchenAPI::Commands.UndoBeginCancelTicketCommand, async out msg : Java::_types.Message);
+        beginReviseTicket(@Event::_aspects.CommandMessage async in cm : KitchenAPI::Commands.BeginReviseTicketCommand, async out msg : Java::_types.Message);
+        undoBeginReviseTicket(@Event::_aspects.CommandMessage async in cm : KitchenAPI::Commands.UndoBeginReviseTicketCommand, async out msg : Java::_types.Message);
+        confirmReviseTicket(@Event::_aspects.CommandMessage async in cm : KitchenAPI::Commands.ConfirmReviseTicketCommand, async out msg : Java::_types.Message);
+    }
 }
