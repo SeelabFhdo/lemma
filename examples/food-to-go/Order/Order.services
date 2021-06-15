@@ -1,18 +1,25 @@
 import datatypes from "../Common/Common.data" as Common
+
 import datatypes from "Order.data" as OrderDomain
 import datatypes from "OrderAPI.data" as OrderAPI
+
+import microservices from "../Restaurant/Restaurant.services" as Restaurant
+import datatypes from "../Restaurant/RestaurantAPI.data" as RestaurantAPI
 import datatypes from "../Restaurant/Restaurant.data" as RestaurantDomain
+
 import technology from "../TechnologyModels/Java.technology" as Java
-import technology from "../TechnologyModels/Kafka.technology" as Kafka
 import technology from "../TechnologyModels/Spring.technology" as Spring
+import technology from "../TechnologyModels/Eventuate.technology" as Event
+
 
 @technology(Java)
-@technology(Kafka)
 @technology(Spring)
-@async(Kafka::_protocols.kafka)
-@sync(Spring::_protocols.rest)
-@Kafka::_aspects.BootstrapAddress("localhost:9092")
+@technology(Event)
 functional microservice org.example.OrderService {
+
+    required microservices {Restaurant::org.example.RestaurantService}
+
+    @sync(Spring::_protocols.rest)
     @endpoints(Spring::_protocols.rest: "/orders";)
     interface Orders {
         ---
@@ -21,8 +28,8 @@ functional microservice org.example.OrderService {
         ---
         @Spring::_aspects.Post
         create(
-            sync in request : OrderAPI::web.CreateOrderRequest,
-            sync out response : OrderAPI::web.CreateOrderResponse
+            sync in request : OrderAPI::Web.CreateOrderRequest,
+            sync out response : OrderAPI::Web.CreateOrderResponse
         );
 
         ---
@@ -36,7 +43,7 @@ functional microservice org.example.OrderService {
             sync in orderId : long,
 
             @Spring::_aspects.ResponseEntity
-            sync out response : OrderAPI::web.GetOrderResponse
+            sync out response : OrderAPI::Web.GetOrderResponse
         );
 
         ---
@@ -50,20 +57,18 @@ functional microservice org.example.OrderService {
             sync in orderId : long,
 
             @Spring::_aspects.ResponseEntity
-            sync out response : OrderAPI::web.GetOrderResponse,
+            sync out response : OrderAPI::Web.GetOrderResponse,
 
             @Spring::_aspects.HttpNotFound
             sync out fault notFound : int
         );
     }
-	//TODO THIS SHOULD BE EVENTUATE
+
+    // derived from DeliveryMessageHandlers.java
+    @async(Event::_protocols.eventuate)
+    @endpoints(Event::_protocols.eventuate: "net.chrisrichardson.ftgo.restaurantservice.domain.Restaurant";)
     interface OrderEventConsumer {
-        ---
-        Listen for a menu to be created
-        @required menuCreated Menu was created (uses RestaurantCreated as its envelope
-            to also get the name of the restaurant, for which the menu was created)
-        ---
-        @Kafka::_aspects.KafkaListener(group = "ftgo", topic = "ftgoTopic")
-        listenCreateMenu(async in menuCreated : RestaurantDomain::Restaurant.RestaurantCreated);
+        createMenu(@Event::_aspects.DomainEventEnvelope async in de : RestaurantDomain::API.RestaurantCreated);
+        reviseMenu(@Event::_aspects.DomainEventEnvelope async in de : RestaurantDomain::API.RestaurantMenuRevised);
     }
 }

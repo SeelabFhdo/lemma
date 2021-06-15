@@ -1,18 +1,102 @@
 import microservices from "Kitchen.services" as KitchenServices
+
 import technology from "../TechnologyModels/Java.technology" as Java
 import technology from "../TechnologyModels/Spring.technology" as Spring
 import technology from "../TechnologyModels/Eventuate.technology" as Event
 
+// Mappings for Kitchen.data
+
+@technology(Event)
+type KitchenServices::KitchenDomain::Domain.TicketCreatedEvent {
+    aspects {Event::_aspects.DomainEvent;}
+}
+
+@technology(Spring)
+@technology(Java)
+type KitchenServices::KitchenDomain::Domain.KitchenService {
+    op accept{
+        aspects { Spring::_aspects.Transactional; }
+        parameters {readyBy : Java::_types.LocalDateTime;}
+    }
+}
+
+
+@technology(Java)
+type KitchenServices::KitchenDomain::Domain.Ticket {
+    readyBy : Java::_types.LocalDateTime;
+    acceptTime : Java::_types.LocalDateTime;
+    preparingTime : Java::_types.LocalDateTime;
+    pickedUpTime : Java::_types.LocalDateTime;
+    readyForPickupTime : Java::_types.LocalDateTime;
+}
+
+// Mappings for KitchenAPI.data
+
 
 @technology(Event)
 @technology(Java)
-type KitchenServices::KitchenAPI::events.TicketAcceptedEvent {
-	aspects {Event::_aspects.DomainEvent;}
-	readyBy : Java::_types.LocalDateTime;
+type KitchenServices::KitchenAPI::Events.TicketAcceptedEvent {
+    aspects {Event::_aspects.DomainEvent;}
+    readyBy : Java::_types.LocalDateTime;
 }
 
 @technology(Event)
-type KitchenServices::KitchenAPI::events.TicketCancelled {
-	aspects {Event::_aspects.DomainEvent;}
+@technology(Java)
+type KitchenServices::KitchenAPI::Web.TicketAcceptance {
+    aspects {Event::_aspects.DomainEvent;}
+    readyBy : Java::_types.LocalDateTime;
 }
- 
+
+@technology(Event)
+type KitchenServices::KitchenAPI::Events.TicketCancelled {
+    aspects {Event::_aspects.DomainEvent;}
+}
+
+@technology(Event)
+type KitchenServices::KitchenAPI::Commands.CreateTicket {
+    aspects {Event::_aspects.Command("restaurantService");}
+}
+
+@technology(Event)
+type KitchenServices::KitchenAPI::Commands.BeginCancelTicketCommand {
+    aspects {Event::_aspects.Command;}
+}
+
+@technology(Event)
+type KitchenServices::KitchenAPI::Commands.BeginReviseTicketCommand {
+    aspects {Event::_aspects.Command;}
+}
+
+@technology(Event)
+type KitchenServices::KitchenAPI::Commands.CancelCreateTicket {
+    aspects {Event::_aspects.Command;}
+}
+@technology(Event)
+type KitchenServices::KitchenAPI::Commands.ChangeTicketLineItemQuantity {
+    aspects {Event::_aspects.Command;}
+}
+
+@technology(Event)
+type KitchenServices::KitchenAPI::Commands.ConfirmCancelTicketCommand {
+    aspects {Event::_aspects.Command;}
+}
+
+@technology(Event)
+type KitchenServices::KitchenAPI::Commands.ConfirmCreateTicket {
+    aspects {Event::_aspects.Command;}
+}
+
+@technology(Event)
+type KitchenServices::KitchenAPI::Commands.ConfirmReviseTicketCommand {
+    aspects {Event::_aspects.Command;}
+}
+
+@technology(Event)
+type KitchenServices::KitchenAPI::Commands.UndoBeginCancelTicketCommand {
+    aspects {Event::_aspects.Command;}
+}
+
+@technology(Event)
+type KitchenServices::KitchenAPI::Commands.UndoBeginReviseTicketCommand {
+    aspects {Event::_aspects.Command;}
+}

@@ -2,15 +2,38 @@ import datatypes from "../Common/Common.data" as Common
 import datatypes from "Restaurant.data" as RestaurantDomain
 import datatypes from "RestaurantAPI.data" as RestaurantAPI
 import technology from "../TechnologyModels/Java.technology" as Java
-import technology from "../TechnologyModels/Kafka.technology" as Kafka
 import technology from "../TechnologyModels/Spring.technology" as Spring
 
 @technology(Java)
 @technology(Spring)
-@sync(Spring::_protocols.rest)
 functional microservice org.example.RestaurantService {
 
-    interface kitchen {
-        test();
-	}
+
+    @sync(Spring::_protocols.rest)
+    @endpoints(Spring::_protocols.rest: "/restaurants";)
+    interface Restaurants {
+        ---
+        Create order
+        @required request Request to create the given restaurant object
+        ---
+        @Spring::_aspects.Post
+        create(
+            @Spring::_aspects.RequestBody sync in request : RestaurantDomain::Web.CreateRestaurantRequest,
+            sync out response : RestaurantDomain::Web.CreateRestaurantResponse
+        );
+
+        ---
+        Get Restaurant
+        @required restaurantId ID of the restaurant to retrieve
+        ---
+        @endpoints(Spring::_protocols.rest: "/{restaurantId}";)
+        @Spring::_aspects.Get
+        get(
+            @Spring::_aspects.PathVariable
+            sync in restaurantId : long,
+
+            @Spring::_aspects.ResponseEntity
+            sync out response : RestaurantDomain::Web.GetRestaurantResponse
+        );
+    }
 }

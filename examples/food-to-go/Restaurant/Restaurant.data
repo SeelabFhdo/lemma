@@ -1,7 +1,10 @@
 import datatypes from "../Common/Common.data" as Common
+import datatypes from "RestaurantAPI.data" as RestaurantAPI
 
-context Restaurant {
-    structure RestaurantCreated<domainEvent, valueObject> {
+context Domain {
+
+    structure Restaurant<entity> {
+        long id<identifier>,
         string name,
         RestaurantMenu menu
     }
@@ -10,30 +13,56 @@ context Restaurant {
         MenuItems menuItems
     }
 
-	list MenuItems { MenuItem i }
+    list MenuItems { MenuItem i }
 
     structure MenuItem<valueObject> {
         string id,
         string name,
         Common::Common.Money price
     }
-    
-    
+
+    structure RestaurantService<service> {
+        function Restaurant create(Web.CreateRestaurantRequest request),
+        function Restaurant findById(long restaurantId)
+    }
+}
+
+context Web {
+    structure CreateRestaurantRequest {
+        string name,
+          Common::Common.Address address,
+        Domain.RestaurantMenu menu
+    }
+
+    structure CreateRestaurantResponse {
+        long id
+    }
+    structure GetRestaurantResponse {
+        long id,
+        string name
+    }
+}
+
+context Events {
+    structure RestaurantCreated {
+        string name,
+        Common::Common.Address address,
+        Domain.RestaurantMenu menu
+    }
+    structure RestaurantMenuRevised {
+        Domain.RestaurantMenu menu
+    }
+}
 
 
-
-
-
-
-// TODO CHECK FOR EVENT CREATION
-// RestaurantDomainEventPublisher.java
-// RestaurantRepository.java
-// RestaurantServiceDomainConfiguration.java
-// RestaurantService.java
-// CreateRestaurantRequest.java
-
-
-
-    
-    
+// Due to occurring cyclic dependency put here instead of into RestaurantAPI
+context API {
+    structure RestaurantCreated {
+        string name,
+        Common::Common.Address address,
+        Domain.RestaurantMenu menu
+    }
+    structure RestaurantMenuRevised {
+        Domain.RestaurantMenu menu
+    }
 }

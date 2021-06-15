@@ -1,4 +1,86 @@
-context events {	
-    structure TicketAcceptedEvent {date readyBy}    
+//represents the domain data from kitchen-service-api accompanying the kitchen-service
+
+context Events {
+
+    structure KitchenServiceChannels {
+        immutable string COMMAND_CHANNEL = "kitchenService",
+        immutable string TICKET_EVENT_CHANNEL = "net.chrisrichardson.ftgo.kitchenservice.domain.Ticket"
+    }
+    structure TicketAcceptedEvent {date readyBy}
     structure TicketCancelled {}
+
+}
+
+context Web {
+    structure TicketAcceptance {
+        date readyBy
+    }
+}
+
+context Commands {
+    structure CreateTicket {
+      long orderId,
+      TicketDetails ticketDetails,
+      long restaurantId
+    }
+
+    list TicketDetails{TicketLineItem lineItems}
+
+    structure TicketLineItem {
+        int quantity,
+          string menuItemId,
+          string name
+    }
+
+    list TicketLineItemList {TicketLineItem item}
+
+    structure BeginCancelTicketCommand {
+        long restaurantId,
+        long orderId
+      }
+
+      structure BeginReviseTicketCommand {
+      long restaurantId,
+      RevisedOrderLineItemList revisedOrderLineItems,
+      long orderId
+    }
+
+    list RevisedOrderLineItemList{RevisedOrderLineItem revisedOrderLineItems}
+
+    structure RevisedOrderLineItem {
+        int quantity,
+        string menuItemId
+    }
+
+    structure CancelCreateTicket {
+        long ticketId
+      }
+
+      structure ChangeTicketLineItemQuantity {
+        long orderId
+      }
+
+      structure ConfirmCancelTicketCommand {
+        long restaurantId,
+        long orderId
+      }
+
+      structure ConfirmCreateTicket {
+          long ticketId
+      }
+
+    structure ConfirmReviseTicketCommand  {
+      long restaurantId,
+      RevisedOrderLineItemList revisedOrderLineItems,
+      long orderId
+    }
+
+    structure UndoBeginCancelTicketCommand {
+        long restaurantId,
+        long orderId
+    }
+    structure UndoBeginReviseTicketCommand {
+        long restaurantId,
+        long orderId
+    }
 }

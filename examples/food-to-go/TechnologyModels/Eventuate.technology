@@ -1,13 +1,20 @@
 technology Eventuate {
-	
-	protocols {
+
+    protocols {
         async eventuate data formats "application/json" default with format "application/json";
+        async eventuateSaga data formats "application/json" default with format "application/json";
     }
-		
+
     service aspects {
         aspect DomainEventEnvelope<singleval> for parameters{
-        	selector(protocol = eventuate);
+            selector(protocol = eventuate);
+        }
+        aspect CommandMessage<singleval> for parameters{
+            selector(protocol = eventuateSaga);
         }
         aspect DomainEvent<singleval> for types{}
+        aspect Command<singleval> for types{
+            string destination;
+        }
     }
 }

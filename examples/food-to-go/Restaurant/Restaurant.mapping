@@ -4,12 +4,23 @@ import technology from "../TechnologyModels/Spring.technology" as Spring
 import technology from "../TechnologyModels/Eventuate.technology" as Event
 
 @technology(Event)
-type RestaurantServices::RestaurantAPI::events.RestaurantCreated {
-	aspects {Event::_aspects.DomainEvent;}
+type RestaurantServices::RestaurantDomain::API.RestaurantCreated {
+    aspects {Event::_aspects.DomainEvent;}
 }
- 
+
 @technology(Event)
-type RestaurantServices::RestaurantAPI::events.RestaurantMenuRevised {
-	aspects {Event::_aspects.DomainEvent;}
-} 
- 
+type RestaurantServices::RestaurantDomain::Events.RestaurantMenuRevised {
+    aspects {Event::_aspects.DomainEvent;}
+}
+
+@technology(Event)
+type RestaurantServices::RestaurantDomain::Events.RestaurantCreated {
+    aspects {Event::_aspects.DomainEvent;}
+}
+
+@technology(Java)
+type RestaurantServices::RestaurantDomain::Domain.RestaurantService {
+    op findById {
+        return type {aspects {Java::_aspects.Optional;}}
+    }
+}

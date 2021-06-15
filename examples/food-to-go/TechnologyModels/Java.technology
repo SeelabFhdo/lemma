@@ -13,13 +13,15 @@ technology Java {
         primitive type Object based on unspecified default;
         primitive type BigDecimal;
         primitive type LocalDateTime;
+        primitive type Message;
 
         compatibility matrix {
             Double -> BigDecimal;
             Date -> LocalDateTime;
+            String -> Message;
         }
     }
-	
+
     service aspects {
         aspect Table<singleval> for types {
             string name<mandatory>;

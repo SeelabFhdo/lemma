@@ -1,5 +1,6 @@
 import datatypes from "../Common/Common.data" as Common
 import datatypes from "Delivery.data" as DeliveryDomain
+import datatypes from "DeliveryAPI.data" as DeliveryAPI
 
 import microservices from "../Kitchen/Kitchen.services" as Kitchen
 import datatypes from "../Kitchen/KitchenAPI.data" as KitchenAPI
@@ -9,9 +10,9 @@ import datatypes from "../Order/OrderAPI.data" as OrderAPI
 
 import microservices from "../Restaurant/Restaurant.services" as Restaurant
 import datatypes from "../Restaurant/RestaurantAPI.data" as RestaurantAPI
+import datatypes from "../Restaurant/Restaurant.data" as RestaurantDomain
 
 import technology from "../TechnologyModels/Java.technology" as Java
-import technology from "../TechnologyModels/Kafka.technology" as Kafka
 import technology from "../TechnologyModels/Spring.technology" as Spring
 import technology from "../TechnologyModels/Eventuate.technology" as Event
 
@@ -19,29 +20,30 @@ import technology from "../TechnologyModels/Eventuate.technology" as Event
 @technology(Spring)
 @technology(Event)
 functional microservice org.example.DeliveryService {
-	required microservices {
-		Kitchen::org.example.KitchenService,
-		Order::org.example.OrderService,
-		Restaurant::org.example.RestaurantService
-	}
-	
-	@async(Event::_protocols.eventuate)
-	interface events {			
-		@endpoints(Event::_protocols.eventuate: "RESTAURANT_EVENT_CHANNEL";)
-		handleRestaurantCreated(@Event::_aspects.DomainEventEnvelope async in dee : RestaurantAPI::events.RestaurantCreated);
-		
-		@endpoints(Event::_protocols.eventuate: "ORDER_EVENT_CHANNEL";)
-		handleOrderCreatedEvent(@Event::_aspects.DomainEventEnvelope async in dee : OrderAPI::events.OrderCreatedEvent);
-		
-		@endpoints(Event::_protocols.eventuate: "TICKET_EVENT_CHANNEL";) 
-		handleTicketAcceptedEvent(@Event::_aspects.DomainEventEnvelope async in dee : KitchenAPI::events.TicketAcceptedEvent);
-		
-		@endpoints(Event::_protocols.eventuate: "TICKET_EVENT_CHANNEL";)
-		handleTicketCancelledEvent(@Event::_aspects.DomainEventEnvelope async in dee : KitchenAPI::events.TicketCancelled);
-	} 
-	
-	@sync(Spring::_protocols.rest)
-    interface deliveries {
+    required microservices {
+        Kitchen::org.example.KitchenService,
+        Order::org.example.OrderService,
+        Restaurant::org.example.RestaurantService
+    }
+
+    // derived from DeliveryMessageHandlers.java
+    @async(Event::_protocols.eventuate)
+    interface DeliveryMessageHandlers {
+        @endpoints(Event::_protocols.eventuate: "net.chrisrichardson.ftgo.restaurantservice.domain.Restaurant";)
+        handleRestaurantCreated(@Event::_aspects.DomainEventEnvelope async in dee : RestaurantDomain::API.RestaurantCreated);
+
+        @endpoints(Event::_protocols.eventuate: "net.chrisrichardson.ftgo.orderservice.domain.Order";)
+        handleOrderCreatedEvent(@Event::_aspects.DomainEventEnvelope async in dee : OrderAPI::Events.OrderCreatedEvent);
+
+        @endpoints(Event::_protocols.eventuate: "net.chrisrichardson.ftgo.kitchenservice.domain.Ticket";)
+        handleTicketAcceptedEvent(@Event::_aspects.DomainEventEnvelope async in dee : KitchenAPI::Events.TicketAcceptedEvent);
+
+        @endpoints(Event::_protocols.eventuate: "net.chrisrichardson.ftgo.kitchenservice.domain.Ticket";)
+        handleTicketCancelledEvent(@Event::_aspects.DomainEventEnvelope async in dee : KitchenAPI::Events.TicketCancelled);
+    }
+
+    @sync(Spring::_protocols.rest)
+    interface Deliveries {
         ---
         Update Courier Location
         @required courierId id of courier
@@ -51,7 +53,7 @@ functional microservice org.example.DeliveryService {
         @Spring::_aspects.Post
         updateCourierLocation(
             @Spring::_aspects.PathVariable sync in courierId : long,
-            @Spring::_aspects.RequestBody sync in availability : DeliveryDomain::API.CourierAvailability
+            @Spring::_aspects.RequestBody sync in availability : DeliveryAPI::Web.CourierAvailability
         );
 
         ---
@@ -65,7 +67,7 @@ functional microservice org.example.DeliveryService {
             sync in deliveryId : long,
 
             @Spring::_aspects.ResponseEntity
-            sync out response : DeliveryDomain::API.DeliveryStatus
+            sync out response : DeliveryAPI::Web.DeliveryStatus
         );
-	}
+    }
 }

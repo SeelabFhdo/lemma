@@ -5,7 +5,7 @@ technology Spring {
 
     service aspects {
         aspect Transactional<singleval> for types;
-        aspect Transactional<singleval> for domainOperations; 
+        aspect Transactional<singleval> for domainOperations;
         aspect Get<singleval> for operations {
             selector(protocol = rest);
         }

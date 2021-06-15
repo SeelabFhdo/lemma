@@ -1,8 +1,77 @@
 import datatypes from "../Common/Common.data" as Common
+import datatypes from "KitchenAPI.data" as KitchenAPI
 
-context Kitchen {
- structure Dummy {
- 	
+context Domain {
+ structure KitchenService<service> {
+     procedure createMenu(long id, RestaurantMenu menu),
+     procedure reviseMenu(long ticketId, RestaurantMenu revisedMenu),
+     function Ticket createTicket(long restaurantId, long ticketId, KitchenAPI::Commands.TicketDetails ticketDetails),
+     procedure accept(long ticketId, date readyBy),
+     procedure confirmCreateTicket(long ticketId),
+     procedure cancelCreateTicket(long ticketId),
+     procedure cancelTicket(long restaurantId, long ticketId),
+     procedure confirmCancelTicket(long restaurantId, long ticketId),
+     procedure undoCancel(long restaurantId, long ticketId),
+     procedure beginReviseOrder(long restaurantId, long ticketId, KitchenAPI::Commands.RevisedOrderLineItemList revisedOrderLineItems),
+     procedure undoBeginReviseOrder(long restaurantId, long ticketId),
+     procedure confirmReviseTicket(long restaurantId, long ticketId, KitchenAPI::Commands.RevisedOrderLineItemList revisedOrderLineItems)
  }
-}
 
+ structure MenuItem {
+      string id,
+      string name,
+      Common::Common.Money price
+  }
+  list RestaurantMenu {MenuItem items}
+
+ structure Restaurant<aggregate, entity> {
+      string id<identifier>,
+      string name,
+      Common::Common.Money price,
+      RestaurantMenu menuItems<part>
+  }
+
+ structure TicketCreatedEvent {
+     long id,
+     KitchenAPI::Commands.TicketDetails details
+ }
+  structure TicketPickedUpEvent {}
+
+  structure TicketPreparationCompletedEvent {}
+
+  structure TicketPreparationStartedEvent {}
+
+  structure TicketRevised {}
+
+  enum TicketState {
+      CREATE_PENDING, AWAITING_ACCEPTANCE, ACCEPTED, PREPARING, READY_FOR_PICKUP, PICKED_UP, CANCEL_PENDING, CANCELLED, REVISION_PENDING
+  }
+
+ structure Ticket<entity> {
+     long id<identifier>,
+     TicketState state,
+     TicketState previousState,
+     long restaurantId,
+     KitchenAPI::Commands.TicketLineItemList lineItems,
+    date readyBy,
+    date acceptTime,
+    date preparingTime,
+    date pickedUpTime,
+    date readyForPickupTime
+ }
+
+
+ structure CancelCommand {
+    long orderId,
+    boolean force
+ }
+
+  structure ChangeLineItemQuantityCommand {}
+
+
+}
+context Web {
+    structure GetRestaurantResponse {
+        long restaurantId
+    }
+}

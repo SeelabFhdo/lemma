@@ -1,16 +1,14 @@
 import datatypes from "../Common/Common.data" as Common
 import datatypes from "Consumer.data" as ConsumerDomain
 import technology from "../TechnologyModels/Java.technology" as Java
-import technology from "../TechnologyModels/Kafka.technology" as Kafka
 import technology from "../TechnologyModels/Spring.technology" as Spring
+import technology from "../TechnologyModels/Eventuate.technology" as Event
 
 @technology(Java)
-@technology(Kafka)
 @technology(Spring)
-@async(Kafka::_protocols.kafka)
-@sync(Spring::_protocols.rest)
-@Kafka::_aspects.BootstrapAddress("localhost:9092")
+@technology(Event)
 functional microservice org.example.ConsumerService {
+    @sync(Spring::_protocols.rest)
     @endpoints(Spring::_protocols.rest: "/consumers";)
     interface Consumers {
         ---
@@ -36,5 +34,12 @@ functional microservice org.example.ConsumerService {
             @Spring::_aspects.ResponseEntity
             sync out response : ConsumerDomain::Web.GetConsumerResponse
         );
+    }
+
+    // derived from ConsumerServiceCommandHandlers
+    @async(Event::_protocols.eventuateSaga)
+    @endpoints(Event::_protocols.eventuateSaga: "consumerService";)
+    interface ConsumerServiceCommandHandlers {
+        validateOrderForConsumer(@Event::_aspects.CommandMessage async in cm : ConsumerDomain::API.ValidateOrderByConsumer, async out msg : Java::_types.Message);
     }
 }

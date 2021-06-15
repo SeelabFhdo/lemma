@@ -1,7 +1,24 @@
 import microservices from "Account.services" as AccountServices
 import technology from "../TechnologyModels/Java.technology" as Java
+import technology from "../TechnologyModels/Spring.technology" as Spring
+import technology from "../TechnologyModels/Eventuate.technology" as Event
 
 @technology(Java)
 type AccountServices::Common::Common.Money {
     amount : Java::_types.BigDecimal;
+}
+
+@technology(Event)
+type AccountServices::AccountDomain::API.AuthorizeCommand {
+    aspects {Event::_aspects.Command;}
+}
+
+@technology(Event)
+type AccountServices::AccountDomain::API.ReverseAuthorizationCommand {
+    aspects {Event::_aspects.Command;}
+}
+
+@technology(Event)
+type AccountServices::AccountDomain::API.ReviseAuthorization {
+    aspects {Event::_aspects.Command;}
 }
