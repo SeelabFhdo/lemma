@@ -17,8 +17,8 @@ buildscript {
     val extractedEclipseDependenciesDir = project.file("$buildDir/extractedEclipseDependencies")
     extra.set("extractedEclipseDependenciesDir", extractedEclipseDependenciesDir)
 
-    extra.set("eclipseVersion", "4.15.0")
-    extra.set("eclipseOclVersion", "6.9.0")
+    //extra.set("eclipseVersion", "4.19.0")
+    extra.set("eclipseOclVersion", "6.15.0")
 }
 
 /**
@@ -33,10 +33,20 @@ p2AsMaven {
     val eclipseOclVersion: String by rootProject.extra
 
     group("eclipse-deps") {
-        repo("https://archive.eclipse.org/modeling/mdt/ocl/updates/releases/$eclipseOclVersion/")
+        repo("https://download.eclipse.org/modeling/mdt/ocl/updates/releases/$eclipseOclVersion/")
         iu("org.eclipse.ocl.ecore")
 
-        repoEclipse(eclipseVersion)
+        // Usually, you would use the following to add an official Eclipse release to the group using the
+        // com.diffplug.p2.asmaven plugin:
+        //      repoEclipse(eclipseVersion)
+        // From the given eclipseVersion, the plugin will perform a mapping to an Eclipse relase URL
+        // (cf. https://github.com/diffplug/goomph/blob/967ed7c3a96c33fda749f15f2b3d10065c32e359/src/main/java/com/diffplug/gradle/pde/EclipseRelease.java#L74).
+        // However, all versions of com.diffplug.p2.asmaven greater 3.27.0 (tested up to 3.30.0) currently result in an
+        // InvocationTargetException caused by an NPE (probably due to changes in Eclise release dependencies; cf.
+        // https://github.com/diffplug/goomph/pull/145). Consequently, we are stuck to com.diffplug.p2.asmaven 3.27.0
+        // for now. To still be able to depend on Eclipse 4.19 (2021-03), we therefore have to hardwire the Eclipse
+        // release repository as follows:
+        repo("https://download.eclipse.org/eclipse/updates/4.19/R-4.19-202103031800/")
         iu("org.eclipse.emf.common")
         iu("org.eclipse.emf.ecore")
     }

@@ -119,6 +119,15 @@
                         <artifactId>org.eclipse.xtext.xbase</artifactId>
                         <version>${xtext-version}</version>
                     </dependency>
+                    <!--
+                        Fix version of Xtext Util
+                        (cf. https://www.eclipse.org/forums/index.php/t/1107630/)
+                    -->
+                    <dependency>
+                        <groupId>org.eclipse.xtext</groupId>
+                        <artifactId>org.eclipse.xtext.util</artifactId>
+                        <version>${xtext-version}</version>
+                    </dependency>
                     <dependency>
                         <groupId>org.eclipse.xtext</groupId>
                         <artifactId>xtext-antlr-generator</artifactId>

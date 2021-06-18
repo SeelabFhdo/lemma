@@ -10,7 +10,6 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
 import org.eclipse.ocl.ecore.EcoreEnvironmentFactory
 import org.eclipse.ocl.ecore.OCL
 import java.lang.ClassCastException
-import kotlin.reflect.KClass
 
 /**
  * Singleton facade with convenience methods for executing OCL queries on models.
@@ -36,7 +35,7 @@ object OclQueryHelper {
      * OCL Collection instance
      */
     fun queryCollection(modelFilePath: String, ePackageInstance: EPackage, query: String)
-            = query(modelFilePath, ePackageInstance, query, Collection::class.java)
+        = query(modelFilePath, ePackageInstance, query, Collection::class.java)
 
     /**
      * Execute an OCL query on an EMF [Resource] instance

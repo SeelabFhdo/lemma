@@ -9,10 +9,10 @@ Require-Bundle: org.eclipse.emf.ecore,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.xtend.lib,
  org.eclipse.xtend.lib.macro,
- org.eclipse.xtext;bundle-version="2.21.0",
+ org.eclipse.xtext;bundle-version="2.25.0",
  de.fhdo.lemma.data.datadsl.metamodel,
- org.eclipse.core.resources;bundle-version="3.13.700",
- org.eclipse.core.runtime;bundle-version="3.17.100"
+ org.eclipse.core.resources;bundle-version="3.14.0",
+ org.eclipse.core.runtime;bundle-version="3.20.100"
 Export-Package: de.fhdo.lemma.utils
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Automatic-Module-Name: de.fhdo.lemma.utils

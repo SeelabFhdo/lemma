@@ -45,7 +45,7 @@
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <build-helper-maven-plugin-version>3.1.0</build-helper-maven-plugin-version>
+        <build-helper-maven-plugin-version>3.2.0</build-helper-maven-plugin-version>
         <data-extractor-version>${project.version}</data-extractor-version>
         <data-metamodel-version>${project.version}</data-metamodel-version>
         <eclipse-version>2021-03</eclipse-version>
@@ -56,7 +56,7 @@
         <mapping-metamodel-version>${project.version}</mapping-metamodel-version>
         <maven-clean-plugin-version>3.1.0</maven-clean-plugin-version>
         <maven-compiler-plugin-version>3.8.1</maven-compiler-plugin-version>
-        <tycho-version>1.7.0</tycho-version>
+        <tycho-version>2.3.0</tycho-version>
     </properties>
 
     <repositories>

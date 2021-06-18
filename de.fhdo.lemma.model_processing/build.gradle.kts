@@ -15,14 +15,14 @@ repositories {
 buildscript {
     extra.set("classgraphVersion", "4.8.35")
     extra.set("coroutinesVersion", "1.1.1")
-    extra.set("equinoxVersion", "3.11.0")
+    extra.set("equinoxVersion", "3.14.100")
     extra.set("jansiVersion", "1.17.1")
-    extra.set("jdtCoreVersion", "3.21.0")
+    extra.set("jdtCoreVersion", "3.25.0")
     extra.set("lemmaEclipsePluginsVersion", version)
     extra.set("lsp4jVersion", "0.9.0")
     extra.set("oclVersion", version)
     extra.set("picocliVersion", "3.9.3")
-    extra.set("xtextVersion", "2.21.0")
+    extra.set("xtextVersion", "2.25.0")
 }
 
 dependencies {
@@ -51,7 +51,7 @@ dependencies {
     implementation("info.picocli:picocli:$picocliVersion")
     implementation("org.eclipse.xtext:org.eclipse.xtext.ecore:$xtextVersion")
 
-    // Workaround for https://github.com/eclipse/xtext/issues/1231. Remove with upgrade to Xtext 2.15.
+    // Workaround for https://github.com/eclipse/xtext/issues/1231
     implementation("org.eclipse.jdt:org.eclipse.jdt.core:$jdtCoreVersion")
     implementation("org.eclipse.platform:org.eclipse.equinox.common:$equinoxVersion")
 }

@@ -18,8 +18,9 @@
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
+        <atl-version>4.4.0</atl-version>
         <eclipse-version>2021-03</eclipse-version>
-        <tycho-version>1.7.0</tycho-version>
+        <tycho-version>2.3.0</tycho-version>
     </properties>
 
     <repositories>
@@ -27,6 +28,12 @@
             <id>eclipse</id>
             <layout>p2</layout>
             <url>http://download.eclipse.org/releases/${eclipse-version}/</url>
+        </repository>
+
+        <repository>
+            <id>ATL Update Site</id>
+            <layout>p2</layout>
+            <url>http://download.eclipse.org/mmt/atl/updates/releases/${atl-version}/</url>
         </repository>
     </repositories>
 

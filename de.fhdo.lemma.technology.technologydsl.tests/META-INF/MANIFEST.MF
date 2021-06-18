@@ -10,7 +10,7 @@ Require-Bundle: de.fhdo.lemma.technology.technologydsl,
  org.junit;bundle-version="4.13.0",
  org.eclipse.xtext.testing,
  org.eclipse.xtext.xbase.testing,
- org.eclipse.xtext.xbase.lib;bundle-version="2.21.0"
+ org.eclipse.xtext.xbase.lib;bundle-version="2.25.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: de.fhdo.lemma.technology.tests;x-internal=true
 Import-Package: org.hamcrest.core,

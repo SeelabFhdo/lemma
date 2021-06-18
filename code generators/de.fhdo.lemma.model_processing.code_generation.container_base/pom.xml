@@ -6,16 +6,16 @@
     <artifactId>de.fhdo.lemma.model_processing.code_generation.container_base</artifactId>
     <version>0.8.0-SNAPSHOT</version>
     <name>Docker Code Generator</name>
-    <description>A LEMMA code generator for dockerfiles.</description>
+    <description>A LEMMA code generator for container configurations.</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <java.version>11</java.version>
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
-        <xtend.version>2.20.0</xtend.version>
+        <xtend.version>2.25.0</xtend.version>
         <snakeyaml.version>1.21</snakeyaml.version>
-        <maven-assembly.verion>3.3.0</maven-assembly.verion>
+        <maven-assembly.version>3.3.0</maven-assembly.version>
     </properties>
 
     <dependencies>
@@ -114,7 +114,7 @@
 
             <plugin>
               <artifactId>maven-assembly-plugin</artifactId>
-              <version>${maven-assembly.verion}</version>
+              <version>${maven-assembly.version}</version>
               <configuration>
                <appendAssemblyId>false</appendAssemblyId>
                 <finalName>${project.artifactId}-${project.version}-standalone</finalName>

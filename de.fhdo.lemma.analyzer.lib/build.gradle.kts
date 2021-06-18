@@ -13,7 +13,6 @@ repositories {
 }
 
 buildscript {
-    extra.set("emfVersion", "2.18.0")
     extra.set("jgraphtVersion", "1.5.0")
     extra.set("lemmaEclipsePluginsVersion", version)
 }
@@ -29,7 +28,7 @@ dependencies {
     implementation("de.fhdo.lemma.intermediate:de.fhdo.lemma.service.intermediate.metamodel:" +
         lemmaEclipsePluginsVersion)
     implementation("de.fhdo.lemma.model_processing.utils:de.fhdo.lemma.model_processing.utils:" +
-            lemmaEclipsePluginsVersion)
+        lemmaEclipsePluginsVersion)
     implementation("de.fhdo.lemma.technology.technologydsl:de.fhdo.lemma.technology.technologydsl.metamodel:" +
         lemmaEclipsePluginsVersion)
     implementation("org.jgrapht:jgrapht-core:$jgraphtVersion")
