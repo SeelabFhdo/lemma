@@ -1,0 +1,33 @@
+import datatypes from "../Common/Common.data" as Common
+
+context Domain {
+    structure Account {}
+
+    structure AccountingService<service> {
+        procedure create(string aggregateId)
+    }
+}
+
+context Web {
+    structure GetAccountResponse {
+        string accountId
+    }
+}
+
+context API {
+    structure AuthorizeCommand {
+        long consumerId,
+        long orderId,
+        Common::Common.Money orderTotal
+    }
+    structure ReverseAuthorizationCommand {
+        long consumerId,
+        long orderId,
+        Common::Common.Money orderTotal
+    }
+    structure ReviseAuthorization {
+        long consumerId,
+        long orderId,
+        Common::Common.Money orderTotal
+    }
+}

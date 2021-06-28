@@ -1,0 +1,40 @@
+import datatypes from "../Common/Common.data" as Common
+
+context Domain {
+    structure Consumer<aggregate, entity> {
+        long id<identifier>,
+        immutable Common::Common.PersonName name<part>,
+        procedure validateOrderByConsumer(Common::Common.Money orderTotal)
+    }
+
+    structure ConsumerService<service> {
+        procedure validateOrderForConsumer(long consumerId, Common::Common.Money orderTotal),
+        function Consumer create(Common::Common.PersonName name),
+        function Consumer findById(long consumerId)
+    }
+
+    structure ConsumerCreated {}
+}
+
+context Web {
+    structure CreateConsumerResponse {
+        long consumerId<identifier>
+    }
+
+    structure GetConsumerResponse extends CreateConsumerResponse {
+        Common::Common.PersonName name
+    }
+
+    structure CreateConsumerRequest {
+        Common::Common.PersonName name
+    }
+
+}
+
+context API {
+    structure ValidateOrderByConsumer {
+        long consumerId,
+        long orderId,
+          Common::Common.Money orderTotal
+    }
+}

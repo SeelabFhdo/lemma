@@ -1,0 +1,25 @@
+import microservices from "Consumer.services" as ConsumerServices
+import technology from "../TechnologyModels/Java.technology" as Java
+import technology from "../TechnologyModels/Spring.technology" as Spring
+import technology from "../TechnologyModels/Eventuate.technology" as Event
+
+
+@technology(Java)
+type ConsumerServices::Common::Common.Money {
+    amount : Java::_types.BigDecimal;
+}
+
+@technology(Event)
+type ConsumerServices::ConsumerDomain::Domain.ConsumerCreated {
+    aspects {Event::_aspects.DomainEvent;}
+}
+
+
+@technology(Java)
+@technology(Spring)
+type ConsumerServices::ConsumerDomain::Domain.ConsumerService {
+    op create { aspects { Spring::_aspects.Transactional; } }
+    op findById {
+        return type { aspects {Java::_aspects.Optional;}}
+    }
+}

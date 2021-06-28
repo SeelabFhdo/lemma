@@ -1,0 +1,21 @@
+context Common {
+    structure Money<valueObject> {
+        immutable double amount,
+        function Money add(Money delta),
+        function boolean isGreaterThanOrEqual(Money other),
+        function Money multiply(int x)
+    }
+
+    structure PersonName<valueObject> {
+        immutable string firstName,
+        immutable string lastName
+    }
+
+    structure Address<valueObject> {
+        string street1,
+        string street2,
+        string city,
+        string state,
+        string zip
+    }
+}

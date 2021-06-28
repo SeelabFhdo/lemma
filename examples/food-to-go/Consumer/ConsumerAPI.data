@@ -1,0 +1,5 @@
+context API {
+    structure ConsumerServiceChannels {
+        immutable string COMMAND_CHANNEL = "consumerService"
+    }
+}

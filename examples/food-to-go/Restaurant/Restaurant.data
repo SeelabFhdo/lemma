@@ -1,0 +1,68 @@
+import datatypes from "../Common/Common.data" as Common
+import datatypes from "RestaurantAPI.data" as RestaurantAPI
+
+context Domain {
+
+    structure Restaurant<entity> {
+        long id<identifier>,
+        string name,
+        RestaurantMenu menu
+    }
+
+    structure RestaurantMenu<valueObject> {
+        MenuItems menuItems
+    }
+
+    list MenuItems { MenuItem i }
+
+    structure MenuItem<valueObject> {
+        string id,
+        string name,
+        Common::Common.Money price
+    }
+
+    structure RestaurantService<service> {
+        function Restaurant create(Web.CreateRestaurantRequest request),
+        function Restaurant findById(long restaurantId)
+    }
+}
+
+context Web {
+    structure CreateRestaurantRequest {
+        string name,
+          Common::Common.Address address,
+        Domain.RestaurantMenu menu
+    }
+
+    structure CreateRestaurantResponse {
+        long id
+    }
+    structure GetRestaurantResponse {
+        long id,
+        string name
+    }
+}
+
+context Events {
+    structure RestaurantCreated {
+        string name,
+        Common::Common.Address address,
+        Domain.RestaurantMenu menu
+    }
+    structure RestaurantMenuRevised {
+        Domain.RestaurantMenu menu
+    }
+}
+
+
+// Due to occurring cyclic dependency put here instead of into RestaurantAPI
+context API {
+    structure RestaurantCreated {
+        string name,
+        Common::Common.Address address,
+        Domain.RestaurantMenu menu
+    }
+    structure RestaurantMenuRevised {
+        Domain.RestaurantMenu menu
+    }
+}

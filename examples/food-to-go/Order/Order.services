@@ -1,0 +1,74 @@
+import datatypes from "../Common/Common.data" as Common
+
+import datatypes from "Order.data" as OrderDomain
+import datatypes from "OrderAPI.data" as OrderAPI
+
+import microservices from "../Restaurant/Restaurant.services" as Restaurant
+import datatypes from "../Restaurant/RestaurantAPI.data" as RestaurantAPI
+import datatypes from "../Restaurant/Restaurant.data" as RestaurantDomain
+
+import technology from "../TechnologyModels/Java.technology" as Java
+import technology from "../TechnologyModels/Spring.technology" as Spring
+import technology from "../TechnologyModels/Eventuate.technology" as Event
+
+
+@technology(Java)
+@technology(Spring)
+@technology(Event)
+functional microservice org.example.OrderService {
+
+    required microservices {Restaurant::org.example.RestaurantService}
+
+    @sync(Spring::_protocols.rest)
+    @endpoints(Spring::_protocols.rest: "/orders";)
+    interface Orders {
+        ---
+        Create order
+        @required request Request
+        ---
+        @Spring::_aspects.Post
+        create(
+            sync in request : OrderAPI::Web.CreateOrderRequest,
+            sync out response : OrderAPI::Web.CreateOrderResponse
+        );
+
+        ---
+        Get order
+        @required orderId ID of the order to retrieve
+        ---
+        @endpoints(Spring::_protocols.rest: "/{orderId}";)
+        @Spring::_aspects.Get
+        getOrder(
+            @Spring::_aspects.PathVariable
+            sync in orderId : long,
+
+            @Spring::_aspects.ResponseEntity
+            sync out response : OrderAPI::Web.GetOrderResponse
+        );
+
+        ---
+        Cancel order
+        @required orderId ID of the order to cancel
+        ---
+        @endpoints(Spring::_protocols.rest: "/{orderId}/cancel";)
+        @Spring::_aspects.Post
+        cancel(
+            @Spring::_aspects.PathVariable
+            sync in orderId : long,
+
+            @Spring::_aspects.ResponseEntity
+            sync out response : OrderAPI::Web.GetOrderResponse,
+
+            @Spring::_aspects.HttpNotFound
+            sync out fault notFound : int
+        );
+    }
+
+    // derived from DeliveryMessageHandlers.java
+    @async(Event::_protocols.eventuate)
+    @endpoints(Event::_protocols.eventuate: "net.chrisrichardson.ftgo.restaurantservice.domain.Restaurant";)
+    interface OrderEventConsumer {
+        createMenu(@Event::_aspects.DomainEventEnvelope async in de : RestaurantDomain::API.RestaurantCreated);
+        reviseMenu(@Event::_aspects.DomainEventEnvelope async in de : RestaurantDomain::API.RestaurantMenuRevised);
+    }
+}

@@ -1,0 +1,71 @@
+import datatypes from "../Common/Common.data" as Common
+
+context Web {
+    structure CreateOrderRequest<valueObject> {
+        long consumerId,
+        long restaurantId,
+        LineItems lineItems
+    }
+
+    structure LineItem {
+        string menuItemId,
+        int quantity
+    }
+
+    list LineItems { LineItem i }
+
+    structure CreateOrderResponse<valueObject> {
+        long orderId
+    }
+
+    structure GetOrderResponse<valueObject> {
+        long orderId,
+        string state,
+        Common::Common.Money orderTotal
+    }
+}
+
+context Events {
+
+    structure OrderServiceChannels {
+        immutable string COMMAND_CHANNEL = "orderService",
+        immutable string ORDER_EVENT_CHANNEL = "net.chrisrichardson.ftgo.orderservice.domain.Order"
+    }
+
+    structure OrderAuthorized{}
+
+    structure OrderCancelled{}
+
+    structure OrderCreatedEvent{
+        OrderDetails orderDetails,
+        Common::Common.Address deliveryAddress,
+        string restaurantName
+    }
+
+    structure OrderDetails{
+        OrderLineItemList lineItems,
+        Common::Common.Money orderTotal,
+        long restaurantId,
+        long consumerId
+    }
+
+    list OrderLineItemList {OrderLineItem lineItem}
+
+    structure OrderLineItem{
+        int quantity,
+        string menuItemId,
+        string name,
+        Common::Common.Money price
+    }
+
+    structure OrderRejected{}
+
+    enum OrderState{
+        APPROVAL_PENDING,
+        APPROVED,
+        REJECTED,
+        CANCEL_PENDING,
+        CANCELLED,
+        REVISION_PENDING
+    }
+}

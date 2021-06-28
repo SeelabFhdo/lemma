@@ -1,0 +1,52 @@
+import datatypes from "../Common/Common.data" as Common
+
+import datatypes from "../Consumer/Consumer.data" as ConsumerDomain
+import datatypes from "Account.data" as AccountDomain
+
+import microservices from "../Consumer/Consumer.services" as Consumer
+
+import technology from "../TechnologyModels/Java.technology" as Java
+import technology from "../TechnologyModels/Spring.technology" as Spring
+import technology from "../TechnologyModels/Eventuate.technology" as Event
+
+@technology(Java)
+@technology(Spring)
+@technology(Event)
+functional microservice org.example.AccountService {
+    required microservices {Consumer::org.example.ConsumerService}
+
+    @sync(Spring::_protocols.rest)
+    @endpoints(Spring::_protocols.rest: "/accounts";)
+    interface Accounts {
+        ---
+        Get account
+        @required accountId ID of the consumer to retrieve
+        ---
+        @endpoints(Spring::_protocols.rest: "/{accountId}";)
+        @Spring::_aspects.Get
+        getAccount(
+            @Spring::_aspects.PathVariable
+            sync in accountId : long,
+
+            @Spring::_aspects.ResponseEntity
+            sync out response : AccountDomain::Web.GetAccountResponse
+        );
+    }
+
+
+    // derived from AccountingEventConsumer
+    @async(Event::_protocols.eventuate)
+    @endpoints(Event::_protocols.eventuate: "net.chrisrichardson.ftgo.consumerservice.domain.Consumer";)
+    interface AccountingEventConsumer {
+        createAccount(@Event::_aspects.DomainEventEnvelope async in dee : ConsumerDomain::Domain.ConsumerCreated);
+    }
+
+    // derived from AccountingServiceCommandHandler
+    @async(Event::_protocols.eventuateSaga)
+    @endpoints(Event::_protocols.eventuateSaga: "accountingService";)
+    interface AccountingServiceCommandHandler {
+        authorize(@Event::_aspects.CommandMessage async in cm : AccountDomain::API.AuthorizeCommand);
+        reverseAuthorization(@Event::_aspects.CommandMessage async in cm : AccountDomain::API.ReverseAuthorizationCommand);
+        reviseAuthorization(@Event::_aspects.CommandMessage async in cm : AccountDomain::API.ReviseAuthorization);
+    }
+}

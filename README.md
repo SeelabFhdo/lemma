@@ -74,6 +74,7 @@ As an alternative to the Eclipse updatesite, you may also download the LEMMA Ecl
 We provide three examples in the form of a set of LEMMA models that describe coherent microservice architectures including their domain data, microservice APIs, and their operation. You can find the modeling examples on GitHub:
 - [Parking Space Example](https://github.com/SeelabFhdo/lemma/tree/master/examples/parking-spaces)
 - [E-Vehicle Charging Example](https://github.com/SeelabFhdo/lemma/tree/master/examples/e-vehicle-charging)
+- [Food to Go Example](https://github.com/SeelabFhdo/lemma/tree/master/examples/food-to-go)
 - [Insurance Company Example](https://github.com/SeelabFhdo/lemma/tree/master/examples/insurance-company)
 
 ## Documentation

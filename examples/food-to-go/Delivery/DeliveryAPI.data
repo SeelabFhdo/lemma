@@ -1,0 +1,35 @@
+context Web {
+    structure ActionInfo {
+        DeliveryActionType type
+    }
+
+    structure CourierAvailability {
+        boolean available
+    }
+
+    enum DeliveryActionType {
+        PICKUP,
+        DROPOFF
+    }
+
+    structure DeliveryInfo {
+        long id,
+        DeliveryState state
+    }
+
+    enum DeliveryState {
+        CANCELLED,
+        SCHEDULED,
+        PENDING
+    }
+
+    structure DeliveryStatus {
+        DeliveryInfo deliveryInfo,
+        long assignedCourier,
+        ActionInfoList courierActions
+    }
+
+    list ActionInfoList {
+        ActionInfo infos
+    }
+}
