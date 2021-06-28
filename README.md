@@ -21,8 +21,8 @@
       alt="Build" />
   </a>
   <!-- Eclipse -->
-  <a href="https://img.shields.io/badge/eclipse-%3E%3D%202020--09-green">
-    <img src="https://img.shields.io/badge/eclipse-%3E%3D%202020--09-green?style=flat-square"
+  <a href="https://img.shields.io/badge/eclipse-%3E%3D%202021--03-green">
+    <img src="https://img.shields.io/badge/eclipse-%3E%3D%202021--03-green?style=flat-square"
       alt="Eclipse" />
   </a>
   <!-- License -->
@@ -59,7 +59,7 @@
 - **designed for extensibility:** interested in extending LEMMA with your own super cool framework for microservice development or deployment? drop us an [e-mail](mailto:florian.rademacher@fh-dortmund.de)
 
 ## Installation
-LEMMA works with any Eclipse version greater or equal 2020-09. However, your Eclipse installation must meet the following [prerequisites](#prerequisites). If it does, you can either install LEMMA's latest release from its Eclipse updatesite or as a set of dropins.
+LEMMA works with any Eclipse version greater or equal 2021-03. However, your Eclipse installation must meet the following [prerequisites](#prerequisites). If it does, you can either install LEMMA's latest release from its Eclipse updatesite or as a set of dropins.
 
 ### Prerequisites
 - Optional: To leverage LEMMA's model processors, LEMMA requires the installation of the Eclipse plugins for the [ATL Transformation Language and EMFTVM](https://www.eclipse.org/atl/). You may install `ATL/EMFTVM`, e.g., from the [Eclipse Marketplace](https://marketplace.eclipse.org/content/atlemftvm).
