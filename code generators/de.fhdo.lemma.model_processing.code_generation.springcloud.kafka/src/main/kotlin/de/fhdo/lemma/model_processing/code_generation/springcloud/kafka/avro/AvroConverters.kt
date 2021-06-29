@@ -236,7 +236,7 @@ internal object AvroConverters {
 
         /* Create method body */
         converterMethod.addStatements("""$javaTypeName $variableName = new $javaTypeName();""")
-        converterMethod.addStructureSetters(structure, parameterName)
+        converterMethod.addStructureSetters(structure, variableName, parameterName)
         converterMethod.addStatements("return $variableName;")
 
         /* Create Avro converters for nested data structures recursively */
@@ -246,7 +246,8 @@ internal object AvroConverters {
     /**
      * Add setter statements to Avro converter for deserialization
      */
-    private fun MethodDeclaration.addStructureSetters(structure: IntermediateDataStructure, parameterName: String) {
+    private fun MethodDeclaration.addStructureSetters(structure: IntermediateDataStructure, variableName: String,
+        parameterName: String) {
         val visibleMutableFieldsAndTypes = structure.visibleFieldsAndTypes(true)
 
         // Prepare setter statements. All visible mutable fields of the given data structure, whose type is an
@@ -256,7 +257,7 @@ internal object AvroConverters {
         val setterStatements = visibleMutableFieldsAndTypes
             .filter { (_, type) -> type is IntermediateEnumeration || type is IntermediatePrimitiveType }
             .joinToString("\n") { (dataField, type) ->
-                val (statement, imports) = getStructureSetStatement(parameterName, dataField.name, type, parameterName)
+                val (statement, imports) = getStructureSetStatement(variableName, dataField.name, type, parameterName)
                 imports.forEach { this.addRelocatableImport(it) }
                 neverEmptyFieldFound = neverEmptyFieldFound || dataField.hasFeature("NEVER_EMPTY")
                 statement
