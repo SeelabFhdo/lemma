@@ -72,7 +72,7 @@ internal class OperationHandler
          * add the corresponding annotation to the generated Java method. Note that if two outgoing parameters have the
          * aspect, only the status of the first one will be considered.
          */
-        val responseStatusAnnotation = eObject.parameters.first() {
+        val responseStatusAnnotation = eObject.parameters.firstOrNull {
             it.isResultParameter &&
             it.communicationType == CommunicationType.SYNCHRONOUS.name &&
             it.hasAspect("java.ResponseStatus", "Spring.ResponseStatus")
