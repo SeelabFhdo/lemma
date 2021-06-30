@@ -1,7 +1,6 @@
 package de.fhdo.lemma.eclipse.ui.editor.server;
 
 import com.google.common.base.Function;
-import de.fhdo.lemma.eclipse.ui.editor.server.ConnectProgressDialog;
 import de.fhdo.lemma.live_validation.protocol.extensions.LiveValidationServer;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IMessageProvider;
@@ -32,7 +31,7 @@ public class ServerConnectionDialog extends TitleAreaDialog {
     "([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*") + 
     "([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\\-]*[A-Za-z0-9])");
   
-  private static final int MIN_DIALOG_WIDTH = 220;
+  private static final int MIN_DIALOG_WIDTH = 240;
   
   private static final int MIN_DIALOG_HEIGHT = 110;
   

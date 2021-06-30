@@ -24,7 +24,7 @@ class ServerConnectionDialog extends TitleAreaDialog {
     static val HOSTNAME_REGEX = "^(" +
         "([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*" +
         "([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\\-]*[A-Za-z0-9])"
-    static val MIN_DIALOG_WIDTH = 220
+    static val MIN_DIALOG_WIDTH = 240
     static val MIN_DIALOG_HEIGHT = 110
 
     Text hostnameField
