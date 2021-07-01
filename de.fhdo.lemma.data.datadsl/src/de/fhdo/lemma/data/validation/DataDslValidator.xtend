@@ -870,4 +870,22 @@ class DataDslValidator extends AbstractDataDslValidator {
             warning("An enumeration should only be a domain event or value object", enumeration,
                 DataPackage::Literals.COMPLEX_TYPE__FEATURES)
     }
+
+    /**
+     * Check fields of list types
+     */
+    @Check
+    def checkListFields(ListType type) {
+        if (type.dataFields.empty)
+            return
+
+        val duplicateIndex = LemmaUtils.getDuplicateIndex(type.dataFields, [name])
+
+        if (duplicateIndex === -1)
+            return
+
+        val duplicate = type.dataFields.get(duplicateIndex)
+        error('''Duplicate field «duplicate.name»''', duplicate,
+            DataPackage::Literals.DATA_FIELD__NAME)
+    }
 }

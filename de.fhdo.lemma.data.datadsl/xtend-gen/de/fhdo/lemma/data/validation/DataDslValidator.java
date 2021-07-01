@@ -26,7 +26,6 @@ import de.fhdo.lemma.data.PrimitiveTypeConstants;
 import de.fhdo.lemma.data.PrimitiveValue;
 import de.fhdo.lemma.data.Type;
 import de.fhdo.lemma.data.Version;
-import de.fhdo.lemma.data.validation.AbstractDataDslValidator;
 import de.fhdo.lemma.utils.LemmaUtils;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -1065,5 +1064,30 @@ public class DataDslValidator extends AbstractDataDslValidator {
       this.warning("An enumeration should only be a domain event or value object", enumeration, 
         DataPackage.Literals.COMPLEX_TYPE__FEATURES);
     }
+  }
+  
+  /**
+   * Check fields of list types
+   */
+  @Check
+  public void checkListFields(final ListType type) {
+    boolean _isEmpty = type.getDataFields().isEmpty();
+    if (_isEmpty) {
+      return;
+    }
+    final Function<DataField, String> _function = (DataField it) -> {
+      return it.getName();
+    };
+    final Integer duplicateIndex = LemmaUtils.<DataField, String>getDuplicateIndex(type.getDataFields(), _function);
+    if (((duplicateIndex).intValue() == (-1))) {
+      return;
+    }
+    final DataField duplicate = type.getDataFields().get((duplicateIndex).intValue());
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Duplicate field ");
+    String _name = duplicate.getName();
+    _builder.append(_name);
+    this.error(_builder.toString(), duplicate, 
+      DataPackage.Literals.DATA_FIELD__NAME);
   }
 }
