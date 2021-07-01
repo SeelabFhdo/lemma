@@ -4,15 +4,16 @@ import org.eclipse.xtend.lib.annotations.Accessors
 
 import java.util.Map
 import java.util.List
+import com.fasterxml.jackson.annotation.JsonInclude
 
 /**
- * This POJO represents the data structure of a network in a docker-compose
- * file in yaml format. It is used by the snakeyaml framework for parsing an existing docker
- * compose file.
+ * This POJO represents the data structure of a docker-compose file in a yaml format used by
+ * the jackson data format framework.
  *
  * @author <a href="mailto:philip.wizenty@fh-dortmund.de">Philip Wizenty</a>
  */
-class Network {
+ @JsonInclude(NON_EMPTY)
+class DockerComposeNetwork {
     @Accessors
     String driver;
 

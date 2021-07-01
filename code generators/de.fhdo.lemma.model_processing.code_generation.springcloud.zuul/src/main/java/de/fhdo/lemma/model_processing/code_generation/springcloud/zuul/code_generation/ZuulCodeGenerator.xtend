@@ -80,14 +80,13 @@ class ZuulCodeGenerator extends AbstractCodeGenerationModule {
         // Build Docker-Compose part based on a operation aspect or node configuration
         val dockerComposeAspect = node.aspects.findFirst[aspect | aspect.name == "ComposePart"]
         if (dockerComposeAspect === null)
-            OpenedDockerComposeFile.instance.addOrReplaceDockerComposePart(node.name,
-                ZuulTemplate::getDockerComposeForZuul(node))
+            OpenedDockerComposeFile.instance.addOrReplaceDockerComposePart(node)
         else
             OpenedDockerComposeFile.instance.addOrReplaceDockerComposePart(node.name,
                 dockerComposeAspect.propertyValues?.get(0).value)
 
         // Write Docker-Compose file to the file path
-        val filePath = '''«targetFolder»«File.separator»docker-compose.yml'''
+        val filePath = OpenedDockerComposeFile.instance.dockerComposePath
         content.put(filePath, OpenedDockerComposeFile.instance.toString)
     }
 
