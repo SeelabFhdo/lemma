@@ -19,6 +19,7 @@ import de.fhdo.lemma.model_processing.code_generation.mariadb.template.MariaDBTe
 import de.fhdo.lemma.operation.intermediate.IntermediateOperationNode
 import de.fhdo.lemma.model_processing.code_generation.container_base.file.docker.OpenedDockerComposeFile
 import de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode
+import de.fhdo.lemma.model_processing.code_generation.container_base.file.docker.DockerComposeService
 
 /**
  * Main class of the MariaDB code generation module of the container base code generator.
@@ -122,7 +123,6 @@ class MariaDBCodeGenerator extends AbstractCodeGenerationModule {
         val kubernetes = MariaDBTemplate::getKubernetesDeploymentForMariaDb(node)
         val path = '''«targetFolder»«File.separator»«node.name»«File.separator»''' +
             '''«node.name.toLowerCase»-deployment.yaml'''
-
         content.put(path, kubernetes)
     }
 
@@ -131,7 +131,7 @@ class MariaDBCodeGenerator extends AbstractCodeGenerationModule {
      */
     private def createDockerComposeDeployment(IntermediateInfrastructureNode node) {
         /*
-         * Set targetFolder for docker-compose.yml file and open an existing or create a new
+         * Set targetFolder for docker-compose.yaml file and open an existing or create a new
          * docker-compose file
          */
         OpenedDockerComposeFile.instance.init(targetFolder)
@@ -140,14 +140,37 @@ class MariaDBCodeGenerator extends AbstractCodeGenerationModule {
         // Build Docker-Compose part based on a operation aspect or node configuration
         val dockerComposeAspect = node.aspects.findFirst[aspect | aspect.name == "ComposePart"]
         if (dockerComposeAspect === null)
-            OpenedDockerComposeFile.instance.addOrReplaceDockerComposePart(node.name,
-                MariaDBTemplate::getDockerComposeForMariaDB(node))
+            OpenedDockerComposeFile.instance.dockerComposeFile.services.put(node.name,
+                createComposeService(node)
+            )
         else
             OpenedDockerComposeFile.instance.addOrReplaceDockerComposePart(node.name,
                 dockerComposeAspect.propertyValues?.get(0).value)
 
         // Write Docker-Compose file to the file path
-        val filePath = '''«targetFolder»«File.separator»docker-compose.yml'''
+        val filePath = OpenedDockerComposeFile.instance.dockerComposePath
         content.put(filePath, OpenedDockerComposeFile.instance.toString)
+    }
+
+    /**
+     * Create a DockerComposeService instance for a MariaDB.
+     */
+    private def DockerComposeService createComposeService(IntermediateInfrastructureNode node) {
+        val service = OpenedDockerComposeFile.instance.getServiceFromNode(node)
+        node.defaultValues.forEach[
+            if (it.technologySpecificProperty.name.toLowerCase == "username")
+                service.environment.put("MYSQL_USER", it.value)
+
+            if (it.technologySpecificProperty.name.toLowerCase == "userpassword")
+                service.environment.put("MYSQL_PASSWORD", it.value)
+
+            if (it.technologySpecificProperty.name.toLowerCase == "rootpassword")
+                service.environment.put("MYSQL_ROOT_PASSWORD", it.value)
+
+            if (it.technologySpecificProperty.name.toLowerCase == "database")
+                service.environment.put("MYSQL_DATABASE", it.value)
+        ]
+        service.build = null
+        return service
     }
 }

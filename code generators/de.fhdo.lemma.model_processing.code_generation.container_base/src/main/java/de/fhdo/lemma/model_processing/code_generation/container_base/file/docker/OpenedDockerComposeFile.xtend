@@ -1,18 +1,14 @@
 package de.fhdo.lemma.model_processing.code_generation.container_base.file.docker
 
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
+import com.fasterxml.jackson.databind.ObjectMapper
 import de.fhdo.lemma.operation.intermediate.IntermediateOperationNode
 import de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode
 import de.fhdo.lemma.operation.intermediate.IntermediateContainer
-import org.yaml.snakeyaml.representer.Representer
-import org.yaml.snakeyaml.Yaml
-import org.yaml.snakeyaml.constructor.Constructor
-import java.io.File
-import java.nio.file.Files
-import java.nio.file.Paths
-import java.nio.charset.StandardCharsets
 import de.fhdo.lemma.model_processing.code_generation.container_base.util.Util
-import de.fhdo.lemma.model_processing.code_generation.container_base.template.DockerComposeTemplate
 import de.fhdo.lemma.utils.LemmaUtils
+import java.io.File
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * This class uses the singleton design pattern handling the generation of the docker-compose file.
@@ -21,9 +17,10 @@ import de.fhdo.lemma.utils.LemmaUtils
  */
 class OpenedDockerComposeFile {
     static OpenedDockerComposeFile instance
+    @Accessors
     String dockerComposePath
-    val dockerComposeServiceParts = <String, String> newHashMap
-    val dockerComposeNetworkParts = <String> newLinkedList
+    @Accessors
+    DockerComposeFile dockerComposeFile
     boolean initialized = false
 
     /**
@@ -45,7 +42,13 @@ class OpenedDockerComposeFile {
         if (initialized)
             throw new IllegalStateException("OpenedDockerComposeFile is already initialized.")
 
-        dockerComposePath = '''«targetFolder»«File.separator»docker-compose.yml'''
+        dockerComposePath = '''«targetFolder»«File.separator»docker-compose'''
+
+        if (new File(dockerComposePath + ".yml").exists)
+            dockerComposePath = dockerComposePath + ".yml"
+            else
+                dockerComposePath = dockerComposePath + ".yaml"
+
         initialized = true
     }
 
@@ -59,17 +62,7 @@ class OpenedDockerComposeFile {
         if (new File(dockerComposePath).exists && new File(dockerComposePath).length > 0)
             loadDockerComposePartsFromFile
         else
-            createDefaultNetwork
-    }
-
-    /**
-     * Add or replace a docker-compose part to the docker-compose file based on the name of the
-     * operation node.The configuration of the docker-compose part is created by an intermediate
-     * deployment aspect.
-     */
-    def addOrReplaceDockerComposePart(String name, String dockerComposeServicePart) {
-        val adjustedDockerPart = Util::adjustIndentations("  ", dockerComposeServicePart) + "\n"
-        addOrReplace(name, adjustedDockerPart)
+            createNewDockerFile
     }
 
     /**
@@ -83,145 +76,95 @@ class OpenedDockerComposeFile {
     def addOrReplaceDockerComposePart(IntermediateOperationNode node) {
         switch (node) {
             IntermediateInfrastructureNode : {
-                val serv = '''«getServiceFromNode(node)»«"\n"»'''
-                addOrReplace(node.name, serv)
+                dockerComposeFile.services.put(node.name, getServiceFromNode(node))
             }
             IntermediateContainer: {
-                val serv = '''«getServiceFromContainer(node)»«"\n"»'''
-                addOrReplace(node.name, serv)
+                dockerComposeFile.services.put(node.name, getServiceFromContainer(node))
             }
             default : throw new IllegalArgumentException("OperationNode instance not supported.")
         }
     }
 
     /**
-     * Create a default network for the docker compose file. This is needed because LEMMA's
-     * operation modeling language does not support network configurations at the moment.
+     * Add or replace a docker-compose part to the docker-compose file based on the name of the
+     * operation node.The configuration of the docker-compose part is created by an intermediate
+     * deployment aspect.
      */
-    private def createDefaultNetwork() {
-        val network = new Network
-        network.driver = "bridge"
-        dockerComposeNetworkParts.add(
-            DockerComposeTemplate::buildDockerComposeNetwork("default-network", network)
-        )
+    def addOrReplaceDockerComposePart(String name, String dockerComposeServicePart) {
+        val adjustedDockerPart = Util::adjustIndentations("", dockerComposeServicePart) + "\n"
+        val mapper = new ObjectMapper(new YAMLFactory());
+        val service = mapper.readValue(adjustedDockerPart, DockerComposeService)
+        dockerComposeFile.services.put(name.toLowerCase, service)
     }
 
     /**
-     * Add or replace the docker-compose parts based the the name of the intermediate operation
-     * node.
+     * Create a new docker compose file and add ne default network. The default network is needed
+     * because LEMMA's operation modeling language does not support network configurations at the
+     * moment.
      */
-    private def addOrReplace(String name, String dockerComposeServicePart) {
-        dockerComposeServiceParts.put(name.toLowerCase, dockerComposeServicePart)
+    private def createNewDockerFile() {
+        dockerComposeFile = new DockerComposeFile
+        var network = new DockerComposeNetwork()
+        network.driver = "bridge"
+        dockerComposeFile.networks.put("default-network", network)
+        dockerComposeFile.version = "3.7"
     }
 
     /**
      * Create a POJO Service from  a container
      */
-    private def String getServiceFromContainer(IntermediateContainer container) {
-        val service = getBasicServiceFromOperationNode(container)
-
+    private def DockerComposeService getServiceFromContainer(IntermediateContainer container) {
+        val service = new DockerComposeService
         service.build = Util.buildPathFromQualifiedName(
             container.deployedServices.get(0).qualifiedName
         )
+        service.image = container.name.toLowerCase
+        service.containerName = container.name.toLowerCase
+        service.networks.add("default-network")
 
-        return DockerComposeTemplate::buildDockerComposeParts(container.name, service)
-    }
-
-    /**
-     * Create a POJO Service from a infrastructure node
-     */
-    private def String getServiceFromNode(IntermediateInfrastructureNode node) {
-        val service = getBasicServiceFromOperationNode(node)
-        val imageType = node.defaultValues.findFirst[p |
-            p.technologySpecificProperty.name.toLowerCase == "imagetype" &&
-            p.value.toLowerCase == "springcomponent"
-        ]
-
-        if (imageType !== null)
-            service.build = node.name + File.separator
-
-        node.dependsOnNodes.forEach[depentOnNode |
-            service.depends_on.add(depentOnNode.name)]
-
-        val stringBuilder = new StringBuilder
-        stringBuilder.append(DockerComposeTemplate::buildDockerComposeParts(node.name, service))
-
-        return stringBuilder.toString
-    }
-
-    /**
-     * Create basic service POJO
-     */
-    private def Service getBasicServiceFromOperationNode(IntermediateOperationNode node) {
-        val service = new Service
-        service.image = node.name
-        service.container_name = node.name
-
-        node.endpoints.forEach[endpoint |
+        container.endpoints.forEach[endpoint |
             endpoint.addresses.forEach[address |
                 val port = LemmaUtils.getPortFromAddress(address)
-                service.ports.add(port + ':' + port)
+                service.ports.add('''«port»:«port»''')
             ]
         ]
-
-        dockerComposeNetworkParts.forEach[networkPart |
-            service.networks.add(getNetworkName(networkPart))]
 
         return service
     }
 
     /**
-     * Get the name for the network in the docker-compose file
+     * Create a POJO Service from a infrastructure node
      */
-    private def String getNetworkName(String networkName) {
-        return networkName.lines.toArray.get(0)?.toString.replace(":", "").trim ?: ""
+     def DockerComposeService getServiceFromNode(IntermediateInfrastructureNode node) {
+        val service = new DockerComposeService
+        service.build = node.name.toLowerCase
+        service.image = node.name.toLowerCase
+        service.containerName = node.name.toLowerCase
+        service.networks.add("default-network")
+
+        node.endpoints.forEach[endpoint |
+            endpoint.addresses.forEach[address |
+                val port = LemmaUtils.getPortFromAddress(address)
+                service.ports.add('''«port»:«port»''')
+            ]
+        ]
+
+        return service
     }
 
     /**
      * Load a existing docker-compose file from the target folder
      */
     private def loadDockerComposePartsFromFile() {
-        val stringBuilder = new StringBuilder
-
-        val stream = Files.lines(Paths.get(dockerComposePath), StandardCharsets.UTF_8)
-        stream.forEach[line | stringBuilder.append(line).append("\n")]
-
-        val representer = new Representer
-        representer.getPropertyUtils.skipMissingProperties = true
-
-        val yaml = new Yaml(new Constructor(DockerComposeFile),representer)
-        parse(yaml.loadAs(stringBuilder.toString, DockerComposeFile))
-    }
-
-    /**
-     * Extract the Service and Network information out of a docker-compose file
-     */
-    private def parse(DockerComposeFile file) {
-        file.services.forEach[name, service |
-            val part = '''«DockerComposeTemplate::buildDockerComposeParts(name, service)»«"\n"»'''
-            dockerComposeServiceParts.put(name.toLowerCase, part)
-        ]
-
-        if (file.networks.empty)
-            createDefaultNetwork
-        else {
-            file.networks.forEach[name, network |
-                val networkPart = DockerComposeTemplate::buildDockerComposeNetwork(name, network)
-                dockerComposeNetworkParts.add(networkPart)
-            ]
-        }
+        val mapper = new ObjectMapper(new YAMLFactory());
+        dockerComposeFile = mapper.readValue(new File(dockerComposePath), DockerComposeFile)
     }
 
     /**
      * Create the string for the serialization process
      */
-   override String toString() {
-       val stringBuilder = new StringBuilder
-       stringBuilder.append(DockerComposeTemplate::dockerComposeHeader)
-       stringBuilder.append(DockerComposeTemplate::dockerComposeNetworkHeder)
-       dockerComposeNetworkParts.forEach[network | stringBuilder.append(network)]
-       stringBuilder.append(DockerComposeTemplate::dockerComposeServiceHeander)
-       dockerComposeServiceParts.values.forEach[part| stringBuilder.append(part)]
-       return stringBuilder.toString
+    override String toString() {
+        val mapper = new ObjectMapper(new YAMLFactory());
+        return mapper.writeValueAsString(dockerComposeFile)
    }
 }

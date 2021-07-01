@@ -7,7 +7,6 @@ import de.fhdo.lemma.operation.intermediate.IntermediatePackage
 import de.fhdo.lemma.operation.intermediate.IntermediateOperationNode
 import de.fhdo.lemma.model_processing.languages.LanguageDescription
 import de.fhdo.lemma.model_processing.code_generation.container_base.file.docker.OpenedDockerComposeFile
-import java.io.File
 import org.jetbrains.annotations.NotNull
 
 /**
@@ -29,7 +28,7 @@ class DockerComposeCodeGenerator extends AbstractCodeGenerationModule {
         model = intermediateModelResource.contents.get(0) as IntermediateOperationModel
 
         /*
-         * Set targetFolder for docker-compose.yml file and open an existing or create a new
+         * Set targetFolder for docker-compose.yaml file and open an existing or create a new
          * docker-compose file
          */
         OpenedDockerComposeFile.instance.init(targetFolder)
@@ -42,9 +41,8 @@ class DockerComposeCodeGenerator extends AbstractCodeGenerationModule {
         model.infrastructureNodes.forEach[node | createDockerComposeFile(node)]
 
         // Write  docker-compose file to the file path
-        val filePath = '''«targetFolder»«File.separator»docker-compose.yml'''
+        val filePath = OpenedDockerComposeFile.instance.dockerComposePath
         content.put(filePath, OpenedDockerComposeFile.instance.toString)
-
         return withCharset(content, "UTF-8");
     }
 

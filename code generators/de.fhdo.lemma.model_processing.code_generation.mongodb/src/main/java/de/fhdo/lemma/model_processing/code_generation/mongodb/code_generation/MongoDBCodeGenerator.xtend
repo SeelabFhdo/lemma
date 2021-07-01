@@ -18,6 +18,7 @@ import java.io.File
 import java.nio.file.Paths
 import java.io.ByteArrayInputStream
 import org.jetbrains.annotations.NotNull
+import de.fhdo.lemma.model_processing.code_generation.container_base.file.docker.DockerComposeService
 
 /**
  * Main class of the MongoDB code generation module of the MongoDB code generator.
@@ -117,7 +118,6 @@ class MongoDBCodeGenerator extends AbstractCodeGenerationModule {
         val kubernetes = MongoDBTemplate::getKubernetesDeploymentForMongoDB(node)
         val path = '''«targetFolder»«File.separator»«node.name»«File.separator»''' +
             '''«node.name.toLowerCase»-deployment.yaml'''
-
         content.put(path, kubernetes)
     }
 
@@ -135,14 +135,35 @@ class MongoDBCodeGenerator extends AbstractCodeGenerationModule {
         // Build Docker-Compose part based on a operation aspect or node configuration
         val dockerComposeAspect = node.aspects.findFirst[aspect | aspect.name == "ComposePart"]
         if (dockerComposeAspect === null)
-            OpenedDockerComposeFile.instance.addOrReplaceDockerComposePart(node.name,
-                MongoDBTemplate::getDockerComposeForMongoDB(node))
+            OpenedDockerComposeFile.instance.dockerComposeFile.services.put(node.name,
+                createComposeService(node)
+            )
         else
             OpenedDockerComposeFile.instance.addOrReplaceDockerComposePart(node.name,
                 dockerComposeAspect.propertyValues?.get(0).value)
 
         // Write  Docker-Compose file to the file path
-        val filePath = '''«targetFolder»«File.separator»docker-compose.yml'''
+        val filePath = OpenedDockerComposeFile.instance.dockerComposePath
         content.put(filePath, OpenedDockerComposeFile.instance.toString)
+    }
+
+    /**
+     * Create a DockerComposeService instance for a MongoDB.
+     */
+    private def DockerComposeService createComposeService(IntermediateInfrastructureNode node) {
+        val service = OpenedDockerComposeFile.instance.getServiceFromNode(node)
+        node.defaultValues.forEach[
+            if (it.technologySpecificProperty.name.toLowerCase == "username")
+                service.environment.put("MONGO_INITDB_ROOT_USERNAME", it.value)
+
+            if (it.technologySpecificProperty.name.toLowerCase == "password")
+                service.environment.put("MONGO_INITDB_ROOT_PASSWORD", it.value)
+
+            if (it.technologySpecificProperty.name.toLowerCase == "database")
+                service.environment.put("MONGO_INITDB_DATABASE", it.value)
+        ]
+        service.build = null
+        service.image= "mongo"
+        return service
     }
 }

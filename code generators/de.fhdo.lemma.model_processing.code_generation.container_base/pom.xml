@@ -10,12 +10,12 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
         <java.version>11</java.version>
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
         <xtend.version>2.25.0</xtend.version>
         <snakeyaml.version>1.21</snakeyaml.version>
         <maven-assembly.version>3.3.0</maven-assembly.version>
+        <jackson.dataformat.version>2.12.3</jackson.dataformat.version>
     </properties>
 
     <dependencies>
@@ -76,9 +76,9 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.yaml</groupId>
-            <artifactId>snakeyaml</artifactId>
-            <version>${snakeyaml.version}</version>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-yaml</artifactId>
+            <version>${jackson.dataformat.version}</version>
         </dependency>
     </dependencies>
 
