@@ -29,7 +29,7 @@ dependencies {
     val classgraphVersion: String by rootProject.extra
     val commonsVersion: String by rootProject.extra
     val javaParserVersion: String by rootProject.extra
-    //val jansiVersion: String by rootProject.extra
+    val jansiVersion: String by rootProject.extra
     val koinVersion: String by rootProject.extra
     val lemmaEclipsePluginsVersion: String by rootProject.extra
     val lsp4jVersion: String by rootProject.extra
@@ -57,7 +57,7 @@ dependencies {
     implementation("org.apache.commons:commons-lang3:$commonsVersion")
     implementation("org.eclipse.lsp4j:org.eclipse.lsp4j:$lsp4jVersion")
     implementation("org.eclipse.lsp4j:org.eclipse.lsp4j.jsonrpc:$lsp4jVersion")
-    //implementation("org.fusesource.jansi:jansi:$jansiVersion")
+    implementation("org.fusesource.jansi:jansi:$jansiVersion")
     implementation("org.redundent:kotlin-xml-builder:$xmlBuilderVersion")
 }
 
