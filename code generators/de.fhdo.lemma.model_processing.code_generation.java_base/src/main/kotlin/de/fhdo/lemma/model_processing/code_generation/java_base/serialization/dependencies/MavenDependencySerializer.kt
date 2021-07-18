@@ -281,6 +281,7 @@ private class MavenDependencySerializerBase : KoinComponent {
         mergeRepositoriesFromOtherModel(otherModel)
         mergePropertiesFromModel(otherModel)
         mergeDependenciesFromModel(otherModel)
+        mergeDependencyManagementFromModel(otherModel)
         mergePluginsFromModel(otherModel)
     }
 
@@ -328,6 +329,19 @@ private class MavenDependencySerializerBase : KoinComponent {
             missingSubNodes.forEach { thisPropertiesNode merge it }
         } else
             this merge otherPropertiesNode
+    }
+
+    /**
+     * Helper to merge the "dependencyManagement" XML element of the [otherModel] into this [Node]
+     */
+    private fun Node.mergeDependencyManagementFromModel(otherModel: Node) {
+        val otherDependencyManagementNode = otherModel.childNodes.find { it.nodeName == "dependencyManagement" }
+            ?: return
+        val thisDependencyManagementNode = childNodes.find { it.nodeName == "dependencyManagement" }
+        if (thisDependencyManagementNode != null)
+            thisDependencyManagementNode.mergeDependenciesFromModel(otherDependencyManagementNode)
+        else
+            this merge otherDependencyManagementNode
     }
 
     /**
