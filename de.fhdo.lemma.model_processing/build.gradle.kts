@@ -15,7 +15,8 @@ repositories {
 buildscript {
     extra.set("classgraphVersion", "4.8.35")
     extra.set("coroutinesVersion", "1.1.1")
-    extra.set("equinoxVersion", "3.14.100")
+    // Pin Eclipse Equinox version to 3.11.0 (instead of 3.14.100) as required by Xtext's standalone execution mechanism
+    extra.set("equinoxVersion", "3.11.0")
     extra.set("jansiVersion", "1.17.1")
     extra.set("jdtCoreVersion", "3.25.0")
     extra.set("lemmaEclipsePluginsVersion", version)
