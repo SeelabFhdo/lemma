@@ -15,10 +15,7 @@ repositories {
 buildscript {
     extra.set("classgraphVersion", "4.8.35")
     extra.set("coroutinesVersion", "1.1.1")
-    // Pin Eclipse Equinox version to 3.11.0 (instead of 3.14.100) as required by Xtext's standalone execution mechanism
-    extra.set("equinoxVersion", "3.11.0")
     extra.set("jansiVersion", "1.17.1")
-    extra.set("jdtCoreVersion", "3.25.0")
     extra.set("lemmaEclipsePluginsVersion", version)
     extra.set("lsp4jVersion", "0.9.0")
     extra.set("oclVersion", version)
@@ -29,9 +26,7 @@ buildscript {
 dependencies {
     val classgraphVersion: String by rootProject.extra
     val coroutinesVersion: String by rootProject.extra
-    val equinoxVersion: String by rootProject.extra
     val jansiVersion: String by rootProject.extra
-    val jdtCoreVersion:String by rootProject.extra
     val lemmaEclipsePluginsVersion: String by rootProject.extra
     val lsp4jVersion: String by rootProject.extra
     val oclVersion: String by rootProject.extra
@@ -51,10 +46,6 @@ dependencies {
 
     implementation("info.picocli:picocli:$picocliVersion")
     implementation("org.eclipse.xtext:org.eclipse.xtext.ecore:$xtextVersion")
-
-    // Workaround for https://github.com/eclipse/xtext/issues/1231
-    implementation("org.eclipse.jdt:org.eclipse.jdt.core:$jdtCoreVersion")
-    implementation("org.eclipse.platform:org.eclipse.equinox.common:$equinoxVersion")
 }
 
 tasks.withType<KotlinCompile> {
