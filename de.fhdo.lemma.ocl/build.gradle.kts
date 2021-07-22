@@ -17,7 +17,6 @@ buildscript {
     val extractedEclipseDependenciesDir = project.file("$buildDir/extractedEclipseDependencies")
     extra.set("extractedEclipseDependenciesDir", extractedEclipseDependenciesDir)
 
-    //extra.set("eclipseVersion", "4.19.0")
     extra.set("eclipseOclVersion", "6.15.0")
 }
 
@@ -29,7 +28,6 @@ buildscript {
  */
 apply(plugin = "com.diffplug.p2.asmaven")
 p2AsMaven {
-    val eclipseVersion: String by rootProject.extra
     val eclipseOclVersion: String by rootProject.extra
 
     group("eclipse-deps") {
@@ -125,11 +123,20 @@ tasks.register("allDependencies", type = Jar::class) {
  * without the Kotlin standard library. That is, this dependency is to be used by Kotlin programs.
  */
 val allDependenciesNoKotlin = task("allDependenciesNoKotlin", type = Jar::class) {
+    val extractedEclipseDependenciesDir: File by rootProject.extra
     archiveClassifier.set("all-dependencies-no-kotlin")
 
     // Build fat JAR excluding Kotlin standard lib
-    from(configurations.compileClasspath.get().filter{ it.exists() && !it.name.startsWith("kotlin-stdlib") }
-        .map { if (it.isDirectory) it else zipTree(it) })
+    from(
+        // We need explicitly to add the directory of downloaded Eclipse dependencies here as otherwise Gradle won't
+        // include the contained dependency files in the "no Kotlin" fat JAR. Strangely, for the previous
+        // allDependencies task we do not need to include the directory explicitly because Gradle implicitly adds its
+        // contents to the produced "all dependencies" fat JAR.
+        files(extractedEclipseDependenciesDir),
+        configurations.compileClasspath.get()
+            .filter{ it.exists() && !it.name.startsWith("kotlin") }
+            .map { if (it.isDirectory) it else zipTree(it) }
+    )
     with(tasks["jar"] as CopySpec)
 
     manifest {
