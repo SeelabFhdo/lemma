@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="ASCII"?>
+<intermediate:IntermediateDataModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:intermediate="http://www.fhdo.de/lemma/data/intermediate" sourceModelUri="file:///home/florian/Dokumente/Forschung/Dissertation/eclipse-workspace/examples/model-processing/example models/domain/Common.data">
+  <contexts name="SharedDomainConcepts" qualifiedName="SharedDomainConcepts">
+    <complexTypes xsi:type="intermediate:IntermediateDataStructure" name="Money" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="SharedDomainConcepts.Money">
+      <featureNames>VALUE_OBJECT</featureNames>
+      <operations name="add" qualifiedName="SharedDomainConcepts.Money.add">
+        <returnType>
+          <type xsi:type="intermediate:IntermediateComplexType" name="Money" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="SharedDomainConcepts.Money"/>
+          <originalType xsi:type="intermediate:IntermediateComplexType" name="Money" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="SharedDomainConcepts.Money"/>
+        </returnType>
+        <parameters name="delta" qualifiedName="SharedDomainConcepts.Money.add.delta">
+          <type xsi:type="intermediate:IntermediateComplexType" name="Money" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="SharedDomainConcepts.Money"/>
+          <originalType xsi:type="intermediate:IntermediateComplexType" name="Money" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="SharedDomainConcepts.Money"/>
+        </parameters>
+      </operations>
+      <operations name="isGreaterThanOrEqual" qualifiedName="SharedDomainConcepts.Money.isGreaterThanOrEqual">
+        <returnType>
+          <type xsi:type="intermediate:IntermediatePrimitiveType" name="boolean" origin="BUILTIN" kind="PRIMITIVE" size="1"/>
+          <originalType xsi:type="intermediate:IntermediatePrimitiveType" name="boolean" origin="BUILTIN" kind="PRIMITIVE" size="1"/>
+        </returnType>
+        <parameters name="other" qualifiedName="SharedDomainConcepts.Money.isGreaterThanOrEqual.other">
+          <type xsi:type="intermediate:IntermediateComplexType" name="Money" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="SharedDomainConcepts.Money"/>
+          <originalType xsi:type="intermediate:IntermediateComplexType" name="Money" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="SharedDomainConcepts.Money"/>
+        </parameters>
+      </operations>
+      <operations name="asString" qualifiedName="SharedDomainConcepts.Money.asString">
+        <returnType>
+          <type xsi:type="intermediate:IntermediatePrimitiveType" name="string" origin="BUILTIN" kind="PRIMITIVE"/>
+          <originalType xsi:type="intermediate:IntermediatePrimitiveType" name="string" origin="BUILTIN" kind="PRIMITIVE"/>
+        </returnType>
+      </operations>
+      <operations name="multiply" qualifiedName="SharedDomainConcepts.Money.multiply">
+        <returnType>
+          <type xsi:type="intermediate:IntermediateComplexType" name="Money" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="SharedDomainConcepts.Money"/>
+          <originalType xsi:type="intermediate:IntermediateComplexType" name="Money" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="SharedDomainConcepts.Money"/>
+        </returnType>
+        <parameters name="x" qualifiedName="SharedDomainConcepts.Money.multiply.x">
+          <type xsi:type="intermediate:IntermediatePrimitiveType" name="int" origin="BUILTIN" kind="PRIMITIVE" size="32"/>
+          <originalType xsi:type="intermediate:IntermediatePrimitiveType" name="int" origin="BUILTIN" kind="PRIMITIVE" size="32"/>
+        </parameters>
+      </operations>
+      <dataFields name="amount" qualifiedName="SharedDomainConcepts.Money.amount" immutable="true">
+        <type xsi:type="intermediate:IntermediatePrimitiveType" name="double" origin="BUILTIN" kind="PRIMITIVE" size="64"/>
+        <originalType xsi:type="intermediate:IntermediatePrimitiveType" name="double" origin="BUILTIN" kind="PRIMITIVE" size="64"/>
+      </dataFields>
+    </complexTypes>
+  </contexts>
+  <contexts name="DomainEvents" qualifiedName="DomainEvents">
+    <complexTypes xsi:type="intermediate:IntermediateDataStructure" name="RestaurantCreated" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="DomainEvents.RestaurantCreated">
+      <featureNames>DOMAIN_EVENT</featureNames>
+      <featureNames>VALUE_OBJECT</featureNames>
+      <dataFields name="name" qualifiedName="DomainEvents.RestaurantCreated.name">
+        <type xsi:type="intermediate:IntermediatePrimitiveType" name="string" origin="BUILTIN" kind="PRIMITIVE"/>
+        <originalType xsi:type="intermediate:IntermediatePrimitiveType" name="string" origin="BUILTIN" kind="PRIMITIVE"/>
+      </dataFields>
+      <dataFields name="menu" qualifiedName="DomainEvents.RestaurantCreated.menu">
+        <type xsi:type="intermediate:IntermediateComplexType" name="RestaurantMenu" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="DomainEvents.RestaurantMenu"/>
+        <originalType xsi:type="intermediate:IntermediateComplexType" name="RestaurantMenu" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="DomainEvents.RestaurantMenu"/>
+      </dataFields>
+    </complexTypes>
+    <complexTypes xsi:type="intermediate:IntermediateDataStructure" name="RestaurantMenu" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="DomainEvents.RestaurantMenu">
+      <featureNames>VALUE_OBJECT</featureNames>
+      <dataFields name="menuItems" qualifiedName="DomainEvents.RestaurantMenu.menuItems">
+        <type xsi:type="intermediate:IntermediateComplexType" name="MenuItems" origin="DATA_MODEL" kind="LIST" qualifiedName="DomainEvents.MenuItems"/>
+        <originalType xsi:type="intermediate:IntermediateComplexType" name="MenuItems" origin="DATA_MODEL" kind="LIST" qualifiedName="DomainEvents.MenuItems"/>
+      </dataFields>
+    </complexTypes>
+    <complexTypes xsi:type="intermediate:IntermediateDataStructure" name="MenuItem" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="DomainEvents.MenuItem">
+      <featureNames>VALUE_OBJECT</featureNames>
+      <dataFields name="id" qualifiedName="DomainEvents.MenuItem.id">
+        <type xsi:type="intermediate:IntermediatePrimitiveType" name="string" origin="BUILTIN" kind="PRIMITIVE"/>
+        <originalType xsi:type="intermediate:IntermediatePrimitiveType" name="string" origin="BUILTIN" kind="PRIMITIVE"/>
+      </dataFields>
+      <dataFields name="name" qualifiedName="DomainEvents.MenuItem.name">
+        <type xsi:type="intermediate:IntermediatePrimitiveType" name="string" origin="BUILTIN" kind="PRIMITIVE"/>
+        <originalType xsi:type="intermediate:IntermediatePrimitiveType" name="string" origin="BUILTIN" kind="PRIMITIVE"/>
+      </dataFields>
+      <dataFields name="price" qualifiedName="DomainEvents.MenuItem.price">
+        <type xsi:type="intermediate:IntermediateComplexType" name="Money" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="SharedDomainConcepts.Money"/>
+        <originalType xsi:type="intermediate:IntermediateComplexType" name="Money" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="SharedDomainConcepts.Money"/>
+      </dataFields>
+    </complexTypes>
+    <complexTypes xsi:type="intermediate:IntermediateListType" name="MenuItems" origin="DATA_MODEL" kind="LIST" qualifiedName="DomainEvents.MenuItems" structuredList="true">
+      <dataFields name="i" qualifiedName="DomainEvents.MenuItems.i">
+        <type xsi:type="intermediate:IntermediateComplexType" name="MenuItem" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="DomainEvents.MenuItem"/>
+        <originalType xsi:type="intermediate:IntermediateComplexType" name="MenuItem" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="DomainEvents.MenuItem"/>
+      </dataFields>
+    </complexTypes>
+  </contexts>
+</intermediate:IntermediateDataModel>

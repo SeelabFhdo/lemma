@@ -1,0 +1,131 @@
+import datatypes from "Common.data" as Common
+
+context Order {
+	// Bestellung
+	structure Order<aggregate, entity> {
+		long id<identifier>,
+		immutable long ^version,
+		immutable OrderState state,
+		immutable long consumerId = -1,
+		immutable long restaurantId = -1,
+
+		// Bestellpositionen
+		immutable OrderLineItems orderLineItems<part>,
+
+		// Organisatorische Informationen
+		hide immutable DeliveryInformation deliveryInformation<part>,
+
+		// Bestellminimum
+		hide immutable Common::SharedDomainConcepts.Money orderMinimum<part>,
+
+		// Funktion zur Berechnung des kumulierten Gesamtpreises einer Bestellung
+		function Common::SharedDomainConcepts.Money getOrderTotal()
+	}
+
+	// Bestellstatus
+	enum OrderState {
+		APPROVED,
+		APPROVAL_PENDING,
+		REJECTED,
+		REVISION_PENDING
+	}
+
+	// Eine einzelne Bestellposition
+	structure OrderLineItem<valueObject> {
+		int quantity,
+		string menuItemId,
+		string name,
+		Common::SharedDomainConcepts.Money price,
+
+		// Funktion zur Berechnung des Differenzbetrags zwischen alter und
+		// geänderter Bestellposition auf Basis der Änderung der Bestellmenge
+		function Common::SharedDomainConcepts.Money deltaForChangedQuantity(
+			int newQuantity
+		),
+
+		// Funktion zur Berechnung des Gesamtpreises einer Bestellposition
+		function Common::SharedDomainConcepts.Money getTotal
+	}
+
+	// Domänenkonzept zur Bearbeitung mehrerer Bestellpositionen
+	structure OrderLineItems<valueObject> {
+		OrderLineItemsType lineItems,
+
+		// Funktion zur Auswahl einer Bestellposition im Schmackofatz-Portal
+		function OrderLineItem findOrderLineItem(string id),
+
+		// Funktion zur Berechnung des Gesamtpreises aller Bestellpositionen
+		function Common::SharedDomainConcepts.Money orderTotal
+	}
+
+	// List-Typ für eine Menge von Bestellpositionen
+	list OrderLineItemsType { OrderLineItem i }
+
+	// Organisatorische Informationen einer Bestellung
+	structure DeliveryInformation<valueObject> {
+		date deliveryTime,
+		Address deliveryAddress
+	}
+
+	// Address-Domänenkonzept
+	structure Address<valueObject> {
+		immutable string street1,
+		immutable string street2,
+		immutable string city,
+		immutable string state,
+		immutable string zip
+	}
+
+	// Domain-Service mit domänenspezifischen Hilfsfunktionen
+	structure OrderService<service> {
+		function Order createOrder(long consumerId, long restaurantId,
+			MenuItemIdAndQuantityList lineItems),
+		function Order updateOrder(long orderId, Order order),
+		function Order cancel(long orderId),
+		procedure approveOrder(long orderId),
+		procedure rejectOrder(long orderId)
+	}
+
+	// Domänenkonzept für die createOrder-Funktion des Domain-Service. Es fasst
+	// die Kennung einer Position auf der Speisekarte des Restaurants und die
+	// Bestellmenge für diese Position zusammen.
+	structure MenuItemIdAndQuantity {
+		string menuItemId,
+		immutable int quantity
+	}
+
+	// List-Typ für eine Menge von Instanzen des Domänenkonzepts
+	// MenuItemIdAndQuantity
+	list MenuItemIdAndQuantityList { MenuItemIdAndQuantity itemQuantity }
+}
+
+context API {
+	structure CreateOrderRequest<valueObject> {
+		long consumerId,
+		long restaurantId,
+		LineItems lineItems
+	}
+
+	structure LineItem {
+		string menuItemId,
+		int quantity
+	}
+
+	list LineItems { LineItem i }
+
+	structure CreateOrderResponse<valueObject> {
+		long orderId
+	}
+
+	structure GetOrderResponse<valueObject> {
+		long orderId,
+		string state,
+		Common::SharedDomainConcepts.Money orderTotal
+	}
+
+	structure CancelOrderResponse<valueObject> {
+		long orderId,
+		string state,
+		Common::SharedDomainConcepts.Money orderTotal
+	}
+}

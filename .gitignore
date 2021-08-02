@@ -27,7 +27,6 @@ code generators/de.fhdo.lemma.model_processing.code_generation.java_base/linecnt
 *.iml
 *.hprof
 de.fhdo.lemma.eclipse.ui.editor
-examples/**/intermediate/
 howto-lemma-release.md/
 lemma-cd-documentation/
 code generators/de.fhdo.lemma.model_processing.code_generation.springcloud.kafka_backup/
@@ -36,3 +35,8 @@ build/deploy/debug_deploy.sh
 .DS_Store
 __pycache__/
 build/deploy/debug_env.sh
+examples/**/intermediate/
+!examples/model-processing/example models/intermediate/
+examples/**/build/
+examples/model-processing/run11.sh
+examples/model-processing/generated code/

@@ -1,0 +1,9 @@
+technology Protocols {
+	protocols {
+		sync rest data formats "json", "xml" default with format "json";
+		async amqp data formats "json", "xml" default with format "json";
+
+		sync soap data formats "xml";
+		async mqtt data formats "xml";
+	}
+}

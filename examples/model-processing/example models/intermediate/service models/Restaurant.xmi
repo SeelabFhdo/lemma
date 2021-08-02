@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="ASCII"?>
+<intermediate:IntermediateServiceModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:intermediate="http://www.fhdo.de/lemma/service/intermediate" xmlns:intermediate_1="http://www.fhdo.de/lemma/data/intermediate" sourceModelUri="file://../../microservices/Restaurant.services">
+  <imports name="Common" importUri="file://../data models/Common.xmi" importTypeName="DATATYPES"/>
+  <imports name="RestaurantDomain" importUri="file://../data models/Restaurant.xmi" importTypeName="DATATYPES"/>
+  <imports name="JavaSpring" importUri="file://../../technology/JavaSpring.technology" importTypeName="TECHNOLOGY"/>
+  <imports name="Kafka" importUri="file://../../technology/Kafka.technology" importTypeName="TECHNOLOGY"/>
+  <imports name="Protocols" importUri="file://../../technology/Protocols.technology" importTypeName="TECHNOLOGY"/>
+  <microservices sourceModelUri="file://../../microservices/Restaurant.services" name="org.example.RestaurantService" qualifiedName="org.example.RestaurantService" type="FUNCTIONAL" visibility="ARCHITECTURE" effectivelyImplemented="true">
+    <technologies name="JavaSpring" import="//@imports.2"/>
+    <technologies name="Kafka" import="//@imports.3"/>
+    <technologies name="Protocols" import="//@imports.4"/>
+    <protocols communicationType="SYNCHRONOUS" protocol="rest" dataFormat="json"/>
+    <protocols communicationType="ASYNCHRONOUS" protocol="kafka" dataFormat="binary"/>
+    <interfaces name="Restaurants" qualifiedName="org.example.RestaurantService.Restaurants" visibility="ARCHITECTURE" hasImplementedOperations="true">
+      <endpoints communicationType="SYNCHRONOUS" protocol="rest" dataFormat="json" technology="//@microservices.0/@technologies.2">
+        <addresses>/restaurants</addresses>
+      </endpoints>
+      <endpoints communicationType="SYNCHRONOUS" protocol="rest" dataFormat="xml">
+        <addresses>/restaurants</addresses>
+      </endpoints>
+      <protocols communicationType="SYNCHRONOUS" protocol="rest" dataFormat="json"/>
+      <protocols communicationType="ASYNCHRONOUS" protocol="kafka" dataFormat="binary"/>
+      <operations name="create" qualifiedName="org.example.RestaurantService.Restaurants.create" visibility="ARCHITECTURE">
+        <apiOperationComment comment="Create a new restaurant.">
+          <parameterComments comment="Restaurant creation request" required="true" parameter="//@microservices.0/@interfaces.0/@operations.0/@parameters.0"/>
+        </apiOperationComment>
+        <protocols communicationType="SYNCHRONOUS" protocol="rest" dataFormat="json"/>
+        <protocols communicationType="ASYNCHRONOUS" protocol="kafka" dataFormat="binary"/>
+        <aspects name="PostMapping" qualifiedName="java.PostMapping" import="//@imports.2">
+          <featureNames>SINGLE_VALUED</featureNames>
+        </aspects>
+        <aspects name="KafkaProducer" qualifiedName="Kafka.KafkaProducer" import="//@imports.3">
+          <featureNames>SINGLE_VALUED</featureNames>
+          <properties name="group" type="string"/>
+          <properties name="topic" type="string"/>
+          <propertyValues value="ftgo" property="//@microservices.0/@interfaces.0/@operations.0/@aspects.1/@properties.0"/>
+          <propertyValues value="ftgoTopic" property="//@microservices.0/@interfaces.0/@operations.0/@aspects.1/@properties.1"/>
+        </aspects>
+        <parameters name="request" qualifiedName="org.example.RestaurantService.Restaurants.create.request" exchangePattern="IN" communicationType="SYNCHRONOUS">
+          <type xsi:type="intermediate_1:IntermediateImportedComplexType" name="RestaurantInformation" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="API.RestaurantInformation" import="//@imports.1"/>
+          <originalType xsi:type="intermediate_1:IntermediateImportedComplexType" name="RestaurantInformation" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="API.RestaurantInformation" import="//@imports.1"/>
+        </parameters>
+        <parameters name="response" qualifiedName="org.example.RestaurantService.Restaurants.create.response" exchangePattern="OUT" communicationType="ASYNCHRONOUS">
+          <type xsi:type="intermediate_1:IntermediateImportedComplexType" name="RestaurantCreated" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="DomainEvents.RestaurantCreated" import="//@imports.0"/>
+          <originalType xsi:type="intermediate_1:IntermediateImportedComplexType" name="RestaurantCreated" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="DomainEvents.RestaurantCreated" import="//@imports.0"/>
+        </parameters>
+      </operations>
+    </interfaces>
+  </microservices>
+</intermediate:IntermediateServiceModel>
