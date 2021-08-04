@@ -42,7 +42,13 @@ internal fun List<ValidationResult>.print(file: String) {
         return
 
     println("Validation results for file $file:")
-    val sortedResults = sortedWith(compareBy({ it.type.severityWeight }, ValidationResult::message))
+    val sortedResults = sortedWith(
+        compareByDescending<ValidationResult> { it.type.severityWeight }
+        .thenBy(ValidationResult::lineNumber)
+        .thenBy(ValidationResult::column)
+        .thenBy(ValidationResult::message)
+    )
+
     for (result in sortedResults) {
         val printResult: (Any) -> (Unit) = when (result.type) {
             ValidationResultType.ERROR -> ::printlnError
