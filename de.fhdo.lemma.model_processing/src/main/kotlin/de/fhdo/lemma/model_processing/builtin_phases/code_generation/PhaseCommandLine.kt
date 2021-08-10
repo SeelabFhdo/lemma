@@ -1,7 +1,6 @@
 package de.fhdo.lemma.model_processing.builtin_phases.code_generation
 
 import picocli.CommandLine
-import picocli.CommandLine.Model.CommandSpec
 
 /**
  * Singleton, which represents the commandline of the [CodeGenerationPhase].
@@ -11,10 +10,7 @@ import picocli.CommandLine.Model.CommandSpec
 internal object PhaseCommandLine {
     const val ALLOW_CODE_GENERATION_OUTSIDE_TARGET_FOLDER_OPTION_NAME = "--allow_code_generation_outside_target_folder"
     const val PRESERVE_EXISTING_FILES_OPTION_NAME = "--preserve_existing_files"
-    const val INVOKE_ONLY_SPECIFIED_MODULES = "--invoke_only_specified_modules"
-
-    @CommandLine.Spec
-    private lateinit var commandSpec: CommandSpec
+    const val INVOKE_ONLY_SPECIFIED_MODULES_OPTION_NAME = "--invoke_only_specified_modules"
 
     // Print properties commandline option
     @CommandLine.Option(
@@ -46,7 +42,7 @@ internal object PhaseCommandLine {
 
     // Invoke specified modules commandline option
     @CommandLine.Option(
-        names = [INVOKE_ONLY_SPECIFIED_MODULES],
+        names = [INVOKE_ONLY_SPECIFIED_MODULES_OPTION_NAME],
         description = ["invoke only those modules that were explicitly specified as phase parameters"]
     )
     var invokeOnlySpecifiedModules: Boolean = false

@@ -5,7 +5,6 @@ import de.fhdo.lemma.operation.intermediate.IntermediateOperationModel
 import de.fhdo.lemma.model_processing.builtin_phases.code_generation.AbstractCodeGenerationModule
 import de.fhdo.lemma.operation.intermediate.IntermediatePackage
 import de.fhdo.lemma.operation.intermediate.IntermediateOperationNode
-import de.fhdo.lemma.model_processing.languages.LanguageDescription
 import de.fhdo.lemma.model_processing.code_generation.container_base.file.docker.OpenedDockerComposeFile
 import org.jetbrains.annotations.NotNull
 
@@ -25,7 +24,7 @@ class DockerComposeCodeGenerator extends AbstractCodeGenerationModule {
     @NotNull
     override execute(String[] phaseArguments, String[] moduleArguments) {
         // Receive the intermediate operation model
-        model = intermediateModelResource.contents.get(0) as IntermediateOperationModel
+        model = resource.contents.get(0) as IntermediateOperationModel
 
         /*
          * Set targetFolder for docker-compose.yaml file and open an existing or create a new
@@ -47,11 +46,11 @@ class DockerComposeCodeGenerator extends AbstractCodeGenerationModule {
     }
 
     /**
-     * Receive the language description for the intermediate operation model package.
+     * Receive the language namespace for the intermediate operation model package.
      */
     @NotNull
-    override getLanguageDescription() {
-        new LanguageDescription(IntermediatePackage.eINSTANCE)
+    override getLanguageNamespace() {
+        IntermediatePackage.eNS_URI
     }
 
     /**

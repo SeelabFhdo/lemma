@@ -27,7 +27,6 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.languages.SERVIC
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.getTypeMapping
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.PropertyFile
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.services.ServicesContext.State as ServicesState
-import de.fhdo.lemma.model_processing.languages.registerLanguage
 import de.fhdo.lemma.model_processing.loadXtextResource
 import de.fhdo.lemma.model_processing.utils.loadModelRootRelative
 import de.fhdo.lemma.model_processing.utils.mainInterface
@@ -50,6 +49,7 @@ import de.fhdo.lemma.technology.ExchangePattern
 import io.github.classgraph.ClassGraph
 import io.github.classgraph.ClassInfo
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.EPackage
 import java.io.File
 import java.lang.IllegalArgumentException
 
@@ -346,21 +346,13 @@ private fun <T: EObject> loadOriginalModelRoot(modelFilePath: String) : T {
 }
 
 /**
- * Flag to indicate whether the [DATA_DSL_LANGUAGE_DESCRIPTION] was already added to the EPackage registry.
- *
- * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
- */
-private var dataDslRegistered = false
-
-/**
  * Add the [DATA_DSL_LANGUAGE_DESCRIPTION] to the EPackage registry, if this did not happen already.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 private fun registerDataDsl() {
-    if (!dataDslRegistered)
-        registerLanguage(DATA_DSL_LANGUAGE_DESCRIPTION.nsUri)
-    dataDslRegistered = true
+    if (DATA_DSL_LANGUAGE_DESCRIPTION.nsUri !in EPackage.Registry.INSTANCE)
+        EPackage.Registry.INSTANCE[DATA_DSL_LANGUAGE_DESCRIPTION.nsUri] = DATA_DSL_LANGUAGE_DESCRIPTION.eInstance
 }
 
 /**

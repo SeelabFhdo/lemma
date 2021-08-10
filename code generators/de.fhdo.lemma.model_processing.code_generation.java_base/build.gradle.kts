@@ -15,10 +15,13 @@ repositories {
 buildscript {
     extra.set("classgraphVersion", "4.8.35")
     extra.set("commonsVersion", "3.5")
+    extra.set("groovyVersion", "3.0.3")
     extra.set("jansiVersion", "1.17.1")
     extra.set("javaParserVersion", "3.14.10")
     extra.set("koinVersion", "2.0.1")
     extra.set("lemmaEclipsePluginsVersion", version)
+    extra.set("log4jVersion", "2.11.2")
+    extra.set("loggingVersion", "1.7.9")
     extra.set("lsp4jVersion", "0.9.0")
     extra.set("modelProcessingVersion", version)
     extra.set("picocliVersion", "3.9.3")
@@ -28,10 +31,13 @@ buildscript {
 dependencies {
     val classgraphVersion: String by rootProject.extra
     val commonsVersion: String by rootProject.extra
+    val groovyVersion: String by rootProject.extra
     val javaParserVersion: String by rootProject.extra
     val jansiVersion: String by rootProject.extra
     val koinVersion: String by rootProject.extra
     val lemmaEclipsePluginsVersion: String by rootProject.extra
+    val log4jVersion: String by rootProject.extra
+    val loggingVersion: String by rootProject.extra
     val lsp4jVersion: String by rootProject.extra
     val modelProcessingVersion: String by rootProject.extra
     val picocliVersion: String by rootProject.extra
@@ -42,6 +48,10 @@ dependencies {
     implementation("com.github.javaparser:javaparser-core:$javaParserVersion")
     implementation("de.fhdo.lemma.data.datadsl:de.fhdo.lemma.data.datadsl:$lemmaEclipsePluginsVersion")
     implementation("de.fhdo.lemma.data.datadsl:de.fhdo.lemma.data.datadsl.metamodel:$lemmaEclipsePluginsVersion")
+    implementation("de.fhdo.lemma.technology.mappingdsl:de.fhdo.lemma.technology.mappingdsl:" +
+        "$lemmaEclipsePluginsVersion")
+    implementation("de.fhdo.lemma.technology.mappingdsl:de.fhdo.lemma.technology.mappingdsl.metamodel:" +
+        "$lemmaEclipsePluginsVersion")
     implementation("de.fhdo.lemma.intermediate:de.fhdo.lemma.data.intermediate.metamodel:$lemmaEclipsePluginsVersion")
     implementation("de.fhdo.lemma.intermediate:de.fhdo.lemma.service.intermediate.metamodel:" +
         lemmaEclipsePluginsVersion)
@@ -53,6 +63,12 @@ dependencies {
     implementation("info.picocli:picocli:$picocliVersion")
     implementation("io.github.classgraph:classgraph:$classgraphVersion")
     implementation("io.insert-koin:koin-core:$koinVersion")
+    implementation("org.apache.logging.log4j:log4j-api:$log4jVersion")
+    implementation("org.apache.logging.log4j:log4j-core:$log4jVersion")
+    implementation("org.apache.logging.log4j:log4j-slf4j-impl:$log4jVersion")
+    implementation("io.github.microutils:kotlin-logging:$loggingVersion")
+    // Required by log4j (Groovy execution engine)
+    implementation("org.codehaus.groovy:groovy-jsr223:$groovyVersion")
     // Required by kotlin-xml-builder
     implementation("org.apache.commons:commons-lang3:$commonsVersion")
     implementation("org.eclipse.lsp4j:org.eclipse.lsp4j:$lsp4jVersion")

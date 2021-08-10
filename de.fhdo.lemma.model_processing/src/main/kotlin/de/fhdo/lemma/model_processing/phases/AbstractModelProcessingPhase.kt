@@ -1,8 +1,16 @@
 package de.fhdo.lemma.model_processing.phases
 
-import java.lang.IllegalArgumentException
+import de.fhdo.lemma.model_processing.annotations.ConsumesBasicCommandLineOption
+import de.fhdo.lemma.model_processing.command_line.BasicCommandLine
+import de.fhdo.lemma.model_processing.command_line.BasicOption
 
 private const val ID_REGEX = """[A-Za-z]\w*"""
+
+// Type alias for missing commandline options of a phase. The first list in the pair comprises missing options that
+// shall result in the phase to fail (i.e., the failIfNotPresent attribute of the @RequiresBasicCommandLineOption
+// annotation was set to true). The second list in the pair comprises missing options that do not cause the phase to
+// fail.
+internal typealias MissingCommandLineOptions = Pair<List<BasicOption>, List<BasicOption>>
 
 /**
  * Abstract superclass for all model processing phases.
@@ -17,10 +25,31 @@ abstract class AbstractModelProcessingPhase {
 
     lateinit var id: String
         private set
+    lateinit var predecessors: List<String>
+        internal set
+    lateinit var successors: List<String>
+        internal set
     var isBlocking: Boolean = false
         private set
-    override fun equals(other: Any?) = id == (other as? AbstractModelProcessingPhase)?.id ?: false
+    var isOmittable: Boolean = true
+        private set
+    override fun equals(other: Any?) = id == ((other as? AbstractModelProcessingPhase)?.id ?: false)
     override fun hashCode(): Int = id.hashCode()
+    override fun toString() = buildString {
+        append("$id (isBlocking = $isBlocking, isOmittable = $isOmittable)")
+        append(
+            if (expectedParameters.isNotEmpty())
+                "\n\tExpected parameters:\n" + expectedParameters.values.joinToString("\n") { "\t\t-$it" }
+            else
+                ""
+        )
+        append(
+            if (returnParameters.isNotEmpty())
+                "\n\tReturn parameters:\n" + returnParameters.values.joinToString("\n") { "\t\t-$it" }
+            else
+                ""
+        )
+    }
 
     lateinit var processorImplementationPackage: String
         private set
@@ -40,15 +69,36 @@ abstract class AbstractModelProcessingPhase {
     /**
      * Phase initialization (invoked by [de.fhdo.lemma.model_processing.phases.loadAndInitializeProcessingPhase])
      */
-    open fun initialize(id: String, isBlocking: Boolean, processorImplementationPackage: String) {
+    open fun initialize(id: String, isOmittable: Boolean, isBlocking: Boolean, processorImplementationPackage: String) {
         if (isInitialized)
             throw IllegalArgumentException("Phase has already been initialized")
 
         this.id = id.apply { checkId(this) }
+        this.isOmittable = isOmittable
         this.isBlocking = isBlocking
         this.processorImplementationPackage = processorImplementationPackage
 
         isInitialized = true
+    }
+
+    /**
+     * Helper to get all missing commandline options that the phase requires
+     */
+    internal fun getMissingCommandLineOptions() : MissingCommandLineOptions {
+        val missingOptionsCausingError = mutableListOf<BasicOption>()
+        val missingOptionsNoError = mutableListOf<BasicOption>()
+
+        this::class.annotations
+            .filterIsInstance<ConsumesBasicCommandLineOption>()
+            .filter { !BasicCommandLine.hasParsedOption(it.requiredOption) }
+            .forEach {
+                if (it.errorIfNotPresent)
+                    missingOptionsCausingError.add(it.requiredOption)
+                else
+                    missingOptionsNoError.add(it.requiredOption)
+            }
+
+        return missingOptionsCausingError to missingOptionsNoError
     }
 
     /**
@@ -112,17 +162,6 @@ abstract class AbstractModelProcessingPhase {
                     "consist of letters, numbers, and the underscore.")
     }
 
-    /**
-     * Convenience infix function to cast an object to a given [Class]
-     */
-    protected infix fun <T: Any> Any?.withType(clazz: Class<T>) : T? {
-        return try {
-            clazz.cast(this)
-        } catch (ex: Exception) {
-            null
-        }
-    }
-
     /*
      * The following functions represent convenience, shortcut functions to the heap. They all have their counterparts
      * in the [PhaseHeap] implementation. However, the convenience functions are all executed in the context of this
@@ -138,9 +177,11 @@ abstract class AbstractModelProcessingPhase {
     protected fun PhaseHeap.contains(entryKey: String) = this.contains(id, entryKey)
     protected operator fun <T: Any> PhaseHeap.get(entryKey: String, clazz: Class<T>) = this[id, entryKey, clazz]
     protected fun PhaseHeap.isNull(entryKey: String) = this.isNull(id, entryKey)
+    @Suppress("MemberVisibilityCanBePrivate")
     protected fun PhaseHeap.isNotNull(entryKey: String) = this.isNotNull(id, entryKey)
     protected fun <T: Any> PhaseHeap.isEntryOfType(entryKey: String, clazz: Class<T>)
         = this.isEntryOfType(id, entryKey, clazz)
+    @Suppress("MemberVisibilityCanBePrivate")
     protected fun PhaseHeap.remove(entryKey: String) {
         this.remove(entryKey)
     }
@@ -151,7 +192,9 @@ abstract class AbstractModelProcessingPhase {
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-open class PhaseReturnParameter(val name: String, val type: Class<out Any>, var optional: Boolean = false)
+open class PhaseReturnParameter(val name: String, val type: Class<out Any>, var optional: Boolean = false) {
+    override fun toString() = "$name : ${type.simpleName}${if (optional) "?" else ""}"
+}
 
 /**
  * A return parameter that is expected by a phase.
@@ -159,7 +202,10 @@ open class PhaseReturnParameter(val name: String, val type: Class<out Any>, var 
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 class ExpectedPhaseReturnParameter(name: String, type: Class<out Any>, optional: Boolean = false,
-    var onlyExpectedOnSuccessfulExecution: Boolean = true) : PhaseReturnParameter(name, type, optional)
+    var onlyExpectedOnSuccessfulExecution: Boolean = true) : PhaseReturnParameter(name, type, optional) {
+    override fun toString() = super.toString() +
+        if (onlyExpectedOnSuccessfulExecution) " (only expected on successful phase execution)" else ""
+}
 
 /**
  * Builder to specify the returned and expected parameters of a phase. In Kotlin, this can be used as a DSL construct in
@@ -177,6 +223,7 @@ class PhaseParametersScopeBuilder(private val phaseInstance: AbstractModelProces
     fun returns(initializer: PhaseReturnParametersScopeBuilder.() -> Unit) : PhaseReturnParametersScopeBuilder
         = PhaseReturnParametersScopeBuilder(phaseInstance).apply(initializer)
 
+    @Suppress("unused")
     fun expects(initializer: ExpectsPhaseReturnParametersScopeBuilder.() -> Unit)
         : ExpectsPhaseReturnParametersScopeBuilder
         = ExpectsPhaseReturnParametersScopeBuilder(phaseInstance).apply(initializer)
@@ -260,12 +307,14 @@ class ExpectsPhaseReturnParametersScopeBuilder(private val phaseInstance: Abstra
  */
 class ExpectsPhaseReturnParametersBuilder(private val expectedFromPhase: String,
     private val callingPhaseInstance: AbstractModelProcessingPhase) {
+    @Suppress("unused")
     infix fun String.withType(type: Class<out Any>) : ExpectedPhaseReturnParameter {
         val expectedParameter = ExpectedPhaseReturnParameter(this, type, false)
         callingPhaseInstance.expectedParameters[expectedFromPhase] = expectedParameter
         return expectedParameter
     }
 
+    @Suppress("unused")
     fun always(parameter: ExpectedPhaseReturnParameter) {
         parameter.onlyExpectedOnSuccessfulExecution = false
     }

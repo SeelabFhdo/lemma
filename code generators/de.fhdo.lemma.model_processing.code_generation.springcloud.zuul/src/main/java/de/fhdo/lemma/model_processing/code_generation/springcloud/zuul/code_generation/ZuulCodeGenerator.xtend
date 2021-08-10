@@ -30,7 +30,7 @@ class ZuulCodeGenerator extends AbstractCodeGenerationModule {
      */
     override execute(String[] phaseArguments, String[] moduleArguments) {
         // Receive the intermediate operation model
-        model = intermediateModelResource.contents.get(0) as IntermediateOperationModel
+        model = resource.contents.get(0) as IntermediateOperationModel
 
         // Create infrastructure node-specific Zuul components
         model.infrastructureNodes.forEach[
@@ -48,11 +48,11 @@ class ZuulCodeGenerator extends AbstractCodeGenerationModule {
     }
 
     /**
-     * Receive the language description for the intermediate operation model package.
+     * Receive the language namespace for the intermediate operation model package.
      */
     @NotNull
-    override getLanguageDescription() {
-        new LanguageDescription(IntermediatePackage.eINSTANCE)
+    override getLanguageNamespace() {
+        IntermediatePackage.eNS_URI
     }
 
     /**

@@ -2,8 +2,7 @@ package de.fhdo.lemma.model_processing.code_generation.container_base.source_mod
 
 import de.fhdo.lemma.model_processing.annotations.Before
 import de.fhdo.lemma.model_processing.annotations.SourceModelValidator
-import de.fhdo.lemma.model_processing.builtin_phases.source_model_validation.AbstractXtextSourceModelValidator
-import de.fhdo.lemma.model_processing.builtin_phases.source_model_validation.SourceModelValidationMode
+import de.fhdo.lemma.model_processing.phases.validation.AbstractXtextModelValidator
 import de.fhdo.lemma.model_processing.languages.XtextImportUriConverterKt
 import de.fhdo.lemma.operation.OperationModel
 import de.fhdo.lemma.operation.OperationPackage
@@ -17,15 +16,13 @@ import org.eclipse.xtext.validation.Check
  *
  * @author <a href="mailto:philip.wizenty@fh-dortmund.de">Philip Wizenty</a>
  */
-@SourceModelValidator(supportedFileExtensions='operation',
-    validationMode=SourceModelValidationMode.XTEXT
-)
-class ContainerBaseSourceModelValidator extends AbstractXtextSourceModelValidator {
+@SourceModelValidator
+class ContainerBaseSourceModelValidator extends AbstractXtextModelValidator {
     /**
-     * Get namespace for the operation model package
+     * Get supported file extensions
      */
-    override getLanguageNamespace() {
-        return OperationPackage.eNS_URI
+    override getSupportedFileExtensions() {
+        newHashSet("operation")
     }
 
     /**

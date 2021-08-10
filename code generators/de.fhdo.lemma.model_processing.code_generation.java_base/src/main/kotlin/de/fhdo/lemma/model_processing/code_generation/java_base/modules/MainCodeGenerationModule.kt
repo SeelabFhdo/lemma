@@ -24,10 +24,10 @@ import de.fhdo.lemma.service.intermediate.IntermediateServiceModel
 @CodeGenerationModule("main")
 internal class MainCodeGenerationModule : CodeGenerationModuleBase() {
     /**
-     * Return the language description for the intermediate model kind with which this code generator can deal, i.e.,
+     * Return the language namespace for the intermediate model kind with which this code generator can deal, i.e.,
      * intermediate service models
      */
-    override fun getLanguageDescription() = INTERMEDIATE_SERVICE_MODEL_LANGUAGE_DESCRIPTION
+    override fun getLanguageNamespace() = INTERMEDIATE_SERVICE_MODEL_LANGUAGE_DESCRIPTION.nsUri
 
     /**
      * Initialize the code generation module
@@ -73,13 +73,13 @@ internal class MainCodeGenerationModule : CodeGenerationModuleBase() {
                 CommandLine.alternativeIntermediateServiceModelFile!! to
                     CommandLine.alternativeIntermediateServiceModelFile!!.asXmiResource()
             else
-                intermediateModelFile to intermediateModelResource
+                modelFile to resource
 
         /* Initialize the main state hold by the main context */
         MainState.initialize(
             intermediateServiceModelFilePath,
             intermediateServiceModelResource,
-            intermediateModelResource,
+            resource,
             targetFolder,
             CommandLine.parameterLineCountFile
         )

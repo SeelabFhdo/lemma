@@ -3,7 +3,6 @@ package de.fhdo.lemma.model_processing.code_generation.container_base.code_gener
 import de.fhdo.lemma.model_processing.annotations.CodeGenerationModule
 import de.fhdo.lemma.model_processing.builtin_phases.code_generation.AbstractCodeGenerationModule
 import de.fhdo.lemma.operation.intermediate.IntermediateOperationModel
-import de.fhdo.lemma.model_processing.languages.LanguageDescription
 import de.fhdo.lemma.operation.intermediate.IntermediatePackage
 import de.fhdo.lemma.operation.intermediate.OperationMicroserviceReference
 import de.fhdo.lemma.model_processing.code_generation.container_base.template.PropertyFileTemplate
@@ -30,7 +29,7 @@ class PropertyFileCodeGenerator extends AbstractCodeGenerationModule{
     @NotNull
     override execute(String[] phaseArguments, String[] moduleArguments) {
         // Receive the intermediate operation model
-        model = intermediateModelResource.contents.get(0) as IntermediateOperationModel
+        model = resource.contents.get(0) as IntermediateOperationModel
 
         // Generate all container
         model.containers.forEach [container |
@@ -48,8 +47,8 @@ class PropertyFileCodeGenerator extends AbstractCodeGenerationModule{
      * Receive the language description for the intermediate operation model package.
      */
     @NotNull
-    override getLanguageDescription() {
-        new LanguageDescription(IntermediatePackage.eINSTANCE)
+    override getLanguageNamespace() {
+        IntermediatePackage.eNS_URI
     }
 
     /**

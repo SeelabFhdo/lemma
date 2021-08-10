@@ -35,14 +35,25 @@ internal operator fun AnnotationInfoList.get(annotationClass: KClass<out Annotat
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun findAnnotatedClasses(sourcePackage: String, annotationClass: KClass<out Annotation>) =
-    ClassGraph()
-        .enableClassInfo()
-        .enableAnnotationInfo()
-        .whitelistPackages(sourcePackage)
-        .scan()
-        .getClassesWithAnnotation(annotationClass)
-        .toMutableList()
+internal fun findAnnotatedClasses(sourcePackage: String, annotationClass: KClass<out Annotation>) : ClassInfoList {
+    if (sourcePackage !in ScanResultsPerPackage)
+        ScanResultsPerPackage[sourcePackage] = ClassGraph().enableClassInfo().enableAnnotationInfo()
+            .whitelistPackages(sourcePackage).scan()
+
+    val packageAndAnnotation = sourcePackage to annotationClass
+    if (packageAndAnnotation !in ClassesPerPackageAndAnnotation)
+        ClassesPerPackageAndAnnotation[packageAndAnnotation] = ScanResultsPerPackage[sourcePackage]!!
+            .getClassesWithAnnotation(annotationClass)
+
+    return ClassesPerPackageAndAnnotation[packageAndAnnotation]!!
+}
+
+// Cache for Classgraph scan results
+private object ScanResultsPerPackage : HashMap<String, ScanResult>()
+
+// Cache for scanned classes with annotation
+private typealias PackageAndAnnotation = Pair<String, KClass<out Annotation>>
+private object ClassesPerPackageAndAnnotation : HashMap<PackageAndAnnotation, ClassInfoList>()
 
 /**
  * Helper to find all methods of an object that have been annotated with a given annotation class.
@@ -74,7 +85,7 @@ internal fun Any.findAnnotatedMethods(annotationClass: KClass<out Annotation>, v
         val valueParameters = it.parameters.filter{ parameter -> parameter.kind == KParameter.Kind.VALUE }
         if (valueParameters.size == parameterClasses.size) {
             var allTypesMatch = true
-            for (n in 0 until valueParameters.size) {
+            for (n in valueParameters.indices) {
                 val parameter = valueParameters[n]
                 val expectedType = parameterClasses[n].starProjectedType
 

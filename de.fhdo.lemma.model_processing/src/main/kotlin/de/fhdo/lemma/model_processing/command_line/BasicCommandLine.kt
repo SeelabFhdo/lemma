@@ -9,11 +9,8 @@ import picocli.CommandLine.ParameterException
 import picocli.CommandLine.Spec
 
 /**
- * Enumeration of basic commandline options that may be specified by model processing phases as being required in the
- * form of parameters of [de.fhdo.lemma.model_processing.annotations.RequiresBasicCommandLineOptions].
- *
- * A "basic" commandline option is distinguished from a phase-specific commandline option. It is relevant for the model
- * processor as a whole and independent of any specific phase.
+ * Enumeration of basic commandline options. A "basic" commandline option is distinguished from a phase-specific
+ * commandline option as being relevant to the model processor as a whole and independent of any specific phase.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
@@ -21,6 +18,7 @@ enum class BasicOption(val names: List<String>) {
     SOURCE_MODEL_FILE(listOf("-s", "--source_model")),
     INTERMEDIATE_MODEL_FILE(listOf("-i", "--intermediate_model")),
     TARGET_FOLDER(listOf("-t", "--target_folder")),
+    @Suppress("unused")
     INVOKE_ONLY_SPECIFIED_PHASES(listOf("--invoke_only_specified_phases"))
 }
 
@@ -30,13 +28,12 @@ enum class BasicOption(val names: List<String>) {
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 object BasicCommandLine {
+    private const val DEBUG_OPTION_NAME = "--debug"
+
     @Spec
     private lateinit var commandSpec: CommandSpec
 
-    /*
-     * Commandline option that specifies the source model file, i.e., the Xtext file, before it was transformed into
-     * an intermediate model file
-     */
+    /* Commandline option that specifies the source model file */
     var sourceModelFile: String? = null
         @Option(
             names = ["-s", "--source_model"],
@@ -64,17 +61,40 @@ object BasicCommandLine {
             field = value
         }
 
-    /* Commandline option that specifies the target folder of the model processing */
+    /* Commandline option that specifies the target folder of the model processing tasks like code generation */
     @Option(
         names = ["-t", "--target_folder"],
         paramLabel = "TARGET_FOLDER",
-        description = ["the target folder of the model processing"]
+        description = ["model processing target folder"]
     )
     var targetFolder: String? = null
 
-    /*
-     * Commandline option to instruct the model processor to only invoke all explicitly specified phases
+    /* Commandline option to instruct the model processor to print debug messages to standard output */
+    @Suppress("unused")
+    var debugSpecification: String? = null
+        @Option(
+            names = [DEBUG_OPTION_NAME],
+            description = [
+                "print debug messages to standard output (may receive a list of space-delimited strings of which " +
+                "each identifies the kind of debug messages to print; debug message kinds involve phase identifiers)"
+            ],
+            arity = "0..1"
+        )
+        set(value) {
+            if (value != null && value.isNotEmpty())
+                debugMessageKinds.addAll(value.split(" "))
+
+            field = value
+        }
+
+    internal val debugMessageKinds = mutableListOf<String>()
+
+    /**
+     * Did the user request to run model processing in debug mode?
      */
+    internal fun debugMode() = parsedOptions.any { it.names().contains(DEBUG_OPTION_NAME) }
+
+    /* Commandline option to instruct the model processor to only invoke all explicitly specified phases */
     @Option(
         names = ["--invoke_only_specified_phases"],
         description = ["invoke only those phases that were explicitly specified as command line parameters"]

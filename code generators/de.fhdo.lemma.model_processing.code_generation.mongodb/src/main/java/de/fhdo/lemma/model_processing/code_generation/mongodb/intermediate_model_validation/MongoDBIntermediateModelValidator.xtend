@@ -1,12 +1,12 @@
 package de.fhdo.lemma.model_processing.code_generation.mongodb.intermediate_model_validation
 
 import de.fhdo.lemma.model_processing.annotations.IntermediateModelValidator
-import de.fhdo.lemma.model_processing.builtin_phases.intermediate_model_validation.AbstractIntermediateDeclarativeValidator
 import de.fhdo.lemma.operation.intermediate.IntermediatePackage
 import de.fhdo.lemma.operation.intermediate.IntermediateContainer
 import org.eclipse.xtext.validation.Check
 import de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode
 import de.fhdo.lemma.model_processing.code_generation.mongodb.code_generation.MongoDBCodeGenerator
+import de.fhdo.lemma.model_processing.phases.validation.AbstractXmiDeclarativeValidator
 
 /**
  * The MongoDB intermediate model validator is responsible for checking general aspects for
@@ -15,7 +15,7 @@ import de.fhdo.lemma.model_processing.code_generation.mongodb.code_generation.Mo
  * @author <a href="mailto:philip.wizenty@fh-dortmund.de">Philip Wizenty</a>
  */
 @IntermediateModelValidator
-class MongoDBIntermediateModelValidator extends AbstractIntermediateDeclarativeValidator {
+class MongoDBIntermediateModelValidator extends AbstractXmiDeclarativeValidator {
     /**
      * Get the namespace for the intermediate operation model
      */

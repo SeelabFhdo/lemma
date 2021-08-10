@@ -1,36 +1,31 @@
 package de.fhdo.lemma.model_processing.builtin_phases.code_generation
 
-import de.fhdo.lemma.model_processing.annotations.CodeGenerationModule
 import de.fhdo.lemma.model_processing.annotations.CodeGenerationPropertyProvider
-import de.fhdo.lemma.model_processing.annotations.ExplicitlyInvokedCodeGenerationModule
 import de.fhdo.lemma.model_processing.annotations.ModelProcessingPhase
-import de.fhdo.lemma.model_processing.annotations.RequiresBasicCommandLineOptions
+import de.fhdo.lemma.model_processing.annotations.ConsumesBasicCommandLineOption
 import de.fhdo.lemma.model_processing.annotations.findAnnotatedClasses
-import de.fhdo.lemma.model_processing.annotations.get
 import de.fhdo.lemma.model_processing.asFile
-import de.fhdo.lemma.model_processing.asXmiResource
-import de.fhdo.lemma.model_processing.phases.AbstractModelProcessingPhase
+import de.fhdo.lemma.model_processing.builtin_phases.code_generation.AvailableCodeGenerationModules.missingDependency
 import de.fhdo.lemma.model_processing.builtin_phases.intermediate_model_validation.IntermediateModelValidationPhase
+import de.fhdo.lemma.model_processing.phases.AbstractModelProcessingPhase
 import de.fhdo.lemma.model_processing.command_line.BasicCommandLine
 import de.fhdo.lemma.model_processing.command_line.BasicOption
 import de.fhdo.lemma.model_processing.command_line.parseCommandLine
 import de.fhdo.lemma.model_processing.containsAny
+import de.fhdo.lemma.model_processing.debugPhase
+import de.fhdo.lemma.model_processing.debugPhaseArguments
 import de.fhdo.lemma.model_processing.extendsImplementsOrException
 import de.fhdo.lemma.model_processing.isChildPathOf
-import de.fhdo.lemma.model_processing.languages.registerLanguages
+import de.fhdo.lemma.model_processing.phases.ModelKind
 import de.fhdo.lemma.model_processing.phases.PhaseException
-import de.fhdo.lemma.model_processing.phases.PhaseHeap
 import de.fhdo.lemma.model_processing.printlnError
+import de.fhdo.lemma.model_processing.printlnPhaseError
 import de.fhdo.lemma.model_processing.printlnWarning
-import de.fhdo.lemma.model_processing.readModelingNamespacesFromXmi
-import io.github.classgraph.ClassInfo
-import org.eclipse.emf.ecore.EObject
-import org.eclipse.emf.ecore.resource.Resource
-import java.nio.charset.Charset
 import java.util.ArrayDeque
 import java.util.Deque
 import java.util.LinkedList
-import kotlin.reflect.KClass
+
+private typealias ModuleArguments = Map<String, List<String>>
 
 /**
  * Implementation of the model processor's code generation phase.
@@ -38,119 +33,257 @@ import kotlin.reflect.KClass
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 @ModelProcessingPhase("code_generation", IntermediateModelValidationPhase::class)
-@RequiresBasicCommandLineOptions(BasicOption.INTERMEDIATE_MODEL_FILE, BasicOption.TARGET_FOLDER)
+@ConsumesBasicCommandLineOption(BasicOption.TARGET_FOLDER)
 internal class CodeGenerationPhase : AbstractModelProcessingPhase() {
-    /**
-     * Phase initialization (overridden to specify parameter constraints)
-     */
-    override fun initialize(id: String, isBlocking: Boolean, processorImplementationPackage: String) {
-        super.initialize(id, isBlocking, processorImplementationPackage)
-
-        parameters {
-            expects {
-                from("intermediate_model_validation") {
-                    "intermediateModelFileNamespaces" withType Set::class.java
-                    "resource" withType Resource::class.java
-                }
-            }
-        }
-    }
-
     /**
      * Execute the phase
      */
     override fun process(args: Array<String>) {
+        debugPhaseArguments(args)
+
+        /* Handle passed target folder */
+        debugPhase {
+            "Target folder \"${BasicCommandLine.targetFolder!!}\" will be used for code generation." +
+            if (PhaseCommandLine.allowCodeGenerationOutsideTargetFolder)
+                " However, user allowed code generation outside the target folder."
+            else
+                ""
+        }
+
         /* Get code generation properties from provider, if any */
         val propertyProvider = findCodeGenerationPropertyProvider(processorImplementationPackage)
+        if (propertyProvider != null)
+            debugPhase {
+                "Found code generation property provider ${propertyProvider::class.java.name} in processor " +
+                "implementation package \"$processorImplementationPackage\""
+            }
+
         val codeGenerationProperties = propertyProvider?.getProperties() ?: emptyMap()
+        if (codeGenerationProperties.isNotEmpty()) {
+            debugPhase { "Got the following properties from the code generation property provider:" }
+            codeGenerationProperties.forEach { debugPhase { "\t- ${it.key} = ${it.value}" } }
+        } else if (propertyProvider != null)
+            debugPhase { "Code generation property provider did not yield any properties" }
 
-        /* Find and initialize code generation modules */
-        val (modules, dependencyRelationships) = findAndInitCodeGenerationModules(processorImplementationPackage,
-            CodeGenerationModule::class, codeGenerationProperties)
-        val (explicitlyInvokedModules, _) = findAndInitCodeGenerationModules(processorImplementationPackage,
-            ExplicitlyInvokedCodeGenerationModule::class, codeGenerationProperties)
-
-        // Prepare loaded module information that assigns a Boolean value to each module, stating whether the module is
-        // to be explicitly invoked or not
-        val loadedModuleInfo = modules.keys.associateBy({it}, {false}).toMutableMap()
-        loadedModuleInfo.putAll(explicitlyInvokedModules.keys.associateBy({it}, {true}))
-
-        if (loadedModuleInfo.isEmpty())
-            throw PhaseException("No code generation modules were found on the classpath")
+        /* Find available code generation modules */
+        AvailableCodeGenerationModules.initialize(processorImplementationPackage, codeGenerationProperties)
 
         /* Parse commandline */
-        val (phaseArguments, modulesArguments) = parseCommandLine(args, loadedModuleInfo.keys.toList())
+        val codeGenerationModuleNames = AvailableCodeGenerationModules.getAllModuleNames().toList()
+        val (phaseSpecificArguments, moduleSpecificArguments) = parseCommandLine(args, codeGenerationModuleNames)
         try {
-            PhaseCommandLine(phaseArguments)
+            PhaseCommandLine(phaseSpecificArguments)
         } catch (ex: Exception) {
             throw PhaseException(ex.message)
         }
 
-        /* Only print properties if requested by user */
+        /* Handle commands that might interrupt the phase's execution */
+        val interruptExecution = handleInterruptingCommands(codeGenerationProperties)
+        if (interruptExecution)
+            return
+
+        /* Execute code generation modules for model kinds */
+        executeCodeGenerationModules(ModelKind.SOURCE, phaseSpecificArguments, moduleSpecificArguments)
+        executeCodeGenerationModules(ModelKind.INTERMEDIATE, phaseSpecificArguments, moduleSpecificArguments)
+    }
+
+    /**
+     * Helper to find the code generation property provider on the classpath
+     */
+    private fun findCodeGenerationPropertyProvider(processorPackage : String) : CodeGenerationPropertyProviderI? {
+        val annotatedClasses = findAnnotatedClasses(processorPackage, CodeGenerationPropertyProvider::class)
+        when {
+            annotatedClasses.isEmpty() -> return null
+            annotatedClasses.size > 1 -> throw PhaseException("Ambiguous code generation property providers. Only " +
+                "one class in processor implementation package \"$processorPackage\" may be annotated as being a " +
+                "code generation property provider")
+        }
+
+        val providerInfo = annotatedClasses.first()
+        providerInfo.extendsImplementsOrException("Code generation property provider",
+            expectedInterface = CodeGenerationPropertyProviderI::class)
+
+        return providerInfo
+            .loadClass(CodeGenerationPropertyProviderI::class.java)
+            .getDeclaredConstructor()
+            .newInstance()
+    }
+
+    /**
+     * Handle CLI commands that might interrupt the execution of the code generation phase (returns true, if the phase
+     * shall be interrupted after a certain command)
+     */
+    private fun handleInterruptingCommands(codeGenerationProperties: Map<String, String>) : Boolean {
+        // Print properties
         if (PhaseCommandLine.printProperties) {
             if (codeGenerationProperties.isNotEmpty())
-                codeGenerationProperties.forEach { println("${it.key}: ${it.value}") }
+                codeGenerationProperties.forEach { println("${it.key} = ${it.value}") }
             else
                 println("No properties found for code generation phase")
 
-            return
+            return true
         }
 
-        // Only print names of generation modules if requested by user
+        // Print names of available generation modules
         if (PhaseCommandLine.printModules) {
-            println("Loaded code generation modules:")
-            loadedModuleInfo.toSortedMap().forEach { (name, explicitlyInvoked) ->
-                if (explicitlyInvoked)
-                    println("$name (to be explicitly invoked)")
-                else
-                    println(name)
+            printAvailableModulesForKind(ModelKind.SOURCE)
+            printAvailableModulesForKind(ModelKind.INTERMEDIATE)
+
+            return true
+        }
+
+        return false
+    }
+
+    /**
+     * Helper to print the code generation modules available for the given [ModelKind]
+     */
+    private fun printAvailableModulesForKind(modelKind: ModelKind) {
+        val moduleInfos = AvailableCodeGenerationModules.getModules(modelKind)
+        println("Available code generation modules for ${modelKind.label} model:")
+        moduleInfos.sortedBy { it.name }.forEach {
+            println(
+                "\t- ${it.name} (language namespace: ${it.languageNamespace}" +
+                if (it.dependsOn.isNotEmpty()) ", depends on: ${it.dependsOn}" else "" +
+                if (it.explicitlyInvoked) ", explicit invocation required)" else ")"
+            )
+        }
+    }
+
+    /**
+     * Execute all code generation modules available for a certain [ModelKind]
+     */
+    private fun executeCodeGenerationModules(modelKind: ModelKind, phaseSpecificArguments: List<String>,
+        moduleSpecificArguments: Map<String, List<String>>) {
+        val kindLabel = modelKind.label
+
+        /* Check if matching code generation modules exist */
+        if (!AvailableCodeGenerationModules.existModules(modelKind)) {
+            debugPhase {
+                "No code generation modules for $kindLabel model found. Code generation for this model kind aborted."
             }
             return
         }
 
-        /* Calculate module execution plan that considers possible module dependencies */
-        val modulesToExecute = when {
-            // Invoke only those modules that were explicitly specified on the commandline
+        /* Calculate module execution plan */
+        val executionPlan = try {
+            val (modulesToExecute, onlyExplicitlyInvokedModules)
+                = determineModulesToExecute(modelKind, moduleSpecificArguments)
+            modulesToExecute.calculateExecutionPlan(onlyExplicitlyInvokedModules)
+        } catch (ex: ModuleExecutionDeterminationException) {
+            printlnPhaseError(this, ex.message)
+            return
+        }
+
+        /* Execute code generation modules according to the calculated execution plan */
+        if (!executionPlan.isEmpty()) {
+            debugPhase { "Calculated execution plan for code generation modules concerning $kindLabel model:" }
+            executionPlan.forEachIndexed { index, module ->
+                debugPhase {
+                    "\t${index+1}. ${module.name}" +
+                    if (module.explicitlyInvoked) " (explicit invocation required)" else ""
+                }
+            }
+            executionPlan.execute(modelKind, phaseSpecificArguments, moduleSpecificArguments)
+        }
+    }
+
+    /**
+     * Determine the code generation modules to execute for the given [ModelKind]. The boolean flag of the returned
+     * [Pair] specifies if the user passed CLI arguments to the processor that make it necessary to only execute those
+     * code generation modules, which require explicit invocation.
+     */
+    private fun determineModulesToExecute(modelKind: ModelKind, moduleArguments: ModuleArguments)
+        : Pair<List<CodeGenerationModuleRegistrationInfo>, Boolean> {
+        val kindLabel = modelKind.label
+
+        /* Determine modules to execute */
+        val candidateModules = AvailableCodeGenerationModules.getModules(modelKind)
+        val namesOfExplicitlyInvokedModules = AvailableCodeGenerationModules.getNamesOfAllExplicitlyInvokedModules()
+        val (modulesToExecute, onlyExplicitlyInvokedModules) = when {
+            // User explicitly requested to only invoke those modules that were specified on the commandline
             PhaseCommandLine.invokeOnlySpecifiedModules -> {
-                (modules + explicitlyInvokedModules).filter { it.key in modulesArguments.keys }
+                candidateModules.filter { it.name in moduleArguments.keys } to false
             }
 
-            // In case an explicitly invoked module was stated on the commandline, only invoke those modules that need
-            // to be explicitly invoked (this behavior is consistent with that of [AbstractModelProcessor])
-            modulesArguments.keys.containsAny(explicitlyInvokedModules.keys) -> explicitlyInvokedModules
+            // In case an explicitly invoked module was stated on the commandline, only invoke those modules that
+            // require explicit invocation (this behavior is consistent with that of [AbstractModelProcessor])
+            moduleArguments.keys.containsAny(namesOfExplicitlyInvokedModules) ->
+                AvailableCodeGenerationModules.getExplicitlyInvokedModules(modelKind) to true
 
-            // Invoke all modules that do not need to be invoked explicitly
-            else -> modules
+            // Invoke all modules that do not require explicit invocation
+            else -> candidateModules.filter { !it.explicitlyInvoked } to false
         }
 
         if (modulesToExecute.isEmpty())
-            throw PhaseException("No modules found to execute. Probably the " +
-                "${PhaseCommandLine.INVOKE_ONLY_SPECIFIED_MODULES} option was specified without a module.")
-        else {
-            val missingDependency = dependencyRelationships.keys.find { it !in modulesToExecute.keys }
+            debugPhase {
+                "No executable code generation modules determinable for $kindLabel model. Maybe the " +
+                "${PhaseCommandLine.INVOKE_ONLY_SPECIFIED_MODULES_OPTION_NAME} option was specified without a module " +
+                "or only modules of the opposite model kind were selected for execution?"
+            }
+        // Modules that require explicit invocation cannot specify dependencies to other modules via the dependsOn
+        // annotation parameter
+        else if (!onlyExplicitlyInvokedModules) {
+            val missingDependency = modulesToExecute.missingDependency(modelKind)
             if (missingDependency != null)
-                throw PhaseException("Some code generation modules depend on module \"$missingDependency\", which " +
-                    "was not found on the classpath. Probably it was excluded with the " +
-                    "${PhaseCommandLine.INVOKE_ONLY_SPECIFIED_MODULES} option.")
+                throw ModuleExecutionDeterminationException("Some code generation modules for $kindLabel model " +
+                    "depend on module \"$missingDependency\", which was not found in processor implementation " +
+                    "package \"$processorImplementationPackage\". Maybe the module was excluded with the " +
+                    "${PhaseCommandLine.INVOKE_ONLY_SPECIFIED_MODULES_OPTION_NAME} option?")
         }
 
-        val executionPlan = calculateExecutionPlan(modulesToExecute, dependencyRelationships)
+        return modulesToExecute to onlyExplicitlyInvokedModules
+    }
 
-        /* Execute code generation modules */
-        val generatedFiles = mutableMapOf<String, Pair<String, Charset>>()
-        executionPlan.forEach {
-            val moduleArguments = modulesArguments[it.name]?.toTypedArray() ?: emptyArray()
-            generatedFiles.putAll(it.execute(phaseArguments.toTypedArray(), moduleArguments))
+    /**
+     * Exception to communicate that code generation module execution is not feasible and the whole phase is to be
+     * aborted
+     */
+    private class ModuleExecutionDeterminationException(override val message: String) : PhaseException(message)
+
+    /**
+     * Execute a stack of code generation modules from their [CodeGenerationModuleRegistrationInfo] for a given
+     * [ModelKind]
+     */
+    private fun Deque<CodeGenerationModuleRegistrationInfo>.execute(modelKind: ModelKind, phaseArguments: List<String>,
+        allModuleArguments: ModuleArguments) {
+        val kindLabel = modelKind.label
+
+        /* Execute the modules and gather all generated files */
+        val allGeneratedFiles = mutableMapOf<String, CharsetAwareFileContent>()
+        forEach {
+            val moduleArguments = allModuleArguments[it.name]?.toTypedArray() ?: emptyArray()
+            if (moduleArguments.isNotEmpty())
+                debugPhase {
+                    "Executing code generation module \"${it.name}\" for $kindLabel model with arguments " +
+                    "\"${moduleArguments.joinToString()}\""
+                }
+            else
+                debugPhase { "Executing code generation module \"${it.name}\" for $kindLabel model without arguments" }
+
+            // Actual module execution
+            val generatedFiles = it.instance.execute(phaseArguments.toTypedArray(), moduleArguments)
+
+            if (generatedFiles.isNotEmpty()) {
+                debugPhase { "Module generated the following files for $kindLabel model:" }
+                generatedFiles.forEach { path, (content, charset) ->
+                    debugPhase { "\t- $path (charset: ${charset.name()}, character count: ${content.length})" }
+                }
+            } else
+                debugPhase { "Module did not generate any files for $kindLabel model" }
+
+            allGeneratedFiles.putAll(generatedFiles)
         }
 
-        if (generatedFiles.isEmpty()) {
-            println("No files were generated by the code generation modules")
+        if (allGeneratedFiles.isEmpty()) {
+            println("No files were generated by code generation modules for $kindLabel model")
             return
         }
 
         /* Write generated contents to files */
         val targetFolder = BasicCommandLine.targetFolder!!
-        for ((filepath, content) in generatedFiles) {
+        debugPhase { "Writing generated file contents to disk" }
+        for ((filepath, content) in allGeneratedFiles) {
             if (!PhaseCommandLine.allowCodeGenerationOutsideTargetFolder && !(filepath isChildPathOf targetFolder)) {
                 printlnWarning("Generated file \"$filepath\" is not a child of generation target folder " +
                     "\"$targetFolder\" and code generation outside the target folder is not allowed. If you want to " +
@@ -180,142 +313,21 @@ internal class CodeGenerationPhase : AbstractModelProcessingPhase() {
 }
 
 /**
- * Helper to find the code generation property provider on the classpath.
+ * Helper to calculate an execution plan for this list of [AbstractCodeGenerationModule]s represented as
+ * [CodeGenerationModuleRegistrationInfo]s. Note that the function requires the [CodeGenerationModuleRegistrationInfo]s
+ * to concern only a single [ModelKind] and will otherwise throw an [IllegalArgumentException].
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-private fun findCodeGenerationPropertyProvider(processorPackage : String) : CodeGenerationPropertyProviderI? {
-    val annotatedClasses = findAnnotatedClasses(processorPackage, CodeGenerationPropertyProvider::class)
-    when {
-        annotatedClasses.isEmpty() ->
-            return null
-        annotatedClasses.size > 1 ->
-            throw PhaseException("Ambiguous code generation property providers. Only one class on the classpath may " +
-                "be annotated as being a code generation property provider")
-    }
+private fun List<CodeGenerationModuleRegistrationInfo>.calculateExecutionPlan(onlyExplicitlyInvokedModules: Boolean)
+    : Deque<CodeGenerationModuleRegistrationInfo> {
+    if (isEmpty())
+        return ArrayDeque()
 
-    val providerInfo = annotatedClasses.first()
-    providerInfo.extendsImplementsOrException(
-        "Code generation property provider",
-        expectedInterface = CodeGenerationPropertyProviderI::class
-    )
+    require(map { it.modelKind }.toSet().size == 1) { "Ambiguous model kinds detected in execution plan calculation" }
+    val modelKind = this[0].modelKind
 
-    return providerInfo
-        .loadClass(CodeGenerationPropertyProviderI::class.java)
-        .getDeclaredConstructor()
-        .newInstance()
-}
-
-/**
- * Helper to find and initialize [AbstractCodeGenerationModule] implementers on the classpath.
- *
- * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
- */
-private fun findAndInitCodeGenerationModules(processorPackage: String, annotationClass: KClass<out Annotation>,
-    codeGenerationProperties: Map<String, String>)
-    : Pair<Map<String, AbstractCodeGenerationModule>, Map<String, List<String>>> {
-    val loadedModules = mutableMapOf<String, AbstractCodeGenerationModule>()
-    val dependencyRelationships = mutableMapOf<String, List<String>>()
-
-    val annotatedClasses = findAnnotatedClasses(processorPackage, annotationClass)
-    for (classInfo in annotatedClasses) {
-        /* Code generation modules must extend AbstractCodeGenerationModule */
-        classInfo.extendsImplementsOrException(
-            "Code generation module",
-            expectedSuperclass = AbstractCodeGenerationModule::class
-        )
-
-        /* Check name and duplicates */
-        val annotationInfo = classInfo.annotationInfo[annotationClass]!!
-        val moduleName = annotationInfo.parameterValues["name"].value as String
-        if (moduleName.isEmpty())
-            throw PhaseException("Name of code generation module implemented in class \"${classInfo.simpleName}\" " +
-                "must not be empty")
-
-        if (loadedModules.containsKey(moduleName))
-            throw PhaseException("Duplicate module detected: \"$moduleName\"")
-
-        /* Create and initialize module instance */
-        // dependsOn annotation parameter does not exist for modules to be invoked explicitly
-        val dependsOnModule = annotationInfo.parameterValues["dependsOn"]?.value as? String ?: ""
-        val moduleInstance = initCodeGenerationModuleInstance(classInfo, moduleName, dependsOnModule,
-             codeGenerationProperties)
-        loadedModules += moduleName to moduleInstance
-
-        /*
-         * Add module to the map of dependency relationships, which assigns the list of dependent modules (values) to
-         * those modules they depend on (key)
-         */
-        if (dependsOnModule.isNotEmpty())
-            (dependencyRelationships
-                .putIfAbsent(dependsOnModule, mutableListOf(moduleName))
-                    as? MutableList<String>
-            )?.add(moduleName)
-    }
-
-    return loadedModules to dependencyRelationships
-}
-
-/**
- * Helper to create and initialize [AbstractCodeGenerationModule] instances.
- *
- * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
- */
-private fun initCodeGenerationModuleInstance(classInfo: ClassInfo, moduleName: String, dependsOn: String,
-    codeGenerationProperties: Map<String, String>) : AbstractCodeGenerationModule {
-    // Create instance
-    val moduleInstance = classInfo.loadClass(AbstractCodeGenerationModule::class.java)
-        .getDeclaredConstructor()
-        .newInstance()
-
-    // Register all EPackages needed by the intermediate model
-    registerLanguages(getIntermediateModelFileNamespaces())
-
-    // Load intermediate model Ecore Resource
-    val intermediateModelResource = getIntermediateModelResource()
-    @Suppress("UNCHECKED_CAST")
-    val relevantModelElements = PhaseHeap["intermediate_model_query", "relevantModelElements"] as? List<EObject>
-    val modelElementQuery = PhaseHeap["intermediate_model_query", "query"] as? String
-
-    // Initialize module instance
-    moduleInstance.initialize(moduleName, dependsOn, codeGenerationProperties, BasicCommandLine.intermediateModelFile!!,
-        BasicCommandLine.targetFolder!!, intermediateModelResource, relevantModelElements, modelElementQuery)
-    return moduleInstance
-}
-
-/**
- * Helper to retrieve the intermediate model's Ecore namespace(s). Reuses namespace information from previous phases if
- * existent.
- *
- * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
- */
-private fun getIntermediateModelFileNamespaces() : Set<String> {
-    @Suppress("UNCHECKED_CAST")
-    return PhaseHeap["intermediate_model_query", "intermediateModelFileNamespaces"] as? Set<String>
-        ?: PhaseHeap["intermediate_model_validation", "intermediateModelFileNamespaces"] as? Set<String>
-        ?: readModelingNamespacesFromXmi(BasicCommandLine.intermediateModelFile!!)
-}
-
-/**
- * Helper to load the intermediate model as Ecore Resource. Reuses Resource instances from previous phases if existent.
- *
- * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
- */
-private fun getIntermediateModelResource() : Resource {
-    return PhaseHeap["intermediate_model_query", "resource"] as? Resource
-        ?: PhaseHeap["intermediate_model_validation", "resource"] as? Resource
-        ?: BasicCommandLine.intermediateModelFile!!.asXmiResource()
-}
-
-/**
- * Helper to calculate an execution plan for an [AbstractCodeGenerationModule] set by considering dependencies between
- * modules.
- *
- * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
- */
-private fun calculateExecutionPlan(modules: Map<String, AbstractCodeGenerationModule>,
-    dependencyRelationships: Map<String, List<String>>) : Deque<AbstractCodeGenerationModule> {
-    val independentModules = modules.filter { it.value.dependsOn.isEmpty() }.keys
+    val independentModules = filter { it.dependsOn.isEmpty() }.map { it.name }
     val executionPlan = LinkedList<String>(independentModules)
 
     /*
@@ -342,33 +354,37 @@ private fun calculateExecutionPlan(modules: Map<String, AbstractCodeGenerationMo
      *     (3) Add dependents to the stack of dependents to check an goto (1) or quit the planning, in case the stack
      *         is empty and no further dependents to check exist.
      */
-    val checkDependentsFor = ArrayDeque(dependencyRelationships.keys)
+    val modulesWithDependents = if (!onlyExplicitlyInvokedModules)
+            AvailableCodeGenerationModules.getNamesOfModulesWithDependents(modelKind)
+        else
+            emptySet()
+    val checkDependentsFor = ArrayDeque(modulesWithDependents)
     while (checkDependentsFor.isNotEmpty()) {
         val currentDependency = checkDependentsFor.pop()
-        val dependents = dependencyRelationships[currentDependency]
+        val dependents = AvailableCodeGenerationModules.getDependents(modelKind, currentDependency)
 
-        var maxPositionBeforeDependents = if (dependents != null)
-                dependents.map{ executionPlan.indexOf(it) }.min()!!
-            else
-                -1
+        var maxPositionBeforeDependents = if (dependents.isNotEmpty())
+            dependents.map{ executionPlan.indexOf(it) }.min()!!
+        else
+            -1
 
         if (maxPositionBeforeDependents > -1) {
             val modulesBefore = executionPlan.subList(0, maxPositionBeforeDependents + 1)
-            val circularDependency = if (dependents != null) modulesBefore.find { it in dependents } else null
+            val circularDependency = if (dependents.isNotEmpty()) modulesBefore.find { it in dependents } else null
             if (circularDependency != null)
                 throw PhaseException("Circular dependency detected: Code generation module \"$currentDependency\" " +
-                        "depends on \"$circularDependency\" and vice versa, possibly indirectly")
+                    "depends on \"$circularDependency\" and vice versa, possibly indirectly")
         } else
             maxPositionBeforeDependents = executionPlan.size
 
         if (!executionPlan.contains(currentDependency))
             executionPlan.add(maxPositionBeforeDependents, currentDependency)
 
-        if (dependents != null)
-            checkDependentsFor.addAll(dependents)
+        checkDependentsFor.addAll(dependents)
     }
 
-    val result = ArrayDeque<AbstractCodeGenerationModule>()
-    executionPlan.forEach { result.add(modules[it]) }
+    val result = ArrayDeque<CodeGenerationModuleRegistrationInfo>()
+    val moduleInfoByName = this.associateBy { it.name }
+    executionPlan.forEach { result.add(moduleInfoByName[it]!!) }
     return result
 }

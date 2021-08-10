@@ -18,7 +18,7 @@ internal object PhaseExecutionLog {
     internal fun addEntry(phaseId: String, executionInfo: PhaseExecutionInfo) {
         if (log.containsKey(phaseId))
             throw IllegalStateException("Phase execution log already contains execution information about phase " +
-                    "\"$phaseId\"")
+                "\"$phaseId\"")
 
         log[phaseId] = executionInfo
     }
@@ -26,6 +26,7 @@ internal object PhaseExecutionLog {
     /**
      * Check if a phase was executed
      */
+    @Suppress("unused")
     internal fun phaseExecuted(phaseId: String) = log.containsKey(phaseId)
 
     /**
@@ -38,6 +39,7 @@ internal object PhaseExecutionLog {
      * Check if a phase execution failed for some reason, i.e., if the phase throw an [Exception]. Note, that this
      * method returns false, both when the phase was executed successfully and when it never got executed.
      */
+    @Suppress("unused")
     internal fun phaseExecutionFailed(phaseId: String) : Boolean {
         val executionFinishedSuccessfully = log[phaseId]?.executionFinishedSuccessfully
         return if (executionFinishedSuccessfully != null)

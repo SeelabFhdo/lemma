@@ -30,10 +30,10 @@ import java.util.ArrayDeque
 @ExplicitlyInvokedCodeGenerationModule("shared")
 internal class SharedCodeGenerationModule : CodeGenerationModuleBase() {
     /**
-     * Return the language description for the intermediate model kind with which this code generator can deal, i.e.,
-     * intermediate service models
+     * Return the language namespace for the intermediate model kind with which this code generator can deal, i.e.,
+     * intermediate domain models
      */
-    override fun getLanguageDescription() = INTERMEDIATE_DATA_MODEL_LANGUAGE_DESCRIPTION
+    override fun getLanguageNamespace() = INTERMEDIATE_DATA_MODEL_LANGUAGE_DESCRIPTION.nsUri
 
     /**
      * Initialize the code generation module

@@ -1,11 +1,11 @@
 package de.fhdo.lemma.model_processing.code_generation.springcloud.zuul.intermediate_model_validation
 
 import de.fhdo.lemma.model_processing.annotations.IntermediateModelValidator
-import de.fhdo.lemma.model_processing.builtin_phases.intermediate_model_validation.AbstractIntermediateDeclarativeValidator
 import de.fhdo.lemma.operation.intermediate.IntermediatePackage
 import org.eclipse.xtext.validation.Check
 import de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode
 import de.fhdo.lemma.model_processing.code_generation.springcloud.zuul.code_generation.ZuulCodeGenerator
+import de.fhdo.lemma.model_processing.phases.validation.AbstractXmiDeclarativeValidator
 
 /**
  * The Spring Cloud Zuul intermediate model validator is responsible for checking general aspects
@@ -14,7 +14,7 @@ import de.fhdo.lemma.model_processing.code_generation.springcloud.zuul.code_gene
  * @author <a href="mailto:philip.wizenty@fh-dortmund.de">Philip Wizenty</a>
  */
 @IntermediateModelValidator
-class ZuulIntermediateModelValidator extends AbstractIntermediateDeclarativeValidator {
+class ZuulIntermediateModelValidator extends AbstractXmiDeclarativeValidator {
     /**
      * Get the namespace for the intermediate operation model
      */

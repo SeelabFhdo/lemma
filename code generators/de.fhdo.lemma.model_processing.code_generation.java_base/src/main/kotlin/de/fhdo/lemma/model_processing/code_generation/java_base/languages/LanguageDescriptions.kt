@@ -6,10 +6,12 @@ import de.fhdo.lemma.data.DataDslStandaloneSetup
 import de.fhdo.lemma.data.DataPackage
 import de.fhdo.lemma.service.intermediate.IntermediatePackage as IntermediateServicePackage
 import de.fhdo.lemma.model_processing.annotations.LanguageDescriptionProvider
-import de.fhdo.lemma.model_processing.languages.LanguageDescription
 import de.fhdo.lemma.model_processing.languages.LanguageDescriptionProviderI
+import de.fhdo.lemma.model_processing.languages.XmiLanguageDescription
 import de.fhdo.lemma.model_processing.languages.XtextLanguageDescription
 import de.fhdo.lemma.service.ServicePackage
+import de.fhdo.lemma.technology.mapping.MappingPackage
+import de.fhdo.lemma.technology.mappingdsl.MappingDslStandaloneSetup
 
 /**
  * [LanguageDescriptionProvider] for the Java base generator as expected by LEMMA's model processing framework.
@@ -18,15 +20,15 @@ import de.fhdo.lemma.service.ServicePackage
  */
 @LanguageDescriptionProvider
 internal class DescriptionProvider : LanguageDescriptionProviderI {
-    override fun getLanguageDescription(forLanguageNamespace: String) : LanguageDescription? {
-        return when(forLanguageNamespace) {
-            DataPackage.eNS_URI -> DATA_DSL_LANGUAGE_DESCRIPTION
+    override fun getLanguageDescription(forLanguageNamespace : Boolean, forFileExtension : Boolean,
+        languageNamespaceOrFileExtension : String) = when(languageNamespaceOrFileExtension) {
+            DataPackage.eNS_URI, "data" -> DATA_DSL_LANGUAGE_DESCRIPTION
+            MappingPackage.eNS_URI, "mapping" -> MAPPING_DSL_LANGUAGE_DESCRIPTION
             IntermediateDataPackage.eNS_URI -> INTERMEDIATE_DATA_MODEL_LANGUAGE_DESCRIPTION
             IntermediateServicePackage.eNS_URI -> INTERMEDIATE_SERVICE_MODEL_LANGUAGE_DESCRIPTION
-            ServicePackage.eNS_URI -> SERVICE_DSL_LANGUAGE_DESCRIPTION
+            ServicePackage.eNS_URI, "services" -> SERVICE_DSL_LANGUAGE_DESCRIPTION
             else -> null
         }
-    }
 }
 
 /**
@@ -37,6 +39,14 @@ internal class DescriptionProvider : LanguageDescriptionProviderI {
 internal val DATA_DSL_LANGUAGE_DESCRIPTION = XtextLanguageDescription(DataPackage.eINSTANCE, DataDslStandaloneSetup())
 
 /**
+ * [XtextLanguageDescription] for the Mapping DSL.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal val MAPPING_DSL_LANGUAGE_DESCRIPTION
+    = XtextLanguageDescription(MappingPackage.eINSTANCE, MappingDslStandaloneSetup())
+
+/**
  * [XtextLanguageDescription] for the Service DSL.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
@@ -45,15 +55,16 @@ internal val SERVICE_DSL_LANGUAGE_DESCRIPTION = XtextLanguageDescription(Service
     ServiceDslStandaloneSetup())
 
 /**
- * [LanguageDescription] for intermediate data models.
+ * [XmiLanguageDescription] for intermediate data models.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal val INTERMEDIATE_DATA_MODEL_LANGUAGE_DESCRIPTION = LanguageDescription(IntermediateDataPackage.eINSTANCE)
+internal val INTERMEDIATE_DATA_MODEL_LANGUAGE_DESCRIPTION = XmiLanguageDescription(IntermediateDataPackage.eINSTANCE)
 
 /**
- * [LanguageDescription] for intermediate service models.
+ * [XmiLanguageDescription] for intermediate service models.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal val INTERMEDIATE_SERVICE_MODEL_LANGUAGE_DESCRIPTION = LanguageDescription(IntermediateServicePackage.eINSTANCE)
+internal val INTERMEDIATE_SERVICE_MODEL_LANGUAGE_DESCRIPTION
+    = XmiLanguageDescription(IntermediateServicePackage.eINSTANCE)

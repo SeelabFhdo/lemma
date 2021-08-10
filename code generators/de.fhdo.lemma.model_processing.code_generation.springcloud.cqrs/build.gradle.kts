@@ -11,15 +11,21 @@ repositories {
 }
 
 buildscript {
+    extra.set("groovyVersion", "3.0.3")
     extra.set("javaBaseGeneratorVersion", version)
     extra.set("javaParserVersion", "3.14.10")
     extra.set("lemmaEclipsePluginsVersion", version)
+    extra.set("log4jVersion", "2.11.2")
+    extra.set("loggingVersion", "1.7.9")
     extra.set("modelProcessingVersion", version)
 }
 
 dependencies {
+    val groovyVersion: String by rootProject.extra
     val javaBaseGeneratorVersion: String by rootProject.extra
     val lemmaEclipsePluginsVersion: String by rootProject.extra
+    val log4jVersion: String by rootProject.extra
+    val loggingVersion: String by rootProject.extra
     val modelProcessingVersion: String by rootProject.extra
 
     implementation(kotlin("stdlib-jdk8"))
@@ -38,6 +44,12 @@ dependencies {
     implementation("de.fhdo.lemma.model_processing.utils:de.fhdo.lemma.model_processing.utils:" +
             modelProcessingVersion)
     implementation("de.fhdo.lemma.servicedsl:de.fhdo.lemma.servicedsl:$lemmaEclipsePluginsVersion")
+    implementation("org.apache.logging.log4j:log4j-api:$log4jVersion")
+    implementation("org.apache.logging.log4j:log4j-core:$log4jVersion")
+    implementation("org.apache.logging.log4j:log4j-slf4j-impl:$log4jVersion")
+    implementation("io.github.microutils:kotlin-logging:$loggingVersion")
+    // Required by log4j (Groovy execution engine)
+    implementation("org.codehaus.groovy:groovy-jsr223:$groovyVersion")
 }
 
 tasks {

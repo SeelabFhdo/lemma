@@ -66,5 +66,6 @@ object PhaseHeap {
     /**
      * Remove the data of a certain phase at a given named address
      */
+    @Suppress("unused")
     fun remove(phaseId: String, entryKey: String) = heapEntries[phaseId]?.remove(entryKey)
 }

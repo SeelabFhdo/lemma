@@ -17,6 +17,8 @@ buildscript {
     extra.set("coroutinesVersion", "1.1.1")
     extra.set("jansiVersion", "1.17.1")
     extra.set("lemmaEclipsePluginsVersion", version)
+    extra.set("log4jVersion", "2.11.2")
+    extra.set("loggingVersion", "1.7.9")
     extra.set("lsp4jVersion", "0.9.0")
     extra.set("oclVersion", version)
     extra.set("picocliVersion", "3.9.3")
@@ -28,6 +30,8 @@ dependencies {
     val coroutinesVersion: String by rootProject.extra
     val jansiVersion: String by rootProject.extra
     val lemmaEclipsePluginsVersion: String by rootProject.extra
+    val log4jVersion: String by rootProject.extra
+    val loggingVersion: String by rootProject.extra
     val lsp4jVersion: String by rootProject.extra
     val oclVersion: String by rootProject.extra
     val picocliVersion: String by rootProject.extra
@@ -38,11 +42,15 @@ dependencies {
     implementation("de.fhdo.lemma.live_validation:de.fhdo.lemma.live_validation:$lemmaEclipsePluginsVersion")
     implementation("de.fhdo.lemma.ocl:de.fhdo.lemma.ocl:$oclVersion:all-dependencies-no-kotlin")
     implementation("de.fhdo.lemma:de.fhdo.lemma.utils:$lemmaEclipsePluginsVersion")
+    implementation("org.apache.logging.log4j:log4j-api:$log4jVersion")
+    implementation("org.apache.logging.log4j:log4j-core:$log4jVersion")
+    implementation("org.apache.logging.log4j:log4j-slf4j-impl:$log4jVersion")
     implementation("org.eclipse.lsp4j:org.eclipse.lsp4j:$lsp4jVersion")
     implementation("org.eclipse.lsp4j:org.eclipse.lsp4j.jsonrpc:$lsp4jVersion")
     implementation("org.fusesource.jansi:jansi:$jansiVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
     implementation("io.github.classgraph:classgraph:$classgraphVersion")
+    implementation("io.github.microutils:kotlin-logging:$loggingVersion")
 
     implementation("info.picocli:picocli:$picocliVersion")
     implementation("org.eclipse.xtext:org.eclipse.xtext.ecore:$xtextVersion")

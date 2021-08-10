@@ -4,8 +4,6 @@ import com.google.common.base.Function
 import de.fhdo.lemma.data.Type
 import de.fhdo.lemma.model_processing.annotations.Before
 import de.fhdo.lemma.model_processing.annotations.SourceModelValidator
-import de.fhdo.lemma.model_processing.builtin_phases.source_model_validation.AbstractXtextSourceModelValidator
-import de.fhdo.lemma.model_processing.builtin_phases.source_model_validation.SourceModelValidationMode
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.cqrsAlias
 import de.fhdo.lemma.model_processing.utils.countInputParameters
 import de.fhdo.lemma.model_processing.utils.countResultParameters
@@ -15,6 +13,7 @@ import de.fhdo.lemma.model_processing.utils.getEndpointAddresses
 import de.fhdo.lemma.model_processing.utils.hasServiceAspect
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.kafkaAlias
 import de.fhdo.lemma.model_processing.languages.convertToAbsoluteFileUrisInPlace
+import de.fhdo.lemma.model_processing.phases.validation.AbstractXtextModelValidator
 import de.fhdo.lemma.model_processing.utils.getPropertyValue
 import de.fhdo.lemma.model_processing.utils.hasInputParameters
 import de.fhdo.lemma.model_processing.utils.hasResultParameters
@@ -40,12 +39,9 @@ import java.lang.IllegalArgumentException
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-@SourceModelValidator(
-    validationMode = SourceModelValidationMode.XTEXT,
-    supportedFileExtensions = ["services"]
-)
-internal class ServiceModelSourceValidator : AbstractXtextSourceModelValidator() {
-    override fun getLanguageNamespace() = ServicePackage.eNS_URI
+@SourceModelValidator
+internal class ServiceModelSourceValidator : AbstractXtextModelValidator() {
+    override fun getSupportedFileExtensions() = setOf("services")
 
     /**
      * Prepare import model paths before validation

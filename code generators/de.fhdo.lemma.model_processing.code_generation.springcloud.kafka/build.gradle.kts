@@ -12,10 +12,13 @@ repositories {
 
 buildscript {
     extra.set("commonsVersion", "3.5")
+    extra.set("groovyVersion", "3.0.3")
     extra.set("jansiVersion", "1.17.1")
     extra.set("javaBaseGeneratorVersion", version)
     extra.set("javaParserVersion", "3.14.10")
     extra.set("lemmaEclipsePluginsVersion", version)
+    extra.set("log4jVersion", "2.11.2")
+    extra.set("loggingVersion", "1.7.9")
     extra.set("lsp4jVersion", "0.9.0")
     extra.set("modelProcessingVersion", version)
     extra.set("picocliVersion", "3.9.3")
@@ -24,10 +27,13 @@ buildscript {
 
 dependencies {
     val commonsVersion: String by rootProject.extra
+    val groovyVersion: String by rootProject.extra
     val jansiVersion: String by rootProject.extra
     val javaBaseGeneratorVersion: String by rootProject.extra
     val javaParserVersion: String by rootProject.extra
     val lemmaEclipsePluginsVersion: String by rootProject.extra
+    val log4jVersion: String by rootProject.extra
+    val loggingVersion: String by rootProject.extra
     val lsp4jVersion: String by rootProject.extra
     val modelProcessingVersion: String by rootProject.extra
     val picocliVersion: String by rootProject.extra
@@ -57,6 +63,12 @@ dependencies {
     implementation("de.fhdo.lemma.technology.technologydsl:de.fhdo.lemma.technology.technologydsl.metamodel:" +
         lemmaEclipsePluginsVersion)
     implementation("info.picocli:picocli:$picocliVersion")
+    implementation("org.apache.logging.log4j:log4j-api:$log4jVersion")
+    implementation("org.apache.logging.log4j:log4j-core:$log4jVersion")
+    implementation("org.apache.logging.log4j:log4j-slf4j-impl:$log4jVersion")
+    implementation("io.github.microutils:kotlin-logging:$loggingVersion")
+    // Required by log4j (Groovy execution engine)
+    implementation("org.codehaus.groovy:groovy-jsr223:$groovyVersion")
     // Required by kotlin-xml-builder
     implementation("org.apache.commons:commons-lang3:$commonsVersion")
     implementation("org.fusesource.jansi:jansi:$jansiVersion")

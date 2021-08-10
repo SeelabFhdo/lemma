@@ -3,7 +3,6 @@ package de.fhdo.lemma.model_processing.code_generation.mongodb.code_generation
 import de.fhdo.lemma.model_processing.annotations.CodeGenerationModule
 import de.fhdo.lemma.model_processing.builtin_phases.code_generation.AbstractCodeGenerationModule
 import de.fhdo.lemma.operation.intermediate.IntermediatePackage
-import de.fhdo.lemma.model_processing.languages.LanguageDescription
 import de.fhdo.lemma.operation.intermediate.IntermediateOperationModel
 import de.fhdo.lemma.model_processing.code_generation.mongodb.template.MongoDBTemplate
 import de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode
@@ -38,7 +37,7 @@ class MongoDBCodeGenerator extends AbstractCodeGenerationModule {
      */
     override execute(String[] phaseArguments, String[] moduleArguments) {
         // Receive the intermediate operation model
-        model = intermediateModelResource.contents.get(0) as IntermediateOperationModel
+        model = resource.contents.get(0) as IntermediateOperationModel
 
         // Create service-specific MongoDB configurations
         model.containers.forEach[
@@ -66,11 +65,11 @@ class MongoDBCodeGenerator extends AbstractCodeGenerationModule {
     }
 
     /**
-     * Receive the language description for the intermediate operation model package.
+     * Receive the language namespace for the intermediate operation model package.
      */
     @NotNull
-    override getLanguageDescription() {
-        new LanguageDescription(IntermediatePackage.eINSTANCE)
+    override getLanguageNamespace() {
+        IntermediatePackage.eNS_URI
     }
 
     /**

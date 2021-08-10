@@ -19,7 +19,7 @@ private val PHASE_SUPERCLASS_NAME = AbstractModelProcessingPhase::class.java.nam
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 internal fun loadProcessingPhases(modelProcessingPackage: String, processorImplementationPackage: String)
-        : LinkedHashSet<AbstractModelProcessingPhase> {
+    : LinkedHashSet<AbstractModelProcessingPhase> {
     val initialPhase = findInitialProcessingPhase(modelProcessingPackage)
     val phasesAfterInitialPhase = findAnnotatedClasses(modelProcessingPackage, ModelProcessingPhase::class)
     // Prevent duplicates in case the implementation package is a sub-package of the model processing package
@@ -99,7 +99,7 @@ private fun MutableSet<AbstractModelProcessingPhase>.loadAndAddPhase(phaseToLoad
     processorImplementationPackage: String) {
     if (!phaseToLoad.extendsSuperclass(PHASE_SUPERCLASS_NAME))
         throw IllegalStateException("Designated model processing phase ${phaseToLoad.name} does not inherit " +
-                "from $PHASE_SUPERCLASS_NAME")
+            "from $PHASE_SUPERCLASS_NAME")
 
     val newPhase = loadAndInitializeProcessingPhase(
         phaseToLoad,
@@ -120,6 +120,7 @@ private fun loadAndInitializeProcessingPhase(phaseClassInfo: ClassInfo, processo
     val phaseId = findPhaseAnnotationParameter<String>(phaseClassInfo, "id")
         ?: throw IllegalStateException("No model processing phase annotation found for designated model processing " +
             "phase ${phaseClassInfo.name}")
+    val isOmittable = findPhaseAnnotationParameter<Boolean>(phaseClassInfo, "isOmittable")!!
     val isBlocking = findPhaseAnnotationParameter<Boolean>(phaseClassInfo, "isBlocking")!!
 
     /* Load and initialize the phase */
@@ -128,7 +129,7 @@ private fun loadAndInitializeProcessingPhase(phaseClassInfo: ClassInfo, processo
         .getDeclaredConstructor()
         .newInstance()
 
-    loadedPhase.initialize(phaseId, isBlocking, processorImplementationPackage)
+    loadedPhase.initialize(phaseId, isOmittable, isBlocking, processorImplementationPackage)
     return loadedPhase
 }
 

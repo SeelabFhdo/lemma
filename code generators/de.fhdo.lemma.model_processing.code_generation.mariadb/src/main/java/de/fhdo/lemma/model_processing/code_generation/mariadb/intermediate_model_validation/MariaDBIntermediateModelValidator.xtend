@@ -1,12 +1,12 @@
 package de.fhdo.lemma.model_processing.code_generation.mariadb.intermediate_model_validation
 
-import de.fhdo.lemma.model_processing.builtin_phases.intermediate_model_validation.AbstractIntermediateDeclarativeValidator
 import de.fhdo.lemma.operation.intermediate.IntermediatePackage
 import de.fhdo.lemma.model_processing.annotations.IntermediateModelValidator
 import de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode
 import de.fhdo.lemma.operation.intermediate.IntermediateContainer
 import org.eclipse.xtext.validation.Check
 import de.fhdo.lemma.model_processing.code_generation.mariadb.code_generation.MariaDBCodeGenerator
+import de.fhdo.lemma.model_processing.phases.validation.AbstractXmiDeclarativeValidator
 
 /**
  * The MariaDB intermediate model validator is responsible for checking general aspects for
@@ -15,7 +15,7 @@ import de.fhdo.lemma.model_processing.code_generation.mariadb.code_generation.Ma
  * @author <a href="mailto:philip.wizenty@fh-dortmund.de">Philip Wizenty</a>
  */
 @IntermediateModelValidator
-class MariaDBIntermediateModelValidator extends AbstractIntermediateDeclarativeValidator {
+class MariaDBIntermediateModelValidator extends AbstractXmiDeclarativeValidator {
     /**
      * Get the namespace for the intermediate operation model
      */

@@ -6,8 +6,8 @@ import de.fhdo.lemma.data.DataDslStandaloneSetup
 import de.fhdo.lemma.data.DataPackage
 import de.fhdo.lemma.service.intermediate.IntermediatePackage as IntermediateServicePackage
 import de.fhdo.lemma.model_processing.annotations.LanguageDescriptionProvider
-import de.fhdo.lemma.model_processing.languages.LanguageDescription
 import de.fhdo.lemma.model_processing.languages.LanguageDescriptionProviderI
+import de.fhdo.lemma.model_processing.languages.XmiLanguageDescription
 import de.fhdo.lemma.model_processing.languages.XtextLanguageDescription
 import de.fhdo.lemma.service.ServicePackage
 
@@ -19,15 +19,14 @@ import de.fhdo.lemma.service.ServicePackage
 @Suppress("unused")
 @LanguageDescriptionProvider
 internal class DescriptionProvider : LanguageDescriptionProviderI {
-    override fun getLanguageDescription(forLanguageNamespace: String) : LanguageDescription? {
-        return when(forLanguageNamespace) {
+    override fun getLanguageDescription(forLanguageNamespace: Boolean, forFileExtension: Boolean,
+        languageNamespaceOrFileExtension: String) = when(languageNamespaceOrFileExtension) {
             DataPackage.eNS_URI -> DATA_DSL_LANGUAGE_DESCRIPTION
             IntermediateDataPackage.eNS_URI -> INTERMEDIATE_DATA_MODEL_LANGUAGE_DESCRIPTION
             IntermediateServicePackage.eNS_URI -> INTERMEDIATE_SERVICE_MODEL_LANGUAGE_DESCRIPTION
             ServicePackage.eNS_URI -> SERVICE_DSL_LANGUAGE_DESCRIPTION
             else -> null
         }
-    }
 }
 
 /**
@@ -46,15 +45,16 @@ internal val SERVICE_DSL_LANGUAGE_DESCRIPTION = XtextLanguageDescription(Service
     ServiceDslStandaloneSetup())
 
 /**
- * [LanguageDescription] for intermediate data models.
+ * [XmiLanguageDescription] for intermediate data models.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal val INTERMEDIATE_DATA_MODEL_LANGUAGE_DESCRIPTION = LanguageDescription(IntermediateDataPackage.eINSTANCE)
+internal val INTERMEDIATE_DATA_MODEL_LANGUAGE_DESCRIPTION = XmiLanguageDescription(IntermediateDataPackage.eINSTANCE)
 
 /**
- * [LanguageDescription] for intermediate service models.
+ * [XmiLanguageDescription] for intermediate service models.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal val INTERMEDIATE_SERVICE_MODEL_LANGUAGE_DESCRIPTION = LanguageDescription(IntermediateServicePackage.eINSTANCE)
+internal val INTERMEDIATE_SERVICE_MODEL_LANGUAGE_DESCRIPTION
+    = XmiLanguageDescription(IntermediateServicePackage.eINSTANCE)

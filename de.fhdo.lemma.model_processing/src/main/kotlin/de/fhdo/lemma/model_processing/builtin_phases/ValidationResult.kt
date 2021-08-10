@@ -29,7 +29,7 @@ class ValidationResult(var lineNumber: Int? = null, var column: Int? = null, var
 )
 
 /**
- * Internal helper to printout a [ValidationResult] list.
+ * Internal helper to print out a [ValidationResult] list.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
@@ -67,7 +67,7 @@ internal fun List<ValidationResult>.print(file: String) {
                 printableResult.append(" (column $column)")
 
             val printableMessage = message ?: ""
-            if (!printableMessage.isEmpty())
+            if (printableMessage.isNotEmpty())
                 printableResult.append(": $printableMessage")
         }
         printResult(printableResult.toString())

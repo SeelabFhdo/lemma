@@ -6,8 +6,8 @@ import de.fhdo.lemma.operation.OperationPackage
 import de.fhdo.lemma.model_processing.languages.XtextLanguageDescription
 import de.fhdo.lemma.operationdsl.OperationDslStandaloneSetup
 import de.fhdo.lemma.operation.intermediate.IntermediatePackage
-import de.fhdo.lemma.model_processing.languages.LanguageDescription
 import org.eclipse.xtext.util.internal.Nullable
+import de.fhdo.lemma.model_processing.languages.XmiLanguageDescription
 
 /**
  * This class contains the language description for LEMMA's modeling languages.
@@ -17,19 +17,19 @@ import org.eclipse.xtext.util.internal.Nullable
 @LanguageDescriptionProvider
 class ZuulLanguageDescriptionProvider implements LanguageDescriptionProviderI {
     /**
-     * Receive language description for LEMMA's operation model and intermediate operation model
+     * Provide language description for LEMMA's operation model and intermediate operation model
      * modules.
      */
     @Nullable
-    override getLanguageDescription(String namespace) {
-        switch namespace {
-            case OperationPackage.eNS_URI :
-                return new XtextLanguageDescription(OperationPackage.eINSTANCE,
+    override getLanguageDescription(boolean forLanguageNamespace, boolean forFileExtension,
+        String languageNamespaceOrFileExtension) {
+        return switch languageNamespaceOrFileExtension {
+            case OperationPackage.eNS_URI:
+                new XtextLanguageDescription(OperationPackage.eINSTANCE,
                     new OperationDslStandaloneSetup)
-            case IntermediatePackage.eNS_URI :
-                return new LanguageDescription(IntermediatePackage.eINSTANCE)
-            default :
-                return null
+            case IntermediatePackage.eNS_URI:
+                new XmiLanguageDescription(IntermediatePackage.eINSTANCE)
+            default: null
         }
     }
 }

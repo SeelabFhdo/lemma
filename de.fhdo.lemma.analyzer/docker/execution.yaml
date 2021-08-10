@@ -17,7 +17,6 @@
 
 - required_args:
   - builtin:
-    - source_model: "path to source model (must be relative to model base path)"
     - intermediate_model: "path to intermediate model (must be relative to model base path)"
 
 - optional_args:

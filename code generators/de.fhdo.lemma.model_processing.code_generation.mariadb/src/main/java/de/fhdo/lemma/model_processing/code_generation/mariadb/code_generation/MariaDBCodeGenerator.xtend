@@ -2,11 +2,8 @@ package de.fhdo.lemma.model_processing.code_generation.mariadb.code_generation
 
 import de.fhdo.lemma.model_processing.annotations.CodeGenerationModule
 import de.fhdo.lemma.model_processing.builtin_phases.code_generation.AbstractCodeGenerationModule
-import de.fhdo.lemma.operation.intermediate.IntermediatePackage
-import de.fhdo.lemma.model_processing.languages.LanguageDescription
 import de.fhdo.lemma.operation.intermediate.IntermediateOperationModel
 import java.io.File
-import org.jetbrains.annotations.NotNull
 import de.fhdo.lemma.operation.intermediate.IntermediateContainer
 import de.fhdo.lemma.model_processing.code_generation.container_base.file.property.OpenedPropertyFiles
 import java.nio.file.Paths
@@ -20,6 +17,8 @@ import de.fhdo.lemma.operation.intermediate.IntermediateOperationNode
 import de.fhdo.lemma.model_processing.code_generation.container_base.file.docker.OpenedDockerComposeFile
 import de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode
 import de.fhdo.lemma.model_processing.code_generation.container_base.file.docker.DockerComposeService
+import de.fhdo.lemma.operation.intermediate.IntermediatePackage
+import org.jetbrains.annotations.NotNull
 
 /**
  * Main class of the MariaDB code generation module of the container base code generator.
@@ -32,7 +31,6 @@ class MariaDBCodeGenerator extends AbstractCodeGenerationModule {
     val content = <String, String> newHashMap
     public static val MARIADB_TECHNOLOGY = "mariadb.mariadb"
 
-
     /**
      * This method is responsible for handling the instance of the intermediate operation model.
      * The corresponding functions are called depending on whether the operation node is an instance
@@ -40,7 +38,7 @@ class MariaDBCodeGenerator extends AbstractCodeGenerationModule {
      */
     override execute(String[] phaseArguments, String[] moduleArguments) {
         // Receive the intermediate operation model
-        model = intermediateModelResource.contents.get(0) as IntermediateOperationModel
+        model = resource.contents.get(0) as IntermediateOperationModel
 
         // Create service-specific MariaDB configurations
         model.containers.forEach[
@@ -71,11 +69,11 @@ class MariaDBCodeGenerator extends AbstractCodeGenerationModule {
     }
 
     /**
-     * Receive the language description for the intermediate operation model package.
+     * Receive the language namespace for the intermediate operation model package.
      */
     @NotNull
-    override getLanguageDescription() {
-        new LanguageDescription(IntermediatePackage.eINSTANCE)
+    override getLanguageNamespace() {
+        IntermediatePackage.eNS_URI
     }
 
     /**

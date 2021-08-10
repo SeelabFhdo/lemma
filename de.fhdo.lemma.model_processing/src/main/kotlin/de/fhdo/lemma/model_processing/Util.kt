@@ -1,9 +1,13 @@
 package de.fhdo.lemma.model_processing
 
 import de.fhdo.lemma.model_processing.annotations.findAnnotatedMethods
+import de.fhdo.lemma.model_processing.command_line.BasicCommandLine
+import de.fhdo.lemma.model_processing.phases.AbstractModelProcessingPhase
 import de.fhdo.lemma.utils.LemmaUtils
 import io.github.classgraph.ClassInfo
+import mu.KotlinLogging
 import org.eclipse.emf.common.util.URI
+import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
@@ -14,7 +18,8 @@ import org.fusesource.jansi.Ansi.ansi
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStream
-import java.lang.IllegalStateException
+import java.io.PrintWriter
+import java.io.StringWriter
 import java.nio.file.Paths
 import javax.xml.stream.XMLInputFactory
 import kotlin.reflect.KClass
@@ -25,12 +30,6 @@ import kotlin.reflect.full.starProjectedType
 import kotlin.reflect.full.withNullability
 import kotlin.reflect.jvm.isAccessible
 
-/**
- * Find the first entry of a certain instance in an [Iterable]. Returns null, if there is none.
- *
- * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
- */
-internal inline fun <reified R> Iterable<*>.findIsInstance() = filterIsInstance<R>().firstOrNull()
 
 /**
  * Check if an [Array] contains any of the given elements.
@@ -67,7 +66,7 @@ fun String.asFile() = File(this)
  */
 fun String.asXmiResource() : Resource {
     val file = this.asFile()
-    require(file.exists()) { "String \"$this\" does not represent a file" }
+    require(file.exists()) { """String "$this" does not represent a file""" }
 
     val resourceSet = ResourceSetImpl()
     val extensionFactoryMap = Resource.Factory.Registry.INSTANCE.extensionToFactoryMap
@@ -96,6 +95,14 @@ private const val WARNING_COLOR = "yellow"
 internal fun printColor(message: Any, colorName: String) = print(ansi().render("@|$colorName $message|@"))
 
 /**
+ * [print] a phase-specific error to the console.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun printPhaseError(phase: AbstractModelProcessingPhase, message: String)
+    = printError("""Model processing phase "${phase.id}": $message""")
+
+/**
  * [print] an error to the console.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
@@ -103,18 +110,19 @@ internal fun printColor(message: Any, colorName: String) = print(ansi().render("
 internal fun printError(message: Any) = printColor(message, ERROR_COLOR)
 
 /**
- * [print] a warning to the console.
- *
- * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
- */
-internal fun printWarning(message: Any) = printColor(message, WARNING_COLOR)
-
-/**
  * [println] to the console in a given color.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 internal fun printlnColor(message: Any, colorName: String) = println(ansi().render("@|$colorName $message|@"))
+
+/**
+ * [println] a phase-specific error to the console.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun printlnPhaseError(phase: AbstractModelProcessingPhase, message: String)
+    = printlnError("""Model processing phase "${phase.id}": $message""")
 
 /**
  * [println] an error to the console.
@@ -213,13 +221,13 @@ internal fun ClassInfo.extendsImplementsOrException(classSemantics: String, expe
     if (expectedSuperclass != null && !extendsSuperclass(expectedSuperclass.java.name))
         throw IllegalStateException("$classSemantics $name must extend $expectedSuperclass")
 
-    if (expectedInterface != null && !interfaces.containsName(expectedInterface.java.name))
+    if (expectedInterface != null && !implementsInterface(expectedInterface.java.name))
         throw IllegalStateException("$classSemantics $name must implement $expectedInterface")
 }
 
 /**
  * Read all modeling-related ("custom") namespaces from an XMI file. That is, all XML namespace declarations besides the
- * default ones, i.e., "xsi" and "xmi.
+ * default ones, i.e., "xsi" and "xmi".
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
@@ -254,7 +262,7 @@ internal fun readModelingNamespacesFromXmi(xmiFile: String) : Set<String> {
 }
 
 /**
- * Check if a path is a child of another path
+ * Check if a path is a child of another path.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
@@ -281,10 +289,114 @@ fun loadXtextResource(languageSetup: ISetup, filepath: String, inputStream: Inpu
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 fun Resource.absoluteBasePath()
-        = this.uri.let {
-    val scheme = it.scheme()?.toString() ?: ""
-    it.toString()
-        .removePrefix(scheme)
-        // Remove possibly remaining colon prefix, e.g., for a URI in the form "file:/myFolder/example.file"
-        .removePrefix(":")
+    = this.uri.let {
+        val scheme = it.scheme()?.toString() ?: ""
+        it.toString()
+            .removePrefix(scheme)
+            // Remove possibly remaining colon prefix, e.g., for a URI in the form "file:/myFolder/example.file"
+            .removePrefix(":")
+    }
+
+/**
+ * Retrieve the main interface of this [EObject] instance, which is the first interface of the [EObject] instance that
+ * can be cast to the [EObject] interface.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+@Suppress("UNCHECKED_CAST")
+internal fun EObject.ecoreMainInterface()
+    = this::class.java.interfaces.find {
+        (it as? Class<out EObject>) != null
+    } as? Class<out EObject>?
+
+/**
+ * Convert this [Throwable]'s stack trace to a String.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun Throwable.stackTraceAsString() : String {
+    val writer = StringWriter()
+    printStackTrace(PrintWriter(writer))
+    return writer.toString()
 }
+
+private val LOGGER = KotlinLogging.logger {}
+
+/**
+ * Convenience function to log a debug [message] of type [String] with kind "basic" when the user activated debugging
+ * via the [BasicCommandLine].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+@Suppress("unused")
+fun debug(message: String) = debug("basic") { message }
+
+/**
+ * Log a debug [message] with kind "basic" when the user activated debugging via the [BasicCommandLine].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun debug(message: () -> Any?) = debug("basic", message)
+
+/**
+ * Log a debug [message] with kind [messageKindIdentifier] when the user activated debugging via the [BasicCommandLine].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun debug(messageKindIdentifier: String, message: () -> Any?) {
+    if (BasicCommandLine.debugMessageKinds.isEmpty() ||
+        BasicCommandLine.debugMessageKinds.contains(messageKindIdentifier))
+        LOGGER.debug(message)
+}
+
+/**
+ * Convenience function to log a debug [message] of type [String] with kind "basic" from within a model processing
+ * phase.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+@Suppress("unused")
+fun debugPhase(message: String) = debugPhase("basic") { message }
+
+/**
+ * Log a debug [message] with kind "basic" from within a model processing phase.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun debugPhase(message: () -> Any?) = debugPhase("basic", message)
+
+/**
+ * Log a debug [message] from within a model processing phase.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun debugPhase(messageKindIdentifier: String = "basic", message: () -> Any?)
+    = debug(messageKindIdentifier) { "\t${message.invoke().toString()}" }
+
+/**
+ * Log the arguments passed to a phase in a debug message.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun debugPhaseArguments(args: Array<String>) {
+    if (args.isNotEmpty()) {
+        debugPhase { "Phase arguments: " }
+        args.forEach { debugPhase { "\t- $it" } }
+    } else
+        debugPhase { "No phase arguments given" }
+}
+
+/**
+ * Version of [toSet] that ensures the production of a [LinkedHashSet].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun <T> Iterable<T>.toLinkedHashSet()
+    = if (this is Collection) {
+            when (size) {
+                0 -> toCollection(LinkedHashSet(0))
+                1 -> toCollection(LinkedHashSet(1))
+                else -> toSet() as LinkedHashSet<T>
+            }
+        } else
+            toSet() as LinkedHashSet<T>

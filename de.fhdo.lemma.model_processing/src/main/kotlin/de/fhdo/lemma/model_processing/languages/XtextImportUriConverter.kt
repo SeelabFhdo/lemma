@@ -13,6 +13,7 @@ import java.lang.IllegalArgumentException
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
+@Suppress("unused")
 fun <T: Any> List<T>.convertToAbsoluteFileUrisInPlace(resource: Resource) {
     if (isEmpty())
         return

@@ -1,9 +1,11 @@
 package de.fhdo.lemma.model_processing.builtin_phases.code_generation
 
 import de.fhdo.lemma.model_processing.languages.LanguageDescription
-import org.eclipse.emf.ecore.EObject
+import de.fhdo.lemma.model_processing.phases.ModelKind
 import org.eclipse.emf.ecore.resource.Resource
 import java.nio.charset.Charset
+
+typealias CharsetAwareFileContent = Pair<String, Charset>
 
 /**
  * Abstract superclass for code generation modules.
@@ -16,25 +18,37 @@ abstract class AbstractCodeGenerationModule {
     /* These properties will be passed to the module by the [CodeGenerationPhase] with invoking [initialize] */
     lateinit var name: String
         private set
+    @Suppress("MemberVisibilityCanBePrivate")
     lateinit var dependsOn: String
         private set
+    @Suppress("MemberVisibilityCanBePrivate")
     lateinit var properties: Map<String, String>
         private set
-    lateinit var intermediateModelFile: String
+    @Suppress("MemberVisibilityCanBePrivate")
+    lateinit var modelFile: String
         private set
+    @Suppress("MemberVisibilityCanBePrivate")
     lateinit var targetFolder: String
         private set
-    lateinit var intermediateModelResource: Resource
+    @Suppress("MemberVisibilityCanBePrivate")
+    lateinit var languageDescription: LanguageDescription
         private set
-    var relevantModelElements: List<EObject>? = null
+    lateinit var resource: Resource
         private set
+    @Suppress("MemberVisibilityCanBePrivate")
+    lateinit var modelKind: ModelKind
+        private set
+    @Suppress("MemberVisibilityCanBePrivate")
+    var relevantModelElements: Collection<*>? = null
+        private set
+    @Suppress("MemberVisibilityCanBePrivate")
     var modelElementQuery: String? = null
         private set
 
     /**
-     * Get language description of intermediate model
+     * Get supported language namespace
      */
-    abstract fun getLanguageDescription() : LanguageDescription
+    abstract fun getLanguageNamespace() : String
 
     /**
      * Implementation of the actual code generation. The arguments of the [CodeGenerationPhase] invocation will be
@@ -43,14 +57,15 @@ abstract class AbstractCodeGenerationModule {
      * path of a generated file, and its content and charset.
      */
     abstract fun execute(phaseArguments: Array<String>, moduleArguments: Array<String>)
-        : Map<String, Pair<String, Charset>>
+        : Map<String, CharsetAwareFileContent>
 
     /**
      * Helper to convert a map of generated files (key: path, value: content) to a map that assigns a common charset to
      * each content value.
      */
-    protected fun withCharset(map: Map<String, String>, charsetName: String) : Map<String, Pair<String, Charset>> {
-        val resultMap = mutableMapOf<String, Pair<String, Charset>>()
+    @Suppress("unused")
+    protected fun withCharset(map: Map<String, String>, charsetName: String) : Map<String, CharsetAwareFileContent> {
+        val resultMap = mutableMapOf<String, CharsetAwareFileContent>()
         map.forEach { (k, v) ->
             resultMap[k] = v to Charset.forName(charsetName)
         }
@@ -60,20 +75,26 @@ abstract class AbstractCodeGenerationModule {
     /**
      * Initializes the module. Gets invoked by [CodeGenerationPhase].
      */
-    internal fun initialize(name: String, dependsOn: String, properties: Map<String, String>,
-        intermediateModelFile: String, targetFolder: String, intermediateModelResource: Resource,
-        relevantModelElements: List<EObject>?, modelElementQuery: String?) {
+    internal fun initialize(
+        name: String,
+        dependsOn: String,
+        properties: Map<String, String>,
+        modelKind: ModelKind,
+        targetFolder: String
+    ) {
         if (initialized)
             throw IllegalStateException("Module was already initialized")
 
         this.name = name
         this.dependsOn = dependsOn
         this.properties = properties
-        this.intermediateModelFile = intermediateModelFile
+        this.modelKind = modelKind
+        this.modelFile = modelKind.getFilePathOfPassedModelFromHeap()!!
         this.targetFolder = targetFolder
-        this.intermediateModelResource = intermediateModelResource
-        this.relevantModelElements = relevantModelElements
-        this.modelElementQuery = modelElementQuery
+        this.languageDescription = modelKind.getLanguageDescriptionOfPassedModel()!!
+        this.resource = modelKind.getResourceOfPassedModel()!!
+        this.relevantModelElements = modelKind.getRelevantElementsOfPassedModel()
+        this.modelElementQuery = modelKind.getQueryOfPassedModel()
 
         initialized = true
     }

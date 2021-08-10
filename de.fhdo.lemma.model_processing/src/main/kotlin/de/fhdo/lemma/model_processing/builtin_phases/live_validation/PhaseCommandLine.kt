@@ -5,7 +5,7 @@ import de.fhdo.lemma.live_validation.protocol.LiveValidationServer.Companion.DEF
 import picocli.CommandLine
 
 /**
- * Singleton, which represents the commandline of the [SourceModelLiveValidationPhase].
+ * Singleton, which represents the commandline of the [LiveValidationPhase].
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */

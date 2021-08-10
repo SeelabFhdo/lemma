@@ -4,8 +4,8 @@ import de.fhdo.lemma.analyzer.command_line.CommandLine
 import de.fhdo.lemma.model_processing.annotations.Before
 import de.fhdo.lemma.model_processing.annotations.BeforeCheck
 import de.fhdo.lemma.model_processing.annotations.RethrowExceptions
-import de.fhdo.lemma.model_processing.builtin_phases.intermediate_model_validation.AbstractIntermediateDeclarativeValidator
 import de.fhdo.lemma.model_processing.command_line.BasicCommandLine
+import de.fhdo.lemma.model_processing.phases.validation.AbstractXmiDeclarativeValidator
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.validation.Check
@@ -17,7 +17,7 @@ import kotlin.reflect.KFunction
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal abstract class AbstractAnalysisModule<T: EObject> : AbstractIntermediateDeclarativeValidator() {
+internal abstract class AbstractAnalysisModule<T: EObject> : AbstractXmiDeclarativeValidator() {
     companion object {
         private val executedModulesList = mutableSetOf<String>()
         private val consumedAdditionalCommandLineOptions = mutableSetOf<String>()

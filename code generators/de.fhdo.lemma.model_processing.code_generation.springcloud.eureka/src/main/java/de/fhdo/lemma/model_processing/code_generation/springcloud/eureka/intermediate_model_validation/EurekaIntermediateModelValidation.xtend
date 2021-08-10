@@ -2,11 +2,11 @@ package de.fhdo.lemma.model_processing.code_generation.springcloud.eureka.interm
 
 import de.fhdo.lemma.operation.intermediate.IntermediatePackage
 import de.fhdo.lemma.model_processing.annotations.IntermediateModelValidator
-import de.fhdo.lemma.model_processing.builtin_phases.intermediate_model_validation.AbstractIntermediateDeclarativeValidator
 import org.eclipse.xtext.validation.Check
 import de.fhdo.lemma.operation.intermediate.IntermediateContainer
 import de.fhdo.lemma.model_processing.code_generation.springcloud.eureka.code_generation.EurekaCodeGenerator
 import de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode
+import de.fhdo.lemma.model_processing.phases.validation.AbstractXmiDeclarativeValidator
 
 /**
  * The Spring Cloud Eureka model validator is responsible for checking the compatibility of the
@@ -15,7 +15,7 @@ import de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode
  * @author <a href="mailto:philip.wizenty@fh-dortmund.de">Philip Wizenty</a>
  */
 @IntermediateModelValidator
-class EurekaIntermediateModelValidation extends AbstractIntermediateDeclarativeValidator {
+class EurekaIntermediateModelValidation extends AbstractXmiDeclarativeValidator {
     /**
      * Get the namespace for the intermediate operation model
      */

@@ -2,7 +2,6 @@ package de.fhdo.lemma.model_processing.code_generation.springcloud.cqrs.language
 
 import de.fhdo.lemma.ServiceDslStandaloneSetup
 import de.fhdo.lemma.model_processing.annotations.LanguageDescriptionProvider
-import de.fhdo.lemma.model_processing.languages.LanguageDescription
 import de.fhdo.lemma.model_processing.languages.LanguageDescriptionProviderI
 import de.fhdo.lemma.model_processing.languages.XtextLanguageDescription
 import de.fhdo.lemma.service.ServicePackage
@@ -14,12 +13,11 @@ import de.fhdo.lemma.service.ServicePackage
  */
 @LanguageDescriptionProvider
 internal class DescriptionProvider : LanguageDescriptionProviderI {
-    override fun getLanguageDescription(forLanguageNamespace: String) : LanguageDescription? {
-        return when(forLanguageNamespace) {
-            ServicePackage.eNS_URI -> SERVICE_DSL_LANGUAGE_DESCRIPTION
+    override fun getLanguageDescription(forLanguageNamespace: Boolean, forFileExtension: Boolean,
+        languageNamespaceOrFileExtension: String) = when(languageNamespaceOrFileExtension) {
+            "services" -> SERVICE_DSL_LANGUAGE_DESCRIPTION
             else -> null
         }
-    }
 }
 
 /**

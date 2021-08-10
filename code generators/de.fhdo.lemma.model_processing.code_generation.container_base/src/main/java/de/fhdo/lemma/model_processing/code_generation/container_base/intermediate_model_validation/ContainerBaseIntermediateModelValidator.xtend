@@ -1,7 +1,7 @@
 package de.fhdo.lemma.model_processing.code_generation.container_base.intermediate_model_validation
 
 import de.fhdo.lemma.model_processing.annotations.IntermediateModelValidator
-import de.fhdo.lemma.model_processing.builtin_phases.intermediate_model_validation.AbstractIntermediateDeclarativeValidator
+import de.fhdo.lemma.model_processing.phases.validation.AbstractXmiDeclarativeValidator
 import de.fhdo.lemma.operation.intermediate.IntermediatePackage
 import de.fhdo.lemma.operation.intermediate.IntermediateContainer
 import de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode
@@ -17,7 +17,7 @@ import de.fhdo.lemma.utils.LemmaUtils
  * @author <a href="mailto:philip.wizenty@fh-dortmund.de">Philip Wizenty</a>
  */
 @IntermediateModelValidator
-class ContainerBaseIntermediateModelValidator extends AbstractIntermediateDeclarativeValidator {
+class ContainerBaseIntermediateModelValidator extends AbstractXmiDeclarativeValidator {
     /**
      * Get the namespace for the intermediate operation model
      */

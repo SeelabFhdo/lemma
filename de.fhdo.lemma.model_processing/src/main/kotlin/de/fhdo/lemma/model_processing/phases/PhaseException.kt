@@ -5,5 +5,4 @@ package de.fhdo.lemma.model_processing.phases
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-open class PhaseException(message: String? = null, val abortPhaseExecution: Boolean = true,
-    val exitModelProcessor: Boolean = false) : Exception(message)
+open class PhaseException(message: String? = null, val exitModelProcessor: Boolean = false) : Exception(message)

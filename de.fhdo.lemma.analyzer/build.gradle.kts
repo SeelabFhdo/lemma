@@ -14,9 +14,12 @@ repositories {
 
 buildscript {
     extra.set("classgraphVersion", "4.8.35")
+    extra.set("groovyVersion", "3.0.3")
     extra.set("jansiVersion", "1.17.1")
     extra.set("jgraphtVersion", "1.5.0")
     extra.set("lemmaEclipsePluginsVersion", version)
+    extra.set("log4jVersion", "2.11.2")
+    extra.set("loggingVersion", "1.7.9")
     extra.set("lsp4jVersion", "0.9.0")
     extra.set("modelProcessingVersion", version)
     extra.set("picocliVersion", "3.9.3")
@@ -25,8 +28,11 @@ buildscript {
 
 dependencies {
     val classgraphVersion: String by rootProject.extra
+    val groovyVersion: String by rootProject.extra
     val jansiVersion: String by rootProject.extra
     val jgraphtVersion: String by rootProject.extra
+    val log4jVersion: String by rootProject.extra
+    val loggingVersion: String by rootProject.extra
     val lemmaEclipsePluginsVersion: String by rootProject.extra
     val lsp4jVersion: String by rootProject.extra
     val modelProcessingVersion: String by rootProject.extra
@@ -47,6 +53,12 @@ dependencies {
     implementation("de.fhdo.lemma.servicedsl:de.fhdo.lemma.servicedsl:$lemmaEclipsePluginsVersion")
     implementation("info.picocli:picocli:$picocliVersion")
     implementation("io.github.classgraph:classgraph:$classgraphVersion")
+    implementation("org.apache.logging.log4j:log4j-api:$log4jVersion")
+    implementation("org.apache.logging.log4j:log4j-core:$log4jVersion")
+    implementation("org.apache.logging.log4j:log4j-slf4j-impl:$log4jVersion")
+    implementation("io.github.microutils:kotlin-logging:$loggingVersion")
+    // Required by log4j (Groovy execution engine)
+    implementation("org.codehaus.groovy:groovy-jsr223:$groovyVersion")
     implementation("org.jgrapht:jgrapht-core:$jgraphtVersion")
     implementation("org.eclipse.lsp4j:org.eclipse.lsp4j:$lsp4jVersion")
     implementation("org.eclipse.lsp4j:org.eclipse.lsp4j.jsonrpc:$lsp4jVersion")

@@ -1,4 +1,4 @@
-package de.fhdo.lemma.model_processing.builtin_phases.intermediate_model_validation
+package de.fhdo.lemma.model_processing.phases.validation
 
 import de.fhdo.lemma.model_processing.annotations.After
 import de.fhdo.lemma.model_processing.annotations.Before
@@ -9,6 +9,9 @@ import de.fhdo.lemma.model_processing.annotations.findAnnotatedMethods
 import de.fhdo.lemma.model_processing.builtin_phases.ValidationResult
 import de.fhdo.lemma.model_processing.builtin_phases.ValidationResultType
 import de.fhdo.lemma.model_processing.callAnnotatedMethods
+import de.fhdo.lemma.model_processing.debug
+import de.fhdo.lemma.model_processing.ecoreMainInterface
+import de.fhdo.lemma.model_processing.languages.LanguageDescription
 import de.fhdo.lemma.model_processing.withType
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EStructuralFeature
@@ -25,14 +28,14 @@ import kotlin.reflect.jvm.isAccessible
 import kotlin.reflect.jvm.jvmErasure
 
 /**
- * Abstract superclass for all intermediate model validators. Intermediate model validation currently only supports
- * declarative validation. This corresponds to the behavior of Xtext-based source model validators (see
- * [de.fhdo.lemma.model_processing.builtin_phases.source_model_validation.AbstractXtextSourceModelValidator]), i.e.,
+ * Abstract superclass for XMI model validators. XMI model validation currently only supports declarative validation.
+ * This corresponds to the behavior of Xtext-based source model validators (see [AbstractXtextModelValidator]), i.e.,
  * validation is based on implementing [AbstractDeclarativeValidator] and annotating validation methods with [Check].
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-abstract class AbstractIntermediateDeclarativeValidator : AbstractDeclarativeValidator() {
+@Suppress("unused")
+abstract class AbstractXmiDeclarativeValidator : AbstractDeclarativeValidator(), ModelValidatorI {
     // The currently validated object
     private lateinit var validatedObject: EObject
 
@@ -50,43 +53,43 @@ abstract class AbstractIntermediateDeclarativeValidator : AbstractDeclarativeVal
             it.returnType == Boolean::class.starProjectedType
         }
 
-    // This attribute must not be of type Kotlin Array. Otherwise the discovery of @Check methods in Java-based concrete
-    // validators will fail with a KotlinReflectionInternalError from the mapPropertySignature() method of the
+    // This attribute must not be of type Kotlin Array. Otherwise, the discovery of @Check methods in Java-based
+    // concrete validators will fail with a KotlinReflectionInternalError from the mapPropertySignature() method of the
     // RuntimeTypeMapper Singleton from Kotlin's reflect library. The reason for this error is probably that
     // RuntimeTypeMapper does not support resolution of Java fields with Kotlin's built-ins Array type, yet (the
     // reflective javaElement field will be null for such fields which ultimately causes the error in
     // mapPropertySignature()).
     private lateinit var phaseArguments: List<String>
 
-    /**
-     * Get namespace of intermediate model language
-     */
-    abstract fun getLanguageNamespace() : String
+    // XMI model validation is solely driven by language namespaces, i.e., it requires the implementation of
+    // getLanguageNamespace() from the [ModelValidatorI] interface
+    final override fun getSupportedFileExtensions() = emptySet<String>()
 
     /**
      * Internal setter for arguments that concern the phase
      */
-    internal fun setPhaseArguments(phaseArguments: Array<String>) {
+    override fun setPhaseArguments(phaseArguments: Array<String>) {
         this.phaseArguments = phaseArguments.toList()
     }
 
     /**
      * External getter for phase arguments. May be used by concrete implementers.
      */
-    fun getPhaseArguments() = phaseArguments.toTypedArray()
+    override fun getPhaseArguments() = phaseArguments.toTypedArray()
 
     /**
      * Execute validator with the loaded model resource
      */
-    operator fun invoke(resource: Resource, relevantModelElements: Collection<EObject>?) : List<ValidationResult> {
+    override fun invoke(validationResource: Resource, languageDescription: LanguageDescription,
+        relevantModelElements: Collection<*>?) : List<ValidationResult> {
         // Setup MessageAcceptor to collect validation results
         messageAcceptor = ValidationResultCollector()
 
         // Call @Before methods in concrete subclasses
-        this.callAnnotatedMethods(Before::class, resource withType Resource::class)
+        this.callAnnotatedMethods(Before::class, validationResource withType Resource::class)
 
         // Execute the validator
-        validate(resource, relevantModelElements)
+        validate(validationResource, relevantModelElements)
 
         // Call @After methods in concrete subclasses
         this.callAnnotatedMethods<Nothing>(After::class)
@@ -96,17 +99,27 @@ abstract class AbstractIntermediateDeclarativeValidator : AbstractDeclarativeVal
     }
 
     /**
-     * Perform the actual validations. Basically, intermediate model validation is consistent with the behavior of
+     * Perform the actual validations. Basically, XMI model validation is consistent with the behavior of
      * [AbstractDeclarativeValidator]. However, it is not possible to directly employ [AbstractDeclarativeValidator] for
-     * intermediate modle validations because intermediate models are not based on Xtext. Therefore, we mimic the
-     * behavior of [AbstractDeclarativeValidator] in that we invoke all methods with the [Check] annotation in concrete
-     * subclasses of [AbstractIntermediateDeclarativeValidator] on model elements from intermediate models.
+     * XMI model validation because XMI models are not based on Xtext. Therefore, we mimic the behavior of
+     * [AbstractDeclarativeValidator] in that we invoke all methods with the [Check] annotation in concrete
+     * subclasses of [AbstractXmiDeclarativeValidator] on model elements from XMI models.
      */
-    private fun validate(resource: Resource, relevantModelElements: Collection<EObject>?) {
+    private fun validate(resource: Resource, relevantModelElements: Collection<*>?) {
         val checkMethodsPerInstanceType = HashMap<KType, List<KFunction<*>>>()
         val iter = relevantModelElements?.iterator() ?: resource.allContents
         while (iter.hasNext()) {
             val element = iter.next()
+            if (element == null)
+                continue
+            else if (element !is EObject) {
+                debug {
+                    "\t\t- ${this::class.java.name}: Element $element is not of type ${EObject::class.java.name} but "
+                    "${element::class.java.name}. It will therefore not be validated."
+                }
+                continue
+            }
+
             val elementType = element::class.starProjectedType
             val elementInterface = element.ecoreMainInterface()
 
@@ -134,16 +147,6 @@ abstract class AbstractIntermediateDeclarativeValidator : AbstractDeclarativeVal
     }
 
     /**
-     * Retrieve the main interface of this [EObject] instance, which is the first interface of the [EObject] instance
-     * that can be cast to the [EObject] interface
-     */
-    @Suppress("UNCHECKED_CAST")
-    private fun EObject.ecoreMainInterface()
-        = this::class.java.interfaces.find {
-                (it as? Class<out EObject>) != null
-            } as? Class<out EObject>?
-
-    /**
      * Find all check methods that are able to validate the given [elementType] or [elementInterface]
      */
     private fun findApplicableCheckMethods(elementType: KType, elementInterface: Class<out EObject>?)
@@ -164,7 +167,7 @@ abstract class AbstractIntermediateDeclarativeValidator : AbstractDeclarativeVal
     /**
      * Call [BeforeCheck] methods on this [KFunction]. Returns false if any of the [BeforeCheck] methods returns false.
      */
-    private fun KFunction<*>.callBeforeCheckMethods(validatorInstance: AbstractIntermediateDeclarativeValidator,
+    private fun KFunction<*>.callBeforeCheckMethods(validatorInstance: AbstractXmiDeclarativeValidator,
         beforeCheckMethods: List<KFunction<*>>) : Boolean {
         for (beforeCheckMethod in beforeCheckMethods) {
             beforeCheckMethod.isAccessible = true
@@ -224,7 +227,7 @@ abstract class AbstractIntermediateDeclarativeValidator : AbstractDeclarativeVal
     }
 
     /**
-     * Add a issue code to the currently validated object
+     * Add an issue code to the currently validated object
      */
     override fun addIssueToState(issueCode: String?, message: String?, feature: EStructuralFeature?) {
         addIssue(message, validatedObject, feature, issueCode, null)
@@ -233,9 +236,7 @@ abstract class AbstractIntermediateDeclarativeValidator : AbstractDeclarativeVal
     /**
      * Get the current object
      */
-    override fun getCurrentObject(): EObject {
-        return validatedObject
-    }
+    override fun getCurrentObject() = validatedObject
 }
 
 /**
@@ -295,5 +296,4 @@ private class ValidationResultCollector(val validationResults: MutableList<Valid
         validationResults += ValidationResult(offset = offset, length = length, message = message ?: "",
             type = ValidationResultType.WARNING)
     }
-
 }
