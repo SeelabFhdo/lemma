@@ -95,3 +95,7 @@ val standalone = task("standalone", type = Jar::class) {
         exclude("META-INF/*.DSA", "META-INF/*.RSA", "META-INF/*.SF")
     }
 }
+
+artifacts {
+    add("archives", standalone)
+}
