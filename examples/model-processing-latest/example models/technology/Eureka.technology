@@ -1,0 +1,5 @@
+technology eureka {
+	service aspects {
+		aspect EnableEurekaClient for microservices;
+	}
+}

@@ -1,0 +1,182 @@
+technology java {
+	types {
+		primitive type Boolean based on boolean default;
+		primitive type Byte based on byte default;
+		primitive type Character based on char default;
+		primitive type Date based on date default;
+		primitive type Double based on double default;
+		primitive type Float based on float default;
+		primitive type Integer based on int default;
+		primitive type Long based on long default;
+		primitive type Short based on short default;
+		primitive type String based on string default;
+		primitive type Object based on unspecified default;
+		primitive type BigDecimal;
+		primitive type Currency;
+
+		structure type AuthenticationException;
+		structure type HttpServletRequest;
+		structure type Principal;
+
+		list type GrantedAuthorities;
+		list type Resources;
+
+		compatibility matrix {
+			Double, Float -> BigDecimal;
+			String -> Currency;
+		}
+	}
+
+	service aspects {
+		aspect Access<singleval> for types {
+			string value = "FIELD";
+		}
+		aspect Application<singleval> for microservices {
+			string name<mandatory>;
+		}
+		aspect Array<singleval> for fields;
+		aspect AttributeOverride for fields {
+			string name<mandatory>;
+			string column<mandatory>;
+		}
+
+		aspect Collection<singleval> for fields;
+		aspect Constant<singleval> for fields;
+		aspect CrossOrigin<singleval> for operations { string origins <mandatory>; }
+		aspect CustomProperty for microservices {
+			string name <mandatory>;
+			string value <mandatory>;
+		}
+
+		aspect DatasourceConfiguration<singleval> for microservices {
+			string url;
+			string username;
+			string password;
+			string driverClassName;
+		}
+		aspect DatasourcePassword<singleval> for microservices {
+			string password<mandatory>;
+		}
+		aspect DatasourceUsername<singleval> for microservices {
+			string username<mandatory>;
+		}
+		aspect DatasourceUrl<singleval> for microservices {
+			string url<mandatory>;
+		}
+		aspect DecimalMax<singleval> for fields {
+			string value <mandatory>;
+			boolean inclusive = false;
+		}
+		aspect DecimalMin<singleval> for fields {
+			string value <mandatory>;
+		}
+		aspect DeleteMapping<singleval> for operations;
+
+		aspect Email<singleval> for fields;
+		aspect Embeddable<singleval> for types;
+		aspect Embedded<singleval> for fields;
+		aspect EmbeddedId<singleval> for fields;
+		aspect Enumerated<singleval> for fields {
+			string value = "STRING";
+		}
+		aspect Entity<singleval> for types;
+
+		aspect FeignClient<singleval> for microservices, interfaces { string name <mandatory>; }
+
+		aspect GeneratedValue<singleval> for fields;
+		aspect GetMapping<singleval> for operations;
+
+		aspect HttpNotFound<singleval> for parameters {
+			selector(exchange_pattern = out);
+		}
+		aspect HttpStatus for parameters {
+			int statusCode <mandatory>;
+		}
+		aspect HibernateConfiguration<singleval> for microservices {
+			string ddlAuto;
+		}
+
+		aspect Id<singleval> for fields;
+
+		aspect JacksonConfiguration<singleval> for microservices {
+			boolean INDENT_OUTPUT;
+			string defaultPropertyInclusion;
+		}
+		aspect JpaRepository<singleval> for microservices;
+		aspect JpaShowSql<singleval> for microservices {
+			boolean showSql = true;
+		}
+		aspect JsonFormat<singleval> for fields {
+			string pattern <mandatory>;
+		}
+		aspect JsonIgnore<singleval> for fields;
+		aspect JsonProperty<singleval> for fields {
+			string name;
+		}
+		aspect JsonUnwrapped<singleval> for fields;
+
+		aspect Map<singleval> for types;
+		aspect MessageMapping<singleval> for operations {
+			string value <mandatory>;
+		}
+		aspect Multimap<singleval> for domainOperations;
+
+		aspect NotNull<singleval> for fields;
+
+		aspect OneToMany for fields {
+			string cascade = "ALL";
+			string fetch;
+		}
+		aspect OneToOne for fields {
+			string cascade = "ALL";
+		}
+		aspect Optional<singleval> for domainParameters, parameters;
+
+		aspect PathVariable for parameters {
+			selector(exchange_pattern = in);
+		}
+		aspect PostMapping<singleval> for operations;
+		aspect Port for microservices { int port<mandatory>; }
+		aspect PutMapping<singleval> for operations;
+
+		aspect ResourceSupport for types;
+		aspect ResponseEntity for domainParameters, parameters {
+			selector(exchange_pattern = out);
+		}
+		aspect ResponseStatus for parameters {
+			selector(exchange_pattern = out);
+
+			string status <mandatory>;
+		}
+		aspect RequestBody for parameters {
+			selector(exchange_pattern = in);
+		}
+		aspect RequestParam for parameters {
+			selector(exchange_pattern = in);
+
+			string value;
+			string defaultValue = "";
+		}
+
+		aspect SendTo<singleval> for operations {
+			string value <mandatory>;
+		}
+		aspect Set<singleval> for parameters;
+		aspect static<singleval> for domainOperations;
+
+		aspect Table<singleval> for types {
+			string name<mandatory>;
+		}
+		aspect Transactional<singleval> for types;
+
+		aspect UserDetails<singleval> for types, domainParameters;
+
+		aspect Valid<singleval> for fields, parameters;
+		aspect Value<singleval> for fields {
+			string value <mandatory>;
+		}
+		aspect Version<singleval> for fields;
+
+		aspect WebServiceGatewaySupport<singleval> for microservices;
+	}
+}

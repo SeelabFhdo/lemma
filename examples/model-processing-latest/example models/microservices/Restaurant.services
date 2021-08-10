@@ -1,0 +1,27 @@
+import datatypes from "../domain/Common.data" as Common
+import datatypes from "../domain/Restaurant.data" as RestaurantDomain
+import technology from "../technology/JavaSpring.technology" as JavaSpring
+import technology from "../technology/Kafka.technology" as Kafka
+import technology from "../technology/Protocols.technology" as Protocols
+
+@technology(JavaSpring)
+@technology(Kafka)
+@technology(Protocols)
+@sync(Protocols::_protocols.rest)
+@async(Kafka::_protocols.kafka)
+functional microservice org.example.RestaurantService {
+	@endpoints(Protocols::_protocols.rest: "/restaurants";)
+	interface Restaurants {
+		---
+		Create a new restaurant.
+
+		@required request Restaurant creation request
+		---
+		@JavaSpring::_aspects.PostMapping
+		@Kafka::_aspects.KafkaProducer(group = "ftgo", topic = "ftgoTopic")
+		create(
+			sync in request : RestaurantDomain::API.RestaurantInformation,
+			async out response : Common::DomainEvents.RestaurantCreated
+		);
+	}
+}

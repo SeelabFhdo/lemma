@@ -1,0 +1,33 @@
+technology Kafka {
+	protocols {
+		async kafka data formats "binary" default with format "binary";
+		async zookeeper data formats "zookeeper" default with format "zookeeper";
+	}
+
+	service aspects {
+		aspect KafkaListener<singleval> for operations {
+			selector(protocol = kafka);
+			string group;
+			string topic;
+		}
+		aspect KafkaProducer<singleval> for operations {
+			selector(protocol = kafka);
+			string group;
+			string topic;
+		}
+	}
+
+	infrastructure technologies {
+		Kafka {
+			operation environments = "eventuateio/eventuateio-local-kafka:0.15.0" default;
+
+			service properties {
+				string zooKeeperServer;
+			}
+		}
+
+		ZooKeeper {
+			operation environments = "eventuateio/eventuateio-local-zookeeper:0.15.0" default;
+		}
+	}
+}

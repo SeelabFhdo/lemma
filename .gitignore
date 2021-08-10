@@ -37,6 +37,9 @@ __pycache__/
 build/deploy/debug_env.sh
 examples/**/intermediate/
 !examples/model-processing/example models/intermediate/
+!examples/model-processing-latest/example models/intermediate/
 examples/**/build/
 examples/model-processing/run11.sh
 examples/model-processing/generated code/
+examples/model-processing-latest/run11.sh
+examples/model-processing-latest/generated code/
