@@ -8,7 +8,7 @@ import de.fhdo.lemma.model_processing.builtin_phases.source_model_validation.Abs
 import de.fhdo.lemma.model_processing.builtin_phases.source_model_validation.SourceModelValidationMode
 import de.fhdo.lemma.model_processing.code_generation.springcloud.domain_events.domainEventsAlias
 import de.fhdo.lemma.model_processing.languages.convertToAbsoluteFileUrisInPlace
-import de.fhdo.lemma.model_processing.utils.hasServiceAspect
+import de.fhdo.lemma.model_processing.utils.hasMappingAspect
 import de.fhdo.lemma.technology.mapping.ComplexTypeMapping
 import de.fhdo.lemma.technology.mapping.MappingPackage
 import de.fhdo.lemma.technology.mapping.TechnologyMapping
@@ -44,7 +44,7 @@ internal class MappingModelSourceValidator : AbstractXtextSourceModelValidator()
     private fun checkGroup(mapping: ComplexTypeMapping) {
         val dataStructure = mapping.type.type as? DataStructure ?: return
         val domainEventsAlias = mapping.domainEventsAlias ?: return
-        if (!mapping.hasServiceAspect(domainEventsAlias, "EventGroup"))
+        if (!mapping.hasMappingAspect(domainEventsAlias, "EventGroup"))
             return
 
         // The EventGroup aspect may only be applied to domain concepts with the domainEvent feature
