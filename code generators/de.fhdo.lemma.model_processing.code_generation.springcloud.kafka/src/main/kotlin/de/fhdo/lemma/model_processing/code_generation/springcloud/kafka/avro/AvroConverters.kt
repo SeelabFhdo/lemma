@@ -143,8 +143,10 @@ internal object AvroConverters {
 
         // Prepare statement for schema file reading
         addRelocatableImport("java.io.InputStream")
+        addRelocatableImport("java.lang.invoke.MethodHandles")
         val getFileAsInputStreamStatement = if (fileFromResources)
-                """InputStream schemaStream = $CLASSNAME.class.getClassLoader().getResourceAsStream("$schemaFile");"""
+                "InputStream schemaStream = MethodHandles.lookup().lookupClass().getClassLoader()" +
+                    """.getResourceAsStream("$schemaFile");"""
             else {
                 addRelocatableImport("java.io.FileInputStream")
                 """InputStream schemaStream = new FileInputStream("$schemaFile");"""
