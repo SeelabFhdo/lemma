@@ -8,6 +8,5 @@
 
 - required_args:
   - builtin:
-    - source_model: "path to operation model (must be relative to model base path)"
     - intermediate_model: "path to intermediate operation model (must be relative to model base path)"
     - target_folder: "path to generation target folder"
