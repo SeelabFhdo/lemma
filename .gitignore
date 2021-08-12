@@ -27,7 +27,7 @@ code generators/de.fhdo.lemma.model_processing.code_generation.java_base/linecnt
 .~lock*
 *.iml
 *.hprof
-de.fhdo.lemma.eclipse.ui.editor
+examples/**/intermediate/
 howto-lemma-release.md/
 lemma-cd-documentation/
 code generators/de.fhdo.lemma.model_processing.code_generation.springcloud.kafka_backup/
