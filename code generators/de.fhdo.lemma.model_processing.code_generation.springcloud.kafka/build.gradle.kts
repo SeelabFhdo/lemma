@@ -12,6 +12,7 @@ repositories {
 
 buildscript {
     extra.set("commonsVersion", "3.5")
+    extra.set("coroutinesVersion", "1.1.1")
     extra.set("groovyVersion", "3.0.3")
     extra.set("jansiVersion", "1.17.1")
     extra.set("javaBaseGeneratorVersion", version)
@@ -19,7 +20,7 @@ buildscript {
     extra.set("lemmaEclipsePluginsVersion", version)
     extra.set("log4jVersion", "2.11.2")
     extra.set("loggingVersion", "1.7.9")
-    extra.set("lsp4jVersion", "0.9.0")
+    extra.set("lsp4jVersion", "0.10.0")
     extra.set("modelProcessingVersion", version)
     extra.set("picocliVersion", "3.9.3")
     extra.set("xmlBuilderVersion", "1.7.2")
@@ -27,6 +28,7 @@ buildscript {
 
 dependencies {
     val commonsVersion: String by rootProject.extra
+    val coroutinesVersion: String by rootProject.extra
     val groovyVersion: String by rootProject.extra
     val jansiVersion: String by rootProject.extra
     val javaBaseGeneratorVersion: String by rootProject.extra
@@ -48,16 +50,19 @@ dependencies {
     implementation("de.fhdo.lemma.intermediate:de.fhdo.lemma.data.intermediate.metamodel:$lemmaEclipsePluginsVersion")
     implementation("de.fhdo.lemma.intermediate:de.fhdo.lemma.service.intermediate.metamodel:" +
         lemmaEclipsePluginsVersion)
-    implementation("de.fhdo.lemma.live_validation:de.fhdo.lemma.live_validation:$lemmaEclipsePluginsVersion")
     implementation("de.fhdo.lemma.model_processing:de.fhdo.lemma.model_processing:$modelProcessingVersion")
+    implementation("de.fhdo.lemma.live_validation:de.fhdo.lemma.live_validation.util:$lemmaEclipsePluginsVersion")
+    implementation("de.fhdo.lemma.live_validation:de.fhdo.lemma.live_validation.model:$lemmaEclipsePluginsVersion")
+    implementation("de.fhdo.lemma.live_validation:de.fhdo.lemma.live_validation.protocol:$lemmaEclipsePluginsVersion")
+    implementation("de.fhdo.lemma.live_validation:de.fhdo.lemma.live_validation.client:$lemmaEclipsePluginsVersion")
     implementation("de.fhdo.lemma.model_processing.code_generation.java_base:" +
         "de.fhdo.lemma.model_processing.code_generation.java_base:$javaBaseGeneratorVersion")
     implementation("de.fhdo.lemma.model_processing.utils:de.fhdo.lemma.model_processing.utils:$modelProcessingVersion")
     implementation("de.fhdo.lemma.servicedsl:de.fhdo.lemma.servicedsl:$lemmaEclipsePluginsVersion")
     implementation("de.fhdo.lemma.technology.mappingdsl:de.fhdo.lemma.technology.mappingdsl:" +
-            lemmaEclipsePluginsVersion)
+        lemmaEclipsePluginsVersion)
     implementation("de.fhdo.lemma.technology.mappingdsl:" +
-            "de.fhdo.lemma.technology.mappingdsl.metamodel:$lemmaEclipsePluginsVersion")
+        "de.fhdo.lemma.technology.mappingdsl.metamodel:$lemmaEclipsePluginsVersion")
     implementation("de.fhdo.lemma.technology.technologydsl:de.fhdo.lemma.technology.technologydsl:" +
         lemmaEclipsePluginsVersion)
     implementation("de.fhdo.lemma.technology.technologydsl:de.fhdo.lemma.technology.technologydsl.metamodel:" +
@@ -74,6 +79,7 @@ dependencies {
     implementation("org.fusesource.jansi:jansi:$jansiVersion")
     implementation("org.eclipse.lsp4j:org.eclipse.lsp4j:$lsp4jVersion")
     implementation("org.eclipse.lsp4j:org.eclipse.lsp4j.jsonrpc:$lsp4jVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
     implementation("org.redundent:kotlin-xml-builder:$xmlBuilderVersion")
 }
 

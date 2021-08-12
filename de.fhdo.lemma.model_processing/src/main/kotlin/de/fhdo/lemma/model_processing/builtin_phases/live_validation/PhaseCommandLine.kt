@@ -1,7 +1,7 @@
 package de.fhdo.lemma.model_processing.builtin_phases.live_validation
 
-import de.fhdo.lemma.live_validation.protocol.LiveValidationServer.Companion.DEFAULT_HOSTNAME
-import de.fhdo.lemma.live_validation.protocol.LiveValidationServer.Companion.DEFAULT_PORT
+import de.fhdo.lemma.live_validation.protocol.extensions.LiveValidationServer.DEFAULT_HOSTNAME
+import de.fhdo.lemma.live_validation.protocol.extensions.LiveValidationServer.DEFAULT_PORT
 import picocli.CommandLine
 
 /**

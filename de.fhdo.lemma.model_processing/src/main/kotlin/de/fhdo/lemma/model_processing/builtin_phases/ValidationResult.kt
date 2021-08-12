@@ -1,7 +1,7 @@
 package de.fhdo.lemma.model_processing.builtin_phases
 
-import de.fhdo.lemma.live_validation.common.IssueDiagnostic
-import de.fhdo.lemma.live_validation.common.IssueRange
+import de.fhdo.lemma.live_validation.model.IssueDiagnostic
+import de.fhdo.lemma.live_validation.model.IssueRange
 import de.fhdo.lemma.model_processing.printlnError
 import de.fhdo.lemma.model_processing.printlnWarning
 import org.eclipse.lsp4j.DiagnosticSeverity

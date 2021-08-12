@@ -20,7 +20,7 @@ buildscript {
     extra.set("lemmaEclipsePluginsVersion", version)
     extra.set("log4jVersion", "2.11.2")
     extra.set("loggingVersion", "1.7.9")
-    extra.set("lsp4jVersion", "0.9.0")
+    extra.set("lsp4jVersion", "0.10.0")
     extra.set("modelProcessingVersion", version)
     extra.set("picocliVersion", "3.9.3")
     extra.set("xtextVersion", "2.25.0")
@@ -47,7 +47,6 @@ dependencies {
     implementation("de.fhdo.lemma.intermediate:de.fhdo.lemma.data.intermediate.metamodel:$lemmaEclipsePluginsVersion")
     implementation("de.fhdo.lemma.intermediate:de.fhdo.lemma.service.intermediate.metamodel:" +
         lemmaEclipsePluginsVersion)
-    implementation("de.fhdo.lemma.live_validation:de.fhdo.lemma.live_validation:$lemmaEclipsePluginsVersion")
     implementation("de.fhdo.lemma.model_processing:de.fhdo.lemma.model_processing:$modelProcessingVersion")
     implementation("de.fhdo.lemma.model_processing.utils:de.fhdo.lemma.model_processing.utils:$modelProcessingVersion")
     implementation("de.fhdo.lemma.servicedsl:de.fhdo.lemma.servicedsl:$lemmaEclipsePluginsVersion")
