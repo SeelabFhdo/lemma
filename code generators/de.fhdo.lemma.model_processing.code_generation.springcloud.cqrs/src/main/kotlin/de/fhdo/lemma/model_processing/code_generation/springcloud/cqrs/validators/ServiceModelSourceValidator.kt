@@ -59,7 +59,7 @@ internal class ServiceModelSourceValidator : AbstractXtextModelValidator() {
      */
     private fun Microservice.checkSideOperations(sideAspectName: String, checkOperations: (List<Operation>) -> Unit) {
         val cqrsAlias = cqrsAlias() ?: return
-        val sideInterfaces = interfaces.filter { it.hasServiceAspect(cqrsAlias, sideAspectName) }.ifEmpty { interfaces }
+        val sideInterfaces = interfaces.filter { it.hasServiceAspect(cqrsAlias, sideAspectName) }
         val operationsToCheck = sideInterfaces.map { it.operations }.flatten()
         checkOperations(operationsToCheck)
     }
