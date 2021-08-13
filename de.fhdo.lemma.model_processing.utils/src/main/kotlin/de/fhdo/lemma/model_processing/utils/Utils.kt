@@ -338,12 +338,11 @@ fun IntermediateMicroservice.hasTechnology(technologyName: String, ignoreCase: B
  */
 fun List<TechnologyReference>.findAliasForTechnology(technologyName: String)
     = find {
-        val technologyModelFilepath = URLDecoder.decode(it.technology.importURI, StandardCharsets.UTF_8)
-            .removePrefix("file://")
+        val technologyModelFilepath = it.technology.importURI.uriToFilePath()
         val absoluteTechnologyModelFilepath = if (LemmaUtils.representsAbsolutePath(technologyModelFilepath))
                 technologyModelFilepath
             else {
-                val referencingModelFilepath = it.eResource().uri.toString().removePrefix("file://")
+                val referencingModelFilepath = it.eResource().uri.toString().uriToFilePath()
                 LemmaUtils.convertToAbsolutePath(technologyModelFilepath, referencingModelFilepath)
             }
 
@@ -352,8 +351,16 @@ fun List<TechnologyReference>.findAliasForTechnology(technologyName: String)
             TechnologyModelCache.add(absoluteTechnologyModelFilepath, parsedTechnologyName)
         } else
             TechnologyModelCache.technologyName(absoluteTechnologyModelFilepath)
+
         parsedTechnologyName == technologyName
     }?.technology?.name
+
+/**
+ * Convert this URI to a file path.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun String.uriToFilePath() = URLDecoder.decode(this, StandardCharsets.UTF_8).removePrefix("file://")
 
 /**
  * The [findAliasForTechnology] function involves expensive scanning of technology model files. We therefore cache the
