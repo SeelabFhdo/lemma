@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: de.fhdo.lemma.technology.technologydsl
 Bundle-Vendor: University of Applied Sciences and Arts Dortmun
-Bundle-Version: 0.8.0.qualifier
+Bundle-Version: 0.8.5.qualifier
 Bundle-SymbolicName: de.fhdo.lemma.technology.technologydsl;singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: de.fhdo.lemma.technology.technologydsl.metamodel,

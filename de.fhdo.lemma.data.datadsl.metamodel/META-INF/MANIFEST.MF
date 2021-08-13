@@ -5,7 +5,7 @@ Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-SymbolicName: de.fhdo.lemma.data.datadsl.metamodel;singleton:=true
 Automatic-Module-Name: de.fhdo.lemma.data.datadsl.metamodel
-Bundle-Version: 0.8.0.qualifier
+Bundle-Version: 0.8.5.qualifier
 Bundle-ClassPath: .
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: de.fhdo.lemma.data,

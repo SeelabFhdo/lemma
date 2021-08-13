@@ -6,7 +6,7 @@
         <relativePath>../de.fhdo.lemma.eclipse.updatesite.parent/pom.xml</relativePath>
         <groupId>de.fhdo.lemma.eclipse.updatesite</groupId>
         <artifactId>parent</artifactId>
-        <version>0.8.0-SNAPSHOT</version>
+        <version>0.8.5-SNAPSHOT</version>
     </parent>
 
     <artifactId>de.fhdo.lemma.eclipse.updatesite.feature</artifactId>

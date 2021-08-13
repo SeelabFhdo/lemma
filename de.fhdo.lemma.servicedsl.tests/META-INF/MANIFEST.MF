@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: de.fhdo.lemma.servicedsl.tests
 Bundle-Vendor: University of Applied Sciences and Arts Dortmund
-Bundle-Version: 0.8.0.qualifier
+Bundle-Version: 0.8.5.qualifier
 Bundle-SymbolicName: de.fhdo.lemma.servicedsl.tests;singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: de.fhdo.lemma.servicedsl,

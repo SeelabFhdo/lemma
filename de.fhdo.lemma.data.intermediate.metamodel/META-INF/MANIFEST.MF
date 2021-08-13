@@ -4,7 +4,7 @@ Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-SymbolicName: de.fhdo.lemma.data.intermediate.metamodel;singleton:=true
 Bundle-Localization: plugin
-Bundle-Version: 0.8.0.qualifier
+Bundle-Version: 0.8.5.qualifier
 Bundle-ClassPath: .
 Automatic-Module-Name: de.fhdo.lemma.data.intermediate.metamodel
 Bundle-RequiredExecutionEnvironment: JavaSE-11

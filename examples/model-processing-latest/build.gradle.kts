@@ -3,7 +3,6 @@ plugins {
 }
 
 group = "de.fhdo.lemma.examples.model_processing.latest"
-version = "0.8.0-SNAPSHOT"
 
 repositories {
     mavenCentral()

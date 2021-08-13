@@ -4,7 +4,7 @@ Bundle-Name: de.fhdo.lemma.intermediate.transformations
 Bundle-Vendor: University of Applied Sciences and Arts Dortmund
 Bundle-SymbolicName: de.fhdo.lemma.intermediate.transformations;singleton:=true
 Automatic-Module-Name: IntermediateModelTransformations
-Bundle-Version: 0.8.0.qualifier
+Bundle-Version: 0.8.5.qualifier
 Bundle-ClassPath: .
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-11

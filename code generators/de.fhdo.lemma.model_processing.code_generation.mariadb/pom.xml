@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.fhdo.lemma.model_processing.code_generation.mariadb</groupId>
     <artifactId>de.fhdo.lemma.model_processing.code_generation.mariadb</artifactId>
-    <version>0.8.0-SNAPSHOT</version>
+    <version>0.8.5-SNAPSHOT</version>
     <name>MariaDB Code Generator</name>
     <description>A LEMMA code generator for the MariaDB technology.</description>
 
