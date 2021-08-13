@@ -9,5 +9,5 @@ Require-Bundle: com.google.guava,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.xtend.lib,
  org.eclipse.xtend.lib.macro,
- de.fhdo.lemma.technology.mappingdsl.metamodel;bundle-version="0.8.0"
+ de.fhdo.lemma.technology.mappingdsl.metamodel
 Export-Package: de.fhdo.lemma.technology.mappingdsl.extractor
