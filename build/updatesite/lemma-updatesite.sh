@@ -17,8 +17,8 @@ notify_error() {
 ### MAIN SCRIPT
 
 # Tell Maven to use the "eclipse-updatesite" profile defined in the LEMMA
-# Eclipse Updatesite modules' POM files. The profile skips tests and sets the
-# compiled Java class versions to 52 (Java 8) as currently expected by Eclipse.
+# Eclipse Updatesite modules' POM files. With the profile activated, Maven skips
+# test execution.
 export LEMMA_UPDATESITE_BUILD="true"
 
 # We use LEMMA's Linux build script to first build all modules, which shall
