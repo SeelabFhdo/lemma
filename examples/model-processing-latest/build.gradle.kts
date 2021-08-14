@@ -7,7 +7,14 @@ version = "0.8.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
+
+    // Local Maven repository for versions of required LEMMA dependencies that might not have been deployed, yet
     mavenLocal()
+
+    maven {
+        // Repository of LEMMA artifacts
+        url = uri("https://repository.seelab.fh-dortmund.de/repository/maven-public/")
+    }
 }
 
 dependencies {
