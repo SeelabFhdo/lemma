@@ -18,9 +18,18 @@ function check_env {
 
 # Deploy the Updatesite
 function do_updatesite_deploy() {
-    sshpass -p "$DEPLOY_UPDATESITE_PASSWORD" \
-        scp -r -oStrictHostKeyChecking=no target/repository/* \
-            "$DEPLOY_UPDATESITE_USER@$DEPLOY_UPDATESITE_IP":/var/www/lemma/
+    if [[ -v "VERBOSE_LEMMA_DEPLOY" &&
+        $VERBOSE_LEMMA_DEPLOY == "true" ]]
+    then
+        sshpass -p "$DEPLOY_UPDATESITE_PASSWORD" \
+            scp -v -r -oStrictHostKeyChecking=no target/repository/* \
+                "$DEPLOY_UPDATESITE_USER@$DEPLOY_UPDATESITE_IP":/var/www/lemma/
+    else
+        sshpass -p "$DEPLOY_UPDATESITE_PASSWORD" \
+            scp -r -oStrictHostKeyChecking=no target/repository/* \
+                "$DEPLOY_UPDATESITE_USER@$DEPLOY_UPDATESITE_IP":/var/www/lemma/
+    fi
+
     rc=$?
     echo "Done (exit status was $rc)"
     return $rc
