@@ -154,8 +154,16 @@ extract_modules_from_file $moduleInclusionFile
 cd ../..
 DEPLOY_ROOT=$(pwd)
 MODULE_COUNT=${#modulesToInclude[@]}
-CURRENT_MODULE_INDEX=1
+## If there are modules to deploy, fetch tags of all git remotes so that they
+## can be considered by module-specific deployment scripts. For example, the
+## Updatesite deployment script (de.fhdo.lemma.eclipse.updatesite/deploy.sh)
+## checks if the last pulled commit has a release tag and in that case deploys
+## the Eclipse Updatesite on a web server.
+if (( $MODULE_COUNT > 0 )); then
+    git fetch --tags --all
+fi
 
+CURRENT_MODULE_INDEX=1
 for module in "${modulesToInclude[@]}"; do
     do_deploy "$module" $CURRENT_MODULE_INDEX $MODULE_COUNT
     CURRENT_MODULE_INDEX=$((CURRENT_MODULE_INDEX+1))
