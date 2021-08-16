@@ -1,6 +1,50 @@
 # Changelog
 All notable changes to [LEMMA](https://github.com/SeelabFhdo/lemma/) will be documented in this file.
 
+## [0.8.5] - 2021-08-16
+### Added
+- Data DSL: Add validation for duplicate list fields
+- Documentation: Add documentation link to README
+- Eclipse UI: Add Xtext editor plugin with Live Validation support
+- Examples: Add new FTGO example
+- Examples: Add examples for code generator implementation before and after the refactoring of the model processing framework (see below), respectively
+- Java Base Generator: Add Genlets to specification for Docker-based execution
+- Java Base Generator: Add support for merging `dependencyManagement` elements from different POM files
+- Live Validation Editor: Activate for all modeling languages
+- Model Processing Framework: Add convenience version of `loadXtextResource()`
+- Model Processing Utils: Add support for domain operation mappings to `EObject.mappingAspects()`
+- Releng: Add updatesite to deployment modules
+- Spring Cloud Genlet: Add support for `ResponseStatus` aspect on synchronous outgoing parameters
+
+### Changed
+- Container Base Generator: Change Dockerfile parsing framework to Jackson and change Docker Compose suffix handling
+- Data DSL: Fix namespace resolution of complex types in `getClosestNamespace()` meta-operation
+- Java Base Generator: Fix Genlet names in Dockerfile
+- Java Base Generator: Make `insertStatement()` API method public
+- Java Base Generator: Streamline Java-based Genlet implementation
+- Kafka Genlet: Fix name of variable definition in generated Avro converter bodies
+- Kafka Genlet: Remove methods from processed Java class only when the corresponding LEMMA operation does not specify synchronous parameters
+- Kafka Genlet: Replace class loader retrieval from "static" class name by "dynamic" `MethodHandles` lookup to cope with possible method relocation during AST ordering by the Java Base Generator
+- Live Validation Framework: Refactor towards loosely coupled Java implementation
+- Model Processing Framework: Change default behavior and exit model processors when phase errors occur
+- Model Processing Framework: Execute all `@Check` methods in intermediate model validators that are capable in checking the exact type or supertypes of a model element
+- Model Processing Framework: Fix access to uninitialized `lateinit` property
+- Model Processing Framework: Refactor for more flexibility in phase invocation and harmonize phase component implementation
+- Model Processing Framework: Sort validation results descending by severity weights, and then ascending by line number, column, and message
+- Model Processing Utils: Consider property `name` in `getPropertyValue()` also for single-valued aspect applications
+- Model Processing Utils: Convert all URIs in `findAliasForTechnology()` to file paths to ensure that technology models can actually be found in the filesystem
+- OCL plugin: Bump version of `p2AsMaven` plugin to `3.27.0` to prevent JCenter interaction
+- Releng: Align Windows build order with Linux build order
+- Releng: Fix error message in Python script for reading version identifiers from build files
+- Static Analyzer: Fix computation of Max Depth metric by counting the edges in the longest path of the resource graph and not the vertices
+- Update Java version of Eclipse plugins and updatesite to 11
+- Upgrade plugins and other components to Eclipse 4.19 (2021-03)
+
+### Removed
+- Model Processing Framework: Remove Equinox and JDT dependencies
+- Model Processing Framework: Remove unused flag `acceptsModuleSpecificArguments` from abstract base class for code generation modules
+- Releng: Remove build file references to the JCenter repository prior to its upcoming deprecation
+
 ## [0.8.0] - 2021-01-16
 ### Added
 - Data DSL: Enable other complex types besides data structures to become Parts of an Aggregate.
