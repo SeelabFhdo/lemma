@@ -16,8 +16,8 @@
       alt="Version" />
   </a>
   <!-- Build -->
-  <a href="https://build.seelab.fh-dortmund.de/job/SeelabFhdo/job/lemma/job/master/">
-    <img src="https://build.seelab.fh-dortmund.de/buildStatus/icon?job=SeelabFhdo%2Flemma%2Fmaster&style=flat-square"
+  <a href="https://build.seelab.fh-dortmund.de/job/SeelabFhdo/job/lemma/job/main/">
+    <img src="https://build.seelab.fh-dortmund.de/buildStatus/icon?job=SeelabFhdo%2Flemma%2Fmain&style=flat-square"
       alt="Build" />
   </a>
   <!-- Eclipse -->
@@ -72,16 +72,16 @@ As an alternative to the Eclipse updatesite, you may also download the LEMMA Ecl
 
 ## Examples
 We provide three examples in the form of a set of LEMMA models that describe coherent microservice architectures including their domain data, microservice APIs, and their operation. You can find the modeling examples on GitHub:
-- [Parking Space Example](https://github.com/SeelabFhdo/lemma/tree/master/examples/parking-spaces)
-- [E-Vehicle Charging Example](https://github.com/SeelabFhdo/lemma/tree/master/examples/e-vehicle-charging)
-- [Food to Go Example](https://github.com/SeelabFhdo/lemma/tree/master/examples/food-to-go)
-- [Insurance Company Example](https://github.com/SeelabFhdo/lemma/tree/master/examples/insurance-company)
+- [Parking Space Example](https://github.com/SeelabFhdo/lemma/tree/main/examples/parking-spaces)
+- [E-Vehicle Charging Example](https://github.com/SeelabFhdo/lemma/tree/main/examples/e-vehicle-charging)
+- [Food to Go Example](https://github.com/SeelabFhdo/lemma/tree/main/examples/food-to-go)
+- [Insurance Company Example](https://github.com/SeelabFhdo/lemma/tree/main/examples/insurance-company)
 
 ## Documentation
 The LEMMA documentation can be found at [https://seelabfhdo.github.io/lemma-docs](https://seelabfhdo.github.io/lemma-docs). The documentation is currently work in progress but will receive updates on a regular basis. For example, it already contains a comprehensive installation guideline and a quick tour!
 
 ## Changelog
-For information about the current version of LEMMA please refer to its [Changelog](https://github.com/SeelabFhdo/lemma/blob/master/CHANGELOG.md).
+For information about the current version of LEMMA please refer to its [Changelog](https://github.com/SeelabFhdo/lemma/blob/main/CHANGELOG.md).
 
 ## Science
 LEMMA has its roots in Software Engineering research, and more specifically in the Software Architecture and Model-driven Engineering research communities. Thus, there are several papers that concern LEMMA's design and its application:
@@ -114,4 +114,4 @@ Kudos to all LEMMA contributors :tada::tada::tada:
 </a>
 
 ## License
-[MIT](https://github.com/SeelabFhdo/lemma/blob/master/LICENSE)
+[MIT](https://github.com/SeelabFhdo/lemma/blob/main/LICENSE)

@@ -1,6 +1,6 @@
 # LEMMA Live Validation Server
 LEMMA's Live Validation server enables to connect LEMMA model processors, which implement a
-[Source Model Validation phase](https://github.com/SeelabFhdo/lemma/tree/master/de.fhdo.lemma.model_processing/src/main/kotlin/de/fhdo/lemma/model_processing/builtin_phases/source_model_validation),
+[Source Model Validation phase](https://github.com/SeelabFhdo/lemma/tree/main/de.fhdo.lemma.model_processing/src/main/kotlin/de/fhdo/lemma/model_processing/builtin_phases/source_model_validation),
 with a running instance of a LEMMA-enabled Eclipse IDE to receive and display source model validation issues leveraging
 the [Language Server Protocol](https://microsoft.github.io/language-server-protocol).
 

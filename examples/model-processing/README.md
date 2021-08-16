@@ -6,13 +6,13 @@ to implement model processors leveraging the framework, please have a look at th
 `model-processing-latest`.**
 
 This project illustrates the implementation of code generators using
-[LEMMA's model processing framework](https://github.com/SeelabFhdo/lemma/tree/master/de.fhdo.lemma.model_processing).
+[LEMMA's model processing framework](https://github.com/SeelabFhdo/lemma/tree/main/de.fhdo.lemma.model_processing).
 In general, this framework aims to facilitate the implementation of processors (e.g., code generators but also static
 analyzers or visualizers) for LEMMA models.
 
 ## Included Example LEMMA Models
 The example code generator expects a LEMMA service model and its
-[intermediate representation](https://github.com/SeelabFhdo/lemma/tree/master/de.fhdo.lemma.service.intermediate.metamodel/doc/build/html)
+[intermediate representation](https://github.com/SeelabFhdo/lemma/tree/main/de.fhdo.lemma.service.intermediate.metamodel/doc/build/html)
 as input. Therefore, the project clusters the [`example models`](example%20models) folder, which stores two LEMMA
 service models ([`Order.services`](example%20models/microservices/Order.services) and
 [`Restaurant.services`](example%20models/microservices/Restaurant.services)) as well as their intermediate
@@ -21,7 +21,7 @@ representations ([`Order.xmi`](example%20models/intermediate/service%20models/Or
 
 ## Build and Execution
 To invoke the example code generator, you first need to build its standalone JAR application using the provided
-[`build.sh`](build.sh) script. Next, you can run the code generator on the 
+[`build.sh`](build.sh) script. Next, you can run the code generator on the
 [`Order.services`](example%20models/microservices/Order.services) model and its intermediate representation
 [`Order.xmi`](example%20models/intermediate/service%20models/Order.xmi) leveraging the [`run.sh`](run.sh) script. To
 execute the generator for the [`Restaurant.services`](example%20models/microservices/Restaurant.services) model and
@@ -70,9 +70,9 @@ representations for them. With the intermediate representations we aim to facili
 similar fashion as Java with its bytecode format and the Java Virtual Machine. Consequently, if you want to write your
 LEMMA model processor, you should have a look at the intermediate specifications for the various modeling languages of
 LEMMA. You can find the specifications in LEMMA's source code repository:
-- [Specification for LEMMA domain models (constructed with LEMMA's Domain Data Modeling Language)](https://github.com/SeelabFhdo/lemma/tree/master/de.fhdo.lemma.data.intermediate.metamodel/doc/build/html)
-- [Specification for LEMMA service models (constructed with LEMMA's Service Modeling Language)](https://github.com/SeelabFhdo/lemma/tree/master/de.fhdo.lemma.service.intermediate.metamodel/doc/build/html)
-- [Specification for LEMMA operation models (constructed with LEMMA's Operation Modeling Language)](https://github.com/SeelabFhdo/lemma/tree/master/de.fhdo.lemma.operation.intermediate.metamodel/doc/build/html)
+- [Specification for LEMMA domain models (constructed with LEMMA's Domain Data Modeling Language)](https://github.com/SeelabFhdo/lemma/tree/main/de.fhdo.lemma.data.intermediate.metamodel/doc/build/html)
+- [Specification for LEMMA service models (constructed with LEMMA's Service Modeling Language)](https://github.com/SeelabFhdo/lemma/tree/main/de.fhdo.lemma.service.intermediate.metamodel/doc/build/html)
+- [Specification for LEMMA operation models (constructed with LEMMA's Operation Modeling Language)](https://github.com/SeelabFhdo/lemma/tree/main/de.fhdo.lemma.operation.intermediate.metamodel/doc/build/html)
 
 You can produce intermediate representations for your own models using your
 [LEMMA Eclipse installation](https://seelabfhdo.github.io/lemma-docs/getting-started/index.html):

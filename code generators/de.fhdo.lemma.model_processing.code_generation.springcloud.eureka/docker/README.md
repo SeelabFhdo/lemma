@@ -1,6 +1,6 @@
 # LEMMA Spring Cloud Eureka Generator Docker Image
 The `lemma/eureka_generator` Docker image bundles LEMMA's
-[Spring Cloud Eureka Generator](https://github.com/SeelabFhdo/lemma/tree/master/code%20generators/de.fhdo.lemma.model_processing.code_generation.springcloud.eureka)
+[Spring Cloud Eureka Generator](https://github.com/SeelabFhdo/lemma/tree/main/code%20generators/de.fhdo.lemma.model_processing.code_generation.springcloud.eureka)
 in an executable form.
 
 ## Using the `run_model_processor.py` Script to Execute the Image

@@ -62,9 +62,9 @@ public class ExampleCodeGenerationModule extends AbstractCodeGenerationModule {
      *      operations with asynchronous parameters)
      * You can find the specifications for intermediate domain and service models here:
      *  - Intermediate Domain Model Specification:
-     *      https://github.com/SeelabFhdo/lemma/tree/master/de.fhdo.lemma.data.intermediate.metamodel/doc/build/html
+     *      https://github.com/SeelabFhdo/lemma/tree/main/de.fhdo.lemma.data.intermediate.metamodel/doc/build/html
      *  - Intermediate Service Model Specification:
-     *      https://github.com/SeelabFhdo/lemma/tree/master/de.fhdo.lemma.service.intermediate.metamodel/doc/build/html
+     *      https://github.com/SeelabFhdo/lemma/tree/main/de.fhdo.lemma.service.intermediate.metamodel/doc/build/html
      */
     @NotNull
     @Override
@@ -91,7 +91,7 @@ public class ExampleCodeGenerationModule extends AbstractCodeGenerationModule {
             for (IntermediateInterface i : m.getInterfaces()) {
                 // Get the communication types of all operations' parameters modeled for the current interface (cf. the
                 // intermediate service model specification at
-                // https://github.com/SeelabFhdo/lemma/tree/master/de.fhdo.lemma.service.intermediate.metamodel/doc/build/html
+                // https://github.com/SeelabFhdo/lemma/tree/main/de.fhdo.lemma.service.intermediate.metamodel/doc/build/html
                 // for information on the model structure
                 List<String> paramTypes = i.getOperations()
                     .stream()

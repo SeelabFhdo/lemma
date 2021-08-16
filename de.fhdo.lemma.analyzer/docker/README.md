@@ -1,6 +1,6 @@
 # LEMMA Static Analyzer Docker Image
 The `lemma/static_analyzer` Docker image bundles LEMMA's
-[Static Analyzer](https://github.com/SeelabFhdo/lemma/tree/master/de.fhdo.lemma.analyzer)
+[Static Analyzer](https://github.com/SeelabFhdo/lemma/tree/main/de.fhdo.lemma.analyzer)
 in an executable form.
 
 ## Using the `run_model_processor.py` Script to Execute the Image

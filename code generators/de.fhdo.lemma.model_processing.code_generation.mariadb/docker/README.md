@@ -1,6 +1,6 @@
 # LEMMA MariaDB Generator Docker Image
 The `lemma/mariadb_generator` Docker image bundles LEMMA's
-[MariaDB Generator](https://github.com/SeelabFhdo/lemma/tree/master/code%20generators/de.fhdo.lemma.model_processing.code_generation.mariadb)
+[MariaDB Generator](https://github.com/SeelabFhdo/lemma/tree/main/code%20generators/de.fhdo.lemma.model_processing.code_generation.mariadb)
 in an executable form.
 
 ## Using the `run_model_processor.py` Script to Execute the Image

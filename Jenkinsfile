@@ -180,7 +180,7 @@ pipeline {
                                 ./build/deploy/docker"
                             )
 
-                            if (env.BRANCH_NAME == 'master') {
+                            if (env.BRANCH_NAME == 'main') {
                                 docker.withRegistry(DOCKER_NEXUS_REGISTRY_URL,
                                     DOCKER_NEXUS_REGISTRY_CREDENTIALS_KEY) {
                                     deployImage.push()
@@ -214,7 +214,7 @@ pipeline {
                     }
 
                     when {
-                        branch 'master'
+                        branch 'main'
                     }
 
                     steps {
@@ -225,7 +225,7 @@ pipeline {
                 stage("Docker: Build and Publish Docker Images") {
                     steps {
                         script {
-                            if (env.BRANCH_NAME == 'master') {
+                            if (env.BRANCH_NAME == 'main') {
                                 def publishArgs =
                                     "registry=\'$DOCKER_NEXUS_REGISTRY_URL\' " +
                                     "user=\'$DOCKER_NEXUS_REGISTRY_CREDENTIALS_USR\' " +

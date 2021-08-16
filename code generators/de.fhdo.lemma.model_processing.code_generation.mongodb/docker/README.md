@@ -1,6 +1,6 @@
 # LEMMA MongoDB Generator Docker Image
 The `lemma/mongodb_generator` Docker image bundles LEMMA's
-[MongoDB Generator](https://github.com/SeelabFhdo/lemma/tree/master/code%20generators/de.fhdo.lemma.model_processing.code_generation.mongodb)
+[MongoDB Generator](https://github.com/SeelabFhdo/lemma/tree/main/code%20generators/de.fhdo.lemma.model_processing.code_generation.mongodb)
 in an executable form.
 
 ## Using the `run_model_processor.py` Script to Execute the Image

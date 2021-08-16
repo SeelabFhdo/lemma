@@ -1,7 +1,7 @@
 # LEMMA Java Generator Docker Image
 The `lemma/java_generator` Docker image bundles LEMMA's
-[Java Base Generator](https://github.com/SeelabFhdo/lemma/tree/master/code%20generators/de.fhdo.lemma.model_processing.code_generation.java_base)
-and its [Genlets](https://github.com/SeelabFhdo/lemma/tree/master/code%20generators)
+[Java Base Generator](https://github.com/SeelabFhdo/lemma/tree/main/code%20generators/de.fhdo.lemma.model_processing.code_generation.java_base)
+and its [Genlets](https://github.com/SeelabFhdo/lemma/tree/main/code%20generators)
 in an executable form.
 
 ## Using the `run_model_processor.py` Script to Execute the Image

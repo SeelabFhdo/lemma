@@ -42,7 +42,7 @@ internal fun Node.addResponseStatusAnnotation(responseStatusAspect: Intermediate
 
 /*
  * The below enumeration is needed by addResponseStatusAnnotation() to identify modeled HTTP status codes. See
- *      https://github.com/spring-projects/spring-framework/blob/master/spring-web/src/main/java/org/springframework/http/HttpStatus.java
+ *      https://github.com/spring-projects/spring-framework/blob/main/spring-web/src/main/java/org/springframework/http/HttpStatus.java
  * for the enumeration's original code.
  */
 

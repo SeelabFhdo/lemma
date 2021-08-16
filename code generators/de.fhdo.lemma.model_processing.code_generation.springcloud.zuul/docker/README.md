@@ -1,6 +1,6 @@
 # LEMMA Spring Cloud Zuul Generator Docker Image
 The `lemma/zuul_generator` Docker image bundles LEMMA's
-[Spring Cloud Zuul Generator](https://github.com/SeelabFhdo/lemma/tree/master/code%20generators/de.fhdo.lemma.model_processing.code_generation.springcloud.zuul)
+[Spring Cloud Zuul Generator](https://github.com/SeelabFhdo/lemma/tree/main/code%20generators/de.fhdo.lemma.model_processing.code_generation.springcloud.zuul)
 in an executable form.
 
 ## Using the `run_model_processor.py` Script to Execute the Image
