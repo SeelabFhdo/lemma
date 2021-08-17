@@ -105,7 +105,7 @@ pipeline {
         }
 
         stage("Build and Deploy") {
-            agent { label "master" }
+            agent { label "controller" }
 
             stages {
                 stage("Build: Build and Push Docker Build Image") {
