@@ -615,6 +615,10 @@ class ExecutionPlan():
     ## "myArgument valueForMyArgument"
     OC_ADD_AS_EXECUTION_ARG_WITH_VALUE = \
         Opcode('ADD_AS_EXECUTION_ARG_WITH_VALUE')
+    ## Add argument to model processor call with an additional value in the form
+    ## when the argument was passed
+    OC_ADD_AS_EXECUTION_ARG_WITH_VALUE_WHEN_NOT_EMPTY = \
+        Opcode('ADD_AS_EXECUTION_ARG_WITH_VALUE_WHEN_NOT_EMPTY')
     ## Add argument to model processor call with an additional value assignment
     ## in the form "myArgument=valueForMyArgument"
     OC_ADD_AS_EXECUTION_ARG_WITH_ASSIGNMENT = \
@@ -636,6 +640,8 @@ class ExecutionPlan():
         """Constructor."""
 
         self._config = config
+        self._optionalBuiltinArgumentNames = \
+            set(map(lambda b: b['argName'], builtinArguments['optional']))
         self._builtinArguments = \
             self._unpack_argument_information(builtinArguments)
         self._customArguments = \
@@ -724,14 +730,14 @@ class ExecutionPlan():
         steps = []
 
         for arg, execution in self._builtinArguments.items():
-            steps.append(self.Step(
-                    arg,
-                    execution,
-                    execution.option,
-                    # Currently, all built-in arguments are of the form
-                    # "myArgument valueForMyArgument"
-                    self.OC_ADD_AS_EXECUTION_ARG_WITH_VALUE
-                ))
+            if arg not in self._optionalBuiltinArgumentNames:
+                # Currently, all built-in arguments are of the form
+                # "myArgument valueForMyArgument"
+                opcode = self.OC_ADD_AS_EXECUTION_ARG_WITH_VALUE
+            else:
+                opcode = self.OC_ADD_AS_EXECUTION_ARG_WITH_VALUE_WHEN_NOT_EMPTY
+
+            steps.append(self.Step(arg, execution, execution.option, opcode))
 
         return steps
 
@@ -1302,6 +1308,14 @@ class ModelProcessorExecutor():
                 ExecutionPlan.OC_ADD_AS_EXECUTION_ARG_WITH_VALUE:
                 argValue = self._get_docker_run_argument_value(argsDict, step)
                 dockerArgs += ['%s "%s"' % (step.option, argValue)]
+
+            # Add argument in the form "myArgument valueForMyArgument" to Docker
+            # call when "valueForMyArgument" was passed
+            elif step.opcode == \
+                ExecutionPlan.OC_ADD_AS_EXECUTION_ARG_WITH_VALUE_WHEN_NOT_EMPTY:
+                argValue = self._get_docker_run_argument_value(argsDict, step)
+                if argValue:
+                    dockerArgs += ['%s "%s"' % (step.option, argValue)]
 
             # Add argument in the form "myArgument=valueForMyArgument" to Docker
             # call
