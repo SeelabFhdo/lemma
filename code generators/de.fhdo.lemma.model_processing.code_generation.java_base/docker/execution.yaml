@@ -18,11 +18,12 @@
 
 - required_args:
   - builtin:
-    - source_model: "path to source service or mapping model (must be relative to model base path)"
     - intermediate_model: "path to intermediate service or mapping model (must be relative to model base path)"
     - target_folder: "path to generation target folder"
 
 - optional_args:
+  - builtin:
+    - source_model: "path to source service or mapping model (must be relative to model base path)"
   - custom:
     - pattern:
         - option: "-p"
