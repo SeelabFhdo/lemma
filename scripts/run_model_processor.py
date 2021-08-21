@@ -2,7 +2,6 @@
 
 from functools import reduce
 from pathlib import Path
-from read_version_identifier_from_build_file import identifier_from_build_file
 from yaml.loader import SafeLoader
 
 import argparse
@@ -1068,6 +1067,8 @@ class ModelProcessorExecutor():
             # function from the "read_version_identifier_from_build_file.py"
             # Python script. To this end, the Python script must exist in the
             # same folder as this script.
+            from read_version_identifier_from_build_file \
+                import identifier_from_build_file
             artifactVersion = identifier_from_build_file(artifactVersionFile)
         except Exception as err:
             raise Exception('Local Docker image build: Could not read '\
