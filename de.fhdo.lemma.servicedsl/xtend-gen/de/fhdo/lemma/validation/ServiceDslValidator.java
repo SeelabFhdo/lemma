@@ -47,7 +47,6 @@ import de.fhdo.lemma.technology.TechnologySpecificPropertyValueAssignment;
 import de.fhdo.lemma.typechecking.TypeChecker;
 import de.fhdo.lemma.typechecking.TypesNotCompatibleException;
 import de.fhdo.lemma.utils.LemmaUtils;
-import de.fhdo.lemma.validation.AbstractServiceDslValidator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -813,9 +812,14 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
   @Check
   public void checkParameterType(final Parameter parameter) {
     Type _effectiveType = parameter.getEffectiveType();
-    if ((_effectiveType instanceof PrimitiveUnspecified)) {
-      this.error("Invalid type", parameter, ServicePackage.Literals.PARAMETER__PRIMITIVE_TYPE);
+    final boolean hasUnspecifiedType = (_effectiveType instanceof PrimitiveUnspecified);
+    boolean _isEffectivelyNotImplemented = parameter.getOperation().isEffectivelyNotImplemented();
+    final boolean operationIsImplemented = (!_isEffectivelyNotImplemented);
+    if (((!hasUnspecifiedType) || (!operationIsImplemented))) {
+      return;
     }
+    this.error("Type unspecified is only allowed in combination with noimpl modifier", parameter, 
+      ServicePackage.Literals.PARAMETER__PRIMITIVE_TYPE);
   }
   
   /**

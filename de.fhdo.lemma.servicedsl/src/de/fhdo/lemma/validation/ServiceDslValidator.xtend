@@ -577,8 +577,14 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
      */
     @Check
     def checkParameterType(Parameter parameter) {
-        if (parameter.effectiveType instanceof PrimitiveUnspecified)
-            error("Invalid type", parameter, ServicePackage::Literals.PARAMETER__PRIMITIVE_TYPE)
+        val hasUnspecifiedType = parameter.effectiveType instanceof PrimitiveUnspecified
+        val operationIsImplemented = !parameter.operation.effectivelyNotImplemented
+        if (!hasUnspecifiedType || !operationIsImplemented) {
+            return
+        }
+
+        error("Type unspecified is only allowed in combination with noimpl modifier", parameter,
+            ServicePackage::Literals.PARAMETER__PRIMITIVE_TYPE)
     }
 
     /**
