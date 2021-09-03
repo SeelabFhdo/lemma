@@ -9,7 +9,7 @@ import de.fhdo.lemma.data.intermediate.IntermediateDataOperation
 import de.fhdo.lemma.data.intermediate.IntermediateDataStructure
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
 import de.fhdo.lemma.data.intermediate.IntermediateListType
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
+import de.fhdo.lemma.java.ast.utils.ImportTargetElementType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandlerI

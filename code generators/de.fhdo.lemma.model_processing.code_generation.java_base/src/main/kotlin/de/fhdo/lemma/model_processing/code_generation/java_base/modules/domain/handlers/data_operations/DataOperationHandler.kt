@@ -6,7 +6,7 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import com.github.javaparser.ast.body.ConstructorDeclaration
 import com.github.javaparser.ast.body.MethodDeclaration
 import de.fhdo.lemma.data.intermediate.IntermediateDataOperation
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setBody
+import de.fhdo.lemma.java.ast.utils.setBody
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CallableCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.invokeCodeGenerationHandler

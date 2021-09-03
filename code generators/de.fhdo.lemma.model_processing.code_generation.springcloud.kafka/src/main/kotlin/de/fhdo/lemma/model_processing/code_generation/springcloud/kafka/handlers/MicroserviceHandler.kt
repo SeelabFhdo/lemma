@@ -1,7 +1,7 @@
 package de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.handlers
 
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addDependency
+import de.fhdo.lemma.model_processing.code_generation.java_base.dependencies.addDependency
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerResult
 import de.fhdo.lemma.model_processing.code_generation.java_base.getAllAspects

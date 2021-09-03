@@ -3,9 +3,9 @@ package de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.
 import com.github.javaparser.ast.Modifier
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import de.fhdo.lemma.data.intermediate.IntermediateDataStructure
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addAllAttributesConstructor
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.newJavaClassOrInterface
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setSuperclass
+import de.fhdo.lemma.java.ast.utils.addAllAttributesConstructor
+import de.fhdo.lemma.java.ast.utils.newJavaClassOrInterface
+import de.fhdo.lemma.java.ast.utils.setSuperclass
 import de.fhdo.lemma.model_processing.code_generation.java_base.classname
 import de.fhdo.lemma.model_processing.code_generation.java_base.fullyQualifiedClassname
 import de.fhdo.lemma.model_processing.code_generation.java_base.fullyQualifiedClasspath

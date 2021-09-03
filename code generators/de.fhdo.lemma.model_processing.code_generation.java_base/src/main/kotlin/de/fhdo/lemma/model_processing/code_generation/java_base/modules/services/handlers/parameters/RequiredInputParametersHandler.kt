@@ -4,12 +4,12 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import com.github.javaparser.ast.body.MethodDeclaration
 import com.github.javaparser.ast.body.Parameter
 import com.github.javaparser.ast.stmt.BlockStmt
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
+import de.fhdo.lemma.java.ast.utils.ImportTargetElementType
+import de.fhdo.lemma.java.ast.utils.isGenericType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.SerializationCharacteristic
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addSerializationCharacteristic
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getImportsInfo
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.isGenericType
 import de.fhdo.lemma.model_processing.code_generation.java_base.buildRequiredInputParameterGuardName
 import de.fhdo.lemma.model_processing.code_generation.java_base.getRequiredInputParameters
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CallableCodeGenerationHandlerI

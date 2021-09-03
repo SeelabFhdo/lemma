@@ -4,10 +4,10 @@ import com.github.javaparser.ast.Modifier
 import com.github.javaparser.ast.body.EnumDeclaration
 import com.github.javaparser.ast.body.Parameter
 import de.fhdo.lemma.data.intermediate.IntermediateEnumeration
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
+import de.fhdo.lemma.java.ast.utils.ImportTargetElementType
+import de.fhdo.lemma.java.ast.utils.newEnum
+import de.fhdo.lemma.java.ast.utils.setBody
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.newEnum
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setBody
 import de.fhdo.lemma.model_processing.code_generation.java_base.fullyQualifiedClasspath
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.VisitingCodeGenerationHandlerI

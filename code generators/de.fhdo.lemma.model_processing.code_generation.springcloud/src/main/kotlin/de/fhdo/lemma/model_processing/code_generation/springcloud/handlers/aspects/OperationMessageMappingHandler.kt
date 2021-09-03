@@ -4,13 +4,13 @@ import com.github.javaparser.ast.Node
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import com.github.javaparser.ast.body.MethodDeclaration
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
+import de.fhdo.lemma.java.ast.utils.ImportTargetElementType
+import de.fhdo.lemma.java.ast.utils.findParentNode
+import de.fhdo.lemma.java.ast.utils.hasAnnotation
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.SerializationCharacteristic
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addAnnotation
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addAndGetAnnotation
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.findParentNode
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.hasAnnotation
 import de.fhdo.lemma.model_processing.code_generation.java_base.getPropertyValue
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandlerI

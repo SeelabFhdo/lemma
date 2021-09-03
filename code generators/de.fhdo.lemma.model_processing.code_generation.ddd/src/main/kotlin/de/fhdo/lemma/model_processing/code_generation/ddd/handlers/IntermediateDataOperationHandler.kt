@@ -3,11 +3,11 @@ package de.fhdo.lemma.model_processing.code_generation.ddd.handlers
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import com.github.javaparser.ast.body.MethodDeclaration
 import de.fhdo.lemma.data.intermediate.IntermediateDataOperation
+import de.fhdo.lemma.java.ast.utils.ImportTargetElementType
 import de.fhdo.lemma.model_processing.code_generation.ddd.DDD_VERSION
 import de.fhdo.lemma.model_processing.code_generation.ddd.getDddElementsForFeatures
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addDependency
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
+import de.fhdo.lemma.model_processing.code_generation.java_base.dependencies.addDependency
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerResult
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler

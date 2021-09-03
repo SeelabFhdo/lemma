@@ -5,10 +5,10 @@ import com.github.javaparser.ast.Node
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import com.github.javaparser.ast.body.EnumDeclaration
 import com.github.javaparser.printer.PrettyPrinter
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.appendStatement
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.asClassOrInterfaceDeclaration
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.hasReturnStatement
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.hasThrowStatement
+import de.fhdo.lemma.java.ast.utils.appendStatement
+import de.fhdo.lemma.java.ast.utils.asClassOrInterfaceDeclaration
+import de.fhdo.lemma.java.ast.utils.hasReturnStatement
+import de.fhdo.lemma.java.ast.utils.hasThrowStatement
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.serialize
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainContext.State as MainState
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.configuration.AbstractSerializationConfiguration

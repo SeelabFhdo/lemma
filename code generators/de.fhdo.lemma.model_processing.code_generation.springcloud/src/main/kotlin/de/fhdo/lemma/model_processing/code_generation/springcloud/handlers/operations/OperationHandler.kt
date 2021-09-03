@@ -4,7 +4,7 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import com.github.javaparser.ast.body.MethodDeclaration
 import com.github.javaparser.ast.type.ClassOrInterfaceType
 import de.fhdo.lemma.data.intermediate.IntermediateComplexType
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
+import de.fhdo.lemma.java.ast.utils.ImportTargetElementType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.SerializationCharacteristic
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addAndGetAnnotation
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport

@@ -15,13 +15,13 @@ import de.fhdo.lemma.data.intermediate.IntermediateDataStructure
 import de.fhdo.lemma.data.intermediate.IntermediateEnumeration
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
 import de.fhdo.lemma.data.intermediate.IntermediateImportedComplexType
+import de.fhdo.lemma.java.ast.utils.ImportTargetElementType
+import de.fhdo.lemma.java.ast.utils.addGetter
+import de.fhdo.lemma.java.ast.utils.addSetter
+import de.fhdo.lemma.java.ast.utils.newJavaClassOrInterface
 import de.fhdo.lemma.model_processing.asFile
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addGetter
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addPrivateAttribute
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addSetter
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.newJavaClassOrInterface
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.DATA_DSL_LANGUAGE_DESCRIPTION
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.SERVICE_DSL_LANGUAGE_DESCRIPTION
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.getTypeMapping

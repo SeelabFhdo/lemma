@@ -1,15 +1,15 @@
 package de.fhdo.lemma.model_processing.code_generation.springcloud.spring.amqp
 
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
+import de.fhdo.lemma.java.ast.utils.ImportTargetElementType
+import de.fhdo.lemma.java.ast.utils.getPackageName
+import de.fhdo.lemma.java.ast.utils.newJavaClassOrInterface
+import de.fhdo.lemma.java.ast.utils.setBody
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.SerializationCharacteristic
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addAndGetAnnotation
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addAnnotation
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addSerializationCharacteristic
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getPackageName
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.newJavaClassOrInterface
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setBody
 import de.fhdo.lemma.model_processing.code_generation.springcloud.Context.State as State
 import de.fhdo.lemma.model_processing.code_generation.springcloud.addProtectedBeanMethod
 

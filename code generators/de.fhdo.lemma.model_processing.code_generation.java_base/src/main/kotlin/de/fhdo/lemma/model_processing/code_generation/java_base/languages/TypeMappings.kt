@@ -12,9 +12,9 @@ import de.fhdo.lemma.data.intermediate.IntermediatePrimitiveType
 import de.fhdo.lemma.data.intermediate.IntermediateType
 import de.fhdo.lemma.data.intermediate.IntermediateTypeKind
 import de.fhdo.lemma.data.intermediate.IntermediateTypeOrigin
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addDependencies
 import de.fhdo.lemma.model_processing.code_generation.java_base.classname
 import de.fhdo.lemma.model_processing.code_generation.java_base.dependencies.DependencyDescription
+import de.fhdo.lemma.model_processing.code_generation.java_base.dependencies.addDependencies
 import de.fhdo.lemma.model_processing.code_generation.java_base.fullyQualifiedClassname
 import de.fhdo.lemma.model_processing.code_generation.java_base.resolve
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainContext.State as DomainState

@@ -6,13 +6,13 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import com.github.javaparser.ast.body.MethodDeclaration
 import com.github.javaparser.ast.body.Parameter
 import com.github.javaparser.ast.type.ClassOrInterfaceType
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
+import de.fhdo.lemma.java.ast.utils.ImportTargetElementType
+import de.fhdo.lemma.java.ast.utils.newJavaClassOrInterface
+import de.fhdo.lemma.java.ast.utils.setBody
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.SerializationCharacteristic
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addAnnotation
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addSerializationCharacteristic
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.newJavaClassOrInterface
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setBody
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletGeneratedNode
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletPathSpecifier
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.findMethod

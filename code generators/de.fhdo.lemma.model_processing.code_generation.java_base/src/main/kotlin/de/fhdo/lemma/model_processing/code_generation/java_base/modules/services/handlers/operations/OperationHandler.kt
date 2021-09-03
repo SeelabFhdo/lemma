@@ -1,18 +1,19 @@
 package de.fhdo.lemma.model_processing.code_generation.java_base.modules.services.handlers.operations
 
+import com.github.javaparser.ast.DataKey
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import com.github.javaparser.ast.body.MethodDeclaration
+import com.github.javaparser.ast.body.Parameter
 import com.github.javaparser.ast.comments.LineComment
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
+import de.fhdo.lemma.java.ast.utils.ImportTargetElementType
+import de.fhdo.lemma.java.ast.utils.addBodyComment
+import de.fhdo.lemma.java.ast.utils.addThrownException
+import de.fhdo.lemma.java.ast.utils.hasEmptyBody
+import de.fhdo.lemma.java.ast.utils.insertStatement
+import de.fhdo.lemma.java.ast.utils.setBody
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.SerializationCharacteristic
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addBodyComment
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addCompositeParameter
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addThrownException
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.emptyBody
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getParametersToCompositeParameters
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.insertStatement
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setBody
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addSerializationCharacteristics
 import de.fhdo.lemma.model_processing.code_generation.java_base.buildCompositeClassName
 import de.fhdo.lemma.model_processing.code_generation.java_base.buildExceptionClassName
 import de.fhdo.lemma.model_processing.code_generation.java_base.buildFullyQualifiedCompositeClassName
@@ -304,9 +305,104 @@ internal class OperationHandler
         }
 
         val callStatement = "${operation.buildRequiredInputParameterGuardName(communicationType)}($parametersString)"
-        if (emptyBody)
-            setBody(callStatement, characteristics = *arrayOf(SerializationCharacteristic.MERGE_ON_RELOCATION))
+        if (hasEmptyBody) {
+            //TODO: add new Body
+            val characteristics = listOf<SerializationCharacteristic>(SerializationCharacteristic.MERGE_ON_RELOCATION)
+            val body = setBody(callStatement)
+            body.addSerializationCharacteristics(characteristics)
+        }
         else
             insertStatement("$callStatement;", 1)
     }
 }
+
+/**
+ * Replace the given list of parameters in the signature of this method with a composite [Parameter] of the specified
+ * [type] and [name].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun MethodDeclaration.addCompositeParameter(type: String, name: String, communicationType: CommunicationType,
+    replacedParameters: List<Parameter>) : Parameter {
+    replacedParameters.forEach { remove(it) }
+    val compositeParameter = addAndGetParameter(type, name)
+    compositeParameter.markAsCompositeParameterFor(communicationType, replacedParameters)
+    return compositeParameter
+}
+
+/**
+ * Mark this [Parameter] as being a composite parameter that replaced the previously existing list of
+ * [replacedParameters] in its defining method.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun Parameter.markAsCompositeParameterFor(communicationType: CommunicationType,
+    replacedParameters: List<Parameter>)
+        = setData(CompositeParameterDataKey, communicationType to replacedParameters.map { it.nameAsString })
+
+/**
+ * Data key for composite parameters of generated methods.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private object CompositeParameterDataKey : DataKey<Pair<CommunicationType, List<String>>>()
+
+/**
+ * Verify if this [Parameter] is a composite [Parameter] for the given [communicationType]. If no [communicationType] is
+ * passed, this function returns true when the [Parameter] exhibits the [CompositeParameterDataKey], independent of its
+ * assigned communication type.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun Parameter.isCompositeParameter(communicationType: CommunicationType? = null) : Boolean {
+    if (!containsData(CompositeParameterDataKey))
+        return false
+    else if (communicationType == null)
+        return true
+
+    val (parameterCommunicationType, _) = getData(CompositeParameterDataKey)
+    return parameterCommunicationType == communicationType
+}
+
+/**
+ * Get all composite parameters of this [MethodDeclaration].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun MethodDeclaration.getCompositeParameters(communicationType: CommunicationType? = null)
+    = parameters.filter {
+        it.isCompositeParameter() &&
+        (communicationType == null || it.getData(CompositeParameterDataKey).first == communicationType)
+    }
+
+/**
+ * Get a map that assigns to each replaced parameter of this [MethodDeclaration] the name of the composite parameter by
+ * which it was replaced.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun MethodDeclaration.getParametersToCompositeParameters(communicationType: CommunicationType? = null)
+    : Map<String, String> {
+    val compositeParameters = getCompositeParameters(communicationType)
+    if (compositeParameters.isEmpty())
+        return emptyMap()
+
+    val resultMap = mutableMapOf<String, String>()
+    compositeParameters.forEach { compositeParameter ->
+        compositeParameter.getReplacedParameterNames().forEach { resultMap[it] = compositeParameter.nameAsString }
+    }
+
+    return resultMap
+}
+
+/**
+ * If this [Parameter] is a composite parameter, retrieve a list of the names of the parameters it replaced. Returns an
+ * empty list in case this [Parameter] is not a composite parameter.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun Parameter.getReplacedParameterNames()
+    = if (isCompositeParameter())
+            getData(CompositeParameterDataKey).second
+        else
+            emptyList()

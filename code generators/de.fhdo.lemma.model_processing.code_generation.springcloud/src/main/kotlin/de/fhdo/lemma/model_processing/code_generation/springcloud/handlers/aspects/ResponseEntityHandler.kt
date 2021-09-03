@@ -4,9 +4,9 @@ import com.github.javaparser.ast.Node
 import com.github.javaparser.ast.body.MethodDeclaration
 import de.fhdo.lemma.data.intermediate.IntermediateDataOperationReturnType
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
+import de.fhdo.lemma.java.ast.utils.ImportTargetElementType
+import de.fhdo.lemma.java.ast.utils.isGenericType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.isGenericType
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.combinations

@@ -12,12 +12,12 @@ import de.fhdo.lemma.data.intermediate.IntermediateComplexType
 import de.fhdo.lemma.data.intermediate.IntermediateDataModel
 import de.fhdo.lemma.data.intermediate.IntermediateDataStructure
 import de.fhdo.lemma.data.intermediate.IntermediateType
+import de.fhdo.lemma.java.ast.utils.ImportTargetElementType
+import de.fhdo.lemma.java.ast.utils.addPrivateAttribute
 import de.fhdo.lemma.model_processing.asFile
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.SerializationCharacteristic
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addAndGetAnnotation
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addPrivateAttribute
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addSerializationCharacteristic
 import de.fhdo.lemma.model_processing.code_generation.java_base.getAspect
 import de.fhdo.lemma.model_processing.code_generation.java_base.getPropertyValue

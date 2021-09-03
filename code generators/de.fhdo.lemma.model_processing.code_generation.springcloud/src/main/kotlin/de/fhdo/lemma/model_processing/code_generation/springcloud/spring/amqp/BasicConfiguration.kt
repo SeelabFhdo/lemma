@@ -1,8 +1,8 @@
 package de.fhdo.lemma.model_processing.code_generation.springcloud.spring.amqp
 
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addDependency
 import de.fhdo.lemma.model_processing.code_generation.java_base.classname
+import de.fhdo.lemma.model_processing.code_generation.java_base.dependencies.addDependency
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasInputParameters
 import de.fhdo.lemma.model_processing.code_generation.java_base.usesProtocol
 import de.fhdo.lemma.model_processing.code_generation.springcloud.addPrivateConstant

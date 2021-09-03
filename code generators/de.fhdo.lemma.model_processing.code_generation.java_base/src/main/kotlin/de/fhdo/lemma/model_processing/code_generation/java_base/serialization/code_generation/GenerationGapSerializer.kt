@@ -4,6 +4,7 @@ import com.github.javaparser.ast.CompilationUnit
 import com.github.javaparser.ast.DataKey
 import com.github.javaparser.ast.Modifier
 import com.github.javaparser.ast.Node
+import com.github.javaparser.ast.body.CallableDeclaration
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import com.github.javaparser.ast.body.ConstructorDeclaration
 import com.github.javaparser.ast.body.MethodDeclaration
@@ -11,41 +12,40 @@ import com.github.javaparser.ast.body.Parameter
 import com.github.javaparser.ast.comments.BlockComment
 import com.github.javaparser.ast.stmt.BlockStmt
 import com.github.javaparser.ast.stmt.ExpressionStmt
+import de.fhdo.lemma.java.ast.utils.ImportTargetElementType
+import de.fhdo.lemma.java.ast.utils.SuperclassInfo
+import de.fhdo.lemma.java.ast.utils.asClassOrInterfaceDeclaration
+import de.fhdo.lemma.java.ast.utils.attributes
+import de.fhdo.lemma.java.ast.utils.copy
+import de.fhdo.lemma.java.ast.utils.copySignature
+import de.fhdo.lemma.java.ast.utils.createDelegatingConstructor
+import de.fhdo.lemma.java.ast.utils.findParentNode
+import de.fhdo.lemma.java.ast.utils.getEponymousJavaClassOrInterface
+import de.fhdo.lemma.java.ast.utils.getFilePath
+import de.fhdo.lemma.java.ast.utils.getPackageName
+import de.fhdo.lemma.java.ast.utils.setSuperclass
+import de.fhdo.lemma.java.ast.utils.getSuperclass
+import de.fhdo.lemma.java.ast.utils.hasEmptyBody
+import de.fhdo.lemma.java.ast.utils.insertBody
+import de.fhdo.lemma.java.ast.utils.isOverridable
+import de.fhdo.lemma.java.ast.utils.methodsExcludingPropertyAccessors
+import de.fhdo.lemma.java.ast.utils.newJavaClassOrInterface
+import de.fhdo.lemma.java.ast.utils.setBody
+import de.fhdo.lemma.java.ast.utils.setFilePath
+import de.fhdo.lemma.java.ast.utils.setPackageName
 import de.fhdo.lemma.model_processing.asFile
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.SerializationCharacteristic
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.SingleImportInfo
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.SuperclassInfo
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImports
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addSerializationCharacteristics
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.attributes
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.clearSerializationCharacteristics
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.copy
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.copySignature
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.createDelegatingConstructor
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.diffCallables
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getAllImportsWithSerializationCharacteristics
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.asClassOrInterfaceDeclaration
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.emptyBody
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.findParentNode
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getEponymousJavaClassOrInterface
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getSuperclass
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getFilePath
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getImportsInfo
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.methodsExcludingPropertyAccessors
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.newJavaClassOrInterface
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getPackageName
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getSerializationCharacteristics
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.hasSerializationCharacteristic
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.insertBody
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.isOverridable
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.removeImport
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.serialize
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setBody
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setSuperclass
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setFilePath
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setPackageName
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainContext.State as MainState
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.LineCountInfo
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.configuration.AbstractSerializationConfiguration
@@ -392,7 +392,7 @@ internal class GenerationGapSerializerBase : KoinComponent {
                 it.addMarkerAnnotation("Override")
 
             // Collect bodies that need to be merged or delegated upon relocation in the *CustomImpl class
-            if (!it.emptyBody) {
+            if (!it.hasEmptyBody) {
                 if (it.mergeBodyOnRelocation)
                     methodBodiesToMerge[it.nameAsString] = it.body.get()
                 else if (it.delegateBodyOnRelocation)
@@ -401,7 +401,7 @@ internal class GenerationGapSerializerBase : KoinComponent {
 
             // Set "not implemented yet" stub body on methods whose body will delegate in *CustomImpl to *GenImpl
             // classes
-            if (it.emptyBody || it.mergeBodyOnRelocation || it.delegateBodyOnRelocation)
+            if (it.hasEmptyBody || it.mergeBodyOnRelocation || it.delegateBodyOnRelocation)
                 it.setBody("""throw new UnsupportedOperationException("Not implemented yet")""")
         }
 
@@ -434,6 +434,8 @@ internal class GenerationGapSerializerBase : KoinComponent {
         // Replace old superclass with the new one including the adapted type parameters
         clazz.setSuperclass(superclassInfo.fullyQualifiedClassname, isExternalSuperclass = superclassInfo.isExternal,
             typeParameters = newTypeParameters)
+        if (superclassInfo.isExternal)
+            clazz.addImport(superclassInfo.fullyQualifiedClassname, ImportTargetElementType.SUPER)
     }
 
     /**
@@ -750,6 +752,30 @@ internal class GenerationGapSerializerBase : KoinComponent {
         missingImports.forEach { existingCompilationUnit.addImport(it) }
 
         return existingClass
+    }
+
+    /**
+     * Helper to diff two classes based on their [CallableDeclaration] lists, i.e., their constructors or methods. The
+     * functions returns all [CallableDeclaration] instances of the [source] list that are not in the [target] list. The
+     * diff of the callables is based on their signatures (name and parameter types).
+     *
+     * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+     */
+    private fun <T: CallableDeclaration<*>> diffCallables(source: List<T>, target: List<T>) : List<T> {
+        val missingCallablesInTarget = mutableListOf<T>()
+        val targetSignatures = target.map { targetCallable ->
+            val parameterTypesString = targetCallable.parameters.joinToString { it.typeAsString }
+            "${targetCallable.name}$parameterTypesString"
+        }
+
+        source.forEach { sourceCallable ->
+            val parameterTypesString = sourceCallable.parameters.joinToString { it.typeAsString }
+            val signatureString = "${sourceCallable.name}$parameterTypesString"
+            if (signatureString !in targetSignatures)
+                missingCallablesInTarget.add(sourceCallable)
+        }
+
+        return missingCallablesInTarget
     }
 
     /**

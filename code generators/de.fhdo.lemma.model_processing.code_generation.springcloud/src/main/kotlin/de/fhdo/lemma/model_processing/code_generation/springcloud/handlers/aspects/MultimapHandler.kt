@@ -7,10 +7,10 @@ import de.fhdo.lemma.data.intermediate.IntermediateDataOperation
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
 import de.fhdo.lemma.data.intermediate.IntermediateListType
 import de.fhdo.lemma.data.intermediate.IntermediateType
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addDependency
+import de.fhdo.lemma.java.ast.utils.ImportTargetElementType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.removeImport
+import de.fhdo.lemma.model_processing.code_generation.java_base.dependencies.addDependency
 import de.fhdo.lemma.model_processing.code_generation.java_base.fullyQualifiedClassname
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletStateAccess
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandler

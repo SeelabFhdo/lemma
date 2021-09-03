@@ -4,12 +4,12 @@ import com.github.javaparser.ast.Modifier
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import de.fhdo.lemma.data.intermediate.IntermediateDataField
 import de.fhdo.lemma.data.intermediate.IntermediateListType
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addAllAttributesConstructor
+import de.fhdo.lemma.java.ast.utils.ImportTargetElementType
+import de.fhdo.lemma.java.ast.utils.addAllAttributesConstructor
+import de.fhdo.lemma.java.ast.utils.newInnerJavaClass
+import de.fhdo.lemma.java.ast.utils.newJavaClassOrInterface
+import de.fhdo.lemma.java.ast.utils.setSuperclass
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.newInnerJavaClass
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.newJavaClassOrInterface
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setSuperclass
 import de.fhdo.lemma.model_processing.code_generation.java_base.classname
 import de.fhdo.lemma.model_processing.code_generation.java_base.fullyQualifiedClasspath
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
@@ -145,6 +145,7 @@ internal class ListTypeHandler
         typeArguments: List<String>) {
         collectionType.imports.forEach { addImport(it, ImportTargetElementType.SUPER) }
         setSuperclass(collectionType.classname, isExternalSuperclass = true, typeParameters = typeArguments)
+        addImport(collectionType.classname, ImportTargetElementType.SUPER)
     }
 }
 

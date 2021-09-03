@@ -5,9 +5,9 @@ import com.github.javaparser.ast.body.FieldDeclaration
 import com.github.javaparser.ast.expr.NormalAnnotationExpr
 import de.fhdo.lemma.data.intermediate.IntermediateDataField
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addDependency
+import de.fhdo.lemma.java.ast.utils.ImportTargetElementType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
+import de.fhdo.lemma.model_processing.code_generation.java_base.dependencies.addDependency
 import de.fhdo.lemma.model_processing.code_generation.java_base.getPropertyValue
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandlerI

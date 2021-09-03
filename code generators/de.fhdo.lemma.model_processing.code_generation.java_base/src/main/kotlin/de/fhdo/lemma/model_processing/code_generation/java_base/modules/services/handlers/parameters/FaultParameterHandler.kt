@@ -2,14 +2,15 @@ package de.fhdo.lemma.model_processing.code_generation.java_base.modules.service
 
 import com.github.javaparser.ast.Modifier
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addAllAttributesConstructor
+import de.fhdo.lemma.java.ast.utils.ImportTargetElementType
+import de.fhdo.lemma.java.ast.utils.addAllAttributesConstructor
+import de.fhdo.lemma.java.ast.utils.addAttribute
+import de.fhdo.lemma.java.ast.utils.insertStatement
+import de.fhdo.lemma.java.ast.utils.newJavaClassOrInterface
+import de.fhdo.lemma.java.ast.utils.setBody
+import de.fhdo.lemma.java.ast.utils.setSuperclass
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addAttribute
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.insertStatement
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.newJavaClassOrInterface
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setBody
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setSuperclass
 import de.fhdo.lemma.model_processing.code_generation.java_base.buildExceptionClassName
 import de.fhdo.lemma.model_processing.code_generation.java_base.buildOperationPackageName
 import de.fhdo.lemma.model_processing.code_generation.java_base.generateCustomExceptionClassFor
@@ -58,6 +59,7 @@ class FaultParameterHandler
         val exceptionClassName = eObject.buildExceptionClassName()
         val generatedClass = newJavaClassOrInterface(eObject.buildOperationPackageName(), exceptionClassName)
         generatedClass.setSuperclass("RuntimeException", isExternalSuperclass = true)
+        generatedClass.addImport("RuntimeException", ImportTargetElementType.SUPER)
 
         // Add parameter attribute to Exception class
         val parameterAttribute = generatedClass.addAttribute(eObject.name, eObject.type, generatedClass,

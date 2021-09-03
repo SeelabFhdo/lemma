@@ -56,6 +56,7 @@ dependencies {
     implementation("de.fhdo.lemma.intermediate:de.fhdo.lemma.service.intermediate.metamodel:" +
         lemmaEclipsePluginsVersion)
 
+    implementation("de.fhdo.lemma.java.ast.utils:de.fhdo.lemma.java.ast.utils:$lemmaEclipsePluginsVersion")
     implementation("de.fhdo.lemma.live_validation:de.fhdo.lemma.live_validation.util:$lemmaEclipsePluginsVersion")
     implementation("de.fhdo.lemma.live_validation:de.fhdo.lemma.live_validation.model:$lemmaEclipsePluginsVersion")
     implementation("de.fhdo.lemma.live_validation:de.fhdo.lemma.live_validation.protocol:$lemmaEclipsePluginsVersion")

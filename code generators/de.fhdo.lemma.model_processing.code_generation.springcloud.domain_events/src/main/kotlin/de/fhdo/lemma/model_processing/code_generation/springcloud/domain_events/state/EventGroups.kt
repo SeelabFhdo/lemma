@@ -1,7 +1,7 @@
 package de.fhdo.lemma.model_processing.code_generation.springcloud.domain_events.state
 
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.newJavaClassOrInterface
+import de.fhdo.lemma.java.ast.utils.newJavaClassOrInterface
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletGeneratedNode
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletPathSpecifier
 import java.io.File

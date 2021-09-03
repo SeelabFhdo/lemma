@@ -47,6 +47,9 @@ de.fhdo.lemma.model_processing.utils
 examples/model-processing
 examples/model-processing-latest
 
+# Java Ast Utils
+de.fhdo.lemma.java.ast.utils
+
 # Code Generators
 code generators/de.fhdo.lemma.ddd
 code generators/de.fhdo.lemma.msa

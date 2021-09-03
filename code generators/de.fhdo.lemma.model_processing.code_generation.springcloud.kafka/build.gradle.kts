@@ -44,6 +44,7 @@ dependencies {
     implementation(kotlin("stdlib"))
     implementation(kotlin("reflect"))
     implementation("com.github.javaparser:javaparser-core:$javaParserVersion")
+    implementation("de.fhdo.lemma.java.ast.utils:de.fhdo.lemma.java.ast.utils:$lemmaEclipsePluginsVersion")
     implementation("de.fhdo.lemma:de.fhdo.lemma.typechecking:$lemmaEclipsePluginsVersion")
     implementation("de.fhdo.lemma.data.datadsl:de.fhdo.lemma.data.datadsl:$lemmaEclipsePluginsVersion")
     implementation("de.fhdo.lemma.data.datadsl:de.fhdo.lemma.data.datadsl.metamodel:$lemmaEclipsePluginsVersion")

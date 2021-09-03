@@ -2,20 +2,20 @@ package de.fhdo.lemma.model_processing.code_generation.java_base.serialization.c
 
 import com.github.javaparser.ast.Node
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
+import de.fhdo.lemma.java.ast.utils.ImportTargetElementType
+import de.fhdo.lemma.java.ast.utils.appendStatement
+import de.fhdo.lemma.java.ast.utils.asClassOrInterfaceDeclaration
+import de.fhdo.lemma.java.ast.utils.getEponymousJavaClassOrInterface
+import de.fhdo.lemma.java.ast.utils.getPackageName
+import de.fhdo.lemma.java.ast.utils.hasEmptyBody
+import de.fhdo.lemma.java.ast.utils.hasReturnStatement
+import de.fhdo.lemma.java.ast.utils.hasThrowStatement
+import de.fhdo.lemma.java.ast.utils.isOverridable
+import de.fhdo.lemma.java.ast.utils.setBody
+import de.fhdo.lemma.java.ast.utils.setFilePath
 import de.fhdo.lemma.model_processing.asFile
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.appendStatement
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.asClassOrInterfaceDeclaration
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.emptyBody
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getEponymousJavaClassOrInterface
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getPackageName
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.hasReturnStatement
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.hasThrowStatement
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.isOverridable
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.serialize
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setBody
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setFilePath
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainContext.State as MainState
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.LineCountInfo
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.configuration.AbstractSerializationConfiguration
@@ -213,7 +213,7 @@ private class ExtendedGenerationGapSerializerBase : KoinComponent {
             if (originalMethod.isOverridable && methodWasPulledUpToInterface)
                 originalMethod.addMarkerAnnotation("Override")
 
-            if (originalMethod.emptyBody) {
+            if (originalMethod.hasEmptyBody) {
                 val comment =
                     """
                         FIXME If you safely want to implement this method, create an extension interface called 
@@ -361,5 +361,5 @@ private class ExtendedGenerationGapSerializerBase : KoinComponent {
      * Callback when the end of the code generation phase is reached. Its main purpose is to add missing constructors
      * to generated classes.
      */
-    internal fun codeGenerationPhaseCompletedCallback() = generationGapDelegate.codeGenerationPhaseCompletedCallback()
+    fun codeGenerationPhaseCompletedCallback() = generationGapDelegate.codeGenerationPhaseCompletedCallback()
 }
