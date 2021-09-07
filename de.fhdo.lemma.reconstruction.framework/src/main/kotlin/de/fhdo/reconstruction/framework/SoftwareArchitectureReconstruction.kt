@@ -1,8 +1,10 @@
 package de.fhdo.reconstruction.framework
 
 import de.fhdo.reconstruction.framework.command_line.CommandLine
-import de.fhdo.reconstruction.framework.modules.ReconstructionMainModule
-import java.io.File
+import de.fhdo.reconstruction.framework.modules.ReconstructionMainHandler
+import de.fhdo.reconstruction.framework.modules.ReconstructionModule
+import de.fhdo.reconstruction.framework.modules.service.ReconstructionServiceHandler
+import de.fhdo.reconstruction.framework.util.compareFullQualifiedNames
 
 /**
  * Main class of the software architecture reconstruction framework
@@ -19,10 +21,6 @@ class SoftwareArchitectureReconstruction
 fun main(args: Array<String>) {
     println("SoftwareArchitectureReconstructionFramework!")
     initializeReconstructionPlugin(args)
-    executePhases()
-    File(CommandLine.targetFolders().first()).walk().forEach {
-        //println(it)
-    }
 }
 
 /**
@@ -30,16 +28,10 @@ fun main(args: Array<String>) {
  */
 internal fun initializeReconstructionPlugin(args: Array<String>) {
     CommandLine(args)
-    ReconstructionMainModule
-    ReconstructionMainModule.getReconstructedMicroservices().forEach {
-        println(it.microservice.name)
-    }
+    ReconstructionMainHandler
+    testCompare()
 }
 
-/**
- * Execute all reconstruction phases.
- */
-internal fun executePhases() {
-    //FileValidatorPhase().invoke()
-    //FileParsingPhase().invoke()
+internal fun testCompare() {
+    val test = compareFullQualifiedNames("de.fhdo.puls.booking_service.command.api.ParkBookingCommandApi", "de.fhdo.puls.booking_service.query.BookingServiceQueryApplication", ".", 2)
 }

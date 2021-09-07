@@ -18,7 +18,7 @@ internal object CommandLine {
      */
     private var parameterPlugins: Set<String>? = null
         @CommandLine.Option(
-            names = ["--plugin"],
+            names = ["--plugin", "-p"],
             paramLabel = "PLUGIN",
             description = ["path to a Plugin's JAR archive"]
         )
