@@ -12,6 +12,7 @@
         <module>../de.fhdo.lemma.servicedsl.metamodel</module>
         <module>../de.fhdo.lemma.servicedsl</module>
         <module>../de.fhdo.lemma.servicedsl.ide</module>
+        <module>../de.fhdo.lemma.servicedsl.extractor</module>
         <!--
             Exclude unnecessary UI from build, which also prevents transitive dependencies to
             other UI projects.
