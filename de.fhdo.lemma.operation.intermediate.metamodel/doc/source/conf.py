@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# Intermediate Service Model Format Specification documentation build configuration file, created by
+# Intermediate Operation Model Specification documentation build configuration file, created by
 # sphinx-quickstart on Thu Dec 27 12:44:33 2018.
 #
 # This file is execfile()d with the current directory set to its
@@ -39,8 +39,6 @@ extensions = ['sphinx.ext.intersphinx',
     'sphinxcontrib.bibtex',
     'javasphinx']
 
-bibtex_bibfiles = ['references.bib']
-
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
@@ -54,7 +52,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'Intermediate Operation Model Format Specification'
+project = 'Intermediate Operation Model Specification'
 copyright = '2021, Florian Rademacher, Philip Wizenty'
 author = 'Florian Rademacher, Philip Wizenty'
 
@@ -120,7 +118,7 @@ html_sidebars = {
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'IntermediateServiceModelFormatSpecificationdoc'
+htmlhelp_basename = 'IntermediateOperationModelSpecificationdoc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -146,18 +144,13 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
-latex_documents = [
-    (master_doc, 'IntermediateServiceModelFormatSpecification.tex', 'Intermediate Service Model Format Specification Documentation',
-     'Florian Rademacher', 'manual'),
-]
-
 
 # -- Options for manual page output ---------------------------------------
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'intermediateservicemodelformatspecification', 'Intermediate Service Model Format Specification Documentation',
+    (master_doc, 'intermediateoperationmodelspecification', 'Intermediate Operation Model Specification Documentation',
      [author], 1)
 ]
 
@@ -168,18 +161,9 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'IntermediateServiceModelFormatSpecification', 'Intermediate Service Model Format Specification Documentation',
-     author, 'IntermediateServiceModelFormatSpecification', 'One line description of project.',
+    (master_doc, 'IntermediateOperationModelSpecification', 'Intermediate Operation Model Specification Documentation',
+     author, 'IntermediateOperationModelSpecification', 'One line description of project.',
      'Miscellaneous'),
 ]
-
-
-
-
-# Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {
-    'data_model' : ('../../../../de.fhdo.lemma.data.intermediate.metamodel/doc/build/html', '../../../de.fhdo.lemma.data.intermediate.metamodel/doc/build/html/objects.inv'),
-    'service_model' : ('../../../../de.fhdo.lemma.service.intermediate.metamodel/doc/build/html', '../../../de.fhdo.lemma.service.intermediate.metamodel/doc/build/html/objects.inv'),
-}
 
 numfig = True

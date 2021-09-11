@@ -1,8 +1,7 @@
-Intermediate Operation Model Format Specification
-=================================================
+Intermediate Operation Model Specification
+==========================================
 
-.. toctree::
-    :caption: Table of Contents
-    :maxdepth: 2
-
-    body
+The specification of LEMMA intermediate operation models is now part of
+`LEMMA's official documentation <https://seelabfhdo.github.io/lemma-docs>`_ and
+located at
+https://seelabfhdo.github.io/lemma-docs/developer-guide/intermediate-model-specifications/intermediate-operation-model-specification.
