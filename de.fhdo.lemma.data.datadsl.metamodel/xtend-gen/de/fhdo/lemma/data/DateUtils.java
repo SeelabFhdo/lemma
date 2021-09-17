@@ -26,64 +26,74 @@ public class DateUtils {
    */
   public static Date parseDate(final String dateString) {
     final DateTimeFormatter format = DateUtils.determineDateFormat(dateString);
-    Date _switchResult = null;
-    boolean _matched = false;
-    if (Objects.equal(format, DateTimeFormatter.ISO_LOCAL_DATE)) {
-      _matched=true;
-    }
-    if (!_matched) {
-      if (Objects.equal(format, DateTimeFormatter.ISO_OFFSET_DATE)) {
-        _matched=true;
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(format, DateTimeFormatter.ISO_DATE)) {
-        _matched=true;
-      }
-    }
-    if (_matched) {
-      _switchResult = Date.from(LocalDate.parse(dateString, format).atStartOfDay(ZoneId.systemDefault()).toInstant());
-    }
-    if (!_matched) {
-      if (Objects.equal(format, DateTimeFormatter.ISO_LOCAL_TIME)) {
+    Date _xtrycatchfinallyexpression = null;
+    try {
+      Date _switchResult = null;
+      boolean _matched = false;
+      if (Objects.equal(format, DateTimeFormatter.ISO_LOCAL_DATE)) {
         _matched=true;
       }
       if (!_matched) {
-        if (Objects.equal(format, DateTimeFormatter.ISO_OFFSET_TIME)) {
+        if (Objects.equal(format, DateTimeFormatter.ISO_OFFSET_DATE)) {
           _matched=true;
         }
       }
       if (!_matched) {
-        if (Objects.equal(format, DateTimeFormatter.ISO_TIME)) {
+        if (Objects.equal(format, DateTimeFormatter.ISO_DATE)) {
           _matched=true;
         }
       }
       if (_matched) {
         _switchResult = Date.from(LocalDate.parse(dateString, format).atStartOfDay(ZoneId.systemDefault()).toInstant());
       }
-    }
-    if (!_matched) {
-      if (Objects.equal(format, DateTimeFormatter.ISO_LOCAL_DATE_TIME)) {
-        _matched=true;
-      }
       if (!_matched) {
-        if (Objects.equal(format, DateTimeFormatter.ISO_OFFSET_DATE_TIME)) {
+        if (Objects.equal(format, DateTimeFormatter.ISO_LOCAL_TIME)) {
           _matched=true;
+        }
+        if (!_matched) {
+          if (Objects.equal(format, DateTimeFormatter.ISO_OFFSET_TIME)) {
+            _matched=true;
+          }
+        }
+        if (!_matched) {
+          if (Objects.equal(format, DateTimeFormatter.ISO_TIME)) {
+            _matched=true;
+          }
+        }
+        if (_matched) {
+          _switchResult = Date.from(LocalDate.parse(dateString, format).atStartOfDay(ZoneId.systemDefault()).toInstant());
         }
       }
       if (!_matched) {
-        if (Objects.equal(format, DateTimeFormatter.ISO_DATE_TIME)) {
+        if (Objects.equal(format, DateTimeFormatter.ISO_LOCAL_DATE_TIME)) {
           _matched=true;
         }
+        if (!_matched) {
+          if (Objects.equal(format, DateTimeFormatter.ISO_OFFSET_DATE_TIME)) {
+            _matched=true;
+          }
+        }
+        if (!_matched) {
+          if (Objects.equal(format, DateTimeFormatter.ISO_DATE_TIME)) {
+            _matched=true;
+          }
+        }
+        if (_matched) {
+          _switchResult = Date.from(LocalDate.parse(dateString, format).atStartOfDay(ZoneId.systemDefault()).toInstant());
+        }
       }
-      if (_matched) {
-        _switchResult = Date.from(LocalDate.parse(dateString, format).atStartOfDay(ZoneId.systemDefault()).toInstant());
+      if (!_matched) {
+        _switchResult = null;
+      }
+      _xtrycatchfinallyexpression = _switchResult;
+    } catch (final Throwable _t) {
+      if (_t instanceof DateTimeParseException) {
+        _xtrycatchfinallyexpression = null;
+      } else {
+        throw Exceptions.sneakyThrow(_t);
       }
     }
-    if (!_matched) {
-      _switchResult = null;
-    }
-    return _switchResult;
+    return _xtrycatchfinallyexpression;
   }
   
   /**

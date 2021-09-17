@@ -13,33 +13,37 @@ import java.time.ZoneId
  *
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
-class DateUtils { 
+class DateUtils {
     /**
      * Parse a date string in the date formats supported by LEMMA
      */
      static def Date parseDate(String dateString) {
         val format = determineDateFormat(dateString)
 
-        return switch(format) {
-            case DateTimeFormatter.ISO_LOCAL_DATE,
-            case DateTimeFormatter.ISO_OFFSET_DATE,
-            case DateTimeFormatter.ISO_DATE:
-                Date.from(LocalDate.parse(dateString, format)
-                    .atStartOfDay(ZoneId.systemDefault()).toInstant())
+        return try {
+            switch(format) {
+                case DateTimeFormatter.ISO_LOCAL_DATE,
+                case DateTimeFormatter.ISO_OFFSET_DATE,
+                case DateTimeFormatter.ISO_DATE:
+                    Date.from(LocalDate.parse(dateString, format)
+                        .atStartOfDay(ZoneId.systemDefault()).toInstant())
 
-            case DateTimeFormatter.ISO_LOCAL_TIME,
-            case DateTimeFormatter.ISO_OFFSET_TIME,
-            case DateTimeFormatter.ISO_TIME:
-                Date.from(LocalDate.parse(dateString, format)
-                    .atStartOfDay(ZoneId.systemDefault()).toInstant())
+                case DateTimeFormatter.ISO_LOCAL_TIME,
+                case DateTimeFormatter.ISO_OFFSET_TIME,
+                case DateTimeFormatter.ISO_TIME:
+                    Date.from(LocalDate.parse(dateString, format)
+                        .atStartOfDay(ZoneId.systemDefault()).toInstant())
 
-            case DateTimeFormatter.ISO_LOCAL_DATE_TIME,
-            case DateTimeFormatter.ISO_OFFSET_DATE_TIME,
-            case DateTimeFormatter.ISO_DATE_TIME:
-                Date.from(LocalDate.parse(dateString, format)
-                    .atStartOfDay(ZoneId.systemDefault()).toInstant())
+                case DateTimeFormatter.ISO_LOCAL_DATE_TIME,
+                case DateTimeFormatter.ISO_OFFSET_DATE_TIME,
+                case DateTimeFormatter.ISO_DATE_TIME:
+                    Date.from(LocalDate.parse(dateString, format)
+                        .atStartOfDay(ZoneId.systemDefault()).toInstant())
 
-            default: null
+                default: null
+            }
+        } catch (DateTimeParseException ex) {
+            null
         }
      }
 
