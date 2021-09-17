@@ -12,6 +12,7 @@
         <module>../de.fhdo.lemma.technology.technologydsl.metamodel</module>
         <module>../de.fhdo.lemma.technology.technologydsl</module>
         <module>../de.fhdo.lemma.technology.technologydsl.ide</module>
+        <module>../de.fhdo.lemma.technology.technologydsl.extractor</module>
         <!--
             Exclude unnecessary UI from build, which also prevents transitive dependencies to
             other UI projects.
