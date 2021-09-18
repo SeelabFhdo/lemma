@@ -672,7 +672,6 @@ public class DataDslValidator extends AbstractDataDslValidator {
             _builder.append("Value is not of type ");
             String _typeName = dataField.getPrimitiveType().getTypeName();
             _builder.append(_typeName);
-            _builder.append(" ");
             this.error(_builder.toString(), dataField, 
               DataPackage.Literals.DATA_FIELD__INITIALIZATION_VALUE);
             return;

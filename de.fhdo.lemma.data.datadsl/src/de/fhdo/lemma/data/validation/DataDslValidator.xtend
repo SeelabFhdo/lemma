@@ -527,7 +527,7 @@ class DataDslValidator extends AbstractDataDslValidator {
 
             // Type of initialization value must be compatible with data field type
             } else if (!dataField.initializationValue.isOfType(dataField.primitiveType)) {
-                error('''Value is not of type «dataField.primitiveType.typeName» ''', dataField,
+                error('''Value is not of type «dataField.primitiveType.typeName»''', dataField,
                     DataPackage::Literals.DATA_FIELD__INITIALIZATION_VALUE)
                 return
             }
