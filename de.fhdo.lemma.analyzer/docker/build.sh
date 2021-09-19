@@ -3,9 +3,9 @@
 # Use this script to build the static analyzer Docker image locally. The script
 # can receive a single argument to identify the version of the static analyzer
 # to pass it to the Dockerfile. The current version of the analyzer may be found
-# may be found in the "de.fhdo.lemma.analyzer/gradle.properties" file. In case
-# no argument was passed, the script will rely on the LEMMA_VERSION environment
-# variable to contain the version of the analyzer.
+# in the "de.fhdo.lemma.analyzer/gradle.properties" file. In case no argument
+# was passed, the script will rely on the LEMMA_VERSION environment variable to
+# contain the version of the analyzer.
 
 export LEMMA_DOCKER_IMAGE_TAG="lemma/static_analyzer:latest"
 
