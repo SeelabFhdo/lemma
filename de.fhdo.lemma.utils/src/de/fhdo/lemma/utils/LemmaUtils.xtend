@@ -514,7 +514,7 @@ final class LemmaUtils {
             val resourceToCheck = resourcesToCheck.pop()
             val toCheckUri = resourceToCheck.URI.toString
 
-            if (toCheckUri === resourceUri)
+            if (toCheckUri == resourceUri)
                 return true
 
             val toCheckContents = getImportedModelContents(resourceToCheck, toCheckUri)

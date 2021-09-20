@@ -632,7 +632,8 @@ public final class LemmaUtils {
       {
         final Resource resourceToCheck = resourcesToCheck.pop();
         final String toCheckUri = resourceToCheck.getURI().toString();
-        if ((toCheckUri == resourceUri)) {
+        boolean _equals = Objects.equal(toCheckUri, resourceUri);
+        if (_equals) {
           return true;
         }
         final List<EObject> toCheckContents = LemmaUtils.getImportedModelContents(resourceToCheck, toCheckUri);
