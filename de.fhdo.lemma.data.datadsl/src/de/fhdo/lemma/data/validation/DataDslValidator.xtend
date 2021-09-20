@@ -669,7 +669,7 @@ class DataDslValidator extends AbstractDataDslValidator {
             // In a redefinition attempt, i.e., when the super operation is not hidden, this
             // operation must be hidden
             if (!thisIsHidden) {
-                error('''Operation cannot redefine operation «superOperationName» ''',
+                error('''Operation cannot redefine operation «superOperationName»''',
                         dataOperation, DataPackage::Literals.DATA_OPERATION__NAME)
                 return
 

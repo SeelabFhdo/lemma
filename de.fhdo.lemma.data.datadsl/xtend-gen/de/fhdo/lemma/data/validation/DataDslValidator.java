@@ -820,7 +820,6 @@ public class DataDslValidator extends AbstractDataDslValidator {
         StringConcatenation _builder = new StringConcatenation();
         _builder.append("Operation cannot redefine operation ");
         _builder.append(superOperationName);
-        _builder.append(" ");
         this.error(_builder.toString(), dataOperation, DataPackage.Literals.DATA_OPERATION__NAME);
         return;
       } else {
