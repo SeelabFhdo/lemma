@@ -741,7 +741,7 @@ class DataDslValidator extends AbstractDataDslValidator {
      */
     private def isEquivalent(Type type1, Type type2) {
         return if (type1 instanceof PrimitiveType && type2 instanceof PrimitiveType)
-            (type1 as PrimitiveType).typeName == (type2 as PrimitiveType)
+            (type1 as PrimitiveType).typeName == (type2 as PrimitiveType).typeName
         else if (type1 instanceof DataStructure && type2 instanceof DataStructure) {
             val dataStructure1 = (type1 as DataStructure)
             val dataStructure2 = (type2 as DataStructure)

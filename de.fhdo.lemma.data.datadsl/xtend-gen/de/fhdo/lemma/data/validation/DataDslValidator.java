@@ -894,7 +894,8 @@ public class DataDslValidator extends AbstractDataDslValidator {
     boolean _xifexpression = false;
     if (((type1 instanceof PrimitiveType) && (type2 instanceof PrimitiveType))) {
       String _typeName = ((PrimitiveType) type1).getTypeName();
-      _xifexpression = Objects.equal(_typeName, ((PrimitiveType) type2));
+      String _typeName_1 = ((PrimitiveType) type2).getTypeName();
+      _xifexpression = Objects.equal(_typeName, _typeName_1);
     } else {
       boolean _xifexpression_1 = false;
       if (((type1 instanceof DataStructure) && (type2 instanceof DataStructure))) {
