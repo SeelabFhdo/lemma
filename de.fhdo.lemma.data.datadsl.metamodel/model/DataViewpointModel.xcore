@@ -1,3 +1,4 @@
+@GenModel(modelDirectory="de.fhdo.lemma.data.datadsl.metamodel/src-gen")
 package de.fhdo.lemma.data
 
 import de.fhdo.lemma.data.DateUtils

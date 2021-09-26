@@ -46,37 +46,21 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-clean-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>gen-clean</id>
-                        <phase>clean</phase>
-                    </execution>
-                </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.eclipse.xtend</groupId>
                 <artifactId>xtend-maven-plugin</artifactId>
             </plugin>
-            <!--
-                The plugin currently does not participate in the build process controlled by the
-                parent POM. So, we need to be able to set the version in the MANIFEST.MF separately.
-                The plugin needs to be run prior to updating the version of the parent, because
-                otherwise it won't be able to find the parent POM.
-            -->
-            <plugin>
-                <groupId>org.eclipse.tycho</groupId>
-                <artifactId>tycho-versions-plugin</artifactId>
-                <version>${tycho-version}</version>
-            </plugin>
-            <!--
-                The tycho-versions-plugin won't, however, update the version of the parent POM being
-                referred in this POM. Therefore, we need the versions-maven-plugin. It needs to be
-                run after the tycho-versions-plugin.
-            -->
+
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
-                <artifactId>versions-maven-plugin</artifactId>
-                <version>${versions-maven-plugin-version}</version>
+                <artifactId>build-helper-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

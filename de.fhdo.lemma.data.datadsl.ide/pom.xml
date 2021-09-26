@@ -13,21 +13,31 @@
     <artifactId>de.fhdo.lemma.data.datadsl.ide</artifactId>
     <packaging>eclipse-plugin</packaging>
 
+    <!--
+        Note that this build cannot run standalone, but requires a prior execution of the DSL's
+        Maven build. That is, because the MWE2 workflow run by the DSL build will produce required
+        code in the project's "src-gen" folder.
+    -->
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-clean-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>gen-clean</id>
-                        <phase>clean</phase>
-                    </execution>
-                </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.eclipse.xtend</groupId>
                 <artifactId>xtend-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

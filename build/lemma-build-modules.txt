@@ -28,8 +28,6 @@ de.fhdo.lemma.data.avro.parent
 
 # UI Components
 de.fhdo.lemma.eclipse.ui.parent
-de.fhdo.lemma.data.datadsl.ui
-de.fhdo.lemma.data.datadsl.ui.tests
 de.fhdo.lemma.technology.technologydsl.ui
 de.fhdo.lemma.technology.technologydsl.ui.tests
 de.fhdo.lemma.servicedsl.ui
