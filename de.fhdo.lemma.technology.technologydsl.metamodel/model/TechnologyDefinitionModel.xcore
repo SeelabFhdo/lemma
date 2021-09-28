@@ -1,3 +1,4 @@
+@GenModel(modelDirectory="de.fhdo.lemma.technology.technologydsl.metamodel/src-gen")
 package de.fhdo.lemma.technology
 
 import de.fhdo.lemma.data.ComplexType
