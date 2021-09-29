@@ -29,6 +29,7 @@ dependencies {
         lemmaEclipsePluginsVersion)
     implementation("de.fhdo.lemma.model_processing.utils:de.fhdo.lemma.model_processing.utils:" +
         lemmaEclipsePluginsVersion)
+    implementation("de.fhdo.lemma.servicedsl:de.fhdo.lemma.servicedsl.metamodel:$lemmaEclipsePluginsVersion")
     implementation("de.fhdo.lemma.technology.technologydsl:de.fhdo.lemma.technology.technologydsl.metamodel:" +
         lemmaEclipsePluginsVersion)
     implementation("org.jgrapht:jgrapht-core:$jgraphtVersion")

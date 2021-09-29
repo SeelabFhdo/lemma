@@ -67,6 +67,16 @@
         </dependency>
         <dependency>
             <groupId>de.fhdo.lemma.intermediate</groupId>
+            <artifactId>de.fhdo.lemma.data.intermediate.metamodel</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.fhdo.lemma.intermediate</groupId>
+            <artifactId>de.fhdo.lemma.service.intermediate.metamodel</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.fhdo.lemma.intermediate</groupId>
             <artifactId>de.fhdo.lemma.operation.intermediate.metamodel</artifactId>
             <version>${project.version}</version>
         </dependency>
