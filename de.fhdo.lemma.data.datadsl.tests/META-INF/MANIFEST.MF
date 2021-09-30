@@ -5,12 +5,14 @@ Bundle-Vendor: University of Applied Sciences and Arts Dortmund
 Bundle-Version: 0.8.5.qualifier
 Bundle-SymbolicName: de.fhdo.lemma.data.datadsl.tests;singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: de.fhdo.lemma.data.datadsl,
+Require-Bundle: de.fhdo.lemma.utils,
+ de.fhdo.lemma.data.datadsl,
  de.fhdo.lemma.data.datadsl.metamodel,
  org.junit;bundle-version="4.13.0",
  org.eclipse.xtext.testing,
  org.eclipse.xtext.xbase.testing,
- org.eclipse.xtext.xbase.lib;bundle-version="2.25.0"
+ org.eclipse.xtext.xbase.lib;bundle-version="2.25.0",
+ de.fhdo.lemma.xtext.test.utils
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: de.fhdo.lemma.data.tests;x-internal=true
 Import-Package: org.hamcrest.core,

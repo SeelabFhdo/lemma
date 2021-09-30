@@ -1,0 +1,7 @@
+version Version1 {
+    structure Test {}
+}
+
+version Version1 {
+    structure Test {}
+}

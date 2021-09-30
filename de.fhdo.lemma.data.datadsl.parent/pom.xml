@@ -67,11 +67,15 @@
         <ecore-xtext-version>1.5.0</ecore-xtext-version>
         <emf-version>2.22.0</emf-version>
         <exec-maven-plugin-version>3.0.0</exec-maven-plugin-version>
+        <junit-version>4.13</junit-version>
         <lifecycle-mapping-version>1.0.0</lifecycle-mapping-version>
         <lsp4j-version>0.10.0</lsp4j-version>
         <maven-assembly-plugin-version>3.3.0</maven-assembly-plugin-version>
         <maven-clean-plugin-version>3.1.0</maven-clean-plugin-version>
         <maven-compiler-plugin-version>3.8.1</maven-compiler-plugin-version>
+        <maven-site-plugin-version>3.9.1</maven-site-plugin-version>
+        <maven-surefire-plugin-version>3.0.0-M5</maven-surefire-plugin-version>
+        <maven-surefire-report-plugin-version>${maven-surefire-plugin-version}</maven-surefire-report-plugin-version>
         <metamodel-version>${project.version}</metamodel-version>
         <org-eclipse-emf-mwe2-launch-version>2.12.1</org-eclipse-emf-mwe2-launch-version>
         <tycho-version>2.3.0</tycho-version>
@@ -140,6 +144,68 @@
                             </configuration>
                         </execution>
                     </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven-surefire-plugin-version}</version>
+                    <executions>
+                        <execution>
+                            <id>test</id>
+                            <phase>test</phase>
+                            <goals>
+                                <goal>test</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>${maven-site-plugin-version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-report-plugin</artifactId>
+                    <version>${maven-surefire-report-plugin-version}</version>
+                    <executions>
+                        <execution>
+                            <id>during-tests</id>
+                            <phase>test</phase>
+                            <goals>
+                                <goal>report</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <outputDirectory>target/surefire-reports</outputDirectory>
+                        <linkXRef>false</linkXRef>
+                    </configuration>
+                </plugin>
+
+                <!--
+                    Disable test execution by Tycho's Surefire plugin because it contradicts the
+                    execution of the language/parsing tests with the regular Surefire plugin. More
+                    precisely, test execution by Tycho's Surefire plugin will result in
+                    FileSystemExceptions as in Tycho test execution resources of a JAR are prefixed
+                    by "bundleresource://" instead of "file://". This prefixing results in
+                    Paths.get(uri) to fail with the mentioned exception. Therefore, we rely on the
+                    regular Surefire plugin and not on its Tycho-specific version, since the former
+                    accesses JAR resources as files instead of OSGi bundle resources.
+                -->
+                <plugin>
+                    <groupId>org.eclipse.tycho</groupId>
+                    <artifactId>tycho-surefire-plugin</artifactId>
+                    <version>${tycho-version}</version>
+                    <configuration>
+                        <failIfNoTests>false</failIfNoTests>
+                        <excludes>
+                            <exclude>**/*Test*.class</exclude>
+                        </excludes>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>

@@ -1,0 +1,7 @@
+structure Structure {
+    procedure sideEffectFree1<sideEffectFree>,
+    procedure sideEffectFree2(int p1, string p2)<sideEffectFree>,
+    function string sideEffectFree3<sideEffectFree>,
+    function string sideEffectFree4(int param)<sideEffectFree>,
+    function string sideEffectFree5(byte p1, float p2)<sideEffectFree>
+}

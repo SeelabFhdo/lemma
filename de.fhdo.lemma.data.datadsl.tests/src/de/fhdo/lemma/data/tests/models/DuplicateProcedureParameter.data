@@ -1,0 +1,3 @@
+structure ComplexType {
+    procedure proc(string param1, int param1)
+}

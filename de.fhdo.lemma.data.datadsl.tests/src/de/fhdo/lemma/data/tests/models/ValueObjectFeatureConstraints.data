@@ -1,0 +1,24 @@
+structure ValueObject1<aggregate,valueObject> {
+    int field,
+    function string myFunc
+}
+
+structure ValueObject2<applicationService,valueObject> {}
+
+structure ValueObject3<domainService,valueObject> {}
+
+structure ValueObject4<entity,valueObject> {}
+
+structure ValueObject5<infrastructureService,valueObject> {}
+
+structure ValueObject6<repository,valueObject> {}
+
+structure ValueObject7<service,valueObject> {}
+
+structure ValueObject8<specification,valueObject> {}
+
+structure ValidValueObject1<valueObject> {}
+
+structure ValidValueObject2<domainEvent,valueObject> {}
+
+structure ValidValueObject3<factory,valueObject> {}

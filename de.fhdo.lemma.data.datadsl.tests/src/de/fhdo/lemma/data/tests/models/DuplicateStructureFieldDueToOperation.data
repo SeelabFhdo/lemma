@@ -1,0 +1,4 @@
+structure Test {
+    procedure structureComponent,
+    int structureComponent
+}

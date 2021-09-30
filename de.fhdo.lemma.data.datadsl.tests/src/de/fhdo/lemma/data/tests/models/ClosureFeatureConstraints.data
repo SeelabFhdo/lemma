@@ -1,0 +1,61 @@
+context Context1 {
+    structure Structure {
+        // Closure should not be an identifier, and take a parameter and return something
+        procedure closure1<identifier,closure>,
+        // Closure should not be an identifier and return something
+        procedure closure2(int singleParam)<identifier,closure>,
+        // Closure should not be a validator and take a parameter
+        function boolean closure3<validator,closure>,
+        // Closure should take exactly one parameter
+        function boolean closure4(boolean firstParam, Structure secondParam)<closure>
+    }
+
+    structure Structure2 {
+        // Closure should return a value of the same type as its parameter (primitive case)
+        function string closure1(int param)<closure>,
+        // Closure should return a value of the same type as its parameter (mixed type kinds)
+        function Structure closure2(int param)<closure>,
+        // Closure should return a value of the same type as its parameter (mixed type kinds)
+        function byte closure3(Structure2 param)<closure>,
+        // Closure should return a value of the same type as its parameter ("inverted" inheritance
+        // relationship: return parameter should be of the same type as parameter, and thus the
+        // former should inherit from the latter and not vice versa)
+        function Structure2 closure4(Structure3 param)<closure>,
+        // Good (inheritance case)
+        function Structure3 closure5(Structure2 param)<closure>,
+        // Good (equal complex types)
+        function Structure2 closure6(Structure2 param)<closure>
+    }
+
+    structure Structure3 extends Structure2 {
+        // Closure should return a value of the same type as its parameter (mixed type kinds)
+        function Collection1 closure7(Structure param)<closure>,
+        // Closure should return a value of the same type as its parameter (mixed type kinds)
+        function Structure closure8(Collection1 param)<closure>,
+        // Closure should return a value of the same type as its parameter (mixed type kinds)
+        function string closure9(Enumeration1 param)<closure>,
+        // Closure should return a value of the same type as its parameter (mixed type kinds)
+        function Collection1 closure10(Enumeration1 param)<closure>,
+        // Good (collection types are equal)
+        function Collection1 closure11(Collection1 param)<closure>,
+        // Good (enumeration types are equal)
+        function Enumeration1 closure12(Enumeration1 param)<closure>
+    }
+
+    collection Collection1 { int }
+
+    enum Enumeration1 { LITERAL("init") }
+}
+
+context Context2 {
+    structure Structure2 {
+        // Closure should return a value of the same type as its parameter (Structure2 from
+        // different contexts and thus not equal)
+        function Context1.Structure2 closure1(Structure2 param)<closure>,
+        // Closure should return a value of the same type as its parameter (Structure2 from
+        // different contexts and thus not equal)
+        function Structure2 closure2(Context1.Structure2 param)<closure>,
+        // Good
+        function Context1.Structure2 closure3(Context1.Structure2 param)<closure>
+    }
+}

@@ -1,0 +1,14 @@
+import datatypes from "SuperStructureScoping2.data" as OtherModel
+
+context Context1 {
+    structure LocalSuperStructure { }
+
+    // Good
+    structure SubStructure1 extends LocalSuperStructure {}
+
+    structure SubStructure2 extends OtherModel::ExternalSuperStructure {}
+}
+
+context Context2 {
+    structure SubStructure extends Context1.LocalSuperStructure {}
+}

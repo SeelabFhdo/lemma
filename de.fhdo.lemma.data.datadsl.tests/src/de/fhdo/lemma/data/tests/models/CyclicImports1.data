@@ -1,0 +1,4 @@
+import datatypes from "CyclicImports1.data" as CyclicImports1
+import datatypes from "CyclicImports2.data" as CyclicImports2
+
+structure Test {}

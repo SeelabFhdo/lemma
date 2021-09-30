@@ -1,0 +1,9 @@
+structure EntityWithMissingIdentifier<entity> {
+
+}
+
+structure EntityWithSeveralDifferentIdentifiers<entity> {
+    long id<identifier>,
+    function long calculateId<identifier>,
+    function long calculateId2<identifier>
+}

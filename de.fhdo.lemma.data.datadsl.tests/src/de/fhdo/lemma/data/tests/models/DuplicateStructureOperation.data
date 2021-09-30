@@ -1,0 +1,4 @@
+structure Test {
+    function string operation(),
+    procedure operation
+}

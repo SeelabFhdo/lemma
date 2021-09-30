@@ -1,0 +1,3 @@
+structure Structure<specification> {
+    function boolean myValidator1<identifier, validator>
+}

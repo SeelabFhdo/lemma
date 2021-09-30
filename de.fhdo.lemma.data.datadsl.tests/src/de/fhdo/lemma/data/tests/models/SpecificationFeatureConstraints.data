@@ -1,0 +1,13 @@
+structure Specification<specification,valueObject> {
+
+}
+
+structure Specification2<specification> {
+    int field,
+    procedure validate<validator>,
+    function string validate2<validator>
+}
+
+structure ValidSpecification<specification> {
+    function boolean validate<validator>
+}

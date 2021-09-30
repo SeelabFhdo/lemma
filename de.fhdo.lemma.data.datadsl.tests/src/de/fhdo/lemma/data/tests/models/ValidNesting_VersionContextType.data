@@ -1,0 +1,19 @@
+version Version1 {
+    context Context1 {
+        structure ComplexType {}
+    }
+
+    context Context2 {
+        structure ComplexType {}
+    }
+}
+
+version Version2 {
+    context Context1 {
+        structure ComplexType {}
+    }
+
+    context Context2 {
+        structure ComplexType {}
+    }
+}

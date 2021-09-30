@@ -1,0 +1,14 @@
+import datatypes from "EntityFeatureConstraints.data" as OtherModel
+
+structure Factory<factory,service> {
+    procedure nonFactoryFunction
+}
+
+structure Factory2<factory> {
+    function OtherModel::EntityWithMissingIdentifier factoryFunctionWithWrongReturnType
+}
+
+structure Factory3<factory> {
+    function ValueObject correctFactoryFunction
+}
+structure ValueObject<valueObject> {}

@@ -1,0 +1,4 @@
+import datatypes from "DuplicateImportAlias.data" as Test
+import datatypes from "DuplicateImportFile.data" as Test2
+
+structure Test {}

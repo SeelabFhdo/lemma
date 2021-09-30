@@ -1,0 +1,3 @@
+structure ComplexType {
+    function string Func(string param1, int param1)
+}

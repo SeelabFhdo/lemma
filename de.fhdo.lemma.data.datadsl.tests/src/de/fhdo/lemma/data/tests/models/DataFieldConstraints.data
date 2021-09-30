@@ -1,0 +1,211 @@
+structure Structure {
+    // Data field must have a type or hide a super field
+    field
+}
+
+structure Structure2 {
+    // Only primitive fields are initializable
+    Structure field = "abc",
+    // Field must have a type as it does not hide a super field
+    hide field2,
+    // Field must have a type as it does not hide a super field
+    hide immutable field3,
+    // Hidden immutable fields need to receive an initialization value
+    hide immutable string field4,
+    // Good
+    hide immutable string field5 = "string",
+    // Good
+    hide immutable Structure2 field6,
+    // Duplicate feature
+    int field7<identifier,identifier>,
+    // Good
+    boolean field8<neverEmpty>,
+    // Good
+    byte field9,
+    boolean field10
+}
+
+structure Structure3 extends Structure2 {
+    // Good
+    hide field,
+    // Good
+    string field6,
+    // Inherited field7 cannot be redefined
+    hide int field7,
+    // Inherited fields cannot receive features
+    hide field8<identifier>,
+    // Inherited fields cannot be immutable
+    hide immutable field9,
+    // Inherited field10 cannot be redefined
+    boolean field10
+}
+
+structure Structure4 {
+    string field1,
+    string field2,
+    string field3
+}
+
+structure Structure5 extends Structure4 {
+    hide field1,
+    hide field3
+}
+
+structure Structure6 extends Structure5 {
+    // field1 is not visible anymore as it got hidden in Structure5
+    hide field1,
+    hide field2,
+    boolean field3
+}
+
+collection Collection {
+    // Only primitive fields are initializable
+    Structure2 field1 = "abc",
+    // Only fields of data structures are initializable
+    string field2 = "abc",
+    // Good
+    Structure3 field3
+}
+
+// Type checks
+structure Structure7 {
+    boolean bo1 = true,
+    boolean bo2 = false,
+    boolean bo3 = 'c',
+    boolean bo4 = "string",
+    boolean bo5 = 42,
+    boolean bo6 = "2021-16-09",
+    boolean bo7 = 42.5,
+
+    byte by1 = true,
+    byte by2 = false,
+    byte by3 = 'c',
+    byte by4 = "string",
+    byte by5 = 42,
+    byte by6 = "2021-16-09",
+    byte by7 = 42.5,
+    byte by8 = 0,
+    byte by9 = -1,
+    byte by10 = -128,
+    byte by11 = -129,
+    byte by12 = 127,
+    byte by13 = 128,
+
+    char c1 = true,
+    char c2 = false,
+    char c3 = 'c',
+    char c4 = "string",
+    char c5 = 42,
+    char c6 = "2021-16-09",
+    char c7 = 42.5,
+    char c8 = 1,
+
+    date da1 = true,
+    date da2 = false,
+    date da3 = 'c',
+    date da4 = "string",
+    date da5 = 42,
+    date da6 = "16.09.2021",
+    date da7 = "2021-16-09",
+    date da8 = "2021-09-16",
+    date da9 = "2021-09-16+1",
+    date da10 = "2021-09-16+1:00",
+    date da11 = "2021-09-16+01:00",
+    date da12 = "2021-09-16+23:59",
+    date da13 = "2021-09-16+24:00",
+    date da14 = "2021-09-16-23:59",
+    date da15 = "2021-09-16-24:00",
+    date da16 = "23:59",
+    date da17 = "-23:59",
+    date da18 = "0:00",
+    date da19 = "00:00:00",
+    date da20 = "13:25:60",
+    date da21 = "13:25:59+02:53",
+    date da22 = "2021-09-16T13:25:59+02:53",
+    date da23 = 42.5,
+    date da24 = 1,
+
+    double do1 = true,
+    double do2 = false,
+    double do3 = 'c',
+    double do4 = "string",
+    double do5 = 42,
+    double do6 = "2021-16-09",
+    double do7 = 42.5,
+    double do8 = -0.0,
+    double do9 = 0,
+    double do10 = -4358698456840568049586,
+    double do11 = -4358698456840568049586.4568098456098450968456,
+
+    float f1 = true,
+    float f2 = false,
+    float f3 = 'c',
+    float f4 = "string",
+    float f5 = 42,
+    float f6 = "2021-16-09",
+    float f7 = 42.5,
+    float f8 = -0.0,
+    float f9 = 0,
+    float f10 = -4358698456840568049586,
+    float f11 = -4358698456840568049586.4568098456098450968456,
+
+    int i1 = true,
+    int i2 = false,
+    int i3 = 'c',
+    int i4 = "string",
+    int i5 = 42,
+    int i6 = "2021-16-09",
+    int i7 = 42.5,
+    int i8 = 0,
+    int i9 = -1,
+    int i10 = 2147483647,
+    int i11 = 2147483648,
+    int i12 = -2147483648,
+    int i13 = -2147483649,
+
+    long l1 = true,
+    long l2 = false,
+    long l3 = 'c',
+    long l4 = "string",
+    long l5 = 42,
+    long l6 = "2021-16-09",
+    long l7 = 42.5,
+    long l8 = 0,
+    long l9 = -1,
+    long l10 = 9223372036854775807,
+    long l11 = 9223372036854775808,
+    long l12 = -9223372036854775808,
+    long l13 = -9223372036854775809,
+
+    short sh1 = true,
+    short sh2 = false,
+    short sh3 = 'c',
+    short sh4 = "string",
+    short sh5 = 42,
+    short sh6 = "2021-16-09",
+    short sh7 = 42.5,
+    short sh8 = 0,
+    short sh9 = -1,
+    short sh10 = 32767,
+    short sh11 = 32768,
+    short sh12 = -32768,
+    short sh13 = -32769,
+
+    string str1 = true,
+    string str2 = false,
+    string str3 = 'c',
+    string str4 = "string",
+    string str5 = 42,
+    string str6 = "2021-16-09",
+    string str7 = 42.5,
+
+    unspecified u1 = true,
+    unspecified u2 = false,
+    unspecified u3 = 'c',
+    unspecified u4 = "uing",
+    unspecified u5 = 42,
+    unspecified u6 = "2021-16-09",
+    unspecified u7 = 42.5,
+    unspecified u8 = 0,
+    unspecified u9 = -1
+}

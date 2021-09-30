@@ -1,0 +1,8 @@
+version Version1 {
+    structure Structure {}
+    collection Collection { int field }
+}
+
+version Version2 {
+    enum Enumeration { LITERAL }
+}

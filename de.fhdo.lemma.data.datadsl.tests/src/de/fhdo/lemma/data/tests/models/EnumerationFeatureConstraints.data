@@ -1,0 +1,20 @@
+enum Test1<aggregate> { LITERAL }
+
+enum Test2<applicationService> { LITERAL }
+
+enum Test3<domainService> { LITERAL }
+
+enum Test4<entity> { LITERAL }
+
+enum Test5<factory> { LITERAL }
+
+enum Test6<infrastructureService> { LITERAL }
+
+enum Test7<repository> { LITERAL }
+
+enum Test8<service> { LITERAL }
+
+enum Test9<specification> { LITERAL }
+
+// Good enumeration
+enum Test10<domainEvent, valueObject> { LITERAL }

@@ -1,0 +1,9 @@
+structure SuperStructure extends SubStructure {}
+
+structure SubStructure extends SuperStructure {}
+
+structure Structure1 extends Structure3 {}
+
+structure Structure2 extends Structure1 {}
+
+structure Structure3 extends Structure1 {}

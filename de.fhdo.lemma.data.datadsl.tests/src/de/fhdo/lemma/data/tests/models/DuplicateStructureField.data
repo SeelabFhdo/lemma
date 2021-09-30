@@ -1,0 +1,4 @@
+structure Test {
+    int field1,
+    string field1
+}

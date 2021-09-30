@@ -1,0 +1,9 @@
+version Version1 {
+    structure ComplexType1 {}
+    structure ComplexType2 {}
+}
+
+version Version2 {
+    structure ComplexType1 {}
+    structure ComplexType2 {}
+}

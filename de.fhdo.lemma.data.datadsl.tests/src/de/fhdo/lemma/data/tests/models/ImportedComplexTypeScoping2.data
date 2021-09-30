@@ -1,0 +1,27 @@
+import datatypes from "ImportedComplexTypeScoping1.data" as OtherModel
+
+// Good
+structure Structure1 {
+    OtherModel::Version1.Collection field,
+    function OtherModel::Version2.Enumeration myFunc(
+        OtherModel::Version1.Structure p
+    )
+}
+
+structure Structure2 {
+    OtherModel::Version2.Collection field,
+    function OtherModel3::Version2.Enumeration myFunc(
+        OtherModel::Version1.Structure7 p
+    )
+}
+
+// Good
+collection Collection1 {
+    OtherModel::Version2.Enumeration f
+}
+
+collection Collection2 {
+    OtherModel2::Version2.Enumeration f1,
+    OtherModel::Version3.Enumeration f2,
+    OtherModel::Version1.Structure6 f3
+}

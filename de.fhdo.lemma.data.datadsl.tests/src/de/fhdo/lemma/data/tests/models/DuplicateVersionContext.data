@@ -1,0 +1,9 @@
+version Version {
+    context Context1 {
+        structure Test {}
+    }
+
+    context Context1 {
+        structure Test {}
+    }
+}

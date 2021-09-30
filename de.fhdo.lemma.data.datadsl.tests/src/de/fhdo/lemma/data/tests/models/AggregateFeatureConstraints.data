@@ -1,0 +1,7 @@
+structure AggregateWithPart<aggregate> {
+    AggregateWithoutPart aggregatePart<part>
+}
+
+structure AggregateWithoutPart<entity,aggregate> {
+    int id<identifier>
+}

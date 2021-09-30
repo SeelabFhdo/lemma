@@ -1,0 +1,3 @@
+import datatypes from "NotADomainModel.txt" as Test2
+
+structure Test {}

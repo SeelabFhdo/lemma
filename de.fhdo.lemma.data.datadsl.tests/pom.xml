@@ -13,7 +13,17 @@
     <artifactId>de.fhdo.lemma.data.datadsl.tests</artifactId>
     <packaging>eclipse-test-plugin</packaging>
 
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit-version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
     <build>
+        <testSourceDirectory>${project.basedir}/xtend-gen</testSourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -30,6 +40,28 @@
                 <artifactId>xtend-maven-plugin</artifactId>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <!--
+                        By default, the Surefire plugin searches compiled test classes in the
+                        "target/test-classes" folder. However, since we treat test code regular
+                        source code in the DSL's "tests" sub-project (i.e., the code resides in the
+                        "src" folder rather than "src/test/java"), we adapt the search folder for
+                        test classes to "target/classes", which Maven by default uses as the target
+                        folder for compiled Java classes.
+                    -->
+                    <testClassesDirectory>${project.build.directory}/classes</testClassesDirectory>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+            </plugin>
+
+            <!-- Currently not used -->
+            <!-- <plugin>
                 <groupId>org.eclipse.tycho</groupId>
                 <artifactId>tycho-surefire-plugin</artifactId>
                 <version>${tycho-version}</version>
@@ -38,7 +70,16 @@
                     <useUIThread>false</useUIThread>
                     <failIfNoTests>false</failIfNoTests>
                 </configuration>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </reporting>
 </project>

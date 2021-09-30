@@ -1,0 +1,5 @@
+structure ComplexType1 {}
+
+collection ComplexType1 { int }
+
+enum ComplexType1 { LITERAL }

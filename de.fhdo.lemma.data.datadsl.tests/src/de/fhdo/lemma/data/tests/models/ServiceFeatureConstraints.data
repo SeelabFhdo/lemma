@@ -1,0 +1,8 @@
+structure ServiceWithoutOperations<valueObject,service> {
+
+}
+
+structure ServiceWithField<valueObject,service> {
+    int field,
+    procedure p()
+}

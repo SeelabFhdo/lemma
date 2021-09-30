@@ -1,0 +1,9 @@
+context Context1 {
+    structure ComplexType1 {}
+    structure ComplexType2 {}
+}
+
+context Context2 {
+    structure ComplexType1 {}
+    structure ComplexType2 {}
+}

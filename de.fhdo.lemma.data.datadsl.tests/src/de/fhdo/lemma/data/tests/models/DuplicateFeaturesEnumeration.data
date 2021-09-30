@@ -1,0 +1,1 @@
+enum Enumeration<entity, entity> { LITERAL }

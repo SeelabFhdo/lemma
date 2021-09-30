@@ -1,0 +1,53 @@
+structure Structure {
+    // Duplicate feature
+    function string myFunction<identifier,identifier>,
+    procedure myProcedure<identifier, identifier>,
+
+    // Good
+    function string myFunction2<identifier>,
+    procedure myProcedure2<identifier>,
+    function string myFunction3(),
+    function boolean myFunction4,
+    procedure myProcedure3(int param),
+    function byte myFunction5
+}
+
+structure Structure2 extends Structure {
+    // Inherited operations cannot receive features
+    hide procedure myFunction<identifier>,
+    hide function string myProcedure<identifier>,
+
+    // Inherited myProcedure2 cannot be redefined
+    procedure myProcedure2,
+
+    // Good
+    hide string myFunction2,
+
+    // Inherited operation must be of same kind (function or procedure) as super operation
+    hide procedure myFunction3,
+
+    // Hidden inherited operation must not specify parameters
+    hide function myFunction4(int newParam),
+    hide procedure myProcedure3(int newParam),
+
+    // Hidden inherited operation must not specify a return type
+    hide function boolean myFunction5(),
+
+    // Operation must have a return type specification or be hidden
+    function myFunction6
+}
+
+structure Structure3 {
+    procedure p1,
+    procedure p2,
+    procedure p3
+}
+
+structure Structure4 extends Structure3 {
+    hide procedure p1,
+    hide procedure p3
+}
+
+structure Structure5 extends Structure4 {
+    function string p3(int param)
+}

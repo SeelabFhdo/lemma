@@ -1,0 +1,4 @@
+import datatypes from "test.data" as Test
+import datatypes from "test2.data" as Test
+
+structure Test {}

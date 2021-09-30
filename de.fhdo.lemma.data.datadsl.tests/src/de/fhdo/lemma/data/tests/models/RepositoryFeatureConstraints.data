@@ -1,0 +1,14 @@
+import datatypes from "EntityFeatureConstraints.data" as OtherModel
+import datatypes from "FactoryFeatureConstraints.data" as OtherModel2
+
+structure Repository<repository,valueObject> {
+
+}
+
+structure Repository2<repository> {
+    procedure repoProcedure(OtherModel2::Factory2 f)
+}
+
+structure Repository3<repository> {
+    function string repoFunction(OtherModel::EntityWithMissingIdentifier e)
+}

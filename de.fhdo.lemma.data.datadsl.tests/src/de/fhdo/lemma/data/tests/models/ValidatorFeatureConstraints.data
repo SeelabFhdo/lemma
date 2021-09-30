@@ -1,0 +1,17 @@
+structure Structure {
+    function boolean myValidator1<validator>,
+    function string myValidator2<validator>,
+    procedure myValidator3<validator>,
+    function boolean myValidator4(int param)<validator>,
+    function string myValidator5(int param)<validator>,
+    procedure myValidator6(Structure param)<validator>
+}
+
+structure MySpec<specification> {
+    function boolean myValidator1<validator>,
+    function string myValidator2<validator>,
+    procedure myValidator3<validator>,
+    function boolean myValidator4(int param)<validator>,
+    function string myValidator5(int param)<validator>,
+    procedure myValidator6(Structure param)<validator>
+}

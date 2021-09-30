@@ -1,0 +1,25 @@
+context Context1 {
+    collection Collection {
+        int field<part>
+    }
+
+    structure Structure1 {
+        string field<part>
+    }
+
+    structure Structure2<valueObject> {
+        Structure1 field<part>
+    }
+
+    structure Structure3<aggregate,entity> {
+        long id<identifier>,
+        Structure2 field<part>
+    }
+}
+
+context Context2 {
+    structure Structure1<aggregate,entity> {
+        long id<identifier>,
+        Context1.Structure3 field<part>
+    }
+}
