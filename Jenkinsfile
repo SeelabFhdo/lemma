@@ -36,74 +36,6 @@ pipeline {
     }
 
     stages {
-        stage("Windows Build") {
-            agent { label "windows" }
-
-            stages {
-                stage("Remove Build Management Folders") {
-                    steps {
-                        bat "${WINDOWS_RUN_GIT_COMMAND} \"cd \$HOME && " +
-                            "rm -rf .m2/ && rm -rf .gradle/ && rm -rf .goomph\""
-                    }
-                }
-
-                stage("Build in Windows") {
-                    steps {
-                        dir("build") {
-                            script {
-                                env.JAVA_HOME="${env.ProgramFiles}\\" +
-                                    WINDOWS_JAVA_VERSION
-                            }
-                            bat "call lemma.bat"
-                            script {
-                                env.JAVA_HOME=""
-                            }
-                        }
-                    }
-                }
-            }
-
-            post {
-                success {
-                    cleanWs()
-                }
-
-                failure {
-                    script {
-                        def postMessageBranchUrl = "${env.BASE_BRANCH_URL}/tree/${env.BRANCH_NAME}"
-                        def postMessageBranch = env.BRANCH_NAME ? "\n\tBranch: [${env.BRANCH_NAME}](${postMessageBranchUrl})" : ""
-
-                        def postMessageCommitAuthor = bat(
-                                script: "${WINDOWS_RUN_GIT_COMMAND} \"git --no-pager show -s --format='%%an' > __windows_out\" && type __windows_out && del __windows_out",
-                                returnStdout: true
-                            ).trim()
-                        postMessageCommitAuthor = postMessageCommitAuthor.readLines().drop(1).join(" ")
-
-                        def postMessageCommitMessage = bat(
-                                script: "${WINDOWS_RUN_GIT_COMMAND} \"git log --format=%%B -n 1 ${GIT_COMMIT} > __windows_out\" && type __windows_out && del __windows_out",
-                                returnStdout: true
-                            ).trim()
-                        postMessageCommitMessage = postMessageCommitMessage.readLines().drop(1).join(" ")
-
-                        def postMessageCommitUrl = "${env.BASE_BRANCH_URL}/commit/${env.GIT_COMMIT}"
-                        def postMessageCommitInfo = "(\"${postMessageCommitMessage}\") by *${postMessageCommitAuthor}*"
-                        def postMessageCommit = env.GIT_COMMIT ? "\n\tCommit: [${env.GIT_COMMIT}](${postMessageCommitUrl}) ${postMessageCommitInfo}" : ""
-                        def postMessageBody = "\n\tJob: ${env.JOB_NAME}" +
-                            "${postMessageBranch}" +
-                            "${postMessageCommit}" +
-                            "\n\tStatus: ${currentBuild.result}" +
-                            "\n\tBuild: [#${env.BUILD_NUMBER}](${env.BUILD_URL})"
-
-                        discordSend(
-                            result: currentBuild.currentResult,
-                            description: "LEMMA Build ${currentBuild.result}: ${postMessageBody}",
-                            webhookURL: DISCORD_WEBHOOK
-                        )
-                    }
-                }
-            }
-        }
-
         stage("Build and Deploy") {
             agent { label "controller" }
 
@@ -113,14 +45,14 @@ pipeline {
                         script {
                             buildImage = docker.build BUILD_IMAGE,
                                 "./build/docker"
-                            docker.withRegistry(DOCKER_NEXUS_REGISTRY_URL,
+                            /*docker.withRegistry(DOCKER_NEXUS_REGISTRY_URL,
                                 DOCKER_NEXUS_REGISTRY_CREDENTIALS_KEY) {
                                 buildImage.push()
                             }
                             docker.withRegistry(DOCKER_RANCHER_REGISTRY_URL,
                                 DOCKER_RANCHER_REGISTRY_CREDENTIALS_KEY) {
                                 buildImage.push()
-                            }
+                            }*/
                         }
                     }
                 }
