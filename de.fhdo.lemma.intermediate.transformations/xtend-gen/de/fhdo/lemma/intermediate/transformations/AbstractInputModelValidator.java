@@ -2,9 +2,6 @@ package de.fhdo.lemma.intermediate.transformations;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
-import de.fhdo.lemma.intermediate.transformations.IntermediateTransformationException;
-import de.fhdo.lemma.intermediate.transformations.IntermediateTransformationExceptionKind;
-import de.fhdo.lemma.intermediate.transformations.IntermediateTransformationPhase;
 import java.util.Collections;
 import java.util.List;
 import org.eclipse.emf.ecore.EObject;

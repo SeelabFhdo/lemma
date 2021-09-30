@@ -134,7 +134,6 @@ public class IntermediateAspectPropertyImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getName() {
         return name;
     }
@@ -144,7 +143,6 @@ public class IntermediateAspectPropertyImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -157,7 +155,6 @@ public class IntermediateAspectPropertyImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getType() {
         return type;
     }
@@ -167,7 +164,6 @@ public class IntermediateAspectPropertyImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setType(String newType) {
         String oldType = type;
         type = newType;
@@ -180,7 +176,6 @@ public class IntermediateAspectPropertyImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getDefaultValue() {
         return defaultValue;
     }
@@ -190,7 +185,6 @@ public class IntermediateAspectPropertyImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setDefaultValue(String newDefaultValue) {
         String oldDefaultValue = defaultValue;
         defaultValue = newDefaultValue;
@@ -203,7 +197,6 @@ public class IntermediateAspectPropertyImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<String> getFeatureNames() {
         if (featureNames == null) {
             featureNames = new EDataTypeEList<String>(String.class, this, IntermediatePackage.INTERMEDIATE_ASPECT_PROPERTY__FEATURE_NAMES);
@@ -216,7 +209,6 @@ public class IntermediateAspectPropertyImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateImportedAspect getAspect() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_ASPECT_PROPERTY__ASPECT) return null;
         return (IntermediateImportedAspect)eContainer();
@@ -247,7 +239,6 @@ public class IntermediateAspectPropertyImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setAspect(IntermediateImportedAspect newAspect) {
         if (newAspect != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_ASPECT_PROPERTY__ASPECT && newAspect != null)) {
             if (EcoreUtil.isAncestor(this, newAspect))

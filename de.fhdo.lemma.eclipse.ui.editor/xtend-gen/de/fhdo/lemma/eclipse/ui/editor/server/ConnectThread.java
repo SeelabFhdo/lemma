@@ -1,7 +1,6 @@
 package de.fhdo.lemma.eclipse.ui.editor.server;
 
 import com.google.common.base.Function;
-import de.fhdo.lemma.eclipse.ui.editor.server.ServerConnection;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 

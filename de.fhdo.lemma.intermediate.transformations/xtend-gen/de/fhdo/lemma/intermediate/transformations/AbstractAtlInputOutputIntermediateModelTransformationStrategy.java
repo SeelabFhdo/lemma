@@ -1,9 +1,5 @@
 package de.fhdo.lemma.intermediate.transformations;
 
-import de.fhdo.lemma.intermediate.transformations.AbstractIntermediateModelTransformationStrategy;
-import de.fhdo.lemma.intermediate.transformations.TransformationModelDescription;
-import de.fhdo.lemma.intermediate.transformations.TransformationModelDirection;
-import de.fhdo.lemma.intermediate.transformations.TransformationModelType;
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.LinkedHashMap;

@@ -10,7 +10,6 @@
 
     <modules>
         <module>../de.fhdo.lemma.eclipse.ui</module>
-        <module>../de.fhdo.lemma.eclipse.ui.editor</module>
     </modules>
 
     <profiles>
@@ -46,11 +45,8 @@
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <atl-version>4.4.0</atl-version>
         <build-helper-maven-plugin-version>3.2.0</build-helper-maven-plugin-version>
         <eclipse-version>2021-03</eclipse-version>
-        <live-validation-version>${project.version}</live-validation-version>
-        <lsp4j-version>0.10.0</lsp4j-version>
         <maven-clean-plugin-version>3.1.0</maven-clean-plugin-version>
         <maven-compiler-plugin-version>3.8.1</maven-compiler-plugin-version>
         <maven-dependency-plugin-version>3.1.2</maven-dependency-plugin-version>
@@ -64,37 +60,32 @@
             <layout>p2</layout>
             <url>http://download.eclipse.org/releases/${eclipse-version}/</url>
         </repository>
-
-        <repository>
-            <id>lsp4j</id>
-            <layout>p2</layout>
-            <url>https://download.eclipse.org/lsp4j/updates/releases/${lsp4j-version}</url>
-        </repository>
-
-        <repository>
-            <id>ATL Update Site</id>
-            <layout>p2</layout>
-            <url>http://download.eclipse.org/mmt/atl/updates/releases/${atl-version}/</url>
-        </repository>
-
-        <!--
-            Strangely, we require this repository to enable the build of the UI parent plugin, which
-            otherwise fails due to missing ATL dependencies (required transitively due to the
-            plugin's dependency on the de.fhdo.lemma.intermediate.transformations plugin). However,
-            we would have expected the resolution of the ATL dependencies from the "ATL Update Site"
-            (see above) as it works for the Transformations plugin. Yet, the resolution does not
-            seem to work for the transitive dependency in the UI parent plugin.
-        -->
-        <repository>
-            <id>Eclipse Default</id>
-            <layout>default</layout>
-            <url>https://repo.eclipse.org/content/groups/releases/</url>
-        </repository>
     </repositories>
 
     <build>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>${maven-clean-plugin-version}</version>
+                    <executions>
+                        <execution>
+                            <id>gen-clean</id>
+                            <goals>
+                                <goal>clean</goal>
+                            </goals>
+                            <configuration>
+                                <filesets>
+                                    <fileset>
+                                        <directory>${project.basedir}/xtend-gen</directory>
+                                    </fileset>
+                                </filesets>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
                 <plugin>
                     <groupId>org.eclipse.xtend</groupId>
                     <artifactId>xtend-maven-plugin</artifactId>
@@ -110,29 +101,47 @@
                         </execution>
                     </executions>
                     <configuration>
-                        <outputDirectory>xtend-gen</outputDirectory>
+                        <outputDirectory>${project.basedir}/xtend-gen</outputDirectory>
                     </configuration>
                 </plugin>
 
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-clean-plugin</artifactId>
-                    <version>${maven-clean-plugin-version}</version>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>${build-helper-maven-plugin-version}</version>
                     <executions>
                         <execution>
-                            <id>gen-clean</id>
+                            <id>add-source</id>
+                            <phase>generate-sources</phase>
                             <goals>
-                                <goal>clean</goal>
+                                <goal>add-source</goal>
                             </goals>
                             <configuration>
-                                <filesets>
-                                    <fileset>
-                                        <directory>${basedir}/xtend-gen</directory>
-                                    </fileset>
-                                </filesets>
+                                <sources>
+                                    <source>${project.basedir}/xtend-gen</source>
+                                </sources>
                             </configuration>
                         </execution>
                     </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin-version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.eclipse.tycho</groupId>
+                    <artifactId>tycho-maven-plugin</artifactId>
+                    <version>${tycho-version}</version>
+                    <extensions>true</extensions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.eclipse.tycho</groupId>
+                    <artifactId>tycho-versions-plugin</artifactId>
+                    <version>${tycho-version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -141,13 +150,11 @@
             <plugin>
                 <groupId>org.eclipse.tycho</groupId>
                 <artifactId>tycho-maven-plugin</artifactId>
-                <version>${tycho-version}</version>
-                <extensions>true</extensions>
             </plugin>
+
             <plugin>
                 <groupId>org.eclipse.tycho</groupId>
                 <artifactId>tycho-versions-plugin</artifactId>
-                <version>${tycho-version}</version>
             </plugin>
         </plugins>
     </build>

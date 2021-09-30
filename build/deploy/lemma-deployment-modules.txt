@@ -8,6 +8,10 @@ de.fhdo.lemma.utils
 # Type Checker
 de.fhdo.lemma.typechecking
 
+# Live-Validation-capable Xtext Editor
+de.fhdo.lemma.live_validation
+de.fhdo.lemma.eclipse.ui.editor.parent
+
 # Languages
 de.fhdo.lemma.data.datadsl.parent
 de.fhdo.lemma.technology.technologydsl.parent
@@ -18,9 +22,6 @@ de.fhdo.lemma.operationdsl.parent
 # Transformations
 de.fhdo.lemma.intermediate.transformations.parent
 de.fhdo.lemma.data.avro.parent
-
-# Live Validation Framework
-de.fhdo.lemma.live_validation
 
 # UI Components
 de.fhdo.lemma.eclipse.ui.parent

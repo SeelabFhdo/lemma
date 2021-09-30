@@ -159,7 +159,6 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getName() {
         return name;
     }
@@ -169,7 +168,6 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -182,7 +180,6 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getQualifiedName() {
         return qualifiedName;
     }
@@ -192,7 +189,6 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setQualifiedName(String newQualifiedName) {
         String oldQualifiedName = qualifiedName;
         qualifiedName = newQualifiedName;
@@ -205,7 +201,6 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<String> getFeatureNames() {
         if (featureNames == null) {
             featureNames = new EDataTypeEList<String>(String.class, this, IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__FEATURE_NAMES);
@@ -218,7 +213,6 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateImport getImport() {
         if (import_ != null && import_.eIsProxy()) {
             InternalEObject oldImport = (InternalEObject)import_;
@@ -245,7 +239,6 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setImport(IntermediateImport newImport) {
         IntermediateImport oldImport = import_;
         import_ = newImport;
@@ -258,7 +251,6 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<IntermediateAspectProperty> getProperties() {
         if (properties == null) {
             properties = new EObjectContainmentWithInverseEList<IntermediateAspectProperty>(IntermediateAspectProperty.class, this, IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__PROPERTIES, IntermediatePackage.INTERMEDIATE_ASPECT_PROPERTY__ASPECT);
@@ -271,7 +263,6 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<IntermediateAspectPropertyValue> getPropertyValues() {
         if (propertyValues == null) {
             propertyValues = new EObjectContainmentWithInverseEList<IntermediateAspectPropertyValue>(IntermediateAspectPropertyValue.class, this, IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__PROPERTY_VALUES, IntermediatePackage.INTERMEDIATE_ASPECT_PROPERTY_VALUE__ASPECT);
@@ -284,7 +275,6 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateComplexType getComplexType() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__COMPLEX_TYPE) return null;
         return (IntermediateComplexType)eContainer();
@@ -315,7 +305,6 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setComplexType(IntermediateComplexType newComplexType) {
         if (newComplexType != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__COMPLEX_TYPE && newComplexType != null)) {
             if (EcoreUtil.isAncestor(this, newComplexType))
@@ -337,7 +326,6 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateDataOperation getOperation() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__OPERATION) return null;
         return (IntermediateDataOperation)eContainer();
@@ -368,7 +356,6 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setOperation(IntermediateDataOperation newOperation) {
         if (newOperation != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__OPERATION && newOperation != null)) {
             if (EcoreUtil.isAncestor(this, newOperation))
@@ -390,7 +377,6 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateDataOperationReturnType getReturnType() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__RETURN_TYPE) return null;
         return (IntermediateDataOperationReturnType)eContainer();
@@ -421,7 +407,6 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setReturnType(IntermediateDataOperationReturnType newReturnType) {
         if (newReturnType != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__RETURN_TYPE && newReturnType != null)) {
             if (EcoreUtil.isAncestor(this, newReturnType))
@@ -443,7 +428,6 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateDataOperationParameter getParameter() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__PARAMETER) return null;
         return (IntermediateDataOperationParameter)eContainer();
@@ -474,7 +458,6 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setParameter(IntermediateDataOperationParameter newParameter) {
         if (newParameter != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__PARAMETER && newParameter != null)) {
             if (EcoreUtil.isAncestor(this, newParameter))
@@ -496,7 +479,6 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateDataField getDataField() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__DATA_FIELD) return null;
         return (IntermediateDataField)eContainer();
@@ -527,7 +509,6 @@ public class IntermediateImportedAspectImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setDataField(IntermediateDataField newDataField) {
         if (newDataField != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__DATA_FIELD && newDataField != null)) {
             if (EcoreUtil.isAncestor(this, newDataField))

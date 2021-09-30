@@ -127,7 +127,6 @@ public class IntermediateDataModelImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getSourceModelUri() {
         return sourceModelUri;
     }
@@ -137,7 +136,6 @@ public class IntermediateDataModelImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setSourceModelUri(String newSourceModelUri) {
         String oldSourceModelUri = sourceModelUri;
         sourceModelUri = newSourceModelUri;
@@ -150,7 +148,6 @@ public class IntermediateDataModelImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<IntermediateImport> getImports() {
         if (imports == null) {
             imports = new EObjectContainmentWithInverseEList<IntermediateImport>(IntermediateImport.class, this, IntermediatePackage.INTERMEDIATE_DATA_MODEL__IMPORTS, IntermediatePackage.INTERMEDIATE_IMPORT__DATA_MODEL);
@@ -163,7 +160,6 @@ public class IntermediateDataModelImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<IntermediateVersion> getVersions() {
         if (versions == null) {
             versions = new EObjectContainmentWithInverseEList<IntermediateVersion>(IntermediateVersion.class, this, IntermediatePackage.INTERMEDIATE_DATA_MODEL__VERSIONS, IntermediatePackage.INTERMEDIATE_VERSION__DATA_MODEL);
@@ -176,7 +172,6 @@ public class IntermediateDataModelImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<IntermediateContext> getContexts() {
         if (contexts == null) {
             contexts = new EObjectContainmentWithInverseEList<IntermediateContext>(IntermediateContext.class, this, IntermediatePackage.INTERMEDIATE_DATA_MODEL__CONTEXTS, IntermediatePackage.INTERMEDIATE_CONTEXT__DATA_MODEL);
@@ -189,7 +184,6 @@ public class IntermediateDataModelImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<IntermediateComplexType> getComplexTypes() {
         if (complexTypes == null) {
             complexTypes = new EObjectContainmentWithInverseEList<IntermediateComplexType>(IntermediateComplexType.class, this, IntermediatePackage.INTERMEDIATE_DATA_MODEL__COMPLEX_TYPES, IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__DATA_MODEL);

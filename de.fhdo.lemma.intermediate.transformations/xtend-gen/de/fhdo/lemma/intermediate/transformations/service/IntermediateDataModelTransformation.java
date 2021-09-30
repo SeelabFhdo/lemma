@@ -11,7 +11,6 @@ import de.fhdo.lemma.intermediate.transformations.AbstractAtlInputOutputIntermed
 import de.fhdo.lemma.intermediate.transformations.AbstractInputModelValidator;
 import de.fhdo.lemma.intermediate.transformations.TransformationModelDescription;
 import de.fhdo.lemma.intermediate.transformations.TransformationModelType;
-import de.fhdo.lemma.intermediate.transformations.service.DataModelTransformationValidator;
 import de.fhdo.lemma.utils.LemmaUtils;
 import java.util.Map;
 import java.util.function.BiConsumer;

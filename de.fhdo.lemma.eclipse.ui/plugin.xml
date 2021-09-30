@@ -8,26 +8,6 @@
             id="de.fhdo.lemma.eclipse.ui.category.lemmaCommands">
       </category>
       <command
-            name="Generate Intermediate Service Models"
-            categoryId="de.fhdo.lemma.eclipse.ui.category.lemmaCommands"
-            id="de.fhdo.lemma.eclipse.ui.commands.generateServiceIntermediateModels">
-            <commandParameter
-                  id="de.fhdo.lemma.eclipse.ui.commands.parameters.selectedModelsOnly"
-                  name="Generate intermediate service models from resources selected in Project Explorer?"
-                  optional="true">
-            </commandParameter>
-      </command>
-      <command
-            name="Generate Intermediate Operation Models"
-            categoryId="de.fhdo.lemma.eclipse.ui.category.lemmaCommands"
-            id="de.fhdo.lemma.eclipse.ui.commands.generateOperationIntermediateModels">
-            <commandParameter
-                  id="de.fhdo.lemma.eclipse.ui.commands.parameters.selectedModelsOnly"
-                  name="Generate intermediate operation models from resources selected in Project Explorer?"
-                  optional="true">
-            </commandParameter>
-      </command>
-      <command
             name="About"
             categoryId="de.fhdo.lemma.eclipse.ui.category.lemmaCommands"
             id="de.fhdo.lemma.eclipse.ui.commands.about">
@@ -36,14 +16,6 @@
    <extension
          point="org.eclipse.ui.handlers">
       <handler
-            commandId="de.fhdo.lemma.eclipse.ui.commands.generateServiceIntermediateModels"
-            class="de.fhdo.lemma.eclipse.ui.IntermediateServiceModelTransformationController">
-      </handler>
-      <handler
-            commandId="de.fhdo.lemma.eclipse.ui.commands.generateOperationIntermediateModels"
-            class="de.fhdo.lemma.eclipse.ui.IntermediateOperationModelTransformationController">
-      </handler>
-      <handler
             commandId="de.fhdo.lemma.eclipse.ui.commands.about"
             class="de.fhdo.lemma.eclipse.ui.about_dialog.Controller">
       </handler>
@@ -51,158 +23,16 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
-         <menu
-               label="LEMMA"
-               mnemonic="D"
-               id="de.fhdo.lemma.eclipse.ui.lemmaMenu">
-            <command
-                  commandId="de.fhdo.lemma.eclipse.ui.commands.generateServiceIntermediateModels"
-                  mnemonic="M"
-                  icon="icons/generateIntermediateServiceModels.gif"
-                  id="de.fhdo.lemma.eclipse.ui.lemmaMenu.generateServiceIntermediateModels"
-                  label="Generate Intermediate Service Models...">
-                  <parameter
-                        name="de.fhdo.lemma.eclipse.ui.commands.parameters.selectedModelsOnly"
-                        value="true"/>
-            </command>
-            <command
-                  commandId="de.fhdo.lemma.eclipse.ui.commands.generateServiceIntermediateModels"
-                  mnemonic="W"
-                  icon="icons/generateForWorkspace.png"
-                  id="de.fhdo.lemma.eclipse.ui.lemmaMenu.generateServiceIntermediateModelsForWorkspace"
-                  label="Generate Intermediate Service Models for Workspace...">
-                  <parameter
-                        name="de.fhdo.lemma.eclipse.ui.commands.parameters.selectedModelsOnly"
-                        value="false"/>
-            </command>
-            <separator
-                  name="languageSeparator"
-                  visible="true">
-            </separator>
-            <command
-                  commandId="de.fhdo.lemma.eclipse.ui.commands.generateOperationIntermediateModels"
-                  mnemonic="M"
-                  icon="icons/generateIntermediateOperationModels.gif"
-                  id="de.fhdo.lemma.eclipse.ui.lemmaMenu.generateServiceIntermediateModels"
-                  label="Generate Intermediate Operation Models...">
-                  <parameter
-                        name="de.fhdo.lemma.eclipse.ui.commands.parameters.selectedModelsOnly"
-                        value="true"/>
-            </command>
-            <command
-                  commandId="de.fhdo.lemma.eclipse.ui.commands.generateOperationIntermediateModels"
-                  mnemonic="W"
-                  icon="icons/generateForWorkspace.png"
-                  id="de.fhdo.lemma.eclipse.ui.lemmaMenu.generateOperationIntermediateModelsForWorkspace"
-                  label="Generate Intermediate Operation Models for Workspace...">
-                  <parameter
-                        name="de.fhdo.lemma.eclipse.ui.commands.parameters.selectedModelsOnly"
-                        value="false"/>
-            </command>
-            <separator
-                  name="aboutSeparator"
-                  visible="true">
-            </separator>
-            <command
-                  commandId="de.fhdo.lemma.eclipse.ui.commands.about"
-                  icon="icons/about.png"
-                  id="de.fhdo.lemma.eclipse.ui.lemmaMenu.about"
-                  label="About LEMMA">
-            </command>
-         </menu>
-      </menuContribution>
-      <menuContribution
-            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
-         <toolbar
-               id="de.fhdo.lemma.eclipse.ui.lemmaToolbar">
-            <command
-                  commandId="de.fhdo.lemma.eclipse.ui.commands.generateServiceIntermediateModels"
-                  icon="icons/generateIntermediateServiceModels.gif"
-                  tooltip="Generate Intermediate Service Models"
-                  id="de.fhdo.lemma.eclipse.ui.toolbars.generateServiceIntermediateModels">
-                  <parameter
-                        name="de.fhdo.lemma.eclipse.ui.commands.parameters.selectedModelsOnly"
-                        value="true"/>
-            </command>
-         </toolbar>
-         <toolbar
-               id="de.fhdo.lemma.eclipse.ui.lemmaToolbar">
-            <command
-                  commandId="de.fhdo.lemma.eclipse.ui.commands.generateOperationIntermediateModels"
-                  icon="icons/generateIntermediateOperationModels.gif"
-                  tooltip="Generate Intermediate Operation Models"
-                  id="de.fhdo.lemma.eclipse.ui.toolbars.generateOperationIntermediateModels">
-                  <parameter
-                        name="de.fhdo.lemma.eclipse.ui.commands.parameters.selectedModelsOnly"
-                        value="true"/>
-            </command>
-         </toolbar>
-      </menuContribution>
-      <menuContribution
-            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+            locationURI="menu:de.fhdo.lemma.eclipse.ui.lemmaMenu?after=de.fhdo.lemma.eclipse.ui.lemmaMenu.connectionInformation">
+        <separator
+              name="aboutSeparator"
+              visible="true">
+        </separator>
         <command
-              commandId="de.fhdo.lemma.eclipse.ui.commands.generateServiceIntermediateModels"
-              mnemonic="M"
-              id="de.fhdo.lemma.eclipse.ui.menus.transformToLemmaModels"
-              icon="icons/generateIntermediateServiceModels.gif"
-              label="Generate Intermediate Service Models...">
-              <visibleWhen>
-                <with variable="activeMenuSelection">
-                    <iterate
-                        ifEmpty="false">
-                        <or>
-                            <instanceof value="org.eclipse.core.resources.IProject"/>
-                            <instanceof value="org.eclipse.core.resources.IFolder"/>
-                            <instanceof value="org.eclipse.jdt.core.IJavaProject"/>
-                            <adapt type="org.eclipse.core.resources.IResource">
-                                <or>
-                                    <test property="org.eclipse.core.resources.name"
-                                        value="*.data" />
-                                    <test property="org.eclipse.core.resources.name"
-                                        value="*.mapping" />
-                                    <test property="org.eclipse.core.resources.name"
-                                        value="*.services" />
-                                </or>
-                            </adapt>
-                        </or>
-                    </iterate>
-                </with>
-              </visibleWhen>
-              <parameter
-                    name="de.fhdo.lemma.eclipse.ui.commands.parameters.selectedModelsOnly"
-                    value="true"/>
-        </command>
-      </menuContribution>
-      <menuContribution
-            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
-        <command
-              commandId="de.fhdo.lemma.eclipse.ui.commands.generateOperationIntermediateModels"
-              mnemonic="M"
-              id="de.fhdo.lemma.eclipse.ui.menus.transformToLemmaOperationModels"
-              icon="icons/generateIntermediateOperationModels.gif"
-              label="Generate Intermediate Operation Models...">
-              <visibleWhen>
-                <with variable="activeMenuSelection">
-                    <iterate
-                        ifEmpty="false">
-                        <or>
-                            <instanceof value="org.eclipse.core.resources.IProject"/>
-                            <instanceof value="org.eclipse.core.resources.IFolder"/>
-                            <instanceof value="org.eclipse.jdt.core.IJavaProject"/>
-                            <adapt type="org.eclipse.core.resources.IResource">
-                                <or>
-                                    <test property="org.eclipse.core.resources.name"
-                                        value="*.operation" />
-                                </or>
-                            </adapt>
-                        </or>
-                    </iterate>
-                </with>
-              </visibleWhen>
-              <parameter
-                    name="de.fhdo.lemma.eclipse.ui.commands.parameters.selectedModelsOnly"
-                    value="true"/>
+              commandId="de.fhdo.lemma.eclipse.ui.commands.about"
+              icon="icons/about.png"
+              id="de.fhdo.lemma.eclipse.ui.lemmaMenu.about"
+              label="About LEMMA">
         </command>
       </menuContribution>
    </extension>

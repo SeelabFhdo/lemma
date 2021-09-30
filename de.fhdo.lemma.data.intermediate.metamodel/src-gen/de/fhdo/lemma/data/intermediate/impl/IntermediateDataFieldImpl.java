@@ -251,7 +251,6 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getName() {
         return name;
     }
@@ -261,7 +260,6 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -274,7 +272,6 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getQualifiedName() {
         return qualifiedName;
     }
@@ -284,7 +281,6 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setQualifiedName(String newQualifiedName) {
         String oldQualifiedName = qualifiedName;
         qualifiedName = newQualifiedName;
@@ -297,7 +293,6 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public boolean isHidden() {
         return hidden;
     }
@@ -307,7 +302,6 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setHidden(boolean newHidden) {
         boolean oldHidden = hidden;
         hidden = newHidden;
@@ -320,7 +314,6 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public boolean isImmutable() {
         return immutable;
     }
@@ -330,7 +323,6 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setImmutable(boolean newImmutable) {
         boolean oldImmutable = immutable;
         immutable = newImmutable;
@@ -343,7 +335,6 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public boolean isInherited() {
         return inherited;
     }
@@ -353,7 +344,6 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setInherited(boolean newInherited) {
         boolean oldInherited = inherited;
         inherited = newInherited;
@@ -366,7 +356,6 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<String> getFeatureNames() {
         if (featureNames == null) {
             featureNames = new EDataTypeEList<String>(String.class, this, IntermediatePackage.INTERMEDIATE_DATA_FIELD__FEATURE_NAMES);
@@ -379,7 +368,6 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getInitializationValue() {
         return initializationValue;
     }
@@ -389,7 +377,6 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setInitializationValue(String newInitializationValue) {
         String oldInitializationValue = initializationValue;
         initializationValue = newInitializationValue;
@@ -402,7 +389,6 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<IntermediatePrimitiveType> getInitializationValueCompatibleTypes() {
         if (initializationValueCompatibleTypes == null) {
             initializationValueCompatibleTypes = new EObjectContainmentWithInverseEList<IntermediatePrimitiveType>(IntermediatePrimitiveType.class, this, IntermediatePackage.INTERMEDIATE_DATA_FIELD__INITIALIZATION_VALUE_COMPATIBLE_TYPES, IntermediatePackage.INTERMEDIATE_PRIMITIVE_TYPE__INITIALIZED_DATA_FIELD);
@@ -415,7 +401,6 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateType getType() {
         return type;
     }
@@ -440,7 +425,6 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setType(IntermediateType newType) {
         if (newType != type) {
             NotificationChain msgs = null;
@@ -460,7 +444,6 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateType getOriginalType() {
         return originalType;
     }
@@ -485,7 +468,6 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setOriginalType(IntermediateType newOriginalType) {
         if (newOriginalType != originalType) {
             NotificationChain msgs = null;
@@ -505,7 +487,6 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<IntermediateImportedAspect> getAspects() {
         if (aspects == null) {
             aspects = new EObjectContainmentWithInverseEList<IntermediateImportedAspect>(IntermediateImportedAspect.class, this, IntermediatePackage.INTERMEDIATE_DATA_FIELD__ASPECTS, IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__DATA_FIELD);
@@ -518,7 +499,6 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateDataStructure getDataStructure() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_DATA_FIELD__DATA_STRUCTURE) return null;
         return (IntermediateDataStructure)eContainer();
@@ -549,7 +529,6 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setDataStructure(IntermediateDataStructure newDataStructure) {
         if (newDataStructure != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_DATA_FIELD__DATA_STRUCTURE && newDataStructure != null)) {
             if (EcoreUtil.isAncestor(this, newDataStructure))
@@ -571,7 +550,6 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateListType getListType() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_DATA_FIELD__LIST_TYPE) return null;
         return (IntermediateListType)eContainer();
@@ -602,7 +580,6 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setListType(IntermediateListType newListType) {
         if (newListType != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_DATA_FIELD__LIST_TYPE && newListType != null)) {
             if (EcoreUtil.isAncestor(this, newListType))
@@ -624,7 +601,6 @@ public class IntermediateDataFieldImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateComplexType getEffectiveComplexType() {
         IntermediateComplexType _xifexpression = null;
         IntermediateDataStructure _dataStructure = this.getDataStructure();

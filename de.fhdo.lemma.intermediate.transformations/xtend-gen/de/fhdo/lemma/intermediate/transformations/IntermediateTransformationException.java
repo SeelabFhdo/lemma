@@ -1,7 +1,5 @@
 package de.fhdo.lemma.intermediate.transformations;
 
-import de.fhdo.lemma.intermediate.transformations.IntermediateTransformationExceptionKind;
-import de.fhdo.lemma.intermediate.transformations.IntermediateTransformationPhase;
 import org.eclipse.xtend.lib.annotations.AccessorType;
 import org.eclipse.xtend.lib.annotations.Accessors;
 import org.eclipse.xtext.xbase.lib.Pure;

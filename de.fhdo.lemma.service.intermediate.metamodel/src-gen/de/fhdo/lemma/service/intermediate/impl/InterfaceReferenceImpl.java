@@ -164,7 +164,6 @@ public class InterfaceReferenceImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getName() {
         return name;
     }
@@ -174,7 +173,6 @@ public class InterfaceReferenceImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -187,7 +185,6 @@ public class InterfaceReferenceImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getVersion() {
         return version;
     }
@@ -197,7 +194,6 @@ public class InterfaceReferenceImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setVersion(String newVersion) {
         String oldVersion = version;
         version = newVersion;
@@ -210,7 +206,6 @@ public class InterfaceReferenceImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getQualifiedName() {
         return qualifiedName;
     }
@@ -220,7 +215,6 @@ public class InterfaceReferenceImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setQualifiedName(String newQualifiedName) {
         String oldQualifiedName = qualifiedName;
         qualifiedName = newQualifiedName;
@@ -233,7 +227,6 @@ public class InterfaceReferenceImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public boolean isImported() {
         return imported;
     }
@@ -243,7 +236,6 @@ public class InterfaceReferenceImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setImported(boolean newImported) {
         boolean oldImported = imported;
         imported = newImported;
@@ -256,7 +248,6 @@ public class InterfaceReferenceImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateImport getImport() {
         if (import_ != null && import_.eIsProxy()) {
             InternalEObject oldImport = (InternalEObject)import_;
@@ -283,7 +274,6 @@ public class InterfaceReferenceImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setImport(IntermediateImport newImport) {
         IntermediateImport oldImport = import_;
         import_ = newImport;
@@ -296,7 +286,6 @@ public class InterfaceReferenceImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateInterface getLocalInterface() {
         if (localInterface != null && localInterface.eIsProxy()) {
             InternalEObject oldLocalInterface = (InternalEObject)localInterface;
@@ -323,7 +312,6 @@ public class InterfaceReferenceImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setLocalInterface(IntermediateInterface newLocalInterface) {
         IntermediateInterface oldLocalInterface = localInterface;
         localInterface = newLocalInterface;
@@ -336,7 +324,6 @@ public class InterfaceReferenceImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateMicroservice getRequiringMicroservice() {
         if (eContainerFeatureID() != IntermediatePackage.INTERFACE_REFERENCE__REQUIRING_MICROSERVICE) return null;
         return (IntermediateMicroservice)eContainer();
@@ -367,7 +354,6 @@ public class InterfaceReferenceImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setRequiringMicroservice(IntermediateMicroservice newRequiringMicroservice) {
         if (newRequiringMicroservice != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERFACE_REFERENCE__REQUIRING_MICROSERVICE && newRequiringMicroservice != null)) {
             if (EcoreUtil.isAncestor(this, newRequiringMicroservice))

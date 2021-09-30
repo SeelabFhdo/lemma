@@ -123,7 +123,6 @@ public class IntermediateListTypeImpl extends IntermediateComplexTypeImpl implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public boolean isPrimitiveList() {
         return primitiveList;
     }
@@ -133,7 +132,6 @@ public class IntermediateListTypeImpl extends IntermediateComplexTypeImpl implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setPrimitiveList(boolean newPrimitiveList) {
         boolean oldPrimitiveList = primitiveList;
         primitiveList = newPrimitiveList;
@@ -146,7 +144,6 @@ public class IntermediateListTypeImpl extends IntermediateComplexTypeImpl implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public boolean isStructuredList() {
         return structuredList;
     }
@@ -156,7 +153,6 @@ public class IntermediateListTypeImpl extends IntermediateComplexTypeImpl implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setStructuredList(boolean newStructuredList) {
         boolean oldStructuredList = structuredList;
         structuredList = newStructuredList;
@@ -169,7 +165,6 @@ public class IntermediateListTypeImpl extends IntermediateComplexTypeImpl implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediatePrimitiveType getPrimitiveType() {
         return primitiveType;
     }
@@ -194,7 +189,6 @@ public class IntermediateListTypeImpl extends IntermediateComplexTypeImpl implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setPrimitiveType(IntermediatePrimitiveType newPrimitiveType) {
         if (newPrimitiveType != primitiveType) {
             NotificationChain msgs = null;
@@ -214,7 +208,6 @@ public class IntermediateListTypeImpl extends IntermediateComplexTypeImpl implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<IntermediateDataField> getDataFields() {
         if (dataFields == null) {
             dataFields = new EObjectContainmentWithInverseEList<IntermediateDataField>(IntermediateDataField.class, this, IntermediatePackage.INTERMEDIATE_LIST_TYPE__DATA_FIELDS, IntermediatePackage.INTERMEDIATE_DATA_FIELD__LIST_TYPE);

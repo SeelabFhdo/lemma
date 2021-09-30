@@ -13,39 +13,31 @@
     <artifactId>de.fhdo.lemma.service.intermediate.metamodel</artifactId>
     <packaging>eclipse-plugin</packaging>
 
-    <dependencies>
-        <dependency>
-            <groupId>de.fhdo.lemma.intermediate</groupId>
-            <artifactId>de.fhdo.lemma.data.intermediate.metamodel</artifactId>
-            <version>${intermediate-data-metamodel-version}</version>
-        </dependency>
-    </dependencies>
-
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.eclipse.xtend</groupId>
+                <artifactId>xtend-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
-                <version>${build-helper-maven-plugin-version}</version>
-                <executions>
-                  <execution>
-                    <id>add-source</id>
-                    <phase>generate-sources</phase>
-                    <goals>
-                      <goal>add-source</goal>
-                    </goals>
-                    <configuration>
-                      <sources>
-                        <source>src-gen/</source>
-                      </sources>
-                    </configuration>
-                  </execution>
-                </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin-version}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>tycho-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

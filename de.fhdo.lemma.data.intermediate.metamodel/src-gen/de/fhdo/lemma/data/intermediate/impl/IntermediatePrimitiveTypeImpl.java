@@ -77,7 +77,6 @@ public class IntermediatePrimitiveTypeImpl extends IntermediateTypeImpl implemen
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Integer getSize() {
         return size;
     }
@@ -87,7 +86,6 @@ public class IntermediatePrimitiveTypeImpl extends IntermediateTypeImpl implemen
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setSize(Integer newSize) {
         Integer oldSize = size;
         size = newSize;
@@ -100,7 +98,6 @@ public class IntermediatePrimitiveTypeImpl extends IntermediateTypeImpl implemen
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateDataField getInitializedDataField() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_PRIMITIVE_TYPE__INITIALIZED_DATA_FIELD) return null;
         return (IntermediateDataField)eContainer();
@@ -131,7 +128,6 @@ public class IntermediatePrimitiveTypeImpl extends IntermediateTypeImpl implemen
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setInitializedDataField(IntermediateDataField newInitializedDataField) {
         if (newInitializedDataField != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_PRIMITIVE_TYPE__INITIALIZED_DATA_FIELD && newInitializedDataField != null)) {
             if (EcoreUtil.isAncestor(this, newInitializedDataField))
@@ -153,7 +149,6 @@ public class IntermediatePrimitiveTypeImpl extends IntermediateTypeImpl implemen
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateEnumerationField getInitializedEnumerationField() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_PRIMITIVE_TYPE__INITIALIZED_ENUMERATION_FIELD) return null;
         return (IntermediateEnumerationField)eContainer();
@@ -184,7 +179,6 @@ public class IntermediatePrimitiveTypeImpl extends IntermediateTypeImpl implemen
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setInitializedEnumerationField(IntermediateEnumerationField newInitializedEnumerationField) {
         if (newInitializedEnumerationField != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_PRIMITIVE_TYPE__INITIALIZED_ENUMERATION_FIELD && newInitializedEnumerationField != null)) {
             if (EcoreUtil.isAncestor(this, newInitializedEnumerationField))

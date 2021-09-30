@@ -124,7 +124,6 @@ public abstract class IntermediateTypeImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getName() {
         return name;
     }
@@ -134,7 +133,6 @@ public abstract class IntermediateTypeImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -147,7 +145,6 @@ public abstract class IntermediateTypeImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateTypeOrigin getOrigin() {
         return origin;
     }
@@ -157,7 +154,6 @@ public abstract class IntermediateTypeImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setOrigin(IntermediateTypeOrigin newOrigin) {
         IntermediateTypeOrigin oldOrigin = origin;
         origin = newOrigin == null ? ORIGIN_EDEFAULT : newOrigin;
@@ -170,7 +166,6 @@ public abstract class IntermediateTypeImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateTypeKind getKind() {
         return kind;
     }
@@ -180,7 +175,6 @@ public abstract class IntermediateTypeImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setKind(IntermediateTypeKind newKind) {
         IntermediateTypeKind oldKind = kind;
         kind = newKind == null ? KIND_EDEFAULT : newKind;
@@ -193,7 +187,6 @@ public abstract class IntermediateTypeImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateDataOperationReturnType getReturnType() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_TYPE__RETURN_TYPE) return null;
         return (IntermediateDataOperationReturnType)eContainer();
@@ -224,7 +217,6 @@ public abstract class IntermediateTypeImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setReturnType(IntermediateDataOperationReturnType newReturnType) {
         if (newReturnType != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_TYPE__RETURN_TYPE && newReturnType != null)) {
             if (EcoreUtil.isAncestor(this, newReturnType))
@@ -246,7 +238,6 @@ public abstract class IntermediateTypeImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateDataOperationParameter getParameter() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_TYPE__PARAMETER) return null;
         return (IntermediateDataOperationParameter)eContainer();
@@ -277,7 +268,6 @@ public abstract class IntermediateTypeImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setParameter(IntermediateDataOperationParameter newParameter) {
         if (newParameter != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_TYPE__PARAMETER && newParameter != null)) {
             if (EcoreUtil.isAncestor(this, newParameter))
@@ -299,7 +289,6 @@ public abstract class IntermediateTypeImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateDataField getDataField() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_TYPE__DATA_FIELD) return null;
         return (IntermediateDataField)eContainer();
@@ -330,7 +319,6 @@ public abstract class IntermediateTypeImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setDataField(IntermediateDataField newDataField) {
         if (newDataField != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_TYPE__DATA_FIELD && newDataField != null)) {
             if (EcoreUtil.isAncestor(this, newDataField))

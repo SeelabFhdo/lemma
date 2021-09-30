@@ -1,6 +1,5 @@
 package de.fhdo.lemma.eclipse.ui.about_dialog;
 
-import de.fhdo.lemma.eclipse.ui.about_dialog.MarkdownToStyledTextConverter;
 import java.io.InputStream;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TrayDialog;

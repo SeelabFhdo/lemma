@@ -105,7 +105,6 @@ public class IntermediateServiceModelImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getSourceModelUri() {
         return sourceModelUri;
     }
@@ -115,7 +114,6 @@ public class IntermediateServiceModelImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setSourceModelUri(String newSourceModelUri) {
         String oldSourceModelUri = sourceModelUri;
         sourceModelUri = newSourceModelUri;
@@ -128,7 +126,6 @@ public class IntermediateServiceModelImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<IntermediateImport> getImports() {
         if (imports == null) {
             imports = new EObjectContainmentEList<IntermediateImport>(IntermediateImport.class, this, IntermediatePackage.INTERMEDIATE_SERVICE_MODEL__IMPORTS);
@@ -141,7 +138,6 @@ public class IntermediateServiceModelImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<IntermediateMicroservice> getMicroservices() {
         if (microservices == null) {
             microservices = new EObjectContainmentWithInverseEList<IntermediateMicroservice>(IntermediateMicroservice.class, this, IntermediatePackage.INTERMEDIATE_SERVICE_MODEL__MICROSERVICES, IntermediatePackage.INTERMEDIATE_MICROSERVICE__SERVICE_MODEL);

@@ -11,8 +11,9 @@
     <modules>
         <module>../de.fhdo.lemma.data.intermediate.metamodel</module>
         <module>../de.fhdo.lemma.service.intermediate.metamodel</module>
-        <module>../de.fhdo.lemma.intermediate.transformations</module>
         <module>../de.fhdo.lemma.operation.intermediate.metamodel</module>
+        <module>../de.fhdo.lemma.intermediate.transformations</module>
+        <module>../de.fhdo.lemma.intermediate.transformations.ui</module>
     </modules>
 
     <profiles>
@@ -86,6 +87,27 @@
         <pluginManagement>
             <plugins>
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>${maven-clean-plugin-version}</version>
+                    <executions>
+                        <execution>
+                            <id>gen-clean</id>
+                            <goals>
+                                <goal>clean</goal>
+                            </goals>
+                            <configuration>
+                                <filesets>
+                                    <fileset>
+                                        <directory>${project.basedir}/xtend-gen</directory>
+                                    </fileset>
+                                </filesets>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
                     <groupId>org.eclipse.xtend</groupId>
                     <artifactId>xtend-maven-plugin</artifactId>
                     <version>${xtext-version}</version>
@@ -100,29 +122,47 @@
                         </execution>
                     </executions>
                     <configuration>
-                        <outputDirectory>xtend-gen</outputDirectory>
+                        <outputDirectory>${project.basedir}/xtend-gen</outputDirectory>
                     </configuration>
                 </plugin>
 
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-clean-plugin</artifactId>
-                    <version>${maven-clean-plugin-version}</version>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>${build-helper-maven-plugin-version}</version>
                     <executions>
-                        <execution>
-                            <id>gen-clean</id>
-                            <goals>
-                                <goal>clean</goal>
-                            </goals>
-                            <configuration>
-                                <filesets>
-                                    <fileset>
-                                        <directory>${basedir}/xtend-gen</directory>
-                                    </fileset>
-                                </filesets>
-                            </configuration>
-                        </execution>
+                      <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                          <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                          <sources>
+                            <source>${project.basedir}/src-gen</source>
+                          </sources>
+                        </configuration>
+                      </execution>
                     </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin-version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.eclipse.tycho</groupId>
+                    <artifactId>tycho-maven-plugin</artifactId>
+                    <version>${tycho-version}</version>
+                    <extensions>true</extensions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.eclipse.tycho</groupId>
+                    <artifactId>tycho-versions-plugin</artifactId>
+                    <version>${tycho-version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -131,13 +171,10 @@
             <plugin>
                 <groupId>org.eclipse.tycho</groupId>
                 <artifactId>tycho-maven-plugin</artifactId>
-                <version>${tycho-version}</version>
-                <extensions>true</extensions>
             </plugin>
             <plugin>
                 <groupId>org.eclipse.tycho</groupId>
                 <artifactId>tycho-versions-plugin</artifactId>
-                <version>${tycho-version}</version>
             </plugin>
         </plugins>
     </build>

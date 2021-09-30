@@ -208,6 +208,13 @@
          version="0.0.0"
          unpack="false"/>
 
+   <plugin
+         id="de.fhdo.lemma.intermediate.transformations.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
    <!-- Required by Eclipse UI -->
    <plugin
          id="de.fhdo.lemma.technology.mappingdsl.metamodel"

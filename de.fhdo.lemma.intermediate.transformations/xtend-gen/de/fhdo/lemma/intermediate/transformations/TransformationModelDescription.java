@@ -1,6 +1,5 @@
 package de.fhdo.lemma.intermediate.transformations;
 
-import de.fhdo.lemma.intermediate.transformations.TransformationModelDirection;
 import java.util.Objects;
 import org.eclipse.xtend.lib.annotations.Accessors;
 import org.eclipse.xtext.xbase.lib.Pure;

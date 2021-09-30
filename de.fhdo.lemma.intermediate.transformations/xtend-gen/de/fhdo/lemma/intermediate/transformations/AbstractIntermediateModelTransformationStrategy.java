@@ -2,13 +2,6 @@ package de.fhdo.lemma.intermediate.transformations;
 
 import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
-import de.fhdo.lemma.intermediate.transformations.AbstractInputModelValidator;
-import de.fhdo.lemma.intermediate.transformations.IntermediateTransformationException;
-import de.fhdo.lemma.intermediate.transformations.IntermediateTransformationExceptionKind;
-import de.fhdo.lemma.intermediate.transformations.IntermediateTransformationPhase;
-import de.fhdo.lemma.intermediate.transformations.TransformationModelDescription;
-import de.fhdo.lemma.intermediate.transformations.TransformationModelDirection;
-import de.fhdo.lemma.intermediate.transformations.TransformationModelType;
 import de.fhdo.lemma.utils.LemmaUtils;
 import java.util.HashMap;
 import java.util.LinkedHashMap;

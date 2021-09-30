@@ -112,22 +112,19 @@
         </command>
       </menuContribution>
       <menuContribution
-            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
-         <toolbar
-               id="de.fhdo.lemma.eclipse.ui.lemmaToolbar">
-            <command
-                  commandId="de.fhdo.lemma.eclipse.ui.commands.connectToLiveValidationServer"
-                  icon="icons/connectLiveValidationServer.gif"
-                  tooltip="Connect to Live Validation Server"
-                  id="de.fhdo.lemma.eclipse.ui.toolbars.connectToLiveValidationServer">
-            </command>
-            <command
-                  commandId="de.fhdo.lemma.eclipse.ui.commands.disconnectFromLiveValidationServer"
-                  icon="icons/disconnectLiveValidationServer.gif"
-                  tooltip="Disconnect from Live Validation Server"
-                  id="de.fhdo.lemma.eclipse.ui.toolbars.disconnectFromLiveValidationServer">
-            </command>
-         </toolbar>
+            locationURI="toolbar:de.fhdo.lemma.eclipse.ui.lemmaToolbar?after=de.fhdo.lemma.eclipse.ui.toolbars.generateOperationIntermediateModels">
+        <command
+              commandId="de.fhdo.lemma.eclipse.ui.commands.connectToLiveValidationServer"
+              icon="icons/connectLiveValidationServer.gif"
+              tooltip="Connect to Live Validation Server"
+              id="de.fhdo.lemma.eclipse.ui.toolbars.connectToLiveValidationServer">
+        </command>
+        <command
+              commandId="de.fhdo.lemma.eclipse.ui.commands.disconnectFromLiveValidationServer"
+              icon="icons/disconnectLiveValidationServer.gif"
+              tooltip="Disconnect from Live Validation Server"
+              id="de.fhdo.lemma.eclipse.ui.toolbars.disconnectFromLiveValidationServer">
+        </command>
       </menuContribution>
    </extension>
 </plugin>

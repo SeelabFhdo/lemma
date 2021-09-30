@@ -207,7 +207,6 @@ public class IntermediateOperationImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getName() {
         return name;
     }
@@ -217,7 +216,6 @@ public class IntermediateOperationImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -230,7 +228,6 @@ public class IntermediateOperationImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getQualifiedName() {
         return qualifiedName;
     }
@@ -240,7 +237,6 @@ public class IntermediateOperationImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setQualifiedName(String newQualifiedName) {
         String oldQualifiedName = qualifiedName;
         qualifiedName = newQualifiedName;
@@ -253,7 +249,6 @@ public class IntermediateOperationImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getVisibility() {
         return visibility;
     }
@@ -263,7 +258,6 @@ public class IntermediateOperationImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setVisibility(String newVisibility) {
         String oldVisibility = visibility;
         visibility = newVisibility;
@@ -276,7 +270,6 @@ public class IntermediateOperationImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public boolean isNotImplemented() {
         return notImplemented;
     }
@@ -286,7 +279,6 @@ public class IntermediateOperationImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setNotImplemented(boolean newNotImplemented) {
         boolean oldNotImplemented = notImplemented;
         notImplemented = newNotImplemented;
@@ -299,7 +291,6 @@ public class IntermediateOperationImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateApiOperationComment getApiOperationComment() {
         return apiOperationComment;
     }
@@ -324,7 +315,6 @@ public class IntermediateOperationImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setApiOperationComment(IntermediateApiOperationComment newApiOperationComment) {
         if (newApiOperationComment != apiOperationComment) {
             NotificationChain msgs = null;
@@ -344,7 +334,6 @@ public class IntermediateOperationImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<IntermediateEndpoint> getEndpoints() {
         if (endpoints == null) {
             endpoints = new EObjectContainmentWithInverseEList<IntermediateEndpoint>(IntermediateEndpoint.class, this, IntermediatePackage.INTERMEDIATE_OPERATION__ENDPOINTS, IntermediatePackage.INTERMEDIATE_ENDPOINT__OPERATION);
@@ -357,7 +346,6 @@ public class IntermediateOperationImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<IntermediateProtocolSpecification> getProtocols() {
         if (protocols == null) {
             protocols = new EObjectContainmentEList<IntermediateProtocolSpecification>(IntermediateProtocolSpecification.class, this, IntermediatePackage.INTERMEDIATE_OPERATION__PROTOCOLS);
@@ -370,7 +358,6 @@ public class IntermediateOperationImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<IntermediateImportedAspect> getAspects() {
         if (aspects == null) {
             aspects = new EObjectContainmentEList<IntermediateImportedAspect>(IntermediateImportedAspect.class, this, IntermediatePackage.INTERMEDIATE_OPERATION__ASPECTS);
@@ -383,7 +370,6 @@ public class IntermediateOperationImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<IntermediateParameter> getParameters() {
         if (parameters == null) {
             parameters = new EObjectContainmentWithInverseEList<IntermediateParameter>(IntermediateParameter.class, this, IntermediatePackage.INTERMEDIATE_OPERATION__PARAMETERS, IntermediatePackage.INTERMEDIATE_PARAMETER__OPERATION);
@@ -396,7 +382,6 @@ public class IntermediateOperationImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateInterface getInterface() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_OPERATION__INTERFACE) return null;
         return (IntermediateInterface)eContainer();
@@ -427,7 +412,6 @@ public class IntermediateOperationImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setInterface(IntermediateInterface newInterface) {
         if (newInterface != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_OPERATION__INTERFACE && newInterface != null)) {
             if (EcoreUtil.isAncestor(this, newInterface))

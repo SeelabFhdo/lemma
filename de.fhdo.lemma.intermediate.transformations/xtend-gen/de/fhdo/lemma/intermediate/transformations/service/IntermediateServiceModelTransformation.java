@@ -6,7 +6,6 @@ import de.fhdo.lemma.intermediate.transformations.AbstractAtlInputOutputIntermed
 import de.fhdo.lemma.intermediate.transformations.AbstractInputModelValidator;
 import de.fhdo.lemma.intermediate.transformations.TransformationModelDescription;
 import de.fhdo.lemma.intermediate.transformations.TransformationModelType;
-import de.fhdo.lemma.intermediate.transformations.service.ServiceModelTransformationValidator;
 import de.fhdo.lemma.service.Import;
 import de.fhdo.lemma.service.Microservice;
 import de.fhdo.lemma.service.ServiceModel;

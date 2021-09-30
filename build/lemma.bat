@@ -10,6 +10,10 @@ REM Type Checker
 set modules=%modules%;de.fhdo.lemma.technology.technologydsl.metamodel
 set modules=%modules%;de.fhdo.lemma.typechecking
 
+REM Live-Validation-capable Xtext Editor
+set modules=%modules%;de.fhdo.lemma.live_validation
+set modules=%modules%;de.fhdo.lemma.eclipse.ui.editor.parent
+
 REM Languages
 set modules=%modules%;de.fhdo.lemma.data.datadsl.parent
 set modules=%modules%;de.fhdo.lemma.technology.technologydsl.parent
@@ -20,9 +24,6 @@ set modules=%modules%;de.fhdo.lemma.operationdsl.parent
 REM Transformations
 set modules=%modules%;de.fhdo.lemma.intermediate.transformations.parent
 set modules=%modules%;de.fhdo.lemma.data.avro.parent
-
-REM Live Validation Framework
-set modules=%modules%;de.fhdo.lemma.live_validation
 
 REM UI Components
 set modules=%modules%;de.fhdo.lemma.eclipse.ui.parent
