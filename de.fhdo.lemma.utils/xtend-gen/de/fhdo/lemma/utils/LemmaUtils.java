@@ -6,6 +6,8 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import java.io.File;
 import java.io.InputStream;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayDeque;
@@ -51,6 +53,8 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
  */
 @SuppressWarnings("all")
 public final class LemmaUtils {
+  private static final String PLATFORM_RESOURCE_SCHEME = "platform:/resource";
+  
   /**
    * Get the current version of LEMMA as a printable String
    */
@@ -97,32 +101,117 @@ public final class LemmaUtils {
    * resource represented by an import URI that points to a file
    */
   public static List<EObject> getImportedModelContents(final Resource context, final String importUri) {
-    if ((((context == null) || (importUri == null)) || importUri.isEmpty())) {
-      return null;
-    }
-    Resource importResource = EcoreUtil2.getResource(context, importUri);
-    List<EObject> _elvis = null;
-    EList<EObject> _contents = null;
-    if (importResource!=null) {
-      _contents=importResource.getContents();
-    }
-    if (_contents != null) {
-      _elvis = _contents;
-    } else {
-      List<EObject> _emptyList = CollectionLiterals.<EObject>emptyList();
-      _elvis = _emptyList;
-    }
-    List<EObject> importedContents = _elvis;
-    boolean _isEmpty = importedContents.isEmpty();
-    if (_isEmpty) {
-      importResource = EcoreUtil2.getResource(context, LemmaUtils.convertToFileUri(importUri));
-      EList<EObject> _contents_1 = null;
-      if (importResource!=null) {
-        _contents_1=importResource.getContents();
+    List<EObject> _xifexpression = null;
+    if (((context != null) && (!StringExtensions.isNullOrEmpty(importUri)))) {
+      List<EObject> _elvis = null;
+      Resource _resourceFromUri = LemmaUtils.getResourceFromUri(context, importUri);
+      EList<EObject> _contents = null;
+      if (_resourceFromUri!=null) {
+        _contents=_resourceFromUri.getContents();
       }
-      importedContents = _contents_1;
+      if (_contents != null) {
+        _elvis = _contents;
+      } else {
+        List<EObject> _emptyList = CollectionLiterals.<EObject>emptyList();
+        _elvis = _emptyList;
+      }
+      _xifexpression = _elvis;
+    } else {
+      _xifexpression = null;
     }
-    return importedContents;
+    return _xifexpression;
+  }
+  
+  /**
+   * Get an Ecore Resource object from a given URI
+   */
+  public static Resource getResourceFromUri(final Resource context, final String uri) {
+    Resource _xifexpression = null;
+    if (((context != null) && (!StringExtensions.isNullOrEmpty(uri)))) {
+      Resource _xblockexpression = null;
+      {
+        final String absoluteFileUri = LemmaUtils.absoluteFileUriFromResourceBase(LemmaUtils.convertPlatformUriToAbsoluteFilePath(uri), context);
+        _xblockexpression = EcoreUtil2.getResource(context, absoluteFileUri);
+      }
+      _xifexpression = _xblockexpression;
+    } else {
+      _xifexpression = null;
+    }
+    return _xifexpression;
+  }
+  
+  /**
+   * Get absolute file URI for a given relative URI based on the path of the given Ecore resource
+   */
+  public static String absoluteFileUriFromResourceBase(final String relativeUri, final Resource resource) {
+    return LemmaUtils.convertToAbsoluteFileUri(relativeUri, LemmaUtils.absolutePath(resource));
+  }
+  
+  /**
+   * Get absolute path for a given Ecore resource
+   */
+  public static String absolutePath(final Resource resource) {
+    String _xtrycatchfinallyexpression = null;
+    try {
+      IFile _fileForResource = LemmaUtils.getFileForResource(resource);
+      String _absolutePath = null;
+      if (_fileForResource!=null) {
+        _absolutePath=LemmaUtils.getAbsolutePath(_fileForResource);
+      }
+      _xtrycatchfinallyexpression = _absolutePath;
+    } catch (final Throwable _t) {
+      if (_t instanceof IllegalStateException) {
+        _xtrycatchfinallyexpression = LemmaUtils.absoluteFilePathFromResourceBaseWithoutWorkspace(resource);
+      } else {
+        throw Exceptions.sneakyThrow(_t);
+      }
+    }
+    return _xtrycatchfinallyexpression;
+  }
+  
+  /**
+   * Decode an URI
+   */
+  private static String decodeUri(final String uri) {
+    return URLDecoder.decode(uri, StandardCharsets.UTF_8);
+  }
+  
+  /**
+   * Get absolute path for a given Ecore resource when there is no Eclipse workspace available.
+   */
+  private static String absoluteFilePathFromResourceBaseWithoutWorkspace(final Resource resource) {
+    try {
+      final String resourcePath = LemmaUtils.decodeUri(LemmaUtils.removeFileUri(resource.getURI().toString()));
+      return new File(resourcePath).getCanonicalPath();
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  /**
+   * Convert a platform URI to an absolute file path
+   */
+  private static String convertPlatformUriToAbsoluteFilePath(final String uri) {
+    boolean _hasPlatformResourceScheme = LemmaUtils.hasPlatformResourceScheme(uri);
+    boolean _not = (!_hasPlatformResourceScheme);
+    if (_not) {
+      return uri;
+    }
+    final String relativeResourcePath = LemmaUtils.decodeUri(LemmaUtils.removePrefix(uri, LemmaUtils.PLATFORM_RESOURCE_SCHEME, false));
+    final IResource resource = ResourcesPlugin.getWorkspace().getRoot().findMember(relativeResourcePath);
+    String _xifexpression = null;
+    if ((resource instanceof IFile)) {
+      _xifexpression = LemmaUtils.removeFileUri(LemmaUtils.getAbsolutePath(((IFile) resource)));
+    } else {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("Resource URI ");
+      _builder.append(uri);
+      _builder.append(" does not point to a ");
+      String _plus = (_builder.toString() + 
+        "file");
+      throw new IllegalArgumentException(_plus);
+    }
+    return _xifexpression;
   }
   
   /**
@@ -185,11 +274,26 @@ public final class LemmaUtils {
   }
   
   /**
-   * Convert a relative file path to an absolute file path that is based on an absolute base path
+   * Check if a URI exhibits the "platform:/resource" scheme
    */
-  public static String convertToAbsolutePath(final String relativeFilePath, final String absoluteBaseFilePath) {
+  public static boolean hasPlatformResourceScheme(final String uri) {
+    return ((uri != null) && uri.startsWith(LemmaUtils.PLATFORM_RESOURCE_SCHEME));
+  }
+  
+  /**
+   * Convert a relative file path or URI to an absolute file path that is based on an absolute
+   * base path
+   */
+  public static String convertToAbsolutePath(final String relativeFilePathOrUri, final String absoluteBaseFilePath) {
     try {
-      final String relativeFilePathWithoutScheme = LemmaUtils.removeFileUri(relativeFilePath);
+      String _xifexpression = null;
+      boolean _hasPlatformResourceScheme = LemmaUtils.hasPlatformResourceScheme(relativeFilePathOrUri);
+      if (_hasPlatformResourceScheme) {
+        _xifexpression = LemmaUtils.convertPlatformUriToAbsoluteFilePath(relativeFilePathOrUri);
+      } else {
+        _xifexpression = LemmaUtils.decodeUri(LemmaUtils.removeFileUri(relativeFilePathOrUri));
+      }
+      final String relativeFilePathWithoutScheme = _xifexpression;
       boolean _representsAbsolutePath = LemmaUtils.representsAbsolutePath(relativeFilePathWithoutScheme);
       if (_representsAbsolutePath) {
         return relativeFilePathWithoutScheme;
@@ -215,10 +319,7 @@ public final class LemmaUtils {
    * Check if a URI exhibits the "file" scheme
    */
   public static boolean isFileUri(final String uri) {
-    if ((uri == null)) {
-      return false;
-    }
-    return uri.startsWith("file://");
+    return ((uri != null) && uri.startsWith("file://"));
   }
   
   /**
@@ -302,7 +403,13 @@ public final class LemmaUtils {
     if ((LemmaUtils.isWindowsOs() && uriWithoutScheme.startsWith("//"))) {
       _xifexpression = uriWithoutScheme.substring(2);
     } else {
-      _xifexpression = uriWithoutScheme;
+      String _xifexpression_1 = null;
+      if (((!LemmaUtils.isWindowsOs()) && uriWithoutScheme.startsWith("///"))) {
+        _xifexpression_1 = uriWithoutScheme.substring(2);
+      } else {
+        _xifexpression_1 = uriWithoutScheme;
+      }
+      _xifexpression = _xifexpression_1;
     }
     return _xifexpression;
   }
@@ -355,55 +462,11 @@ public final class LemmaUtils {
   }
   
   /**
-   * Convenience method to convert a relative path to an absolute "file" URI
+   * Convenience method to convert a relative path or URI to an absolute "file" URI
    */
-  public static String convertToAbsoluteFileUri(final String relativeFilePath, final String absoluteBaseFilePath) {
-    String _xifexpression = null;
-    boolean _isFileUri = LemmaUtils.isFileUri(relativeFilePath);
-    boolean _not = (!_isFileUri);
-    if (_not) {
-      _xifexpression = LemmaUtils.convertToFileUri(LemmaUtils.convertToAbsolutePath(relativeFilePath, absoluteBaseFilePath));
-    } else {
-      _xifexpression = relativeFilePath;
-    }
-    return _xifexpression;
-  }
-  
-  /**
-   * Convenience method to convert a relative path to an absolute "file" URI by using an IFile as
-   * basis
-   */
-  public static String convertToAbsoluteFileUri(final String relativeFilePath, final IFile file) {
-    String _xifexpression = null;
-    boolean _isFileUri = LemmaUtils.isFileUri(relativeFilePath);
-    if (_isFileUri) {
-      _xifexpression = relativeFilePath;
-    } else {
-      _xifexpression = LemmaUtils.convertToAbsoluteFileUri(relativeFilePath, LemmaUtils.getAbsolutePath(file));
-    }
-    return _xifexpression;
-  }
-  
-  /**
-   * Convenience method to convert a relative path to an absolute "file" URI by using a Resource
-   * as basis
-   */
-  public static String convertToAbsoluteFileUri(final String relativeFilePath, final Resource basis) {
-    String _xifexpression = null;
-    boolean _isFileUri = LemmaUtils.isFileUri(relativeFilePath);
-    if (_isFileUri) {
-      _xifexpression = relativeFilePath;
-    } else {
-      String _xifexpression_1 = null;
-      boolean _isFileUri_1 = LemmaUtils.isFileUri(basis.getURI().toString());
-      if (_isFileUri_1) {
-        _xifexpression_1 = LemmaUtils.convertToAbsoluteFileUri(relativeFilePath, basis.getURI().toString());
-      } else {
-        _xifexpression_1 = LemmaUtils.convertToAbsoluteFileUri(relativeFilePath, LemmaUtils.getFileForResource(basis));
-      }
-      _xifexpression = _xifexpression_1;
-    }
-    return _xifexpression;
+  public static String convertToAbsoluteFileUri(final String relativeFilePathOrUri, final String absoluteBaseFilePath) {
+    final String absoluteFilePath = LemmaUtils.convertToAbsolutePath(LemmaUtils.removeFileUri(relativeFilePathOrUri), absoluteBaseFilePath);
+    return LemmaUtils.convertToFileUri(absoluteFilePath);
   }
   
   /**
@@ -541,49 +604,28 @@ public final class LemmaUtils {
   }
   
   /**
+   * Retrieve the absolute path of a ComplexTypeImport
+   */
+  public static String getAbsolutePathFromComplexTypeImport(final ComplexTypeImport complexTypeImport) {
+    return LemmaUtils.removeFileUri(LemmaUtils.absoluteFileUriFromResourceBase(
+      complexTypeImport.getImportURI(), complexTypeImport.eResource()));
+  }
+  
+  /**
    * Check if an imported file represented by its URI exists. The URI may be project-relative or
    * absolute.
    */
   public static boolean importFileExists(final Resource context, final String importUri) {
-    if (((importUri == null) || importUri.isEmpty())) {
-      return false;
+    final String absoluteImportFilePath = LemmaUtils.convertToAbsolutePath(importUri, LemmaUtils.absolutePath(context));
+    boolean _xifexpression = false;
+    boolean _isNullOrEmpty = StringExtensions.isNullOrEmpty(absoluteImportFilePath);
+    boolean _not = (!_isNullOrEmpty);
+    if (_not) {
+      _xifexpression = Files.exists(Paths.get(absoluteImportFilePath));
+    } else {
+      _xifexpression = false;
     }
-    Resource projectResource = EcoreUtil2.getResource(context, importUri);
-    if ((projectResource == null)) {
-      final String uriWithFileScheme = LemmaUtils.convertToFileUri(importUri);
-      projectResource = EcoreUtil2.getResource(context, uriWithFileScheme);
-    }
-    String _xtrycatchfinallyexpression = null;
-    try {
-      IFile _fileForResource = LemmaUtils.getFileForResource(projectResource);
-      String _absolutePath = null;
-      if (_fileForResource!=null) {
-        _absolutePath=LemmaUtils.getAbsolutePath(_fileForResource);
-      }
-      _xtrycatchfinallyexpression = _absolutePath;
-    } catch (final Throwable _t) {
-      if (_t instanceof Exception) {
-        _xtrycatchfinallyexpression = null;
-      } else {
-        throw Exceptions.sneakyThrow(_t);
-      }
-    }
-    String importFilePath = _xtrycatchfinallyexpression;
-    if ((importFilePath == null)) {
-      String _xtrycatchfinallyexpression_1 = null;
-      try {
-        java.net.URI _uRI = new java.net.URI(importUri);
-        _xtrycatchfinallyexpression_1 = new File(_uRI).getPath();
-      } catch (final Throwable _t) {
-        if (_t instanceof Exception) {
-          _xtrycatchfinallyexpression_1 = LemmaUtils.removeFileUri(importUri);
-        } else {
-          throw Exceptions.sneakyThrow(_t);
-        }
-      }
-      importFilePath = _xtrycatchfinallyexpression_1;
-    }
-    return Files.exists(Paths.get(importFilePath));
+    return _xifexpression;
   }
   
   /**

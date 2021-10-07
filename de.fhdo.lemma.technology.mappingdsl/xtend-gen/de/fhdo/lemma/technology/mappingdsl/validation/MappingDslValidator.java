@@ -792,21 +792,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     final Function1<Import, ServiceModel> _function_1 = (Import it) -> {
       ServiceModel _xblockexpression = null;
       {
-        final boolean isAbsoluteFileUri = (LemmaUtils.isFileUri(it.getImportURI()) && 
-          LemmaUtils.representsAbsolutePath(LemmaUtils.removeFileUri(it.getImportURI())));
-        String _xifexpression = null;
-        if (isAbsoluteFileUri) {
-          _xifexpression = it.getImportURI();
-        } else {
-          String _xblockexpression_1 = null;
-          {
-            final IFile serviceModelFile = LemmaUtils.getFileForResource(it.eResource());
-            _xblockexpression_1 = LemmaUtils.convertToAbsoluteFileUri(it.getImportURI(), 
-              LemmaUtils.getAbsolutePath(serviceModelFile));
-          }
-          _xifexpression = _xblockexpression_1;
-        }
-        final String modelFileUri = _xifexpression;
+        final String modelFileUri = LemmaUtils.absoluteFileUriFromResourceBase(it.getImportURI(), it.eResource());
         _xblockexpression = LemmaUtils.<ServiceModel>getImportedModelRoot(it.eResource(), modelFileUri, ServiceModel.class);
       }
       return _xblockexpression;

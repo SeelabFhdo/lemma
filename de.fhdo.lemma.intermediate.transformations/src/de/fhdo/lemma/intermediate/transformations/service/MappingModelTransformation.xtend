@@ -570,7 +570,7 @@ class MappingModelTransformation
                     if (importType == ImportType.DATATYPES) {
                         val absoluteDataModelImportUri = LemmaUtils.convertToAbsoluteFileUri(
                             importURI,
-                            inputServiceModel.file
+                            LemmaUtils.getAbsolutePath(inputServiceModel.file)
                         )
                         absoluteDataModelImportUri == inputDataModel.inputPath
                     } else
