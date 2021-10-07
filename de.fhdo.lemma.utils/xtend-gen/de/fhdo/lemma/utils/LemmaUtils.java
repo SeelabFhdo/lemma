@@ -4,6 +4,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
+import de.fhdo.lemma.data.ComplexTypeImport;
 import java.io.File;
 import java.io.InputStream;
 import java.net.URLDecoder;
@@ -641,56 +642,6 @@ public final class LemmaUtils {
           return true;
         }
         nextSuperConcept = getNextSuperConcept.apply(nextSuperConcept);
-      }
-    }
-    return false;
-  }
-  
-  /**
-   * Check if an import is cyclic, i.e., if two files vice versa import each other.
-   * 
-   * The method takes the following type arguments:
-   *     - IMPORT_CONCEPT: The EObject-based concept that enables imports.
-   *     - ROOT_CONCEPT: The EObject-based root concept that encapsulates the IMPORT_CONCEPT,
-   *                     e.g., DataModel for ComplexTypeImport.
-   * 
-   * The function argument of the method must for a given ROOT_CONCEPT instance return the
-   * imported resources.
-   */
-  public static <IMPORT_CONCEPT extends EObject, ROOT_CONCEPT extends EObject> boolean isCyclicImport(final IMPORT_CONCEPT import_, final Class<ROOT_CONCEPT> rootConceptClazz, final Function<ROOT_CONCEPT, List<Resource>> getImportedResources) {
-    if ((((import_ == null) || 
-      (import_.eResource() == null)) || 
-      (import_.eResource().getURI() == null))) {
-      return false;
-    }
-    final ROOT_CONCEPT modelRoot = EcoreUtil2.<ROOT_CONCEPT>getContainerOfType(import_, rootConceptClazz);
-    if ((modelRoot == null)) {
-      return false;
-    }
-    final String resourceUri = import_.eResource().getURI().toString();
-    List<Resource> _apply = getImportedResources.apply(modelRoot);
-    final ArrayDeque<Resource> resourcesToCheck = new ArrayDeque<Resource>(_apply);
-    while ((!resourcesToCheck.isEmpty())) {
-      {
-        final Resource resourceToCheck = resourcesToCheck.pop();
-        final String toCheckUri = resourceToCheck.getURI().toString();
-        boolean _equals = Objects.equal(toCheckUri, resourceUri);
-        if (_equals) {
-          return true;
-        }
-        final List<EObject> toCheckContents = LemmaUtils.getImportedModelContents(resourceToCheck, toCheckUri);
-        if (((toCheckContents != null) && (!toCheckContents.isEmpty()))) {
-          try {
-            EObject _get = toCheckContents.get(0);
-            final ROOT_CONCEPT toCheckModelRoot = ((ROOT_CONCEPT) _get);
-            resourcesToCheck.addAll(getImportedResources.apply(toCheckModelRoot));
-          } catch (final Throwable _t) {
-            if (_t instanceof ClassCastException) {
-            } else {
-              throw Exceptions.sneakyThrow(_t);
-            }
-          }
-        }
       }
     }
     return false;
