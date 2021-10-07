@@ -622,17 +622,9 @@ class MappingDslValidator extends AbstractMappingDslValidator {
         val allImportedServiceModels = model.imports
             .filter[importType === ImportType.MICROSERVICES]
             .map[
-                val isAbsoluteFileUri = LemmaUtils.isFileUri(importURI) &&
-                    LemmaUtils.representsAbsolutePath(LemmaUtils.removeFileUri(importURI))
-                val modelFileUri = if (isAbsoluteFileUri)
-                        importURI
-                    else {
-                        val serviceModelFile = LemmaUtils.getFileForResource(eResource)
-                        LemmaUtils.convertToAbsoluteFileUri(importURI,
-                            LemmaUtils.getAbsolutePath(serviceModelFile))
-                    }
-                    LemmaUtils.getImportedModelRoot(eResource, modelFileUri, ServiceModel)
-                ]
+                val modelFileUri = LemmaUtils.absoluteFileUriFromResourceBase(importURI, eResource)
+                LemmaUtils.getImportedModelRoot(eResource, modelFileUri, ServiceModel)
+            ]
         val allMappedMicroservices = model.serviceMappings.map[microservice.microservice].toList
         val nonMappedMicroservices = allImportedServiceModels
             .map[microservices]

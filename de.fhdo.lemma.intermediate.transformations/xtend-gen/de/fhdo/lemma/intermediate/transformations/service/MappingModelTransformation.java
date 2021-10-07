@@ -336,7 +336,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
             {
               final String absoluteDataModelImportUri = LemmaUtils.convertToAbsoluteFileUri(
                 it.getImportURI(), 
-                inputServiceModel.getFile());
+                LemmaUtils.getAbsolutePath(inputServiceModel.getFile()));
               String _inputPath = inputDataModel.getInputPath();
               _xblockexpression = Objects.equal(absoluteDataModelImportUri, _inputPath);
             }

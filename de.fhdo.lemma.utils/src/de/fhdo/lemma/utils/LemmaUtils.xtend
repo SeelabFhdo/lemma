@@ -23,6 +23,8 @@ import org.eclipse.core.resources.IFile
 import java.util.Properties
 import org.eclipse.core.resources.IProject
 import java.util.regex.Pattern
+import java.net.URLDecoder
+import java.nio.charset.StandardCharsets
 
 /**
  * This class collects _static_ utility methods to be used across DSLs' implementations.
@@ -30,6 +32,8 @@ import java.util.regex.Pattern
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 final class LemmaUtils {
+    static val PLATFORM_RESOURCE_SCHEME = "platform:/resource"
+
     /**
      * Get the current version of LEMMA as a printable String
      */
@@ -64,20 +68,78 @@ final class LemmaUtils {
      * resource represented by an import URI that points to a file
      */
     def static getImportedModelContents(Resource context, String importUri) {
-        if (context === null || importUri === null || importUri.empty)
-            return null
+        return if (context !== null && !importUri.nullOrEmpty)
+                getResourceFromUri(context, importUri)?.contents ?: emptyList
+            else
+                null
+    }
 
-        var importResource = EcoreUtil2.getResource(context, importUri)
-        var importedContents = importResource?.contents ?: emptyList
+    /**
+     * Get an Ecore Resource object from a given URI
+     */
+    def static getResourceFromUri(Resource context, String uri) {
+        return if (context !== null && !uri.nullOrEmpty) {
+            val absoluteFileUri = uri.convertPlatformUriToAbsoluteFilePath
+                .absoluteFileUriFromResourceBase(context)
+            EcoreUtil2.getResource(context, absoluteFileUri)
+        } else
+            null
+    }
 
-        // The imported contents may be empty, e.g., when the "file" scheme is missing. Try again
-        // with "file" scheme.
-        if (importedContents.empty) {
-            importResource = EcoreUtil2.getResource(context, convertToFileUri(importUri))
-            importedContents = importResource?.contents
+    /**
+     * Get absolute file URI for a given relative URI based on the path of the given Ecore resource
+     */
+    def static absoluteFileUriFromResourceBase(String relativeUri, Resource resource) {
+        return convertToAbsoluteFileUri(relativeUri, resource.absolutePath)
+    }
+
+    /**
+     * Get absolute path for a given Ecore resource
+     */
+    def static absolutePath(Resource resource) {
+        /**
+         * The IllegalStateException is thrown when no Eclipse workspace is available. This is the
+         * case for applications that run standalone. Then the absolute path of a resource is
+         * resolved via the Java library File.
+         */
+        return try {
+            resource.fileForResource?.absolutePath
+        } catch (IllegalStateException exception) {
+            absoluteFilePathFromResourceBaseWithoutWorkspace(resource)
         }
+    }
 
-        return importedContents
+    /**
+     * Decode an URI
+     */
+    private static def decodeUri(String uri) {
+        URLDecoder.decode(uri, StandardCharsets.UTF_8)
+    }
+
+    /**
+     * Get absolute path for a given Ecore resource when there is no Eclipse workspace available.
+     */
+    private def static absoluteFilePathFromResourceBaseWithoutWorkspace(Resource resource) {
+        val resourcePath = resource.URI.toString.removeFileUri.decodeUri
+        return new File(resourcePath).canonicalPath
+    }
+
+    /**
+     * Convert a platform URI to an absolute file path
+     */
+    private def static convertPlatformUriToAbsoluteFilePath(String uri) {
+        if (!uri.hasPlatformResourceScheme)
+            return uri
+
+        val relativeResourcePath = uri.removePrefix(PLATFORM_RESOURCE_SCHEME, false).decodeUri
+        // Usage of ResourcesPlugin is okay here, because we don't encounter resource URIs with the
+        // platform resource scheme outside of Eclipse
+        val resource = ResourcesPlugin.workspace.root.findMember(relativeResourcePath)
+        return if (resource instanceof IFile)
+                (resource as IFile).absolutePath.removeFileUri
+            else
+                throw new IllegalArgumentException('''Resource URI «uri» does not point to a ''' +
+                    "file")
     }
 
     /**
@@ -128,11 +190,22 @@ final class LemmaUtils {
     }
 
     /**
-     * Convert a relative file path to an absolute file path that is based on an absolute base path
+     * Check if a URI exhibits the "platform:/resource" scheme
      */
-    def static convertToAbsolutePath(String relativeFilePath, String absoluteBaseFilePath) {
+    def static hasPlatformResourceScheme(String uri) {
+        return (uri !== null) && uri.startsWith(PLATFORM_RESOURCE_SCHEME)
+    }
+
+    /**
+     * Convert a relative file path or URI to an absolute file path that is based on an absolute
+     * base path
+     */
+    def static convertToAbsolutePath(String relativeFilePathOrUri, String absoluteBaseFilePath) {
+        val relativeFilePathWithoutScheme = if (relativeFilePathOrUri.hasPlatformResourceScheme)
+                relativeFilePathOrUri.convertPlatformUriToAbsoluteFilePath
+            else
+                relativeFilePathOrUri.removeFileUri.decodeUri
         // Don't convert if the given relative file path isn't relative at all
-        val relativeFilePathWithoutScheme = removeFileUri(relativeFilePath)
         if (relativeFilePathWithoutScheme.representsAbsolutePath)
             return relativeFilePathWithoutScheme
 
@@ -153,10 +226,7 @@ final class LemmaUtils {
      * Check if a URI exhibits the "file" scheme
      */
     def static isFileUri(String uri) {
-        if (uri === null)
-            return false
-
-        return uri.startsWith("file://")
+        return (uri !== null) && uri.startsWith("file://")
     }
 
     /**
@@ -236,6 +306,10 @@ final class LemmaUtils {
         val uriWithoutScheme = uri.substring(scheme.length + 1)
         return if (isWindowsOs && uriWithoutScheme.startsWith("//"))
                uriWithoutScheme.substring(2)
+            // For a comparison of strings it is necessary to use uniform paths. Sometimes paths
+            // with only one / are returned. Therefore the three /// must be converted into one.
+           else if (!isWindowsOs && uriWithoutScheme.startsWith("///"))
+               uriWithoutScheme.substring(2)
            else
                uriWithoutScheme
     }
@@ -266,37 +340,12 @@ final class LemmaUtils {
     }
 
     /**
-     * Convenience method to convert a relative path to an absolute "file" URI
+     * Convenience method to convert a relative path or URI to an absolute "file" URI
      */
-    def static convertToAbsoluteFileUri(String relativeFilePath, String absoluteBaseFilePath) {
-        return if (!isFileUri(relativeFilePath))
-                convertToFileUri(convertToAbsolutePath(relativeFilePath, absoluteBaseFilePath))
-            else
-                relativeFilePath
-    }
-
-    /**
-     * Convenience method to convert a relative path to an absolute "file" URI by using an IFile as
-     * basis
-     */
-    def static convertToAbsoluteFileUri(String relativeFilePath, IFile file) {
-        return if (isFileUri(relativeFilePath))
-            relativeFilePath
-        else
-            convertToAbsoluteFileUri(relativeFilePath, file.absolutePath)
-    }
-
-    /**
-     * Convenience method to convert a relative path to an absolute "file" URI by using a Resource
-     * as basis
-     */
-    def static convertToAbsoluteFileUri(String relativeFilePath, Resource basis) {
-        return if (isFileUri(relativeFilePath))
-            relativeFilePath
-        else if (isFileUri(basis.URI.toString))
-            convertToAbsoluteFileUri(relativeFilePath, basis.URI.toString)
-        else
-            convertToAbsoluteFileUri(relativeFilePath, getFileForResource(basis))
+    def static convertToAbsoluteFileUri(String relativeFilePathOrUri, String absoluteBaseFilePath) {
+        val absoluteFilePath = convertToAbsolutePath(relativeFilePathOrUri.removeFileUri,
+            absoluteBaseFilePath)
+        return convertToFileUri(absoluteFilePath)
     }
 
     /**
@@ -406,48 +455,26 @@ final class LemmaUtils {
     }
 
     /**
+     * Retrieve the absolute path of a ComplexTypeImport
+     */
+    def static getAbsolutePathFromComplexTypeImport(ComplexTypeImport complexTypeImport) {
+        return absoluteFileUriFromResourceBase(
+            complexTypeImport.importURI, complexTypeImport.eResource
+        ).removeFileUri
+    }
+
+
+
+    /**
      * Check if an imported file represented by its URI exists. The URI may be project-relative or
      * absolute.
      */
     def static importFileExists(Resource context, String importUri) {
-        if (importUri === null || importUri.empty)
-            return false
-
-        // Cover project-specific relative paths, i.e., import is a resource
-        var projectResource = EcoreUtil2.getResource(context, importUri)
-        if (projectResource === null) {
-            val uriWithFileScheme = convertToFileUri(importUri)
-            projectResource = EcoreUtil2.getResource(context, uriWithFileScheme)
-        }
-
-        var importFilePath = try {
-            getFileForResource(projectResource)?.absolutePath
-        } catch (Exception ex) {
-            // Since importFileExists() is called from language validators only, this exception will
-            // occur when the validators are executed headless, i.e., outside Eclipse. Headless
-            // validator execution happens, e.g., in standalone model processors. The reason for the
-            // exception to occur is the unavailability of ResourcesPlugin (which is used by
-            // getFileForResource()) in headless validator execution. The concrete Exception
-            // instance is an IllegalStateException and the message will probably be "Workspace is
-            // closed."
-            null
-        }
-
-        // URI does not point to a project resource, so maybe its an absolute path in the
-        // filesystem
-        if (importFilePath === null) {
-            importFilePath = try {
-                new File(new java.net.URI(importUri)).path
-            } catch (Exception ex) {
-                // A conversion to a file path may not be possible via java.net.URI, if the import
-                // URI does not point an absolute path. The same exception occurs, if the URI has an
-                // "inconstistent" format like "file:///foo bar/baz", where the space between "foo"
-                // and "bar" is not encoded by "%20".
-                removeFileUri(importUri)
-            }
-        }
-
-        return Files.exists(Paths.get(importFilePath))
+        val absoluteImportFilePath = convertToAbsolutePath(importUri, context.absolutePath)
+        return if (!absoluteImportFilePath.nullOrEmpty)
+                Files.exists(Paths.get(absoluteImportFilePath))
+            else
+                false
     }
 
     /**

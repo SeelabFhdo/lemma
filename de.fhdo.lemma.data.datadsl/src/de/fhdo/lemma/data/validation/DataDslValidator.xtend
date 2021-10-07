@@ -5,7 +5,6 @@ package de.fhdo.lemma.data.validation
 
 import org.eclipse.xtext.validation.Check
 import de.fhdo.lemma.data.ComplexTypeImport
-import org.eclipse.xtext.EcoreUtil2
 import de.fhdo.lemma.data.DataModel
 import de.fhdo.lemma.data.DataPackage
 import de.fhdo.lemma.data.DataStructure
@@ -14,7 +13,6 @@ import org.eclipse.xtext.naming.QualifiedName
 import de.fhdo.lemma.data.Version
 import com.google.common.base.Function
 import java.util.List
-import org.eclipse.emf.ecore.resource.Resource
 import de.fhdo.lemma.utils.LemmaUtils
 import de.fhdo.lemma.data.DataFieldFeature
 import org.eclipse.emf.ecore.EObject
