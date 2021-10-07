@@ -25,6 +25,7 @@ import org.eclipse.core.resources.IProject
 import java.util.regex.Pattern
 import java.net.URLDecoder
 import java.nio.charset.StandardCharsets
+import de.fhdo.lemma.data.ComplexTypeImport
 
 /**
  * This class collects _static_ utility methods to be used across DSLs' implementations.
@@ -496,62 +497,6 @@ final class LemmaUtils {
 
             // Climb up inheritance hierarchy
             nextSuperConcept = getNextSuperConcept.apply(nextSuperConcept)
-        }
-
-        return false
-    }
-
-    /**
-     * Check if an import is cyclic, i.e., if two files vice versa import each other.
-     *
-     * The method takes the following type arguments:
-     *     - IMPORT_CONCEPT: The EObject-based concept that enables imports.
-     *     - ROOT_CONCEPT: The EObject-based root concept that encapsulates the IMPORT_CONCEPT,
-     *                     e.g., DataModel for ComplexTypeImport.
-     *
-     * The function argument of the method must for a given ROOT_CONCEPT instance return the
-     * imported resources.
-     */
-    def static <IMPORT_CONCEPT extends EObject, ROOT_CONCEPT extends EObject>
-        isCyclicImport(
-            IMPORT_CONCEPT ^import,
-            Class<ROOT_CONCEPT> rootConceptClazz,
-            Function<ROOT_CONCEPT, List<Resource>> getImportedResources
-        ) {
-        if (import === null ||
-            import.eResource === null ||
-            import.eResource.URI === null)
-            return false
-
-        // Try to get the root of the importing model
-        val modelRoot = EcoreUtil2.getContainerOfType(import, rootConceptClazz)
-        if (modelRoot === null)
-            return false
-
-        /*
-         * Detect import cycles by visiting all resources being imported by the importing model
-         * recursively leveraging a stack. A cycle exists if we come back to the importing model at
-         * some point, i.e., if the importing model is imported by on of the resources it directly
-         * or indirectly (transitively) imports.
-         */
-        val resourceUri = import.eResource.URI.toString
-        val resourcesToCheck = new ArrayDeque<Resource>(getImportedResources.apply(modelRoot))
-
-        while (!resourcesToCheck.empty) {
-            val resourceToCheck = resourcesToCheck.pop()
-            val toCheckUri = resourceToCheck.URI.toString
-
-            if (toCheckUri == resourceUri)
-                return true
-
-            val toCheckContents = getImportedModelContents(resourceToCheck, toCheckUri)
-            if (toCheckContents !== null && !toCheckContents.empty)
-                try {
-                    val toCheckModelRoot = toCheckContents.get(0) as ROOT_CONCEPT
-                    resourcesToCheck.addAll(getImportedResources.apply(toCheckModelRoot))
-                } catch (ClassCastException ex) {
-                    // NOOP
-                }
         }
 
         return false

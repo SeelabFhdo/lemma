@@ -27,6 +27,8 @@ import de.fhdo.lemma.data.Enumeration
 import de.fhdo.lemma.data.PrimitiveTypeConstants
 import de.fhdo.lemma.data.ComplexType
 import de.fhdo.lemma.data.ComplexTypeFeature
+import de.fhdo.lemma.data.validation.ImportChain
+import java.util.ArrayList
 
 /**
  * This class contains validation rules for the Data DSL.
@@ -832,19 +834,67 @@ class DataDslValidator extends AbstractDataDslValidator {
     }
 
     /**
-     * Check for cyclic imports (non-transitive)
+     * Detect if an import chain contains cycles
+     */
+    private def static List<ImportChain> detectCycles(DataModel dataModel,
+        ImportChain importChain) {
+        val isInvokingModel = importChain.entries.empty
+        val usedImportChain = if (isInvokingModel)
+            importChain.addEntry(dataModel)
+        else
+            importChain
+        val cycleChains = new ArrayList<ImportChain>
+
+        // Check each import statement for the given DataModel
+        for (importEntry : dataModel.complexTypeImports){
+            val nextDataModel = DataModelManager.getDataModel(importEntry)
+            val newChain = ImportChain.copy(usedImportChain).addEntry(nextDataModel)
+
+            // Check if a cycle was found, if yes then stop the recursion otherwise continue
+            // searching with the imported file
+            if (newChain.hasCycle)
+                cycleChains.add(newChain)
+            else
+                cycleChains.addAll(detectCycles(nextDataModel, newChain))
+        }
+        // Check the ImportChain for a cycle
+        cycleChains.forEach[chain |
+            if(isInvokingModel && chain.entries.get(0) != chain.entries.last)
+                chain.foundImportedCycle
+        ]
+        DataModelManager.clear
+        return cycleChains
+    }
+
+
+    /**
+     * Check for cyclic imports
      */
     @Check
-    def checkForCyclicImports(ComplexTypeImport complexTypeImport) {
-        // Function to retrieve all imported Ecore resources of a data model
-        val Function<DataModel, List<Resource>> getImportedDataModelResources =
-            [complexTypeImports.map[
-                EcoreUtil2.getResource(eResource, importURI)
-            ]]
+    def checkForCyclicImports(DataModel dataModel) {
+        val detecedCycles = detectCycles(dataModel, new ImportChain)
+        detecedCycles.forEach[importChain |
+            dataModel.complexTypeImports.forEach[complexTypeImport |
+                showCyclicImportError(importChain, complexTypeImport)
+            ]
+        ]
+    }
 
-        if (LemmaUtils.isCyclicImport(complexTypeImport, DataModel, getImportedDataModelResources))
-            error("Cyclic import detected", complexTypeImport,
-                DataPackage::Literals.COMPLEX_TYPE_IMPORT__IMPORT_URI)
+    /**
+     * Checks which cycle type is present and outputs the corresponding error message for the
+     * ComplexTypeImport
+     */
+    private def showCyclicImportError(ImportChain importChain, ComplexTypeImport complexTypeImport) {
+        val absoluteImportPath = LemmaUtils.getAbsolutePathFromComplexTypeImport(complexTypeImport)
+        if (importChain.entries.size <= 1 || absoluteImportPath != importChain.entries.get(1)) {
+            return
+        }
+
+        val message = if (importChain.isImportedCycle)
+                "Imported file has one or more cyclic imports"
+            else
+                "Import introduces a cycle"
+        error(message, complexTypeImport, DataPackage::Literals.COMPLEX_TYPE_IMPORT__IMPORT_URI)
     }
 
     /**

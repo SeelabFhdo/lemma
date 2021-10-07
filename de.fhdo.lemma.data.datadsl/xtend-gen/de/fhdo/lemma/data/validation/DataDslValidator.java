@@ -30,6 +30,7 @@ import de.fhdo.lemma.utils.LemmaUtils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -1017,22 +1018,75 @@ public class DataDslValidator extends AbstractDataDslValidator {
   }
   
   /**
-   * Check for cyclic imports (non-transitive)
+   * Detect if an import chain contains cycles
+   */
+  private static List<ImportChain> detectCycles(final DataModel dataModel, final ImportChain importChain) {
+    final boolean isInvokingModel = importChain.getEntries().isEmpty();
+    ImportChain _xifexpression = null;
+    if (isInvokingModel) {
+      _xifexpression = importChain.addEntry(dataModel);
+    } else {
+      _xifexpression = importChain;
+    }
+    final ImportChain usedImportChain = _xifexpression;
+    final ArrayList<ImportChain> cycleChains = new ArrayList<ImportChain>();
+    EList<ComplexTypeImport> _complexTypeImports = dataModel.getComplexTypeImports();
+    for (final ComplexTypeImport importEntry : _complexTypeImports) {
+      {
+        final DataModel nextDataModel = DataModelManager.getDataModel(importEntry);
+        final ImportChain newChain = ImportChain.copy(usedImportChain).addEntry(nextDataModel);
+        boolean _hasCycle = newChain.hasCycle();
+        if (_hasCycle) {
+          cycleChains.add(newChain);
+        } else {
+          cycleChains.addAll(DataDslValidator.detectCycles(nextDataModel, newChain));
+        }
+      }
+    }
+    final Consumer<ImportChain> _function = (ImportChain chain) -> {
+      if ((isInvokingModel && (!Objects.equal(chain.getEntries().get(0), IterableExtensions.<String>last(chain.getEntries()))))) {
+        chain.foundImportedCycle();
+      }
+    };
+    cycleChains.forEach(_function);
+    DataModelManager.clear();
+    return cycleChains;
+  }
+  
+  /**
+   * Check for cyclic imports
    */
   @Check
-  public void checkForCyclicImports(final ComplexTypeImport complexTypeImport) {
-    final Function<DataModel, List<Resource>> _function = (DataModel it) -> {
-      final Function1<ComplexTypeImport, Resource> _function_1 = (ComplexTypeImport it_1) -> {
-        return EcoreUtil2.getResource(it_1.eResource(), it_1.getImportURI());
+  public void checkForCyclicImports(final DataModel dataModel) {
+    ImportChain _importChain = new ImportChain();
+    final List<ImportChain> detecedCycles = DataDslValidator.detectCycles(dataModel, _importChain);
+    final Consumer<ImportChain> _function = (ImportChain importChain) -> {
+      final Consumer<ComplexTypeImport> _function_1 = (ComplexTypeImport complexTypeImport) -> {
+        this.showCyclicImportError(importChain, complexTypeImport);
       };
-      return ListExtensions.<ComplexTypeImport, Resource>map(it.getComplexTypeImports(), _function_1);
+      dataModel.getComplexTypeImports().forEach(_function_1);
     };
-    final Function<DataModel, List<Resource>> getImportedDataModelResources = _function;
-    boolean _isCyclicImport = LemmaUtils.<ComplexTypeImport, DataModel>isCyclicImport(complexTypeImport, DataModel.class, getImportedDataModelResources);
-    if (_isCyclicImport) {
-      this.error("Cyclic import detected", complexTypeImport, 
-        DataPackage.Literals.COMPLEX_TYPE_IMPORT__IMPORT_URI);
+    detecedCycles.forEach(_function);
+  }
+  
+  /**
+   * Checks which cycle type is present and outputs the corresponding error message for the
+   * ComplexTypeImport
+   */
+  private void showCyclicImportError(final ImportChain importChain, final ComplexTypeImport complexTypeImport) {
+    final String absoluteImportPath = LemmaUtils.getAbsolutePathFromComplexTypeImport(complexTypeImport);
+    if (((importChain.getEntries().size() <= 1) || (!Objects.equal(absoluteImportPath, importChain.getEntries().get(1))))) {
+      return;
     }
+    String _xifexpression = null;
+    boolean _isImportedCycle = importChain.getIsImportedCycle();
+    if (_isImportedCycle) {
+      _xifexpression = "Imported file has one or more cyclic imports";
+    } else {
+      _xifexpression = "Import introduces a cycle";
+    }
+    final String message = _xifexpression;
+    this.error(message, complexTypeImport, DataPackage.Literals.COMPLEX_TYPE_IMPORT__IMPORT_URI);
   }
   
   /**
