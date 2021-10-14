@@ -12,7 +12,7 @@ pipeline {
 
         DOCKER_NEXUS_REGISTRY_CREDENTIALS_KEY = "seelab-nexus-docker-registry"
         DOCKER_NEXUS_REGISTRY_CREDENTIALS = credentials("$DOCKER_NEXUS_REGISTRY_CREDENTIALS_KEY")
-        DOCKER_NEXUS_REGISTRY_URL = "http://repository.seelab.fh-dortmund.de:51900"
+        DOCKER_NEXUS_REGISTRY_URL = "https://docker.repository.seelab.fh-dortmund.de"
         DOCKER_RANCHER_REGISTRY_CREDENTIALS_KEY = "seelab-rancher-docker-registry"
         DOCKER_RANCHER_REGISTRY_CREDENTIALS = credentials("$DOCKER_RANCHER_REGISTRY_CREDENTIALS_KEY")
         DOCKER_RANCHER_REGISTRY_URL = "http://registry.seelab.fh-dortmund.de"
