@@ -2,7 +2,7 @@
   - description: "LEMMA MariaDB Generator"
   - docker:
     - image: "lemma/mariadb_generator:latest"
-    - repository: "repository.seelab.fh-dortmund.de:51900"
+    - repository: "docker.repository.seelab.fh-dortmund.de"
     - buildscript: "./build.sh"
     - lemma_version_file: "../pom.xml"
 

@@ -2,7 +2,7 @@
   - description: "LEMMA Static Analyzer"
   - docker:
     - image: "lemma/static_analyzer:latest"
-    - repository: "repository.seelab.fh-dortmund.de:51900"
+    - repository: "docker.repository.seelab.fh-dortmund.de"
     - buildscript: "./build.sh"
     - lemma_version_file: "../gradle.properties"
   - execution_steps:
