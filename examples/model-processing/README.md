@@ -65,14 +65,15 @@ study its files in the following order:
 
 ## Generating Code from Other Models Than the Included Example LEMMA Models
 In case you have [constructed your own LEMMA service models with the Eclipse IDE](https://seelabfhdo.github.io/lemma-docs/getting-started/tour/index.html)
-and want to execute the example code generator on them, you first have to produce corresponding intermediate
-representations for them. With the intermediate representations we aim to facilitate the processing of LEMMA models in a
+and want to execute the example code generator on them, you first have to
+[produce corresponding intermediate representations](https://seelabfhdo.github.io/lemma-docs/developer-guide/intermediate-model-specifications/obtaining-intermediate-models/)
+for them. With the intermediate representations we aim to facilitate the processing of LEMMA models in a
 similar fashion as Java with its bytecode format and the Java Virtual Machine. Consequently, if you want to write your
 LEMMA model processor, you should have a look at the intermediate specifications for the various modeling languages of
-LEMMA. You can find the specifications in LEMMA's source code repository:
-- [Specification for LEMMA domain models (constructed with LEMMA's Domain Data Modeling Language)](https://github.com/SeelabFhdo/lemma/tree/main/de.fhdo.lemma.data.intermediate.metamodel/doc/build/html)
-- [Specification for LEMMA service models (constructed with LEMMA's Service Modeling Language)](https://github.com/SeelabFhdo/lemma/tree/main/de.fhdo.lemma.service.intermediate.metamodel/doc/build/html)
-- [Specification for LEMMA operation models (constructed with LEMMA's Operation Modeling Language)](https://github.com/SeelabFhdo/lemma/tree/main/de.fhdo.lemma.operation.intermediate.metamodel/doc/build/html)
+LEMMA. You can find the specifications in the following locations:
+- [Specification for LEMMA domain models (constructed with LEMMA's Domain Data Modeling Language)](https://seelabfhdo.github.io/lemma-docs/developer-guide/intermediate-model-specifications/intermediate-domain-model-specification/)
+- [Specification for LEMMA service models (constructed with LEMMA's Service Modeling Language)](https://seelabfhdo.github.io/lemma-docs/developer-guide/intermediate-model-specifications/intermediate-service-model-specification/)
+- [Specification for LEMMA operation models (constructed with LEMMA's Operation Modeling Language)](https://seelabfhdo.github.io/lemma-docs/developer-guide/intermediate-model-specifications/intermediate-operation-model-specification/)
 
 You can produce intermediate representations for your own models using your
 [LEMMA Eclipse installation](https://seelabfhdo.github.io/lemma-docs/getting-started/index.html):
