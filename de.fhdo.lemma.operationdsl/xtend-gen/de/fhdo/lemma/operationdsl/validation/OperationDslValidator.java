@@ -16,7 +16,6 @@ import de.fhdo.lemma.operation.OperationPackage;
 import de.fhdo.lemma.operation.PossiblyImportedOperationNode;
 import de.fhdo.lemma.operation.ProtocolAndDataFormat;
 import de.fhdo.lemma.operation.ServiceDeploymentSpecification;
-import de.fhdo.lemma.operationdsl.validation.AbstractOperationDslValidator;
 import de.fhdo.lemma.service.Import;
 import de.fhdo.lemma.service.ImportType;
 import de.fhdo.lemma.service.Microservice;
@@ -75,10 +74,15 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
    */
   @Check
   public void checkImportFileUniqueness(final OperationModel operationModel) {
-    final Function<Import, String> _function = (Import it) -> {
-      return it.getImportURI();
+    final String absolutePath = LemmaUtils.absolutePath(operationModel.eResource());
+    final Function1<Import, String> _function = (Import it) -> {
+      return LemmaUtils.convertToAbsolutePath(it.getImportURI(), absolutePath);
     };
-    final Integer duplicateIndex = LemmaUtils.<Import, String>getDuplicateIndex(operationModel.getImports(), _function);
+    final List<String> absoluteImportPaths = ListExtensions.<Import, String>map(operationModel.getImports(), _function);
+    final Function<String, String> _function_1 = (String it) -> {
+      return it;
+    };
+    final Integer duplicateIndex = LemmaUtils.<String, String>getDuplicateIndex(absoluteImportPaths, _function_1);
     if (((duplicateIndex).intValue() == (-1))) {
       return;
     }

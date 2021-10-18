@@ -32,7 +32,6 @@ import de.fhdo.lemma.technology.TechnologyImport;
 import de.fhdo.lemma.technology.TechnologyPackage;
 import de.fhdo.lemma.technology.TechnologySpecificPrimitiveType;
 import de.fhdo.lemma.technology.TechnologySpecificProperty;
-import de.fhdo.lemma.technology.validation.AbstractTechnologyDslValidator;
 import de.fhdo.lemma.typechecking.TypecheckingUtils;
 import de.fhdo.lemma.utils.LemmaUtils;
 import java.util.HashMap;
@@ -84,10 +83,15 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
    */
   @Check
   public void checkImportFileUniqueness(final Technology model) {
-    final Function<TechnologyImport, String> _function = (TechnologyImport it) -> {
-      return it.getImportURI();
+    final String absolutePath = LemmaUtils.absolutePath(model.eResource());
+    final Function1<TechnologyImport, String> _function = (TechnologyImport it) -> {
+      return LemmaUtils.convertToAbsolutePath(it.getImportURI(), absolutePath);
     };
-    final Integer duplicateIndex = LemmaUtils.<TechnologyImport, String>getDuplicateIndex(model.getImports(), _function);
+    final List<String> absoluteImportPaths = ListExtensions.<TechnologyImport, String>map(model.getImports(), _function);
+    final Function<String, String> _function_1 = (String it) -> {
+      return it;
+    };
+    final Integer duplicateIndex = LemmaUtils.<String, String>getDuplicateIndex(absoluteImportPaths, _function_1);
     if (((duplicateIndex).intValue() == (-1))) {
       return;
     }

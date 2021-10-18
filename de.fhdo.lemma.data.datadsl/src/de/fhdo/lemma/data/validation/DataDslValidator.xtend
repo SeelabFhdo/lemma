@@ -68,7 +68,11 @@ class DataDslValidator extends AbstractDataDslValidator {
      */
     @Check
     def checkImportFileUniqueness(DataModel dataModel) {
-        val duplicateIndex = LemmaUtils.getDuplicateIndex(dataModel.complexTypeImports, [importURI])
+        val absolutePath = LemmaUtils.absolutePath(dataModel.eResource)
+        val absoluteImportPaths = dataModel.complexTypeImports.map[
+            LemmaUtils.convertToAbsolutePath(importURI, absolutePath)
+        ]
+        val duplicateIndex = LemmaUtils.getDuplicateIndex(absoluteImportPaths, [it])
         if (duplicateIndex === -1) {
             return
         }

@@ -54,7 +54,6 @@ import de.fhdo.lemma.technology.mapping.TechnologySpecificFieldMapping;
 import de.fhdo.lemma.technology.mapping.TechnologySpecificImportedServiceAspect;
 import de.fhdo.lemma.technology.mapping.TechnologySpecificProtocol;
 import de.fhdo.lemma.technology.mapping.TechnologySpecificProtocolSpecification;
-import de.fhdo.lemma.technology.mappingdsl.validation.AbstractMappingDslValidator;
 import de.fhdo.lemma.typechecking.TypeChecker;
 import de.fhdo.lemma.typechecking.TypesNotCompatibleException;
 import de.fhdo.lemma.utils.LemmaUtils;
@@ -64,7 +63,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
-import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -143,14 +141,15 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
    */
   @Check
   public void checkTechnologyUniqueness(final ComplexTypeMapping mapping) {
-    final Function1<TechnologyReference, Import> _function = (TechnologyReference it) -> {
-      return it.getTechnology();
+    final String absolutePath = LemmaUtils.absolutePath(mapping.eResource());
+    final Function1<TechnologyReference, String> _function = (TechnologyReference it) -> {
+      return LemmaUtils.convertToAbsolutePath(it.getTechnology().getImportURI(), absolutePath);
     };
-    final Function<Import, Import> _function_1 = (Import it) -> {
+    final List<String> absoluteImportPaths = ListExtensions.<TechnologyReference, String>map(mapping.getTechnologyReferences(), _function);
+    final Function<String, String> _function_1 = (String it) -> {
       return it;
     };
-    final Integer duplicateIndex = LemmaUtils.<Import, Import>getDuplicateIndex(
-      ListExtensions.<TechnologyReference, Import>map(mapping.getTechnologyReferences(), _function), _function_1);
+    final Integer duplicateIndex = LemmaUtils.<String, String>getDuplicateIndex(absoluteImportPaths, _function_1);
     if (((duplicateIndex).intValue() > (-1))) {
       this.error(
         "Duplicate technology assignment", 
