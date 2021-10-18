@@ -34,6 +34,7 @@ import java.util.function.Consumer;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.validation.Check;
@@ -990,15 +991,25 @@ public class DataDslValidator extends AbstractDataDslValidator {
   }
   
   /**
-   * Check if an imported file exists
+   * Check if an imported file exists and if it is case sensitive
    */
   @Check
-  public void checkImportFileExists(final ComplexTypeImport complexTypeImport) {
-    boolean _importFileExists = LemmaUtils.importFileExists(complexTypeImport.eResource(), complexTypeImport.getImportURI());
+  public void checkImportFileExistsAndIsCaseSensitive(final ComplexTypeImport complexTypeImport) {
+    final String importURI = complexTypeImport.getImportURI();
+    final Resource eResource = complexTypeImport.eResource();
+    boolean _importFileExists = LemmaUtils.importFileExists(eResource, importURI);
     boolean _not = (!_importFileExists);
     if (_not) {
       this.error("File not found", complexTypeImport, 
         DataPackage.Literals.COMPLEX_TYPE_IMPORT__IMPORT_URI);
+    } else {
+      boolean _importFileExistsCaseSensitive = LemmaUtils.importFileExistsCaseSensitive(eResource, importURI);
+      boolean _not_1 = (!_importFileExistsCaseSensitive);
+      if (_not_1) {
+        this.error(("Import paths are case sensitive, but the case sensitivity of this import path " + 
+          "does not match its appearance in the filesystem"), complexTypeImport, 
+          DataPackage.Literals.COMPLEX_TYPE_IMPORT__IMPORT_URI);
+      }
     }
   }
   

@@ -71,12 +71,19 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
     }
 
     /**
-     * Check if an imported file exists
+     * Check if an imported file exists and if it is case sensitive
      */
     @Check
-    def checkImportFileExists(TechnologyImport ^import) {
-        if (!LemmaUtils.importFileExists(^import.eResource, import.importURI))
-            error("File not found", TechnologyPackage::Literals.TECHNOLOGY_IMPORT__IMPORT_URI)
+    def checkImportFileExistsAndIsCaseSensitive(TechnologyImport ^import) {
+        val importURI = ^import.importURI
+        val eResource = ^import.eResource
+
+        if (!LemmaUtils.importFileExists(eResource, importURI))
+            error("File not found", ^import,
+                TechnologyPackage::Literals.TECHNOLOGY_IMPORT__IMPORT_URI)
+        else if (!LemmaUtils.importFileExistsCaseSensitive(eResource, importURI))
+            error("Import path and filename must be case sensitive", ^import,
+                TechnologyPackage::Literals.TECHNOLOGY_IMPORT__IMPORT_URI)
     }
 
     /**
@@ -86,7 +93,8 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
     def checkImportType(TechnologyImport technologyImport) {
         if (!LemmaUtils.isImportOfType(technologyImport.eResource, technologyImport.importURI,
             Technology))
-            error("File does not contain a technology model definition", technologyImport,
+            error("Import paths are case sensitive, but the case sensitivity of this import path " +
+                "does not match its appearance in the filesystem", technologyImport,
                 TechnologyPackage::Literals.TECHNOLOGY_IMPORT__IMPORT_URI)
     }
 

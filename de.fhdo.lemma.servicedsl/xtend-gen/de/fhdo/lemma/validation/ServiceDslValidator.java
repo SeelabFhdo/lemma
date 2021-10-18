@@ -54,6 +54,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.naming.QualifiedName;
@@ -77,14 +78,25 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
   private ServiceDslQualifiedNameProvider nameProvider;
   
   /**
-   * Check if an imported file exists
+   * Check if an imported file exists and if it is case sensitive
    */
   @Check
-  public void checkImportFileExists(final Import import_) {
-    boolean _importFileExists = LemmaUtils.importFileExists(import_.eResource(), import_.getImportURI());
+  public void checkImportFileExistsAndIsCaseSensitive(final Import import_) {
+    final String importURI = import_.getImportURI();
+    final Resource eResource = import_.eResource();
+    boolean _importFileExists = LemmaUtils.importFileExists(eResource, importURI);
     boolean _not = (!_importFileExists);
     if (_not) {
-      this.error("File not found", ServicePackage.Literals.IMPORT__IMPORT_URI);
+      this.error("File not found", import_, 
+        ServicePackage.Literals.IMPORT__IMPORT_URI);
+    } else {
+      boolean _importFileExistsCaseSensitive = LemmaUtils.importFileExistsCaseSensitive(eResource, importURI);
+      boolean _not_1 = (!_importFileExistsCaseSensitive);
+      if (_not_1) {
+        this.error(("Import paths are case sensitive, but the case sensitivity of this import path " + 
+          "does not match its appearance in the filesystem"), import_, 
+          ServicePackage.Literals.IMPORT__IMPORT_URI);
+      }
     }
   }
   

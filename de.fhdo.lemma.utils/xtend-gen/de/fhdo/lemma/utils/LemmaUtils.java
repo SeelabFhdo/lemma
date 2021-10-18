@@ -285,25 +285,55 @@ public final class LemmaUtils {
    * Convert a relative file path or URI to an absolute file path that is based on an absolute
    * base path
    */
+  public static String convertToAbsolutePathNonCanonical(final String relativeFilePathOrUri, final String absoluteBaseFilePath) {
+    String _xifexpression = null;
+    boolean _hasPlatformResourceScheme = LemmaUtils.hasPlatformResourceScheme(relativeFilePathOrUri);
+    if (_hasPlatformResourceScheme) {
+      _xifexpression = LemmaUtils.convertPlatformUriToAbsoluteFilePath(relativeFilePathOrUri);
+    } else {
+      _xifexpression = LemmaUtils.decodeUri(LemmaUtils.removeFileUri(relativeFilePathOrUri));
+    }
+    final String relativeFilePathWithoutScheme = _xifexpression;
+    boolean _representsAbsolutePath = LemmaUtils.representsAbsolutePath(relativeFilePathWithoutScheme);
+    if (_representsAbsolutePath) {
+      return relativeFilePathWithoutScheme;
+    }
+    final File absoluteBaseFile = new File(absoluteBaseFilePath);
+    String _parent = absoluteBaseFile.getParent();
+    final File absoluteBaseFolder = new File(_parent);
+    String _plus = (absoluteBaseFolder + File.separator);
+    return (_plus + relativeFilePathWithoutScheme);
+  }
+  
+  /**
+   * Convert a relative file path or URI to a canonical file path that is based on an absolute
+   * base path
+   */
   public static String convertToAbsolutePath(final String relativeFilePathOrUri, final String absoluteBaseFilePath) {
     try {
-      String _xifexpression = null;
-      boolean _hasPlatformResourceScheme = LemmaUtils.hasPlatformResourceScheme(relativeFilePathOrUri);
-      if (_hasPlatformResourceScheme) {
-        _xifexpression = LemmaUtils.convertPlatformUriToAbsoluteFilePath(relativeFilePathOrUri);
-      } else {
-        _xifexpression = LemmaUtils.decodeUri(LemmaUtils.removeFileUri(relativeFilePathOrUri));
-      }
-      final String relativeFilePathWithoutScheme = _xifexpression;
-      boolean _representsAbsolutePath = LemmaUtils.representsAbsolutePath(relativeFilePathWithoutScheme);
-      if (_representsAbsolutePath) {
-        return relativeFilePathWithoutScheme;
-      }
-      final File absoluteBaseFile = new File(absoluteBaseFilePath);
-      String _parent = absoluteBaseFile.getParent();
-      final File absoluteBaseFolder = new File(_parent);
-      final File absoluteFile = new File(absoluteBaseFolder, relativeFilePathWithoutScheme);
+      String _convertToAbsolutePathNonCanonical = LemmaUtils.convertToAbsolutePathNonCanonical(relativeFilePathOrUri, absoluteBaseFilePath);
+      final File absoluteFile = new File(_convertToAbsolutePathNonCanonical);
       return absoluteFile.getCanonicalPath();
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  /**
+   * Check an import URI for correct case sensitivity
+   */
+  public static boolean importFileExistsCaseSensitive(final Resource context, final String importUri) {
+    try {
+      final String absolutePath = LemmaUtils.convertToAbsolutePathNonCanonical(importUri, LemmaUtils.absolutePath(context));
+      final File absoluteFile = new File(absolutePath);
+      boolean _exists = absoluteFile.exists();
+      boolean _not = (!_exists);
+      if (_not) {
+        return false;
+      }
+      final String caseSensitivePath = absoluteFile.getCanonicalPath();
+      final String caseInsensitivePath = Paths.get(absolutePath).normalize().toString();
+      return Objects.equal(caseSensitivePath, caseInsensitivePath);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }

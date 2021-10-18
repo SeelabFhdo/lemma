@@ -53,12 +53,20 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
     ServiceDslQualifiedNameProvider nameProvider
 
     /**
-     * Check if an imported file exists
+     * Check if an imported file exists and if it is case sensitive
      */
     @Check
-    def checkImportFileExists(Import ^import) {
-        if (!LemmaUtils.importFileExists(^import.eResource, import.importURI))
-            error("File not found", ServicePackage::Literals.IMPORT__IMPORT_URI)
+    def checkImportFileExistsAndIsCaseSensitive(Import ^import) {
+        val importURI = ^import.importURI
+        val eResource = ^import.eResource
+
+        if (!LemmaUtils.importFileExists(eResource, importURI))
+            error("File not found", ^import,
+                ServicePackage::Literals.IMPORT__IMPORT_URI)
+        else if (!LemmaUtils.importFileExistsCaseSensitive(eResource, importURI))
+            error("Import paths are case sensitive, but the case sensitivity of this import path " +
+                "does not match its appearance in the filesystem", ^import,
+                ServicePackage::Literals.IMPORT__IMPORT_URI)
     }
 
     /**
