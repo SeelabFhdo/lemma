@@ -201,7 +201,8 @@ final class LemmaUtils {
      * Convert a relative file path or URI to an absolute file path that is based on an absolute
      * base path
      */
-    def static convertToAbsolutePath(String relativeFilePathOrUri, String absoluteBaseFilePath) {
+    def static convertToAbsolutePathNonCanonical(String relativeFilePathOrUri,
+        String absoluteBaseFilePath) {
         val relativeFilePathWithoutScheme = if (relativeFilePathOrUri.hasPlatformResourceScheme)
                 relativeFilePathOrUri.convertPlatformUriToAbsoluteFilePath
             else
@@ -212,8 +213,31 @@ final class LemmaUtils {
 
         val absoluteBaseFile = new File(absoluteBaseFilePath)
         val absoluteBaseFolder = new File(absoluteBaseFile.getParent())
-        val absoluteFile = new File(absoluteBaseFolder, relativeFilePathWithoutScheme)
+        return absoluteBaseFolder + File.separator + relativeFilePathWithoutScheme
+    }
+
+    /**
+     * Convert a relative file path or URI to a canonical file path that is based on an absolute
+     * base path
+     */
+    def static convertToAbsolutePath(String relativeFilePathOrUri, String absoluteBaseFilePath) {
+        val absoluteFile = new File(convertToAbsolutePathNonCanonical(relativeFilePathOrUri,
+            absoluteBaseFilePath))
         return absoluteFile.getCanonicalPath()
+    }
+
+    /**
+     * Check an import URI for correct case sensitivity
+     */
+    def static importFileExistsCaseSensitive(Resource context, String importUri) {
+        val absolutePath = convertToAbsolutePathNonCanonical(importUri, context.absolutePath)
+        val absoluteFile = new File(absolutePath)
+
+        if (!absoluteFile.exists())
+            return false
+        val caseSensitivePath = absoluteFile.canonicalPath
+        val caseInsensitivePath = Paths.get(absolutePath).normalize.toString
+        return caseSensitivePath == caseInsensitivePath
     }
 
     /**

@@ -814,12 +814,19 @@ class DataDslValidator extends AbstractDataDslValidator {
     }
 
     /**
-     * Check if an imported file exists
+     * Check if an imported file exists and if it is case sensitive
      */
     @Check
-    def checkImportFileExists(ComplexTypeImport complexTypeImport) {
-        if (!LemmaUtils.importFileExists(complexTypeImport.eResource, complexTypeImport.importURI))
+    def checkImportFileExistsAndIsCaseSensitive(ComplexTypeImport complexTypeImport) {
+        val importURI = complexTypeImport.importURI
+        val eResource = complexTypeImport.eResource
+
+        if (!LemmaUtils.importFileExists(eResource, importURI))
             error("File not found", complexTypeImport,
+                DataPackage::Literals.COMPLEX_TYPE_IMPORT__IMPORT_URI)
+        else if (!LemmaUtils.importFileExistsCaseSensitive(eResource, importURI))
+            error("Import paths are case sensitive, but the case sensitivity of this import path " +
+                "does not match its appearance in the filesystem", complexTypeImport,
                 DataPackage::Literals.COMPLEX_TYPE_IMPORT__IMPORT_URI)
     }
 

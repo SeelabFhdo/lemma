@@ -32,7 +32,6 @@ import de.fhdo.lemma.technology.TechnologyImport;
 import de.fhdo.lemma.technology.TechnologyPackage;
 import de.fhdo.lemma.technology.TechnologySpecificPrimitiveType;
 import de.fhdo.lemma.technology.TechnologySpecificProperty;
-import de.fhdo.lemma.technology.validation.AbstractTechnologyDslValidator;
 import de.fhdo.lemma.typechecking.TypecheckingUtils;
 import de.fhdo.lemma.utils.LemmaUtils;
 import java.util.HashMap;
@@ -43,6 +42,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.validation.Check;
@@ -97,14 +97,24 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
   }
   
   /**
-   * Check if an imported file exists
+   * Check if an imported file exists and if it is case sensitive
    */
   @Check
-  public void checkImportFileExists(final TechnologyImport import_) {
-    boolean _importFileExists = LemmaUtils.importFileExists(import_.eResource(), import_.getImportURI());
+  public void checkImportFileExistsAndIsCaseSensitive(final TechnologyImport import_) {
+    final String importURI = import_.getImportURI();
+    final Resource eResource = import_.eResource();
+    boolean _importFileExists = LemmaUtils.importFileExists(eResource, importURI);
     boolean _not = (!_importFileExists);
     if (_not) {
-      this.error("File not found", TechnologyPackage.Literals.TECHNOLOGY_IMPORT__IMPORT_URI);
+      this.error("File not found", import_, 
+        TechnologyPackage.Literals.TECHNOLOGY_IMPORT__IMPORT_URI);
+    } else {
+      boolean _importFileExistsCaseSensitive = LemmaUtils.importFileExistsCaseSensitive(eResource, importURI);
+      boolean _not_1 = (!_importFileExistsCaseSensitive);
+      if (_not_1) {
+        this.error("Import path and filename must be case sensitive", import_, 
+          TechnologyPackage.Literals.TECHNOLOGY_IMPORT__IMPORT_URI);
+      }
     }
   }
   
@@ -117,7 +127,8 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
       Technology.class);
     boolean _not = (!_isImportOfType);
     if (_not) {
-      this.error("File does not contain a technology model definition", technologyImport, 
+      this.error(("Import paths are case sensitive, but the case sensitivity of this import path " + 
+        "does not match its appearance in the filesystem"), technologyImport, 
         TechnologyPackage.Literals.TECHNOLOGY_IMPORT__IMPORT_URI);
     }
   }
