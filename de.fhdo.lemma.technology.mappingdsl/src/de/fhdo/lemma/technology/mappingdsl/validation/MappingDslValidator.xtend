@@ -98,11 +98,11 @@ class MappingDslValidator extends AbstractMappingDslValidator {
      */
     @Check
     def checkTechnologyUniqueness(ComplexTypeMapping mapping) {
-        val duplicateIndex = LemmaUtils.getDuplicateIndex(
-            mapping.technologyReferences.map[technology],
-            [it]
-        )
-
+        val absolutePath = LemmaUtils.absolutePath(mapping.eResource)
+        val absoluteImportPaths = mapping.technologyReferences.map[
+            LemmaUtils.convertToAbsolutePath(technology.importURI, absolutePath)
+        ]
+        val duplicateIndex = LemmaUtils.getDuplicateIndex(absoluteImportPaths, [it])
         if (duplicateIndex > -1)
             error(
                 "Duplicate technology assignment",

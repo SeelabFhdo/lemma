@@ -49,7 +49,11 @@ class OperationDslValidator extends AbstractOperationDslValidator {
      */
     @Check
     def checkImportFileUniqueness(OperationModel operationModel) {
-        val duplicateIndex = LemmaUtils.getDuplicateIndex(operationModel.imports, [importURI])
+        val absolutePath = LemmaUtils.absolutePath(operationModel.eResource)
+        val absoluteImportPaths = operationModel.imports.map[
+            LemmaUtils.convertToAbsolutePath(importURI, absolutePath)
+        ]
+        val duplicateIndex = LemmaUtils.getDuplicateIndex(absoluteImportPaths, [it])
         if (duplicateIndex === -1) {
             return
         }

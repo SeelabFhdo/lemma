@@ -186,10 +186,15 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
    */
   @Check
   public void checkImportFileUniqueness(final ServiceModel serviceModel) {
-    final Function<Import, String> _function = (Import it) -> {
-      return it.getImportURI();
+    final String absolutePath = LemmaUtils.absolutePath(serviceModel.eResource());
+    final Function1<Import, String> _function = (Import it) -> {
+      return LemmaUtils.convertToAbsolutePath(it.getImportURI(), absolutePath);
     };
-    final Integer duplicateIndex = LemmaUtils.<Import, String>getDuplicateIndex(serviceModel.getImports(), _function);
+    final List<String> absoluteImportPaths = ListExtensions.<Import, String>map(serviceModel.getImports(), _function);
+    final Function<String, String> _function_1 = (String it) -> {
+      return it;
+    };
+    final Integer duplicateIndex = LemmaUtils.<String, String>getDuplicateIndex(absoluteImportPaths, _function_1);
     if (((duplicateIndex).intValue() == (-1))) {
       return;
     }

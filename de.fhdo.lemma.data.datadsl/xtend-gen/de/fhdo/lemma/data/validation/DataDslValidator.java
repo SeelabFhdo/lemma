@@ -77,10 +77,15 @@ public class DataDslValidator extends AbstractDataDslValidator {
    */
   @Check
   public void checkImportFileUniqueness(final DataModel dataModel) {
-    final Function<ComplexTypeImport, String> _function = (ComplexTypeImport it) -> {
-      return it.getImportURI();
+    final String absolutePath = LemmaUtils.absolutePath(dataModel.eResource());
+    final Function1<ComplexTypeImport, String> _function = (ComplexTypeImport it) -> {
+      return LemmaUtils.convertToAbsolutePath(it.getImportURI(), absolutePath);
     };
-    final Integer duplicateIndex = LemmaUtils.<ComplexTypeImport, String>getDuplicateIndex(dataModel.getComplexTypeImports(), _function);
+    final List<String> absoluteImportPaths = ListExtensions.<ComplexTypeImport, String>map(dataModel.getComplexTypeImports(), _function);
+    final Function<String, String> _function_1 = (String it) -> {
+      return it;
+    };
+    final Integer duplicateIndex = LemmaUtils.<String, String>getDuplicateIndex(absoluteImportPaths, _function_1);
     if (((duplicateIndex).intValue() == (-1))) {
       return;
     }

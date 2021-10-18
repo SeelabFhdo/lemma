@@ -60,7 +60,11 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
      */
     @Check
     def checkImportFileUniqueness(Technology model) {
-        val duplicateIndex = LemmaUtils.getDuplicateIndex(model.imports, [importURI])
+        val absolutePath = LemmaUtils.absolutePath(model.eResource)
+        val absoluteImportPaths = model.imports.map[
+            LemmaUtils.convertToAbsolutePath(importURI, absolutePath)
+        ]
+        val duplicateIndex = LemmaUtils.getDuplicateIndex(absoluteImportPaths, [it])
         if (duplicateIndex === -1) {
             return
         }

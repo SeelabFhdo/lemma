@@ -134,7 +134,11 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
      */
     @Check
     def checkImportFileUniqueness(ServiceModel serviceModel) {
-        val duplicateIndex = LemmaUtils.getDuplicateIndex(serviceModel.imports, [importURI])
+        val absolutePath = LemmaUtils.absolutePath(serviceModel.eResource)
+        val absoluteImportPaths = serviceModel.imports.map[
+            LemmaUtils.convertToAbsolutePath(importURI, absolutePath)
+        ]
+        val duplicateIndex = LemmaUtils.getDuplicateIndex(absoluteImportPaths, [it])
         if (duplicateIndex === -1) {
             return
         }
