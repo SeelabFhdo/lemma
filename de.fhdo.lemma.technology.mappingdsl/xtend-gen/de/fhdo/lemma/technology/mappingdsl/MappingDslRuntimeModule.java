@@ -3,8 +3,6 @@
  */
 package de.fhdo.lemma.technology.mappingdsl;
 
-import de.fhdo.lemma.technology.mappingdsl.AbstractMappingDslRuntimeModule;
-import de.fhdo.lemma.technology.mappingdsl.MappingDslResourceDescriptionStrategy;
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
 
 /**

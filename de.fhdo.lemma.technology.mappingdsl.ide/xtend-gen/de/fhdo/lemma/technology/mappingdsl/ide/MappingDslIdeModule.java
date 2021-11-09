@@ -3,8 +3,6 @@
  */
 package de.fhdo.lemma.technology.mappingdsl.ide;
 
-import de.fhdo.lemma.technology.mappingdsl.ide.AbstractMappingDslIdeModule;
-
 /**
  * Use this class to register ide components.
  */

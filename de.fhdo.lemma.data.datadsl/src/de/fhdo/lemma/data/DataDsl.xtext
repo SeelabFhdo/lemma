@@ -58,13 +58,17 @@ DataStructure returns DataStructure:
 ;
 
 ListType returns ListType:
-    'list' name=ID '{'
-        dataFields+=DataField (',' dataFields+=DataField)*
-    '}'
+    (
+        ('collection' | 'list') name=ID '{'
+            dataFields+=DataField (',' dataFields+=DataField)*
+        '}'
+    )
     |
-    'list' name=ID '{'
-        primitiveType=PrimitiveType
-    '}'
+    (
+        ('collection' | 'list') name=ID '{'
+            primitiveType=PrimitiveType
+        '}'
+    )
 ;
 
 enum DataFieldFeature returns DataFieldFeature:

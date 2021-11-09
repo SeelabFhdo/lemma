@@ -6,7 +6,6 @@ package de.fhdo.lemma.technology.mappingdsl.ui;
 import de.fhdo.lemma.eclipse.ui.editor.LiveValidationCapableXtextEditor;
 import de.fhdo.lemma.eclipse.ui.editor.LiveValidationXtextDocumentProvider;
 import de.fhdo.lemma.eclipse.ui.editor.server.ServerConnection;
-import de.fhdo.lemma.technology.mappingdsl.ui.AbstractMappingDslUiModule;
 import de.fhdo.lemma.technology.mappingdsl.ui.highlighting.HighlightingCalculator;
 import de.fhdo.lemma.technology.mappingdsl.ui.highlighting.HighlightingConfiguration;
 import org.eclipse.ui.plugin.AbstractUIPlugin;

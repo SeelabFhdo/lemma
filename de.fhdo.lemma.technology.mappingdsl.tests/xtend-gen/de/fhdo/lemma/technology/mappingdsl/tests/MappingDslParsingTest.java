@@ -5,7 +5,6 @@ package de.fhdo.lemma.technology.mappingdsl.tests;
 
 import com.google.inject.Inject;
 import de.fhdo.lemma.technology.mapping.TechnologyMapping;
-import de.fhdo.lemma.technology.mappingdsl.tests.MappingDslInjectorProvider;
 import org.eclipse.xtext.testing.InjectWith;
 import org.eclipse.xtext.testing.XtextRunner;
 import org.eclipse.xtext.testing.util.ParseHelper;

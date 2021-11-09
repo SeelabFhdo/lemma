@@ -57,7 +57,6 @@ import de.fhdo.lemma.technology.mapping.TechnologySpecificFieldMapping;
 import de.fhdo.lemma.technology.mapping.TechnologySpecificImportedServiceAspect;
 import de.fhdo.lemma.technology.mapping.TechnologySpecificProtocol;
 import de.fhdo.lemma.technology.mapping.TechnologySpecificProtocolSpecification;
-import de.fhdo.lemma.technology.mappingdsl.scoping.AbstractMappingDslScopeProvider;
 import de.fhdo.lemma.utils.LemmaUtils;
 import java.util.AbstractCollection;
 import java.util.ArrayList;

@@ -32,6 +32,7 @@
 'byte'=120
 'char'=121
 'closure'=114
+'collection'=135
 'communication_type'=88
 'compatibility'=53
 'containers'=93
@@ -43,8 +44,8 @@
 'default'=64
 'deployment'=58
 'domainEvent'=99
-'domainOperations'=136
-'domainParameters'=137
+'domainOperations'=137
+'domainParameters'=138
 'domainService'=100
 'double'=123
 'endpoints'=18
@@ -113,7 +114,7 @@
 'type'=73
 'typedef'=33
 'types'=52
-'unspecified'=135
+'unspecified'=136
 'utility'=134
 'validator'=116
 'valueObject'=106
@@ -170,6 +171,7 @@ T__134=134
 T__135=135
 T__136=136
 T__137=137
+T__138=138
 T__14=14
 T__15=15
 T__16=16

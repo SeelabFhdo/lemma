@@ -3,8 +3,6 @@
  */
 package de.fhdo.lemma.technology.mappingdsl;
 
-import de.fhdo.lemma.technology.mappingdsl.MappingDslStandaloneSetupGenerated;
-
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.
  */
