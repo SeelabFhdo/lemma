@@ -158,7 +158,6 @@ public class ComplexTypeMappingImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getT_sourceModelUri() {
         return t_sourceModelUri;
     }
@@ -168,7 +167,6 @@ public class ComplexTypeMappingImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setT_sourceModelUri(String newT_sourceModelUri) {
         String oldT_sourceModelUri = t_sourceModelUri;
         t_sourceModelUri = newT_sourceModelUri;
@@ -181,7 +179,6 @@ public class ComplexTypeMappingImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<TechnologyReference> getTechnologyReferences() {
         if (technologyReferences == null) {
             technologyReferences = new EObjectContainmentEList<TechnologyReference>(TechnologyReference.class, this, MappingPackage.COMPLEX_TYPE_MAPPING__TECHNOLOGY_REFERENCES);
@@ -194,7 +191,6 @@ public class ComplexTypeMappingImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public ImportedComplexTypeToMap getType() {
         return type;
     }
@@ -219,7 +215,6 @@ public class ComplexTypeMappingImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setType(ImportedComplexTypeToMap newType) {
         if (newType != type) {
             NotificationChain msgs = null;
@@ -239,7 +234,6 @@ public class ComplexTypeMappingImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<TechnologySpecificFieldMapping> getFieldMappings() {
         if (fieldMappings == null) {
             fieldMappings = new EObjectContainmentWithInverseEList<TechnologySpecificFieldMapping>(TechnologySpecificFieldMapping.class, this, MappingPackage.COMPLEX_TYPE_MAPPING__FIELD_MAPPINGS, MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TYPE_MAPPING);
@@ -252,7 +246,6 @@ public class ComplexTypeMappingImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<DataOperationMapping> getOperationMappings() {
         if (operationMappings == null) {
             operationMappings = new EObjectContainmentWithInverseEList<DataOperationMapping>(DataOperationMapping.class, this, MappingPackage.COMPLEX_TYPE_MAPPING__OPERATION_MAPPINGS, MappingPackage.DATA_OPERATION_MAPPING__TYPE_MAPPING);
@@ -265,7 +258,6 @@ public class ComplexTypeMappingImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<TechnologySpecificImportedServiceAspect> getAspects() {
         if (aspects == null) {
             aspects = new EObjectContainmentWithInverseEList<TechnologySpecificImportedServiceAspect>(TechnologySpecificImportedServiceAspect.class, this, MappingPackage.COMPLEX_TYPE_MAPPING__ASPECTS, MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__TYPE_MAPPING);
@@ -278,7 +270,6 @@ public class ComplexTypeMappingImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public TechnologyMapping getMappingModel() {
         if (eContainerFeatureID() != MappingPackage.COMPLEX_TYPE_MAPPING__MAPPING_MODEL) return null;
         return (TechnologyMapping)eContainer();
@@ -309,7 +300,6 @@ public class ComplexTypeMappingImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setMappingModel(TechnologyMapping newMappingModel) {
         if (newMappingModel != eInternalContainer() || (eContainerFeatureID() != MappingPackage.COMPLEX_TYPE_MAPPING__MAPPING_MODEL && newMappingModel != null)) {
             if (EcoreUtil.isAncestor(this, newMappingModel))
@@ -331,7 +321,6 @@ public class ComplexTypeMappingImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<TechnologyReference> getAllTypeDefinitionTechnologyReferences() {
         final Function1<TechnologyReference, Boolean> _function = new Function1<TechnologyReference, Boolean>() {
             public Boolean apply(final TechnologyReference it) {
@@ -355,7 +344,6 @@ public class ComplexTypeMappingImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Import getTypeDefinitionTechnologyImport() {
         final Function1<TechnologyReference, Boolean> _function = new Function1<TechnologyReference, Boolean>() {
             public Boolean apply(final TechnologyReference it) {
@@ -389,7 +377,6 @@ public class ComplexTypeMappingImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Technology getTypeDefinitionTechnology() {
         final Import typeDefinitionTechnologyImport = this.getTypeDefinitionTechnologyImport();
         Technology _xifexpression = null;

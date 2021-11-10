@@ -330,7 +330,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EClass getServiceModel() {
         return serviceModelEClass;
     }
@@ -340,7 +339,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getServiceModel_T_modelUri() {
         return (EAttribute)serviceModelEClass.getEStructuralFeatures().get(0);
     }
@@ -350,7 +348,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getServiceModel_Imports() {
         return (EReference)serviceModelEClass.getEStructuralFeatures().get(1);
     }
@@ -360,7 +357,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getServiceModel_MappedComplexTypes() {
         return (EReference)serviceModelEClass.getEStructuralFeatures().get(2);
     }
@@ -370,7 +366,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getServiceModel_Microservices() {
         return (EReference)serviceModelEClass.getEStructuralFeatures().get(3);
     }
@@ -380,7 +375,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getServiceModel__GetContainedOperations() {
         return serviceModelEClass.getEOperations().get(0);
     }
@@ -390,7 +384,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getServiceModel__GetContainedReferredOperations() {
         return serviceModelEClass.getEOperations().get(1);
     }
@@ -400,7 +393,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getServiceModel__GetContainedInterfaces() {
         return serviceModelEClass.getEOperations().get(2);
     }
@@ -410,7 +402,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EClass getImport() {
         return importEClass;
     }
@@ -420,7 +411,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getImport_T_relatedImportAlias() {
         return (EAttribute)importEClass.getEStructuralFeatures().get(0);
     }
@@ -430,7 +420,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getImport_Name() {
         return (EAttribute)importEClass.getEStructuralFeatures().get(1);
     }
@@ -440,7 +429,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getImport_ImportURI() {
         return (EAttribute)importEClass.getEStructuralFeatures().get(2);
     }
@@ -450,7 +438,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getImport_ImportType() {
         return (EAttribute)importEClass.getEStructuralFeatures().get(3);
     }
@@ -460,7 +447,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getImport_ServiceModel() {
         return (EReference)importEClass.getEStructuralFeatures().get(4);
     }
@@ -470,7 +456,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EClass getMappedComplexType() {
         return mappedComplexTypeEClass;
     }
@@ -480,7 +465,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getMappedComplexType_T_sourceModelUri() {
         return (EAttribute)mappedComplexTypeEClass.getEStructuralFeatures().get(0);
     }
@@ -490,7 +474,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getMappedComplexType_T_typeDefinitionTechnologyImport() {
         return (EReference)mappedComplexTypeEClass.getEStructuralFeatures().get(1);
     }
@@ -500,7 +483,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getMappedComplexType_T_typeDefinitionTechnology() {
         return (EReference)mappedComplexTypeEClass.getEStructuralFeatures().get(2);
     }
@@ -510,7 +492,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getMappedComplexType_TechnologyReferences() {
         return (EReference)mappedComplexTypeEClass.getEStructuralFeatures().get(3);
     }
@@ -520,7 +501,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getMappedComplexType_Type() {
         return (EReference)mappedComplexTypeEClass.getEStructuralFeatures().get(4);
     }
@@ -530,7 +510,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getMappedComplexType_MappedFields() {
         return (EReference)mappedComplexTypeEClass.getEStructuralFeatures().get(5);
     }
@@ -540,7 +519,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getMappedComplexType_MappedOperations() {
         return (EReference)mappedComplexTypeEClass.getEStructuralFeatures().get(6);
     }
@@ -550,7 +528,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getMappedComplexType_Aspects() {
         return (EReference)mappedComplexTypeEClass.getEStructuralFeatures().get(7);
     }
@@ -560,7 +537,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getMappedComplexType_ServiceModel() {
         return (EReference)mappedComplexTypeEClass.getEStructuralFeatures().get(8);
     }
@@ -570,7 +546,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getMappedComplexType__GetQualifiedNameParts__boolean() {
         return mappedComplexTypeEClass.getEOperations().get(0);
     }
@@ -580,7 +555,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getMappedComplexType__BuildQualifiedName__String_boolean() {
         return mappedComplexTypeEClass.getEOperations().get(1);
     }
@@ -590,7 +564,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getMappedComplexType__GetAllTypeDefinitionTechnologyReferences() {
         return mappedComplexTypeEClass.getEOperations().get(2);
     }
@@ -600,7 +573,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getMappedComplexType__GetTypeDefinitionTechnologyImport() {
         return mappedComplexTypeEClass.getEOperations().get(3);
     }
@@ -610,7 +582,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getMappedComplexType__GetTypeDefinitionTechnology() {
         return mappedComplexTypeEClass.getEOperations().get(4);
     }
@@ -620,7 +591,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EClass getMappedDataOperation() {
         return mappedDataOperationEClass;
     }
@@ -630,7 +600,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getMappedDataOperation_DataOperation() {
         return (EReference)mappedDataOperationEClass.getEStructuralFeatures().get(0);
     }
@@ -640,7 +609,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getMappedDataOperation_Aspects() {
         return (EReference)mappedDataOperationEClass.getEStructuralFeatures().get(1);
     }
@@ -650,7 +618,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getMappedDataOperation_MappedReturnType() {
         return (EReference)mappedDataOperationEClass.getEStructuralFeatures().get(2);
     }
@@ -660,7 +627,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getMappedDataOperation_MappedParameters() {
         return (EReference)mappedDataOperationEClass.getEStructuralFeatures().get(3);
     }
@@ -670,7 +636,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getMappedDataOperation_MappedComplexType() {
         return (EReference)mappedDataOperationEClass.getEStructuralFeatures().get(4);
     }
@@ -680,7 +645,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EClass getMappedDataOperationReturnType() {
         return mappedDataOperationReturnTypeEClass;
     }
@@ -690,7 +654,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getMappedDataOperationReturnType_MappedType() {
         return (EReference)mappedDataOperationReturnTypeEClass.getEStructuralFeatures().get(0);
     }
@@ -700,7 +663,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getMappedDataOperationReturnType_Aspects() {
         return (EReference)mappedDataOperationReturnTypeEClass.getEStructuralFeatures().get(1);
     }
@@ -710,7 +672,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getMappedDataOperationReturnType_MappedOperation() {
         return (EReference)mappedDataOperationReturnTypeEClass.getEStructuralFeatures().get(2);
     }
@@ -720,7 +681,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EClass getMappedDataOperationParameter() {
         return mappedDataOperationParameterEClass;
     }
@@ -730,7 +690,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getMappedDataOperationParameter_Parameter() {
         return (EReference)mappedDataOperationParameterEClass.getEStructuralFeatures().get(0);
     }
@@ -740,7 +699,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getMappedDataOperationParameter_MappedType() {
         return (EReference)mappedDataOperationParameterEClass.getEStructuralFeatures().get(1);
     }
@@ -750,7 +708,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getMappedDataOperationParameter_Aspects() {
         return (EReference)mappedDataOperationParameterEClass.getEStructuralFeatures().get(2);
     }
@@ -760,7 +717,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getMappedDataOperationParameter_MappedOperation() {
         return (EReference)mappedDataOperationParameterEClass.getEStructuralFeatures().get(3);
     }
@@ -770,7 +726,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EClass getMappedField() {
         return mappedFieldEClass;
     }
@@ -780,7 +735,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getMappedField_DataField() {
         return (EReference)mappedFieldEClass.getEStructuralFeatures().get(0);
     }
@@ -790,7 +744,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getMappedField_EnumerationField() {
         return (EReference)mappedFieldEClass.getEStructuralFeatures().get(1);
     }
@@ -800,7 +753,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getMappedField_MappedType() {
         return (EReference)mappedFieldEClass.getEStructuralFeatures().get(2);
     }
@@ -810,7 +762,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getMappedField_Aspects() {
         return (EReference)mappedFieldEClass.getEStructuralFeatures().get(3);
     }
@@ -820,7 +771,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getMappedField_Parameter() {
         return (EReference)mappedFieldEClass.getEStructuralFeatures().get(4);
     }
@@ -830,7 +780,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getMappedField_MappedComplexType() {
         return (EReference)mappedFieldEClass.getEStructuralFeatures().get(5);
     }
@@ -840,7 +789,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getMappedField_Name() {
         return (EAttribute)mappedFieldEClass.getEStructuralFeatures().get(6);
     }
@@ -850,7 +798,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getMappedField__GetQualifiedNameParts__boolean() {
         return mappedFieldEClass.getEOperations().get(0);
     }
@@ -860,7 +807,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getMappedField__BuildQualifiedName__String_boolean() {
         return mappedFieldEClass.getEOperations().get(1);
     }
@@ -870,7 +816,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getMappedField__GetEffectiveType() {
         return mappedFieldEClass.getEOperations().get(2);
     }
@@ -880,7 +825,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EClass getMicroservice() {
         return microserviceEClass;
     }
@@ -890,7 +834,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getMicroservice_Name() {
         return (EAttribute)microserviceEClass.getEStructuralFeatures().get(0);
     }
@@ -900,7 +843,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getMicroservice_Version() {
         return (EAttribute)microserviceEClass.getEStructuralFeatures().get(1);
     }
@@ -910,7 +852,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getMicroservice_Type() {
         return (EAttribute)microserviceEClass.getEStructuralFeatures().get(2);
     }
@@ -920,7 +861,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getMicroservice_Visibility() {
         return (EAttribute)microserviceEClass.getEStructuralFeatures().get(3);
     }
@@ -930,7 +870,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getMicroservice_T_defaultProtocols() {
         return (EAttribute)microserviceEClass.getEStructuralFeatures().get(4);
     }
@@ -940,7 +879,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getMicroservice_T_sourceModelUri() {
         return (EAttribute)microserviceEClass.getEStructuralFeatures().get(5);
     }
@@ -950,7 +888,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getMicroservice_TechnologyReferences() {
         return (EReference)microserviceEClass.getEStructuralFeatures().get(6);
     }
@@ -960,7 +897,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getMicroservice_T_typeDefinitionTechnologyImport() {
         return (EReference)microserviceEClass.getEStructuralFeatures().get(7);
     }
@@ -970,7 +906,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getMicroservice_T_typeDefinitionTechnology() {
         return (EReference)microserviceEClass.getEStructuralFeatures().get(8);
     }
@@ -980,7 +915,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getMicroservice_Endpoints() {
         return (EReference)microserviceEClass.getEStructuralFeatures().get(9);
     }
@@ -990,7 +924,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getMicroservice_RequiredMicroservices() {
         return (EReference)microserviceEClass.getEStructuralFeatures().get(10);
     }
@@ -1000,7 +933,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getMicroservice_RequiredInterfaces() {
         return (EReference)microserviceEClass.getEStructuralFeatures().get(11);
     }
@@ -1010,7 +942,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getMicroservice_RequiredOperations() {
         return (EReference)microserviceEClass.getEStructuralFeatures().get(12);
     }
@@ -1020,7 +951,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getMicroservice_Protocols() {
         return (EReference)microserviceEClass.getEStructuralFeatures().get(13);
     }
@@ -1030,7 +960,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getMicroservice_Interfaces() {
         return (EReference)microserviceEClass.getEStructuralFeatures().get(14);
     }
@@ -1040,7 +969,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getMicroservice_Aspects() {
         return (EReference)microserviceEClass.getEStructuralFeatures().get(15);
     }
@@ -1050,7 +978,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getMicroservice_ServiceModel() {
         return (EReference)microserviceEClass.getEStructuralFeatures().get(16);
     }
@@ -1060,7 +987,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getMicroservice_EffectivelyImplemented() {
         return (EAttribute)microserviceEClass.getEStructuralFeatures().get(17);
     }
@@ -1070,7 +996,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getMicroservice_EffectiveVisibility() {
         return (EAttribute)microserviceEClass.getEStructuralFeatures().get(18);
     }
@@ -1080,7 +1005,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getMicroservice_EffectivelyInternal() {
         return (EAttribute)microserviceEClass.getEStructuralFeatures().get(19);
     }
@@ -1090,7 +1014,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getMicroservice__T_effectiveProtocolSpecifications() {
         return microserviceEClass.getEOperations().get(0);
     }
@@ -1100,7 +1023,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getMicroservice__GetAllTypeDefinitionTechnologyReferences() {
         return microserviceEClass.getEOperations().get(1);
     }
@@ -1110,7 +1032,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getMicroservice__GetTypeDefinitionTechnologyImport() {
         return microserviceEClass.getEOperations().get(2);
     }
@@ -1120,7 +1041,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getMicroservice__GetTypeDefinitionTechnology() {
         return microserviceEClass.getEOperations().get(3);
     }
@@ -1130,7 +1050,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getMicroservice__GetQualifiedNameParts() {
         return microserviceEClass.getEOperations().get(4);
     }
@@ -1140,7 +1059,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getMicroservice__BuildQualifiedName__String() {
         return microserviceEClass.getEOperations().get(5);
     }
@@ -1150,7 +1068,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getMicroservice__GetContainedOperations() {
         return microserviceEClass.getEOperations().get(6);
     }
@@ -1160,7 +1077,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getMicroservice__GetContainedReferredOperations() {
         return microserviceEClass.getEOperations().get(7);
     }
@@ -1170,7 +1086,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getMicroservice__GetRequiredImports() {
         return microserviceEClass.getEOperations().get(8);
     }
@@ -1180,7 +1095,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getMicroservice__GetAllRequiredOperations__Import() {
         return microserviceEClass.getEOperations().get(9);
     }
@@ -1190,7 +1104,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getMicroservice__GetAllRequiredMicroservices() {
         return microserviceEClass.getEOperations().get(10);
     }
@@ -1200,7 +1113,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getMicroservice__GetAllInitializingMicroservices() {
         return microserviceEClass.getEOperations().get(11);
     }
@@ -1210,7 +1122,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getMicroservice__CanRequire__Microservice_boolean() {
         return microserviceEClass.getEOperations().get(12);
     }
@@ -1220,7 +1131,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getMicroservice__CanRequire__Interface_boolean() {
         return microserviceEClass.getEOperations().get(13);
     }
@@ -1230,7 +1140,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getMicroservice__CanRequire__Operation_boolean() {
         return microserviceEClass.getEOperations().get(14);
     }
@@ -1240,7 +1149,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EClass getTechnologyReference() {
         return technologyReferenceEClass;
     }
@@ -1250,7 +1158,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getTechnologyReference_IsTypeDefinitionTechnology() {
         return (EAttribute)technologyReferenceEClass.getEStructuralFeatures().get(0);
     }
@@ -1260,7 +1167,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getTechnologyReference_Technology() {
         return (EReference)technologyReferenceEClass.getEStructuralFeatures().get(1);
     }
@@ -1270,7 +1176,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getTechnologyReference_Microservice() {
         return (EReference)technologyReferenceEClass.getEStructuralFeatures().get(2);
     }
@@ -1280,7 +1185,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getTechnologyReference_MappedComplexType() {
         return (EReference)technologyReferenceEClass.getEStructuralFeatures().get(3);
     }
@@ -1290,7 +1194,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EClass getInterface() {
         return interfaceEClass;
     }
@@ -1300,7 +1203,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getInterface_Name() {
         return (EAttribute)interfaceEClass.getEStructuralFeatures().get(0);
     }
@@ -1310,7 +1212,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getInterface_Version() {
         return (EAttribute)interfaceEClass.getEStructuralFeatures().get(1);
     }
@@ -1320,7 +1221,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getInterface_NotImplemented() {
         return (EAttribute)interfaceEClass.getEStructuralFeatures().get(2);
     }
@@ -1330,7 +1230,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getInterface_Visibility() {
         return (EAttribute)interfaceEClass.getEStructuralFeatures().get(3);
     }
@@ -1340,7 +1239,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getInterface_Endpoints() {
         return (EReference)interfaceEClass.getEStructuralFeatures().get(4);
     }
@@ -1350,7 +1248,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getInterface_Protocols() {
         return (EReference)interfaceEClass.getEStructuralFeatures().get(5);
     }
@@ -1360,7 +1257,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getInterface_Operations() {
         return (EReference)interfaceEClass.getEStructuralFeatures().get(6);
     }
@@ -1370,7 +1266,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getInterface_ReferredOperations() {
         return (EReference)interfaceEClass.getEStructuralFeatures().get(7);
     }
@@ -1380,7 +1275,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getInterface_Aspects() {
         return (EReference)interfaceEClass.getEStructuralFeatures().get(8);
     }
@@ -1390,7 +1284,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getInterface_Microservice() {
         return (EReference)interfaceEClass.getEStructuralFeatures().get(9);
     }
@@ -1400,7 +1293,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getInterface_EffectiveVisibility() {
         return (EAttribute)interfaceEClass.getEStructuralFeatures().get(10);
     }
@@ -1410,7 +1302,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getInterface_EffectivelyImplemented() {
         return (EAttribute)interfaceEClass.getEStructuralFeatures().get(11);
     }
@@ -1420,7 +1311,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getInterface_EffectivelyInternal() {
         return (EAttribute)interfaceEClass.getEStructuralFeatures().get(12);
     }
@@ -1430,7 +1320,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getInterface__T_effectiveProtocolSpecifications() {
         return interfaceEClass.getEOperations().get(0);
     }
@@ -1440,7 +1329,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getInterface__GetQualifiedNameParts() {
         return interfaceEClass.getEOperations().get(1);
     }
@@ -1450,7 +1338,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getInterface__BuildQualifiedName__String() {
         return interfaceEClass.getEOperations().get(2);
     }
@@ -1460,7 +1347,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EClass getOperation() {
         return operationEClass;
     }
@@ -1470,7 +1356,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getOperation_Name() {
         return (EAttribute)operationEClass.getEStructuralFeatures().get(0);
     }
@@ -1480,7 +1365,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getOperation_NotImplemented() {
         return (EAttribute)operationEClass.getEStructuralFeatures().get(1);
     }
@@ -1490,7 +1374,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getOperation_Visibility() {
         return (EAttribute)operationEClass.getEStructuralFeatures().get(2);
     }
@@ -1500,7 +1383,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getOperation_ApiOperationComment() {
         return (EReference)operationEClass.getEStructuralFeatures().get(3);
     }
@@ -1510,7 +1392,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getOperation_Endpoints() {
         return (EReference)operationEClass.getEStructuralFeatures().get(4);
     }
@@ -1520,7 +1401,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getOperation_Protocols() {
         return (EReference)operationEClass.getEStructuralFeatures().get(5);
     }
@@ -1530,7 +1410,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getOperation_Parameters() {
         return (EReference)operationEClass.getEStructuralFeatures().get(6);
     }
@@ -1540,7 +1419,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getOperation_Aspects() {
         return (EReference)operationEClass.getEStructuralFeatures().get(7);
     }
@@ -1550,7 +1428,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getOperation_Interface() {
         return (EReference)operationEClass.getEStructuralFeatures().get(8);
     }
@@ -1560,7 +1437,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getOperation_NotImplementedByContainer() {
         return (EAttribute)operationEClass.getEStructuralFeatures().get(9);
     }
@@ -1570,7 +1446,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getOperation_EffectivelyNotImplemented() {
         return (EAttribute)operationEClass.getEStructuralFeatures().get(10);
     }
@@ -1580,7 +1455,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getOperation_EffectiveVisibility() {
         return (EAttribute)operationEClass.getEStructuralFeatures().get(11);
     }
@@ -1590,7 +1464,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getOperation_EffectivelyInternal() {
         return (EAttribute)operationEClass.getEStructuralFeatures().get(12);
     }
@@ -1600,7 +1473,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getOperation__T_effectiveProtocolSpecifications() {
         return operationEClass.getEOperations().get(0);
     }
@@ -1610,7 +1482,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getOperation__GetQualifiedNameParts() {
         return operationEClass.getEOperations().get(1);
     }
@@ -1620,7 +1491,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getOperation__BuildQualifiedName__String() {
         return operationEClass.getEOperations().get(2);
     }
@@ -1630,7 +1500,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EClass getApiOperationComment() {
         return apiOperationCommentEClass;
     }
@@ -1640,7 +1509,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getApiOperationComment_Comment() {
         return (EAttribute)apiOperationCommentEClass.getEStructuralFeatures().get(0);
     }
@@ -1650,7 +1518,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getApiOperationComment_ParameterComments() {
         return (EReference)apiOperationCommentEClass.getEStructuralFeatures().get(1);
     }
@@ -1660,7 +1527,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getApiOperationComment_Operation() {
         return (EReference)apiOperationCommentEClass.getEStructuralFeatures().get(2);
     }
@@ -1670,7 +1536,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EClass getApiParameterComment() {
         return apiParameterCommentEClass;
     }
@@ -1680,7 +1545,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getApiParameterComment_Comment() {
         return (EAttribute)apiParameterCommentEClass.getEStructuralFeatures().get(0);
     }
@@ -1690,7 +1554,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getApiParameterComment_Required() {
         return (EAttribute)apiParameterCommentEClass.getEStructuralFeatures().get(1);
     }
@@ -1700,7 +1563,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getApiParameterComment_Parameter() {
         return (EReference)apiParameterCommentEClass.getEStructuralFeatures().get(2);
     }
@@ -1710,7 +1572,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getApiParameterComment_OperationComment() {
         return (EReference)apiParameterCommentEClass.getEStructuralFeatures().get(3);
     }
@@ -1720,7 +1581,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EClass getReferredOperation() {
         return referredOperationEClass;
     }
@@ -1730,7 +1590,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getReferredOperation_Operation() {
         return (EReference)referredOperationEClass.getEStructuralFeatures().get(0);
     }
@@ -1740,7 +1599,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getReferredOperation_Endpoints() {
         return (EReference)referredOperationEClass.getEStructuralFeatures().get(1);
     }
@@ -1750,7 +1608,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getReferredOperation_Protocols() {
         return (EReference)referredOperationEClass.getEStructuralFeatures().get(2);
     }
@@ -1760,7 +1617,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getReferredOperation_Aspects() {
         return (EReference)referredOperationEClass.getEStructuralFeatures().get(3);
     }
@@ -1770,7 +1626,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getReferredOperation_Interface() {
         return (EReference)referredOperationEClass.getEStructuralFeatures().get(4);
     }
@@ -1780,7 +1635,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getReferredOperation__T_effectiveProtocolSpecifications() {
         return referredOperationEClass.getEOperations().get(0);
     }
@@ -1790,7 +1644,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getReferredOperation__GetQualifiedNameParts() {
         return referredOperationEClass.getEOperations().get(1);
     }
@@ -1800,7 +1653,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getReferredOperation__BuildQualifiedName__String() {
         return referredOperationEClass.getEOperations().get(2);
     }
@@ -1810,7 +1662,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EClass getParameter() {
         return parameterEClass;
     }
@@ -1820,7 +1671,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getParameter_Name() {
         return (EAttribute)parameterEClass.getEStructuralFeatures().get(0);
     }
@@ -1830,7 +1680,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getParameter_ExchangePattern() {
         return (EAttribute)parameterEClass.getEStructuralFeatures().get(1);
     }
@@ -1840,7 +1689,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getParameter_CommunicationType() {
         return (EAttribute)parameterEClass.getEStructuralFeatures().get(2);
     }
@@ -1850,7 +1698,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getParameter_CommunicatesFault() {
         return (EAttribute)parameterEClass.getEStructuralFeatures().get(3);
     }
@@ -1860,7 +1707,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getParameter_Optional() {
         return (EAttribute)parameterEClass.getEStructuralFeatures().get(4);
     }
@@ -1870,7 +1716,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getParameter_InitializedByOperation() {
         return (EReference)parameterEClass.getEStructuralFeatures().get(5);
     }
@@ -1880,7 +1725,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getParameter_ImportedType() {
         return (EReference)parameterEClass.getEStructuralFeatures().get(6);
     }
@@ -1890,7 +1734,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getParameter_PrimitiveType() {
         return (EReference)parameterEClass.getEStructuralFeatures().get(7);
     }
@@ -1900,7 +1743,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getParameter_Aspects() {
         return (EReference)parameterEClass.getEStructuralFeatures().get(8);
     }
@@ -1910,7 +1752,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getParameter_MappedFields() {
         return (EReference)parameterEClass.getEStructuralFeatures().get(9);
     }
@@ -1920,7 +1761,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getParameter_OriginalImportedType() {
         return (EReference)parameterEClass.getEStructuralFeatures().get(10);
     }
@@ -1930,7 +1770,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getParameter_OriginalPrimitiveType() {
         return (EReference)parameterEClass.getEStructuralFeatures().get(11);
     }
@@ -1940,7 +1779,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getParameter_Operation() {
         return (EReference)parameterEClass.getEStructuralFeatures().get(12);
     }
@@ -1950,7 +1788,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getParameter__GetQualifiedNameParts() {
         return parameterEClass.getEOperations().get(0);
     }
@@ -1960,7 +1797,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getParameter__BuildQualifiedName__String() {
         return parameterEClass.getEOperations().get(1);
     }
@@ -1970,7 +1806,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getParameter__BasicallyInitializableBy__Operation() {
         return parameterEClass.getEOperations().get(2);
     }
@@ -1980,7 +1815,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getParameter__GetEffectiveType() {
         return parameterEClass.getEOperations().get(3);
     }
@@ -1990,7 +1824,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getParameter__IsTechnologySpecificEffectiveType() {
         return parameterEClass.getEOperations().get(4);
     }
@@ -2000,7 +1833,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getParameter__GetEffectiveTypeQualifiedNameParts() {
         return parameterEClass.getEOperations().get(5);
     }
@@ -2010,7 +1842,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EClass getPossiblyImportedMicroservice() {
         return possiblyImportedMicroserviceEClass;
     }
@@ -2020,7 +1851,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getPossiblyImportedMicroservice_Import() {
         return (EReference)possiblyImportedMicroserviceEClass.getEStructuralFeatures().get(0);
     }
@@ -2030,7 +1860,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getPossiblyImportedMicroservice_Microservice() {
         return (EReference)possiblyImportedMicroserviceEClass.getEStructuralFeatures().get(1);
     }
@@ -2040,7 +1869,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getPossiblyImportedMicroservice_RequiringMicroservice() {
         return (EReference)possiblyImportedMicroserviceEClass.getEStructuralFeatures().get(2);
     }
@@ -2050,7 +1878,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EClass getPossiblyImportedInterface() {
         return possiblyImportedInterfaceEClass;
     }
@@ -2060,7 +1887,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getPossiblyImportedInterface_Import() {
         return (EReference)possiblyImportedInterfaceEClass.getEStructuralFeatures().get(0);
     }
@@ -2070,7 +1896,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getPossiblyImportedInterface_Interface() {
         return (EReference)possiblyImportedInterfaceEClass.getEStructuralFeatures().get(1);
     }
@@ -2080,7 +1905,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getPossiblyImportedInterface_RequiringMicroservice() {
         return (EReference)possiblyImportedInterfaceEClass.getEStructuralFeatures().get(2);
     }
@@ -2090,7 +1914,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getPossiblyImportedInterface_Required() {
         return (EAttribute)possiblyImportedInterfaceEClass.getEStructuralFeatures().get(3);
     }
@@ -2100,7 +1923,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getPossiblyImportedInterface_RequiredByContainer() {
         return (EAttribute)possiblyImportedInterfaceEClass.getEStructuralFeatures().get(4);
     }
@@ -2110,7 +1932,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EClass getPossiblyImportedOperation() {
         return possiblyImportedOperationEClass;
     }
@@ -2120,7 +1941,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getPossiblyImportedOperation_Import() {
         return (EReference)possiblyImportedOperationEClass.getEStructuralFeatures().get(0);
     }
@@ -2130,7 +1950,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getPossiblyImportedOperation_Operation() {
         return (EReference)possiblyImportedOperationEClass.getEStructuralFeatures().get(1);
     }
@@ -2140,7 +1959,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getPossiblyImportedOperation_RequiringMicroservice() {
         return (EReference)possiblyImportedOperationEClass.getEStructuralFeatures().get(2);
     }
@@ -2150,7 +1968,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getPossiblyImportedOperation_InitializedParameter() {
         return (EReference)possiblyImportedOperationEClass.getEStructuralFeatures().get(3);
     }
@@ -2160,7 +1977,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getPossiblyImportedOperation_Required() {
         return (EAttribute)possiblyImportedOperationEClass.getEStructuralFeatures().get(4);
     }
@@ -2170,7 +1986,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getPossiblyImportedOperation_RequiredByInterface() {
         return (EAttribute)possiblyImportedOperationEClass.getEStructuralFeatures().get(5);
     }
@@ -2180,7 +1995,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getPossiblyImportedOperation_RequiredByMicroservice() {
         return (EAttribute)possiblyImportedOperationEClass.getEStructuralFeatures().get(6);
     }
@@ -2190,7 +2004,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getPossiblyImportedOperation_RequiredByContainer() {
         return (EAttribute)possiblyImportedOperationEClass.getEStructuralFeatures().get(7);
     }
@@ -2200,7 +2013,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EClass getImportedType() {
         return importedTypeEClass;
     }
@@ -2210,7 +2022,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getImportedType_Import() {
         return (EReference)importedTypeEClass.getEStructuralFeatures().get(0);
     }
@@ -2220,7 +2031,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getImportedType_Type() {
         return (EReference)importedTypeEClass.getEStructuralFeatures().get(1);
     }
@@ -2230,7 +2040,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EClass getImportedProtocolAndDataFormat() {
         return importedProtocolAndDataFormatEClass;
     }
@@ -2240,7 +2049,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getImportedProtocolAndDataFormat_Import() {
         return (EReference)importedProtocolAndDataFormatEClass.getEStructuralFeatures().get(0);
     }
@@ -2250,7 +2058,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getImportedProtocolAndDataFormat_ImportedProtocol() {
         return (EReference)importedProtocolAndDataFormatEClass.getEStructuralFeatures().get(1);
     }
@@ -2260,7 +2067,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getImportedProtocolAndDataFormat_DataFormat() {
         return (EReference)importedProtocolAndDataFormatEClass.getEStructuralFeatures().get(2);
     }
@@ -2270,7 +2076,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getImportedProtocolAndDataFormat_Specification() {
         return (EReference)importedProtocolAndDataFormatEClass.getEStructuralFeatures().get(3);
     }
@@ -2280,7 +2085,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getImportedProtocolAndDataFormat_Endpoint() {
         return (EReference)importedProtocolAndDataFormatEClass.getEStructuralFeatures().get(4);
     }
@@ -2290,7 +2094,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EClass getProtocolSpecification() {
         return protocolSpecificationEClass;
     }
@@ -2300,7 +2103,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getProtocolSpecification_CommunicationType() {
         return (EAttribute)protocolSpecificationEClass.getEStructuralFeatures().get(0);
     }
@@ -2310,7 +2112,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getProtocolSpecification_Protocol() {
         return (EReference)protocolSpecificationEClass.getEStructuralFeatures().get(1);
     }
@@ -2320,7 +2121,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EOperation getProtocolSpecification__EffectiveProtocolSpecifications__EList() {
         return protocolSpecificationEClass.getEOperations().get(0);
     }
@@ -2330,7 +2130,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EClass getEndpoint() {
         return endpointEClass;
     }
@@ -2340,7 +2139,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EAttribute getEndpoint_Addresses() {
         return (EAttribute)endpointEClass.getEStructuralFeatures().get(0);
     }
@@ -2350,7 +2148,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getEndpoint_Protocols() {
         return (EReference)endpointEClass.getEStructuralFeatures().get(1);
     }
@@ -2360,7 +2157,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getEndpoint_Microservice() {
         return (EReference)endpointEClass.getEStructuralFeatures().get(2);
     }
@@ -2370,7 +2166,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getEndpoint_Interface() {
         return (EReference)endpointEClass.getEStructuralFeatures().get(3);
     }
@@ -2380,7 +2175,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getEndpoint_Operation() {
         return (EReference)endpointEClass.getEStructuralFeatures().get(4);
     }
@@ -2390,7 +2184,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getEndpoint_ReferredOperation() {
         return (EReference)endpointEClass.getEStructuralFeatures().get(5);
     }
@@ -2400,7 +2193,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EClass getImportedServiceAspect() {
         return importedServiceAspectEClass;
     }
@@ -2410,7 +2202,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getImportedServiceAspect_Import() {
         return (EReference)importedServiceAspectEClass.getEStructuralFeatures().get(0);
     }
@@ -2420,7 +2211,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getImportedServiceAspect_ImportedAspect() {
         return (EReference)importedServiceAspectEClass.getEStructuralFeatures().get(1);
     }
@@ -2430,7 +2220,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getImportedServiceAspect_SinglePropertyValue() {
         return (EReference)importedServiceAspectEClass.getEStructuralFeatures().get(2);
     }
@@ -2440,7 +2229,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getImportedServiceAspect_Values() {
         return (EReference)importedServiceAspectEClass.getEStructuralFeatures().get(3);
     }
@@ -2450,7 +2238,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getImportedServiceAspect_Microservice() {
         return (EReference)importedServiceAspectEClass.getEStructuralFeatures().get(4);
     }
@@ -2460,7 +2247,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getImportedServiceAspect_Interface() {
         return (EReference)importedServiceAspectEClass.getEStructuralFeatures().get(5);
     }
@@ -2470,7 +2256,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getImportedServiceAspect_Operation() {
         return (EReference)importedServiceAspectEClass.getEStructuralFeatures().get(6);
     }
@@ -2480,7 +2265,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getImportedServiceAspect_ReferredOperation() {
         return (EReference)importedServiceAspectEClass.getEStructuralFeatures().get(7);
     }
@@ -2490,7 +2274,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getImportedServiceAspect_Parameter() {
         return (EReference)importedServiceAspectEClass.getEStructuralFeatures().get(8);
     }
@@ -2500,7 +2283,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getImportedServiceAspect_MappedComplexType() {
         return (EReference)importedServiceAspectEClass.getEStructuralFeatures().get(9);
     }
@@ -2510,7 +2292,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getImportedServiceAspect_MappedField() {
         return (EReference)importedServiceAspectEClass.getEStructuralFeatures().get(10);
     }
@@ -2520,7 +2301,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getImportedServiceAspect_MappedDataOperation() {
         return (EReference)importedServiceAspectEClass.getEStructuralFeatures().get(11);
     }
@@ -2530,7 +2310,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getImportedServiceAspect_MappedDataOperationReturnType() {
         return (EReference)importedServiceAspectEClass.getEStructuralFeatures().get(12);
     }
@@ -2540,7 +2319,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EReference getImportedServiceAspect_MappedDataOperationParameter() {
         return (EReference)importedServiceAspectEClass.getEStructuralFeatures().get(13);
     }
@@ -2550,7 +2328,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EEnum getImportType() {
         return importTypeEEnum;
     }
@@ -2560,7 +2337,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EEnum getMicroserviceType() {
         return microserviceTypeEEnum;
     }
@@ -2570,7 +2346,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EEnum getVisibility() {
         return visibilityEEnum;
     }
@@ -2580,7 +2355,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EDataType getTupleList() {
         return tupleListEDataType;
     }
@@ -2590,7 +2364,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EDataType getMicroserviceImportMap() {
         return microserviceImportMapEDataType;
     }
@@ -2600,7 +2373,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EDataType getDefaultProtocols() {
         return defaultProtocolsEDataType;
     }
@@ -2610,7 +2382,6 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public ServiceFactory getServiceFactory() {
         return (ServiceFactory)getEFactoryInstance();
     }

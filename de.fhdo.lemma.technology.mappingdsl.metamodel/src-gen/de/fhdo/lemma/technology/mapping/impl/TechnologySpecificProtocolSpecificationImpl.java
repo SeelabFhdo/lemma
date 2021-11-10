@@ -86,7 +86,6 @@ public class TechnologySpecificProtocolSpecificationImpl extends MinimalEObjectI
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public CommunicationType getCommunicationType() {
         return communicationType;
     }
@@ -96,7 +95,6 @@ public class TechnologySpecificProtocolSpecificationImpl extends MinimalEObjectI
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setCommunicationType(CommunicationType newCommunicationType) {
         CommunicationType oldCommunicationType = communicationType;
         communicationType = newCommunicationType == null ? COMMUNICATION_TYPE_EDEFAULT : newCommunicationType;
@@ -109,7 +107,6 @@ public class TechnologySpecificProtocolSpecificationImpl extends MinimalEObjectI
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public TechnologySpecificProtocol getTechnologySpecificProtocol() {
         return technologySpecificProtocol;
     }
@@ -134,7 +131,6 @@ public class TechnologySpecificProtocolSpecificationImpl extends MinimalEObjectI
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setTechnologySpecificProtocol(TechnologySpecificProtocol newTechnologySpecificProtocol) {
         if (newTechnologySpecificProtocol != technologySpecificProtocol) {
             NotificationChain msgs = null;

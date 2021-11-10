@@ -78,7 +78,6 @@ public class PossiblyImportedMicroserviceImpl extends MinimalEObjectImpl.Contain
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Import getImport() {
         if (import_ != null && import_.eIsProxy()) {
             InternalEObject oldImport = (InternalEObject)import_;
@@ -105,7 +104,6 @@ public class PossiblyImportedMicroserviceImpl extends MinimalEObjectImpl.Contain
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setImport(Import newImport) {
         Import oldImport = import_;
         import_ = newImport;
@@ -118,7 +116,6 @@ public class PossiblyImportedMicroserviceImpl extends MinimalEObjectImpl.Contain
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Microservice getMicroservice() {
         if (microservice != null && microservice.eIsProxy()) {
             InternalEObject oldMicroservice = (InternalEObject)microservice;
@@ -145,7 +142,6 @@ public class PossiblyImportedMicroserviceImpl extends MinimalEObjectImpl.Contain
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setMicroservice(Microservice newMicroservice) {
         Microservice oldMicroservice = microservice;
         microservice = newMicroservice;
@@ -158,7 +154,6 @@ public class PossiblyImportedMicroserviceImpl extends MinimalEObjectImpl.Contain
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Microservice getRequiringMicroservice() {
         if (eContainerFeatureID() != ServicePackage.POSSIBLY_IMPORTED_MICROSERVICE__REQUIRING_MICROSERVICE) return null;
         return (Microservice)eContainer();
@@ -189,7 +184,6 @@ public class PossiblyImportedMicroserviceImpl extends MinimalEObjectImpl.Contain
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setRequiringMicroservice(Microservice newRequiringMicroservice) {
         if (newRequiringMicroservice != eInternalContainer() || (eContainerFeatureID() != ServicePackage.POSSIBLY_IMPORTED_MICROSERVICE__REQUIRING_MICROSERVICE && newRequiringMicroservice != null)) {
             if (EcoreUtil.isAncestor(this, newRequiringMicroservice))

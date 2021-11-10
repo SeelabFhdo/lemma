@@ -3,8 +3,6 @@
  */
 package de.fhdo.lemma.technology;
 
-import de.fhdo.lemma.technology.AbstractTechnologyDslRuntimeModule;
-import de.fhdo.lemma.technology.TechnologyDslResourceDescriptionStrategy;
 import de.fhdo.lemma.technology.validation.TechnologyDslNamesAreUniqueValidationHelper;
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
 import org.eclipse.xtext.validation.INamesAreUniqueValidationHelper;

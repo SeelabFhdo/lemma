@@ -5283,19 +5283,26 @@ ruleTechnologySpecificListType returns [EObject current=null]
 	leaveRule();
 }:
 	(
-		otherlv_0='list'
+		(
+			otherlv_0='collection'
+			{
+				newLeafNode(otherlv_0, grammarAccess.getTechnologySpecificListTypeAccess().getCollectionKeyword_0_0());
+			}
+			    |
+			otherlv_1='list'
+			{
+				newLeafNode(otherlv_1, grammarAccess.getTechnologySpecificListTypeAccess().getListKeyword_0_1());
+			}
+		)
+		otherlv_2='type'
 		{
-			newLeafNode(otherlv_0, grammarAccess.getTechnologySpecificListTypeAccess().getListKeyword_0());
-		}
-		otherlv_1='type'
-		{
-			newLeafNode(otherlv_1, grammarAccess.getTechnologySpecificListTypeAccess().getTypeKeyword_1());
+			newLeafNode(otherlv_2, grammarAccess.getTechnologySpecificListTypeAccess().getTypeKeyword_1());
 		}
 		(
 			(
-				lv_name_2_0=RULE_ID
+				lv_name_3_0=RULE_ID
 				{
-					newLeafNode(lv_name_2_0, grammarAccess.getTechnologySpecificListTypeAccess().getNameIDTerminalRuleCall_2_0());
+					newLeafNode(lv_name_3_0, grammarAccess.getTechnologySpecificListTypeAccess().getNameIDTerminalRuleCall_2_0());
 				}
 				{
 					if ($current==null) {
@@ -5304,14 +5311,14 @@ ruleTechnologySpecificListType returns [EObject current=null]
 					setWithLastConsumed(
 						$current,
 						"name",
-						lv_name_2_0,
+						lv_name_3_0,
 						"org.eclipse.xtext.common.Terminals.ID");
 				}
 			)
 		)
-		otherlv_3=';'
+		otherlv_4=';'
 		{
-			newLeafNode(otherlv_3, grammarAccess.getTechnologySpecificListTypeAccess().getSemicolonKeyword_3());
+			newLeafNode(otherlv_4, grammarAccess.getTechnologySpecificListTypeAccess().getSemicolonKeyword_3());
 		}
 	)
 ;

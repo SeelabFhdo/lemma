@@ -95,7 +95,6 @@ public class TechnologySpecificProtocolImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Import getTechnology() {
         if (technology != null && technology.eIsProxy()) {
             InternalEObject oldTechnology = (InternalEObject)technology;
@@ -122,7 +121,6 @@ public class TechnologySpecificProtocolImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setTechnology(Import newTechnology) {
         Import oldTechnology = technology;
         technology = newTechnology;
@@ -135,7 +133,6 @@ public class TechnologySpecificProtocolImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Protocol getProtocol() {
         if (protocol != null && protocol.eIsProxy()) {
             InternalEObject oldProtocol = (InternalEObject)protocol;
@@ -162,7 +159,6 @@ public class TechnologySpecificProtocolImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setProtocol(Protocol newProtocol) {
         Protocol oldProtocol = protocol;
         protocol = newProtocol;
@@ -175,7 +171,6 @@ public class TechnologySpecificProtocolImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public DataFormat getDataFormat() {
         if (dataFormat != null && dataFormat.eIsProxy()) {
             InternalEObject oldDataFormat = (InternalEObject)dataFormat;
@@ -202,7 +197,6 @@ public class TechnologySpecificProtocolImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setDataFormat(DataFormat newDataFormat) {
         DataFormat oldDataFormat = dataFormat;
         dataFormat = newDataFormat;
@@ -215,7 +209,6 @@ public class TechnologySpecificProtocolImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public TechnologySpecificProtocolSpecification getProtocolSpecification() {
         if (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_PROTOCOL__PROTOCOL_SPECIFICATION) return null;
         return (TechnologySpecificProtocolSpecification)eContainer();
@@ -246,7 +239,6 @@ public class TechnologySpecificProtocolImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setProtocolSpecification(TechnologySpecificProtocolSpecification newProtocolSpecification) {
         if (newProtocolSpecification != eInternalContainer() || (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_PROTOCOL__PROTOCOL_SPECIFICATION && newProtocolSpecification != null)) {
             if (EcoreUtil.isAncestor(this, newProtocolSpecification))
@@ -268,7 +260,6 @@ public class TechnologySpecificProtocolImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public TechnologySpecificEndpoint getEndpoint() {
         if (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_PROTOCOL__ENDPOINT) return null;
         return (TechnologySpecificEndpoint)eContainer();
@@ -299,7 +290,6 @@ public class TechnologySpecificProtocolImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setEndpoint(TechnologySpecificEndpoint newEndpoint) {
         if (newEndpoint != eInternalContainer() || (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_PROTOCOL__ENDPOINT && newEndpoint != null)) {
             if (EcoreUtil.isAncestor(this, newEndpoint))

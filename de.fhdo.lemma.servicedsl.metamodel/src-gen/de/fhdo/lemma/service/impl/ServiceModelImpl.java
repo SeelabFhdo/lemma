@@ -129,7 +129,6 @@ public class ServiceModelImpl extends MinimalEObjectImpl.Container implements Se
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getT_modelUri() {
         return t_modelUri;
     }
@@ -139,7 +138,6 @@ public class ServiceModelImpl extends MinimalEObjectImpl.Container implements Se
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setT_modelUri(String newT_modelUri) {
         String oldT_modelUri = t_modelUri;
         t_modelUri = newT_modelUri;
@@ -152,7 +150,6 @@ public class ServiceModelImpl extends MinimalEObjectImpl.Container implements Se
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<Import> getImports() {
         if (imports == null) {
             imports = new EObjectContainmentWithInverseEList<Import>(Import.class, this, ServicePackage.SERVICE_MODEL__IMPORTS, ServicePackage.IMPORT__SERVICE_MODEL);
@@ -165,7 +162,6 @@ public class ServiceModelImpl extends MinimalEObjectImpl.Container implements Se
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<MappedComplexType> getMappedComplexTypes() {
         if (mappedComplexTypes == null) {
             mappedComplexTypes = new EObjectContainmentWithInverseEList<MappedComplexType>(MappedComplexType.class, this, ServicePackage.SERVICE_MODEL__MAPPED_COMPLEX_TYPES, ServicePackage.MAPPED_COMPLEX_TYPE__SERVICE_MODEL);
@@ -178,7 +174,6 @@ public class ServiceModelImpl extends MinimalEObjectImpl.Container implements Se
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<Microservice> getMicroservices() {
         if (microservices == null) {
             microservices = new EObjectContainmentWithInverseEList<Microservice>(Microservice.class, this, ServicePackage.SERVICE_MODEL__MICROSERVICES, ServicePackage.MICROSERVICE__SERVICE_MODEL);
@@ -191,7 +186,6 @@ public class ServiceModelImpl extends MinimalEObjectImpl.Container implements Se
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<Operation> getContainedOperations() {
         final Function1<Microservice, EList<Operation>> _function = new Function1<Microservice, EList<Operation>>() {
             public EList<Operation> apply(final Microservice it) {
@@ -206,7 +200,6 @@ public class ServiceModelImpl extends MinimalEObjectImpl.Container implements Se
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<ReferredOperation> getContainedReferredOperations() {
         final Function1<Microservice, EList<ReferredOperation>> _function = new Function1<Microservice, EList<ReferredOperation>>() {
             public EList<ReferredOperation> apply(final Microservice it) {
@@ -221,7 +214,6 @@ public class ServiceModelImpl extends MinimalEObjectImpl.Container implements Se
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<Interface> getContainedInterfaces() {
         final Function1<Microservice, EList<Interface>> _function = new Function1<Microservice, EList<Interface>>() {
             public EList<Interface> apply(final Microservice it) {

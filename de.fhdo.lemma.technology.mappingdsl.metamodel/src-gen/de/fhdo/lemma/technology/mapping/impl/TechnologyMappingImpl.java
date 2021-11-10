@@ -115,7 +115,6 @@ public class TechnologyMappingImpl extends MinimalEObjectImpl.Container implemen
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<Import> getImports() {
         if (imports == null) {
             imports = new EObjectContainmentEList<Import>(Import.class, this, MappingPackage.TECHNOLOGY_MAPPING__IMPORTS);
@@ -128,7 +127,6 @@ public class TechnologyMappingImpl extends MinimalEObjectImpl.Container implemen
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<ComplexTypeMapping> getTypeMappings() {
         if (typeMappings == null) {
             typeMappings = new EObjectContainmentWithInverseEList<ComplexTypeMapping>(ComplexTypeMapping.class, this, MappingPackage.TECHNOLOGY_MAPPING__TYPE_MAPPINGS, MappingPackage.COMPLEX_TYPE_MAPPING__MAPPING_MODEL);
@@ -141,7 +139,6 @@ public class TechnologyMappingImpl extends MinimalEObjectImpl.Container implemen
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<MicroserviceMapping> getServiceMappings() {
         if (serviceMappings == null) {
             serviceMappings = new EObjectContainmentWithInverseEList<MicroserviceMapping>(MicroserviceMapping.class, this, MappingPackage.TECHNOLOGY_MAPPING__SERVICE_MAPPINGS, MappingPackage.MICROSERVICE_MAPPING__MAPPING_MODEL);
@@ -154,7 +151,6 @@ public class TechnologyMappingImpl extends MinimalEObjectImpl.Container implemen
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<InterfaceMapping> getMappedInterfaces() {
         final Function1<MicroserviceMapping, EList<InterfaceMapping>> _function = new Function1<MicroserviceMapping, EList<InterfaceMapping>>() {
             public EList<InterfaceMapping> apply(final MicroserviceMapping it) {
@@ -169,7 +165,6 @@ public class TechnologyMappingImpl extends MinimalEObjectImpl.Container implemen
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<OperationMapping> getMappedOperations() {
         final Function1<MicroserviceMapping, EList<OperationMapping>> _function = new Function1<MicroserviceMapping, EList<OperationMapping>>() {
             public EList<OperationMapping> apply(final MicroserviceMapping it) {
@@ -184,7 +179,6 @@ public class TechnologyMappingImpl extends MinimalEObjectImpl.Container implemen
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<ComplexParameterMapping> getComplexParameterMappings() {
         final ArrayList<ComplexParameterMapping> mappings = CollectionLiterals.<ComplexParameterMapping>newArrayList();
         final Function1<OperationMapping, EList<ParameterMapping>> _function = new Function1<OperationMapping, EList<ParameterMapping>>() {
@@ -208,7 +202,6 @@ public class TechnologyMappingImpl extends MinimalEObjectImpl.Container implemen
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<ReferredOperationMapping> getMappedReferredOperations() {
         final Function1<MicroserviceMapping, EList<ReferredOperationMapping>> _function = new Function1<MicroserviceMapping, EList<ReferredOperationMapping>>() {
             public EList<ReferredOperationMapping> apply(final MicroserviceMapping it) {

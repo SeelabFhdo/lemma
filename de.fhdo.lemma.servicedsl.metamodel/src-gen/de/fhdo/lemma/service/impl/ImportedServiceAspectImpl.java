@@ -129,7 +129,6 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Import getImport() {
         if (import_ != null && import_.eIsProxy()) {
             InternalEObject oldImport = (InternalEObject)import_;
@@ -156,7 +155,6 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setImport(Import newImport) {
         Import oldImport = import_;
         import_ = newImport;
@@ -169,7 +167,6 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public ServiceAspect getImportedAspect() {
         if (importedAspect != null && importedAspect.eIsProxy()) {
             InternalEObject oldImportedAspect = (InternalEObject)importedAspect;
@@ -196,7 +193,6 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setImportedAspect(ServiceAspect newImportedAspect) {
         ServiceAspect oldImportedAspect = importedAspect;
         importedAspect = newImportedAspect;
@@ -209,7 +205,6 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public PrimitiveValue getSinglePropertyValue() {
         return singlePropertyValue;
     }
@@ -234,7 +229,6 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setSinglePropertyValue(PrimitiveValue newSinglePropertyValue) {
         if (newSinglePropertyValue != singlePropertyValue) {
             NotificationChain msgs = null;
@@ -254,7 +248,6 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<TechnologySpecificPropertyValueAssignment> getValues() {
         if (values == null) {
             values = new EObjectContainmentEList<TechnologySpecificPropertyValueAssignment>(TechnologySpecificPropertyValueAssignment.class, this, ServicePackage.IMPORTED_SERVICE_ASPECT__VALUES);
@@ -267,7 +260,6 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Microservice getMicroservice() {
         if (eContainerFeatureID() != ServicePackage.IMPORTED_SERVICE_ASPECT__MICROSERVICE) return null;
         return (Microservice)eContainer();
@@ -298,7 +290,6 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setMicroservice(Microservice newMicroservice) {
         if (newMicroservice != eInternalContainer() || (eContainerFeatureID() != ServicePackage.IMPORTED_SERVICE_ASPECT__MICROSERVICE && newMicroservice != null)) {
             if (EcoreUtil.isAncestor(this, newMicroservice))
@@ -320,7 +311,6 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Interface getInterface() {
         if (eContainerFeatureID() != ServicePackage.IMPORTED_SERVICE_ASPECT__INTERFACE) return null;
         return (Interface)eContainer();
@@ -351,7 +341,6 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setInterface(Interface newInterface) {
         if (newInterface != eInternalContainer() || (eContainerFeatureID() != ServicePackage.IMPORTED_SERVICE_ASPECT__INTERFACE && newInterface != null)) {
             if (EcoreUtil.isAncestor(this, newInterface))
@@ -373,7 +362,6 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Operation getOperation() {
         if (eContainerFeatureID() != ServicePackage.IMPORTED_SERVICE_ASPECT__OPERATION) return null;
         return (Operation)eContainer();
@@ -404,7 +392,6 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setOperation(Operation newOperation) {
         if (newOperation != eInternalContainer() || (eContainerFeatureID() != ServicePackage.IMPORTED_SERVICE_ASPECT__OPERATION && newOperation != null)) {
             if (EcoreUtil.isAncestor(this, newOperation))
@@ -426,7 +413,6 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public ReferredOperation getReferredOperation() {
         if (eContainerFeatureID() != ServicePackage.IMPORTED_SERVICE_ASPECT__REFERRED_OPERATION) return null;
         return (ReferredOperation)eContainer();
@@ -457,7 +443,6 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setReferredOperation(ReferredOperation newReferredOperation) {
         if (newReferredOperation != eInternalContainer() || (eContainerFeatureID() != ServicePackage.IMPORTED_SERVICE_ASPECT__REFERRED_OPERATION && newReferredOperation != null)) {
             if (EcoreUtil.isAncestor(this, newReferredOperation))
@@ -479,7 +464,6 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Parameter getParameter() {
         if (eContainerFeatureID() != ServicePackage.IMPORTED_SERVICE_ASPECT__PARAMETER) return null;
         return (Parameter)eContainer();
@@ -510,7 +494,6 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setParameter(Parameter newParameter) {
         if (newParameter != eInternalContainer() || (eContainerFeatureID() != ServicePackage.IMPORTED_SERVICE_ASPECT__PARAMETER && newParameter != null)) {
             if (EcoreUtil.isAncestor(this, newParameter))
@@ -532,7 +515,6 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public MappedComplexType getMappedComplexType() {
         if (eContainerFeatureID() != ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_COMPLEX_TYPE) return null;
         return (MappedComplexType)eContainer();
@@ -563,7 +545,6 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setMappedComplexType(MappedComplexType newMappedComplexType) {
         if (newMappedComplexType != eInternalContainer() || (eContainerFeatureID() != ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_COMPLEX_TYPE && newMappedComplexType != null)) {
             if (EcoreUtil.isAncestor(this, newMappedComplexType))
@@ -585,7 +566,6 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public MappedField getMappedField() {
         if (eContainerFeatureID() != ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_FIELD) return null;
         return (MappedField)eContainer();
@@ -616,7 +596,6 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setMappedField(MappedField newMappedField) {
         if (newMappedField != eInternalContainer() || (eContainerFeatureID() != ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_FIELD && newMappedField != null)) {
             if (EcoreUtil.isAncestor(this, newMappedField))
@@ -638,7 +617,6 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public MappedDataOperation getMappedDataOperation() {
         if (eContainerFeatureID() != ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION) return null;
         return (MappedDataOperation)eContainer();
@@ -669,7 +647,6 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setMappedDataOperation(MappedDataOperation newMappedDataOperation) {
         if (newMappedDataOperation != eInternalContainer() || (eContainerFeatureID() != ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION && newMappedDataOperation != null)) {
             if (EcoreUtil.isAncestor(this, newMappedDataOperation))
@@ -691,7 +668,6 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public MappedDataOperationReturnType getMappedDataOperationReturnType() {
         if (eContainerFeatureID() != ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION_RETURN_TYPE) return null;
         return (MappedDataOperationReturnType)eContainer();
@@ -722,7 +698,6 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setMappedDataOperationReturnType(MappedDataOperationReturnType newMappedDataOperationReturnType) {
         if (newMappedDataOperationReturnType != eInternalContainer() || (eContainerFeatureID() != ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION_RETURN_TYPE && newMappedDataOperationReturnType != null)) {
             if (EcoreUtil.isAncestor(this, newMappedDataOperationReturnType))
@@ -744,7 +719,6 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public MappedDataOperationParameter getMappedDataOperationParameter() {
         if (eContainerFeatureID() != ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION_PARAMETER) return null;
         return (MappedDataOperationParameter)eContainer();
@@ -775,7 +749,6 @@ public class ImportedServiceAspectImpl extends MinimalEObjectImpl.Container impl
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setMappedDataOperationParameter(MappedDataOperationParameter newMappedDataOperationParameter) {
         if (newMappedDataOperationParameter != eInternalContainer() || (eContainerFeatureID() != ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION_PARAMETER && newMappedDataOperationParameter != null)) {
             if (EcoreUtil.isAncestor(this, newMappedDataOperationParameter))

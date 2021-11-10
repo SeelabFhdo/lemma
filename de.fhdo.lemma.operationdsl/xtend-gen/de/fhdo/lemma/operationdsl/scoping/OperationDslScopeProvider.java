@@ -17,7 +17,6 @@ import de.fhdo.lemma.operation.OperationPackage;
 import de.fhdo.lemma.operation.PossiblyImportedOperationNode;
 import de.fhdo.lemma.operation.ProtocolAndDataFormat;
 import de.fhdo.lemma.operation.ServiceDeploymentSpecification;
-import de.fhdo.lemma.operationdsl.scoping.AbstractOperationDslScopeProvider;
 import de.fhdo.lemma.service.Import;
 import de.fhdo.lemma.service.Microservice;
 import de.fhdo.lemma.service.ServiceModel;

@@ -260,7 +260,6 @@ public class InterfaceImpl extends MinimalEObjectImpl.Container implements Inter
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getName() {
         return name;
     }
@@ -270,7 +269,6 @@ public class InterfaceImpl extends MinimalEObjectImpl.Container implements Inter
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -283,7 +281,6 @@ public class InterfaceImpl extends MinimalEObjectImpl.Container implements Inter
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getVersion() {
         return version;
     }
@@ -293,7 +290,6 @@ public class InterfaceImpl extends MinimalEObjectImpl.Container implements Inter
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setVersion(String newVersion) {
         String oldVersion = version;
         version = newVersion;
@@ -306,7 +302,6 @@ public class InterfaceImpl extends MinimalEObjectImpl.Container implements Inter
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public boolean isNotImplemented() {
         return notImplemented;
     }
@@ -316,7 +311,6 @@ public class InterfaceImpl extends MinimalEObjectImpl.Container implements Inter
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setNotImplemented(boolean newNotImplemented) {
         boolean oldNotImplemented = notImplemented;
         notImplemented = newNotImplemented;
@@ -329,7 +323,6 @@ public class InterfaceImpl extends MinimalEObjectImpl.Container implements Inter
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Visibility getVisibility() {
         return visibility;
     }
@@ -339,7 +332,6 @@ public class InterfaceImpl extends MinimalEObjectImpl.Container implements Inter
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setVisibility(Visibility newVisibility) {
         Visibility oldVisibility = visibility;
         visibility = newVisibility == null ? VISIBILITY_EDEFAULT : newVisibility;
@@ -352,7 +344,6 @@ public class InterfaceImpl extends MinimalEObjectImpl.Container implements Inter
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<Endpoint> getEndpoints() {
         if (endpoints == null) {
             endpoints = new EObjectContainmentWithInverseEList<Endpoint>(Endpoint.class, this, ServicePackage.INTERFACE__ENDPOINTS, ServicePackage.ENDPOINT__INTERFACE);
@@ -365,7 +356,6 @@ public class InterfaceImpl extends MinimalEObjectImpl.Container implements Inter
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<ProtocolSpecification> getProtocols() {
         if (protocols == null) {
             protocols = new EObjectContainmentEList<ProtocolSpecification>(ProtocolSpecification.class, this, ServicePackage.INTERFACE__PROTOCOLS);
@@ -378,7 +368,6 @@ public class InterfaceImpl extends MinimalEObjectImpl.Container implements Inter
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<Operation> getOperations() {
         if (operations == null) {
             operations = new EObjectContainmentWithInverseEList<Operation>(Operation.class, this, ServicePackage.INTERFACE__OPERATIONS, ServicePackage.OPERATION__INTERFACE);
@@ -391,7 +380,6 @@ public class InterfaceImpl extends MinimalEObjectImpl.Container implements Inter
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<ReferredOperation> getReferredOperations() {
         if (referredOperations == null) {
             referredOperations = new EObjectContainmentWithInverseEList<ReferredOperation>(ReferredOperation.class, this, ServicePackage.INTERFACE__REFERRED_OPERATIONS, ServicePackage.REFERRED_OPERATION__INTERFACE);
@@ -404,7 +392,6 @@ public class InterfaceImpl extends MinimalEObjectImpl.Container implements Inter
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<ImportedServiceAspect> getAspects() {
         if (aspects == null) {
             aspects = new EObjectContainmentWithInverseEList<ImportedServiceAspect>(ImportedServiceAspect.class, this, ServicePackage.INTERFACE__ASPECTS, ServicePackage.IMPORTED_SERVICE_ASPECT__INTERFACE);
@@ -417,7 +404,6 @@ public class InterfaceImpl extends MinimalEObjectImpl.Container implements Inter
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Microservice getMicroservice() {
         if (eContainerFeatureID() != ServicePackage.INTERFACE__MICROSERVICE) return null;
         return (Microservice)eContainer();
@@ -448,7 +434,6 @@ public class InterfaceImpl extends MinimalEObjectImpl.Container implements Inter
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setMicroservice(Microservice newMicroservice) {
         if (newMicroservice != eInternalContainer() || (eContainerFeatureID() != ServicePackage.INTERFACE__MICROSERVICE && newMicroservice != null)) {
             if (EcoreUtil.isAncestor(this, newMicroservice))
@@ -470,7 +455,6 @@ public class InterfaceImpl extends MinimalEObjectImpl.Container implements Inter
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Visibility getEffectiveVisibility() {
         Microservice _microservice = this.getMicroservice();
         boolean _tripleEquals = (_microservice == null);
@@ -536,7 +520,6 @@ public class InterfaceImpl extends MinimalEObjectImpl.Container implements Inter
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public boolean isEffectivelyImplemented() {
         return ((!this.isNotImplemented()) && IterableExtensions.<Operation>exists(this.getOperations(), new Function1<Operation, Boolean>() {
             public Boolean apply(final Operation it) {
@@ -551,7 +534,6 @@ public class InterfaceImpl extends MinimalEObjectImpl.Container implements Inter
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public boolean isEffectivelyInternal() {
         Visibility _effectiveVisibility = this.getEffectiveVisibility();
         return (_effectiveVisibility == Visibility.INTERNAL);
@@ -562,7 +544,6 @@ public class InterfaceImpl extends MinimalEObjectImpl.Container implements Inter
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public List<Map<String, Object>> t_effectiveProtocolSpecifications() {
         List<Map<String, Object>> _xifexpression = null;
         boolean _isEmpty = this.getProtocols().isEmpty();
@@ -600,7 +581,6 @@ public class InterfaceImpl extends MinimalEObjectImpl.Container implements Inter
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<String> getQualifiedNameParts() {
         EList<String> _xblockexpression = null;
         {
@@ -624,7 +604,6 @@ public class InterfaceImpl extends MinimalEObjectImpl.Container implements Inter
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String buildQualifiedName(final String separator) {
         if ((separator == null)) {
             return null;

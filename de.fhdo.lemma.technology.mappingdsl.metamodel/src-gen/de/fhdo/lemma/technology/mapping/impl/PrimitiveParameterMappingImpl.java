@@ -75,7 +75,6 @@ public class PrimitiveParameterMappingImpl extends ParameterMappingImpl implemen
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Import getTechnology() {
         if (technology != null && technology.eIsProxy()) {
             InternalEObject oldTechnology = (InternalEObject)technology;
@@ -102,7 +101,6 @@ public class PrimitiveParameterMappingImpl extends ParameterMappingImpl implemen
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setTechnology(Import newTechnology) {
         Import oldTechnology = technology;
         technology = newTechnology;
@@ -115,7 +113,6 @@ public class PrimitiveParameterMappingImpl extends ParameterMappingImpl implemen
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public TechnologySpecificPrimitiveType getPrimitiveType() {
         if (primitiveType != null && primitiveType.eIsProxy()) {
             InternalEObject oldPrimitiveType = (InternalEObject)primitiveType;
@@ -142,7 +139,6 @@ public class PrimitiveParameterMappingImpl extends ParameterMappingImpl implemen
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setPrimitiveType(TechnologySpecificPrimitiveType newPrimitiveType) {
         TechnologySpecificPrimitiveType oldPrimitiveType = primitiveType;
         primitiveType = newPrimitiveType;

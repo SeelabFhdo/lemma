@@ -90,7 +90,6 @@ public class TechnologyReferenceImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public boolean isIsTypeDefinitionTechnology() {
         return isTypeDefinitionTechnology;
     }
@@ -100,7 +99,6 @@ public class TechnologyReferenceImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setIsTypeDefinitionTechnology(boolean newIsTypeDefinitionTechnology) {
         boolean oldIsTypeDefinitionTechnology = isTypeDefinitionTechnology;
         isTypeDefinitionTechnology = newIsTypeDefinitionTechnology;
@@ -113,7 +111,6 @@ public class TechnologyReferenceImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Import getTechnology() {
         if (technology != null && technology.eIsProxy()) {
             InternalEObject oldTechnology = (InternalEObject)technology;
@@ -140,7 +137,6 @@ public class TechnologyReferenceImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setTechnology(Import newTechnology) {
         Import oldTechnology = technology;
         technology = newTechnology;
@@ -153,7 +149,6 @@ public class TechnologyReferenceImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Microservice getMicroservice() {
         if (eContainerFeatureID() != ServicePackage.TECHNOLOGY_REFERENCE__MICROSERVICE) return null;
         return (Microservice)eContainer();
@@ -184,7 +179,6 @@ public class TechnologyReferenceImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setMicroservice(Microservice newMicroservice) {
         if (newMicroservice != eInternalContainer() || (eContainerFeatureID() != ServicePackage.TECHNOLOGY_REFERENCE__MICROSERVICE && newMicroservice != null)) {
             if (EcoreUtil.isAncestor(this, newMicroservice))
@@ -206,7 +200,6 @@ public class TechnologyReferenceImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public MappedComplexType getMappedComplexType() {
         if (eContainerFeatureID() != ServicePackage.TECHNOLOGY_REFERENCE__MAPPED_COMPLEX_TYPE) return null;
         return (MappedComplexType)eContainer();
@@ -237,7 +230,6 @@ public class TechnologyReferenceImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setMappedComplexType(MappedComplexType newMappedComplexType) {
         if (newMappedComplexType != eInternalContainer() || (eContainerFeatureID() != ServicePackage.TECHNOLOGY_REFERENCE__MAPPED_COMPLEX_TYPE && newMappedComplexType != null)) {
             if (EcoreUtil.isAncestor(this, newMappedComplexType))

@@ -109,7 +109,6 @@ public class ApiParameterCommentImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getComment() {
         return comment;
     }
@@ -119,7 +118,6 @@ public class ApiParameterCommentImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setComment(String newComment) {
         String oldComment = comment;
         comment = newComment;
@@ -132,7 +130,6 @@ public class ApiParameterCommentImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public boolean isRequired() {
         return required;
     }
@@ -142,7 +139,6 @@ public class ApiParameterCommentImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setRequired(boolean newRequired) {
         boolean oldRequired = required;
         required = newRequired;
@@ -155,7 +151,6 @@ public class ApiParameterCommentImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Parameter getParameter() {
         if (parameter != null && parameter.eIsProxy()) {
             InternalEObject oldParameter = (InternalEObject)parameter;
@@ -182,7 +177,6 @@ public class ApiParameterCommentImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setParameter(Parameter newParameter) {
         Parameter oldParameter = parameter;
         parameter = newParameter;
@@ -195,7 +189,6 @@ public class ApiParameterCommentImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public ApiOperationComment getOperationComment() {
         if (eContainerFeatureID() != ServicePackage.API_PARAMETER_COMMENT__OPERATION_COMMENT) return null;
         return (ApiOperationComment)eContainer();
@@ -226,7 +219,6 @@ public class ApiParameterCommentImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setOperationComment(ApiOperationComment newOperationComment) {
         if (newOperationComment != eInternalContainer() || (eContainerFeatureID() != ServicePackage.API_PARAMETER_COMMENT__OPERATION_COMMENT && newOperationComment != null)) {
             if (EcoreUtil.isAncestor(this, newOperationComment))

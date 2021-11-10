@@ -148,7 +148,6 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public ServiceModel createServiceModel() {
         ServiceModelImpl serviceModel = new ServiceModelImpl();
         return serviceModel;
@@ -159,7 +158,6 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Import createImport() {
         ImportImpl import_ = new ImportImpl();
         return import_;
@@ -170,7 +168,6 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public MappedComplexType createMappedComplexType() {
         MappedComplexTypeImpl mappedComplexType = new MappedComplexTypeImpl();
         return mappedComplexType;
@@ -181,7 +178,6 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public MappedDataOperation createMappedDataOperation() {
         MappedDataOperationImpl mappedDataOperation = new MappedDataOperationImpl();
         return mappedDataOperation;
@@ -192,7 +188,6 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public MappedDataOperationReturnType createMappedDataOperationReturnType() {
         MappedDataOperationReturnTypeImpl mappedDataOperationReturnType = new MappedDataOperationReturnTypeImpl();
         return mappedDataOperationReturnType;
@@ -203,7 +198,6 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public MappedDataOperationParameter createMappedDataOperationParameter() {
         MappedDataOperationParameterImpl mappedDataOperationParameter = new MappedDataOperationParameterImpl();
         return mappedDataOperationParameter;
@@ -214,7 +208,6 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public MappedField createMappedField() {
         MappedFieldImpl mappedField = new MappedFieldImpl();
         return mappedField;
@@ -225,7 +218,6 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Microservice createMicroservice() {
         MicroserviceImpl microservice = new MicroserviceImpl();
         return microservice;
@@ -236,7 +228,6 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public TechnologyReference createTechnologyReference() {
         TechnologyReferenceImpl technologyReference = new TechnologyReferenceImpl();
         return technologyReference;
@@ -247,7 +238,6 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Interface createInterface() {
         InterfaceImpl interface_ = new InterfaceImpl();
         return interface_;
@@ -258,7 +248,6 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Operation createOperation() {
         OperationImpl operation = new OperationImpl();
         return operation;
@@ -269,7 +258,6 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public ApiOperationComment createApiOperationComment() {
         ApiOperationCommentImpl apiOperationComment = new ApiOperationCommentImpl();
         return apiOperationComment;
@@ -280,7 +268,6 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public ApiParameterComment createApiParameterComment() {
         ApiParameterCommentImpl apiParameterComment = new ApiParameterCommentImpl();
         return apiParameterComment;
@@ -291,7 +278,6 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public ReferredOperation createReferredOperation() {
         ReferredOperationImpl referredOperation = new ReferredOperationImpl();
         return referredOperation;
@@ -302,7 +288,6 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Parameter createParameter() {
         ParameterImpl parameter = new ParameterImpl();
         return parameter;
@@ -313,7 +298,6 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public PossiblyImportedMicroservice createPossiblyImportedMicroservice() {
         PossiblyImportedMicroserviceImpl possiblyImportedMicroservice = new PossiblyImportedMicroserviceImpl();
         return possiblyImportedMicroservice;
@@ -324,7 +308,6 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public PossiblyImportedInterface createPossiblyImportedInterface() {
         PossiblyImportedInterfaceImpl possiblyImportedInterface = new PossiblyImportedInterfaceImpl();
         return possiblyImportedInterface;
@@ -335,7 +318,6 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public PossiblyImportedOperation createPossiblyImportedOperation() {
         PossiblyImportedOperationImpl possiblyImportedOperation = new PossiblyImportedOperationImpl();
         return possiblyImportedOperation;
@@ -346,7 +328,6 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public ImportedType createImportedType() {
         ImportedTypeImpl importedType = new ImportedTypeImpl();
         return importedType;
@@ -357,7 +338,6 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public ImportedProtocolAndDataFormat createImportedProtocolAndDataFormat() {
         ImportedProtocolAndDataFormatImpl importedProtocolAndDataFormat = new ImportedProtocolAndDataFormatImpl();
         return importedProtocolAndDataFormat;
@@ -368,7 +348,6 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public ProtocolSpecification createProtocolSpecification() {
         ProtocolSpecificationImpl protocolSpecification = new ProtocolSpecificationImpl();
         return protocolSpecification;
@@ -379,7 +358,6 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Endpoint createEndpoint() {
         EndpointImpl endpoint = new EndpointImpl();
         return endpoint;
@@ -390,7 +368,6 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public ImportedServiceAspect createImportedServiceAspect() {
         ImportedServiceAspectImpl importedServiceAspect = new ImportedServiceAspectImpl();
         return importedServiceAspect;
@@ -518,7 +495,6 @@ public class ServiceFactoryImpl extends EFactoryImpl implements ServiceFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public ServicePackage getServicePackage() {
         return (ServicePackage)getEPackage();
     }

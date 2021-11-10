@@ -39,6 +39,7 @@ public class OperationDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getImportedServiceAspectAccess().getAlternatives_4_1(), "rule__ImportedServiceAspect__Alternatives_4_1");
 			builder.put(grammarAccess.getAnythingAccess().getAlternatives(), "rule__Anything__Alternatives");
 			builder.put(grammarAccess.getTechnologyAccess().getAlternatives_4_2(), "rule__Technology__Alternatives_4_2");
+			builder.put(grammarAccess.getTechnologySpecificListTypeAccess().getAlternatives_0(), "rule__TechnologySpecificListType__Alternatives_0");
 			builder.put(grammarAccess.getServiceAspectPointcutAccess().getAlternatives(), "rule__ServiceAspectPointcut__Alternatives");
 			builder.put(grammarAccess.getServiceAspectAccess().getAlternatives_6(), "rule__ServiceAspect__Alternatives_6");
 			builder.put(grammarAccess.getOperationAspectAccess().getAlternatives_6(), "rule__OperationAspect__Alternatives_6");

@@ -5,7 +5,6 @@ import de.fhdo.lemma.data.PrimitiveValue;
 import de.fhdo.lemma.operation.ImportedOperationAspect;
 import de.fhdo.lemma.operation.OperationNode;
 import de.fhdo.lemma.operation.OperationPackage;
-import de.fhdo.lemma.operationdsl.ui.highlighting.HighlightingConfiguration;
 import de.fhdo.lemma.technology.TechnologyPackage;
 import de.fhdo.lemma.technology.TechnologySpecificPropertyValueAssignment;
 import java.util.Collections;

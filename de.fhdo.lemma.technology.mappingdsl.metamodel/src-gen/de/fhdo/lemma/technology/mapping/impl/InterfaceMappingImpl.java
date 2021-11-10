@@ -111,7 +111,6 @@ public class InterfaceMappingImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Interface getInterface() {
         if (interface_ != null && interface_.eIsProxy()) {
             InternalEObject oldInterface = (InternalEObject)interface_;
@@ -138,7 +137,6 @@ public class InterfaceMappingImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setInterface(Interface newInterface) {
         Interface oldInterface = interface_;
         interface_ = newInterface;
@@ -151,7 +149,6 @@ public class InterfaceMappingImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<TechnologySpecificEndpoint> getEndpoints() {
         if (endpoints == null) {
             endpoints = new EObjectContainmentWithInverseEList<TechnologySpecificEndpoint>(TechnologySpecificEndpoint.class, this, MappingPackage.INTERFACE_MAPPING__ENDPOINTS, MappingPackage.TECHNOLOGY_SPECIFIC_ENDPOINT__INTERFACE_MAPPING);
@@ -164,7 +161,6 @@ public class InterfaceMappingImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<TechnologySpecificProtocolSpecification> getProtocols() {
         if (protocols == null) {
             protocols = new EObjectContainmentEList<TechnologySpecificProtocolSpecification>(TechnologySpecificProtocolSpecification.class, this, MappingPackage.INTERFACE_MAPPING__PROTOCOLS);
@@ -177,7 +173,6 @@ public class InterfaceMappingImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<TechnologySpecificImportedServiceAspect> getAspects() {
         if (aspects == null) {
             aspects = new EObjectContainmentWithInverseEList<TechnologySpecificImportedServiceAspect>(TechnologySpecificImportedServiceAspect.class, this, MappingPackage.INTERFACE_MAPPING__ASPECTS, MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__INTERFACE_MAPPING);
@@ -190,7 +185,6 @@ public class InterfaceMappingImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public MicroserviceMapping getMicroserviceMapping() {
         if (eContainerFeatureID() != MappingPackage.INTERFACE_MAPPING__MICROSERVICE_MAPPING) return null;
         return (MicroserviceMapping)eContainer();
@@ -221,7 +215,6 @@ public class InterfaceMappingImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setMicroserviceMapping(MicroserviceMapping newMicroserviceMapping) {
         if (newMicroserviceMapping != eInternalContainer() || (eContainerFeatureID() != MappingPackage.INTERFACE_MAPPING__MICROSERVICE_MAPPING && newMicroserviceMapping != null)) {
             if (EcoreUtil.isAncestor(this, newMicroserviceMapping))

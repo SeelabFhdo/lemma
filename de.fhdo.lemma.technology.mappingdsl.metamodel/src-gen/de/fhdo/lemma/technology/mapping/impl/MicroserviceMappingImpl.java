@@ -173,7 +173,6 @@ public class MicroserviceMappingImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<TechnologyReference> getTechnologyReferences() {
         if (technologyReferences == null) {
             technologyReferences = new EObjectContainmentEList<TechnologyReference>(TechnologyReference.class, this, MappingPackage.MICROSERVICE_MAPPING__TECHNOLOGY_REFERENCES);
@@ -186,7 +185,6 @@ public class MicroserviceMappingImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public ImportedMicroservice getMicroservice() {
         return microservice;
     }
@@ -211,7 +209,6 @@ public class MicroserviceMappingImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setMicroservice(ImportedMicroservice newMicroservice) {
         if (newMicroservice != microservice) {
             NotificationChain msgs = null;
@@ -231,7 +228,6 @@ public class MicroserviceMappingImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<TechnologySpecificEndpoint> getEndpoints() {
         if (endpoints == null) {
             endpoints = new EObjectContainmentWithInverseEList<TechnologySpecificEndpoint>(TechnologySpecificEndpoint.class, this, MappingPackage.MICROSERVICE_MAPPING__ENDPOINTS, MappingPackage.TECHNOLOGY_SPECIFIC_ENDPOINT__MICROSERVICE_MAPPING);
@@ -244,7 +240,6 @@ public class MicroserviceMappingImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<TechnologySpecificProtocolSpecification> getProtocols() {
         if (protocols == null) {
             protocols = new EObjectContainmentEList<TechnologySpecificProtocolSpecification>(TechnologySpecificProtocolSpecification.class, this, MappingPackage.MICROSERVICE_MAPPING__PROTOCOLS);
@@ -257,7 +252,6 @@ public class MicroserviceMappingImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<InterfaceMapping> getInterfaceMappings() {
         if (interfaceMappings == null) {
             interfaceMappings = new EObjectContainmentWithInverseEList<InterfaceMapping>(InterfaceMapping.class, this, MappingPackage.MICROSERVICE_MAPPING__INTERFACE_MAPPINGS, MappingPackage.INTERFACE_MAPPING__MICROSERVICE_MAPPING);
@@ -270,7 +264,6 @@ public class MicroserviceMappingImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<OperationMapping> getOperationMappings() {
         if (operationMappings == null) {
             operationMappings = new EObjectContainmentWithInverseEList<OperationMapping>(OperationMapping.class, this, MappingPackage.MICROSERVICE_MAPPING__OPERATION_MAPPINGS, MappingPackage.OPERATION_MAPPING__MICROSERVICE_MAPPING);
@@ -283,7 +276,6 @@ public class MicroserviceMappingImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<ReferredOperationMapping> getReferredOperationMappings() {
         if (referredOperationMappings == null) {
             referredOperationMappings = new EObjectContainmentWithInverseEList<ReferredOperationMapping>(ReferredOperationMapping.class, this, MappingPackage.MICROSERVICE_MAPPING__REFERRED_OPERATION_MAPPINGS, MappingPackage.REFERRED_OPERATION_MAPPING__MICROSERVICE_MAPPING);
@@ -296,7 +288,6 @@ public class MicroserviceMappingImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<TechnologySpecificImportedServiceAspect> getAspects() {
         if (aspects == null) {
             aspects = new EObjectContainmentWithInverseEList<TechnologySpecificImportedServiceAspect>(TechnologySpecificImportedServiceAspect.class, this, MappingPackage.MICROSERVICE_MAPPING__ASPECTS, MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__MICROSERVICE_MAPPING);
@@ -309,7 +300,6 @@ public class MicroserviceMappingImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public TechnologyMapping getMappingModel() {
         if (eContainerFeatureID() != MappingPackage.MICROSERVICE_MAPPING__MAPPING_MODEL) return null;
         return (TechnologyMapping)eContainer();
@@ -340,7 +330,6 @@ public class MicroserviceMappingImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setMappingModel(TechnologyMapping newMappingModel) {
         if (newMappingModel != eInternalContainer() || (eContainerFeatureID() != MappingPackage.MICROSERVICE_MAPPING__MAPPING_MODEL && newMappingModel != null)) {
             if (EcoreUtil.isAncestor(this, newMappingModel))
@@ -362,7 +351,6 @@ public class MicroserviceMappingImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<TechnologyReference> getAllTypeDefinitionTechnologyReferences() {
         final Function1<TechnologyReference, Boolean> _function = new Function1<TechnologyReference, Boolean>() {
             public Boolean apply(final TechnologyReference it) {
@@ -386,7 +374,6 @@ public class MicroserviceMappingImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Import getTypeDefinitionTechnologyImport() {
         final Function1<TechnologyReference, Boolean> _function = new Function1<TechnologyReference, Boolean>() {
             public Boolean apply(final TechnologyReference it) {
@@ -420,7 +407,6 @@ public class MicroserviceMappingImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Technology getTypeDefinitionTechnology() {
         final Import typeDefinitionTechnologyImport = this.getTypeDefinitionTechnologyImport();
         Technology _xifexpression = null;

@@ -4,7 +4,7 @@
 '->'=23
 '.'=104
 '::'=76
-';'=14
+';'=16
 '<'=80
 '<-'=22
 '<->'=24
@@ -21,7 +21,7 @@
 'byte'=94
 'char'=95
 'closure'=50
-'collection'=15
+'collection'=14
 'communication_type'=107
 'compatibility'=56
 'containers'=34
@@ -60,7 +60,7 @@
 'inout'=19
 'int'=99
 'interfaces'=31
-'list'=16
+'list'=15
 'long'=100
 'mandatory'=25
 'matrix'=57

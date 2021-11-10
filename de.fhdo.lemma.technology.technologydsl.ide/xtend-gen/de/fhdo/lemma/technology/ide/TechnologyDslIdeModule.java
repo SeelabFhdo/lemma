@@ -3,8 +3,6 @@
  */
 package de.fhdo.lemma.technology.ide;
 
-import de.fhdo.lemma.technology.ide.AbstractTechnologyDslIdeModule;
-
 /**
  * Use this class to register ide components.
  */

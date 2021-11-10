@@ -91,7 +91,6 @@ public class EndpointImpl extends MinimalEObjectImpl.Container implements Endpoi
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<String> getAddresses() {
         if (addresses == null) {
             addresses = new EDataTypeEList<String>(String.class, this, ServicePackage.ENDPOINT__ADDRESSES);
@@ -104,7 +103,6 @@ public class EndpointImpl extends MinimalEObjectImpl.Container implements Endpoi
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<ImportedProtocolAndDataFormat> getProtocols() {
         if (protocols == null) {
             protocols = new EObjectContainmentWithInverseEList<ImportedProtocolAndDataFormat>(ImportedProtocolAndDataFormat.class, this, ServicePackage.ENDPOINT__PROTOCOLS, ServicePackage.IMPORTED_PROTOCOL_AND_DATA_FORMAT__ENDPOINT);
@@ -117,7 +115,6 @@ public class EndpointImpl extends MinimalEObjectImpl.Container implements Endpoi
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Microservice getMicroservice() {
         if (eContainerFeatureID() != ServicePackage.ENDPOINT__MICROSERVICE) return null;
         return (Microservice)eContainer();
@@ -148,7 +145,6 @@ public class EndpointImpl extends MinimalEObjectImpl.Container implements Endpoi
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setMicroservice(Microservice newMicroservice) {
         if (newMicroservice != eInternalContainer() || (eContainerFeatureID() != ServicePackage.ENDPOINT__MICROSERVICE && newMicroservice != null)) {
             if (EcoreUtil.isAncestor(this, newMicroservice))
@@ -170,7 +166,6 @@ public class EndpointImpl extends MinimalEObjectImpl.Container implements Endpoi
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Interface getInterface() {
         if (eContainerFeatureID() != ServicePackage.ENDPOINT__INTERFACE) return null;
         return (Interface)eContainer();
@@ -201,7 +196,6 @@ public class EndpointImpl extends MinimalEObjectImpl.Container implements Endpoi
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setInterface(Interface newInterface) {
         if (newInterface != eInternalContainer() || (eContainerFeatureID() != ServicePackage.ENDPOINT__INTERFACE && newInterface != null)) {
             if (EcoreUtil.isAncestor(this, newInterface))
@@ -223,7 +217,6 @@ public class EndpointImpl extends MinimalEObjectImpl.Container implements Endpoi
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Operation getOperation() {
         if (eContainerFeatureID() != ServicePackage.ENDPOINT__OPERATION) return null;
         return (Operation)eContainer();
@@ -254,7 +247,6 @@ public class EndpointImpl extends MinimalEObjectImpl.Container implements Endpoi
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setOperation(Operation newOperation) {
         if (newOperation != eInternalContainer() || (eContainerFeatureID() != ServicePackage.ENDPOINT__OPERATION && newOperation != null)) {
             if (EcoreUtil.isAncestor(this, newOperation))
@@ -276,7 +268,6 @@ public class EndpointImpl extends MinimalEObjectImpl.Container implements Endpoi
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public ReferredOperation getReferredOperation() {
         if (eContainerFeatureID() != ServicePackage.ENDPOINT__REFERRED_OPERATION) return null;
         return (ReferredOperation)eContainer();
@@ -307,7 +298,6 @@ public class EndpointImpl extends MinimalEObjectImpl.Container implements Endpoi
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setReferredOperation(ReferredOperation newReferredOperation) {
         if (newReferredOperation != eInternalContainer() || (eContainerFeatureID() != ServicePackage.ENDPOINT__REFERRED_OPERATION && newReferredOperation != null)) {
             if (EcoreUtil.isAncestor(this, newReferredOperation))

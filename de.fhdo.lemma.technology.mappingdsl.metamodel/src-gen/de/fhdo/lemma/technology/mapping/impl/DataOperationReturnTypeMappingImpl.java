@@ -99,7 +99,6 @@ public class DataOperationReturnTypeMappingImpl extends MinimalEObjectImpl.Conta
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Import getTechnology() {
         if (technology != null && technology.eIsProxy()) {
             InternalEObject oldTechnology = (InternalEObject)technology;
@@ -126,7 +125,6 @@ public class DataOperationReturnTypeMappingImpl extends MinimalEObjectImpl.Conta
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setTechnology(Import newTechnology) {
         Import oldTechnology = technology;
         technology = newTechnology;
@@ -139,7 +137,6 @@ public class DataOperationReturnTypeMappingImpl extends MinimalEObjectImpl.Conta
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Type getType() {
         if (type != null && type.eIsProxy()) {
             InternalEObject oldType = (InternalEObject)type;
@@ -166,7 +163,6 @@ public class DataOperationReturnTypeMappingImpl extends MinimalEObjectImpl.Conta
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setType(Type newType) {
         Type oldType = type;
         type = newType;
@@ -179,7 +175,6 @@ public class DataOperationReturnTypeMappingImpl extends MinimalEObjectImpl.Conta
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<TechnologySpecificImportedServiceAspect> getAspects() {
         if (aspects == null) {
             aspects = new EObjectContainmentWithInverseEList<TechnologySpecificImportedServiceAspect>(TechnologySpecificImportedServiceAspect.class, this, MappingPackage.DATA_OPERATION_RETURN_TYPE_MAPPING__ASPECTS, MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_OPERATION_RETURN_TYPE_MAPPING);
@@ -192,7 +187,6 @@ public class DataOperationReturnTypeMappingImpl extends MinimalEObjectImpl.Conta
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public DataOperationMapping getOperationMapping() {
         if (eContainerFeatureID() != MappingPackage.DATA_OPERATION_RETURN_TYPE_MAPPING__OPERATION_MAPPING) return null;
         return (DataOperationMapping)eContainer();
@@ -223,7 +217,6 @@ public class DataOperationReturnTypeMappingImpl extends MinimalEObjectImpl.Conta
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setOperationMapping(DataOperationMapping newOperationMapping) {
         if (newOperationMapping != eInternalContainer() || (eContainerFeatureID() != MappingPackage.DATA_OPERATION_RETURN_TYPE_MAPPING__OPERATION_MAPPING && newOperationMapping != null)) {
             if (EcoreUtil.isAncestor(this, newOperationMapping))

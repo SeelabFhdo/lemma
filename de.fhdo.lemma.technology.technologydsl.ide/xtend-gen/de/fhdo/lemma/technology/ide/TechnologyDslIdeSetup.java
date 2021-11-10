@@ -7,7 +7,6 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import de.fhdo.lemma.technology.TechnologyDslRuntimeModule;
 import de.fhdo.lemma.technology.TechnologyDslStandaloneSetup;
-import de.fhdo.lemma.technology.ide.TechnologyDslIdeModule;
 import org.eclipse.xtext.util.Modules2;
 
 /**

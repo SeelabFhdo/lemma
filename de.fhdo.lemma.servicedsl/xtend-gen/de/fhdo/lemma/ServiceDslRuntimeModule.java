@@ -3,9 +3,6 @@
  */
 package de.fhdo.lemma;
 
-import de.fhdo.lemma.AbstractServiceDslRuntimeModule;
-import de.fhdo.lemma.ServiceDslQualifiedNameProvider;
-import de.fhdo.lemma.ServiceDslResourceDescriptionStrategy;
 import de.fhdo.lemma.scoping.ServiceDslScopeProvider;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;

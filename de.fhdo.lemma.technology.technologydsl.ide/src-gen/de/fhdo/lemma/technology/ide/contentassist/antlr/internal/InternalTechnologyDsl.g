@@ -1086,6 +1086,27 @@ finally {
 	restoreStackSize(stackSize);
 }
 
+rule__TechnologySpecificListType__Alternatives_0
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getTechnologySpecificListTypeAccess().getCollectionKeyword_0_0()); }
+		'collection'
+		{ after(grammarAccess.getTechnologySpecificListTypeAccess().getCollectionKeyword_0_0()); }
+	)
+	|
+	(
+		{ before(grammarAccess.getTechnologySpecificListTypeAccess().getListKeyword_0_1()); }
+		'list'
+		{ after(grammarAccess.getTechnologySpecificListTypeAccess().getListKeyword_0_1()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
 rule__ServiceAspectPointcut__Alternatives
 	@init {
 		int stackSize = keepStackSize();
@@ -3987,9 +4008,9 @@ rule__TechnologySpecificListType__Group__0__Impl
 	}
 :
 (
-	{ before(grammarAccess.getTechnologySpecificListTypeAccess().getListKeyword_0()); }
-	'list'
-	{ after(grammarAccess.getTechnologySpecificListTypeAccess().getListKeyword_0()); }
+	{ before(grammarAccess.getTechnologySpecificListTypeAccess().getAlternatives_0()); }
+	(rule__TechnologySpecificListType__Alternatives_0)
+	{ after(grammarAccess.getTechnologySpecificListTypeAccess().getAlternatives_0()); }
 )
 ;
 finally {

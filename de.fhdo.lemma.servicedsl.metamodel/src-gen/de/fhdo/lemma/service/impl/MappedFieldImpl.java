@@ -131,7 +131,6 @@ public class MappedFieldImpl extends MinimalEObjectImpl.Container implements Map
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public DataField getDataField() {
         if (dataField != null && dataField.eIsProxy()) {
             InternalEObject oldDataField = (InternalEObject)dataField;
@@ -158,7 +157,6 @@ public class MappedFieldImpl extends MinimalEObjectImpl.Container implements Map
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setDataField(DataField newDataField) {
         DataField oldDataField = dataField;
         dataField = newDataField;
@@ -171,7 +169,6 @@ public class MappedFieldImpl extends MinimalEObjectImpl.Container implements Map
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EnumerationField getEnumerationField() {
         if (enumerationField != null && enumerationField.eIsProxy()) {
             InternalEObject oldEnumerationField = (InternalEObject)enumerationField;
@@ -198,7 +195,6 @@ public class MappedFieldImpl extends MinimalEObjectImpl.Container implements Map
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setEnumerationField(EnumerationField newEnumerationField) {
         EnumerationField oldEnumerationField = enumerationField;
         enumerationField = newEnumerationField;
@@ -211,7 +207,6 @@ public class MappedFieldImpl extends MinimalEObjectImpl.Container implements Map
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public ImportedType getMappedType() {
         return mappedType;
     }
@@ -236,7 +231,6 @@ public class MappedFieldImpl extends MinimalEObjectImpl.Container implements Map
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setMappedType(ImportedType newMappedType) {
         if (newMappedType != mappedType) {
             NotificationChain msgs = null;
@@ -256,7 +250,6 @@ public class MappedFieldImpl extends MinimalEObjectImpl.Container implements Map
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<ImportedServiceAspect> getAspects() {
         if (aspects == null) {
             aspects = new EObjectContainmentWithInverseEList<ImportedServiceAspect>(ImportedServiceAspect.class, this, ServicePackage.MAPPED_FIELD__ASPECTS, ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_FIELD);
@@ -269,7 +262,6 @@ public class MappedFieldImpl extends MinimalEObjectImpl.Container implements Map
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Parameter getParameter() {
         if (eContainerFeatureID() != ServicePackage.MAPPED_FIELD__PARAMETER) return null;
         return (Parameter)eContainer();
@@ -300,7 +292,6 @@ public class MappedFieldImpl extends MinimalEObjectImpl.Container implements Map
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setParameter(Parameter newParameter) {
         if (newParameter != eInternalContainer() || (eContainerFeatureID() != ServicePackage.MAPPED_FIELD__PARAMETER && newParameter != null)) {
             if (EcoreUtil.isAncestor(this, newParameter))
@@ -322,7 +313,6 @@ public class MappedFieldImpl extends MinimalEObjectImpl.Container implements Map
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public MappedComplexType getMappedComplexType() {
         if (eContainerFeatureID() != ServicePackage.MAPPED_FIELD__MAPPED_COMPLEX_TYPE) return null;
         return (MappedComplexType)eContainer();
@@ -353,7 +343,6 @@ public class MappedFieldImpl extends MinimalEObjectImpl.Container implements Map
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setMappedComplexType(MappedComplexType newMappedComplexType) {
         if (newMappedComplexType != eInternalContainer() || (eContainerFeatureID() != ServicePackage.MAPPED_FIELD__MAPPED_COMPLEX_TYPE && newMappedComplexType != null)) {
             if (EcoreUtil.isAncestor(this, newMappedComplexType))
@@ -375,7 +364,6 @@ public class MappedFieldImpl extends MinimalEObjectImpl.Container implements Map
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getName() {
         String _xifexpression = null;
         DataField _dataField = this.getDataField();
@@ -400,7 +388,6 @@ public class MappedFieldImpl extends MinimalEObjectImpl.Container implements Map
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<String> getQualifiedNameParts(final boolean withImportName) {
         EList<String> _xblockexpression = null;
         {
@@ -428,7 +415,6 @@ public class MappedFieldImpl extends MinimalEObjectImpl.Container implements Map
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String buildQualifiedName(final String separator, final boolean withImportName) {
         if ((separator == null)) {
             return null;
@@ -452,7 +438,6 @@ public class MappedFieldImpl extends MinimalEObjectImpl.Container implements Map
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Type getEffectiveType() {
         Type _xifexpression = null;
         ImportedType _mappedType = this.getMappedType();

@@ -92,7 +92,6 @@ public class ImportedComplexTypeToMapImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Import getServiceModelImport() {
         if (serviceModelImport != null && serviceModelImport.eIsProxy()) {
             InternalEObject oldServiceModelImport = (InternalEObject)serviceModelImport;
@@ -119,7 +118,6 @@ public class ImportedComplexTypeToMapImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setServiceModelImport(Import newServiceModelImport) {
         Import oldServiceModelImport = serviceModelImport;
         serviceModelImport = newServiceModelImport;
@@ -132,7 +130,6 @@ public class ImportedComplexTypeToMapImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Import getDataModelImport() {
         if (dataModelImport != null && dataModelImport.eIsProxy()) {
             InternalEObject oldDataModelImport = (InternalEObject)dataModelImport;
@@ -159,7 +156,6 @@ public class ImportedComplexTypeToMapImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setDataModelImport(Import newDataModelImport) {
         Import oldDataModelImport = dataModelImport;
         dataModelImport = newDataModelImport;
@@ -172,7 +168,6 @@ public class ImportedComplexTypeToMapImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public ComplexType getType() {
         if (type != null && type.eIsProxy()) {
             InternalEObject oldType = (InternalEObject)type;
@@ -199,7 +194,6 @@ public class ImportedComplexTypeToMapImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setType(ComplexType newType) {
         ComplexType oldType = type;
         type = newType;
@@ -212,7 +206,6 @@ public class ImportedComplexTypeToMapImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public ComplexTypeMapping getTypeMapping() {
         if (eContainerFeatureID() != MappingPackage.IMPORTED_COMPLEX_TYPE_TO_MAP__TYPE_MAPPING) return null;
         return (ComplexTypeMapping)eContainer();
@@ -243,7 +236,6 @@ public class ImportedComplexTypeToMapImpl extends MinimalEObjectImpl.Container i
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setTypeMapping(ComplexTypeMapping newTypeMapping) {
         if (newTypeMapping != eInternalContainer() || (eContainerFeatureID() != MappingPackage.IMPORTED_COMPLEX_TYPE_TO_MAP__TYPE_MAPPING && newTypeMapping != null)) {
             if (EcoreUtil.isAncestor(this, newTypeMapping))

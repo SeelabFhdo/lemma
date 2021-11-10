@@ -15,8 +15,6 @@ import de.fhdo.lemma.data.PrimitiveType;
 import de.fhdo.lemma.data.PrimitiveValue;
 import de.fhdo.lemma.data.Type;
 import de.fhdo.lemma.data.Version;
-import de.fhdo.lemma.data.avro.Shared;
-import de.fhdo.lemma.data.avro.Util;
 import de.fhdo.lemma.service.Import;
 import de.fhdo.lemma.service.ImportType;
 import de.fhdo.lemma.service.ServiceFactory;

@@ -3262,7 +3262,7 @@ public class MappingDslGrammarAccess extends AbstractElementFinder.AbstractGramm
 	}
 	
 	//TechnologySpecificListType returns TechnologySpecificListType:
-	//    'list' 'type' name=ID ';'
+	//    ('collection' | 'list') 'type' name=ID ';'
 	//;
 	public TechnologyDslGrammarAccess.TechnologySpecificListTypeElements getTechnologySpecificListTypeAccess() {
 		return gaTechnologyDsl.getTechnologySpecificListTypeAccess();

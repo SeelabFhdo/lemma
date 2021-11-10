@@ -13,8 +13,6 @@ import de.fhdo.lemma.intermediate.transformations.AbstractIntermediateModelTrans
 import de.fhdo.lemma.intermediate.transformations.IntermediateTransformationException;
 import de.fhdo.lemma.intermediate.transformations.TransformationModelDescription;
 import de.fhdo.lemma.intermediate.transformations.TransformationModelType;
-import de.fhdo.lemma.intermediate.transformations.service.IntermediateDataModelRefinement;
-import de.fhdo.lemma.intermediate.transformations.service.MappingModelTransformationValidator;
 import de.fhdo.lemma.service.Import;
 import de.fhdo.lemma.service.ImportType;
 import de.fhdo.lemma.service.MappedComplexType;

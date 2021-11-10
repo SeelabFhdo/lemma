@@ -6,7 +6,6 @@ import de.fhdo.lemma.technology.ServiceAspectPointcut;
 import de.fhdo.lemma.technology.TechnologyAspect;
 import de.fhdo.lemma.technology.TechnologyPackage;
 import de.fhdo.lemma.technology.TechnologySpecificProperty;
-import de.fhdo.lemma.technology.ui.highlighting.HighlightingConfiguration;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;

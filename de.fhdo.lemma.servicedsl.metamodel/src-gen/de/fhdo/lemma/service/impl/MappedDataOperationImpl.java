@@ -110,7 +110,6 @@ public class MappedDataOperationImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public DataOperation getDataOperation() {
         if (dataOperation != null && dataOperation.eIsProxy()) {
             InternalEObject oldDataOperation = (InternalEObject)dataOperation;
@@ -137,7 +136,6 @@ public class MappedDataOperationImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setDataOperation(DataOperation newDataOperation) {
         DataOperation oldDataOperation = dataOperation;
         dataOperation = newDataOperation;
@@ -150,7 +148,6 @@ public class MappedDataOperationImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<ImportedServiceAspect> getAspects() {
         if (aspects == null) {
             aspects = new EObjectContainmentWithInverseEList<ImportedServiceAspect>(ImportedServiceAspect.class, this, ServicePackage.MAPPED_DATA_OPERATION__ASPECTS, ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION);
@@ -163,7 +160,6 @@ public class MappedDataOperationImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public MappedDataOperationReturnType getMappedReturnType() {
         return mappedReturnType;
     }
@@ -188,7 +184,6 @@ public class MappedDataOperationImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setMappedReturnType(MappedDataOperationReturnType newMappedReturnType) {
         if (newMappedReturnType != mappedReturnType) {
             NotificationChain msgs = null;
@@ -208,7 +203,6 @@ public class MappedDataOperationImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<MappedDataOperationParameter> getMappedParameters() {
         if (mappedParameters == null) {
             mappedParameters = new EObjectContainmentWithInverseEList<MappedDataOperationParameter>(MappedDataOperationParameter.class, this, ServicePackage.MAPPED_DATA_OPERATION__MAPPED_PARAMETERS, ServicePackage.MAPPED_DATA_OPERATION_PARAMETER__MAPPED_OPERATION);
@@ -221,7 +215,6 @@ public class MappedDataOperationImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public MappedComplexType getMappedComplexType() {
         if (eContainerFeatureID() != ServicePackage.MAPPED_DATA_OPERATION__MAPPED_COMPLEX_TYPE) return null;
         return (MappedComplexType)eContainer();
@@ -252,7 +245,6 @@ public class MappedDataOperationImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setMappedComplexType(MappedComplexType newMappedComplexType) {
         if (newMappedComplexType != eInternalContainer() || (eContainerFeatureID() != ServicePackage.MAPPED_DATA_OPERATION__MAPPED_COMPLEX_TYPE && newMappedComplexType != null)) {
             if (EcoreUtil.isAncestor(this, newMappedComplexType))

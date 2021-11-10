@@ -128,7 +128,6 @@ public class TechnologySpecificFieldMappingImpl extends MinimalEObjectImpl.Conta
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Import getTechnology() {
         if (technology != null && technology.eIsProxy()) {
             InternalEObject oldTechnology = (InternalEObject)technology;
@@ -155,7 +154,6 @@ public class TechnologySpecificFieldMappingImpl extends MinimalEObjectImpl.Conta
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setTechnology(Import newTechnology) {
         Import oldTechnology = technology;
         technology = newTechnology;
@@ -168,7 +166,6 @@ public class TechnologySpecificFieldMappingImpl extends MinimalEObjectImpl.Conta
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Type getType() {
         if (type != null && type.eIsProxy()) {
             InternalEObject oldType = (InternalEObject)type;
@@ -195,7 +192,6 @@ public class TechnologySpecificFieldMappingImpl extends MinimalEObjectImpl.Conta
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setType(Type newType) {
         Type oldType = type;
         type = newType;
@@ -208,7 +204,6 @@ public class TechnologySpecificFieldMappingImpl extends MinimalEObjectImpl.Conta
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EnumerationField getEnumerationField() {
         if (enumerationField != null && enumerationField.eIsProxy()) {
             InternalEObject oldEnumerationField = (InternalEObject)enumerationField;
@@ -235,7 +230,6 @@ public class TechnologySpecificFieldMappingImpl extends MinimalEObjectImpl.Conta
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setEnumerationField(EnumerationField newEnumerationField) {
         EnumerationField oldEnumerationField = enumerationField;
         enumerationField = newEnumerationField;
@@ -248,7 +242,6 @@ public class TechnologySpecificFieldMappingImpl extends MinimalEObjectImpl.Conta
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public DataField getDataField() {
         if (dataField != null && dataField.eIsProxy()) {
             InternalEObject oldDataField = (InternalEObject)dataField;
@@ -275,7 +268,6 @@ public class TechnologySpecificFieldMappingImpl extends MinimalEObjectImpl.Conta
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setDataField(DataField newDataField) {
         DataField oldDataField = dataField;
         dataField = newDataField;
@@ -288,7 +280,6 @@ public class TechnologySpecificFieldMappingImpl extends MinimalEObjectImpl.Conta
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<TechnologySpecificImportedServiceAspect> getAspects() {
         if (aspects == null) {
             aspects = new EObjectContainmentWithInverseEList<TechnologySpecificImportedServiceAspect>(TechnologySpecificImportedServiceAspect.class, this, MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__ASPECTS, MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__FIELD_MAPPING);
@@ -301,7 +292,6 @@ public class TechnologySpecificFieldMappingImpl extends MinimalEObjectImpl.Conta
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public ComplexTypeMapping getTypeMapping() {
         if (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TYPE_MAPPING) return null;
         return (ComplexTypeMapping)eContainer();
@@ -332,7 +322,6 @@ public class TechnologySpecificFieldMappingImpl extends MinimalEObjectImpl.Conta
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setTypeMapping(ComplexTypeMapping newTypeMapping) {
         if (newTypeMapping != eInternalContainer() || (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__TYPE_MAPPING && newTypeMapping != null)) {
             if (EcoreUtil.isAncestor(this, newTypeMapping))
@@ -354,7 +343,6 @@ public class TechnologySpecificFieldMappingImpl extends MinimalEObjectImpl.Conta
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public ComplexParameterMapping getParameterMapping() {
         if (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__PARAMETER_MAPPING) return null;
         return (ComplexParameterMapping)eContainer();
@@ -385,7 +373,6 @@ public class TechnologySpecificFieldMappingImpl extends MinimalEObjectImpl.Conta
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setParameterMapping(ComplexParameterMapping newParameterMapping) {
         if (newParameterMapping != eInternalContainer() || (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__PARAMETER_MAPPING && newParameterMapping != null)) {
             if (EcoreUtil.isAncestor(this, newParameterMapping))
@@ -407,7 +394,6 @@ public class TechnologySpecificFieldMappingImpl extends MinimalEObjectImpl.Conta
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Type getOriginalTypeOfMappedElement() {
         Type _xifexpression = null;
         DataField _dataField = this.getDataField();

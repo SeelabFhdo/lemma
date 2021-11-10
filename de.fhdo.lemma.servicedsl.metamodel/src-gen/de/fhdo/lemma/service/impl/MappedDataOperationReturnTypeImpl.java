@@ -85,7 +85,6 @@ public class MappedDataOperationReturnTypeImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public ImportedType getMappedType() {
         return mappedType;
     }
@@ -110,7 +109,6 @@ public class MappedDataOperationReturnTypeImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setMappedType(ImportedType newMappedType) {
         if (newMappedType != mappedType) {
             NotificationChain msgs = null;
@@ -130,7 +128,6 @@ public class MappedDataOperationReturnTypeImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<ImportedServiceAspect> getAspects() {
         if (aspects == null) {
             aspects = new EObjectContainmentWithInverseEList<ImportedServiceAspect>(ImportedServiceAspect.class, this, ServicePackage.MAPPED_DATA_OPERATION_RETURN_TYPE__ASPECTS, ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION_RETURN_TYPE);
@@ -143,7 +140,6 @@ public class MappedDataOperationReturnTypeImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public MappedDataOperation getMappedOperation() {
         if (eContainerFeatureID() != ServicePackage.MAPPED_DATA_OPERATION_RETURN_TYPE__MAPPED_OPERATION) return null;
         return (MappedDataOperation)eContainer();
@@ -174,7 +170,6 @@ public class MappedDataOperationReturnTypeImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setMappedOperation(MappedDataOperation newMappedOperation) {
         if (newMappedOperation != eInternalContainer() || (eContainerFeatureID() != ServicePackage.MAPPED_DATA_OPERATION_RETURN_TYPE__MAPPED_OPERATION && newMappedOperation != null)) {
             if (EcoreUtil.isAncestor(this, newMappedOperation))

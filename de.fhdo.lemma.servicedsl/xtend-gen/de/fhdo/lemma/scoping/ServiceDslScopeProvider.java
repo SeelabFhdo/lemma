@@ -10,7 +10,6 @@ import com.google.common.collect.Iterables;
 import de.fhdo.lemma.data.ComplexType;
 import de.fhdo.lemma.data.DataModel;
 import de.fhdo.lemma.data.PrimitiveValue;
-import de.fhdo.lemma.scoping.AbstractServiceDslScopeProvider;
 import de.fhdo.lemma.service.Import;
 import de.fhdo.lemma.service.ImportedProtocolAndDataFormat;
 import de.fhdo.lemma.service.ImportedServiceAspect;

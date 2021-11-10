@@ -77,7 +77,7 @@ TechnologySpecificPrimitiveType returns TechnologySpecificPrimitiveType:
 ;
 
 TechnologySpecificListType returns TechnologySpecificListType:
-    'list' 'type' name=ID ';'
+    ('collection' | 'list') 'type' name=ID ';'
 ;
 
 TechnologySpecificDataStructure returns TechnologySpecificDataStructure:

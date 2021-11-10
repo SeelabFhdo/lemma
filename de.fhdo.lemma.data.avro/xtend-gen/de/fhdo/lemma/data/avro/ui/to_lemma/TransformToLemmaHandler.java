@@ -5,8 +5,6 @@ import de.fhdo.lemma.data.DataModel;
 import de.fhdo.lemma.data.avro.LemmaGenerator;
 import de.fhdo.lemma.data.avro.Shared;
 import de.fhdo.lemma.data.avro.ui.Util;
-import de.fhdo.lemma.data.avro.ui.to_lemma.AvroToLemmaDialog;
-import de.fhdo.lemma.data.avro.ui.to_lemma.SpecifyLemmaPathsDialog;
 import de.fhdo.lemma.data.datadsl.extractor.DataDslExtractor;
 import de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils;
 import de.fhdo.lemma.service.ServiceModel;

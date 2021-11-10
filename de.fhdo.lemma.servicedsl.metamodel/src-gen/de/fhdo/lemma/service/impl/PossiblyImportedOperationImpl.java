@@ -132,7 +132,6 @@ public class PossiblyImportedOperationImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Import getImport() {
         if (import_ != null && import_.eIsProxy()) {
             InternalEObject oldImport = (InternalEObject)import_;
@@ -159,7 +158,6 @@ public class PossiblyImportedOperationImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setImport(Import newImport) {
         Import oldImport = import_;
         import_ = newImport;
@@ -172,7 +170,6 @@ public class PossiblyImportedOperationImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Operation getOperation() {
         if (operation != null && operation.eIsProxy()) {
             InternalEObject oldOperation = (InternalEObject)operation;
@@ -199,7 +196,6 @@ public class PossiblyImportedOperationImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setOperation(Operation newOperation) {
         Operation oldOperation = operation;
         operation = newOperation;
@@ -212,7 +208,6 @@ public class PossiblyImportedOperationImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Microservice getRequiringMicroservice() {
         if (eContainerFeatureID() != ServicePackage.POSSIBLY_IMPORTED_OPERATION__REQUIRING_MICROSERVICE) return null;
         return (Microservice)eContainer();
@@ -243,7 +238,6 @@ public class PossiblyImportedOperationImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setRequiringMicroservice(Microservice newRequiringMicroservice) {
         if (newRequiringMicroservice != eInternalContainer() || (eContainerFeatureID() != ServicePackage.POSSIBLY_IMPORTED_OPERATION__REQUIRING_MICROSERVICE && newRequiringMicroservice != null)) {
             if (EcoreUtil.isAncestor(this, newRequiringMicroservice))
@@ -265,7 +259,6 @@ public class PossiblyImportedOperationImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Parameter getInitializedParameter() {
         if (eContainerFeatureID() != ServicePackage.POSSIBLY_IMPORTED_OPERATION__INITIALIZED_PARAMETER) return null;
         return (Parameter)eContainer();
@@ -296,7 +289,6 @@ public class PossiblyImportedOperationImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setInitializedParameter(Parameter newInitializedParameter) {
         if (newInitializedParameter != eInternalContainer() || (eContainerFeatureID() != ServicePackage.POSSIBLY_IMPORTED_OPERATION__INITIALIZED_PARAMETER && newInitializedParameter != null)) {
             if (EcoreUtil.isAncestor(this, newInitializedParameter))
@@ -318,7 +310,6 @@ public class PossiblyImportedOperationImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public boolean isRequired() {
         Microservice _requiringMicroservice = this.getRequiringMicroservice();
         return (_requiringMicroservice != null);
@@ -329,7 +320,6 @@ public class PossiblyImportedOperationImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public boolean isRequiredByInterface() {
         if ((((this.getOperation() == null) || 
             (!this.isRequired())) || 
@@ -353,7 +343,6 @@ public class PossiblyImportedOperationImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public boolean isRequiredByMicroservice() {
         if (((((this.getOperation() == null) || 
             (!this.isRequired())) || 
@@ -378,7 +367,6 @@ public class PossiblyImportedOperationImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public boolean isRequiredByContainer() {
         return (this.isRequiredByInterface() || this.isRequiredByMicroservice());
     }

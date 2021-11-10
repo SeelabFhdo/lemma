@@ -94,7 +94,6 @@ public class ApiOperationCommentImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getComment() {
         return comment;
     }
@@ -104,7 +103,6 @@ public class ApiOperationCommentImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setComment(String newComment) {
         String oldComment = comment;
         comment = newComment;
@@ -117,7 +115,6 @@ public class ApiOperationCommentImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<ApiParameterComment> getParameterComments() {
         if (parameterComments == null) {
             parameterComments = new EObjectContainmentWithInverseEList<ApiParameterComment>(ApiParameterComment.class, this, ServicePackage.API_OPERATION_COMMENT__PARAMETER_COMMENTS, ServicePackage.API_PARAMETER_COMMENT__OPERATION_COMMENT);
@@ -130,7 +127,6 @@ public class ApiOperationCommentImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Operation getOperation() {
         if (eContainerFeatureID() != ServicePackage.API_OPERATION_COMMENT__OPERATION) return null;
         return (Operation)eContainer();
@@ -161,7 +157,6 @@ public class ApiOperationCommentImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setOperation(Operation newOperation) {
         if (newOperation != eInternalContainer() || (eContainerFeatureID() != ServicePackage.API_OPERATION_COMMENT__OPERATION && newOperation != null)) {
             if (EcoreUtil.isAncestor(this, newOperation))

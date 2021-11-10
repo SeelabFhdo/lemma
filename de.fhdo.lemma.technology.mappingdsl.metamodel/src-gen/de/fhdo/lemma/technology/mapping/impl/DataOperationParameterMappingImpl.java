@@ -111,7 +111,6 @@ public class DataOperationParameterMappingImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public DataOperationParameter getParameter() {
         if (parameter != null && parameter.eIsProxy()) {
             InternalEObject oldParameter = (InternalEObject)parameter;
@@ -138,7 +137,6 @@ public class DataOperationParameterMappingImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setParameter(DataOperationParameter newParameter) {
         DataOperationParameter oldParameter = parameter;
         parameter = newParameter;
@@ -151,7 +149,6 @@ public class DataOperationParameterMappingImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Import getTechnology() {
         if (technology != null && technology.eIsProxy()) {
             InternalEObject oldTechnology = (InternalEObject)technology;
@@ -178,7 +175,6 @@ public class DataOperationParameterMappingImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setTechnology(Import newTechnology) {
         Import oldTechnology = technology;
         technology = newTechnology;
@@ -191,7 +187,6 @@ public class DataOperationParameterMappingImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Type getType() {
         if (type != null && type.eIsProxy()) {
             InternalEObject oldType = (InternalEObject)type;
@@ -218,7 +213,6 @@ public class DataOperationParameterMappingImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setType(Type newType) {
         Type oldType = type;
         type = newType;
@@ -231,7 +225,6 @@ public class DataOperationParameterMappingImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<TechnologySpecificImportedServiceAspect> getAspects() {
         if (aspects == null) {
             aspects = new EObjectContainmentWithInverseEList<TechnologySpecificImportedServiceAspect>(TechnologySpecificImportedServiceAspect.class, this, MappingPackage.DATA_OPERATION_PARAMETER_MAPPING__ASPECTS, MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_OPERATION_PARAMETER_MAPPING);
@@ -244,7 +237,6 @@ public class DataOperationParameterMappingImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public DataOperationMapping getOperationMapping() {
         if (eContainerFeatureID() != MappingPackage.DATA_OPERATION_PARAMETER_MAPPING__OPERATION_MAPPING) return null;
         return (DataOperationMapping)eContainer();
@@ -275,7 +267,6 @@ public class DataOperationParameterMappingImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setOperationMapping(DataOperationMapping newOperationMapping) {
         if (newOperationMapping != eInternalContainer() || (eContainerFeatureID() != MappingPackage.DATA_OPERATION_PARAMETER_MAPPING__OPERATION_MAPPING && newOperationMapping != null)) {
             if (EcoreUtil.isAncestor(this, newOperationMapping))

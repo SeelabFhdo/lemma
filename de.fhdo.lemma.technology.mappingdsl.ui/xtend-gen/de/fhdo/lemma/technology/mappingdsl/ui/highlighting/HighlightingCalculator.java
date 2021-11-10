@@ -9,7 +9,6 @@ import de.fhdo.lemma.technology.TechnologySpecificPropertyValueAssignment;
 import de.fhdo.lemma.technology.mapping.ComplexTypeMapping;
 import de.fhdo.lemma.technology.mapping.MappingPackage;
 import de.fhdo.lemma.technology.mapping.TechnologySpecificImportedServiceAspect;
-import de.fhdo.lemma.technology.mappingdsl.ui.highlighting.HighlightingConfiguration;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;

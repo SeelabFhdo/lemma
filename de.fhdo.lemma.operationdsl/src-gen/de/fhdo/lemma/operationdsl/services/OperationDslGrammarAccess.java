@@ -2361,7 +2361,7 @@ public class OperationDslGrammarAccess extends AbstractElementFinder.AbstractGra
 	}
 	
 	//TechnologySpecificListType returns TechnologySpecificListType:
-	//    'list' 'type' name=ID ';'
+	//    ('collection' | 'list') 'type' name=ID ';'
 	//;
 	public TechnologyDslGrammarAccess.TechnologySpecificListTypeElements getTechnologySpecificListTypeAccess() {
 		return gaTechnologyDsl.getTechnologySpecificListTypeAccess();

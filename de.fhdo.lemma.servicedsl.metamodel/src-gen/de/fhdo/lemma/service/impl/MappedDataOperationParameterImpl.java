@@ -98,7 +98,6 @@ public class MappedDataOperationParameterImpl extends MinimalEObjectImpl.Contain
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public DataOperationParameter getParameter() {
         if (parameter != null && parameter.eIsProxy()) {
             InternalEObject oldParameter = (InternalEObject)parameter;
@@ -125,7 +124,6 @@ public class MappedDataOperationParameterImpl extends MinimalEObjectImpl.Contain
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setParameter(DataOperationParameter newParameter) {
         DataOperationParameter oldParameter = parameter;
         parameter = newParameter;
@@ -138,7 +136,6 @@ public class MappedDataOperationParameterImpl extends MinimalEObjectImpl.Contain
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public ImportedType getMappedType() {
         return mappedType;
     }
@@ -163,7 +160,6 @@ public class MappedDataOperationParameterImpl extends MinimalEObjectImpl.Contain
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setMappedType(ImportedType newMappedType) {
         if (newMappedType != mappedType) {
             NotificationChain msgs = null;
@@ -183,7 +179,6 @@ public class MappedDataOperationParameterImpl extends MinimalEObjectImpl.Contain
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<ImportedServiceAspect> getAspects() {
         if (aspects == null) {
             aspects = new EObjectContainmentWithInverseEList<ImportedServiceAspect>(ImportedServiceAspect.class, this, ServicePackage.MAPPED_DATA_OPERATION_PARAMETER__ASPECTS, ServicePackage.IMPORTED_SERVICE_ASPECT__MAPPED_DATA_OPERATION_PARAMETER);
@@ -196,7 +191,6 @@ public class MappedDataOperationParameterImpl extends MinimalEObjectImpl.Contain
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public MappedDataOperation getMappedOperation() {
         if (eContainerFeatureID() != ServicePackage.MAPPED_DATA_OPERATION_PARAMETER__MAPPED_OPERATION) return null;
         return (MappedDataOperation)eContainer();
@@ -227,7 +221,6 @@ public class MappedDataOperationParameterImpl extends MinimalEObjectImpl.Contain
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setMappedOperation(MappedDataOperation newMappedOperation) {
         if (newMappedOperation != eInternalContainer() || (eContainerFeatureID() != ServicePackage.MAPPED_DATA_OPERATION_PARAMETER__MAPPED_OPERATION && newMappedOperation != null)) {
             if (EcoreUtil.isAncestor(this, newMappedOperation))

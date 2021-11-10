@@ -606,22 +606,30 @@ public class TechnologyDslGrammarAccess extends AbstractElementFinder.AbstractGr
 	public class TechnologySpecificListTypeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.technology.TechnologyDsl.TechnologySpecificListType");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cListKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final Keyword cCollectionKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
+		private final Keyword cListKeyword_0_1 = (Keyword)cAlternatives_0.eContents().get(1);
 		private final Keyword cTypeKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cNameIDTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
 		private final Keyword cSemicolonKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		//TechnologySpecificListType returns TechnologySpecificListType:
-		//    'list' 'type' name=ID ';'
+		//    ('collection' | 'list') 'type' name=ID ';'
 		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'list' 'type' name=ID ';'
+		//('collection' | 'list') 'type' name=ID ';'
 		public Group getGroup() { return cGroup; }
 		
+		//('collection' | 'list')
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+		
+		//'collection'
+		public Keyword getCollectionKeyword_0_0() { return cCollectionKeyword_0_0; }
+		
 		//'list'
-		public Keyword getListKeyword_0() { return cListKeyword_0; }
+		public Keyword getListKeyword_0_1() { return cListKeyword_0_1; }
 		
 		//'type'
 		public Keyword getTypeKeyword_1() { return cTypeKeyword_1; }
@@ -2195,7 +2203,7 @@ public class TechnologyDslGrammarAccess extends AbstractElementFinder.AbstractGr
 	}
 	
 	//TechnologySpecificListType returns TechnologySpecificListType:
-	//    'list' 'type' name=ID ';'
+	//    ('collection' | 'list') 'type' name=ID ';'
 	//;
 	public TechnologySpecificListTypeElements getTechnologySpecificListTypeAccess() {
 		return pTechnologySpecificListType;

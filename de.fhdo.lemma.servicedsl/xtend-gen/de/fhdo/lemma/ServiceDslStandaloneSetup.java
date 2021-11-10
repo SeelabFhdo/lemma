@@ -3,8 +3,6 @@
  */
 package de.fhdo.lemma;
 
-import de.fhdo.lemma.ServiceDslStandaloneSetupGenerated;
-
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.
  */

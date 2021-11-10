@@ -106,7 +106,6 @@ public class PossiblyImportedInterfaceImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Import getImport() {
         if (import_ != null && import_.eIsProxy()) {
             InternalEObject oldImport = (InternalEObject)import_;
@@ -133,7 +132,6 @@ public class PossiblyImportedInterfaceImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setImport(Import newImport) {
         Import oldImport = import_;
         import_ = newImport;
@@ -146,7 +144,6 @@ public class PossiblyImportedInterfaceImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Interface getInterface() {
         if (interface_ != null && interface_.eIsProxy()) {
             InternalEObject oldInterface = (InternalEObject)interface_;
@@ -173,7 +170,6 @@ public class PossiblyImportedInterfaceImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setInterface(Interface newInterface) {
         Interface oldInterface = interface_;
         interface_ = newInterface;
@@ -186,7 +182,6 @@ public class PossiblyImportedInterfaceImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public Microservice getRequiringMicroservice() {
         if (eContainerFeatureID() != ServicePackage.POSSIBLY_IMPORTED_INTERFACE__REQUIRING_MICROSERVICE) return null;
         return (Microservice)eContainer();
@@ -217,7 +212,6 @@ public class PossiblyImportedInterfaceImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setRequiringMicroservice(Microservice newRequiringMicroservice) {
         if (newRequiringMicroservice != eInternalContainer() || (eContainerFeatureID() != ServicePackage.POSSIBLY_IMPORTED_INTERFACE__REQUIRING_MICROSERVICE && newRequiringMicroservice != null)) {
             if (EcoreUtil.isAncestor(this, newRequiringMicroservice))
@@ -239,7 +233,6 @@ public class PossiblyImportedInterfaceImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public boolean isRequired() {
         Microservice _requiringMicroservice = this.getRequiringMicroservice();
         return (_requiringMicroservice != null);
@@ -250,7 +243,6 @@ public class PossiblyImportedInterfaceImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public boolean isRequiredByContainer() {
         if (((this.getInterface() == null) || (!this.isRequired()))) {
             return false;

@@ -19,7 +19,6 @@ import de.fhdo.lemma.technology.ServiceAspectPointcut;
 import de.fhdo.lemma.technology.Technology;
 import de.fhdo.lemma.technology.TechnologyImport;
 import de.fhdo.lemma.technology.TechnologyPackage;
-import de.fhdo.lemma.technology.scoping.AbstractTechnologyDslScopeProvider;
 import de.fhdo.lemma.typechecking.TypecheckingUtils;
 import de.fhdo.lemma.utils.LemmaUtils;
 import java.util.ArrayList;

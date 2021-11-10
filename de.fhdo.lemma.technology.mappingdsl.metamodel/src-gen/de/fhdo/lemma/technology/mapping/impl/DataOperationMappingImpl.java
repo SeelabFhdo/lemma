@@ -110,7 +110,6 @@ public class DataOperationMappingImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public DataOperation getDataOperation() {
         if (dataOperation != null && dataOperation.eIsProxy()) {
             InternalEObject oldDataOperation = (InternalEObject)dataOperation;
@@ -137,7 +136,6 @@ public class DataOperationMappingImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setDataOperation(DataOperation newDataOperation) {
         DataOperation oldDataOperation = dataOperation;
         dataOperation = newDataOperation;
@@ -150,7 +148,6 @@ public class DataOperationMappingImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<TechnologySpecificImportedServiceAspect> getAspects() {
         if (aspects == null) {
             aspects = new EObjectContainmentWithInverseEList<TechnologySpecificImportedServiceAspect>(TechnologySpecificImportedServiceAspect.class, this, MappingPackage.DATA_OPERATION_MAPPING__ASPECTS, MappingPackage.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__DATA_OPERATION_MAPPING);
@@ -163,7 +160,6 @@ public class DataOperationMappingImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public DataOperationReturnTypeMapping getReturnTypeMapping() {
         return returnTypeMapping;
     }
@@ -188,7 +184,6 @@ public class DataOperationMappingImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setReturnTypeMapping(DataOperationReturnTypeMapping newReturnTypeMapping) {
         if (newReturnTypeMapping != returnTypeMapping) {
             NotificationChain msgs = null;
@@ -208,7 +203,6 @@ public class DataOperationMappingImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<DataOperationParameterMapping> getParameterMappings() {
         if (parameterMappings == null) {
             parameterMappings = new EObjectContainmentWithInverseEList<DataOperationParameterMapping>(DataOperationParameterMapping.class, this, MappingPackage.DATA_OPERATION_MAPPING__PARAMETER_MAPPINGS, MappingPackage.DATA_OPERATION_PARAMETER_MAPPING__OPERATION_MAPPING);
@@ -221,7 +215,6 @@ public class DataOperationMappingImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public ComplexTypeMapping getTypeMapping() {
         if (eContainerFeatureID() != MappingPackage.DATA_OPERATION_MAPPING__TYPE_MAPPING) return null;
         return (ComplexTypeMapping)eContainer();
@@ -252,7 +245,6 @@ public class DataOperationMappingImpl extends MinimalEObjectImpl.Container imple
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setTypeMapping(ComplexTypeMapping newTypeMapping) {
         if (newTypeMapping != eInternalContainer() || (eContainerFeatureID() != MappingPackage.DATA_OPERATION_MAPPING__TYPE_MAPPING && newTypeMapping != null)) {
             if (EcoreUtil.isAncestor(this, newTypeMapping))

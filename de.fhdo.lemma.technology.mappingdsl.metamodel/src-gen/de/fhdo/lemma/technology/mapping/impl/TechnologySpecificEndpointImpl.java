@@ -91,7 +91,6 @@ public class TechnologySpecificEndpointImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<String> getAddresses() {
         if (addresses == null) {
             addresses = new EDataTypeEList<String>(String.class, this, MappingPackage.TECHNOLOGY_SPECIFIC_ENDPOINT__ADDRESSES);
@@ -104,7 +103,6 @@ public class TechnologySpecificEndpointImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<TechnologySpecificProtocol> getTechnologySpecificProtocols() {
         if (technologySpecificProtocols == null) {
             technologySpecificProtocols = new EObjectContainmentWithInverseEList<TechnologySpecificProtocol>(TechnologySpecificProtocol.class, this, MappingPackage.TECHNOLOGY_SPECIFIC_ENDPOINT__TECHNOLOGY_SPECIFIC_PROTOCOLS, MappingPackage.TECHNOLOGY_SPECIFIC_PROTOCOL__ENDPOINT);
@@ -117,7 +115,6 @@ public class TechnologySpecificEndpointImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public MicroserviceMapping getMicroserviceMapping() {
         if (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_ENDPOINT__MICROSERVICE_MAPPING) return null;
         return (MicroserviceMapping)eContainer();
@@ -148,7 +145,6 @@ public class TechnologySpecificEndpointImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setMicroserviceMapping(MicroserviceMapping newMicroserviceMapping) {
         if (newMicroserviceMapping != eInternalContainer() || (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_ENDPOINT__MICROSERVICE_MAPPING && newMicroserviceMapping != null)) {
             if (EcoreUtil.isAncestor(this, newMicroserviceMapping))
@@ -170,7 +166,6 @@ public class TechnologySpecificEndpointImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public InterfaceMapping getInterfaceMapping() {
         if (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_ENDPOINT__INTERFACE_MAPPING) return null;
         return (InterfaceMapping)eContainer();
@@ -201,7 +196,6 @@ public class TechnologySpecificEndpointImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setInterfaceMapping(InterfaceMapping newInterfaceMapping) {
         if (newInterfaceMapping != eInternalContainer() || (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_ENDPOINT__INTERFACE_MAPPING && newInterfaceMapping != null)) {
             if (EcoreUtil.isAncestor(this, newInterfaceMapping))
@@ -223,7 +217,6 @@ public class TechnologySpecificEndpointImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public OperationMapping getOperationMapping() {
         if (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_ENDPOINT__OPERATION_MAPPING) return null;
         return (OperationMapping)eContainer();
@@ -254,7 +247,6 @@ public class TechnologySpecificEndpointImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setOperationMapping(OperationMapping newOperationMapping) {
         if (newOperationMapping != eInternalContainer() || (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_ENDPOINT__OPERATION_MAPPING && newOperationMapping != null)) {
             if (EcoreUtil.isAncestor(this, newOperationMapping))
@@ -276,7 +268,6 @@ public class TechnologySpecificEndpointImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public ReferredOperationMapping getReferredOperationMapping() {
         if (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_ENDPOINT__REFERRED_OPERATION_MAPPING) return null;
         return (ReferredOperationMapping)eContainer();
@@ -307,7 +298,6 @@ public class TechnologySpecificEndpointImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setReferredOperationMapping(ReferredOperationMapping newReferredOperationMapping) {
         if (newReferredOperationMapping != eInternalContainer() || (eContainerFeatureID() != MappingPackage.TECHNOLOGY_SPECIFIC_ENDPOINT__REFERRED_OPERATION_MAPPING && newReferredOperationMapping != null)) {
             if (EcoreUtil.isAncestor(this, newReferredOperationMapping))
