@@ -464,15 +464,20 @@ class DataDslValidator extends AbstractDataDslValidator {
             warning("A specification should not exhibit other domain features", complexType,
                 DataPackage::Literals.COMPLEX_TYPE__FEATURES, featureIndex)
 
-        // A specification should comprise at least one validator operation
-        val effectiveOperations = complexType.asStructure?.effectiveOperations
-        if (effectiveOperations === null) {
+        if (!(complexType instanceof DataStructure)) {
             return
         }
+        val dataStructure = complexType as DataStructure
 
-        if (!effectiveOperations.exists[hasFeature(DataOperationFeature.VALIDATOR)])
+        // A specification should comprise at least one validator operation
+        if (!dataStructure.effectiveOperations.exists[hasFeature(DataOperationFeature.VALIDATOR)])
             warning("A specification should comprise at least one validator operation",
                 complexType, DataPackage::Literals.COMPLEX_TYPE__FEATURES, featureIndex)
+
+        // A specification should only comprise operations
+        if (!dataStructure.effectiveFields.empty)
+            warning("A specification should only comprise operations", dataStructure,
+                DataPackage::Literals.COMPLEX_TYPE__FEATURES, featureIndex)
     }
 
     /**

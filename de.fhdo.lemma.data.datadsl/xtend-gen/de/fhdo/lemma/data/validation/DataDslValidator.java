@@ -604,22 +604,23 @@ public class DataDslValidator extends AbstractDataDslValidator {
       this.warning("A specification should not exhibit other domain features", complexType, 
         DataPackage.Literals.COMPLEX_TYPE__FEATURES, featureIndex);
     }
-    DataStructure _asStructure = this.asStructure(complexType);
-    EList<DataOperation> _effectiveOperations = null;
-    if (_asStructure!=null) {
-      _effectiveOperations=_asStructure.getEffectiveOperations();
-    }
-    final EList<DataOperation> effectiveOperations = _effectiveOperations;
-    if ((effectiveOperations == null)) {
+    if ((!(complexType instanceof DataStructure))) {
       return;
     }
+    final DataStructure dataStructure = ((DataStructure) complexType);
     final Function1<DataOperation, Boolean> _function = (DataOperation it) -> {
       return Boolean.valueOf(it.hasFeature(DataOperationFeature.VALIDATOR));
     };
-    boolean _exists = IterableExtensions.<DataOperation>exists(effectiveOperations, _function);
+    boolean _exists = IterableExtensions.<DataOperation>exists(dataStructure.getEffectiveOperations(), _function);
     boolean _not = (!_exists);
     if (_not) {
       this.warning("A specification should comprise at least one validator operation", complexType, DataPackage.Literals.COMPLEX_TYPE__FEATURES, featureIndex);
+    }
+    boolean _isEmpty = dataStructure.getEffectiveFields().isEmpty();
+    boolean _not_1 = (!_isEmpty);
+    if (_not_1) {
+      this.warning("A specification should only comprise operations", dataStructure, 
+        DataPackage.Literals.COMPLEX_TYPE__FEATURES, featureIndex);
     }
   }
   
