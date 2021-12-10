@@ -14,22 +14,22 @@ context Delivery {
     }
 
     structure Action<valueObject> {
-      DeliveryAPI::Web.DeliveryActionType type,
-      Common::Common.Address address,
-      date time,
-      long deliveryId,
-      function boolean actionFor(long deliveryId),
-      function Action makePickup(long deliveryId, Common::Common.Address pickupAddress, date pickupTime),
-      function Action makeDropoff(long deliveryId, Common::Common.Address deliveryAddress, date deliveryTime)
+      immutable DeliveryAPI::Web.DeliveryActionType type,
+      immutable Common::Common.Address address,
+      immutable date time,
+      immutable long deliveryId,
+      function boolean actionFor(long deliveryId)<sideEffectFree>,
+      function Action makePickup(long deliveryId, Common::Common.Address pickupAddress, date pickupTime)<sideEffectFree>,
+      function Action makeDropoff(long deliveryId, Common::Common.Address deliveryAddress, date deliveryTime)<sideEffectFree>
     }
 
     list ActionList {Action action}
 
     structure Plan<valueObject> {
-        hide ActionList actions,
-        procedure add(Action action),
-        procedure removeDelivery(long deliveryId),
-        function ActionList actionsForDelivery(long deliveryId)
+        hide immutable ActionList actions,
+        procedure add(Action action)<sideEffectFree>,
+        procedure removeDelivery(long deliveryId)<sideEffectFree>,
+        function ActionList actionsForDelivery(long deliveryId)<sideEffectFree>
     }
 
     structure Delivery<entity> {

@@ -10,15 +10,15 @@ context Domain {
     }
 
     structure RestaurantMenu<valueObject> {
-        MenuItems menuItems
+        immutable MenuItems menuItems
     }
 
     list MenuItems { MenuItem i }
 
     structure MenuItem<valueObject> {
-        string id,
-        string name,
-        Common::Common.Money price
+        immutable string id,
+        immutable string name,
+        immutable Common::Common.Money price
     }
 
     structure RestaurantService<service> {

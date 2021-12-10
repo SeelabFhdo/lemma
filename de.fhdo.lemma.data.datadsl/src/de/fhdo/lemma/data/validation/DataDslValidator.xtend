@@ -506,6 +506,24 @@ class DataDslValidator extends AbstractDataDslValidator {
             warning("A value object should not be an aggregate, entity, repository, service, or " +
                 "specification", complexType, DataPackage::Literals.COMPLEX_TYPE__FEATURES,
                 featureIndex)
+
+        if (!(complexType instanceof DataStructure)) {
+            return
+        }
+        val dataStructure = complexType as DataStructure
+
+        // Operations of a value object should be side-effect-free
+        val hasOperationsWithSideEffects = dataStructure.effectiveOperations.exists[
+            !hasFeature(DataOperationFeature.SIDE_EFFECT_FREE)
+        ]
+        if (hasOperationsWithSideEffects)
+            warning("The operations of a value object should be side-effect-free", complexType,
+                DataPackage::Literals.COMPLEX_TYPE__FEATURES, featureIndex)
+
+        // Fields of a value object should be immutable
+        if (dataStructure.effectiveFields.exists[!immutable])
+            warning("The fields of a value object should be immutable", complexType,
+                DataPackage::Literals.COMPLEX_TYPE__FEATURES, featureIndex)
     }
 
     /**

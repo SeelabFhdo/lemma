@@ -1,9 +1,9 @@
 context Common {
     structure Money<valueObject> {
         immutable double amount,
-        function Money add(Money delta),
-        function boolean isGreaterThanOrEqual(Money other),
-        function Money multiply(int x)
+        function Money add(Money delta)<sideEffectFree>,
+        function boolean isGreaterThanOrEqual(Money other)<sideEffectFree>,
+        function Money multiply(int x)<sideEffectFree>
     }
 
     structure PersonName<valueObject> {
@@ -12,10 +12,10 @@ context Common {
     }
 
     structure Address<valueObject> {
-        string street1,
-        string street2,
-        string city,
-        string state,
-        string zip
+        immutable string street1,
+        immutable string street2,
+        immutable string city,
+        immutable string state,
+        immutable string zip
     }
 }

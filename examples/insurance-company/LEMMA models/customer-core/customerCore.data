@@ -1,6 +1,6 @@
 context customerCore {
     structure Address<valueObject> {
-        hide long id<identifier>,
+        hide immutable long id = -1 <identifier>,
         immutable string streetAddress<neverEmpty>,
         immutable string postalCode<neverEmpty>,
         immutable string city<neverEmpty>
@@ -9,8 +9,8 @@ context customerCore {
     list Addresses { Address a }
 
     structure CustomerId<valueObject> {
-        string id,
-        function CustomerId random
+        immutable string id,
+        function CustomerId random<sideEffectFree>
     }
 
     structure CustomerProfileEntity<entity> {
@@ -61,22 +61,22 @@ context customerCore {
     }
 
     structure AddressDto<valueObject> {
-        string streetAddress<neverEmpty>,
-        string postalCode<neverEmpty>,
-        string city<neverEmpty>,
-        function AddressDto fromDomainObject(Address address),
-        function Address toDomainObject
+        immutable string streetAddress<neverEmpty>,
+        immutable string postalCode<neverEmpty>,
+        immutable string city<neverEmpty>,
+        function AddressDto fromDomainObject(Address address)<sideEffectFree>,
+        function Address toDomainObject<sideEffectFree>
     }
 
     structure CustomerProfileUpdateRequestDto<valueObject> {
-        string firstname<neverEmpty>,
-        string lastname<neverEmpty>,
-        date birthday,
-        string streetAddress<neverEmpty>,
-        string postalCode<neverEmpty>,
-        string city<neverEmpty>,
-        string email<neverEmpty>,
-        string phoneNumber
+        immutable string firstname<neverEmpty>,
+        immutable string lastname<neverEmpty>,
+        immutable date birthday,
+        immutable string streetAddress<neverEmpty>,
+        immutable string postalCode<neverEmpty>,
+        immutable string city<neverEmpty>,
+        immutable string email<neverEmpty>,
+        immutable string phoneNumber
     }
 
     structure CustomerResponseDto<valueObject> {

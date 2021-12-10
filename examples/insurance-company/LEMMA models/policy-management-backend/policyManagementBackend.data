@@ -1,15 +1,15 @@
 context policyManagement {
     structure Address<valueObject> {
-        hide long id<identifier>,
+        hide immutable long id = -1<identifier>,
         immutable string streetAddress,
         immutable string postalCode,
         immutable string city
     }
 
     structure CustomerDecisionEvent<valueObject, domainEvent> {
-        date ^date,
-        long ^insuranceQuoteRequestId,
-        boolean ^quoteAccepted
+        immutable date ^date,
+        immutable long ^insuranceQuoteRequestId,
+        immutable boolean ^quoteAccepted
     }
 
     structure CustomerInfoEntity<entity> {
@@ -36,8 +36,8 @@ context policyManagement {
     }
 
     structure InsuranceQuoteExpiredEvent<valueObject, domainEvent> {
-        date ^date,
-        long insuranceQuoteRequestId
+        immutable date ^date,
+        immutable long insuranceQuoteRequestId
     }
 
     structure InsuranceQuoteRequestAggregateRoot<aggregate, entity> {
@@ -61,17 +61,17 @@ context policyManagement {
     }
 
     structure InsuranceQuoteRequestEvent<valueObject, domainEvent> {
-        date ^date,
-        InsuranceQuoteRequestDto insuranceQuoteRequestDto
+        immutable date ^date,
+        immutable InsuranceQuoteRequestDto insuranceQuoteRequestDto
     }
 
     structure InsuranceQuoteResponseEvent<valueObject, domainEvent> {
-        date ^date,
-        long insuranceQuoteRequestId,
-        boolean requestAccepted,
-        date expirationDate,
-        MoneyAmountDto insurancePremium,
-        MoneyAmountDto policyLimit
+        immutable date ^date,
+        immutable long insuranceQuoteRequestId,
+        immutable boolean requestAccepted,
+        immutable date expirationDate,
+        immutable MoneyAmountDto insurancePremium,
+        immutable MoneyAmountDto policyLimit
     }
 
     structure InsuranceType<valueObject> {
@@ -79,9 +79,9 @@ context policyManagement {
     }
 
     structure PolicyCreatedEvent<valueObject, domainEvent> {
-        date ^date,
-        long insuranceQuoteRequestId,
-        string policyId
+        immutable date ^date,
+        immutable long insuranceQuoteRequestId,
+        immutable string policyId
     }
 
     enum RequestStatus<valueObject> {
@@ -95,7 +95,7 @@ context policyManagement {
     }
 
     structure RequestStatusChange<valueObject> {
-        long id,
+        immutable long id,
         immutable date ^date,
         immutable RequestStatus status
     }
@@ -103,57 +103,57 @@ context policyManagement {
     list RequestStatusChanges { RequestStatusChange c }
 
     structure AddressDto<valueObject> {
-        string streetAddress,
-        string postalCode,
-        string city,
-        function AddressDto fromDomainObject(Address address),
-        function Address toDomainObject
+        immutable string streetAddress,
+        immutable string postalCode,
+        immutable string city,
+        function AddressDto fromDomainObject(Address address)<sideEffectFree>,
+        function Address toDomainObject<sideEffectFree>
     }
 
     structure DeletePolicyEvent<valueObject, domainEvent> {
-        string kind,
-        string originator,
-        date ^date,
-        string policyId
+        immutable string kind,
+        immutable string originator,
+        immutable date ^date,
+        immutable string policyId
     }
 
     list AddressDtos { AddressDto d }
 
     structure CustomerId<valueObject> {
-        string id
+        immutable string id
     }
 
     list CustomerIds { CustomerId i }
 
     structure CustomerDto<valueObject> {
-        string customerId,
-        CustomerProfileDto customerProfile
+        immutable string customerId,
+        immutable CustomerProfileDto customerProfile
     }
 
     structure CustomerIdDto<valueObject> {
-        string id
+        immutable string id
     }
 
     structure CustomerProfileDto<valueObject> {
-        string firstname,
-        string lastname,
-        date birthday,
-        AddressDto currentAddress,
-        string email,
-        string phoneNumber,
-        AddressDtos moveHistory
+        immutable string firstname,
+        immutable string lastname,
+        immutable date birthday,
+        immutable AddressDto currentAddress,
+        immutable string email,
+        immutable string phoneNumber,
+        immutable AddressDtos moveHistory
     }
 
     structure CustomersDto<valueObject> {
-        CustomerDtos customers
+        immutable CustomerDtos customers
     }
 
     structure PaginatedCustomerResponseDto<valueObject> {
-        string filter,
-        int limit,
-        int offset,
-        int size,
-        CustomerDtos customers
+        immutable string filter,
+        immutable int limit,
+        immutable int offset,
+        immutable int size,
+        immutable CustomerDtos customers
     }
 
     structure InsuringAgreementEntity<entity> {
@@ -162,7 +162,7 @@ context policyManagement {
     }
 
     structure InsuringAgreementItem<valueObject> {
-        long id<identifier>,
+        immutable long id<identifier>,
         immutable string title,
         immutable string description
     }
@@ -190,8 +190,8 @@ context policyManagement {
     list PolicyAggregateRoots { PolicyAggregateRoot p }
 
     structure PolicyId<valueObject> {
-        string id,
-        function PolicyId random
+        immutable string id,
+        function PolicyId random<sideEffectFree>
     }
 
     structure PolicyPeriod<valueObject> {
@@ -204,11 +204,11 @@ context policyManagement {
     }
 
     structure UpdatePolicyEvent<valueObject,domainEvent> {
-        string kind,
-        string originator,
-        date ^date,
-        CustomerDto customer,
-        PolicyDto policy
+        immutable string kind,
+        immutable string originator,
+        immutable date ^date,
+        immutable CustomerDto customer,
+        immutable PolicyDto policy
     }
 
     structure CustomerCoreRemoteProxy<infrastructureService> {
@@ -252,93 +252,98 @@ context policyManagement {
 
     structure InsuringAgreementDto<valueObject> {
         immutable InsuringAgreementItemDtos agreementItems<neverEmpty>,
-        function InsuringAgreementDto fromDomainObject(InsuringAgreementEntity insuringAgreement),
-        function InsuringAgreementEntity toDomainObject
+        function InsuringAgreementDto
+        	fromDomainObject(InsuringAgreementEntity insuringAgreement)<sideEffectFree>,
+        function InsuringAgreementEntity toDomainObject<sideEffectFree>
     }
 
     structure InsuringAgreementItemDto<valueObject> {
         immutable string title<neverEmpty>,
         immutable string description<neverEmpty>,
-        function InsuringAgreementItemDto fromDomainObject(InsuringAgreementItem item),
-        function InsuringAgreementItem toDomainObject
+        function InsuringAgreementItemDto
+        	fromDomainObject(InsuringAgreementItem item)<sideEffectFree>,
+        function InsuringAgreementItem toDomainObject<sideEffectFree>
     }
 
     list InsuringAgreementItemDtos { InsuringAgreementItemDto d }
 
     structure MoneyAmountDto<valueObject> {
-        double amount<neverEmpty>,
-        string currency<neverEmpty>,
-        function MoneyAmountDto fromDomainObject(MoneyAmount moneyAmount),
-        function MoneyAmount toDomainObject
+        immutable double amount<neverEmpty>,
+        immutable string currency<neverEmpty>,
+        function MoneyAmountDto fromDomainObject(MoneyAmount moneyAmount)<sideEffectFree>,
+        function MoneyAmount toDomainObject<sideEffectFree>
     }
 
     structure PolicyDto<valueObject> {
-        string policyId,
-        unspecified customer,
-        date creationDate,
-        PolicyPeriodDto policyPeriod,
-        string policyType,
-        MoneyAmountDto deductible,
-        MoneyAmountDto policyLimit,
-        MoneyAmountDto insurancePremium,
-        InsuringAgreementDto insuringAgreement,
-        Strings expandable,
-        function PolicyDto fromDomainObject(PolicyAggregateRoot policy)
+        immutable string policyId,
+        immutable unspecified customer,
+        immutable date creationDate,
+        immutable PolicyPeriodDto policyPeriod,
+        immutable string policyType,
+        immutable MoneyAmountDto deductible,
+        immutable MoneyAmountDto policyLimit,
+        immutable MoneyAmountDto insurancePremium,
+        immutable InsuringAgreementDto insuringAgreement,
+        immutable Strings expandable,
+        function PolicyDto fromDomainObject(PolicyAggregateRoot policy)<sideEffectFree>
     }
 
     list Strings { string }
 
     structure CustomerInfoDto<valueObject> {
-        string customerId,
-        string firstname,
-        string lastname,
-        AddressDto contactAddress,
-        AddressDto billingAddress,
-        function CustomerInfoDto fromDomainObject(CustomerInfoEntity customerInfo),
-        function CustomerInfoEntity toDomainObject
+        immutable string customerId,
+        immutable string firstname,
+        immutable string lastname,
+        immutable AddressDto contactAddress,
+        immutable AddressDto billingAddress,
+        function CustomerInfoDto fromDomainObject(CustomerInfoEntity customerInfo)<sideEffectFree>,
+        function CustomerInfoEntity toDomainObject<sideEffectFree>
     }
 
     structure InsuranceOptionsDto<valueObject> {
-        date startDate,
-        string insuranceType,
-        MoneyAmountDto deductible,
-        function InsuranceOptionsDto fromDomainObject(InsuranceOptionsEntity insuranceOptions),
-        function InsuranceOptionsEntity toDomainObject
+        immutable date startDate,
+        immutable string insuranceType,
+        immutable MoneyAmountDto deductible,
+        function InsuranceOptionsDto
+        	fromDomainObject(InsuranceOptionsEntity insuranceOptions)<sideEffectFree>,
+        function InsuranceOptionsEntity toDomainObject<sideEffectFree>
     }
 
     structure InsuranceQuoteDto<valueObject> {
-        date expirationDate<neverEmpty>,
-        MoneyAmountDto insurancePremium<neverEmpty>,
-        MoneyAmountDto policyLimit<neverEmpty>,
-        function InsuranceQuoteDto fromDomainObject(InsuranceQuoteEntity insuranceQuote)
+        immutable date expirationDate<neverEmpty>,
+        immutable MoneyAmountDto insurancePremium<neverEmpty>,
+        immutable MoneyAmountDto policyLimit<neverEmpty>,
+        function InsuranceQuoteDto
+        	fromDomainObject(InsuranceQuoteEntity insuranceQuote)<sideEffectFree>
     }
 
     structure InsuranceQuoteRequestDto<valueObject> {
-        long id,
-        date ^date,
-        RequestStatusChangeDtos statusHistory,
-        CustomerInfoDto customerInfo<neverEmpty>,
-        InsuranceOptionsDto insuranceOptions<neverEmpty>,
-        InsuranceQuoteDto insuranceQuote,
-        string policyId,
+        immutable long id,
+        immutable date ^date,
+        immutable RequestStatusChangeDtos statusHistory,
+        immutable CustomerInfoDto customerInfo<neverEmpty>,
+        immutable InsuranceOptionsDto insuranceOptions<neverEmpty>,
+        immutable InsuranceQuoteDto insuranceQuote,
+        immutable string policyId,
         function InsuranceQuoteRequestDto fromDomainObject(
             InsuranceQuoteRequestAggregateRoot insuranceQuoteRequest
-        )
+        )<sideEffectFree>
     }
 
     list InsuranceQuoteRequestDtos { InsuranceQuoteRequestDto d }
 
     structure InsuranceQuoteResponseDto<valueObject> {
-        string status<neverEmpty>,
-        date expirationDate,
-        MoneyAmountDto insurancePremium,
-        MoneyAmountDto policyLimit
+        immutable string status<neverEmpty>,
+        immutable date expirationDate,
+        immutable MoneyAmountDto insurancePremium,
+        immutable MoneyAmountDto policyLimit
     }
 
     structure RequestStatusChangeDto<valueObject> {
-        date ^date,
-        string status<neverEmpty>,
-        function RequestStatusChangeDto fromDomainObject(RequestStatusChange requestStatusChange)
+        immutable date ^date,
+        immutable string status<neverEmpty>,
+        function RequestStatusChangeDto
+        	fromDomainObject(RequestStatusChange requestStatusChange)<sideEffectFree>
     }
 
     list RequestStatusChangeDtos { RequestStatusChangeDto r }
@@ -346,10 +351,10 @@ context policyManagement {
     list PolicyDtos { PolicyDto d }
 
     structure PolicyPeriodDto<valueObject> {
-        date startDate<neverEmpty>,
-        date endDate<neverEmpty>,
-        function PolicyPeriodDto fromDomainObject(PolicyPeriod policyPeriod),
-        PolicyPeriod toDomainObject
+        immutable date startDate<neverEmpty>,
+        immutable date endDate<neverEmpty>,
+        function PolicyPeriodDto fromDomainObject(PolicyPeriod policyPeriod)<sideEffectFree>,
+        function PolicyPeriod toDomainObject<sideEffectFree>
     }
 
     structure PaginatedPolicyResponseDto<valueObject> {
@@ -360,8 +365,8 @@ context policyManagement {
     }
 
     structure RiskFactorRequestDto<valueObject> {
-        date birthday,
-        string postalCode
+        immutable date birthday,
+        immutable string postalCode
     }
 
     structure RiskFactorResponseDto<valueObject> {

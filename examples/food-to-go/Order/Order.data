@@ -22,25 +22,25 @@ context Order {
     }
 
     structure OrderLineItem<valueObject> {
-        int quantity,
-        string menuItemId,
-        string name,
-        Common::Common.Money price,
-        function Common::Common.Money deltaForChangedQuantity(int newQuantity),
-        function Common::Common.Money getTotal
+        immutable int quantity,
+        immutable string menuItemId,
+        immutable string name,
+        immutable Common::Common.Money price,
+        function Common::Common.Money deltaForChangedQuantity(int newQuantity)<sideEffectFree>,
+        function Common::Common.Money getTotal<sideEffectFree>
     }
 
     structure OrderLineItems<valueObject> {
-        OrderLineItemsType lineItems,
-        function OrderLineItem findOrderLineItem(string lineItemId),
-        function Common::Common.Money orderTotal
+        immutable OrderLineItemsType lineItems,
+        function OrderLineItem findOrderLineItem(string lineItemId)<sideEffectFree>,
+        function Common::Common.Money orderTotal<sideEffectFree>
     }
 
     list OrderLineItemsType { OrderLineItem i }
 
     structure DeliveryInformation<valueObject> {
-        date deliveryTime,
-        Address deliveryAddress
+        immutable date deliveryTime,
+        immutable Address deliveryAddress
     }
 
     structure Address<valueObject> {
@@ -52,7 +52,7 @@ context Order {
     }
 
     structure PaymentInformation<valueObject> {
-        string paymentToken
+        immutable string paymentToken
     }
 
     structure OrderService<service> {

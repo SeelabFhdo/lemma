@@ -642,6 +642,28 @@ public class DataDslValidator extends AbstractDataDslValidator {
       this.warning(("A value object should not be an aggregate, entity, repository, service, or " + 
         "specification"), complexType, DataPackage.Literals.COMPLEX_TYPE__FEATURES, featureIndex);
     }
+    if ((!(complexType instanceof DataStructure))) {
+      return;
+    }
+    final DataStructure dataStructure = ((DataStructure) complexType);
+    final Function1<DataOperation, Boolean> _function_1 = (DataOperation it) -> {
+      boolean _hasFeature = it.hasFeature(DataOperationFeature.SIDE_EFFECT_FREE);
+      return Boolean.valueOf((!_hasFeature));
+    };
+    final boolean hasOperationsWithSideEffects = IterableExtensions.<DataOperation>exists(dataStructure.getEffectiveOperations(), _function_1);
+    if (hasOperationsWithSideEffects) {
+      this.warning("The operations of a value object should be side-effect-free", complexType, 
+        DataPackage.Literals.COMPLEX_TYPE__FEATURES, featureIndex);
+    }
+    final Function1<DataField, Boolean> _function_2 = (DataField it) -> {
+      boolean _isImmutable = it.isImmutable();
+      return Boolean.valueOf((!_isImmutable));
+    };
+    boolean _exists_1 = IterableExtensions.<DataField>exists(dataStructure.getEffectiveFields(), _function_2);
+    if (_exists_1) {
+      this.warning("The fields of a value object should be immutable", complexType, 
+        DataPackage.Literals.COMPLEX_TYPE__FEATURES, featureIndex);
+    }
   }
   
   /**

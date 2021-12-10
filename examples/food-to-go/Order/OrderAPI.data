@@ -2,9 +2,9 @@ import datatypes from "../Common/Common.data" as Common
 
 context Web {
     structure CreateOrderRequest<valueObject> {
-        long consumerId,
-        long restaurantId,
-        LineItems lineItems
+        immutable long consumerId,
+        immutable long restaurantId,
+        immutable LineItems lineItems
     }
 
     structure LineItem {
@@ -15,13 +15,13 @@ context Web {
     list LineItems { LineItem i }
 
     structure CreateOrderResponse<valueObject> {
-        long orderId
+        immutable long orderId
     }
 
     structure GetOrderResponse<valueObject> {
-        long orderId,
-        string state,
-        Common::Common.Money orderTotal
+        immutable long orderId,
+        immutable string state,
+        immutable Common::Common.Money orderTotal
     }
 }
 
