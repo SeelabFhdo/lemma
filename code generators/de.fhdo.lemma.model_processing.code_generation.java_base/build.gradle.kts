@@ -20,7 +20,7 @@ buildscript {
     extra.set("javaParserVersion", "3.14.10")
     extra.set("koinVersion", "2.0.1")
     extra.set("lemmaEclipsePluginsVersion", version)
-    extra.set("log4jVersion", "2.11.2")
+    extra.set("log4jVersion", "2.15.0")
     extra.set("loggingVersion", "1.7.9")
     extra.set("lsp4jVersion", "0.10.0")
     extra.set("modelProcessingVersion", version)
