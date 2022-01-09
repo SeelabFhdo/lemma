@@ -22,12 +22,17 @@ class DataModelManager {
         val absoluteFilePath = removeFileUri(absoluteFileUriFromResourceBase(
             complexTypeImport.importURI, complexTypeImport.eResource
         ))
-        if (loadedResources.containsKey(absoluteFilePath))
-            return loadedResources.get(absoluteFilePath)
+        var dataModel = loadedResources.get(absoluteFilePath)
 
-        val dataModel = getResourceFromUri(complexTypeImport.eResource,
-            absoluteFilePath).contents.get(0) as DataModel
-        loadedResources.put(absoluteFilePath, dataModel)
+        if (dataModel === null) {
+            val modelResource = getResourceFromUri(complexTypeImport.eResource,
+                absoluteFilePath)
+            if (!modelResource?.contents.empty) {
+                dataModel = modelResource.contents.get(0) as DataModel
+                loadedResources.put(absoluteFilePath, dataModel)
+            }
+        }
+
         return dataModel
     }
 

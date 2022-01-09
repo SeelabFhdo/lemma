@@ -1073,12 +1073,14 @@ public class DataDslValidator extends AbstractDataDslValidator {
     for (final ComplexTypeImport importEntry : _complexTypeImports) {
       {
         final DataModel nextDataModel = DataModelManager.getDataModel(importEntry);
-        final ImportChain newChain = ImportChain.copy(usedImportChain).addEntry(nextDataModel);
-        boolean _hasCycle = newChain.hasCycle();
-        if (_hasCycle) {
-          cycleChains.add(newChain);
-        } else {
-          cycleChains.addAll(DataDslValidator.detectCycles(nextDataModel, newChain));
+        if ((nextDataModel != null)) {
+          final ImportChain newChain = ImportChain.copy(usedImportChain).addEntry(nextDataModel);
+          boolean _hasCycle = newChain.hasCycle();
+          if (_hasCycle) {
+            cycleChains.add(newChain);
+          } else {
+            cycleChains.addAll(DataDslValidator.detectCycles(nextDataModel, newChain));
+          }
         }
       }
     }

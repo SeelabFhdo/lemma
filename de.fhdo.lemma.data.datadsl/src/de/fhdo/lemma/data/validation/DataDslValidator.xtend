@@ -882,14 +882,17 @@ class DataDslValidator extends AbstractDataDslValidator {
         // Check each import statement for the given DataModel
         for (importEntry : dataModel.complexTypeImports){
             val nextDataModel = DataModelManager.getDataModel(importEntry)
-            val newChain = ImportChain.copy(usedImportChain).addEntry(nextDataModel)
 
-            // Check if a cycle was found, if yes then stop the recursion otherwise continue
-            // searching with the imported file
-            if (newChain.hasCycle)
-                cycleChains.add(newChain)
-            else
-                cycleChains.addAll(detectCycles(nextDataModel, newChain))
+            if (nextDataModel !== null) {
+                val newChain = ImportChain.copy(usedImportChain).addEntry(nextDataModel)
+
+                // Check if a cycle was found, if yes then stop the recursion otherwise continue
+                // searching with the imported file
+                if (newChain.hasCycle)
+                    cycleChains.add(newChain)
+                else
+                    cycleChains.addAll(detectCycles(nextDataModel, newChain))
+            }
         }
         // Check the ImportChain for a cycle
         cycleChains.forEach[chain |
