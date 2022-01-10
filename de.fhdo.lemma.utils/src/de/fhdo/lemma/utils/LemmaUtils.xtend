@@ -511,9 +511,19 @@ final class LemmaUtils {
             INHERITING_CONCEPT inheritingConcept,
             Function<INHERITING_CONCEPT, INHERITING_CONCEPT> getNextSuperConcept
         ) {
-        var INHERITING_CONCEPT nextSuperConcept = getNextSuperConcept.apply(inheritingConcept)
+        var nextSuperConcept = getNextSuperConcept.apply(inheritingConcept)
+        val visitedSuperConcepts = <INHERITING_CONCEPT>newHashSet
 
-        while (nextSuperConcept !== null) {
+        while (nextSuperConcept !== null && !visitedSuperConcepts.contains(nextSuperConcept)) {
+            // Keep track of visited super concepts to prevent infinite loops when a super concept
+            // is part of a cyclic inheritance hierarchy. For instance, this mechanism prevents an
+            // infinite loop in the validation of Structure2, which inherits from Structure1 that is
+            // part of a cyclic inheritance hierarchy with Structure3:
+            //      structure Structure1 extends Structure3 {}
+            //      structure Structure2 extends Structure1 {}
+            //      structure Structure3 extends Structure1 {}
+            visitedSuperConcepts.add(nextSuperConcept)
+
             // The given inheriting concept reoccurs somewhere in the upper inheritance
             // hierarchy and hence is part of a cycle
             if (nextSuperConcept == inheritingConcept)

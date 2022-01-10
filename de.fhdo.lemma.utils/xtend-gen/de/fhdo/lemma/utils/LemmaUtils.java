@@ -14,6 +14,7 @@ import java.nio.file.Paths;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.function.Consumer;
@@ -665,8 +666,10 @@ public final class LemmaUtils {
    */
   public static <INHERITING_CONCEPT extends EObject> boolean hasCyclicInheritance(final INHERITING_CONCEPT inheritingConcept, final Function<INHERITING_CONCEPT, INHERITING_CONCEPT> getNextSuperConcept) {
     INHERITING_CONCEPT nextSuperConcept = getNextSuperConcept.apply(inheritingConcept);
-    while ((nextSuperConcept != null)) {
+    final HashSet<INHERITING_CONCEPT> visitedSuperConcepts = CollectionLiterals.<INHERITING_CONCEPT>newHashSet();
+    while (((nextSuperConcept != null) && (!visitedSuperConcepts.contains(nextSuperConcept)))) {
       {
+        visitedSuperConcepts.add(nextSuperConcept);
         boolean _equals = Objects.equal(nextSuperConcept, inheritingConcept);
         if (_equals) {
           return true;
