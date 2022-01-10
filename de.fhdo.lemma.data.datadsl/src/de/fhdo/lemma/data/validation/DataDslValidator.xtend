@@ -945,6 +945,16 @@ class DataDslValidator extends AbstractDataDslValidator {
     }
 
     /**
+     * Check contexts for non-emptyness
+     */
+    @Check
+    def checkContextNotEmpty(Context context) {
+        if (context.complexTypes.empty)
+            error("A context must define at least one complex type", context,
+                DataPackage::Literals.CONTEXT__NAME)
+    }
+
+    /**
      * Check allowed features on enumerations
      */
     @Check

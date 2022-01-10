@@ -1142,6 +1142,18 @@ public class DataDslValidator extends AbstractDataDslValidator {
   }
   
   /**
+   * Check contexts for non-emptyness
+   */
+  @Check
+  public void checkContextNotEmpty(final Context context) {
+    boolean _isEmpty = context.getComplexTypes().isEmpty();
+    if (_isEmpty) {
+      this.error("A context must define at least one complex type", context, 
+        DataPackage.Literals.CONTEXT__NAME);
+    }
+  }
+  
+  /**
    * Check allowed features on enumerations
    */
   @Check
