@@ -12,6 +12,7 @@ de.fhdo.lemma.technology.technologydsl.metamodel
 de.fhdo.lemma.typechecking
 
 # Languages
+de.fhdo.lemma.xtext.test.utils
 de.fhdo.lemma.data.datadsl.parent
 de.fhdo.lemma.technology.technologydsl.parent
 de.fhdo.lemma.servicedsl.parent

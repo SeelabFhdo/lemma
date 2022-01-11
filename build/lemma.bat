@@ -11,6 +11,7 @@ set modules=%modules%;de.fhdo.lemma.technology.technologydsl.metamodel
 set modules=%modules%;de.fhdo.lemma.typechecking
 
 REM Languages
+set modules=%modules%;de.fhdo.lemma.xtext.test.utils
 set modules=%modules%;de.fhdo.lemma.data.datadsl.parent
 set modules=%modules%;de.fhdo.lemma.technology.technologydsl.parent
 set modules=%modules%;de.fhdo.lemma.servicedsl.parent

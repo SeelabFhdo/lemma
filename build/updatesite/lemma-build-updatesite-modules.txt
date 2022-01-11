@@ -11,6 +11,7 @@ de.fhdo.lemma.data.datadsl.metamodel
 de.fhdo.lemma.utils
 de.fhdo.lemma.technology.technologydsl.metamodel
 de.fhdo.lemma.typechecking
+de.fhdo.lemma.xtext.test.utils
 de.fhdo.lemma.data.datadsl.parent
 de.fhdo.lemma.data.datadsl.ui
 de.fhdo.lemma.technology.technologydsl.parent
