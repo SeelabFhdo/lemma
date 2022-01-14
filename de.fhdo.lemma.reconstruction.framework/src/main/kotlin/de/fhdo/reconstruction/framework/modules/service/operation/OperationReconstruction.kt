@@ -1,26 +1,18 @@
 package de.fhdo.reconstruction.framework.modules.service.operation
 
 import de.fhdo.reconstruction.framework.modules.AbstractReconstructionElement
+import de.fhdo.reconstruction.framework.modules.common.MetaData
+import de.fhdo.reconstruction.framework.modules.domain.datastructure.ComplexType
+import de.fhdo.reconstruction.framework.modules.domain.datastructure.PrimitiveType
 
 data class Operation(
     val name: String,
-    var interfaceName: String? = null
+    @Transient
+    var interfaceName: String? = null,
+    val parameters: MutableList<Parameter> = mutableListOf(),
+    val metaData: MutableList<MetaData> = mutableListOf()
+
 ): AbstractReconstructionElement()
-
-data class ReconstructedOperation(
-    val name: String
-)
-
-/**
- * Helper function to create an [Operation] for a [ReconstructedInterface]
- */
-fun createOperation(interfaceName: String, name: String)
-    = Operation(interfaceName, name)
-
-/**
- * Helper function to create a [ReconstructedOperation] from an [Operation]
- */
-fun getReconstructedOperationFromOperation(operation: Operation) = ReconstructedOperation(operation.name)
 
 /**
  * Factory for creating operations
@@ -30,4 +22,35 @@ class ReconstructionOperationFactory() {
      * Create an interface based on a given name
      */
     fun createOperation(name: String) = Operation(name)
+}
+
+data class Parameter(
+    val name: String,
+    val communicationType: CommunicationType,
+    val exchangePattern: ExchangePattern,
+    var primitiveType: PrimitiveType? = null,
+    var complexType: ComplexType? = null,
+    val metaData: MutableList<MetaData> = mutableListOf()
+)
+
+enum class CommunicationType {
+    SYNCHRONOUS,
+    ASYNCHRONOUS
+}
+
+enum class ExchangePattern {
+    IN,
+    OUT,
+    INOUT
+}
+
+/**
+ * Factory for creating parameters
+ */
+class ReconstructionParameterFactory() {
+    /**
+     * Create an interface based on a given name
+     */
+    fun createParameter(name: String, communicationType: CommunicationType, exchangePattern: ExchangePattern)
+        = Parameter(name, communicationType, exchangePattern)
 }

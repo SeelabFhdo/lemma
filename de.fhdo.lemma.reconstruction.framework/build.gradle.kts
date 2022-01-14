@@ -23,6 +23,7 @@ buildscript {
     extra.set("xmlBuilderVersion", "1.7.2")
     extra.set("modelProcessingVersion", version)
     extra.set("kmongoVersion", "4.2.8")
+    extra.set("softwareReconstructionVersion", version)
 }
 
 dependencies {
@@ -36,12 +37,15 @@ dependencies {
     val modelProcessingVersion: String by rootProject.extra
     val lemmaEclipsePluginsVersion: String by rootProject.extra
     val kmongoVersion: String by rootProject.extra
+    val softwareReconstructionVersion: String by rootProject.extra
 
     implementation(kotlin("stdlib"))
     implementation(kotlin("reflect"))
 
     implementation("de.fhdo.lemma.model_processing:de.fhdo.lemma.model_processing:$modelProcessingVersion")
     implementation("de.fhdo.lemma.servicedsl:de.fhdo.lemma.servicedsl.metamodel:$lemmaEclipsePluginsVersion")
+
+    implementation("io.github.microutils:kotlin-logging:1.4.1")
 
     implementation("info.picocli:picocli:$picocliVersion")
     implementation("io.github.classgraph:classgraph:$classgraphVersion")
@@ -54,6 +58,7 @@ dependencies {
     implementation("org.redundent:kotlin-xml-builder:$xmlBuilderVersion")
     implementation("org.litote.kmongo:kmongo:$kmongoVersion")
 
+    implementation("org.slf4j:slf4j-api:1.7.32")
 }
 
 tasks.withType<KotlinCompile> {
@@ -114,7 +119,7 @@ val standalone = task("standalone", type = Jar::class) {
     with(tasks["jar"] as CopySpec)
 
     manifest {
-        attributes("Main-Class" to "de.fhdo.software.architecture.reconstruction.framework.SoftwareArchitectureReconstructionKt")
+        attributes("Main-Class" to "de.fhdo.reconstruction.framework.SoftwareArchitectureReconstructionKt")
 
         // Prevent security exception from JAR verifier
         exclude("META-INF/*.DSA", "META-INF/*.RSA", "META-INF/*.SF")

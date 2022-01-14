@@ -2,6 +2,7 @@ package de.fhdo.reconstruction.framework.plugins
 
 import de.fhdo.lemma.model_processing.asFile
 import de.fhdo.lemma.model_processing.phases.PhaseException
+import java.net.URL
 import java.net.URLClassLoader
 import java.util.regex.Pattern
 
@@ -26,6 +27,7 @@ abstract class AbstractPlugin(val pluginImplementationPackage: String) {
 @Suppress("UNCHECKED_CAST")
 internal fun loadPlugins(pluginFilePathsAndClassnames: Map<String, String?>): Map<AbstractPlugin, URLClassLoader> {
     val classLoaders = createPluginClassLoaders(pluginFilePathsAndClassnames.keys)
+
     return pluginFilePathsAndClassnames.map { (filePath, explicitlySpecifiedClassname) ->
         val pluginClassLoader = classLoaders[filePath]!!
         val pluginClassnames = explicitlySpecifiedClassname?.let { listOf(it) }
@@ -70,12 +72,34 @@ internal fun loadPlugins(pluginFilePathsAndClassnames: Map<String, String?>): Ma
  *
  * @author [Philip Wizenty](mailto:philip.wizenty@fh-dortmund.de)
  */
-private fun createPluginClassLoaders(pluginFilePaths: Iterable<String>): Map<String, URLClassLoader> =
+private fun createPluginClassLoadersOld(pluginFilePaths: Iterable<String>): Map<String, URLClassLoader> =
     pluginFilePaths.map {
         val pluginUrl = it.asFile().toURI().toURL()
         val pluginClassLoader = URLClassLoader.newInstance(arrayOf(pluginUrl), ClassLoader.getSystemClassLoader())
         it to pluginClassLoader
     }.toMap()
+
+
+/**
+ * Helper to create [URLClassLoader] instances for the paths to the Plugins JAR archives.
+ *
+ * @author [Philip Wizenty](mailto:philip.wizenty@fh-dortmund.de)
+ */
+private fun createPluginClassLoaders(pluginFilePaths: Iterable<String>): Map<String, URLClassLoader> {
+    val pluginUrls = mutableListOf<URL>()
+    pluginFilePaths.forEach {
+        pluginUrls.add(it.asFile().toURI().toURL())
+    }
+
+    val pluginClassLoader = URLClassLoader.newInstance(pluginUrls.toTypedArray(), ClassLoader.getSystemClassLoader())
+
+    return pluginFilePaths.map {
+        it to pluginClassLoader
+    }.toMap()
+
+}
+
+
 
 /**
  * Helper to infer the default fully-qualified names of a Plugin class from the file path to its JAR archive. The

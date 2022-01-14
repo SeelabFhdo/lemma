@@ -122,27 +122,9 @@ val allDependenciesNoKotlin = task("allDependenciesNoKotlin", type = Jar::class)
     }
 }
 
-/**
- * standalone task to create a standalone runnable JAR of the Java Base Generator
- */
-val standalone = task("standalone", type = Jar::class) {
-    archiveClassifier.set("standalone")
-
-    // Build fat JAR
-    from(configurations.compileClasspath.get().filter{ it.exists() }.map { if (it.isDirectory) it else zipTree(it) })
-    with(tasks["jar"] as CopySpec)
-
-    manifest {
-        attributes("Main-Class" to "de.fhdo.lemma.model_processing.code_generation.java_base.JavaBaseGeneratorKt")
-
-        // Prevent security exception from JAR verifier
-        exclude("META-INF/*.DSA", "META-INF/*.RSA", "META-INF/*.SF")
-    }
-}
-
 // Mark allDependencies and allDependenciesNoKotlin as normal archives to be produced by build processes by default
 artifacts {
     add("archives", allDependencies)
     add("archives", allDependenciesNoKotlin)
-    add("archives", standalone)
+    //add("archives", standalone)
 }

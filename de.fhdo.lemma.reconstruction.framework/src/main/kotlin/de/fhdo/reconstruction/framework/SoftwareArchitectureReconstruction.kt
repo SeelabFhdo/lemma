@@ -2,8 +2,6 @@ package de.fhdo.reconstruction.framework
 
 import de.fhdo.reconstruction.framework.command_line.CommandLine
 import de.fhdo.reconstruction.framework.modules.ReconstructionMainHandler
-import de.fhdo.reconstruction.framework.modules.ReconstructionModule
-import de.fhdo.reconstruction.framework.modules.service.ReconstructionServiceHandler
 import de.fhdo.reconstruction.framework.util.compareFullQualifiedNames
 
 /**
@@ -11,7 +9,6 @@ import de.fhdo.reconstruction.framework.util.compareFullQualifiedNames
  *
  * @author [Philip Wizenty](mailto:philip.wizenty@fh-dortmund.de)
  */
-class SoftwareArchitectureReconstruction
 
 /**
  * Entry point of the software architecture reconstruction framework

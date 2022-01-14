@@ -1,8 +1,8 @@
 package de.fhdo.reconstruction.framework.modules.service.microservice
 
 import de.fhdo.reconstruction.framework.modules.AbstractReconstructionElement
-import de.fhdo.reconstruction.framework.modules.service.ReconstructionServiceHandler
-import de.fhdo.reconstruction.framework.modules.service.`interface`.ReconstructedInterface
+import de.fhdo.reconstruction.framework.modules.common.MetaData
+import de.fhdo.reconstruction.framework.modules.service.`interface`.Interface
 
 /**
  * Data structure for reconstructing LEMMA's Microservice from a file, e.g., a Java or Kotlin file.
@@ -12,29 +12,9 @@ data class Microservice(
     var version: String? = null,
     var type: String? = null,
     var visibility: String? = null,
-    val interfaces: MutableList<ReconstructedInterface>? = mutableListOf()
+    val interfaces: MutableList<Interface> = mutableListOf(),
+    val metaData: MutableList<MetaData> = mutableListOf()
 ) : AbstractReconstructionElement()
-
-/**
- * Data class for handling microservices, reconstructed from the plugins.
- */
-data class ReconstructedMicroservice(
-    val fullyQualifiedName: String,
-    val microservice: Microservice
-)
-
-/**
- * Function to receive reconstructed microservices for identifying corresponding parts.
- */
-fun getReconstructedMicroservices(): MutableList<ReconstructedMicroservice> {
-    return ReconstructionServiceHandler.reconstructedMicroservices
-}
-
-/**
- * Helper function to create a [ReconstructedMicroservice] from a [Microservice]
- */
-internal fun getReconstructedMicroserviceFromMicroservice(service: Microservice)
-    = ReconstructedMicroservice(service.name, service)
 
 /**
  * Factory for creating microservices.

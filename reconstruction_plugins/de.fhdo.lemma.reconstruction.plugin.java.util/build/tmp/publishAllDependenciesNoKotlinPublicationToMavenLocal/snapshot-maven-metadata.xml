@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata modelVersion="1.1.0">
+  <groupId>de.fhdo.lemma.reconstruction.java.util</groupId>
+  <artifactId>de.fhdo.lemma.reconstruction.java.util</artifactId>
+  <version>0.8.5-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <localCopy>true</localCopy>
+    </snapshot>
+    <lastUpdated>20220114133702</lastUpdated>
+    <snapshotVersions>
+      <snapshotVersion>
+        <extension>pom</extension>
+        <value>0.8.5-SNAPSHOT</value>
+        <updated>20220114133702</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>jar</extension>
+        <value>0.8.5-SNAPSHOT</value>
+        <updated>20220114133702</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <classifier>all-dependencies-no-kotlin</classifier>
+        <extension>jar</extension>
+        <value>0.8.5-SNAPSHOT</value>
+        <updated>20220114133702</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>module</extension>
+        <value>0.8.5-SNAPSHOT</value>
+        <updated>20220114133702</updated>
+      </snapshotVersion>
+    </snapshotVersions>
+  </versioning>
+</metadata>

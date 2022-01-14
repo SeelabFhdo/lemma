@@ -22,12 +22,13 @@ annotation class ReconstructionModule(val stage: ReconstructionStage)
  * Enum class for specifying the reconstruction stage for reconstruction modules.
  */
 enum class ReconstructionStage () {
-    Microservice,
-    Interface,
+    Service,
+    Domain,
     Operation
 }
 
 /**
  * Abstract superclass for reconstruction elements
  */
-abstract class AbstractReconstructionElement()
+abstract class AbstractReconstructionElement() {
+}

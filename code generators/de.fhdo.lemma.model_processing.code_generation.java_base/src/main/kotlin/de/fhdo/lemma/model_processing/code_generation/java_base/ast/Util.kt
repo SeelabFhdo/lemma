@@ -469,7 +469,7 @@ internal fun ClassOrInterfaceDeclaration.setFilePath(filePath: String) {
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun ClassOrInterfaceDeclaration.getFilePath() : String? {
+fun ClassOrInterfaceDeclaration.getFilePath() : String? {
     return if (containsData(FilePathDataKey))
         getData(FilePathDataKey)
     else
@@ -852,7 +852,7 @@ internal fun ClassOrInterfaceDeclaration.addGetterForInheritedAttribute(attribut
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal val ClassOrInterfaceDeclaration.methodsExcludingPropertyAccessors
+val ClassOrInterfaceDeclaration.methodsExcludingPropertyAccessors
     get() = methods.filter { !it.isGeneratedPropertyAccessor }
 
 /**
@@ -861,7 +861,7 @@ internal val ClassOrInterfaceDeclaration.methodsExcludingPropertyAccessors
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun EnumDeclaration.getPackageName() = findParentNode<CompilationUnit>()!!.getPackageName()
+fun EnumDeclaration.getPackageName()= findParentNode<CompilationUnit>()!!.getPackageName()
 
 /**
  * Add an import statement to the Java enumeration represented by an [EnumDeclaration] instance. The import will not be
