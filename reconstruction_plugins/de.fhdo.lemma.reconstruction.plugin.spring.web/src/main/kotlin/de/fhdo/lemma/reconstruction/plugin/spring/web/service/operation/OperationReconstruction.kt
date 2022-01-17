@@ -49,6 +49,10 @@ internal object ReconstructionServiceInformation {
         reconstructionElements.add(reconstructionElement)
     }
 
+    internal fun addAll(reconstructionElementList: List<AbstractReconstructionElement>) {
+        reconstructionElements.addAll(reconstructionElementList)
+    }
+
     internal fun getAllReconstructedElements(): List<AbstractReconstructionElement> {
         return reconstructionElements
     }
@@ -155,7 +159,7 @@ private fun handleListParameter(name: String, clazz: ClassOrInterfaceType, patte
     unit: CompilationUnit): Parameter {
     val listType = clazz.childNodes.get(1).toString()
     val listName = "${listType}${clazz.childNodes.get(0)}"
-    val contextName = "${getComplexName(unit)}"
+    val contextName = getComplexName(unit)
     val structure = ReconstructionDataStructureFactory().createDataStructure(contextName, "${listName}Structure")
 
 
@@ -173,7 +177,7 @@ private fun handleListParameter(name: String, clazz: ClassOrInterfaceType, patte
     // Add list type data structure
     val dependency = addDataStructureDependency(clazz.childNodes.get(1).toString(), unit)
     if (dependency != null)
-        ReconstructionServiceInformation.add(dependency)
+        ReconstructionServiceInformation.addAll(dependency)
 
     // Add data structure for list
 
@@ -202,12 +206,12 @@ private fun handleDataStructureParameter(name: String, clazz: ClassOrInterfaceTy
     pattern: ExchangePattern): Parameter {
     val parameter = ReconstructionParameterFactory().createParameter(name,
         CommunicationType.SYNCHRONOUS, pattern)
-    //val qualifiedName = "${getComplexName(unit)}.${clazz.nameAsString}"
+    val qualifiedName = "${getComplexName(unit)}.${clazz.nameAsString}"
 
-    val dependency = addDataStructureDependency(clazz.nameAsString, unit)
-    if (dependency != null)
-        ReconstructionServiceInformation.add(dependency)
-    val qualifiedName = "${dependency?.qualifiedContextName}.${dependency?.name}"
+    val dependencies = addDataStructureDependency(clazz.nameAsString, unit)
+    ReconstructionServiceInformation.addAll(dependencies)
+
+    //val qualifiedName = "${dependency.qualifiedContextName}.${dependency.name}"
     val complexType = ComplexType(name, qualifiedName, ClassType.DATA_STRUCTURE)
     parameter.complexType = complexType
     return parameter

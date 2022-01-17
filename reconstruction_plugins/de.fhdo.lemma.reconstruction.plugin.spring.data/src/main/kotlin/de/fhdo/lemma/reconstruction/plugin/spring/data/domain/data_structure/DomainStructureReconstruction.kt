@@ -6,9 +6,11 @@ import com.github.javaparser.ast.body.VariableDeclarator
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.attributes
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.hasAnnotation
 import de.fhdo.lemma.reconstruction.java.util.parser.JavaParseTree
+import de.fhdo.lemma.reconstruction.java.util.parser.domain.FieldWithDependencies
 import de.fhdo.lemma.reconstruction.java.util.parser.domain.addDataStructureDependency
 import de.fhdo.lemma.reconstruction.java.util.parser.domain.getCompilationUnitForDependency
 import de.fhdo.lemma.reconstruction.java.util.parser.domain.getEnumerationDependency
+import de.fhdo.lemma.reconstruction.java.util.parser.domain.handleComplexType
 import de.fhdo.lemma.reconstruction.java.util.parser.domain.isClass
 import de.fhdo.lemma.reconstruction.java.util.parser.domain.isEnum
 import de.fhdo.lemma.reconstruction.java.util.parser.domain.isPrimitiveTypeOrWrapper
@@ -36,6 +38,10 @@ internal object ReconstructionDomainInformation {
 
     internal fun add(reconstructionElement: AbstractReconstructionElement) {
         reconstructionElements.add(reconstructionElement)
+    }
+
+    internal fun addAll(reconstructionElementList: List<AbstractReconstructionElement>) {
+        reconstructionElements.addAll(reconstructionElementList)
     }
 
     internal fun getAllReconstructedElements(): List<AbstractReconstructionElement> {
@@ -103,78 +109,10 @@ private fun reconstructDataStructureAttributes(clazz: ClassOrInterfaceDeclaratio
             field.primitiveType = handlePrimitiveTypeAttribute(it.typeAsString)
             fields.add(field)
         } else {
-            fields.add(handleComplexType(it, unit))
+            val fieldWithDependencies = handleComplexType(it, unit)
+            fields.add(fieldWithDependencies.field)
+            ReconstructionDomainInformation.addAll(fieldWithDependencies.dependencies)
         }
     }
     return fields
-}
-
-/**
- * Handle complex type fields. The complex fields distinguish between collection, enumerations, data structures and
- * maps.
- */
-private fun handleComplexType(variable: VariableDeclarator, unit: CompilationUnit): Field {
-    return when {
-        variable.typeAsString.contains("List") -> handleListField(variable)
-        variable.typeAsString.contains("Map") -> handleMapField(variable)
-        getCompilationUnitForDependency(variable.nameAsString, variable.typeAsString, unit).isClass()
-            -> handleDataStructureField(variable, unit)
-        getCompilationUnitForDependency(variable.nameAsString, variable.typeAsString, unit).isEnum()
-            -> handleEnumField(variable, unit)
-        else -> handleUnknownField(variable)
-    }
-}
-
-private fun handleListField(variable: VariableDeclarator): Field {
-    val complexType = ComplexType("Collection", "java.util.List", ClassType.COLLECTION)
-    val metadata = createMetaData("CollectionType")
-    metadata.values.put("Type", variable.type.childNodes.get(1).toString())
-    metadata.values.put("Name", variable.childNodes.get(1).toString())
-    val field = ReconstructionFieldFactory().createField(variable.nameAsString)
-    field.complexType = complexType
-    field.metaData.add(metadata)
-    return field
-}
-
-private fun handleMapField(variable: VariableDeclarator): Field {
-    val complexType = ComplexType("Map", "java.util.Map", ClassType.MAP)
-    val metadata = createMetaData("MapType")
-    metadata.values.put("Class", variable.childNodes.get(0).toString())
-    metadata.values.put("Key", variable.childNodes.get(1).toString())
-    metadata.values.put("Value", variable.childNodes.get(2).toString())
-    val field = ReconstructionFieldFactory().createField(variable.nameAsString)
-    field.complexType = complexType
-    field.metaData.add(metadata)
-    return field
-}
-
-private fun handleDataStructureField(variable: VariableDeclarator, unit: CompilationUnit): Field {
-    val field = ReconstructionFieldFactory().createField(variable.nameAsString)
-    val qualifiedName = "${getComplexName(unit)}.${variable.typeAsString}"
-    val complexType = ComplexType(variable.typeAsString, qualifiedName, ClassType.DATA_STRUCTURE)
-    field.complexType = complexType
-
-    val dependency = addDataStructureDependency(variable.typeAsString, unit)
-    if (dependency != null)
-        ReconstructionDomainInformation.add(dependency)
-    return field
-}
-
-private fun handleEnumField(variable: VariableDeclarator, unit: CompilationUnit): Field {
-    println("Handle Enum Test!")
-    val dependencyUnit = getCompilationUnitForDependency(variable.nameAsString, variable.typeAsString, unit)
-    val qualifiedName = "${getComplexName(unit)}.${variable.typeAsString}"
-    val complexType = ComplexType(variable.nameAsString, qualifiedName, ClassType.ENUMERATION)
-    val field = ReconstructionFieldFactory().createField(variable.nameAsString)
-    field.complexType = complexType
-    val enumType = getEnumerationDependency(dependencyUnit)
-    ReconstructionDomainInformation.add(enumType)
-    return field
-}
-
-private fun handleUnknownField(variable: VariableDeclarator): Field {
-    val field = ReconstructionFieldFactory().createField(variable.nameAsString)
-    val complexType = ComplexType("unspecified", "unspecified", ClassType.UNSPECIFIED)
-    field.complexType = complexType
-    return field
 }
