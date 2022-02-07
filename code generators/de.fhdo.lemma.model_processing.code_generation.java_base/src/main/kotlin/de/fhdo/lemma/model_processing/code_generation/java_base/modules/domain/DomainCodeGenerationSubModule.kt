@@ -67,7 +67,7 @@ internal class DomainCodeGenerationSubModule : KoinComponent {
 
             val modelRoot = loadModelRoot<IntermediateDataModel>(absoluteUri.removeFileUri())
             modelRoot.imports.filterByType(ImportType.DATATYPES).forEach {
-                urisTodo.push(it.importUri to importingModelAbsolutePath)
+                urisTodo.push(it.importUri to absoluteUri.removeFileUri())
             }
         }
 
