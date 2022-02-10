@@ -36,7 +36,13 @@ internal class OperationRestMappingsHandler : AspectHandlerI {
         "Spring.Put" to "PutMapping",
         "Spring.Post" to "PostMapping",
         "Spring.Delete" to "DeleteMapping",
-        "Spring.Patch" to "PatchMapping"
+        "Spring.Patch" to "PatchMapping",
+
+        "Spring.GetMapping" to "GetMapping",
+        "Spring.PutMapping" to "PutMapping",
+        "Spring.PostMapping" to "PostMapping",
+        "Spring.DeleteMapping" to "DeleteMapping",
+        "Spring.PatchMapping" to "PatchMapping"
     )
 
     override fun handlesAspects() = aspectToAnnotationMapping.keys
