@@ -98,7 +98,8 @@ internal class MainCodeGenerationModule : CodeGenerationModuleBase() {
         if (javaMicroservices.isEmpty()) {
             val intermediateServiceModelFilePath: String by MainState
             throw PhaseException("No Java microservices found in intermediate service model " +
-                "\"$intermediateServiceModelFilePath\"")
+                "\"$intermediateServiceModelFilePath\". You need to assign a technology model with name \"Java\" to " +
+                "at least one modeled microservice.")
         }
 
         javaMicroservices.forEach {
