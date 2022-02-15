@@ -2,7 +2,7 @@ package de.fhdo.lemma.model_processing.code_generation.java_base.modules
 
 import de.fhdo.lemma.model_processing.builtin_phases.code_generation.AbstractCodeGenerationModule
 import de.fhdo.lemma.model_processing.code_generation.java_base.dependencies.DependencyDescription
-import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.DependencyFragmentProviderI
+import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.DependencyModifierI
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletEvent
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletEventType
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainContext.sendEventToGenlets
@@ -81,7 +81,7 @@ internal abstract class CodeGenerationModuleBase : AbstractCodeGenerationModule(
         startKoin { modules( module {
             factory<AbstractSerializationConfiguration> { DefaultSerializationConfiguration }
             factory { codeGenerationSerializer }
-            factory<DependencySerializerI<*, *>> {
+            factory<DependencySerializerI<*>> {
                 if (writeLineCountInfo)
                     CountingMavenDependencySerializer()
                 else
@@ -133,15 +133,15 @@ internal abstract class CodeGenerationModuleBase : AbstractCodeGenerationModule(
      * Helper to serialize collected dependency information under the given [artifactIdentifier]
      */
     private fun serializeDependencies(artifactIdentifier: String) {
-        val dependencySerializer: DependencySerializerI<Any, Any> by inject()
+        val dependencySerializer: DependencySerializerI<Any> by inject()
         val collectedDependencies: Set<DependencyDescription> by MainContext.State
-        val dependencyFragmentProviderInstances: List<DependencyFragmentProviderI<Any, Any>> by MainContext.State
+        val dependencyModifierInstances: List<DependencyModifierI<Any>> by MainContext.State
         val currentMicroserviceTargetFolderPath: String by MainContext.State
 
         val (targetFilePath, generatedContent) = dependencySerializer.invoke(
             artifactIdentifier,
             collectedDependencies,
-            dependencyFragmentProviderInstances,
+            dependencyModifierInstances,
             currentMicroserviceTargetFolderPath,
             "pom.xml"
         )

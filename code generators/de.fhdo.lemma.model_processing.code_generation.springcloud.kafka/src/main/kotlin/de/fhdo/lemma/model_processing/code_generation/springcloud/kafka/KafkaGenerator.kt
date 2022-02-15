@@ -39,7 +39,7 @@ internal lateinit var genletHeap: MutableMap<String, Any?>
 class KafkaGenerator : AbstractGenlet(BASE_PACKAGE) {
     override fun nameOfCodeGenerationHandlerPackage() = "$BASE_PACKAGE.handlers"
     override fun nameOfAspectHandlerPackage() = "${nameOfCodeGenerationHandlerPackage()}.aspects"
-    override fun nameOfDependencyFragmentProviderPackage() = "$BASE_PACKAGE.dependencies"
+    override fun nameOfDependencyModifierPackage() = "$BASE_PACKAGE.dependencies"
 
     /**
      * React to a code generation event

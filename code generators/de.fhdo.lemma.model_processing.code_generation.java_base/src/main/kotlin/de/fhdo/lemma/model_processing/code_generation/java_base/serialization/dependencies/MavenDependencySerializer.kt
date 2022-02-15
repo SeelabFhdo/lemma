@@ -2,8 +2,8 @@ package de.fhdo.lemma.model_processing.code_generation.java_base.serialization.d
 
 import de.fhdo.lemma.model_processing.asFile
 import de.fhdo.lemma.model_processing.code_generation.java_base.dependencies.DependencyDescription
-import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.DependencyFragmentProviderI
 import de.fhdo.lemma.model_processing.code_generation.java_base.dependencies.DependencyType
+import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.DependencyModifierI
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.LineCountInfo
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainContext.State as MainState
 import de.fhdo.lemma.model_processing.utils.countLines
@@ -25,7 +25,7 @@ import java.util.regex.Pattern
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 internal class MavenDependencySerializer(override val dependencyType: DependencyType = DependencyType.MAVEN)
-    : DependencySerializerI<Node, Node> {
+    : DependencySerializerI<Node> {
     private val delegate: MavenDependencySerializerBase = MavenDependencySerializerBase()
 
     /**
@@ -41,14 +41,9 @@ internal class MavenDependencySerializer(override val dependencyType: Dependency
         = delegate.serialize(model, targetFolderPath, targetFilePath)
 
     /**
-     * Determine [DependencyFragmentProviderI] implementation to allow Genlets to add dependency fragments
+     * Determine [DependencyModifierI] implementation to allow Genlets to modify dependencies
      */
-    override fun fragmentProviderClass() = delegate.fragmentProviderClass()
-
-    /**
-     * Add the provided dependency fragment to the given dependency model
-     */
-    override fun addFragment(model: Node, fragment: Node) = delegate.addFragment(model, fragment)
+    override fun modifierClass() = delegate.modifierClass()
 }
 
 /**
@@ -58,7 +53,7 @@ internal class MavenDependencySerializer(override val dependencyType: Dependency
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 internal class CountingMavenDependencySerializer(override val dependencyType: DependencyType = DependencyType.MAVEN)
-    : DependencySerializerI<Node, Node> {
+    : DependencySerializerI<Node> {
     private val delegate: MavenDependencySerializerBase = MavenDependencySerializerBase()
 
     /**
@@ -79,14 +74,9 @@ internal class CountingMavenDependencySerializer(override val dependencyType: De
     }
 
     /**
-     * Determine [DependencyFragmentProviderI] implementation to allow Genlets to add dependency fragments
+     * Determine [DependencyModifierI] implementation to allow Genlets to modify dependencies
      */
-    override fun fragmentProviderClass() = delegate.fragmentProviderClass()
-
-    /**
-     * Add the provided dependency fragment to the given dependency model
-     */
-    override fun addFragment(model: Node, fragment: Node) = delegate.addFragment(model, fragment)
+    override fun modifierClass() = delegate.modifierClass()
 }
 
 /**
@@ -286,8 +276,7 @@ private class MavenDependencySerializerBase : KoinComponent {
     }
 
     /**
-     * Helper to merge the "parent" XML element (possibly added as a fragment by a Genlet) of the [otherModel] into this
-     * [Node]
+     * Helper to merge the "parent" XML element of the [otherModel] into this [Node]
      */
     private fun Node.mergeParentFromModel(otherModel: Node) {
         val otherParentNode = otherModel.childNodes.find { it.nodeName == "parent" } ?: return
@@ -406,26 +395,16 @@ private class MavenDependencySerializerBase : KoinComponent {
     }
 
     /**
-     * Determine [DependencyFragmentProviderI] implementation
+     * Determine [DependencyModifierI] implementation
      */
-    fun fragmentProviderClass() = MavenDependencyFragmentProviderI::class.java
-
-    /**
-     * Add the provided dependency fragment to the given dependency model
-     */
-    fun addFragment(model: Node, fragment: Node) : Node {
-        model merge fragment
-        return model
-    }
+    fun modifierClass() = MavenDependencyModifierI::class.java
 }
 
 /**
- * Maven-specific [DependencyFragmentProviderI] implementation to be used by Genlets for providing fragments to a
- * generated POM file.
+ * Maven-specific [DependencyModifierI] implementation to be used by Genlets for modifying a generated POM file.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-interface MavenDependencyFragmentProviderI :
-    DependencyFragmentProviderI<Node, Node> {
+interface MavenDependencyModifierI : DependencyModifierI<Node> {
     override fun dependencyType() = DependencyType.MAVEN
 }

@@ -4,20 +4,20 @@ import com.github.javaparser.ast.Node
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
 import de.fhdo.lemma.model_processing.code_generation.java_base.commandline.CommandLine
 import de.fhdo.lemma.model_processing.code_generation.java_base.dependencies.DependencyDescription
-import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.DependencyFragmentProviderI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerResult
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletEvent
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.findAspectHandlers
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.findCodeGenerationHandlers
-import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.findDependencyFragmentProviders
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.loadGenlets
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.buildAspectHandlerQualifiedName
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.findAspectHandlers
 import de.fhdo.lemma.model_processing.code_generation.java_base.eObjectPackageName
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.AbstractGenlet
+import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.DependencyModifierI
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletEventType
+import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.findDependencyModifiers
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.LineCountInfo
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.code_generation.CodeGenerationSerializerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.configuration.AbstractSerializationConfiguration
@@ -47,14 +47,13 @@ internal object MainContext {
     object State : KoinComponent {
         private val serializationConfiguration: AbstractSerializationConfiguration by inject()
         private val codeGenerationSerializer: CodeGenerationSerializerI by inject()
-        private val dependencySerializer: DependencySerializerI<*, *> by inject()
+        private val dependencySerializer: DependencySerializerI<*> by inject()
 
         private val collectedDependencies = mutableSetOf<DependencyDescription>()
         private val aspectHandlers = mutableMapOf<AbstractGenlet?, Map<String, Class<AspectHandlerI>>>()
         private val genletCodeGenerationHandlers
             = mutableMapOf<AbstractGenlet, Map<String, Set<Class<GenletCodeGenerationHandlerI<EObject, Node, Any>>>>>()
-        private val dependencyFragmentProviders
-            = mutableMapOf<AbstractGenlet, List<Class<DependencyFragmentProviderI<Any, Any>>>>()
+        private val dependencyModifiers = mutableMapOf<AbstractGenlet, List<Class<DependencyModifierI<Any>>>>()
         private val generatedFileContents = mutableMapOf<String, Pair<String, Charset>>()
         private val generatedLineCountInfo = mutableSetOf<LineCountInfo>()
 
@@ -120,15 +119,15 @@ internal object MainContext {
         }
 
         /**
-         * Helper to load Genlets together with their code generation handlers, aspect handlers, and dependency fragment
-         * providers
+         * Helper to load Genlets together with their code generation handlers, aspect handlers, and dependency
+         * modifiers
          */
         private fun loadGenlets() {
             genlets = loadGenlets(CommandLine.genlets())
             genlets.forEach { (genlet, classLoader) -> with(genlet) {
                 genletCodeGenerationHandlers[this] = findCodeGenerationHandlers(classLoader)
                 aspectHandlers[this] = findAspectHandlers(classLoader)
-                dependencyFragmentProviders[this] = findDependencyFragmentProviders(classLoader, dependencySerializer)
+                dependencyModifiers[this] = findDependencyModifiers(classLoader, dependencySerializer)
             } }
             sendEventToGenlets(GenletEvent(GenletEventType.GENLET_LOADED))
         }
@@ -146,7 +145,7 @@ internal object MainContext {
                 "currentMicroserviceTargetFolderPathForJavaFiles" -> currentMicroserviceTargetFolderPathForJavaFiles()
                 "currentMicroserviceTargetFolderPathForResourceFiles" ->
                     currentMicroserviceTargetFolderPathForResourceFiles()
-                "dependencyFragmentProviderInstances" -> dependencyFragmentProviderInstances()
+                "dependencyModifierInstances" -> dependencyModifierInstances()
                 "generatedFileContents" -> generatedFileContents.toMap()
                 "generatedLineCountInfo" -> generatedLineCountInfo.toList()
                 "genletCodeGenerationHandlers" -> genletCodeGenerationHandlers.toMap()
@@ -200,10 +199,9 @@ internal object MainContext {
         }
 
         /**
-         * Helper to create a list of [DependencyFragmentProviderI] instances from the list of collected dependency
-         * fragment providers
+         * Helper to create a list of [DependencyModifierI] instances from the list of collected dependency modifiers
          */
-        private fun dependencyFragmentProviderInstances() = dependencyFragmentProviders.values.flatten()
+        private fun dependencyModifierInstances() = dependencyModifiers.values.flatten()
             .map { it.getConstructor().newInstance() }
 
         /**

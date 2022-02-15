@@ -50,10 +50,10 @@ abstract class AbstractGenlet(processorImplementationPackage: String)
     open fun nameOfAspectHandlerPackage() = nameOfCodeGenerationHandlerPackage()
 
     /**
-     * Name of the Genlet package that clusters dependency fragment providers. By default, this is the same package as
-     * for the Genlet-specific code generation handlers.
+     * Name of the Genlet package that clusters dependency modifiers. By default, this is the same package as for the
+     * Genlet-specific code generation handlers.
      */
-    open fun nameOfDependencyFragmentProviderPackage() = nameOfCodeGenerationHandlerPackage()
+    open fun nameOfDependencyModifierPackage() = nameOfCodeGenerationHandlerPackage()
 
     /**
      * Callback to pass Genlet-specific class loader to Genlet.
@@ -567,13 +567,13 @@ internal fun AbstractGenlet.findCodeGenerationHandlers(classLoader: ClassLoader)
     )
 
 /**
- * Convenience function to find dependency fragment providers in the context of a given [AbstractGenlet].
+ * Convenience function to find dependency modifiers in the context of a given [AbstractGenlet].
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun AbstractGenlet.findDependencyFragmentProviders(classLoader: ClassLoader,
-    dependencySerializer: DependencySerializerI<*, *>)
-    = findDependencyFragmentProviders(nameOfDependencyFragmentProviderPackage(), dependencySerializer, classLoader)
+internal fun AbstractGenlet.findDependencyModifiers(classLoader: ClassLoader,
+    dependencySerializer: DependencySerializerI<*>)
+    = findDependencyModifiers(nameOfDependencyModifierPackage(), dependencySerializer, classLoader)
 
 /**
  * Data key for Genlet-related node information.

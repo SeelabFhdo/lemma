@@ -14,6 +14,77 @@ fun elements(init: Node.() -> Unit) : Node {
 }
 
 /**
+ * Convenience function to add a child node to this [Node] if it doesn't already comprise a child node with the same
+ * name. The [elements] parameter is expected to receive a node created with the "elements" function.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun Node.addChildIfNotExists(elements: Node) {
+    val child = elements.childNodes.first()
+    if (!this.childNodes.any { it.nodeName == child.nodeName })
+        this.addNode(child)
+}
+
+/**
+ * Convenience function to add a child node to a sub-tree of this [Node]. Missing sub-tree hierarchies will also be
+ * created. Suppose this [Node] to represent the XML node tree
+ *      node1
+ *          node2
+ *              node3
+ *                  element1
+ *                  element2
+ *
+ * Passing the sub-tree
+ *      node2
+ *          node4
+ *
+ * and the child element
+ *      element3
+ *
+ * will result in the function to adapt this [Node] as follows:
+ *      node1
+ *          node2
+ *              node3
+ *                  element1
+ *                  element2
+ *              node4
+ *                  element3
+ *
+ * The [elements] parameter is expected to receive a node created with the "elements" function.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun Node.addChild(elements: Node, subTreeElements: Node) {
+    val child = elements.childNodes.first()
+    var subTree: Node? = subTreeElements.childNodes.first()
+    var parent = this
+    var n = parent.childNodes.find { it.nodeName == subTree!!.nodeName }
+
+    // Reduce the passed sub-tree by all node hierarchies that already exist in this node
+    while(n !== null) {
+        parent = n
+        subTree = subTree!!.childNodes.firstOrNull()
+        if (subTree == null)
+            break
+        n = parent.childNodes.find { it.nodeName == subTree.nodeName }
+    }
+
+    // In case the sub-tree contains a node hierarchy not present in this node, add it to this node
+    if (subTree !== null) {
+        parent.addNode(subTree)
+        parent = subTree
+        // Change the parent for the child to the leaf of the sub-tree hierarchy
+        while (parent.childNodes.isNotEmpty())
+            parent = parent.childNodes.first()
+    }
+
+    // Add the child node to this node. The parent is either a child of this node that already existed before invoking
+    // the function (i.e., the complete sub-tree was already a part of this node) or the leaf of the sub-tree (i.e.,
+    // a missing sub-tree hierarchy had to be added to this node).
+    parent.addNode(child)
+}
+
+/**
  * Merge a given XML [Node] into the current one. This happens in-place, i.e., no copy of the current [Node] instance
  * will be created.
  *
@@ -42,7 +113,7 @@ fun elements(init: Node.() -> Unit) : Node {
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-infix fun Node.merge(otherNode: Node) {
+internal infix fun Node.merge(otherNode: Node) {
     /*
      * If the other node has a name, i.e., it was not created with elements() for example, and it differs from the name
      * of this node, directly add the other node to this node as a child, because both nodes already differ at the
