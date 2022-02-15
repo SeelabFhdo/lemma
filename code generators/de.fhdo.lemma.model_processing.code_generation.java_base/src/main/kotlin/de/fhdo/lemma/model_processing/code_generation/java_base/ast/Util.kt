@@ -324,14 +324,14 @@ internal class SingleImportInfo(val import: String, val targetElementType: Impor
 }
 
 /**
- * Data key for AST [Node] instances that clusters an [ImportInfo].
+ * Data key for AST [Node] instances that clusters an [ImportsInfo].
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 private object ImportsInfoDataKey : DataKey<ImportsInfo>()
 
 /**
- * Add an [import] together with its [targetElementType] to the data of an AST [Node] in the form of an [ImportInfo]
+ * Add an [import] together with its [targetElementType] to the data of an AST [Node] in the form of an [ImportsInfo]
  * instance. This enables to track down for which [Node] and its elements a certain [import] was added.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
@@ -348,7 +348,7 @@ private fun Node.addImportsInfo(import: String, targetElementType: ImportTargetE
 }
 
 /**
- * Return all [ImportInfo] instances being assigned to this AST [Node].
+ * Return all [ImportsInfo] instances being assigned to this AST [Node].
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
