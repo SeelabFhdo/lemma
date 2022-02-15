@@ -567,7 +567,7 @@ internal fun ClassOrInterfaceDeclaration.setPackageName(packageName: String)
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 fun ClassOrInterfaceDeclaration.addImport(import: String, targetElementType: ImportTargetElementType,
-    vararg characteristics: SerializationCharacteristic, onlyAddActualIfDifferentPackage: Boolean = true) {
+    vararg characteristics: SerializationCharacteristic) {
     // Independent of whether the import exists on the class/interface or not it will be added to the "invisible" data
     // of the class's/interface's AST node. That is, to allow functions like getAllImportsForTargetElementsOfType() to
     // retrieve import information even if it is not "visible" in the class/interface.
@@ -575,27 +575,39 @@ fun ClassOrInterfaceDeclaration.addImport(import: String, targetElementType: Imp
     targetNodeForImports.addImportsInfo(import, targetElementType, *characteristics)
 
     val compilationUnit = findParentNode<CompilationUnit>()!!
-    if (onlyAddActualIfDifferentPackage) {
-        val importPackage = import.substringBeforeLast(".")
-        if (getPackageName() == importPackage)
-            return
-    }
-    val existingImports = compilationUnit.imports.map { it.name.asString() }
-    if (import !in existingImports)
+    val existingFullQualifierImports = compilationUnit.imports.map { it.name.asString() }
+    val alreadyImported = import in existingFullQualifierImports
+    val importSimpleName = import.substringAfterLast(".")
+    val existingSimpleNameImports = existingFullQualifierImports.map { it.substringAfterLast(".") }
+    val ambiguousImport = !alreadyImported && importSimpleName in existingSimpleNameImports
+
+    // Note that we accept the possible existence of unnecessary imports when the class and the imported element reside
+    // in the same package. That is because we cannot decide upfront whether an element from the same package will be
+    // imported. If we would however prevent unnecessary imports, then it may happen that an element with the same
+    // simple name (i.e., an ambiguously imported element) would be imported *after* the occurrence of the element
+    // import from the same package, thereby effectively overriding references to the element from the same package.
+    if (ambiguousImport)
+        throw AmbiguousImportException(importSimpleName, this)
+    else if (!alreadyImported)
         compilationUnit.addImport(import)
 }
+
+/**
+ * Exception to communicate an ambiguous import to callers of [addImport].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+class AmbiguousImportException(importSimpleName: String, importingClass: ClassOrInterfaceDeclaration)
+    : Exception("An element with simple name $importSimpleName is already imported by class " +
+        importingClass.fullyQualifiedName.get())
 
 /**
  * Convenience function to add a list of [imports] to this [ClassOrInterfaceDeclaration].
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun ClassOrInterfaceDeclaration.addImports(imports: List<SingleImportInfo>,
-    onlyAddActualIfDifferentPackage: Boolean = true) {
-    imports.forEach {
-        addImport(it.import, it.targetElementType, *it.characteristics,
-            onlyAddActualIfDifferentPackage = onlyAddActualIfDifferentPackage)
-    }
+internal fun ClassOrInterfaceDeclaration.addImports(imports: List<SingleImportInfo>) {
+    imports.forEach { addImport(it.import, it.targetElementType, *it.characteristics) }
 }
 
 /**
