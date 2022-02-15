@@ -25,6 +25,16 @@ internal class DependencyModifier : MavenDependencyModifierI {
             }
         )
 
+        inputDependencyModel.addChild(
+            elements {
+                "plugin" {
+                    "groupId" { -"org.springframework.boot" }
+                    "artifactId" { -"spring-boot-maven-plugin" }
+                }
+            },
+            elements { "build" { "plugins" { } } }
+        )
+
         return inputDependencyModel
     }
 }
