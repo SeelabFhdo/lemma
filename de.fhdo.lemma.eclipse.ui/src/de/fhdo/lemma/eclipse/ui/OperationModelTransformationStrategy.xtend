@@ -13,10 +13,12 @@ import java.util.LinkedHashMap
 import java.util.Collections
 import java.util.Map
 import de.fhdo.lemma.intermediate.transformations.service.IntermediateServiceModelTransformation
+import de.fhdo.lemma.intermediate.transformations.service.IntermediateDataModelTransformation
 import de.fhdo.lemma.utils.LemmaUtils
 import de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils
 import de.fhdo.lemma.operation.OperationModel
 import de.fhdo.lemma.intermediate.transformations.operation.IntermediateOperationModelTransformation
+import de.fhdo.lemma.data.DataModel
 
 /**
  * UI-specific intermediate model transformation strategy for models related to the Operation
@@ -27,11 +29,14 @@ import de.fhdo.lemma.intermediate.transformations.operation.IntermediateOperatio
 class OperationModelTransformationStrategy extends AbstractUiModelTransformationStrategy {
     public static val OPERATION_MODEL_FILE_TYPE_ID = "OPERATION"
     public static val SERVICE_MODEL_FILE_TYPE_ID = "SERVICE"
+    public static val DATA_MODEL_FILE_TYPE_ID = "DATA"
 
     static val OPERATION_DSL_EDITOR_ID = "de.fhdo.lemma.operationdsl.OperationDsl"
     static val SERVICE_DSL_EDITOR_ID = "de.fhdo.lemma.ServiceDsl"
+    static val DATA_DSL_EDITOR_ID = "de.fhdo.lemma.data.DataDsl"
     static val List<String> OPERATION_MODEL_FILE_EXTENSIONS = newArrayList
     static val List<String> SERVICE_MODEL_FILE_EXTENSIONS = newArrayList
+    static val List<String> DATA_MODEL_FILE_EXTENSIONS = newArrayList
     static val String MODEL_TYPE_PREFIX = "operation"
     static val ResourceManager RESOURCE_MANAGER =
         new LocalResourceManager(JFaceResources.getResources())
@@ -51,6 +56,9 @@ class OperationModelTransformationStrategy extends AbstractUiModelTransformation
             OPERATION_MODEL_FILE_EXTENSIONS.addAll(
                 LemmaUiUtils.getFileExtensions(OPERATION_DSL_EDITOR_ID)
             )
+
+        if (DATA_MODEL_FILE_EXTENSIONS.empty)
+            DATA_MODEL_FILE_EXTENSIONS.addAll(LemmaUiUtils.getFileExtensions(DATA_DSL_EDITOR_ID))
 
         setupModelFileTypeDescriptions()
     }
@@ -74,6 +82,14 @@ class OperationModelTransformationStrategy extends AbstractUiModelTransformation
                 "Service Model",
                 SERVICE_MODEL_FILE_EXTENSIONS,
                 typeof(IntermediateServiceModelTransformation)
+            ),
+
+            DATA_MODEL_FILE_TYPE_ID -> new ModelFileTypeDescription(
+                DATA_MODEL_FILE_TYPE_ID,
+                LemmaUiUtils.createImage(RESOURCE_MANAGER, class, "dataModelFile.gif"),
+                "Data Model",
+                DATA_MODEL_FILE_EXTENSIONS,
+                typeof(IntermediateDataModelTransformation)
             )
         )
     }
@@ -91,7 +107,8 @@ class OperationModelTransformationStrategy extends AbstractUiModelTransformation
     override getModelTypeDisplayOrdering() {
         return newLinkedList(
             OPERATION_MODEL_FILE_TYPE_ID,
-            SERVICE_MODEL_FILE_TYPE_ID
+            SERVICE_MODEL_FILE_TYPE_ID,
+            DATA_MODEL_FILE_TYPE_ID
         )
     }
 
@@ -100,8 +117,9 @@ class OperationModelTransformationStrategy extends AbstractUiModelTransformation
      */
     override getModelTypeTransformationOrdering() {
         return newLinkedList(
-            OPERATION_MODEL_FILE_TYPE_ID,
-            SERVICE_MODEL_FILE_TYPE_ID
+            DATA_MODEL_FILE_TYPE_ID,
+            SERVICE_MODEL_FILE_TYPE_ID,
+            OPERATION_MODEL_FILE_TYPE_ID
         )
     }
 
@@ -196,11 +214,20 @@ class OperationModelTransformationStrategy extends AbstractUiModelTransformation
         var Map<String, String> importAliasesAndUris
 
         if (!modelFile.xtextResource.contents.empty) {
+            // Data Models
+            if (LemmaUiUtils.hasExtension(modelFile.file, DATA_MODEL_FILE_EXTENSIONS)) {
+                val modelRoot = modelFile.xtextResource.contents.get(0) as DataModel
+                importAliasesAndUris = modelRoot.complexTypeImports.toMap([name], [importURI])
+            }
+
             // Service Models
-            if (LemmaUiUtils.hasExtension(modelFile.file, SERVICE_MODEL_FILE_EXTENSIONS)) {
+            else if (LemmaUiUtils.hasExtension(modelFile.file, SERVICE_MODEL_FILE_EXTENSIONS)) {
                 val modelRoot = modelFile.xtextResource.contents.get(0) as ServiceModel
                 importAliasesAndUris = modelRoot.imports
-                    .filter[importType === ImportType.MICROSERVICES]
+                    .filter[
+                        importType === ImportType.DATATYPES ||
+                        importType === ImportType.MICROSERVICES
+                    ]
                     .toMap([name], [importURI])
             }
 
@@ -244,10 +271,12 @@ class OperationModelTransformationStrategy extends AbstractUiModelTransformation
      * Return default target path for intermediate model transformation for a given file
      */
     override getDefaultTransformationTargetPath(IFile file) {
-        val modelFileTypePathPart = if (LemmaUiUtils.hasExtension(file, OPERATION_MODEL_FILE_EXTENSIONS))
-                "operation models"
+        val modelFileTypePathPart = if (LemmaUiUtils.hasExtension(file, DATA_MODEL_FILE_EXTENSIONS))
+                "data models"
             else if (LemmaUiUtils.hasExtension(file, SERVICE_MODEL_FILE_EXTENSIONS))
                 "service models"
+            else if (LemmaUiUtils.hasExtension(file, OPERATION_MODEL_FILE_EXTENSIONS))
+                "operation models"
 
         val filenameWithoutExtension = LemmaUiUtils.removeExtension(file, [name])
         return '''/intermediate/«modelFileTypePathPart»/«filenameWithoutExtension».xmi'''
