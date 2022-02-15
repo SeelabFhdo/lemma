@@ -3,6 +3,7 @@ package de.fhdo.lemma.model_processing.code_generation.java_base.modules.service
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import com.github.javaparser.ast.body.MethodDeclaration
 import com.github.javaparser.ast.comments.LineComment
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.AmbiguousImportException
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.SerializationCharacteristic
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addBodyComment
@@ -176,8 +177,12 @@ internal class OperationHandler
      */
     private fun handleSynchronousFaultParameters(operation: IntermediateOperation, generatedMethod: MethodDeclaration) {
         operation.getFaultParameters(CommunicationType.SYNCHRONOUS).forEach {
-            generatedMethod.addImport(it.buildFullyQualifiedExceptionClassName(), ImportTargetElementType.METHOD)
-            generatedMethod.addThrownException(it.buildExceptionClassName())
+            try {
+                generatedMethod.addImport(it.buildFullyQualifiedExceptionClassName(), ImportTargetElementType.METHOD)
+                generatedMethod.addThrownException(it.buildExceptionClassName())
+            } catch (ex: AmbiguousImportException) {
+                generatedMethod.addThrownException(it.buildFullyQualifiedExceptionClassName())
+            }
         }
 
         // Fault parameters for which no custom Exception class is generated are to be treated by Genlets
