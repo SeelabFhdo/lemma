@@ -4,8 +4,6 @@ import com.google.common.collect.Iterables;
 import de.fhdo.lemma.eclipse.ui.AbstractUiModelTransformationStrategy;
 import de.fhdo.lemma.eclipse.ui.ModelFile;
 import de.fhdo.lemma.eclipse.ui.ModelFileTypeDescription;
-import de.fhdo.lemma.eclipse.ui.select_models_dialog.ModelTreeContentProvider;
-import de.fhdo.lemma.eclipse.ui.select_models_dialog.ModelTreeLabelProvider;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;

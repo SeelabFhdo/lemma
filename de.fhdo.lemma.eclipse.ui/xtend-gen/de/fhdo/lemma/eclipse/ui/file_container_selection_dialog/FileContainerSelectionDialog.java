@@ -2,7 +2,6 @@ package de.fhdo.lemma.eclipse.ui.file_container_selection_dialog;
 
 import com.google.common.base.Function;
 import de.fhdo.lemma.eclipse.ui.ModelFile;
-import de.fhdo.lemma.eclipse.ui.file_container_selection_dialog.FileContainerSelectionTreeContentProvider;
 import de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils;
 import java.util.ArrayList;
 import java.util.Map;

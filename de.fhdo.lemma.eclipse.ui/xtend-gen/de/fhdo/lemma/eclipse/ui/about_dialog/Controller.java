@@ -1,6 +1,5 @@
 package de.fhdo.lemma.eclipse.ui.about_dialog;
 
-import de.fhdo.lemma.eclipse.ui.about_dialog.AboutDialog;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;

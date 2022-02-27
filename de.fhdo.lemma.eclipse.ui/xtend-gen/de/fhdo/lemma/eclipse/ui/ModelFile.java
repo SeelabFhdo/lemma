@@ -1,6 +1,5 @@
 package de.fhdo.lemma.eclipse.ui;
 
-import de.fhdo.lemma.eclipse.ui.ModelFileTypeDescription;
 import de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils;
 import java.util.List;
 import org.eclipse.core.resources.IFile;
