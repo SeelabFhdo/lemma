@@ -3,6 +3,7 @@ package de.fhdo.lemma.intermediate.transformations.operation;
 import com.google.common.base.Objects;
 import de.fhdo.lemma.data.intermediate.IntermediateImport;
 import de.fhdo.lemma.intermediate.transformations.AbstractAtlInputOutputIntermediateModelTransformationStrategy;
+import de.fhdo.lemma.intermediate.transformations.AbstractIntermediateModelTransformationStrategy;
 import de.fhdo.lemma.intermediate.transformations.TransformationModelDescription;
 import de.fhdo.lemma.intermediate.transformations.TransformationModelType;
 import de.fhdo.lemma.operation.OperationModel;
@@ -34,10 +35,6 @@ public class IntermediateOperationModelTransformation extends AbstractAtlInputOu
   
   private String absoluteInputModelFilePath;
   
-  private String absoluteOutputModelFilePath;
-  
-  private boolean convertToRelativeUris;
-  
   /**
    * Specify reference name and transformation model type of input model
    */
@@ -67,16 +64,12 @@ public class IntermediateOperationModelTransformation extends AbstractAtlInputOu
   }
   
   /**
-   * Fetch input model and output model file prior to transformation execution
+   * Fetch input model file prior to transformation execution
    */
   @Override
-  public void beforeTransformationHook(final Map<TransformationModelDescription, IFile> inputModelFiles, final Map<TransformationModelDescription, String> outputModelPaths, final boolean convertToRelativeUris) {
+  public void beforeTransformationHook(final Map<TransformationModelDescription, IFile> inputModelFiles, final Map<TransformationModelDescription, String> outputModelPaths) {
     this.inputModelFile = ((IFile[])Conversions.unwrapArray(inputModelFiles.values(), IFile.class))[0];
     this.absoluteInputModelFilePath = LemmaUtils.getAbsolutePath(this.inputModelFile);
-    final String projectRelativeOutputModelFilePath = ((String[])Conversions.unwrapArray(outputModelPaths.values(), String.class))[0];
-    this.absoluteOutputModelFilePath = LemmaUtils.convertProjectResourceToAbsoluteFilePath(projectRelativeOutputModelFilePath, 
-      this.inputModelFile.getProject());
-    this.convertToRelativeUris = convertToRelativeUris;
   }
   
   /**
@@ -111,21 +104,21 @@ public class IntermediateOperationModelTransformation extends AbstractAtlInputOu
   }
   
   /**
-   * Modify the given output model
+   * Convert URIs in intermediate operation models to relative ones
    */
   @Override
-  public void modifyOutputModel(final TransformationModelDescription modelDescription, final EObject modelRoot) {
-    if ((!this.convertToRelativeUris)) {
-      return;
-    }
-    final IntermediateOperationModel operationModel = ((IntermediateOperationModel) modelRoot);
-    final String relativeInputModelFilePath = LemmaUtils.relativize(this.absoluteOutputModelFilePath, 
-      this.absoluteInputModelFilePath);
-    operationModel.setSourceModelUri(LemmaUtils.convertToFileUri(relativeInputModelFilePath));
+  public void makeUrisRelative(final AbstractIntermediateModelTransformationStrategy.TransformationResult result) {
+    EObject _get = result.getOutputModel().getResource().getContents().get(0);
+    final IntermediateOperationModel operationModel = ((IntermediateOperationModel) _get);
+    operationModel.setSourceModelUri(LemmaUtils.convertToFileUri(
+      LemmaUtils.relativize(
+        LemmaUtils.removeFileUri(result.getOutputModel().getOutputPath()), 
+        LemmaUtils.removeFileUri(result.getInputModels().get(0).getInputPath()))));
     final Consumer<IntermediateImport> _function = (IntermediateImport it) -> {
-      final String relativeImportModelFilePath = LemmaUtils.relativize(this.absoluteOutputModelFilePath, 
-        LemmaUtils.removeFileUri(it.getImportUri()));
-      it.setImportUri(LemmaUtils.convertToFileUri(relativeImportModelFilePath));
+      it.setImportUri(LemmaUtils.convertToFileUri(
+        LemmaUtils.relativize(
+          LemmaUtils.removeFileUri(result.getOutputModel().getOutputPath()), 
+          LemmaUtils.removeFileUri(it.getImportUri()))));
     };
     operationModel.getImports().forEach(_function);
   }

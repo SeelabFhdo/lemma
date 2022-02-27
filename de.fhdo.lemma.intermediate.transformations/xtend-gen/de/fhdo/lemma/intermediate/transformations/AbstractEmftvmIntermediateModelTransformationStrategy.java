@@ -81,7 +81,7 @@ public abstract class AbstractEmftvmIntermediateModelTransformationStrategy exte
    * Prepare model transformation
    */
   @Override
-  protected void beforeTransformationHook(final Map<TransformationModelDescription, IFile> inputModelFiles, final Map<TransformationModelDescription, String> outputModelPaths, final boolean convertToRelativeUris) {
+  protected void beforeTransformationHook(final Map<TransformationModelDescription, IFile> inputModelFiles, final Map<TransformationModelDescription, String> outputModelPaths) {
     final Function1<IFile, String> _function = (IFile it) -> {
       return LemmaUtils.getAbsolutePath(it);
     };

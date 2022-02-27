@@ -2,13 +2,6 @@ package de.fhdo.lemma.intermediate.transformations;
 
 import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
-import de.fhdo.lemma.intermediate.transformations.AbstractInputModelValidator;
-import de.fhdo.lemma.intermediate.transformations.IntermediateTransformationException;
-import de.fhdo.lemma.intermediate.transformations.IntermediateTransformationExceptionKind;
-import de.fhdo.lemma.intermediate.transformations.IntermediateTransformationPhase;
-import de.fhdo.lemma.intermediate.transformations.TransformationModelDescription;
-import de.fhdo.lemma.intermediate.transformations.TransformationModelDirection;
-import de.fhdo.lemma.intermediate.transformations.TransformationModelType;
 import de.fhdo.lemma.utils.LemmaUtils;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -16,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.URI;
@@ -192,7 +184,7 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
   /**
    * Before transformation hook (optional)
    */
-  protected void beforeTransformationHook(final Map<TransformationModelDescription, IFile> inputModelFiles, final Map<TransformationModelDescription, String> outputModelPaths, final boolean convertToRelativeUris) {
+  protected void beforeTransformationHook(final Map<TransformationModelDescription, IFile> inputModelFiles, final Map<TransformationModelDescription, String> outputModelPaths) {
   }
   
   /**
@@ -263,8 +255,14 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
    * 
    * See MappingModelTransformation for a usage example of a listener.
    */
-  public BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void> registerTransformationsFinishedListener() {
+  public Function2<? super List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, ? super Predicate<IntermediateTransformationException>, ? extends List<AbstractIntermediateModelTransformationStrategy.TransformationResult>> registerTransformationsFinishedListener() {
     return null;
+  }
+  
+  /**
+   * Convert URIs in a transformation result to relative ones (optional)
+   */
+  public void makeUrisRelative(final AbstractIntermediateModelTransformationStrategy.TransformationResult result) {
   }
   
   /**
@@ -313,9 +311,9 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
    * org.eclipse.core.resources.IFile. To this end, the transformation model description for each
    * input model is also passed by the caller.
    */
-  public final Map<TransformationModelDescription, AbstractIntermediateModelTransformationStrategy.TransformationResult> doTransformationFromFiles(final Map<TransformationModelDescription, IFile> inputModelFiles, final Map<TransformationModelDescription, String> outputModelPaths, final Map<String, Map<String, String>> targetPathsOfImports, final boolean convertToRelativeUris, final Predicate<IntermediateTransformationException> warningCallback) {
+  public final Map<TransformationModelDescription, AbstractIntermediateModelTransformationStrategy.TransformationResult> doTransformationFromFiles(final Map<TransformationModelDescription, IFile> inputModelFiles, final Map<TransformationModelDescription, String> outputModelPaths, final Map<String, Map<String, String>> targetPathsOfImports, final Predicate<IntermediateTransformationException> warningCallback) {
     final Map<TransformationModelDescription, Resource> inputModelResources = this.loadModelResources(inputModelFiles);
-    return this.doTransformation(inputModelFiles, inputModelResources, outputModelPaths, targetPathsOfImports, convertToRelativeUris, warningCallback);
+    return this.doTransformation(inputModelFiles, inputModelResources, outputModelPaths, targetPathsOfImports, warningCallback);
   }
   
   /**
@@ -391,12 +389,12 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
    * descriptions are assigned to input files and output paths in the order they were registered
    * in the implementation of registerModelTypes().
    */
-  public final Map<TransformationModelDescription, AbstractIntermediateModelTransformationStrategy.TransformationResult> doTransformationFromFiles(final List<IFile> inputModels, final List<String> outputModelPaths, final Map<String, Map<String, String>> targetPathsOfImports, final boolean convertToRelativeUris, final Predicate<IntermediateTransformationException> warningCallback) {
+  public final Map<TransformationModelDescription, AbstractIntermediateModelTransformationStrategy.TransformationResult> doTransformationFromFiles(final List<IFile> inputModels, final List<String> outputModelPaths, final Map<String, Map<String, String>> targetPathsOfImports, final Predicate<IntermediateTransformationException> warningCallback) {
     final Map<TransformationModelDescription, IFile> inputModelsWithDescriptions = this.<IFile>mapValuesToModelTypeDescriptions(inputModels, 
       "input model", TransformationModelDirection.IN, TransformationModelDirection.INOUT);
     final Map<TransformationModelDescription, String> outputModelsWithDescriptions = this.<String>mapValuesToModelTypeDescriptions(outputModelPaths, 
       "output model", TransformationModelDirection.OUT, TransformationModelDirection.INOUT);
-    return this.doTransformationFromFiles(inputModelsWithDescriptions, outputModelsWithDescriptions, targetPathsOfImports, convertToRelativeUris, warningCallback);
+    return this.doTransformationFromFiles(inputModelsWithDescriptions, outputModelsWithDescriptions, targetPathsOfImports, warningCallback);
   }
   
   /**
@@ -436,12 +434,12 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
    * org.eclipse.emf.ecore.resource.Resource. To this end, the transformation model description
    * for each input model is also passed by the caller.
    */
-  public final Map<TransformationModelDescription, AbstractIntermediateModelTransformationStrategy.TransformationResult> doTransformationFromResources(final Map<TransformationModelDescription, Resource> inputModelResources, final Map<TransformationModelDescription, String> outputModelPaths, final Map<String, Map<String, String>> targetPathsOfImports, final boolean convertToRelativeUris, final Predicate<IntermediateTransformationException> warningCallback) {
+  public final Map<TransformationModelDescription, AbstractIntermediateModelTransformationStrategy.TransformationResult> doTransformationFromResources(final Map<TransformationModelDescription, Resource> inputModelResources, final Map<TransformationModelDescription, String> outputModelPaths, final Map<String, Map<String, String>> targetPathsOfImports, final Predicate<IntermediateTransformationException> warningCallback) {
     final Function1<Resource, IFile> _function = (Resource it) -> {
       return LemmaUtils.getFileForResource(it);
     };
     final Map<TransformationModelDescription, IFile> inputModelFiles = MapExtensions.<TransformationModelDescription, Resource, IFile>mapValues(inputModelResources, _function);
-    return this.doTransformation(inputModelFiles, inputModelResources, outputModelPaths, targetPathsOfImports, convertToRelativeUris, warningCallback);
+    return this.doTransformation(inputModelFiles, inputModelResources, outputModelPaths, targetPathsOfImports, warningCallback);
   }
   
   /**
@@ -449,9 +447,9 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
    * on the basis of two maps that assign the transformation model descriptions to the input model
    * files and resources, respectively.
    */
-  private Map<TransformationModelDescription, AbstractIntermediateModelTransformationStrategy.TransformationResult> doTransformation(final Map<TransformationModelDescription, IFile> inputModelFiles, final Map<TransformationModelDescription, Resource> inputModelResources, final Map<TransformationModelDescription, String> outputModelPaths, final Map<String, Map<String, String>> targetPathsOfImports, final boolean convertToRelativeUris, final Predicate<IntermediateTransformationException> warningCallback) {
+  private Map<TransformationModelDescription, AbstractIntermediateModelTransformationStrategy.TransformationResult> doTransformation(final Map<TransformationModelDescription, IFile> inputModelFiles, final Map<TransformationModelDescription, Resource> inputModelResources, final Map<TransformationModelDescription, String> outputModelPaths, final Map<String, Map<String, String>> targetPathsOfImports, final Predicate<IntermediateTransformationException> warningCallback) {
     this.beforeTransformationChecks(inputModelFiles, outputModelPaths);
-    this.beforeTransformationHook(inputModelFiles, outputModelPaths, convertToRelativeUris);
+    this.beforeTransformationHook(inputModelFiles, outputModelPaths);
     final Map<TransformationModelDescription, Resource> preparedInputModels = this.prepareInputModels(inputModelResources);
     boolean _validateInputModels = this.validateInputModels(inputModelFiles, preparedInputModels, warningCallback);
     boolean _not = (!_validateInputModels);
@@ -464,7 +462,7 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
     }
     this.modifyOutputModels(transformationResultResources);
     this.afterTransformationHook(outputModelPaths);
-    this.saveOutputModels(inputModelFiles, transformationResultResources, outputModelPaths);
+    this.saveOutputModels(transformationResultResources, outputModelPaths);
     return this.createTransformationResults(inputModelFiles, transformationResultResources, outputModelPaths);
   }
   
@@ -624,7 +622,7 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
   /**
    * Serialize all output model resources into XMI files
    */
-  private void saveOutputModels(final Map<TransformationModelDescription, IFile> inputModels, final Map<TransformationModelDescription, Resource> outputModelResources, final Map<TransformationModelDescription, String> outputModelPaths) {
+  private void saveOutputModels(final Map<TransformationModelDescription, Resource> outputModelResources, final Map<TransformationModelDescription, String> outputModelPaths) {
     final BiConsumer<TransformationModelDescription, Resource> _function = (TransformationModelDescription description, Resource resource) -> {
       try {
         final String outputPath = outputModelPaths.get(description);

@@ -74,8 +74,7 @@ abstract class AbstractEmftvmIntermediateModelTransformationStrategy
      */
     override protected beforeTransformationHook(
         Map<TransformationModelDescription, IFile> inputModelFiles,
-        Map<TransformationModelDescription, String> outputModelPaths,
-        boolean convertToRelativeUris
+        Map<TransformationModelDescription, String> outputModelPaths
     ) {
         /*
          * Register metamodels of a concrete transformation's model types to EMFTVM's execution

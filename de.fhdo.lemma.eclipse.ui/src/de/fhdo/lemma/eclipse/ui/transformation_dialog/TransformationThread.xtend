@@ -9,7 +9,6 @@ import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.Path
 import de.fhdo.lemma.eclipse.ui.ModelFileTypeDescription
 import de.fhdo.lemma.intermediate.transformations.AbstractIntermediateModelTransformationStrategy.TransformationResult
-import java.util.LinkedHashSet
 import java.util.function.BiFunction
 import de.fhdo.lemma.intermediate.transformations.IntermediateTransformationException
 import de.fhdo.lemma.intermediate.transformations.AbstractIntermediateModelTransformationStrategy
@@ -18,6 +17,8 @@ import java.util.Map
 import de.fhdo.lemma.utils.LemmaUtils
 import de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils
 import java.util.LinkedList
+import java.util.LinkedHashMap
+import java.util.HashMap
 
 /**
  * Thread to perform actual intermediate model transformations.
@@ -36,6 +37,12 @@ class TransformationThread extends Thread {
     Predicate<List<TransformationResult>> currentTransformationFinishedCallback
     Predicate<List<TransformationResult>> transformationsFinishedCallback
     Display display
+
+    LinkedHashMap<
+        AbstractIntermediateModelTransformationStrategy<?, ?>,
+        (List<TransformationResult>, Predicate<IntermediateTransformationException>)
+            =>List<TransformationResult>
+    > transformationsFinishedListeners
 
     /**
      * Constructor
@@ -71,95 +78,98 @@ class TransformationThread extends Thread {
      * Run model transformations on given files
      */
     override void run() {
-        val transformationsFinishedListeners = <BiFunction<
-            List<TransformationResult>,
-            Predicate<IntermediateTransformationException>,
-            Void
-        >>newLinkedHashSet
-        val allTransformationResults = <TransformationResult>newArrayList
+        transformationsFinishedListeners = newLinkedHashMap
+        val allTransformationStrategiesAndResults = new TransformationResultsPerStrategy()
 
         for (var i = 0; i < modelFiles.size && !stopTransformations; i++) {
             val modelFile = modelFiles.get(i)
             nextTransformationCallback.invokeCallbackIfSpecified(modelFile)
 
-            val transformationListenersAndResults = modelFile.executeTransformations
-
-            transformationsFinishedListeners.addAll(transformationListenersAndResults.key)
-
-            val transformationResults = transformationListenersAndResults.value
-            currentTransformationFinishedCallback.invokeCallbackIfSpecified(
-                transformationResults.unmodifiableView
-            )
-            allTransformationResults.addAll(transformationResults)
+            val transformationStrategyAndResults = modelFile.executeTransformations
+            if (transformationStrategyAndResults !== null) {
+                val strategy = transformationStrategyAndResults.key
+                val results = transformationStrategyAndResults.value
+                allTransformationStrategiesAndResults.put(strategy, results)
+                currentTransformationFinishedCallback.invokeCallbackIfSpecified(
+                    results.unmodifiableView
+                )
+            } else
+                currentTransformationFinishedCallback.invokeCallbackIfSpecified(emptyList)
         }
 
-        executeTransformationsFinishedListeners(transformationsFinishedListeners,
-            allTransformationResults)
-        transformationsFinishedCallback.invokeCallbackIfSpecified(allTransformationResults)
+        val allTransformationResults = allTransformationStrategiesAndResults.values.flatten.toList
+        allTransformationResults.convertModelPathsToAbsoluteFileUris()
+        val additionalResults = executeTransformationsFinishedListeners(allTransformationResults)
+        additionalResults.forEach[strategy, results |
+            allTransformationStrategiesAndResults.putIfAbsent(strategy, results)?.addAll(results)
+            allTransformationResults.addAll(results)
+        ]
+        transformationsFinishedCallback.invokeCallbackIfSpecified(
+            allTransformationResults.unmodifiableView
+        )
+
+        if (convertToRelativeUris) {
+            allTransformationStrategiesAndResults.forEach[strategy, results |
+                results.forEach[
+                    strategy.makeUrisRelative(it)
+                    it.outputModel.resource.save(emptyMap())
+                ]
+            ]
+        }
     }
+
+    /**
+     * Type alias for
+     * HashMap<AbstractIntermediateModelTransformationStrategy<?, ?>, List<TransformationResult>>
+     */
+    private static class TransformationResultsPerStrategy extends
+        HashMap<AbstractIntermediateModelTransformationStrategy<?, ?>, List<TransformationResult>>{}
 
     /**
      * Execute main and refining transformations on a model file
      */
-    private def Pair<
-        List<
-            BiFunction<List<TransformationResult>,
-            Predicate<IntermediateTransformationException>,
-            Void>
-        >,
-        List<TransformationResult>
-    > executeTransformations(ModelFile modelFile) {
-        val transformationsFinishedListeners = <BiFunction<
-            List<TransformationResult>,
-            Predicate<IntermediateTransformationException>,
-            Void
-        >>newArrayList
-        val results = <TransformationResult>newArrayList
-        var exceptionOccurred = false
-
+    private def
+    Pair<AbstractIntermediateModelTransformationStrategy<?, ?>, List<TransformationResult>>
+    executeTransformations(ModelFile modelFile) {
         try {
+            val results = <TransformationResult>newArrayList
+
             /* Build output paths */
             val outputPaths = buildTransformationOutputPaths(modelFile.transformationTargetPath,
                 modelFile.fileTypeDescription, outputRefinementModels)
 
             /* Perform main transformation */
-            val mainTransformationResult = modelFile.mainTransformation(
-                outputPaths.get(0),
-                transformationsFinishedListeners
-            )
+            val mainOutputPath = outputPaths.get(0)
+            val mainTransformationResultAndStrategy = modelFile.mainTransformation(mainOutputPath)
+            val maintransformationStrategy = mainTransformationResultAndStrategy.key
+            val mainTransformationResult = mainTransformationResultAndStrategy.value
 
             if (mainTransformationResult !== null)
                 results.add(mainTransformationResult)
             else
-                return emptyList -> emptyList
+                return null
 
             /* Perform refining transformations */
-            val refiningTransformationResults = modelFile.refiningTransformations(
-                outputPaths,
-                transformationsFinishedListeners
-            )
+            val refiningTransformationResults = modelFile.refiningTransformations(outputPaths)
 
             if (refiningTransformationResults !== null)
                 results.addAll(refiningTransformationResults)
             else
-                return emptyList -> emptyList
+                return null
+
+            return maintransformationStrategy -> results
         } catch(IntermediateTransformationException ex) {
             if (ex.kind === IntermediateTransformationExceptionKind.WARNING)
                 internalTransformationWarningCallback(ex)
             else
                 transformationExceptionCallback.invokeCallbackIfSpecified(ex)
 
-            exceptionOccurred = true
+            return null
         } catch (Exception ex) {
             ex.printStackTrace
             transformationExceptionCallback.invokeCallbackIfSpecified(ex)
-            exceptionOccurred = true
+            return null
         }
-
-        return if (!exceptionOccurred)
-                transformationsFinishedListeners -> results
-            else
-                emptyList -> emptyList
     }
 
     /**
@@ -183,15 +193,10 @@ class TransformationThread extends Thread {
     }
 
     /**
-     * Perform main transformation on a model file
+     * Execute main transformation on a model file
      */
-    private def TransformationResult mainTransformation(
-        ModelFile modelFile,
-        String outputPath,
-        List<BiFunction<
-            List<TransformationResult>,Predicate<IntermediateTransformationException>, Void
-        >> transformationsFinishedListeners
-    ) {
+    private def Pair<AbstractIntermediateModelTransformationStrategy<?, ?>, TransformationResult>
+    mainTransformation(ModelFile modelFile, String outputPath) {
         val strategy = modelFile.fileTypeDescription.createMainTransformationStrategy
         val importTargetPaths = modelFile.children.toMap([importAlias], [transformationTargetPath])
 
@@ -204,24 +209,41 @@ class TransformationThread extends Thread {
             ]
 
         /* Execute the actual transformation */
-        return modelFile.file.executeTransformation(
-            strategy,
-            outputPath,
-            #{outputPath -> importTargetPaths},
-            transformationsFinishedListeners
-        )
+        return strategy -> modelFile.file.executeTransformation(strategy, outputPath,
+            #{outputPath -> importTargetPaths})
     }
 
     /**
-     * Perform refining transformations on a model file
+     * Execute a single transformation strategy on an input file
      */
-    private def List<TransformationResult> refiningTransformations(
-        ModelFile modelFile,
-        List<String> outputPaths,
-        List<BiFunction<
-            List<TransformationResult>,Predicate<IntermediateTransformationException>, Void
-        >> transformationsFinishedListeners
+    private def TransformationResult executeTransformation(
+        IFile inputFile,
+        AbstractIntermediateModelTransformationStrategy strategy,
+        String outputPath,
+        Map<String, Map<String, String>> targetPathsOfImports
     ) {
+        /* Execute transformation */
+        val transformationResult = strategy.doTransformationFromFiles(
+            #[inputFile],
+            #[outputPath],
+            targetPathsOfImports,
+            [internalTransformationWarningCallback]
+        // We currently only support transformations with one output model
+        )?.values?.get(0) as TransformationResult
+
+        /* Register transformations finished listener */
+        val finishedListener = strategy.registerTransformationsFinishedListener()
+        if (finishedListener !== null && transformationResult !== null)
+            transformationsFinishedListeners.put(strategy, finishedListener)
+
+        return transformationResult
+    }
+
+    /**
+     * Execute refining transformations on a model file
+     */
+    private def List<TransformationResult> refiningTransformations(ModelFile modelFile,
+        List<String> outputPaths) {
         val transformationResults = <TransformationResult>newArrayList
 
         var outputPathIndex = 0
@@ -246,12 +268,8 @@ class TransformationThread extends Thread {
             /* Execute the actual transformation */
             val strategy = fileTypeDescription.createRefiningTransformationStrategy(strategyIndex)
             val inputFile = ResourcesPlugin.getWorkspace().getRoot().getFile(inputFilePath)
-            val transformationResult = inputFile.executeTransformation(
-                strategy,
-                outputFilePath,
-                null,
-                transformationsFinishedListeners
-            )
+            val transformationResult = inputFile.executeTransformation(strategy, outputFilePath,
+                null)
 
             if (transformationResult !== null)
                 transformationResults.add(transformationResult)
@@ -263,60 +281,37 @@ class TransformationThread extends Thread {
     }
 
     /**
-     * Execute a single transformation strategy on an input file
+     * Convert the paths of input and output models in the given set of transformation results to
+     * absolute file URIs
      */
-    private def TransformationResult executeTransformation(
-        IFile inputFile,
-        AbstractIntermediateModelTransformationStrategy strategy,
-        String outputPath,
-        Map<String, Map<String, String>> targetPathsOfImports,
-        List<BiFunction<
-            List<TransformationResult>,Predicate<IntermediateTransformationException>, Void
-        >> transformationsFinishedListeners
-    ) {
-        /* Execute transformation */
-        val transformationResult = strategy.doTransformationFromFiles(
-            #[inputFile],
-            #[outputPath],
-            targetPathsOfImports,
-            convertToRelativeUris,
-            [internalTransformationWarningCallback]
-        // We currently only support transformations with one output model
-        )?.values?.get(0) as TransformationResult
-
-        /* Register transformations finished listener */
-        val finishedListener = strategy.registerTransformationsFinishedListener()
-        if (finishedListener !== null && transformationResult !== null)
-            transformationsFinishedListeners.add(finishedListener)
-
-        return transformationResult
-    }
-
-    /**
-     * Execute transformation finished listeners
-     */
-    private def executeTransformationsFinishedListeners(
-        LinkedHashSet<BiFunction<
-            List<TransformationResult>,
-            Predicate<IntermediateTransformationException>,
-            Void>> listeners,
-        List<TransformationResult> results
-    ) {
-        /* Convert input and output model paths to file URIs */
+    private def convertModelPathsToAbsoluteFileUris(List<TransformationResult> results) {
         results.forEach[
             inputModels.forEach[
                 // Input models' paths are always absolute already. Thus, add "file" scheme only.
                 inputPath = LemmaUtils.convertToFileUri(inputPath)
             ]
+
             // Output models' paths are always relative to their project in the workspace. Thus,
             // convert them to absolute paths and add "file" scheme.
             outputModel.outputPath
                 = LemmaUtils.convertProjectPathToAbsoluteFileUri(outputModel.outputPath)
         ]
+    }
 
-        /* Execute listeners */
+    /**
+     * Execute transformation finished listeners
+     */
+    private def executeTransformationsFinishedListeners(List<TransformationResult> results) {
+        // Collect additional transformation results originating from post-actions of
+        // transformations finished listeners, e.g., on previous transformation results
+        val additionalResultsPerStrategy = new TransformationResultsPerStrategy()
+
         try {
-            listeners.forEach[apply(results, [internalTransformationWarningCallback])]
+            transformationsFinishedListeners.forEach[strategy, listener |
+            val additionalResults = listener.apply(results, [internalTransformationWarningCallback])
+            if (additionalResults !== null && !additionalResults.empty)
+                additionalResultsPerStrategy.put(strategy, additionalResults)
+            ]
         } catch(IntermediateTransformationException ex) {
             if (ex.kind === IntermediateTransformationExceptionKind.WARNING)
                 internalTransformationWarningCallback(ex)
@@ -326,6 +321,8 @@ class TransformationThread extends Thread {
             ex.printStackTrace
             transformationExceptionCallback.invokeCallbackIfSpecified(ex)
         }
+
+        return additionalResultsPerStrategy
     }
 
     /**

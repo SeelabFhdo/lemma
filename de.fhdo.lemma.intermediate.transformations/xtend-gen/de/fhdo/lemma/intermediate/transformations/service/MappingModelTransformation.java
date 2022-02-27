@@ -35,7 +35,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.EList;
@@ -89,7 +88,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
     /**
      * Execute the refinements
      */
-    private static Void executeRefinements(final TechnologyMapping inputMappingModel, final String absoluteInputModelPath, final List<AbstractIntermediateModelTransformationStrategy.TransformationResult> results, final Predicate<IntermediateTransformationException> warningCallback) {
+    private static List<AbstractIntermediateModelTransformationStrategy.TransformationResult> executeRefinements(final TechnologyMapping inputMappingModel, final String absoluteInputModelPath, final List<AbstractIntermediateModelTransformationStrategy.TransformationResult> results, final Predicate<IntermediateTransformationException> warningCallback) {
       final HashMap<AbstractIntermediateModelTransformationStrategy.OutputModel, Map<String, AbstractIntermediateModelTransformationStrategy.OutputModel>> refinedModelsPerServiceModel = CollectionLiterals.<AbstractIntermediateModelTransformationStrategy.OutputModel, Map<String, AbstractIntermediateModelTransformationStrategy.OutputModel>>newHashMap();
       final BiConsumer<AbstractIntermediateModelTransformationStrategy.OutputModel, Set<AbstractIntermediateModelTransformationStrategy.OutputModel>> _function = (AbstractIntermediateModelTransformationStrategy.OutputModel serviceModel, Set<AbstractIntermediateModelTransformationStrategy.OutputModel> intermediateDataModels) -> {
         MappingModelTransformation.MappingModelRefinementExecutor.linkTechnologyModels(serviceModel, inputMappingModel);
@@ -289,8 +288,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
       final HashMap<TransformationModelDescription, String> outputModelPaths = CollectionLiterals.<TransformationModelDescription, String>newHashMap(_mappedTo_2);
       final IntermediateDataModelRefinement refiningTransformation = new IntermediateDataModelRefinement();
       final AbstractIntermediateModelTransformationStrategy.TransformationResult refiningResult = refiningTransformation.doTransformationFromResources(inputModelResources, outputModelPaths, 
-        null, 
-        false, warningCallback).get(IntermediateDataModelRefinement.IN_MODEL_DESCRIPTION);
+        null, warningCallback).get(IntermediateDataModelRefinement.IN_MODEL_DESCRIPTION);
       final Iterator<EObject> iter = refiningResult.getOutputModel().getResource().getContents().iterator();
       while (iter.hasNext()) {
         EObject _next = iter.next();
@@ -395,7 +393,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
    * Fetch input model and output model file prior to transformation execution
    */
   @Override
-  public void beforeTransformationHook(final Map<TransformationModelDescription, IFile> inputModelFiles, final Map<TransformationModelDescription, String> outputModelPaths, final boolean convertToRelativeUris) {
+  public void beforeTransformationHook(final Map<TransformationModelDescription, IFile> inputModelFiles, final Map<TransformationModelDescription, String> outputModelPaths) {
     this.absoluteInputModelFilePath = LemmaUtils.getAbsolutePath(((IFile[])Conversions.unwrapArray(inputModelFiles.values(), IFile.class))[0]);
   }
   
@@ -597,12 +595,32 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
    * finished
    */
   @Override
-  public BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void> registerTransformationsFinishedListener() {
-    final BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void> _function = (List<AbstractIntermediateModelTransformationStrategy.TransformationResult> results, Predicate<IntermediateTransformationException> warningCallback) -> {
+  public Function2<? super List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, ? super Predicate<IntermediateTransformationException>, ? extends List<AbstractIntermediateModelTransformationStrategy.TransformationResult>> registerTransformationsFinishedListener() {
+    final Function2<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, List<AbstractIntermediateModelTransformationStrategy.TransformationResult>> _function = (List<AbstractIntermediateModelTransformationStrategy.TransformationResult> results, Predicate<IntermediateTransformationException> warningCallback) -> {
       return MappingModelTransformation.MappingModelRefinementExecutor.executeRefinements(this.inputMappingModel, 
         this.absoluteInputModelFilePath, results, warningCallback);
     };
     return _function;
+  }
+  
+  /**
+   * Convert URIs in intermediate models that occurred from the transformation of a mapping model
+   * to relative ones
+   */
+  @Override
+  public void makeUrisRelative(final AbstractIntermediateModelTransformationStrategy.TransformationResult result) {
+    final EObject modelRoot = result.getOutputModel().getResource().getContents().get(0);
+    boolean _matched = false;
+    if (modelRoot instanceof IntermediateDataModel) {
+      _matched=true;
+      IntermediateDataModelTransformation.performUriRelativization(result);
+    }
+    if (!_matched) {
+      if (modelRoot instanceof IntermediateServiceModel) {
+        _matched=true;
+        IntermediateServiceModelTransformation.performUriRelativization(result);
+      }
+    }
   }
   
   /**

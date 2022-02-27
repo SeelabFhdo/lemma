@@ -21,8 +21,6 @@ import org.eclipse.core.resources.IFile
 class IntermediateDataModelTransformation
     extends AbstractAtlInputOutputIntermediateModelTransformationStrategy {
     String absoluteInputModelFilePath
-    String absoluteOutputModelFilePath
-    boolean convertToRelativeUris
 
     /**
      * Specify reference name and transformation model type of input model
@@ -49,23 +47,14 @@ class IntermediateDataModelTransformation
     }
 
     /**
-     * Fetch input model and output model file prior to transformation execution
+     * Fetch input model file prior to transformation execution
      */
     override beforeTransformationHook(
         Map<TransformationModelDescription, IFile> inputModelFiles,
-        Map<TransformationModelDescription, String> outputModelPaths,
-        boolean convertToRelativeUris
+        Map<TransformationModelDescription, String> outputModelPaths
     ) {
         val inputModelFile = inputModelFiles.values.get(0)
         absoluteInputModelFilePath = LemmaUtils.getAbsolutePath(inputModelFile)
-
-        val projectRelativeOutputModelFilePath = outputModelPaths.values.get(0)
-        absoluteOutputModelFilePath = LemmaUtils.convertProjectResourceToAbsoluteFilePath(
-            projectRelativeOutputModelFilePath,
-            inputModelFile.project
-        )
-
-        this.convertToRelativeUris = convertToRelativeUris
     }
 
     /**
@@ -111,24 +100,30 @@ class IntermediateDataModelTransformation
     }
 
     /**
-     * Modify the given output model
+     * Convert URIs in intermediate data models to relative ones
      */
-    override modifyOutputModel(TransformationModelDescription modelDescription, EObject modelRoot) {
-        if (!convertToRelativeUris)
-            return
+    override makeUrisRelative(TransformationResult result) {
+        result.performUriRelativization()
+    }
 
-        /* Convert absolute URIs (default) to URIs being relative to the output model file */
+    /**
+     * Reusable helper to convert URIs in intermediate data models to relative ones
+     */
+    static def performUriRelativization(TransformationResult result) {
+        val dataModel = result.outputModel.resource.contents.get(0) as IntermediateDataModel
+
         // Convert source model URI
-        val dataModel = modelRoot as IntermediateDataModel
-        val relativeInputModelFilePath = LemmaUtils.relativize(absoluteOutputModelFilePath,
-            absoluteInputModelFilePath)
-        dataModel.sourceModelUri = LemmaUtils.convertToFileUri(relativeInputModelFilePath)
+        dataModel.sourceModelUri = LemmaUtils.convertToFileUri(LemmaUtils.relativize(
+            LemmaUtils.removeFileUri(result.outputModel.outputPath),
+            LemmaUtils.removeFileUri(result.inputModels.get(0).inputPath)
+        ))
 
         // Convert import URIs
         dataModel.imports.forEach[
-            val relativeImportModelFilePath = LemmaUtils.relativize(absoluteOutputModelFilePath,
-                LemmaUtils.removeFileUri(importUri))
-            importUri = LemmaUtils.convertToFileUri(relativeImportModelFilePath)
+            it.importUri = LemmaUtils.convertToFileUri(LemmaUtils.relativize(
+                LemmaUtils.removeFileUri(result.outputModel.outputPath),
+                LemmaUtils.removeFileUri(it.importUri)
+            ))
         ]
     }
 }

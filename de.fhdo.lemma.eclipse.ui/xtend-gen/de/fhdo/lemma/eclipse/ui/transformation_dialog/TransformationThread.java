@@ -1,6 +1,7 @@
 package de.fhdo.lemma.eclipse.ui.transformation_dialog;
 
 import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 import de.fhdo.lemma.eclipse.ui.ModelFile;
 import de.fhdo.lemma.eclipse.ui.ModelFileTypeDescription;
 import de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils;
@@ -11,11 +12,12 @@ import de.fhdo.lemma.utils.LemmaUtils;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.LinkedHashSet;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiFunction;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -27,6 +29,7 @@ import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.ExclusiveRange;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
+import org.eclipse.xtext.xbase.lib.Functions.Function2;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
 
@@ -37,6 +40,13 @@ import org.eclipse.xtext.xbase.lib.Pair;
  */
 @SuppressWarnings("all")
 public class TransformationThread extends Thread {
+  /**
+   * Type alias for
+   * HashMap<AbstractIntermediateModelTransformationStrategy<?, ?>, List<TransformationResult>>
+   */
+  private static class TransformationResultsPerStrategy extends HashMap<AbstractIntermediateModelTransformationStrategy<?, ?>, List<AbstractIntermediateModelTransformationStrategy.TransformationResult>> {
+  }
+  
   private List<ModelFile> modelFiles;
   
   private boolean convertToRelativeUris;
@@ -58,6 +68,8 @@ public class TransformationThread extends Thread {
   private Predicate<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>> transformationsFinishedCallback;
   
   private Display display;
+  
+  private LinkedHashMap<AbstractIntermediateModelTransformationStrategy<?, ?>, Function2<? super List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, ? super Predicate<IntermediateTransformationException>, ? extends List<AbstractIntermediateModelTransformationStrategy.TransformationResult>>> transformationsFinishedListeners;
   
   /**
    * Constructor
@@ -83,51 +95,77 @@ public class TransformationThread extends Thread {
    */
   @Override
   public void run() {
-    final LinkedHashSet<BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void>> transformationsFinishedListeners = CollectionLiterals.<BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void>>newLinkedHashSet();
-    final ArrayList<AbstractIntermediateModelTransformationStrategy.TransformationResult> allTransformationResults = CollectionLiterals.<AbstractIntermediateModelTransformationStrategy.TransformationResult>newArrayList();
+    this.transformationsFinishedListeners = CollectionLiterals.<AbstractIntermediateModelTransformationStrategy<?, ?>, Function2<? super List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, ? super Predicate<IntermediateTransformationException>, ? extends List<AbstractIntermediateModelTransformationStrategy.TransformationResult>>>newLinkedHashMap();
+    final TransformationThread.TransformationResultsPerStrategy allTransformationStrategiesAndResults = new TransformationThread.TransformationResultsPerStrategy();
     for (int i = 0; ((i < this.modelFiles.size()) && (!this.stopTransformations)); i++) {
       {
         final ModelFile modelFile = this.modelFiles.get(i);
         this.invokeCallbackIfSpecified(this.nextTransformationCallback, modelFile);
-        final Pair<List<BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void>>, List<AbstractIntermediateModelTransformationStrategy.TransformationResult>> transformationListenersAndResults = this.executeTransformations(modelFile);
-        transformationsFinishedListeners.addAll(transformationListenersAndResults.getKey());
-        final List<AbstractIntermediateModelTransformationStrategy.TransformationResult> transformationResults = transformationListenersAndResults.getValue();
-        this.invokeCallbackIfSpecified(this.currentTransformationFinishedCallback, 
-          Collections.<AbstractIntermediateModelTransformationStrategy.TransformationResult>unmodifiableList(transformationResults));
-        allTransformationResults.addAll(transformationResults);
+        final Pair<AbstractIntermediateModelTransformationStrategy<?, ?>, List<AbstractIntermediateModelTransformationStrategy.TransformationResult>> transformationStrategyAndResults = this.executeTransformations(modelFile);
+        if ((transformationStrategyAndResults != null)) {
+          final AbstractIntermediateModelTransformationStrategy<?, ?> strategy = transformationStrategyAndResults.getKey();
+          final List<AbstractIntermediateModelTransformationStrategy.TransformationResult> results = transformationStrategyAndResults.getValue();
+          allTransformationStrategiesAndResults.put(strategy, results);
+          this.invokeCallbackIfSpecified(this.currentTransformationFinishedCallback, 
+            Collections.<AbstractIntermediateModelTransformationStrategy.TransformationResult>unmodifiableList(results));
+        } else {
+          this.invokeCallbackIfSpecified(this.currentTransformationFinishedCallback, CollectionLiterals.<AbstractIntermediateModelTransformationStrategy.TransformationResult>emptyList());
+        }
       }
     }
-    this.executeTransformationsFinishedListeners(transformationsFinishedListeners, allTransformationResults);
-    this.invokeCallbackIfSpecified(this.transformationsFinishedCallback, allTransformationResults);
+    final List<AbstractIntermediateModelTransformationStrategy.TransformationResult> allTransformationResults = IterableExtensions.<AbstractIntermediateModelTransformationStrategy.TransformationResult>toList(Iterables.<AbstractIntermediateModelTransformationStrategy.TransformationResult>concat(allTransformationStrategiesAndResults.values()));
+    this.convertModelPathsToAbsoluteFileUris(allTransformationResults);
+    final TransformationThread.TransformationResultsPerStrategy additionalResults = this.executeTransformationsFinishedListeners(allTransformationResults);
+    final BiConsumer<AbstractIntermediateModelTransformationStrategy<?, ?>, List<AbstractIntermediateModelTransformationStrategy.TransformationResult>> _function = (AbstractIntermediateModelTransformationStrategy<?, ?> strategy, List<AbstractIntermediateModelTransformationStrategy.TransformationResult> results) -> {
+      List<AbstractIntermediateModelTransformationStrategy.TransformationResult> _putIfAbsent = allTransformationStrategiesAndResults.putIfAbsent(strategy, results);
+      if (_putIfAbsent!=null) {
+        _putIfAbsent.addAll(results);
+      }
+      allTransformationResults.addAll(results);
+    };
+    additionalResults.forEach(_function);
+    this.invokeCallbackIfSpecified(this.transformationsFinishedCallback, 
+      Collections.<AbstractIntermediateModelTransformationStrategy.TransformationResult>unmodifiableList(allTransformationResults));
+    if (this.convertToRelativeUris) {
+      final BiConsumer<AbstractIntermediateModelTransformationStrategy<?, ?>, List<AbstractIntermediateModelTransformationStrategy.TransformationResult>> _function_1 = (AbstractIntermediateModelTransformationStrategy<?, ?> strategy, List<AbstractIntermediateModelTransformationStrategy.TransformationResult> results) -> {
+        final Consumer<AbstractIntermediateModelTransformationStrategy.TransformationResult> _function_2 = (AbstractIntermediateModelTransformationStrategy.TransformationResult it) -> {
+          try {
+            strategy.makeUrisRelative(it);
+            it.getOutputModel().getResource().save(CollectionLiterals.<Object, Object>emptyMap());
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        };
+        results.forEach(_function_2);
+      };
+      allTransformationStrategiesAndResults.forEach(_function_1);
+    }
   }
   
   /**
    * Execute main and refining transformations on a model file
    */
-  private Pair<List<BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void>>, List<AbstractIntermediateModelTransformationStrategy.TransformationResult>> executeTransformations(final ModelFile modelFile) {
-    final ArrayList<BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void>> transformationsFinishedListeners = CollectionLiterals.<BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void>>newArrayList();
-    final ArrayList<AbstractIntermediateModelTransformationStrategy.TransformationResult> results = CollectionLiterals.<AbstractIntermediateModelTransformationStrategy.TransformationResult>newArrayList();
-    boolean exceptionOccurred = false;
+  private Pair<AbstractIntermediateModelTransformationStrategy<?, ?>, List<AbstractIntermediateModelTransformationStrategy.TransformationResult>> executeTransformations(final ModelFile modelFile) {
     try {
+      final ArrayList<AbstractIntermediateModelTransformationStrategy.TransformationResult> results = CollectionLiterals.<AbstractIntermediateModelTransformationStrategy.TransformationResult>newArrayList();
       final List<String> outputPaths = this.buildTransformationOutputPaths(modelFile.getTransformationTargetPath(), 
         modelFile.getFileTypeDescription(), this.outputRefinementModels);
-      final AbstractIntermediateModelTransformationStrategy.TransformationResult mainTransformationResult = this.mainTransformation(modelFile, 
-        outputPaths.get(0), transformationsFinishedListeners);
+      final String mainOutputPath = outputPaths.get(0);
+      final Pair<AbstractIntermediateModelTransformationStrategy<?, ?>, AbstractIntermediateModelTransformationStrategy.TransformationResult> mainTransformationResultAndStrategy = this.mainTransformation(modelFile, mainOutputPath);
+      final AbstractIntermediateModelTransformationStrategy<?, ?> maintransformationStrategy = mainTransformationResultAndStrategy.getKey();
+      final AbstractIntermediateModelTransformationStrategy.TransformationResult mainTransformationResult = mainTransformationResultAndStrategy.getValue();
       if ((mainTransformationResult != null)) {
         results.add(mainTransformationResult);
       } else {
-        List<BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void>> _emptyList = CollectionLiterals.<BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void>>emptyList();
-        List<AbstractIntermediateModelTransformationStrategy.TransformationResult> _emptyList_1 = CollectionLiterals.<AbstractIntermediateModelTransformationStrategy.TransformationResult>emptyList();
-        return Pair.<List<BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void>>, List<AbstractIntermediateModelTransformationStrategy.TransformationResult>>of(_emptyList, _emptyList_1);
+        return null;
       }
-      final List<AbstractIntermediateModelTransformationStrategy.TransformationResult> refiningTransformationResults = this.refiningTransformations(modelFile, outputPaths, transformationsFinishedListeners);
+      final List<AbstractIntermediateModelTransformationStrategy.TransformationResult> refiningTransformationResults = this.refiningTransformations(modelFile, outputPaths);
       if ((refiningTransformationResults != null)) {
         results.addAll(refiningTransformationResults);
       } else {
-        List<BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void>> _emptyList_2 = CollectionLiterals.<BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void>>emptyList();
-        List<AbstractIntermediateModelTransformationStrategy.TransformationResult> _emptyList_3 = CollectionLiterals.<AbstractIntermediateModelTransformationStrategy.TransformationResult>emptyList();
-        return Pair.<List<BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void>>, List<AbstractIntermediateModelTransformationStrategy.TransformationResult>>of(_emptyList_2, _emptyList_3);
+        return null;
       }
+      return Pair.<AbstractIntermediateModelTransformationStrategy<?, ?>, List<AbstractIntermediateModelTransformationStrategy.TransformationResult>>of(maintransformationStrategy, results);
     } catch (final Throwable _t) {
       if (_t instanceof IntermediateTransformationException) {
         final IntermediateTransformationException ex = (IntermediateTransformationException)_t;
@@ -138,25 +176,16 @@ public class TransformationThread extends Thread {
         } else {
           this.invokeCallbackIfSpecified(this.transformationExceptionCallback, ex);
         }
-        exceptionOccurred = true;
+        return null;
       } else if (_t instanceof Exception) {
         final Exception ex_1 = (Exception)_t;
         ex_1.printStackTrace();
         this.invokeCallbackIfSpecified(this.transformationExceptionCallback, ex_1);
-        exceptionOccurred = true;
+        return null;
       } else {
         throw Exceptions.sneakyThrow(_t);
       }
     }
-    Pair<List<BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void>>, List<AbstractIntermediateModelTransformationStrategy.TransformationResult>> _xifexpression = null;
-    if ((!exceptionOccurred)) {
-      _xifexpression = Pair.<List<BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void>>, List<AbstractIntermediateModelTransformationStrategy.TransformationResult>>of(transformationsFinishedListeners, results);
-    } else {
-      List<BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void>> _emptyList = CollectionLiterals.<BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void>>emptyList();
-      List<AbstractIntermediateModelTransformationStrategy.TransformationResult> _emptyList_1 = CollectionLiterals.<AbstractIntermediateModelTransformationStrategy.TransformationResult>emptyList();
-      _xifexpression = Pair.<List<BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void>>, List<AbstractIntermediateModelTransformationStrategy.TransformationResult>>of(_emptyList, _emptyList_1);
-    }
-    return _xifexpression;
   }
   
   /**
@@ -184,9 +213,9 @@ public class TransformationThread extends Thread {
   }
   
   /**
-   * Perform main transformation on a model file
+   * Execute main transformation on a model file
    */
-  private AbstractIntermediateModelTransformationStrategy.TransformationResult mainTransformation(final ModelFile modelFile, final String outputPath, final List<BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void>> transformationsFinishedListeners) {
+  private Pair<AbstractIntermediateModelTransformationStrategy<?, ?>, AbstractIntermediateModelTransformationStrategy.TransformationResult> mainTransformation(final ModelFile modelFile, final String outputPath) {
     final AbstractIntermediateModelTransformationStrategy strategy = modelFile.getFileTypeDescription().createMainTransformationStrategy();
     final Function1<ModelFile, String> _function = (ModelFile it) -> {
       return it.getImportAlias();
@@ -210,14 +239,41 @@ public class TransformationThread extends Thread {
       modelFile.getChildren().forEach(_function_2);
     }
     Pair<String, Map<String, String>> _mappedTo = Pair.<String, Map<String, String>>of(outputPath, importTargetPaths);
-    return this.executeTransformation(modelFile.getFile(), strategy, outputPath, 
-      Collections.<String, Map<String, String>>unmodifiableMap(CollectionLiterals.<String, Map<String, String>>newHashMap(_mappedTo)), transformationsFinishedListeners);
+    AbstractIntermediateModelTransformationStrategy.TransformationResult _executeTransformation = this.executeTransformation(modelFile.getFile(), strategy, outputPath, 
+      Collections.<String, Map<String, String>>unmodifiableMap(CollectionLiterals.<String, Map<String, String>>newHashMap(_mappedTo)));
+    return Pair.<AbstractIntermediateModelTransformationStrategy<?, ?>, AbstractIntermediateModelTransformationStrategy.TransformationResult>of(strategy, _executeTransformation);
   }
   
   /**
-   * Perform refining transformations on a model file
+   * Execute a single transformation strategy on an input file
    */
-  private List<AbstractIntermediateModelTransformationStrategy.TransformationResult> refiningTransformations(final ModelFile modelFile, final List<String> outputPaths, final List<BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void>> transformationsFinishedListeners) {
+  private AbstractIntermediateModelTransformationStrategy.TransformationResult executeTransformation(final IFile inputFile, final AbstractIntermediateModelTransformationStrategy strategy, final String outputPath, final Map<String, Map<String, String>> targetPathsOfImports) {
+    final Predicate<IntermediateTransformationException> _function = (IntermediateTransformationException it) -> {
+      return this.internalTransformationWarningCallback(it);
+    };
+    Map _doTransformationFromFiles = strategy.doTransformationFromFiles(
+      Collections.<Object>unmodifiableList(CollectionLiterals.<Object>newArrayList(inputFile)), 
+      Collections.<Object>unmodifiableList(CollectionLiterals.<Object>newArrayList(outputPath)), targetPathsOfImports, _function);
+    Collection _values = null;
+    if (_doTransformationFromFiles!=null) {
+      _values=_doTransformationFromFiles.values();
+    }
+    Object _get = null;
+    if (((Object[])Conversions.unwrapArray(_values, Object.class))!=null) {
+      _get=((Object[])Conversions.unwrapArray(_values, Object.class))[0];
+    }
+    final AbstractIntermediateModelTransformationStrategy.TransformationResult transformationResult = ((AbstractIntermediateModelTransformationStrategy.TransformationResult) _get);
+    final Function2 finishedListener = strategy.registerTransformationsFinishedListener();
+    if (((finishedListener != null) && (transformationResult != null))) {
+      this.transformationsFinishedListeners.put(strategy, finishedListener);
+    }
+    return transformationResult;
+  }
+  
+  /**
+   * Execute refining transformations on a model file
+   */
+  private List<AbstractIntermediateModelTransformationStrategy.TransformationResult> refiningTransformations(final ModelFile modelFile, final List<String> outputPaths) {
     final ArrayList<AbstractIntermediateModelTransformationStrategy.TransformationResult> transformationResults = CollectionLiterals.<AbstractIntermediateModelTransformationStrategy.TransformationResult>newArrayList();
     int outputPathIndex = 0;
     final ModelFileTypeDescription fileTypeDescription = modelFile.getFileTypeDescription();
@@ -242,7 +298,7 @@ public class TransformationThread extends Thread {
         final AbstractIntermediateModelTransformationStrategy strategy = fileTypeDescription.createRefiningTransformationStrategy((strategyIndex).intValue());
         final IFile inputFile = ResourcesPlugin.getWorkspace().getRoot().getFile(inputFilePath);
         final AbstractIntermediateModelTransformationStrategy.TransformationResult transformationResult = this.executeTransformation(inputFile, strategy, outputFilePath, 
-          null, transformationsFinishedListeners);
+          null);
         if ((transformationResult != null)) {
           transformationResults.add(transformationResult);
         } else {
@@ -254,79 +310,56 @@ public class TransformationThread extends Thread {
   }
   
   /**
-   * Execute a single transformation strategy on an input file
+   * Convert the paths of input and output models in the given set of transformation results to
+   * absolute file URIs
    */
-  private AbstractIntermediateModelTransformationStrategy.TransformationResult executeTransformation(final IFile inputFile, final AbstractIntermediateModelTransformationStrategy strategy, final String outputPath, final Map<String, Map<String, String>> targetPathsOfImports, final List<BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void>> transformationsFinishedListeners) {
-    final Predicate<IntermediateTransformationException> _function = (IntermediateTransformationException it) -> {
-      return this.internalTransformationWarningCallback(it);
+  private void convertModelPathsToAbsoluteFileUris(final List<AbstractIntermediateModelTransformationStrategy.TransformationResult> results) {
+    final Consumer<AbstractIntermediateModelTransformationStrategy.TransformationResult> _function = (AbstractIntermediateModelTransformationStrategy.TransformationResult it) -> {
+      final Consumer<AbstractIntermediateModelTransformationStrategy.InputModel> _function_1 = (AbstractIntermediateModelTransformationStrategy.InputModel it_1) -> {
+        it_1.setInputPath(LemmaUtils.convertToFileUri(it_1.getInputPath()));
+      };
+      it.getInputModels().forEach(_function_1);
+      AbstractIntermediateModelTransformationStrategy.OutputModel _outputModel = it.getOutputModel();
+      _outputModel.setOutputPath(LemmaUtils.convertProjectPathToAbsoluteFileUri(it.getOutputModel().getOutputPath()));
     };
-    Map _doTransformationFromFiles = strategy.doTransformationFromFiles(
-      Collections.<Object>unmodifiableList(CollectionLiterals.<Object>newArrayList(inputFile)), 
-      Collections.<Object>unmodifiableList(CollectionLiterals.<Object>newArrayList(outputPath)), targetPathsOfImports, 
-      this.convertToRelativeUris, _function);
-    Collection _values = null;
-    if (_doTransformationFromFiles!=null) {
-      _values=_doTransformationFromFiles.values();
-    }
-    Object _get = null;
-    if (((Object[])Conversions.unwrapArray(_values, Object.class))!=null) {
-      _get=((Object[])Conversions.unwrapArray(_values, Object.class))[0];
-    }
-    final AbstractIntermediateModelTransformationStrategy.TransformationResult transformationResult = ((AbstractIntermediateModelTransformationStrategy.TransformationResult) _get);
-    final BiFunction finishedListener = strategy.registerTransformationsFinishedListener();
-    if (((finishedListener != null) && (transformationResult != null))) {
-      transformationsFinishedListeners.add(finishedListener);
-    }
-    return transformationResult;
+    results.forEach(_function);
   }
   
   /**
    * Execute transformation finished listeners
    */
-  private Boolean executeTransformationsFinishedListeners(final LinkedHashSet<BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void>> listeners, final List<AbstractIntermediateModelTransformationStrategy.TransformationResult> results) {
-    boolean _xblockexpression = false;
-    {
-      final Consumer<AbstractIntermediateModelTransformationStrategy.TransformationResult> _function = (AbstractIntermediateModelTransformationStrategy.TransformationResult it) -> {
-        final Consumer<AbstractIntermediateModelTransformationStrategy.InputModel> _function_1 = (AbstractIntermediateModelTransformationStrategy.InputModel it_1) -> {
-          it_1.setInputPath(LemmaUtils.convertToFileUri(it_1.getInputPath()));
+  private TransformationThread.TransformationResultsPerStrategy executeTransformationsFinishedListeners(final List<AbstractIntermediateModelTransformationStrategy.TransformationResult> results) {
+    final TransformationThread.TransformationResultsPerStrategy additionalResultsPerStrategy = new TransformationThread.TransformationResultsPerStrategy();
+    try {
+      final BiConsumer<AbstractIntermediateModelTransformationStrategy<?, ?>, Function2<? super List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, ? super Predicate<IntermediateTransformationException>, ? extends List<AbstractIntermediateModelTransformationStrategy.TransformationResult>>> _function = (AbstractIntermediateModelTransformationStrategy<?, ?> strategy, Function2<? super List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, ? super Predicate<IntermediateTransformationException>, ? extends List<AbstractIntermediateModelTransformationStrategy.TransformationResult>> listener) -> {
+        final Predicate<IntermediateTransformationException> _function_1 = (IntermediateTransformationException it) -> {
+          return this.internalTransformationWarningCallback(it);
         };
-        it.getInputModels().forEach(_function_1);
-        AbstractIntermediateModelTransformationStrategy.OutputModel _outputModel = it.getOutputModel();
-        _outputModel.setOutputPath(LemmaUtils.convertProjectPathToAbsoluteFileUri(it.getOutputModel().getOutputPath()));
-      };
-      results.forEach(_function);
-      boolean _xtrycatchfinallyexpression = false;
-      try {
-        final Consumer<BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void>> _function_1 = (BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void> it) -> {
-          final Predicate<IntermediateTransformationException> _function_2 = (IntermediateTransformationException it_1) -> {
-            return this.internalTransformationWarningCallback(it_1);
-          };
-          it.apply(results, _function_2);
-        };
-        listeners.forEach(_function_1);
-      } catch (final Throwable _t) {
-        if (_t instanceof IntermediateTransformationException) {
-          final IntermediateTransformationException ex = (IntermediateTransformationException)_t;
-          boolean _xifexpression = false;
-          IntermediateTransformationExceptionKind _kind = ex.getKind();
-          boolean _tripleEquals = (_kind == IntermediateTransformationExceptionKind.WARNING);
-          if (_tripleEquals) {
-            _xifexpression = this.internalTransformationWarningCallback(ex);
-          } else {
-            this.invokeCallbackIfSpecified(this.transformationExceptionCallback, ex);
-          }
-          _xtrycatchfinallyexpression = _xifexpression;
-        } else if (_t instanceof Exception) {
-          final Exception ex_1 = (Exception)_t;
-          ex_1.printStackTrace();
-          this.invokeCallbackIfSpecified(this.transformationExceptionCallback, ex_1);
-        } else {
-          throw Exceptions.sneakyThrow(_t);
+        final List<AbstractIntermediateModelTransformationStrategy.TransformationResult> additionalResults = listener.apply(results, _function_1);
+        if (((additionalResults != null) && (!additionalResults.isEmpty()))) {
+          additionalResultsPerStrategy.put(strategy, additionalResults);
         }
+      };
+      this.transformationsFinishedListeners.forEach(_function);
+    } catch (final Throwable _t) {
+      if (_t instanceof IntermediateTransformationException) {
+        final IntermediateTransformationException ex = (IntermediateTransformationException)_t;
+        IntermediateTransformationExceptionKind _kind = ex.getKind();
+        boolean _tripleEquals = (_kind == IntermediateTransformationExceptionKind.WARNING);
+        if (_tripleEquals) {
+          this.internalTransformationWarningCallback(ex);
+        } else {
+          this.invokeCallbackIfSpecified(this.transformationExceptionCallback, ex);
+        }
+      } else if (_t instanceof Exception) {
+        final Exception ex_1 = (Exception)_t;
+        ex_1.printStackTrace();
+        this.invokeCallbackIfSpecified(this.transformationExceptionCallback, ex_1);
+      } else {
+        throw Exceptions.sneakyThrow(_t);
       }
-      _xblockexpression = _xtrycatchfinallyexpression;
     }
-    return Boolean.valueOf(_xblockexpression);
+    return additionalResultsPerStrategy;
   }
   
   /**

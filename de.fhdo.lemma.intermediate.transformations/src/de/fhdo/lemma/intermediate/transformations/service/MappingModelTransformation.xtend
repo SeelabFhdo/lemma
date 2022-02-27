@@ -79,8 +79,7 @@ class MappingModelTransformation
      */
     override beforeTransformationHook(
         Map<TransformationModelDescription, IFile> inputModelFiles,
-        Map<TransformationModelDescription, String> outputModelPaths,
-        boolean convertToRelativeUris
+        Map<TransformationModelDescription, String> outputModelPaths
     ) {
          absoluteInputModelFilePath = LemmaUtils.getAbsolutePath(inputModelFiles.values.get(0))
     }
@@ -278,6 +277,20 @@ class MappingModelTransformation
     }
 
     /**
+     * Convert URIs in intermediate models that occurred from the transformation of a mapping model
+     * to relative ones
+     */
+    override makeUrisRelative(TransformationResult result) {
+        val modelRoot = result.outputModel.resource.contents.get(0)
+        switch(modelRoot) {
+            IntermediateDataModel:
+                IntermediateDataModelTransformation.performUriRelativization(result)
+            IntermediateServiceModel:
+                IntermediateServiceModelTransformation.performUriRelativization(result)
+        }
+    }
+
+    /**
      * This class clusters all functionalities related to the refining of intermediate data models.
      * The refining of intermediate data models being produced during the same transformation run
      * becomes necessary in case the mapping model comprises complex type mappings. In that case,
@@ -296,7 +309,7 @@ class MappingModelTransformation
         /**
          * Execute the refinements
          */
-        private static def Void executeRefinements(
+        private static def List<TransformationResult> executeRefinements(
             TechnologyMapping inputMappingModel,
             String absoluteInputModelPath,
             List<TransformationResult> results,
@@ -517,7 +530,6 @@ class MappingModelTransformation
                     inputModelResources,
                     outputModelPaths,
                     null,
-                    false,
                     warningCallback
                 ).get(IntermediateDataModelRefinement.IN_MODEL_DESCRIPTION)
 
