@@ -45,7 +45,6 @@ REM Model Processing Framework
 set modules=%modules%;de.fhdo.lemma.model_processing
 set modules=%modules%;de.fhdo.lemma.model_processing.utils
 set modules=%modules%;"examples\model-processing"
-set modules=%modules%;"examples\model-processing-latest"
 
 REM Code Generators
 set modules=%modules%;"code generators\de.fhdo.lemma.ddd"

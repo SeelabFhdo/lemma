@@ -46,7 +46,6 @@ de.fhdo.lemma.ocl
 de.fhdo.lemma.model_processing
 de.fhdo.lemma.model_processing.utils
 examples/model-processing
-examples/model-processing-latest
 
 # Code Generators
 code generators/de.fhdo.lemma.ddd

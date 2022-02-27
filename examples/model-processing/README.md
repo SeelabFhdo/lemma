@@ -1,10 +1,5 @@
 # Example LEMMA Code Generator
 
-**Note that this example project only serves documentary purposes for the implementation of model processors prior to
-the refactoring of LEMMA's model processing framework with LEMMA release 0.8.5-SNAPSHOT. For the latest approach on how
-to implement model processors leveraging the framework, please have a look at the example project
-`model-processing-latest`.**
-
 This project illustrates the implementation of code generators using
 [LEMMA's model processing framework](https://github.com/SeelabFhdo/lemma/tree/main/de.fhdo.lemma.model_processing).
 In general, this framework aims to facilitate the implementation of processors (e.g., code generators but also static

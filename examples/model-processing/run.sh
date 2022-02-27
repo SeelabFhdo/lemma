@@ -4,7 +4,7 @@
 # exists.
 
 # Make sure to run the following line with Java 11 or higher
-java -jar build/libs/de.fhdo.lemma.examples.model_processing-standalone.jar \
+java -jar build/libs/de.fhdo.lemma.examples.model_processing.latest-standalone.jar \
   --source_model "example models/microservices/Order.services" \
   --intermediate_model "example models/intermediate/service models/Order.xmi" \
   --target_folder "generated code"
