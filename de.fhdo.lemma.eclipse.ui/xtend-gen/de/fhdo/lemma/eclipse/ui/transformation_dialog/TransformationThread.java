@@ -8,6 +8,7 @@ import de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils;
 import de.fhdo.lemma.intermediate.transformations.AbstractIntermediateModelTransformationStrategy;
 import de.fhdo.lemma.intermediate.transformations.IntermediateTransformationException;
 import de.fhdo.lemma.intermediate.transformations.IntermediateTransformationExceptionKind;
+import de.fhdo.lemma.intermediate.transformations.TransformationModelDescription;
 import de.fhdo.lemma.utils.LemmaUtils;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -216,7 +217,7 @@ public class TransformationThread extends Thread {
    * Execute main transformation on a model file
    */
   private Pair<AbstractIntermediateModelTransformationStrategy<?, ?>, AbstractIntermediateModelTransformationStrategy.TransformationResult> mainTransformation(final ModelFile modelFile, final String outputPath) {
-    final AbstractIntermediateModelTransformationStrategy strategy = modelFile.getFileTypeDescription().createMainTransformationStrategy();
+    final AbstractIntermediateModelTransformationStrategy<?, ?> strategy = modelFile.getFileTypeDescription().createMainTransformationStrategy();
     final Function1<ModelFile, String> _function = (ModelFile it) -> {
       return it.getImportAlias();
     };
@@ -247,23 +248,23 @@ public class TransformationThread extends Thread {
   /**
    * Execute a single transformation strategy on an input file
    */
-  private AbstractIntermediateModelTransformationStrategy.TransformationResult executeTransformation(final IFile inputFile, final AbstractIntermediateModelTransformationStrategy strategy, final String outputPath, final Map<String, Map<String, String>> targetPathsOfImports) {
+  private AbstractIntermediateModelTransformationStrategy.TransformationResult executeTransformation(final IFile inputFile, final AbstractIntermediateModelTransformationStrategy<?, ?> strategy, final String outputPath, final Map<String, Map<String, String>> targetPathsOfImports) {
     final Predicate<IntermediateTransformationException> _function = (IntermediateTransformationException it) -> {
       return this.internalTransformationWarningCallback(it);
     };
-    Map _doTransformationFromFiles = strategy.doTransformationFromFiles(
-      Collections.<Object>unmodifiableList(CollectionLiterals.<Object>newArrayList(inputFile)), 
-      Collections.<Object>unmodifiableList(CollectionLiterals.<Object>newArrayList(outputPath)), targetPathsOfImports, _function);
-    Collection _values = null;
+    Map<TransformationModelDescription, AbstractIntermediateModelTransformationStrategy.TransformationResult> _doTransformationFromFiles = strategy.doTransformationFromFiles(
+      Collections.<IFile>unmodifiableList(CollectionLiterals.<IFile>newArrayList(inputFile)), 
+      Collections.<String>unmodifiableList(CollectionLiterals.<String>newArrayList(outputPath)), targetPathsOfImports, _function);
+    Collection<AbstractIntermediateModelTransformationStrategy.TransformationResult> _values = null;
     if (_doTransformationFromFiles!=null) {
       _values=_doTransformationFromFiles.values();
     }
-    Object _get = null;
-    if (((Object[])Conversions.unwrapArray(_values, Object.class))!=null) {
-      _get=((Object[])Conversions.unwrapArray(_values, Object.class))[0];
+    AbstractIntermediateModelTransformationStrategy.TransformationResult _get = null;
+    if (((AbstractIntermediateModelTransformationStrategy.TransformationResult[])Conversions.unwrapArray(_values, AbstractIntermediateModelTransformationStrategy.TransformationResult.class))!=null) {
+      _get=((AbstractIntermediateModelTransformationStrategy.TransformationResult[])Conversions.unwrapArray(_values, AbstractIntermediateModelTransformationStrategy.TransformationResult.class))[0];
     }
     final AbstractIntermediateModelTransformationStrategy.TransformationResult transformationResult = ((AbstractIntermediateModelTransformationStrategy.TransformationResult) _get);
-    final Function2 finishedListener = strategy.registerTransformationsFinishedListener();
+    final Function2<? super List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, ? super Predicate<IntermediateTransformationException>, ? extends List<AbstractIntermediateModelTransformationStrategy.TransformationResult>> finishedListener = strategy.registerTransformationsFinishedListener();
     if (((finishedListener != null) && (transformationResult != null))) {
       this.transformationsFinishedListeners.put(strategy, finishedListener);
     }
@@ -295,7 +296,7 @@ public class TransformationThread extends Thread {
           inputFilePath = _path_1;
           outputFilePath = outputPaths.get(0);
         }
-        final AbstractIntermediateModelTransformationStrategy strategy = fileTypeDescription.createRefiningTransformationStrategy((strategyIndex).intValue());
+        final AbstractIntermediateModelTransformationStrategy<?, ?> strategy = fileTypeDescription.createRefiningTransformationStrategy((strategyIndex).intValue());
         final IFile inputFile = ResourcesPlugin.getWorkspace().getRoot().getFile(inputFilePath);
         final AbstractIntermediateModelTransformationStrategy.TransformationResult transformationResult = this.executeTransformation(inputFile, strategy, outputFilePath, 
           null);

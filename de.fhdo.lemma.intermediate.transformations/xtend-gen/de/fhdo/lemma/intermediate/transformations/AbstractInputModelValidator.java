@@ -17,8 +17,6 @@ import org.eclipse.xtext.xbase.lib.Exceptions;
 public abstract class AbstractInputModelValidator<T extends EObject> {
   protected String absoluteModelPath;
   
-  private Predicate<IntermediateTransformationException> warningCallback;
-  
   /**
    * Validate input model
    */
@@ -37,7 +35,6 @@ public abstract class AbstractInputModelValidator<T extends EObject> {
       if ((warningFunctions == null)) {
         return true;
       }
-      this.warningCallback = warningCallback;
       for (final Function<T, Void> warningFunction : warningFunctions) {
         try {
           warningFunction.apply(modelRoot);

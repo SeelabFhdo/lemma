@@ -29,7 +29,7 @@ class ModelFileTypeDescription {
     // result files. In most cases, this result file corresponds to the resulting XMI file. However,
     // there might be subsequent refiningTransformationStrategies, which transform the result file
     // into more specific files.
-    Class<? extends AbstractIntermediateModelTransformationStrategy> mainTransformationStrategy
+    Class<? extends AbstractIntermediateModelTransformationStrategy<?, ?>> mainTransformationStrategy
 
     List<TransformationModelType> outputModelTypes
 
@@ -39,15 +39,16 @@ class ModelFileTypeDescription {
     // refine the initial result file. This mechanism is, for instance, used to derive a service
     // from a mapping model (main transformation strategy) and transform it to an intermediate
     // service model (refining transformation strategy).
-    LinkedList<Class<? extends AbstractIntermediateModelTransformationStrategy>>
+    LinkedList<Class<? extends AbstractIntermediateModelTransformationStrategy<?, ?>>>
         refiningTransformationStrategies
 
     /**
      * Constructor
      */
     new(String fileType, Image icon, String description, List<String> extensions,
-        Class<? extends AbstractIntermediateModelTransformationStrategy> mainTransformationStrategy,
-        Class<? extends AbstractIntermediateModelTransformationStrategy>...
+        Class<? extends AbstractIntermediateModelTransformationStrategy<?, ?>>
+            mainTransformationStrategy,
+        Class<? extends AbstractIntermediateModelTransformationStrategy<?, ?>>...
             refiningTransformationStrategies
     ) {
         this.fileType = fileType
@@ -63,7 +64,7 @@ class ModelFileTypeDescription {
      */
     def createMainTransformationStrategy() {
         return if (mainTransformationStrategy !== null)
-                mainTransformationStrategy.newInstance
+                mainTransformationStrategy.declaredConstructor.newInstance()
             else
                 null
     }
@@ -83,7 +84,8 @@ class ModelFileTypeDescription {
             return emptyList
 
         if (outputModelTypes === null)
-            outputModelTypes = mainTransformationStrategy.newInstance.outputModelTypes
+            outputModelTypes = mainTransformationStrategy.declaredConstructor.newInstance
+                .outputModelTypes
 
         return outputModelTypes
     }
@@ -94,7 +96,7 @@ class ModelFileTypeDescription {
     def createRefiningTransformationStrategy(int index) {
         return if (refiningTransformationStrategies !== null && index >= 0 &&
             index < refiningTransformationStrategies.size)
-                refiningTransformationStrategies.get(index).newInstance
+                refiningTransformationStrategies.get(index).declaredConstructor.newInstance()
             else
                 null
     }

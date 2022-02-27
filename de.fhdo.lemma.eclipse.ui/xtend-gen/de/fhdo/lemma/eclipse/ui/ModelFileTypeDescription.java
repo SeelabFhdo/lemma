@@ -29,32 +29,32 @@ public class ModelFileTypeDescription {
   @Accessors
   private List<String> extensions;
   
-  private Class<? extends AbstractIntermediateModelTransformationStrategy> mainTransformationStrategy;
+  private Class<? extends AbstractIntermediateModelTransformationStrategy<?, ?>> mainTransformationStrategy;
   
   private List<TransformationModelType> outputModelTypes;
   
-  private LinkedList<Class<? extends AbstractIntermediateModelTransformationStrategy>> refiningTransformationStrategies;
+  private LinkedList<Class<? extends AbstractIntermediateModelTransformationStrategy<?, ?>>> refiningTransformationStrategies;
   
   /**
    * Constructor
    */
-  public ModelFileTypeDescription(final String fileType, final Image icon, final String description, final List<String> extensions, final Class<? extends AbstractIntermediateModelTransformationStrategy> mainTransformationStrategy, final Class<? extends AbstractIntermediateModelTransformationStrategy>... refiningTransformationStrategies) {
+  public ModelFileTypeDescription(final String fileType, final Image icon, final String description, final List<String> extensions, final Class<? extends AbstractIntermediateModelTransformationStrategy<?, ?>> mainTransformationStrategy, final Class<? extends AbstractIntermediateModelTransformationStrategy<?, ?>>... refiningTransformationStrategies) {
     this.fileType = fileType;
     this.icon = icon;
     this.description = description;
     this.extensions = extensions;
     this.mainTransformationStrategy = mainTransformationStrategy;
-    this.refiningTransformationStrategies = CollectionLiterals.<Class<? extends AbstractIntermediateModelTransformationStrategy>>newLinkedList(refiningTransformationStrategies);
+    this.refiningTransformationStrategies = CollectionLiterals.<Class<? extends AbstractIntermediateModelTransformationStrategy<?, ?>>>newLinkedList(refiningTransformationStrategies);
   }
   
   /**
    * Factory method to create a new instance of the main transformation strategy
    */
-  public AbstractIntermediateModelTransformationStrategy createMainTransformationStrategy() {
+  public AbstractIntermediateModelTransformationStrategy<?, ?> createMainTransformationStrategy() {
     try {
-      AbstractIntermediateModelTransformationStrategy _xifexpression = null;
+      AbstractIntermediateModelTransformationStrategy<?, ?> _xifexpression = null;
       if ((this.mainTransformationStrategy != null)) {
-        _xifexpression = this.mainTransformationStrategy.newInstance();
+        _xifexpression = this.mainTransformationStrategy.getDeclaredConstructor().newInstance();
       } else {
         _xifexpression = null;
       }
@@ -82,7 +82,7 @@ public class ModelFileTypeDescription {
         return CollectionLiterals.<TransformationModelType>emptyList();
       }
       if ((this.outputModelTypes == null)) {
-        this.outputModelTypes = this.mainTransformationStrategy.newInstance().getOutputModelTypes();
+        this.outputModelTypes = this.mainTransformationStrategy.getDeclaredConstructor().newInstance().getOutputModelTypes();
       }
       return this.outputModelTypes;
     } catch (Throwable _e) {
@@ -93,12 +93,12 @@ public class ModelFileTypeDescription {
   /**
    * Factory method to create a new instance of a certain refining transformation strategy
    */
-  public AbstractIntermediateModelTransformationStrategy createRefiningTransformationStrategy(final int index) {
+  public AbstractIntermediateModelTransformationStrategy<?, ?> createRefiningTransformationStrategy(final int index) {
     try {
-      AbstractIntermediateModelTransformationStrategy _xifexpression = null;
+      AbstractIntermediateModelTransformationStrategy<?, ?> _xifexpression = null;
       if ((((this.refiningTransformationStrategies != null) && (index >= 0)) && 
         (index < this.refiningTransformationStrategies.size()))) {
-        _xifexpression = this.refiningTransformationStrategies.get(index).newInstance();
+        _xifexpression = this.refiningTransformationStrategies.get(index).getDeclaredConstructor().newInstance();
       } else {
         _xifexpression = null;
       }

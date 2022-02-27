@@ -17,7 +17,7 @@ import de.fhdo.lemma.eclipse.ui.ModelFileTypeDescription
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 abstract class AbstractUiModelTransformationStrategy {
-    var AbstractIntermediateModelTransformationStrategy transformationStrategy
+    var AbstractIntermediateModelTransformationStrategy<?, ?> transformationStrategy
 
     /**
      * Return the transformation strategy of the concrete subclass. Note, that this method mimics
@@ -128,6 +128,6 @@ abstract class AbstractUiModelTransformationStrategy {
     /**
      * Get a new instance of the transformation strategy
      */
-    abstract protected def AbstractIntermediateModelTransformationStrategy
+    abstract protected def AbstractIntermediateModelTransformationStrategy<?, ?>
         getTransformationStrategyInternal()
 }

@@ -14,7 +14,6 @@ import com.google.common.base.Function
  */
 abstract class AbstractInputModelValidator<T extends EObject> {
     protected String absoluteModelPath
-    Predicate<IntermediateTransformationException> warningCallback
 
     /**
      * Validate input model
@@ -35,7 +34,7 @@ abstract class AbstractInputModelValidator<T extends EObject> {
         if (warningFunctions === null) {
             return true
         }
-        this.warningCallback = warningCallback
+
         for (warningFunction : warningFunctions)
             try {
                 warningFunction.apply(modelRoot)

@@ -18,14 +18,14 @@ import org.eclipse.xtext.xbase.lib.Pair;
  */
 @SuppressWarnings("all")
 public abstract class AbstractUiModelTransformationStrategy {
-  private AbstractIntermediateModelTransformationStrategy transformationStrategy;
+  private AbstractIntermediateModelTransformationStrategy<?, ?> transformationStrategy;
   
   /**
    * Return the transformation strategy of the concrete subclass. Note, that this method mimics
    * the behavior of a Singleton. That is, the instance of the transformation strategy is created
    * only once to increase performance.
    */
-  public AbstractIntermediateModelTransformationStrategy getTransformationStrategy() {
+  public AbstractIntermediateModelTransformationStrategy<?, ?> getTransformationStrategy() {
     if ((this.transformationStrategy == null)) {
       this.transformationStrategy = this.getTransformationStrategyInternal();
     }
@@ -124,5 +124,5 @@ public abstract class AbstractUiModelTransformationStrategy {
   /**
    * Get a new instance of the transformation strategy
    */
-  protected abstract AbstractIntermediateModelTransformationStrategy getTransformationStrategyInternal();
+  protected abstract AbstractIntermediateModelTransformationStrategy<?, ?> getTransformationStrategyInternal();
 }

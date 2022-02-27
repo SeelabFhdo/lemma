@@ -9,7 +9,6 @@ import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.Path
 import de.fhdo.lemma.eclipse.ui.ModelFileTypeDescription
 import de.fhdo.lemma.intermediate.transformations.AbstractIntermediateModelTransformationStrategy.TransformationResult
-import java.util.function.BiFunction
 import de.fhdo.lemma.intermediate.transformations.IntermediateTransformationException
 import de.fhdo.lemma.intermediate.transformations.AbstractIntermediateModelTransformationStrategy
 import org.eclipse.core.resources.IFile
@@ -218,7 +217,7 @@ class TransformationThread extends Thread {
      */
     private def TransformationResult executeTransformation(
         IFile inputFile,
-        AbstractIntermediateModelTransformationStrategy strategy,
+        AbstractIntermediateModelTransformationStrategy<?, ?> strategy,
         String outputPath,
         Map<String, Map<String, String>> targetPathsOfImports
     ) {

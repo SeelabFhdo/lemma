@@ -257,7 +257,7 @@ public class OperationModelTransformationStrategy extends AbstractUiModelTransfo
    * Get transformation strategy
    */
   @Override
-  public AbstractIntermediateModelTransformationStrategy getTransformationStrategyInternal() {
+  public AbstractIntermediateModelTransformationStrategy<?, ?> getTransformationStrategyInternal() {
     return new IntermediateOperationModelTransformation();
   }
   
