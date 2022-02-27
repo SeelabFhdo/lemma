@@ -53,16 +53,16 @@ public class TransformationThread extends Thread {
   
   private Predicate<Exception> transformationExceptionCallback;
   
-  private Predicate<Void> currentTransformationFinishedCallback;
+  private Predicate<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>> currentTransformationFinishedCallback;
   
-  private Predicate<Void> transformationsFinishedCallback;
+  private Predicate<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>> transformationsFinishedCallback;
   
   private Display display;
   
   /**
    * Constructor
    */
-  public TransformationThread(final LinkedList<ModelFile> modelFiles, final boolean convertToRelativeUris, final boolean outputRefinementModels, final Display display, final Predicate<ModelFile> nextTransformationCallback, final Predicate<IntermediateTransformationException> transformationWarningCallback, final Predicate<Exception> transformationExceptionCallback, final Predicate<Void> currentTransformationFinishedCallback, final Predicate<Void> transformationsFinishedCallback) {
+  public TransformationThread(final LinkedList<ModelFile> modelFiles, final boolean convertToRelativeUris, final boolean outputRefinementModels, final Display display, final Predicate<ModelFile> nextTransformationCallback, final Predicate<IntermediateTransformationException> transformationWarningCallback, final Predicate<Exception> transformationExceptionCallback, final Predicate<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>> currentTransformationFinishedCallback, final Predicate<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>> transformationsFinishedCallback) {
     super();
     if (((modelFiles == null) || modelFiles.isEmpty())) {
       throw new IllegalArgumentException("Input models must not be null or empty");
@@ -84,19 +84,21 @@ public class TransformationThread extends Thread {
   @Override
   public void run() {
     final LinkedHashSet<BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void>> transformationsFinishedListeners = CollectionLiterals.<BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void>>newLinkedHashSet();
-    final ArrayList<AbstractIntermediateModelTransformationStrategy.TransformationResult> transformationResults = CollectionLiterals.<AbstractIntermediateModelTransformationStrategy.TransformationResult>newArrayList();
+    final ArrayList<AbstractIntermediateModelTransformationStrategy.TransformationResult> allTransformationResults = CollectionLiterals.<AbstractIntermediateModelTransformationStrategy.TransformationResult>newArrayList();
     for (int i = 0; ((i < this.modelFiles.size()) && (!this.stopTransformations)); i++) {
       {
         final ModelFile modelFile = this.modelFiles.get(i);
-        this.invokeGuiCallbackIfSpecified(this.nextTransformationCallback, modelFile);
+        this.invokeCallbackIfSpecified(this.nextTransformationCallback, modelFile);
         final Pair<List<BiFunction<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, Predicate<IntermediateTransformationException>, Void>>, List<AbstractIntermediateModelTransformationStrategy.TransformationResult>> transformationListenersAndResults = this.executeTransformations(modelFile);
         transformationsFinishedListeners.addAll(transformationListenersAndResults.getKey());
-        transformationResults.addAll(transformationListenersAndResults.getValue());
-        this.invokeGuiCallbackIfSpecified(this.currentTransformationFinishedCallback);
+        final List<AbstractIntermediateModelTransformationStrategy.TransformationResult> transformationResults = transformationListenersAndResults.getValue();
+        this.invokeCallbackIfSpecified(this.currentTransformationFinishedCallback, 
+          Collections.<AbstractIntermediateModelTransformationStrategy.TransformationResult>unmodifiableList(transformationResults));
+        allTransformationResults.addAll(transformationResults);
       }
     }
-    this.executeTransformationsFinishedListeners(transformationsFinishedListeners, transformationResults);
-    this.invokeGuiCallbackIfSpecified(this.transformationsFinishedCallback);
+    this.executeTransformationsFinishedListeners(transformationsFinishedListeners, allTransformationResults);
+    this.invokeCallbackIfSpecified(this.transformationsFinishedCallback, allTransformationResults);
   }
   
   /**
@@ -134,13 +136,13 @@ public class TransformationThread extends Thread {
         if (_tripleEquals) {
           this.internalTransformationWarningCallback(ex);
         } else {
-          this.invokeGuiCallbackIfSpecified(this.transformationExceptionCallback, ex);
+          this.invokeCallbackIfSpecified(this.transformationExceptionCallback, ex);
         }
         exceptionOccurred = true;
       } else if (_t instanceof Exception) {
         final Exception ex_1 = (Exception)_t;
         ex_1.printStackTrace();
-        this.invokeGuiCallbackIfSpecified(this.transformationExceptionCallback, ex_1);
+        this.invokeCallbackIfSpecified(this.transformationExceptionCallback, ex_1);
         exceptionOccurred = true;
       } else {
         throw Exceptions.sneakyThrow(_t);
@@ -311,13 +313,13 @@ public class TransformationThread extends Thread {
           if (_tripleEquals) {
             _xifexpression = this.internalTransformationWarningCallback(ex);
           } else {
-            this.invokeGuiCallbackIfSpecified(this.transformationExceptionCallback, ex);
+            this.invokeCallbackIfSpecified(this.transformationExceptionCallback, ex);
           }
           _xtrycatchfinallyexpression = _xifexpression;
         } else if (_t instanceof Exception) {
           final Exception ex_1 = (Exception)_t;
           ex_1.printStackTrace();
-          this.invokeGuiCallbackIfSpecified(this.transformationExceptionCallback, ex_1);
+          this.invokeCallbackIfSpecified(this.transformationExceptionCallback, ex_1);
         } else {
           throw Exceptions.sneakyThrow(_t);
         }
@@ -331,76 +333,91 @@ public class TransformationThread extends Thread {
    * Internal transformation warning callback
    */
   private boolean internalTransformationWarningCallback(final IntermediateTransformationException warning) {
-    boolean _xifexpression = false;
-    if ((this.transformationWarningCallback != null)) {
-      boolean _xblockexpression = false;
-      {
-        this.display.syncExec(new Runnable() {
-          @Override
-          public void run() {
-            TransformationThread.this.continueTransformationAfterWarning = TransformationThread.this.transformationWarningCallback.apply(warning);
-          }
-        });
-        _xblockexpression = this.continueTransformationAfterWarning;
-      }
-      _xifexpression = _xblockexpression;
+    if ((this.transformationWarningCallback == null)) {
+      return true;
+    }
+    if ((this.display != null)) {
+      this.display.syncExec(new Runnable() {
+        @Override
+        public void run() {
+          TransformationThread.this.continueTransformationAfterWarning = TransformationThread.this.transformationWarningCallback.apply(warning);
+        }
+      });
     } else {
-      _xifexpression = true;
+      this.continueTransformationAfterWarning = this.transformationWarningCallback.apply(warning);
     }
-    return _xifexpression;
+    return this.continueTransformationAfterWarning;
   }
   
   /**
-   * Helper to invoke a callback function in sync with the current display, i.e., the GUI. May
-   * lead to aborting all transformations.
+   * Helper to invoke a callback function. In case a Display instance is available, i.e., we're in
+   * a GUI thread, the function invocation will happen in sync with GUI thread.
    */
-  private void invokeGuiCallbackIfSpecified(final Predicate<ModelFile> function, final ModelFile arg) {
+  private void invokeCallbackIfSpecified(final Predicate<ModelFile> function, final ModelFile modelFile) {
     if ((function == null)) {
       return;
     }
-    this.display.syncExec(new Runnable() {
-      @Override
-      public void run() {
-        boolean _apply = function.apply(arg);
-        boolean _not = (!_apply);
-        TransformationThread.this.stopTransformations = _not;
-      }
-    });
+    if ((this.display != null)) {
+      this.display.syncExec(new Runnable() {
+        @Override
+        public void run() {
+          boolean _apply = function.apply(modelFile);
+          boolean _not = (!_apply);
+          TransformationThread.this.stopTransformations = _not;
+        }
+      });
+    } else {
+      boolean _apply = function.apply(modelFile);
+      boolean _not = (!_apply);
+      this.stopTransformations = _not;
+    }
   }
   
   /**
-   * Helper to invoke a callback function in sync with the current display, i.e., the GUI. May
-   * lead to aborting all transformations.
+   * Helper to invoke a callback function. In case a Display instance is available, i.e., we're in
+   * a GUI thread, the function invocation will happen in sync with GUI thread.
    */
-  private void invokeGuiCallbackIfSpecified(final Predicate<Exception> function, final Exception arg) {
+  private void invokeCallbackIfSpecified(final Predicate<Exception> function, final Exception exception) {
     if ((function == null)) {
       return;
     }
-    this.display.syncExec(new Runnable() {
-      @Override
-      public void run() {
-        boolean _apply = function.apply(arg);
-        boolean _not = (!_apply);
-        TransformationThread.this.stopTransformations = _not;
-      }
-    });
+    if ((this.display != null)) {
+      this.display.syncExec(new Runnable() {
+        @Override
+        public void run() {
+          boolean _apply = function.apply(exception);
+          boolean _not = (!_apply);
+          TransformationThread.this.stopTransformations = _not;
+        }
+      });
+    } else {
+      boolean _apply = function.apply(exception);
+      boolean _not = (!_apply);
+      this.stopTransformations = _not;
+    }
   }
   
   /**
-   * Helper to invoke a callback function in sync with the current display, i.e., the GUI. May
-   * lead to aborting all transformations.
+   * Helper to invoke a callback function. In case a Display instance is available, i.e., we're in
+   * a GUI thread, the function invocation will happen in sync with GUI thread.
    */
-  private void invokeGuiCallbackIfSpecified(final Predicate<Void> function) {
+  private void invokeCallbackIfSpecified(final Predicate<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>> function, final List<AbstractIntermediateModelTransformationStrategy.TransformationResult> transformationResults) {
     if ((function == null)) {
       return;
     }
-    this.display.syncExec(new Runnable() {
-      @Override
-      public void run() {
-        boolean _apply = function.apply(null);
-        boolean _not = (!_apply);
-        TransformationThread.this.stopTransformations = _not;
-      }
-    });
+    if ((this.display != null)) {
+      this.display.syncExec(new Runnable() {
+        @Override
+        public void run() {
+          boolean _apply = function.apply(transformationResults);
+          boolean _not = (!_apply);
+          TransformationThread.this.stopTransformations = _not;
+        }
+      });
+    } else {
+      boolean _apply = function.apply(transformationResults);
+      boolean _not = (!_apply);
+      this.stopTransformations = _not;
+    }
   }
 }

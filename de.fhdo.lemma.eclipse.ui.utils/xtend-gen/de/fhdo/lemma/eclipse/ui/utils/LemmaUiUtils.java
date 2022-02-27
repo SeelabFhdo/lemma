@@ -64,11 +64,15 @@ import org.osgi.framework.FrameworkUtil;
  */
 @SuppressWarnings("all")
 public final class LemmaUiUtils {
-  public static final String SERVICE_DSL_EDITOR_ID = "de.fhdo.lemma.ServiceDsl";
+  public static final String DATA_DSL_EDITOR_ID = "de.fhdo.lemma.data.DataDsl";
   
   public static final String MAPPING_DSL_EDITOR_ID = "de.fhdo.lemma.technology.mappingdsl.MappingDsl";
   
   public static final String OPERATION_DSL_EDITOR_ID = "de.fhdo.lemma.operationdsl.OperationDsl";
+  
+  public static final String SERVICE_DSL_EDITOR_ID = "de.fhdo.lemma.ServiceDsl";
+  
+  public static final String TECHNOLOGY_DSL_EDITOR_ID = "de.fhdo.lemma.technology.technologydsl";
   
   /**
    * Helper to get file extensions for registered DSL editors

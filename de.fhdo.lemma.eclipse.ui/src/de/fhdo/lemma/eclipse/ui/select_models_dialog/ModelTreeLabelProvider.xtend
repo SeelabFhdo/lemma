@@ -4,7 +4,7 @@ import org.eclipse.jface.viewers.StyledString
 import org.eclipse.swt.graphics.Image
 import org.eclipse.core.resources.IProject
 import de.fhdo.lemma.eclipse.ui.ModelFile
-import de.fhdo.lemma.eclipse.ui.ModelFileStyledLabelProvider
+import de.fhdo.lemma.eclipse.ui.internal.ModelFileStyledLabelProvider
 import de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils
 
 /**

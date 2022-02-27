@@ -1,11 +1,14 @@
 package de.fhdo.lemma.eclipse.ui
 
-import java.util.Map
 import java.util.List
 import org.eclipse.core.resources.IFile
 import de.fhdo.lemma.intermediate.transformations.AbstractIntermediateModelTransformationStrategy
 import java.util.LinkedHashMap
 import java.util.LinkedList
+import java.util.Comparator
+import java.util.Collections
+import de.fhdo.lemma.eclipse.ui.ModelFile
+import de.fhdo.lemma.eclipse.ui.ModelFileTypeDescription
 
 /**
  * Abstract strategy for preparing, displaying and controlling intermediate models' transformation
@@ -37,6 +40,30 @@ abstract class AbstractUiModelTransformationStrategy {
      * Get model types' ordering for displaying purposes
      */
     abstract def LinkedList<String> getModelTypeDisplayOrdering()
+
+    /**
+     * Sort a list of model files according to their ordering intended for transformation. The
+     * result will be a new list, i.e., the given list of model files will not be changed.
+     */
+    final def sortByTransformationOrder(List<ModelFile> modelFiles) {
+        val orderedModelFiles = <ModelFile>newLinkedList
+        orderedModelFiles.addAll(modelFiles)
+
+        Collections.sort(orderedModelFiles, new Comparator {
+            override compare(Object o1, Object o2) {
+                val file1 = o1 as ModelFile
+                val fileTypeIndex1 = modelTypeTransformationOrdering
+                    .indexOf(file1.fileTypeDescription.fileType)
+
+                val file2 = o2 as ModelFile
+                val fileTypeIndex2 = modelTypeTransformationOrdering
+                    .indexOf(file2.fileTypeDescription.fileType)
+                return Integer.compare(fileTypeIndex1, fileTypeIndex2)
+            }
+        })
+
+        return orderedModelFiles
+    }
 
     /**
      * Get model types' ordering for transformation
@@ -89,9 +116,9 @@ abstract class AbstractUiModelTransformationStrategy {
     abstract def String getSpecifyPathsDialogMessage()
 
     /**
-     * Get files being imported into a model file mapped to their import aliases
+     * Get imported files of a model in their import order and mapped to their import aliases
      */
-    abstract def Map<String, IFile> getImportedModelFiles(ModelFile modelFile)
+    abstract def LinkedHashMap<String, IFile> getImportedModelFiles(ModelFile modelFile)
 
     /**
      * Get default transformation target path for file

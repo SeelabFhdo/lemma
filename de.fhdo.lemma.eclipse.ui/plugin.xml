@@ -37,11 +37,11 @@
          point="org.eclipse.ui.handlers">
       <handler
             commandId="de.fhdo.lemma.eclipse.ui.commands.generateServiceIntermediateModels"
-            class="de.fhdo.lemma.eclipse.ui.IntermediateServiceModelTransformationController">
+            class="de.fhdo.lemma.eclipse.ui.internal.IntermediateServiceModelTransformationController">
       </handler>
       <handler
             commandId="de.fhdo.lemma.eclipse.ui.commands.generateOperationIntermediateModels"
-            class="de.fhdo.lemma.eclipse.ui.IntermediateOperationModelTransformationController">
+            class="de.fhdo.lemma.eclipse.ui.internal.IntermediateOperationModelTransformationController">
       </handler>
       <handler
             commandId="de.fhdo.lemma.eclipse.ui.commands.about"

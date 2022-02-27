@@ -37,9 +37,11 @@ import org.eclipse.core.runtime.IAdaptable
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 final class LemmaUiUtils {
-    public static val SERVICE_DSL_EDITOR_ID = "de.fhdo.lemma.ServiceDsl"
+    public static val DATA_DSL_EDITOR_ID = "de.fhdo.lemma.data.DataDsl"
     public static val MAPPING_DSL_EDITOR_ID = "de.fhdo.lemma.technology.mappingdsl.MappingDsl"
     public static val OPERATION_DSL_EDITOR_ID = "de.fhdo.lemma.operationdsl.OperationDsl"
+    public static val SERVICE_DSL_EDITOR_ID = "de.fhdo.lemma.ServiceDsl"
+    public static val TECHNOLOGY_DSL_EDITOR_ID = "de.fhdo.lemma.technology.technologydsl"
 
     /**
      * Helper to get file extensions for registered DSL editors

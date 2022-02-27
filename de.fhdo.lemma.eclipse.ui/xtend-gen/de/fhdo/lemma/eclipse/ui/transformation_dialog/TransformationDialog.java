@@ -1,17 +1,14 @@
 package de.fhdo.lemma.eclipse.ui.transformation_dialog;
 
 import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
 import de.fhdo.lemma.eclipse.ui.AbstractUiModelTransformationStrategy;
 import de.fhdo.lemma.eclipse.ui.ModelFile;
-import de.fhdo.lemma.eclipse.ui.transformation_dialog.TransformationThread;
 import de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils;
+import de.fhdo.lemma.intermediate.transformations.AbstractIntermediateModelTransformationStrategy;
 import de.fhdo.lemma.intermediate.transformations.IntermediateTransformationException;
 import de.fhdo.lemma.intermediate.transformations.IntermediateTransformationPhase;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -35,7 +32,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.xtend2.lib.StringConcatenation;
-import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.slf4j.Logger;
@@ -105,26 +101,15 @@ public class TransformationDialog extends TitleAreaDialog {
   }
   
   /**
-   * Filter input files for files that can actually be transformed and order thos files as
-   * determined by the current model transformation strategy
+   * Filter input files for transformable files and order those files as per the transformation
+   * strategy
    */
   private LinkedList<ModelFile> filterAndOrderForTransformation(final List<ModelFile> inputModelFiles, final AbstractUiModelTransformationStrategy strategy) {
-    final LinkedList<ModelFile> filteredAndOrderedFiles = CollectionLiterals.<ModelFile>newLinkedList();
     final Function1<ModelFile, Boolean> _function = (ModelFile it) -> {
       return Boolean.valueOf(it.getFileTypeDescription().canBeTransformed());
     };
-    Iterables.<ModelFile>addAll(filteredAndOrderedFiles, IterableExtensions.<ModelFile>filter(inputModelFiles, _function));
-    Collections.<ModelFile>sort(filteredAndOrderedFiles, new Comparator() {
-      @Override
-      public int compare(final Object o1, final Object o2) {
-        final ModelFile file1 = ((ModelFile) o1);
-        final int fileTypeIndex1 = strategy.getModelTypeTransformationOrdering().indexOf(file1.getFileTypeDescription().getFileType());
-        final ModelFile file2 = ((ModelFile) o2);
-        final int fileTypeIndex2 = strategy.getModelTypeTransformationOrdering().indexOf(file2.getFileTypeDescription().getFileType());
-        return Integer.compare(fileTypeIndex1, fileTypeIndex2);
-      }
-    });
-    return filteredAndOrderedFiles;
+    return strategy.sortByTransformationOrder(
+      IterableExtensions.<ModelFile>toList(IterableExtensions.<ModelFile>filter(inputModelFiles, _function)));
   }
   
   /**
@@ -143,10 +128,10 @@ public class TransformationDialog extends TitleAreaDialog {
     final Predicate<Exception> _function_2 = (Exception it) -> {
       return this.transformationExceptionOccurred(it);
     };
-    final Predicate<Void> _function_3 = (Void it) -> {
+    final Predicate<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>> _function_3 = (List<AbstractIntermediateModelTransformationStrategy.TransformationResult> it) -> {
       return this.currentTransformationFinished();
     };
-    final Predicate<Void> _function_4 = (Void it) -> {
+    final Predicate<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>> _function_4 = (List<AbstractIntermediateModelTransformationStrategy.TransformationResult> it) -> {
       return this.transformationsFinished();
     };
     TransformationThread _transformationThread = new TransformationThread(

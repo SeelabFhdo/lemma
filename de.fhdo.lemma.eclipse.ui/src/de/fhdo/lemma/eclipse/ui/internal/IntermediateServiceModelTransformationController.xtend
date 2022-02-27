@@ -1,4 +1,6 @@
-package de.fhdo.lemma.eclipse.ui
+package de.fhdo.lemma.eclipse.ui.internal
+
+import de.fhdo.lemma.eclipse.ui.ServiceModelTransformationStrategy
 
 /**
  * Controller for handling the intermediate service model transformation in the UI.

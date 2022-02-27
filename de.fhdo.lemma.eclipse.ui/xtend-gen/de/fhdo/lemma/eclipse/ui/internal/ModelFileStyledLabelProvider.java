@@ -1,4 +1,4 @@
-package de.fhdo.lemma.eclipse.ui;
+package de.fhdo.lemma.eclipse.ui.internal;
 
 import de.fhdo.lemma.eclipse.ui.ModelFile;
 import de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils;

@@ -15,7 +15,7 @@ import org.eclipse.swt.layout.GridLayout
 import org.eclipse.swt.graphics.Point
 import org.eclipse.jface.viewers.TableViewerColumn
 import org.eclipse.jface.viewers.ColumnLabelProvider
-import de.fhdo.lemma.eclipse.ui.ModelFileStyledLabelProvider
+import de.fhdo.lemma.eclipse.ui.internal.ModelFileStyledLabelProvider
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider
 import org.eclipse.jface.resource.ResourceManager
 import org.eclipse.jface.resource.LocalResourceManager

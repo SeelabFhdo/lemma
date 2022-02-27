@@ -33,22 +33,23 @@ class TransformationThread extends Thread {
     Predicate<ModelFile> nextTransformationCallback
     Predicate<IntermediateTransformationException> transformationWarningCallback
     Predicate<Exception> transformationExceptionCallback
-    Predicate<Void> currentTransformationFinishedCallback
-    Predicate<Void> transformationsFinishedCallback
+    Predicate<List<TransformationResult>> currentTransformationFinishedCallback
+    Predicate<List<TransformationResult>> transformationsFinishedCallback
     Display display
 
     /**
      * Constructor
      */
-    new(LinkedList<ModelFile> modelFiles,
+    new(
+        LinkedList<ModelFile> modelFiles,
         boolean convertToRelativeUris,
         boolean outputRefinementModels,
         Display display,
         Predicate<ModelFile> nextTransformationCallback,
         Predicate<IntermediateTransformationException> transformationWarningCallback,
         Predicate<Exception> transformationExceptionCallback,
-        Predicate<Void> currentTransformationFinishedCallback,
-        Predicate<Void> transformationsFinishedCallback
+        Predicate<List<TransformationResult>> currentTransformationFinishedCallback,
+        Predicate<List<TransformationResult>> transformationsFinishedCallback
     ) {
         super()
 
@@ -75,20 +76,26 @@ class TransformationThread extends Thread {
             Predicate<IntermediateTransformationException>,
             Void
         >>newLinkedHashSet
-        val transformationResults = <TransformationResult>newArrayList
+        val allTransformationResults = <TransformationResult>newArrayList
 
         for (var i = 0; i < modelFiles.size && !stopTransformations; i++) {
             val modelFile = modelFiles.get(i)
-            nextTransformationCallback.invokeGuiCallbackIfSpecified(modelFile)
+            nextTransformationCallback.invokeCallbackIfSpecified(modelFile)
+
             val transformationListenersAndResults = modelFile.executeTransformations
+
             transformationsFinishedListeners.addAll(transformationListenersAndResults.key)
-            transformationResults.addAll(transformationListenersAndResults.value)
-            currentTransformationFinishedCallback.invokeGuiCallbackIfSpecified()
+
+            val transformationResults = transformationListenersAndResults.value
+            currentTransformationFinishedCallback.invokeCallbackIfSpecified(
+                transformationResults.unmodifiableView
+            )
+            allTransformationResults.addAll(transformationResults)
         }
 
         executeTransformationsFinishedListeners(transformationsFinishedListeners,
-            transformationResults)
-        transformationsFinishedCallback.invokeGuiCallbackIfSpecified()
+            allTransformationResults)
+        transformationsFinishedCallback.invokeCallbackIfSpecified(allTransformationResults)
     }
 
     /**
@@ -140,12 +147,12 @@ class TransformationThread extends Thread {
             if (ex.kind === IntermediateTransformationExceptionKind.WARNING)
                 internalTransformationWarningCallback(ex)
             else
-                transformationExceptionCallback.invokeGuiCallbackIfSpecified(ex)
+                transformationExceptionCallback.invokeCallbackIfSpecified(ex)
 
             exceptionOccurred = true
         } catch (Exception ex) {
             ex.printStackTrace
-            transformationExceptionCallback.invokeGuiCallbackIfSpecified(ex)
+            transformationExceptionCallback.invokeCallbackIfSpecified(ex)
             exceptionOccurred = true
         }
 
@@ -158,8 +165,11 @@ class TransformationThread extends Thread {
     /**
      * Build output paths for transformations by considering refining transformations
      */
-    private def List<String> buildTransformationOutputPaths(String initialOutputPath,
-        ModelFileTypeDescription fileTypeDescription, boolean outputRefinementModels) {
+    private def List<String> buildTransformationOutputPaths(
+        String initialOutputPath,
+        ModelFileTypeDescription fileTypeDescription,
+        boolean outputRefinementModels
+    ) {
         val outputPaths = <String>newArrayList
         if (fileTypeDescription.refiningStrategiesCount > 0 && outputRefinementModels) {
             val basicFilename = LemmaUiUtils.removeExtension(initialOutputPath)
@@ -311,77 +321,88 @@ class TransformationThread extends Thread {
             if (ex.kind === IntermediateTransformationExceptionKind.WARNING)
                 internalTransformationWarningCallback(ex)
             else
-                transformationExceptionCallback.invokeGuiCallbackIfSpecified(ex)
+                transformationExceptionCallback.invokeCallbackIfSpecified(ex)
         } catch (Exception ex) {
             ex.printStackTrace
-            transformationExceptionCallback.invokeGuiCallbackIfSpecified(ex)
+            transformationExceptionCallback.invokeCallbackIfSpecified(ex)
         }
     }
 
     /**
      * Internal transformation warning callback
      */
-    private def internalTransformationWarningCallback(
-        IntermediateTransformationException warning
-    ) {
-        return if (transformationWarningCallback !== null) {
+    private def internalTransformationWarningCallback(IntermediateTransformationException warning) {
+        if (transformationWarningCallback === null)
+            return true
+
+        if (display !== null)
             display.syncExec(new Runnable() {
                 override run() {
                     continueTransformationAfterWarning =
                         transformationWarningCallback.apply(warning)
                 }
             })
+        else
+            continueTransformationAfterWarning = transformationWarningCallback.apply(warning)
 
-            continueTransformationAfterWarning
-        } else
-            true
+        return continueTransformationAfterWarning
     }
 
     /**
-     * Helper to invoke a callback function in sync with the current display, i.e., the GUI. May
-     * lead to aborting all transformations.
+     * Helper to invoke a callback function. In case a Display instance is available, i.e., we're in
+     * a GUI thread, the function invocation will happen in sync with GUI thread.
      */
-    private def invokeGuiCallbackIfSpecified(Predicate<ModelFile> function, ModelFile arg) {
+    private def invokeCallbackIfSpecified(Predicate<ModelFile> function, ModelFile modelFile) {
         if (function === null) {
             return
         }
 
-        display.syncExec(new Runnable() {
-            override run() {
-                stopTransformations = !function.apply(arg)
-            }
-        })
+        if (display !== null)
+            display.syncExec(new Runnable() {
+                override run() {
+                    stopTransformations = !function.apply(modelFile)
+                }
+            })
+        else
+            stopTransformations = !function.apply(modelFile)
     }
 
     /**
-     * Helper to invoke a callback function in sync with the current display, i.e., the GUI. May
-     * lead to aborting all transformations.
+     * Helper to invoke a callback function. In case a Display instance is available, i.e., we're in
+     * a GUI thread, the function invocation will happen in sync with GUI thread.
      */
-    private def invokeGuiCallbackIfSpecified(Predicate<Exception> function, Exception arg) {
+    private def invokeCallbackIfSpecified(Predicate<Exception> function, Exception exception) {
         if (function === null) {
             return
         }
 
-        display.syncExec(new Runnable() {
-            override run() {
-                stopTransformations = !function.apply(arg)
-            }
-        })
+        if (display !== null)
+            display.syncExec(new Runnable() {
+                override run() {
+                    stopTransformations = !function.apply(exception)
+                }
+            })
+        else
+            stopTransformations = !function.apply(exception)
     }
 
     /**
-     * Helper to invoke a callback function in sync with the current display, i.e., the GUI. May
-     * lead to aborting all transformations.
+     * Helper to invoke a callback function. In case a Display instance is available, i.e., we're in
+     * a GUI thread, the function invocation will happen in sync with GUI thread.
      */
-    private def invokeGuiCallbackIfSpecified(Predicate<Void> function) {
+    private def invokeCallbackIfSpecified(Predicate<List<TransformationResult>> function,
+        List<TransformationResult> transformationResults) {
         if (function === null) {
             return
         }
 
-        display.syncExec(new Runnable() {
-            override run() {
-                stopTransformations = !function.apply(null)
-            }
-        })
+        if (display !== null)
+            display.syncExec(new Runnable() {
+                override run() {
+                    stopTransformations = !function.apply(transformationResults)
+                }
+            })
+        else
+            stopTransformations = !function.apply(transformationResults)
     }
 }

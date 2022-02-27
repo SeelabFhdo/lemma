@@ -1,6 +1,5 @@
-package de.fhdo.lemma.eclipse.ui;
+package de.fhdo.lemma.eclipse.ui.internal;
 
-import de.fhdo.lemma.eclipse.ui.AbstractIntermediateModelTransformationController;
 import de.fhdo.lemma.eclipse.ui.AbstractUiModelTransformationStrategy;
 import de.fhdo.lemma.eclipse.ui.OperationModelTransformationStrategy;
 

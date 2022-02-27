@@ -12,13 +12,14 @@ import de.fhdo.lemma.service.ImportType
 import de.fhdo.lemma.technology.mapping.TechnologyMapping
 import de.fhdo.lemma.data.DataModel
 import java.util.LinkedHashMap
-import java.util.Collections
-import java.util.Map
 import de.fhdo.lemma.intermediate.transformations.service.IntermediateDataModelTransformation
 import de.fhdo.lemma.intermediate.transformations.service.IntermediateServiceModelTransformation
 import de.fhdo.lemma.intermediate.transformations.service.MappingModelTransformation
 import de.fhdo.lemma.utils.LemmaUtils
 import de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils
+import de.fhdo.lemma.eclipse.ui.ModelFileTypeDescription
+import de.fhdo.lemma.eclipse.ui.ModelFile
+import org.eclipse.swt.widgets.Display
 
 /**
  * UI-specific intermediate model transformation strategy for models related to the Service Modeling
@@ -31,46 +32,32 @@ class ServiceModelTransformationStrategy extends AbstractUiModelTransformationSt
     public static val MAPPING_MODEL_FILE_TYPE_ID = "MAPPING"
     public static val SERVICE_MODEL_FILE_TYPE_ID = "SERVICE"
 
-    static val DATA_DSL_EDITOR_ID = "de.fhdo.lemma.data.DataDsl"
-    static val SERVICE_DSL_EDITOR_ID = "de.fhdo.lemma.ServiceDsl"
-    static val MAPPING_DSL_EDITOR_ID = "de.fhdo.lemma.technology.mappingdsl.MappingDsl"
-    static val List<String> DATA_MODEL_FILE_EXTENSIONS = newArrayList
-    static val List<String> SERVICE_MODEL_FILE_EXTENSIONS = newArrayList
-    static val List<String> MAPPING_MODEL_FILE_EXTENSIONS = newArrayList
+    public static val List<String> DATA_MODEL_FILE_EXTENSIONS
+        = LemmaUiUtils.getFileExtensions(LemmaUiUtils.DATA_DSL_EDITOR_ID)
+    public static val List<String> SERVICE_MODEL_FILE_EXTENSIONS
+        = LemmaUiUtils.getFileExtensions(LemmaUiUtils.SERVICE_DSL_EDITOR_ID)
+    public static val List<String> MAPPING_MODEL_FILE_EXTENSIONS
+        = LemmaUiUtils.getFileExtensions(LemmaUiUtils.MAPPING_DSL_EDITOR_ID)
     static val String MODEL_TYPE_PREFIX = "service"
-    static val ResourceManager RESOURCE_MANAGER =
-        new LocalResourceManager(JFaceResources.getResources())
-    var LinkedHashMap<String, ModelFileTypeDescription> modelFileTypeDescriptions
 
-    /**
-     * Constructor
-     */
+    val LinkedHashMap<String, ModelFileTypeDescription> modelFileTypeDescriptions
+
     new() {
-        // Collect all relevant file extensions
-        if (SERVICE_MODEL_FILE_EXTENSIONS.empty)
-            SERVICE_MODEL_FILE_EXTENSIONS.addAll(
-                LemmaUiUtils.getFileExtensions(SERVICE_DSL_EDITOR_ID)
-            )
+        /*
+         * Don't associate model file type descriptions with model file icons if no Display instance
+         * is available. In this case, we're not in a UI thread and thus can't load icon images. In
+         * fact, JFaceResources.getResources() will throw an NPE then.
+         */
+        val resourceManager = if (Display.current !== null)
+                new LocalResourceManager(JFaceResources.getResources())
+            else
+                null
 
-        if (MAPPING_MODEL_FILE_EXTENSIONS.empty)
-            MAPPING_MODEL_FILE_EXTENSIONS.addAll(
-                LemmaUiUtils.getFileExtensions(MAPPING_DSL_EDITOR_ID)
-            )
-
-        if (DATA_MODEL_FILE_EXTENSIONS.empty)
-            DATA_MODEL_FILE_EXTENSIONS.addAll(LemmaUiUtils.getFileExtensions(DATA_DSL_EDITOR_ID))
-
-        setupModelFileTypeDescriptions()
-    }
-
-    /**
-     * Helper to setup the map of model file type descriptions
-     */
-    private def setupModelFileTypeDescriptions() {
+        /* Create model file type descriptions */
         modelFileTypeDescriptions = newLinkedHashMap(
             DATA_MODEL_FILE_TYPE_ID -> new ModelFileTypeDescription(
                 DATA_MODEL_FILE_TYPE_ID,
-                LemmaUiUtils.createImage(RESOURCE_MANAGER, class, "dataModelFile.gif"),
+                resourceManager.loadImageIfPossible("dataModelFile.gif"),
                 "Data Model",
                 DATA_MODEL_FILE_EXTENSIONS,
                 typeof(IntermediateDataModelTransformation)
@@ -78,7 +65,7 @@ class ServiceModelTransformationStrategy extends AbstractUiModelTransformationSt
 
             MAPPING_MODEL_FILE_TYPE_ID -> new ModelFileTypeDescription(
                 MAPPING_MODEL_FILE_TYPE_ID,
-                LemmaUiUtils.createImage(RESOURCE_MANAGER, class, "mappingModelFile.gif"),
+                resourceManager.loadImageIfPossible("mappingModelFile.gif"),
                 "Mapping Model",
                 MAPPING_MODEL_FILE_EXTENSIONS,
                 typeof(MappingModelTransformation),
@@ -89,12 +76,23 @@ class ServiceModelTransformationStrategy extends AbstractUiModelTransformationSt
 
             SERVICE_MODEL_FILE_TYPE_ID -> new ModelFileTypeDescription(
                 SERVICE_MODEL_FILE_TYPE_ID,
-                LemmaUiUtils.createImage(RESOURCE_MANAGER, class, "serviceModelFile.gif"),
+                resourceManager.loadImageIfPossible("serviceModelFile.gif"),
                 "Service Model",
                 SERVICE_MODEL_FILE_EXTENSIONS,
                 typeof(IntermediateServiceModelTransformation)
             )
         )
+    }
+
+    /**
+     * Helper to load an image file if a resource manager is available
+     */
+    private def loadImageIfPossible(ResourceManager resourceManager, String filename) {
+        return if (resourceManager !== null)
+                LemmaUiUtils.createImage(resourceManager, ServiceModelTransformationStrategy,
+                    filename)
+            else
+                null
     }
 
     /**
@@ -208,44 +206,44 @@ class ServiceModelTransformationStrategy extends AbstractUiModelTransformationSt
     }
 
     /**
-     * Get files being import by a given model file in the form of IFile instances
+     * Get imported files of a given model file in the form of IFile instances
      */
     override getImportedModelFiles(ModelFile modelFile) {
+        if (modelFile.xtextResource.contents.empty)
+            return <String, IFile>newLinkedHashMap
+
         /* Get aliases and import URIs of imported files */
-        var Map<String, String> importAliasesAndUris
+        val importAliasesAndUris = <String, String>newLinkedHashMap
 
-        if (!modelFile.xtextResource.contents.empty) {
-            // Service Models
-            if (LemmaUiUtils.hasExtension(modelFile.file, SERVICE_MODEL_FILE_EXTENSIONS)) {
-                val modelRoot = modelFile.xtextResource.contents.get(0) as ServiceModel
-                importAliasesAndUris = modelRoot.imports
-                    .filter[
-                        importType === ImportType.DATATYPES ||
-                        importType === ImportType.MICROSERVICES
-                    ].toMap([name], [importURI])
-            }
+        // Service models
+        if (LemmaUiUtils.hasExtension(modelFile.file, SERVICE_MODEL_FILE_EXTENSIONS)) {
+            val modelRoot = modelFile.xtextResource.contents.get(0) as ServiceModel
+            modelRoot.imports
+                .filter[
+                    importType === ImportType.DATATYPES ||
+                    importType === ImportType.MICROSERVICES
+                ].forEach[importAliasesAndUris.put(name, importURI)]
+        }
 
-            // Mapping Models
-            else if (LemmaUiUtils.hasExtension(modelFile.file, MAPPING_MODEL_FILE_EXTENSIONS)) {
-                val modelRoot = modelFile.xtextResource.contents.get(0) as TechnologyMapping
-                importAliasesAndUris = modelRoot.imports
-                    .filter[importType === ImportType.MICROSERVICES]
-                    .toMap([name], [importURI])
-            }
+        // Mapping models
+        else if (LemmaUiUtils.hasExtension(modelFile.file, MAPPING_MODEL_FILE_EXTENSIONS)) {
+            val modelRoot = modelFile.xtextResource.contents.get(0) as TechnologyMapping
+            modelRoot.imports
+                .filter[importType === ImportType.MICROSERVICES]
+                .forEach[importAliasesAndUris.put(name, importURI)]
+        }
 
-            // Data Models
-            else if (LemmaUiUtils.hasExtension(modelFile.file, DATA_MODEL_FILE_EXTENSIONS)) {
-                val modelRoot = modelFile.xtextResource.contents.get(0) as DataModel
-                importAliasesAndUris = modelRoot.complexTypeImports.toMap([name], [importURI])
-            }
-        } else
-            return Collections.EMPTY_MAP
+        // Data models
+        else if (LemmaUiUtils.hasExtension(modelFile.file, DATA_MODEL_FILE_EXTENSIONS)) {
+            val modelRoot = modelFile.xtextResource.contents.get(0) as DataModel
+            modelRoot.complexTypeImports.forEach[importAliasesAndUris.put(name, importURI)]
+        }
 
         /*
          * Iterate over import URIs and return corresponding model files from the workspace mapped
          * to their unique aliases
          */
-        val importedModelFiles = <String, IFile> newHashMap
+        val importedModelFiles = <String, IFile>newLinkedHashMap
         importAliasesAndUris.forEach[alias, importUri |
             // Create URI for absolute path of imported model file
             val modelFileFullPath = modelFile.file.location.toString

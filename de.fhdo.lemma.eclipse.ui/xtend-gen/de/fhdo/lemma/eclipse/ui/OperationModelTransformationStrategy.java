@@ -15,14 +15,13 @@ import de.fhdo.lemma.service.ServiceModel;
 import de.fhdo.lemma.utils.LemmaUtils;
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.emf.ecore.EObject;
@@ -30,6 +29,7 @@ import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
@@ -52,71 +52,62 @@ public class OperationModelTransformationStrategy extends AbstractUiModelTransfo
   
   public static final String DATA_MODEL_FILE_TYPE_ID = "DATA";
   
-  private static final String OPERATION_DSL_EDITOR_ID = "de.fhdo.lemma.operationdsl.OperationDsl";
+  public static final List<String> DATA_MODEL_FILE_EXTENSIONS = LemmaUiUtils.getFileExtensions(LemmaUiUtils.DATA_DSL_EDITOR_ID);
   
-  private static final String SERVICE_DSL_EDITOR_ID = "de.fhdo.lemma.ServiceDsl";
+  public static final List<String> OPERATION_MODEL_FILE_EXTENSIONS = LemmaUiUtils.getFileExtensions(LemmaUiUtils.OPERATION_DSL_EDITOR_ID);
   
-  private static final String DATA_DSL_EDITOR_ID = "de.fhdo.lemma.data.DataDsl";
-  
-  private static final List<String> OPERATION_MODEL_FILE_EXTENSIONS = CollectionLiterals.<String>newArrayList();
-  
-  private static final List<String> SERVICE_MODEL_FILE_EXTENSIONS = CollectionLiterals.<String>newArrayList();
-  
-  private static final List<String> DATA_MODEL_FILE_EXTENSIONS = CollectionLiterals.<String>newArrayList();
+  public static final List<String> SERVICE_MODEL_FILE_EXTENSIONS = LemmaUiUtils.getFileExtensions(LemmaUiUtils.SERVICE_DSL_EDITOR_ID);
   
   private static final String MODEL_TYPE_PREFIX = "operation";
   
-  private static final ResourceManager RESOURCE_MANAGER = new LocalResourceManager(JFaceResources.getResources());
+  private final LinkedHashMap<String, ModelFileTypeDescription> modelFileTypeDescriptions;
   
-  private LinkedHashMap<String, ModelFileTypeDescription> modelFileTypeDescriptions;
-  
-  /**
-   * Constructor
-   */
   public OperationModelTransformationStrategy() {
-    boolean _isEmpty = OperationModelTransformationStrategy.SERVICE_MODEL_FILE_EXTENSIONS.isEmpty();
-    if (_isEmpty) {
-      OperationModelTransformationStrategy.SERVICE_MODEL_FILE_EXTENSIONS.addAll(
-        LemmaUiUtils.getFileExtensions(OperationModelTransformationStrategy.SERVICE_DSL_EDITOR_ID));
+    LocalResourceManager _xifexpression = null;
+    Display _current = Display.getCurrent();
+    boolean _tripleNotEquals = (_current != null);
+    if (_tripleNotEquals) {
+      ResourceManager _resources = JFaceResources.getResources();
+      _xifexpression = new LocalResourceManager(_resources);
+    } else {
+      _xifexpression = null;
     }
-    boolean _isEmpty_1 = OperationModelTransformationStrategy.OPERATION_MODEL_FILE_EXTENSIONS.isEmpty();
-    if (_isEmpty_1) {
-      OperationModelTransformationStrategy.OPERATION_MODEL_FILE_EXTENSIONS.addAll(
-        LemmaUiUtils.getFileExtensions(OperationModelTransformationStrategy.OPERATION_DSL_EDITOR_ID));
-    }
-    boolean _isEmpty_2 = OperationModelTransformationStrategy.DATA_MODEL_FILE_EXTENSIONS.isEmpty();
-    if (_isEmpty_2) {
-      OperationModelTransformationStrategy.DATA_MODEL_FILE_EXTENSIONS.addAll(LemmaUiUtils.getFileExtensions(OperationModelTransformationStrategy.DATA_DSL_EDITOR_ID));
-    }
-    this.setupModelFileTypeDescriptions();
-  }
-  
-  /**
-   * Helper to setup the map of model file type descriptions
-   */
-  private LinkedHashMap<String, ModelFileTypeDescription> setupModelFileTypeDescriptions() {
-    Image _createImage = LemmaUiUtils.createImage(OperationModelTransformationStrategy.RESOURCE_MANAGER, this.getClass(), "operationModelFile.png");
+    final LocalResourceManager resourceManager = _xifexpression;
+    Image _loadImageIfPossible = this.loadImageIfPossible(resourceManager, "operationModelFile.png");
     ModelFileTypeDescription _modelFileTypeDescription = new ModelFileTypeDescription(
-      OperationModelTransformationStrategy.OPERATION_MODEL_FILE_TYPE_ID, _createImage, 
+      OperationModelTransformationStrategy.OPERATION_MODEL_FILE_TYPE_ID, _loadImageIfPossible, 
       "Operation Model", 
       OperationModelTransformationStrategy.OPERATION_MODEL_FILE_EXTENSIONS, 
       IntermediateOperationModelTransformation.class);
     Pair<String, ModelFileTypeDescription> _mappedTo = Pair.<String, ModelFileTypeDescription>of(OperationModelTransformationStrategy.OPERATION_MODEL_FILE_TYPE_ID, _modelFileTypeDescription);
-    Image _createImage_1 = LemmaUiUtils.createImage(OperationModelTransformationStrategy.RESOURCE_MANAGER, this.getClass(), "serviceModelFile.gif");
+    Image _loadImageIfPossible_1 = this.loadImageIfPossible(resourceManager, "serviceModelFile.gif");
     ModelFileTypeDescription _modelFileTypeDescription_1 = new ModelFileTypeDescription(
-      OperationModelTransformationStrategy.SERVICE_MODEL_FILE_TYPE_ID, _createImage_1, 
+      OperationModelTransformationStrategy.SERVICE_MODEL_FILE_TYPE_ID, _loadImageIfPossible_1, 
       "Service Model", 
       OperationModelTransformationStrategy.SERVICE_MODEL_FILE_EXTENSIONS, 
       IntermediateServiceModelTransformation.class);
     Pair<String, ModelFileTypeDescription> _mappedTo_1 = Pair.<String, ModelFileTypeDescription>of(OperationModelTransformationStrategy.SERVICE_MODEL_FILE_TYPE_ID, _modelFileTypeDescription_1);
-    Image _createImage_2 = LemmaUiUtils.createImage(OperationModelTransformationStrategy.RESOURCE_MANAGER, this.getClass(), "dataModelFile.gif");
+    Image _loadImageIfPossible_2 = this.loadImageIfPossible(resourceManager, "dataModelFile.gif");
     ModelFileTypeDescription _modelFileTypeDescription_2 = new ModelFileTypeDescription(
-      OperationModelTransformationStrategy.DATA_MODEL_FILE_TYPE_ID, _createImage_2, 
+      OperationModelTransformationStrategy.DATA_MODEL_FILE_TYPE_ID, _loadImageIfPossible_2, 
       "Data Model", 
       OperationModelTransformationStrategy.DATA_MODEL_FILE_EXTENSIONS, 
       IntermediateDataModelTransformation.class);
     Pair<String, ModelFileTypeDescription> _mappedTo_2 = Pair.<String, ModelFileTypeDescription>of(OperationModelTransformationStrategy.DATA_MODEL_FILE_TYPE_ID, _modelFileTypeDescription_2);
-    return this.modelFileTypeDescriptions = CollectionLiterals.<String, ModelFileTypeDescription>newLinkedHashMap(_mappedTo, _mappedTo_1, _mappedTo_2);
+    this.modelFileTypeDescriptions = CollectionLiterals.<String, ModelFileTypeDescription>newLinkedHashMap(_mappedTo, _mappedTo_1, _mappedTo_2);
+  }
+  
+  /**
+   * Helper to load an image file if a resource manager is available
+   */
+  private Image loadImageIfPossible(final ResourceManager resourceManager, final String filename) {
+    Image _xifexpression = null;
+    if ((resourceManager != null)) {
+      _xifexpression = LemmaUiUtils.createImage(resourceManager, ServiceModelTransformationStrategy.class, filename);
+    } else {
+      _xifexpression = null;
+    }
+    return _xifexpression;
   }
   
   /**
@@ -271,81 +262,66 @@ public class OperationModelTransformationStrategy extends AbstractUiModelTransfo
   }
   
   /**
-   * Get files being import by a given model file in the form of IFile instances
+   * Get imported files of a given model file in the form of IFile instances
    */
   @Override
-  public Map<String, IFile> getImportedModelFiles(final ModelFile modelFile) {
+  public LinkedHashMap<String, IFile> getImportedModelFiles(final ModelFile modelFile) {
     boolean _isEmpty = modelFile.getXtextResource().getContents().isEmpty();
     if (_isEmpty) {
-      return Collections.EMPTY_MAP;
+      return CollectionLiterals.<String, IFile>newLinkedHashMap();
     }
-    Map<String, String> importAliasesAndUris = null;
-    boolean _isEmpty_1 = modelFile.getXtextResource().getContents().isEmpty();
-    boolean _not = (!_isEmpty_1);
-    if (_not) {
-      boolean _hasExtension = LemmaUiUtils.hasExtension(modelFile.getFile(), ((String[])Conversions.unwrapArray(OperationModelTransformationStrategy.DATA_MODEL_FILE_EXTENSIONS, String.class)));
-      if (_hasExtension) {
-        EObject _get = modelFile.getXtextResource().getContents().get(0);
-        final DataModel modelRoot = ((DataModel) _get);
-        final Function1<ComplexTypeImport, String> _function = (ComplexTypeImport it) -> {
-          return it.getName();
+    final LinkedHashMap<String, String> importAliasesAndUris = CollectionLiterals.<String, String>newLinkedHashMap();
+    boolean _hasExtension = LemmaUiUtils.hasExtension(modelFile.getFile(), ((String[])Conversions.unwrapArray(OperationModelTransformationStrategy.DATA_MODEL_FILE_EXTENSIONS, String.class)));
+    if (_hasExtension) {
+      EObject _get = modelFile.getXtextResource().getContents().get(0);
+      final DataModel modelRoot = ((DataModel) _get);
+      final Consumer<ComplexTypeImport> _function = (ComplexTypeImport it) -> {
+        importAliasesAndUris.put(it.getName(), it.getImportURI());
+      };
+      modelRoot.getComplexTypeImports().forEach(_function);
+    } else {
+      boolean _hasExtension_1 = LemmaUiUtils.hasExtension(modelFile.getFile(), ((String[])Conversions.unwrapArray(OperationModelTransformationStrategy.SERVICE_MODEL_FILE_EXTENSIONS, String.class)));
+      if (_hasExtension_1) {
+        EObject _get_1 = modelFile.getXtextResource().getContents().get(0);
+        final ServiceModel modelRoot_1 = ((ServiceModel) _get_1);
+        final Function1<Import, Boolean> _function_1 = (Import it) -> {
+          return Boolean.valueOf(((it.getImportType() == ImportType.DATATYPES) || 
+            (it.getImportType() == ImportType.MICROSERVICES)));
         };
-        final Function1<ComplexTypeImport, String> _function_1 = (ComplexTypeImport it) -> {
-          return it.getImportURI();
+        final Consumer<Import> _function_2 = (Import it) -> {
+          importAliasesAndUris.put(it.getName(), it.getImportURI());
         };
-        importAliasesAndUris = IterableExtensions.<ComplexTypeImport, String, String>toMap(modelRoot.getComplexTypeImports(), _function, _function_1);
+        IterableExtensions.<Import>filter(modelRoot_1.getImports(), _function_1).forEach(_function_2);
       } else {
-        boolean _hasExtension_1 = LemmaUiUtils.hasExtension(modelFile.getFile(), ((String[])Conversions.unwrapArray(OperationModelTransformationStrategy.SERVICE_MODEL_FILE_EXTENSIONS, String.class)));
-        if (_hasExtension_1) {
-          EObject _get_1 = modelFile.getXtextResource().getContents().get(0);
-          final ServiceModel modelRoot_1 = ((ServiceModel) _get_1);
-          final Function1<Import, Boolean> _function_2 = (Import it) -> {
-            return Boolean.valueOf(((it.getImportType() == ImportType.DATATYPES) || 
-              (it.getImportType() == ImportType.MICROSERVICES)));
+        boolean _hasExtension_2 = LemmaUiUtils.hasExtension(modelFile.getFile(), ((String[])Conversions.unwrapArray(OperationModelTransformationStrategy.OPERATION_MODEL_FILE_EXTENSIONS, String.class)));
+        if (_hasExtension_2) {
+          EObject _get_2 = modelFile.getXtextResource().getContents().get(0);
+          final OperationModel modelRoot_2 = ((OperationModel) _get_2);
+          final Function1<Import, Boolean> _function_3 = (Import it) -> {
+            return Boolean.valueOf(((it.getImportType() == ImportType.MICROSERVICES) || 
+              (it.getImportType() == ImportType.OPERATION_NODES)));
           };
-          final Function1<Import, String> _function_3 = (Import it) -> {
-            return it.getName();
+          final Consumer<Import> _function_4 = (Import it) -> {
+            importAliasesAndUris.put(it.getName(), it.getImportURI());
           };
-          final Function1<Import, String> _function_4 = (Import it) -> {
-            return it.getImportURI();
-          };
-          importAliasesAndUris = IterableExtensions.<Import, String, String>toMap(IterableExtensions.<Import>filter(modelRoot_1.getImports(), _function_2), _function_3, _function_4);
-        } else {
-          boolean _hasExtension_2 = LemmaUiUtils.hasExtension(modelFile.getFile(), ((String[])Conversions.unwrapArray(OperationModelTransformationStrategy.OPERATION_MODEL_FILE_EXTENSIONS, String.class)));
-          if (_hasExtension_2) {
-            EObject _get_2 = modelFile.getXtextResource().getContents().get(0);
-            final OperationModel modelRoot_2 = ((OperationModel) _get_2);
-            final Function1<Import, Boolean> _function_5 = (Import it) -> {
-              return Boolean.valueOf(((it.getImportType() == ImportType.MICROSERVICES) || 
-                (it.getImportType() == ImportType.OPERATION_NODES)));
-            };
-            final Function1<Import, String> _function_6 = (Import it) -> {
-              return it.getName();
-            };
-            final Function1<Import, String> _function_7 = (Import it) -> {
-              return it.getImportURI();
-            };
-            importAliasesAndUris = IterableExtensions.<Import, String, String>toMap(IterableExtensions.<Import>filter(modelRoot_2.getImports(), _function_5), _function_6, _function_7);
-          }
+          IterableExtensions.<Import>filter(modelRoot_2.getImports(), _function_3).forEach(_function_4);
         }
       }
-    } else {
-      return Collections.EMPTY_MAP;
     }
-    final HashMap<String, IFile> importedModelFiles = CollectionLiterals.<String, IFile>newHashMap();
-    final BiConsumer<String, String> _function_8 = (String alias, String importUri) -> {
+    final LinkedHashMap<String, IFile> importedModelFiles = CollectionLiterals.<String, IFile>newLinkedHashMap();
+    final BiConsumer<String, String> _function_5 = (String alias, String importUri) -> {
       final String modelFileFullPath = modelFile.getFile().getLocation().toString();
       final String absoluteImportPath = LemmaUtils.convertToAbsolutePath(importUri, modelFileFullPath);
       final URI absoluteImportUri = URI.create(
         LemmaUtils.convertToFileUri(absoluteImportPath).replaceAll("\\s", "%20"));
       final IFile[] files = ResourcesPlugin.getWorkspace().getRoot().findFilesForLocationURI(absoluteImportUri);
-      boolean _isEmpty_2 = ((List<IFile>)Conversions.doWrapArray(files)).isEmpty();
-      boolean _not_1 = (!_isEmpty_2);
-      if (_not_1) {
+      boolean _isEmpty_1 = ((List<IFile>)Conversions.doWrapArray(files)).isEmpty();
+      boolean _not = (!_isEmpty_1);
+      if (_not) {
         importedModelFiles.put(alias, files[0]);
       }
     };
-    importAliasesAndUris.forEach(_function_8);
+    importAliasesAndUris.forEach(_function_5);
     return importedModelFiles;
   }
   

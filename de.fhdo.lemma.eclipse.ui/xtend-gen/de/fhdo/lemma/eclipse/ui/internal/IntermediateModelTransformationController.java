@@ -1,4 +1,4 @@
-package de.fhdo.lemma.eclipse.ui;
+package de.fhdo.lemma.eclipse.ui.internal;
 
 import com.google.common.base.Objects;
 import de.fhdo.lemma.eclipse.ui.AbstractUiModelTransformationStrategy;

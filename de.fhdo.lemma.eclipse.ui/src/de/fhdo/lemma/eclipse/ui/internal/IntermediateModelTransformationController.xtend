@@ -1,43 +1,41 @@
-package de.fhdo.lemma.eclipse.ui
+package de.fhdo.lemma.eclipse.ui.internal
 
-import de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils
-import java.util.List
 import org.eclipse.core.commands.AbstractHandler
 import org.eclipse.core.commands.ExecutionEvent
 import org.eclipse.core.commands.ExecutionException
+import java.util.List
+import de.fhdo.lemma.eclipse.ui.select_models_dialog.commands.SelectModelsHandler
+import de.fhdo.lemma.eclipse.ui.specify_paths_dialog.commands.SpecifyPathsHandler
+import de.fhdo.lemma.eclipse.ui.transformation_dialog.commands.TransformationDialogHandler
+import de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.resources.IFolder
-import org.eclipse.ui.PlatformUI
-import de.fhdo.lemma.eclipse.ui.transformation_dialog.commands.TransformationDialogHandler
-import de.fhdo.lemma.eclipse.ui.specify_paths_dialog.commands.SpecifyPathsHandler
-import de.fhdo.lemma.eclipse.ui.select_models_dialog.commands.SelectModelsHandler
 import org.eclipse.jface.dialogs.MessageDialog
+import org.eclipse.ui.PlatformUI
+import de.fhdo.lemma.eclipse.ui.ModelFile
+import de.fhdo.lemma.eclipse.ui.AbstractUiModelTransformationStrategy
+import de.fhdo.lemma.eclipse.ui.ServiceModelTransformationStrategy
 
 /**
- * Abstract Controller for handling the intermediate model transformation in the UI.
+ * Controller for handling the intermediate model transformation in the UI.
  *
- * @author <a href="mailto:philip.wizenty@fh-dortmund.de">Philip Wizenty</a>
+ * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
-abstract class AbstractIntermediateModelTransformationController extends AbstractHandler {
+class IntermediateModelTransformationController extends AbstractHandler {
     val SHELL = PlatformUI.workbench.activeWorkbenchWindow.shell
 
-    List<String> modelFileTypeExtensions
     AbstractUiModelTransformationStrategy modelTransformationStrategy
+    List<String> modelFileTypeExtensions
     String modelTypePrefix
-
-    /**
-     * Get transformation strategy of model type
-     */
-    abstract def AbstractUiModelTransformationStrategy getTransformationStrategy()
 
     /**
      * Execute controller handler
      */
     override execute(ExecutionEvent event) throws ExecutionException {
         try {
-            modelTransformationStrategy = getTransformationStrategy()
+            modelTransformationStrategy = new ServiceModelTransformationStrategy
             modelFileTypeExtensions = modelTransformationStrategy.modelFileTypeExtensions
             modelTypePrefix = modelTransformationStrategy.modelTypePrefix
         } catch (Exception ex) {

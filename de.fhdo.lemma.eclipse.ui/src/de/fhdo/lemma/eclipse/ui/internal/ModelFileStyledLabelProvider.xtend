@@ -1,4 +1,4 @@
-package de.fhdo.lemma.eclipse.ui
+package de.fhdo.lemma.eclipse.ui.internal
 
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider
 import org.eclipse.jface.viewers.LabelProvider
@@ -8,6 +8,7 @@ import org.eclipse.jface.resource.LocalResourceManager
 import org.eclipse.jface.resource.JFaceResources
 import org.eclipse.jface.viewers.StyledString
 import de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils
+import de.fhdo.lemma.eclipse.ui.ModelFile
 
 /**
  * Base class for styled label providers of model files.

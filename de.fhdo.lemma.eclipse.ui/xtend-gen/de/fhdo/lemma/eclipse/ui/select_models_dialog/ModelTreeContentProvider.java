@@ -4,6 +4,7 @@ import de.fhdo.lemma.eclipse.ui.AbstractUiModelTransformationStrategy;
 import de.fhdo.lemma.eclipse.ui.ModelFile;
 import de.fhdo.lemma.eclipse.ui.ModelFileTypeDescription;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -113,7 +114,7 @@ public class ModelTreeContentProvider implements ITreeContentProvider {
           boolean _isScannedForChildren = ((ModelFile)element).isScannedForChildren();
           boolean _not = (!_isScannedForChildren);
           if (_not) {
-            final Map<String, IFile> importedModelFiles = this.strategy.getImportedModelFiles(((ModelFile)element));
+            final LinkedHashMap<String, IFile> importedModelFiles = this.strategy.getImportedModelFiles(((ModelFile)element));
             final BiConsumer<String, IFile> _function = (String importAlias, IFile file) -> {
               final ModelFile modelFile = this.createModelFile(file, ((ModelFile)element), importAlias);
               Boolean _hasErrors = modelFile.hasErrors();

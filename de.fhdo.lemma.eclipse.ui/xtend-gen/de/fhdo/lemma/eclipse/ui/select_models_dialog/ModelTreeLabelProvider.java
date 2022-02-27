@@ -1,7 +1,7 @@
 package de.fhdo.lemma.eclipse.ui.select_models_dialog;
 
 import de.fhdo.lemma.eclipse.ui.ModelFile;
-import de.fhdo.lemma.eclipse.ui.ModelFileStyledLabelProvider;
+import de.fhdo.lemma.eclipse.ui.internal.ModelFileStyledLabelProvider;
 import de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.viewers.StyledString;

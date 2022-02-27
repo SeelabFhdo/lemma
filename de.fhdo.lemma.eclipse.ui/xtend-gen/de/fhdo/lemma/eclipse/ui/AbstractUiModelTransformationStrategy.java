@@ -1,13 +1,13 @@
 package de.fhdo.lemma.eclipse.ui;
 
-import de.fhdo.lemma.eclipse.ui.ModelFile;
-import de.fhdo.lemma.eclipse.ui.ModelFileTypeDescription;
 import de.fhdo.lemma.intermediate.transformations.AbstractIntermediateModelTransformationStrategy;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Pair;
 
 /**
@@ -41,6 +41,26 @@ public abstract class AbstractUiModelTransformationStrategy {
    * Get model types' ordering for displaying purposes
    */
   public abstract LinkedList<String> getModelTypeDisplayOrdering();
+  
+  /**
+   * Sort a list of model files according to their ordering intended for transformation. The
+   * result will be a new list, i.e., the given list of model files will not be changed.
+   */
+  public final LinkedList<ModelFile> sortByTransformationOrder(final List<ModelFile> modelFiles) {
+    final LinkedList<ModelFile> orderedModelFiles = CollectionLiterals.<ModelFile>newLinkedList();
+    orderedModelFiles.addAll(modelFiles);
+    Collections.<ModelFile>sort(orderedModelFiles, new Comparator() {
+      @Override
+      public int compare(final Object o1, final Object o2) {
+        final ModelFile file1 = ((ModelFile) o1);
+        final int fileTypeIndex1 = AbstractUiModelTransformationStrategy.this.getModelTypeTransformationOrdering().indexOf(file1.getFileTypeDescription().getFileType());
+        final ModelFile file2 = ((ModelFile) o2);
+        final int fileTypeIndex2 = AbstractUiModelTransformationStrategy.this.getModelTypeTransformationOrdering().indexOf(file2.getFileTypeDescription().getFileType());
+        return Integer.compare(fileTypeIndex1, fileTypeIndex2);
+      }
+    });
+    return orderedModelFiles;
+  }
   
   /**
    * Get model types' ordering for transformation
@@ -92,9 +112,9 @@ public abstract class AbstractUiModelTransformationStrategy {
   public abstract String getSpecifyPathsDialogMessage();
   
   /**
-   * Get files being imported into a model file mapped to their import aliases
+   * Get imported files of a model in their import order and mapped to their import aliases
    */
-  public abstract Map<String, IFile> getImportedModelFiles(final ModelFile modelFile);
+  public abstract LinkedHashMap<String, IFile> getImportedModelFiles(final ModelFile modelFile);
   
   /**
    * Get default transformation target path for file

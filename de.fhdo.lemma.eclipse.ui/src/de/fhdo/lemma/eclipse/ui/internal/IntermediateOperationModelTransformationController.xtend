@@ -1,4 +1,6 @@
-package de.fhdo.lemma.eclipse.ui
+package de.fhdo.lemma.eclipse.ui.internal
+
+import de.fhdo.lemma.eclipse.ui.OperationModelTransformationStrategy
 
 /**
  * Controller for handling the intermediate operation model transformation in the UI.

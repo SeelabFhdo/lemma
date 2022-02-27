@@ -1,4 +1,4 @@
-package de.fhdo.lemma.eclipse.ui;
+package de.fhdo.lemma.eclipse.ui.internal;
 
 import com.google.common.base.Objects;
 import de.fhdo.lemma.eclipse.ui.AbstractUiModelTransformationStrategy;
@@ -149,7 +149,7 @@ public abstract class AbstractIntermediateModelTransformationController extends 
   private boolean transformationOnSelectedModelsOnly(final ExecutionEvent event) {
     final String parameterValue = event.getParameter(("de.fhdo.lemma.eclipse.ui.commands.parameters" + 
       ".selectedModelsOnly"));
-    return ((parameterValue != null) && Objects.equal(parameterValue.toLowerCase(), "true"));
+    return ((parameterValue != null) && Objects.equal("true", parameterValue.toLowerCase()));
   }
   
   /**
