@@ -28,6 +28,9 @@ import java.util.Set
 import de.fhdo.lemma.utils.LemmaUtils
 import de.fhdo.lemma.service.ImportType
 import org.eclipse.core.resources.IFile
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
+import org.eclipse.emf.common.util.URI
 
 /**
  * Implementation of the ATL-based model-to-model transformation of mapping models to intermediate
@@ -322,30 +325,55 @@ class MappingModelTransformation
              * the model refinements. That is, in the end we have a map that clusters information
              * about which service models being mapped in the input mapping model produced which
              * intermediate data model refinements from which non-refined intermediate data models.
+             *
+             * In addition, we collect all intermediate data models in their unrefined form to
+             * return them as their own transformation results. That is because the executed
+             * refinement transformation uses the intermediate data model as an INOUT model which
+             * results in the resource of the original intermediate data model getting overwritten
+             * by the path of the refined one.
              */
-            val refinedModelsPerServiceModel = <OutputModel, Map<String, OutputModel>>newHashMap
-            results
+            val refinedModelsPerServiceModel
+                = <OutputModel, Map<OutputModel, OutputModel>>newHashMap
+            val unrefinedIntermediateDataModels = <TransformationResult>newArrayList
+            val intermediateDataModelsPerServiceModel = results
                 .intermediateDataModelsPerServiceModelFor(inputMappingModel, absoluteInputModelPath)
-                    .forEach[
-                        serviceModel, intermediateDataModels |
-                        linkTechnologyModels(serviceModel, inputMappingModel)
+            for (entry : intermediateDataModelsPerServiceModel.entrySet) {
+                val serviceModel = entry.key
+                val intermediateDataModels = entry.value
 
-                        val refinedModels = intermediateDataModels.toMap(
-                            [outputPath],
-                            [runRefininingTransformation(results, serviceModel, it,
-                                warningCallback)]
+                linkTechnologyModels(serviceModel, inputMappingModel)
+
+                val refinedModels = <OutputModel, TransformationResult>newHashMap
+                intermediateDataModels.forEach[
+                    // Keep unrefined version of original intermediate data model by creating a new
+                    // resource from its file written by the previous intermediate transformations
+                    unrefinedIntermediateDataModels.add(new TransformationResult(
+                        it.inputModels,
+                        new OutputModel(
+                            it.outputModel.outputPath,
+                            it.outputModel.namespaceUri,
+                            loadXmiResource(it.outputModel.outputPath)
                         )
+                    ))
 
-                        refinedModels.filter[path, model | model !== null].forEach[
-                            originalModelPath, refinedModel |
-                            refinedModelsPerServiceModel
-                                .putIfAbsent(
-                                    serviceModel,
-                                    newHashMap(originalModelPath -> refinedModel.outputModel)
-                                )
-                                ?.put(originalModelPath, refinedModel.outputModel)
-                        ]
-            ]
+                    // Execute refinement transformation
+                    refinedModels.put(
+                        it.outputModel,
+                        runRefininingTransformation(results, serviceModel, it.outputModel,
+                            warningCallback)
+                     )
+                ]
+
+                refinedModels.filter[path, model | model !== null].forEach[
+                    originalOutputModel, refinedModel |
+                    refinedModelsPerServiceModel
+                        .putIfAbsent(
+                            serviceModel,
+                            newHashMap(originalOutputModel -> refinedModel.outputModel)
+                        )
+                        ?.put(originalOutputModel, refinedModel.outputModel)
+                ]
+            }
 
             /*
              * Adapt the import paths in intermediate service models and intermediate data models
@@ -366,9 +394,27 @@ class MappingModelTransformation
                 refinedDataModels.values.forEach[
                     it.adaptImportPaths([(it as IntermediateDataModel).imports], refinedDataModels)
                 ]
+
+                // Update the output path of the original output model to the one from the
+                // refinement transformation
+                refinedDataModels.forEach[outputModel, refinedModel |
+                    outputModel.outputPath = refinedModel.outputPath
+                ]
             ]
 
-            return null
+            return unrefinedIntermediateDataModels
+        }
+
+        /**
+         * Parse an XMI file with from the given URI
+         */
+        private static def loadXmiResource(String fileUri) {
+            val resourceSet = new ResourceSetImpl()
+            resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
+                .put("xmi", new XMIResourceFactoryImpl())
+            val resource = resourceSet.createResource(URI.createURI(fileUri))
+            resource.load(null)
+            return resource
         }
 
         /**
@@ -399,11 +445,11 @@ class MappingModelTransformation
          * Helper to retrieve intermediate data models that are imported by intermediate service
          * models produced from the input mapping model. Note that the helper maps the original
          * service model of the intermediate service model in a mapping model transformation to the
-         * found intermediate data models. The reason for this is, that the service model does
-         * comprise complex type mappings expressed in mapping models, while the intermediate
-         * service model does not.
+         * TransformationResult instances of found intermediate data models. The reason for this is,
+         * that the service model does comprise complex type mappings expressed in mapping models,
+         * while the intermediate service model does not.
          */
-        private static def Map<OutputModel, Set<OutputModel>>
+        private static def Map<OutputModel, Set<TransformationResult>>
         intermediateDataModelsPerServiceModelFor(
             List<TransformationResult> results,
             TechnologyMapping inputMappingModel,
@@ -420,7 +466,7 @@ class MappingModelTransformation
             val mappedComplexTypesPerServiceModel = serviceModelsCreatedFromMappingModel
                 .toMap([it], [(resource.contents.get(0) as ServiceModel).mappedComplexTypes])
 
-            val resultMap = <OutputModel, Set<OutputModel>>newHashMap
+            val resultMap = <OutputModel, Set<TransformationResult>>newHashMap
             mappedComplexTypesPerServiceModel.forEach[serviceModel, mappedComplexTypes |
                 mappedComplexTypes.forEach[mappedComplexType |
                     // Filter transformation results for intermediate data models that are imported
@@ -431,18 +477,16 @@ class MappingModelTransformation
                         (
                             outputModel.outputPath == mappedComplexType.type.import.importURI ||
 
-                            // This needed when the mapping model and the service model, whose
+                            // This is needed when the mapping model and the service model, whose
                             // imported data models it maps, are transformed together. Then the
                             // intermediate data model isn't produced as part of the mapping model
-                            // transformation..
+                            // transformation.
                             inputModels.get(0).inputPath == mappedComplexType.t_sourceModelUri
                         )
                     ].forEach[
                         // Assign intermediate data models to those service models, whose derived
                         // intermediate service models import the data models
-                        resultMap
-                            .putIfAbsent(serviceModel, newHashSet(outputModel))
-                            ?.add(outputModel)
+                        resultMap.putIfAbsent(serviceModel, newHashSet(it))?.add(it)
                     ]
                 ]
             ]
@@ -473,14 +517,19 @@ class MappingModelTransformation
         private static def adaptImportPaths(
             OutputModel intermediateModel,
             Function<EObject, List<IntermediateImport>> getImportsFromModelRoot,
-            Map<String, OutputModel> refinedDataModels
+            Map<OutputModel, OutputModel> refinedDataModels
         ) {
             val modelRoot = intermediateModel.resource.contents.get(0)
             val imports = getImportsFromModelRoot.apply(modelRoot)
 
+            val refinedModelPerOriginalPaths = <String, OutputModel>newHashMap
+            refinedDataModels.forEach[originalModel, refinedModel |
+                refinedModelPerOriginalPaths.put(originalModel.outputPath, refinedModel)
+            ]
+
             imports.filter[importTypeName == importTypeNameForDatatypes].forEach[dataModelImport |
                 val importUri = dataModelImport.importUri
-                var refinedDataModelUri = refinedDataModels.get(importUri)?.outputPath
+                var refinedDataModelUri = refinedModelPerOriginalPaths.get(importUri)?.outputPath
 
                 // If the map of refined data models does not contain the current import URI
                 // directly, which may happen if a service model gets transformed together with a
