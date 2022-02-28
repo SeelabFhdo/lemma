@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.debug.core.launchConfigurationTypes">
+      <launchConfigurationType
+            allowCommandLine="true"
+            delegate="de.fhdo.lemma.model_processing.eclipse.launcher.processing_configurations.LaunchConfigurationDelegate"
+            id="de.fhdo.lemma.model_processing.eclipse.launcher.ProcessingConfigurationLaunchConfigurationType"
+            modes="run"
+            name="LEMMA Model Processor">
+      </launchConfigurationType>
+      <launchConfigurationType
+            allowCommandLine="false"
+            delegate="de.fhdo.lemma.model_processing.eclipse.launcher.processing_chains.LaunchConfigurationDelegate"
+            id="de.fhdo.lemma.model_processing.eclipse.launcher.ProcessingChainLaunchConfigurationType"
+            modes="run"
+            name="LEMMA Model Processor Chain">
+      </launchConfigurationType>
+   </extension>
+
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+      <launchConfigurationTabGroup
+            class="de.fhdo.lemma.model_processing.eclipse.launcher.processing_configurations.LaunchConfigurationTabGroup"
+            id="de.fhdo.lemma.model_processing.eclipse.launcher.ProcessingConfigurationLaunchConfigurationTabGroup"
+            type="de.fhdo.lemma.model_processing.eclipse.launcher.ProcessingConfigurationLaunchConfigurationType">
+      </launchConfigurationTabGroup>
+      <launchConfigurationTabGroup
+            class="de.fhdo.lemma.model_processing.eclipse.launcher.processing_chains.LaunchConfigurationTabGroup"
+            id="de.fhdo.lemma.model_processing.eclipse.launcher.ProcessingChainLaunchConfigurationTabGroup"
+            type="de.fhdo.lemma.model_processing.eclipse.launcher.ProcessingChainLaunchConfigurationType">
+      </launchConfigurationTabGroup>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="*">
+         <actionSet
+               id="org.eclipse.debug.ui.launchActionSet">
+         </actionSet>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchShortcuts">
+      <shortcut
+            class="de.fhdo.lemma.model_processing.eclipse.launcher.processing_configurations.shortcut.LaunchShortcut"
+            description="Execute a LEMMA model processor on the selected resource"
+            icon="icons/lemmaModelProcessor.gif"
+            id="de.fhdo.lemma.model_processing.eclipse.launcher.ProcessingConfigurationLaunchShortcut"
+            label="LEMMA Model Processor"
+            modes="run">
+         <contextualLaunch>
+            <enablement>
+               <with variable="selection">
+                  <count value="1"></count>
+                  <iterate
+                    ifEmpty="false">
+                    <adapt
+                        type="org.eclipse.core.resources.IFile">
+                        <or>
+                            <test property="org.eclipse.core.resources.extension" value="mapping" />
+                            <test property="org.eclipse.core.resources.extension" value="operation" />
+                            <test property="org.eclipse.core.resources.extension" value="services" />
+                        </or>
+                    </adapt>
+                </iterate>
+               </with>
+            </enablement>
+         </contextualLaunch>
+         <configurationType
+            id="de.fhdo.lemma.model_processing.eclipse.launcher.ProcessingConfigurationLaunchConfigurationType">
+         </configurationType>
+      </shortcut>
+      <shortcut
+            class="de.fhdo.lemma.model_processing.eclipse.launcher.processing_chains.shortcut.LaunchShortcut"
+            description="Execute LEMMA model processors on the selected resource in a specified order"
+            icon="icons/lemmaModelProcessingChain.png"
+            id="de.fhdo.lemma.model_processing.eclipse.launcher.ProcessingChainLaunchShortcut"
+            label="LEMMA Model Processor Chain"
+            modes="run">
+         <contextualLaunch>
+            <enablement>
+               <with variable="selection">
+                  <count value="1"></count>
+                  <iterate
+                    ifEmpty="false">
+                    <adapt
+                        type="org.eclipse.core.resources.IFile">
+                        <or>
+                            <test property="org.eclipse.core.resources.extension" value="mapping" />
+                            <test property="org.eclipse.core.resources.extension" value="operation" />
+                            <test property="org.eclipse.core.resources.extension" value="services" />
+                        </or>
+                    </adapt>
+                </iterate>
+               </with>
+            </enablement>
+         </contextualLaunch>
+         <configurationType
+            id="de.fhdo.lemma.model_processing.eclipse.launcher.ProcessingChainLaunchConfigurationType">
+         </configurationType>
+      </shortcut>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+      <launchConfigurationTypeImage
+            configTypeID="de.fhdo.lemma.model_processing.eclipse.launcher.ProcessingConfigurationLaunchConfigurationType"
+            icon="icons/lemmaModelProcessor.gif"
+            id="de.fhdo.lemma.model_processing.eclipse.launcher.ProcessingConfigurationLaunchConfigurationTypeImage">
+      </launchConfigurationTypeImage>
+      <launchConfigurationTypeImage
+            configTypeID="de.fhdo.lemma.model_processing.eclipse.launcher.ProcessingChainLaunchConfigurationType"
+            icon="icons/lemmaModelProcessingChain.png"
+            id="de.fhdo.lemma.model_processing.eclipse.launcher.ProcessingChainLaunchConfigurationTypeImage">
+      </launchConfigurationTypeImage>
+   </extension>
+</plugin>

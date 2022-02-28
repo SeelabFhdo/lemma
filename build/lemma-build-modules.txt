@@ -38,6 +38,7 @@ de.fhdo.lemma.technology.mappingdsl.ui
 de.fhdo.lemma.technology.mappingdsl.ui.tests
 de.fhdo.lemma.operationdsl.ui
 de.fhdo.lemma.operationdsl.ui.tests
+de.fhdo.lemma.model_processing.eclipse.launcher.parent
 
 # OCL
 de.fhdo.lemma.ocl

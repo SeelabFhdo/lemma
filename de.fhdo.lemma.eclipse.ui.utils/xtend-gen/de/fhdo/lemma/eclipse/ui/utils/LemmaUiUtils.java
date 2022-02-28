@@ -41,6 +41,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.resource.IResourceServiceProvider;
 import org.eclipse.xtext.resource.XtextResource;
+import org.eclipse.xtext.resource.XtextResourceSet;
 import org.eclipse.xtext.util.CancelIndicator;
 import org.eclipse.xtext.validation.CheckMode;
 import org.eclipse.xtext.validation.IResourceValidator;
@@ -197,21 +198,73 @@ public final class LemmaUiUtils {
   }
   
   /**
-   * Load an Xtext file as XtextResource
+   * Load an Xtext resource from an Eclipse workspace
    */
   public static XtextResource loadXtextResource(final IFile file) {
+    final String projectRelativeFilepath = file.getFullPath().toString();
+    final XtextResourceSet resourceSet = LemmaUiUtils.createXtextResourceSetFor(projectRelativeFilepath);
+    final URI platformUri = URI.createPlatformResourceURI(projectRelativeFilepath, true);
+    XtextResource _loadXtextResource = null;
+    if (resourceSet!=null) {
+      _loadXtextResource=LemmaUiUtils.loadXtextResource(resourceSet, platformUri);
+    }
+    return _loadXtextResource;
+  }
+  
+  /**
+   * Helper to create an XtextResourceSet from a given file path
+   */
+  private static XtextResourceSet createXtextResourceSetFor(final String filepath) {
+    final ResourceSet resourceSet = LemmaUiUtils.createResourceSetFor(filepath);
+    XtextResourceSet _xifexpression = null;
+    if ((resourceSet instanceof XtextResourceSet)) {
+      _xifexpression = ((XtextResourceSet) resourceSet);
+    } else {
+      _xifexpression = null;
+    }
+    return _xifexpression;
+  }
+  
+  /**
+   * Helper to create a ResourceSet from a given file path
+   */
+  private static ResourceSet createResourceSetFor(final String filepath) {
+    final IResourceServiceProvider.Registry resourceSetProviderRegistry = IResourceServiceProvider.Registry.INSTANCE;
+    final URI fileUri = URI.createURI(filepath);
+    final IResourceServiceProvider resourceSetProvider = resourceSetProviderRegistry.getResourceServiceProvider(fileUri);
+    return resourceSetProvider.<ResourceSet>get(ResourceSet.class);
+  }
+  
+  /**
+   * Helper to load an XtextResource from a URI using the given XtextResourceSet
+   */
+  private static XtextResource loadXtextResource(final XtextResourceSet resourceSet, final URI uri) {
     try {
-      final ResourceSet resourceSet = LemmaUiUtils.createResourceSetFor(file);
-      if ((resourceSet == null)) {
-        return null;
-      }
-      final URI fileUri = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
-      final Resource fileResource = resourceSet.getResource(fileUri, true);
+      final Resource fileResource = resourceSet.getResource(uri, true);
       fileResource.load(null);
-      return ((XtextResource) fileResource);
+      XtextResource _xifexpression = null;
+      if ((fileResource instanceof XtextResource)) {
+        _xifexpression = ((XtextResource) fileResource);
+      } else {
+        _xifexpression = null;
+      }
+      return _xifexpression;
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
+  }
+  
+  /**
+   * Load an Xtext resource from a local file
+   */
+  public static XtextResource loadXtextResource(final String filepath) {
+    final XtextResourceSet resourceSet = LemmaUiUtils.createXtextResourceSetFor(filepath);
+    final URI fileUri = URI.createFileURI(filepath);
+    XtextResource _loadXtextResource = null;
+    if (resourceSet!=null) {
+      _loadXtextResource=LemmaUiUtils.loadXtextResource(resourceSet, fileUri);
+    }
+    return _loadXtextResource;
   }
   
   /**
@@ -236,7 +289,7 @@ public final class LemmaUiUtils {
     try {
       final XtextResource xtextResource = LemmaUiUtils.loadXtextResource(file);
       EcoreUtil2.resolveAll(xtextResource);
-      final ResourceSet resourceSet = LemmaUiUtils.createResourceSetFor(file);
+      final ResourceSet resourceSet = LemmaUiUtils.createResourceSetFor(file.getFullPath().toString());
       final Resource xmiResource = resourceSet.createResource(URI.createURI(targetFilePath));
       xmiResource.getContents().add(xtextResource.getContents().get(0));
       xmiResource.save(null);
@@ -299,16 +352,6 @@ public final class LemmaUiUtils {
       _xifexpression = "";
     }
     return _xifexpression;
-  }
-  
-  /**
-   * Helper to create ResourceSet from file
-   */
-  public static ResourceSet createResourceSetFor(final IFile file) {
-    final IResourceServiceProvider.Registry resourceSetProviderRegistry = IResourceServiceProvider.Registry.INSTANCE;
-    final URI fileUri = URI.createURI(file.getFullPath().toString());
-    final IResourceServiceProvider resourceSetProvider = resourceSetProviderRegistry.getResourceServiceProvider(fileUri);
-    return resourceSetProvider.<ResourceSet>get(ResourceSet.class);
   }
   
   /**

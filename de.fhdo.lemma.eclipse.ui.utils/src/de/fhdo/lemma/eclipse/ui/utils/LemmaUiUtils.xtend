@@ -30,6 +30,7 @@ import org.eclipse.ui.handlers.HandlerUtil
 import org.eclipse.core.commands.ExecutionEvent
 import org.eclipse.jface.viewers.IStructuredSelection
 import org.eclipse.core.runtime.IAdaptable
+import org.eclipse.xtext.resource.XtextResourceSet
 
 /**
  * Utility class for the LEMMA UI plugin.
@@ -129,17 +130,55 @@ final class LemmaUiUtils {
     }
 
     /**
-     * Load an Xtext file as XtextResource
+     * Load an Xtext resource from an Eclipse workspace
      */
     static def loadXtextResource(IFile file) {
-        val resourceSet = createResourceSetFor(file)
-        if (resourceSet === null)
-            return null
+        val projectRelativeFilepath = file.fullPath.toString
+        val resourceSet = createXtextResourceSetFor(projectRelativeFilepath)
+        val platformUri = URI.createPlatformResourceURI(projectRelativeFilepath, true)
+        return resourceSet?.loadXtextResource(platformUri)
+    }
 
-        val fileUri = URI.createPlatformResourceURI(file.fullPath.toString, true)
-        val fileResource = resourceSet.getResource(fileUri, true)
+    /**
+     * Helper to create an XtextResourceSet from a given file path
+     */
+    private static def createXtextResourceSetFor(String filepath) {
+        val resourceSet = createResourceSetFor(filepath)
+        return if (resourceSet instanceof XtextResourceSet)
+                resourceSet as XtextResourceSet
+            else
+                null
+    }
+
+    /**
+     * Helper to create a ResourceSet from a given file path
+     */
+    private static def createResourceSetFor(String filepath) {
+        val resourceSetProviderRegistry = IResourceServiceProvider.Registry.INSTANCE
+        val fileUri =  URI.createURI(filepath)
+        val resourceSetProvider = resourceSetProviderRegistry.getResourceServiceProvider(fileUri)
+        return resourceSetProvider.get(ResourceSet)
+    }
+
+    /**
+     * Helper to load an XtextResource from a URI using the given XtextResourceSet
+     */
+    private static def loadXtextResource(XtextResourceSet resourceSet, URI uri) {
+        val fileResource = resourceSet.getResource(uri, true)
         fileResource.load(null)
-        return fileResource as XtextResource
+        return if (fileResource instanceof XtextResource)
+                fileResource as XtextResource
+            else
+                null
+    }
+
+    /**
+     * Load an Xtext resource from a local file
+     */
+    static def loadXtextResource(String filepath) {
+        val resourceSet = createXtextResourceSetFor(filepath)
+        val fileUri = URI.createFileURI(filepath)
+        return resourceSet?.loadXtextResource(fileUri)
     }
 
     /**
@@ -159,7 +198,7 @@ final class LemmaUiUtils {
     static def storeAsXmi(IFile file, String targetFilePath) {
         val xtextResource = loadXtextResource(file)
         EcoreUtil2.resolveAll(xtextResource)
-        val resourceSet = createResourceSetFor(file)
+        val resourceSet = createResourceSetFor(file.fullPath.toString)
         val xmiResource = resourceSet.createResource(URI.createURI(targetFilePath))
         xmiResource.contents.add(xtextResource.contents.get(0))
         xmiResource.save(null)
@@ -216,16 +255,6 @@ final class LemmaUiUtils {
                 filenameWithoutPath.substring(lastIndexOfDot + 1)
             else
                 ""
-    }
-
-    /**
-     * Helper to create ResourceSet from file
-     */
-    static def createResourceSetFor(IFile file) {
-        val resourceSetProviderRegistry = IResourceServiceProvider.Registry.INSTANCE
-        val fileUri =  URI.createURI(file.fullPath.toString)
-        val resourceSetProvider = resourceSetProviderRegistry.getResourceServiceProvider(fileUri)
-        return resourceSetProvider.get(ResourceSet)
     }
 
     /**

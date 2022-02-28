@@ -25,6 +25,7 @@ de.fhdo.lemma.live_validation
 
 # UI Components
 de.fhdo.lemma.eclipse.ui.parent
+de.fhdo.lemma.model_processing.eclipse.launcher.parent
 
 # OCL
 de.fhdo.lemma.ocl

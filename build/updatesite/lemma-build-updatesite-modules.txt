@@ -24,3 +24,4 @@ de.fhdo.lemma.operationdsl.ui
 de.fhdo.lemma.intermediate.transformations.parent
 de.fhdo.lemma.data.avro.parent
 de.fhdo.lemma.eclipse.ui.parent
+de.fhdo.lemma.model_processing.eclipse.launcher.parent

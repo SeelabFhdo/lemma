@@ -37,6 +37,7 @@ set modules=%modules%;de.fhdo.lemma.technology.mappingdsl.ui
 set modules=%modules%;de.fhdo.lemma.technology.mappingdsl.ui.tests
 set modules=%modules%;de.fhdo.lemma.operationdsl.ui
 set modules=%modules%;de.fhdo.lemma.operationdsl.ui.tests
+set modules=%modules%;de.fhdo.lemma.model_processing.eclipse.launcher.parent
 
 REM OCL
 set modules=%modules%;de.fhdo.lemma.ocl
