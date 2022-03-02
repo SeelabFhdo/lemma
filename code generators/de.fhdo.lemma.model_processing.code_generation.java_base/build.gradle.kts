@@ -97,6 +97,9 @@ val allDependencies = task("allDependencies", type = Jar::class) {
     with(tasks["jar"] as CopySpec)
 
     manifest {
+        // Prevent "WARNING: sun.reflect.Reflection.getCallerClass is not supported" from log4j
+        attributes("Multi-Release" to "true")
+
         // Prevent security exception from JAR verifier
         exclude("META-INF/*.DSA", "META-INF/*.RSA", "META-INF/*.SF")
     }
@@ -117,6 +120,9 @@ val allDependenciesNoKotlin = task("allDependenciesNoKotlin", type = Jar::class)
     with(tasks["jar"] as CopySpec)
 
     manifest {
+        // Prevent "WARNING: sun.reflect.Reflection.getCallerClass is not supported" from log4j
+        attributes("Multi-Release" to "true")
+
         // Prevent security exception from JAR verifier
         exclude("META-INF/*.DSA", "META-INF/*.RSA", "META-INF/*.SF")
     }
@@ -134,6 +140,8 @@ val standalone = task("standalone", type = Jar::class) {
 
     manifest {
         attributes("Main-Class" to "de.fhdo.lemma.model_processing.code_generation.java_base.JavaBaseGeneratorKt")
+        // Prevent "WARNING: sun.reflect.Reflection.getCallerClass is not supported" from log4j
+        attributes("Multi-Release" to "true")
 
         // Prevent security exception from JAR verifier
         exclude("META-INF/*.DSA", "META-INF/*.RSA", "META-INF/*.SF")

@@ -61,6 +61,8 @@ val standalone = task("standalone", type = Jar::class) {
 
     manifest {
         attributes("Main-Class" to "de.fhdo.lemma.examples.model_processing.latest.ExampleModelProcessor")
+        // Prevent "WARNING: sun.reflect.Reflection.getCallerClass is not supported" from log4j
+        "Multi-Release" to "true"
 
         // Prevent security exception from JAR verifier
         exclude("META-INF/*.DSA", "META-INF/*.RSA", "META-INF/*.SF")

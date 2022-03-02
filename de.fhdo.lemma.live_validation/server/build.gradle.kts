@@ -54,8 +54,7 @@ val runnableJar = task("runnableJar", type = Jar::class) {
     manifest {
         attributes(
             "Main-Class" to "de.fhdo.lemma.live_validation.server.ServerRunner",
-            // Prevent "WARNING: sun.reflect.Reflection.getCallerClass is not supported. This will impact performance."
-            // at application start
+            // Prevent "WARNING: sun.reflect.Reflection.getCallerClass is not supported" from log4j
             "Multi-Release" to "true"
         )
 

@@ -74,6 +74,9 @@ val allDependencies = task("allDependencies", type = Jar::class) {
     with(tasks["jar"] as CopySpec)
 
     manifest {
+        // Prevent "WARNING: sun.reflect.Reflection.getCallerClass is not supported" from log4j
+        "Multi-Release" to "true"
+
         // Prevent security exception from JAR verifier
         exclude("META-INF/*.DSA", "META-INF/*.RSA", "META-INF/*.SF")
     }
@@ -94,6 +97,9 @@ val allDependenciesNoKotlin = task("allDependenciesNoKotlin", type = Jar::class)
     with(tasks["jar"] as CopySpec)
 
     manifest {
+        // Prevent "WARNING: sun.reflect.Reflection.getCallerClass is not supported" from log4j
+        "Multi-Release" to "true"
+
         // Prevent security exception from JAR verifier
         exclude("META-INF/*.DSA", "META-INF/*.RSA", "META-INF/*.SF")
     }

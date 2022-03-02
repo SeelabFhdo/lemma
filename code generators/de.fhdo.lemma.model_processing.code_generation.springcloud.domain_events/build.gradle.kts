@@ -108,6 +108,9 @@ val standalone = task("standalone", type = Jar::class) {
         attributes("Main-Class" to
             "de.fhdo.lemma.model_processing.code_generation.springcloud.domain_events." +
                 "DomainEventsGeneratorKt")
+        // Prevent "WARNING: sun.reflect.Reflection.getCallerClass is not supported" from
+        // log4j
+        attributes("Multi-Release" to "true")
 
         // Prevent security exception from JAR verifier
         exclude("META-INF/*.DSA", "META-INF/*.RSA", "META-INF/*.SF")

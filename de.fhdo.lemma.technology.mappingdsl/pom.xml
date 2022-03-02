@@ -218,6 +218,12 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>${maven-assembly-plugin-version}</version>
                    <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <!-- Prevent "WARNING: sun.reflect.Reflection.getCallerClass is not supported" from log4j -->
+                            <Multi-Release>true</Multi-Release>
+                        </manifestEntries>
+                    </archive>
                     <descriptors>
                         <descriptor>assembly.xml</descriptor>
                     </descriptors>

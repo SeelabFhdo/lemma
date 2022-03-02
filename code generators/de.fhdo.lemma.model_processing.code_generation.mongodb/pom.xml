@@ -122,6 +122,10 @@
                   <manifest>
                     <mainClass>de.fhdo.lemma.model_processing.code_generation.mongodb.MongoDBGenerator</mainClass>
                   </manifest>
+                  <manifestEntries>
+                    <!-- Prevent "WARNING: sun.reflect.Reflection.getCallerClass is not supported" from log4j -->
+                    <Multi-Release>true</Multi-Release>
+                  </manifestEntries>
                 </archive>
                 <descriptors>
                     <descriptor>assembly.xml</descriptor>
