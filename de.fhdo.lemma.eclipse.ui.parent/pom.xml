@@ -55,7 +55,7 @@
         <maven-compiler-plugin-version>3.8.1</maven-compiler-plugin-version>
         <maven-dependency-plugin-version>3.1.2</maven-dependency-plugin-version>
         <tycho-version>2.3.0</tycho-version>
-        <xtext-version>2.25.0</xtext-version>
+        <xtext-version>2.26.0</xtext-version>
     </properties>
 
     <repositories>
@@ -89,6 +89,12 @@
             <id>Eclipse Default</id>
             <layout>default</layout>
             <url>https://repo.eclipse.org/content/groups/releases/</url>
+        </repository>
+
+        <repository>
+            <id>Xtext Update Site</id>
+            <layout>p2</layout>
+            <url>http://download.eclipse.org/modeling/tmf/xtext/updates/releases/${xtext-version}/</url>
         </repository>
     </repositories>
 

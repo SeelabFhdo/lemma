@@ -59,7 +59,7 @@
         <service-viewpoint-metamodel-version>${project.version}</service-viewpoint-metamodel-version>
         <technology-definition-metamodel-version>${project.version}</technology-definition-metamodel-version>
         <tycho-version>2.3.0</tycho-version>
-        <xtext-version>2.25.0</xtext-version>
+        <xtext-version>2.26.0</xtext-version>
     </properties>
 
     <repositories>

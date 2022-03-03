@@ -47,7 +47,7 @@
         <emf-version>2.18.0</emf-version>
         <maven-compiler-plugin-version>3.8.1</maven-compiler-plugin-version>
         <tycho-version>2.3.0</tycho-version>
-        <xtext-version>2.25.0</xtext-version>
+        <xtext-version>2.26.0</xtext-version>
     </properties>
 
     <repositories>

@@ -23,7 +23,7 @@ buildscript {
     extra.set("lsp4jVersion", "0.10.0")
     extra.set("modelProcessingVersion", version)
     extra.set("picocliVersion", "3.9.3")
-    extra.set("xtextVersion", "2.25.0")
+    extra.set("xtextVersion", "2.26.0")
 }
 
 dependencies {

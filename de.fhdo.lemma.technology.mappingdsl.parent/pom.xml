@@ -72,11 +72,11 @@
         <maven-clean-plugin-version>3.1.0</maven-clean-plugin-version>
         <maven-compiler-plugin-version>3.8.1</maven-compiler-plugin-version>
         <metamodel-version>${project.version}</metamodel-version>
-        <org-eclipse-emf-mwe2-launch-version>2.12.1</org-eclipse-emf-mwe2-launch-version>
+        <org-eclipse-emf-mwe2-launch-version>2.12.2</org-eclipse-emf-mwe2-launch-version>
         <tycho-version>2.3.0</tycho-version>
         <lemma-utils-version>${project.version}</lemma-utils-version>
         <versions-maven-plugin-version>2.8.1</versions-maven-plugin-version>
-        <xtext-version>2.25.0</xtext-version>
+        <xtext-version>2.26.0</xtext-version>
     </properties>
 
     <repositories>
