@@ -12,6 +12,11 @@ import com.google.inject.Inject
 import org.eclipse.xtext.validation.Issue
 import org.eclipse.xtext.ui.editor.validation.AnnotationIssueProcessor
 import de.fhdo.lemma.live_validation.model.IssueDiagnostic
+import org.eclipse.xtext.resource.XtextResource
+import org.eclipse.xtext.validation.IResourceValidator
+import org.eclipse.xtext.validation.CheckMode
+import org.eclipse.xtext.util.concurrent.CancelableUnitOfWork
+import org.eclipse.xtext.util.CancelIndicator
 
 /**
  * Xtext-specific editor that is capable of communicating with Live Validation LSP servers. It can
@@ -20,6 +25,9 @@ import de.fhdo.lemma.live_validation.model.IssueDiagnostic
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class LiveValidationCapableXtextEditor extends XtextEditor {
+    @Inject
+    IResourceValidator resourceValidator
+
     @Inject
     IssueResolutionProvider issueResolutionProvider
 
@@ -31,14 +39,40 @@ class LiveValidationCapableXtextEditor extends XtextEditor {
      */
     def addIssueMarkers(List<IssueDiagnostic> issues) {
         val markerCreator = new MarkerCreator
-        val xtextIssues = issues.map[xtextIssue]
+        val xtextIssues = <Issue>newArrayList
+        xtextIssues.addAll(issues.map[xtextIssue])
         xtextIssues.forEach[
             markerCreator.createMarker(it, resource, markerTypeProvider.getMarkerType(it))
         ]
 
+        // Re-validate the current document as otherwise processIssues() will remove markers from
+        // regular model validations built into modeling languages
+        xtextIssues.addAll(performRegularValidationOnDocument())
+
         val annotationIssueProcessor = new AnnotationIssueProcessor(document,
             documentProvider.getAnnotationModel(editorInput), issueResolutionProvider)
         annotationIssueProcessor.processIssues(xtextIssues, progressMonitor)
+    }
+
+    /**
+     * Perform a regular validation based on validators built into modeling languages on the current
+     * document
+     */
+    private def performRegularValidationOnDocument() {
+        // Ported from org.eclipse.xtext.ui.editor.validation.ValidationJob.createIssues()
+        document.tryReadOnly(new CancelableUnitOfWork<List<Issue>, XtextResource>() {
+            override exec(XtextResource resource, CancelIndicator outerIndicator) {
+                if (resource.isValidationDisabled())
+                    return emptyList
+
+                resourceValidator.validate(resource, CheckMode.NORMAL_AND_FAST,
+                    new CancelIndicator() {
+                        override isCanceled() {
+                            return outerIndicator.canceled
+                        }
+                    })
+            }
+        }, [emptyList])
     }
 
     /**

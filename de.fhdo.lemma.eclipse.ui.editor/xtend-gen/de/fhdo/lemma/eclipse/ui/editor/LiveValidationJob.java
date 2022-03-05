@@ -2,7 +2,6 @@ package de.fhdo.lemma.eclipse.ui.editor;
 
 import de.fhdo.lemma.eclipse.ui.editor.server.ServerConnection;
 import de.fhdo.lemma.utils.LemmaUtils;
-import java.util.Collections;
 import java.util.List;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -16,6 +15,7 @@ import org.eclipse.xtext.util.concurrent.IReadAccess;
 import org.eclipse.xtext.validation.CheckMode;
 import org.eclipse.xtext.validation.IResourceValidator;
 import org.eclipse.xtext.validation.Issue;
+import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 
 /**
  * Custom Xtext validation job for Live Validation. It connects to a Live Validation server and
@@ -50,16 +50,16 @@ public class LiveValidationJob extends ValidationJob {
       @Override
       public List<Issue> exec(final XtextResource resource, final CancelIndicator outerIndicator) {
         if (((resource == null) || resource.isValidationDisabled())) {
-          return Collections.<Issue>emptyList();
+          return CollectionLiterals.<Issue>emptyList();
         }
         final IFile resourceFile = LemmaUtils.getFileForResource(resource);
         if ((resourceFile == null)) {
-          return Collections.<Issue>emptyList();
+          return CollectionLiterals.<Issue>emptyList();
         }
         final String documentUri = resourceFile.getLocationURI().toString();
         final String sourceCode = NodeModelUtils.getNode(resource.getContents().get(0)).getText();
         LiveValidationJob.this.liveValidationServerConnection.validate(documentUri, sourceCode);
-        return Collections.<Issue>emptyList();
+        return CollectionLiterals.<Issue>emptyList();
       }
     };
     this.getXtextDocument().<List<Issue>>readOnly(getLiveValidationIssues);

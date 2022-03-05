@@ -10,7 +10,6 @@ import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.xtext.util.concurrent.CancelableUnitOfWork
 import org.eclipse.xtext.util.CancelIndicator
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
-import java.util.Collections
 import org.eclipse.xtext.validation.Issue
 import java.util.List
 import de.fhdo.lemma.eclipse.ui.editor.server.ServerConnection
@@ -47,11 +46,11 @@ class LiveValidationJob extends ValidationJob {
         val getLiveValidationIssues = new CancelableUnitOfWork<List<Issue>, XtextResource>() {
             override exec(XtextResource resource, CancelIndicator outerIndicator) {
                 if (resource === null || resource.isValidationDisabled())
-                    return Collections.emptyList()
+                    return emptyList()
 
                 val resourceFile = LemmaUtils.getFileForResource(resource)
                 if (resourceFile === null)
-                    return Collections.emptyList()
+                    return emptyList()
 
                 // Prepare and send a PerformValidation request to the connected Live Validation
                 // server. Note that the call to ServerConnection.validate() is blocking and relies
@@ -63,7 +62,7 @@ class LiveValidationJob extends ValidationJob {
                 val documentUri = resourceFile.locationURI.toString
                 val sourceCode = NodeModelUtils.getNode(resource.contents.get(0)).text
                 liveValidationServerConnection.validate(documentUri, sourceCode)
-                return Collections.emptyList()
+                return emptyList()
             }
         }
 
