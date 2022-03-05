@@ -47,7 +47,10 @@ internal class ServiceModelSourceValidator : AbstractXtextModelValidator() {
     @Suppress("unused")
     @Check
     private fun checkCommandSide(microservice: Microservice) {
-        microservice.checkSideOperations("CommandSide") { operationsToCheck ->
+        if (!microservice.hasSideAspect("CommandSide"))
+            return
+
+        microservice.checkSideOperations { operationsToCheck ->
             val hasAsynchronousOutgoingParameters = operationsToCheck.any {
                 it.hasResultParameters(CommunicationType.ASYNCHRONOUS)
             }
@@ -59,12 +62,20 @@ internal class ServiceModelSourceValidator : AbstractXtextModelValidator() {
     }
 
     /**
+     * Helper to check that this [Microservice] has an aspect from the CQRS technology model with the given
+     * [sideAspectName]
+     */
+    private fun Microservice.hasSideAspect(sideAspectName: String) : Boolean {
+        val cqrsAlias = cqrsAlias() ?: return false
+        return hasServiceAspect(cqrsAlias, sideAspectName)
+    }
+
+    /**
      * Helper to run checks on all operations specified for a given side [Microservice]
      */
-    private fun Microservice.checkSideOperations(sideAspectName: String, checkOperations: (List<Operation>) -> Unit) {
-        val cqrsAlias = cqrsAlias() ?: return
-        val sideInterfaces = interfaces.filter { it.hasServiceAspect(cqrsAlias, sideAspectName) }
-        val operationsToCheck = sideInterfaces.map { it.operations }.flatten()
+    private fun Microservice.checkSideOperations(checkOperations: (List<Operation>) -> Unit) {
+        val operationsToCheck = interfaces.map { it.operations }.flatten()
+        // Note that by intent we also invoke the check-lambda when the list of operations is empty
         checkOperations(operationsToCheck)
     }
 
@@ -87,6 +98,9 @@ internal class ServiceModelSourceValidator : AbstractXtextModelValidator() {
     @Suppress("unused")
     @Check
     private fun checkCommandSide(iface: Interface) {
+        if (!iface.hasSideAspect("CommandSide"))
+            return
+
         iface.checkSideOperations("CommandSide") { operations ->
             val hasAsynchronousOutgoingParameters = operations.any {
                 it.hasResultParameters(CommunicationType.ASYNCHRONOUS)
@@ -99,12 +113,21 @@ internal class ServiceModelSourceValidator : AbstractXtextModelValidator() {
     }
 
     /**
+     * Helper to check that this [Interface] has an aspect from the CQRS technology model with the given
+     * [sideAspectName]
+     */
+    private fun Interface.hasSideAspect(sideAspectName: String) : Boolean {
+        val cqrsAlias = microservice.cqrsAlias() ?: return false
+        return hasServiceAspect(cqrsAlias, sideAspectName)
+    }
+
+    /**
      * Helper to run checks on all operations specified for a given side [Interface]
      */
     private fun Interface.checkSideOperations(sideAspectName: String, checkOperations: (List<Operation>) -> Unit) {
-        val cqrsAlias = microservice.cqrsAlias() ?: return
-        if (!hasServiceAspect(cqrsAlias, sideAspectName))
+        if (!hasSideAspect(sideAspectName))
             return
+
         checkOperations(operations)
     }
 
@@ -114,7 +137,10 @@ internal class ServiceModelSourceValidator : AbstractXtextModelValidator() {
     @Suppress("unused")
     @Check
     private fun checkQuerySide(microservice: Microservice) {
-        microservice.checkSideOperations("QuerySide") { operationsToCheck ->
+        if (!microservice.hasSideAspect("QuerySide"))
+            return
+
+        microservice.checkSideOperations { operationsToCheck ->
             val hasAsynchronousIncomingParameters = operationsToCheck.any {
                 it.hasInputParameters(CommunicationType.ASYNCHRONOUS)
             }
@@ -125,8 +151,8 @@ internal class ServiceModelSourceValidator : AbstractXtextModelValidator() {
         }
 
         // The query side should require a command side in order to receive updates on domain objects' states
-        val cqrsAlias = microservice.cqrsAlias() ?: return
-        val querySideAspect = microservice.getServiceAspect(cqrsAlias, "QuerySide") ?: return
+        val cqrsAlias = microservice.cqrsAlias()!!
+        val querySideAspect = microservice.getServiceAspect(cqrsAlias, "QuerySide")!!
         val logicalService = querySideAspect.getPropertyValue("logicalService") ?: return
         if (!microservice.requiresCommandSide(logicalService))
             warning("Command side with matching logical service could not be found in required microservices",
@@ -154,6 +180,9 @@ internal class ServiceModelSourceValidator : AbstractXtextModelValidator() {
     @Suppress("unused")
     @Check
     private fun checkQuerySide(iface: Interface) {
+        if (!iface.hasSideAspect("QuerySide"))
+            return
+
         iface.checkSideOperations("QuerySide") { operations ->
             val hasAsynchronousIncomingParameters = operations.any {
                 it.hasInputParameters(CommunicationType.ASYNCHRONOUS)
@@ -167,10 +196,8 @@ internal class ServiceModelSourceValidator : AbstractXtextModelValidator() {
         // The query side interface should be part of a microservice with a command side interface in order to receive
         // updates on domain objects' states
         val microservice = iface.microservice
-        val cqrsAlias = microservice.cqrsAlias() ?: return
-        val hasCommandSide = microservice.interfaces.any {
-            it.hasServiceAspect(cqrsAlias, "CommandSide")
-        }
+        val cqrsAlias = microservice.cqrsAlias()!!
+        val hasCommandSide = microservice.interfaces.any { it.hasServiceAspect(cqrsAlias, "CommandSide") }
         if (!hasCommandSide)
             warning("No corresponding command side interface found in microservice",
                 ServicePackage.Literals.INTERFACE__NAME)
