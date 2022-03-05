@@ -26,6 +26,7 @@ import org.eclipse.xtext.validation.Check
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
+@Suppress("unused")
 @SourceModelValidator
 internal class ServiceModelSourceValidator : AbstractXtextModelValidator() {
     override fun getSupportedFileExtensions() = setOf("services")
@@ -33,6 +34,7 @@ internal class ServiceModelSourceValidator : AbstractXtextModelValidator() {
     /**
      * Prepare import model paths before validation
      */
+    @Suppress("unused")
     @Before
     private fun prepareImportModelPaths(resource: Resource) {
         val sm = resource.contents[0] as ServiceModel
@@ -42,6 +44,7 @@ internal class ServiceModelSourceValidator : AbstractXtextModelValidator() {
     /**
      * Check command side microservice
      */
+    @Suppress("unused")
     @Check
     private fun checkCommandSide(microservice: Microservice) {
         microservice.checkSideOperations("CommandSide") { operationsToCheck ->
@@ -81,6 +84,7 @@ internal class ServiceModelSourceValidator : AbstractXtextModelValidator() {
     /**
      * Check command side interface
      */
+    @Suppress("unused")
     @Check
     private fun checkCommandSide(iface: Interface) {
         iface.checkSideOperations("CommandSide") { operations ->
@@ -107,6 +111,7 @@ internal class ServiceModelSourceValidator : AbstractXtextModelValidator() {
     /**
      * Check query side microservice
      */
+    @Suppress("unused")
     @Check
     private fun checkQuerySide(microservice: Microservice) {
         microservice.checkSideOperations("QuerySide") { operationsToCheck ->
@@ -146,6 +151,7 @@ internal class ServiceModelSourceValidator : AbstractXtextModelValidator() {
     /**
      * Check query side interface
      */
+    @Suppress("unused")
     @Check
     private fun checkQuerySide(iface: Interface) {
         iface.checkSideOperations("QuerySide") { operations ->
