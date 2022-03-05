@@ -59,7 +59,7 @@ internal class ServiceModelSourceValidator : AbstractXtextModelValidator() {
         val domainEventsAlias = operation.`interface`.microservice.domainEventsAlias ?: return
         val consumerAspect = operation.getServiceAspect(domainEventsAlias, "Consumer") ?: return
 
-        // Operations with the Producer aspect must exhibit an input parameter
+        // Operations with the Consumer aspect must exhibit an input parameter
         if (!operation.hasInputParameters(CommunicationType.ASYNCHRONOUS)) {
             error("The Consumer aspect may only be applied to operations with an input parameter",
                 ServicePackage.Literals.OPERATION__NAME)

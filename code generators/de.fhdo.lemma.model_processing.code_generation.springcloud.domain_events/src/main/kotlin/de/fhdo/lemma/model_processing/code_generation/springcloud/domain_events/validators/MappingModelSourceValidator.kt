@@ -46,6 +46,6 @@ internal class MappingModelSourceValidator : AbstractXtextModelValidator() {
         // The EventGroup aspect may only be applied to domain concepts with the domainEvent feature
         if (!dataStructure.hasFeature(ComplexTypeFeature.DOMAIN_EVENT))
             error("EventGroup aspect is only applicable to domain events",
-                MappingPackage.Literals.COMPLEX_TYPE_MAPPING__ASPECTS)
+                MappingPackage.Literals.COMPLEX_TYPE_MAPPING__TYPE)
     }
 }
