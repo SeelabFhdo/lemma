@@ -16,6 +16,7 @@ import de.fhdo.lemma.service.Operation
 import de.fhdo.lemma.service.ServiceModel
 import de.fhdo.lemma.service.ServicePackage
 import de.fhdo.lemma.technology.CommunicationType
+import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.validation.Check
 
@@ -50,7 +51,7 @@ internal class ServiceModelSourceValidator : AbstractXtextModelValidator() {
 
             if (!hasAsynchronousOutgoingParameters)
                 warning("Command side should have operations with asynchronous outgoing parameters that communicate " +
-                    "state changes to query sides", ServicePackage.Literals.MICROSERVICE__REQUIRED_MICROSERVICES)
+                    "state changes to query sides", microservice.getTargetLiteralForRequiredMicroservicesIssue())
         }
     }
 
@@ -62,6 +63,19 @@ internal class ServiceModelSourceValidator : AbstractXtextModelValidator() {
         val sideInterfaces = interfaces.filter { it.hasServiceAspect(cqrsAlias, sideAspectName) }
         val operationsToCheck = sideInterfaces.map { it.operations }.flatten()
         checkOperations(operationsToCheck)
+    }
+
+    /**
+     * Helper to determine the target [EStructuralFeature] for issues related to the specified required microservices
+     * of this [Microservice]
+     */
+    private fun Microservice.getTargetLiteralForRequiredMicroservicesIssue() : EStructuralFeature {
+        return if (requiredMicroservices.isNotEmpty())
+                ServicePackage.Literals.MICROSERVICE__REQUIRED_MICROSERVICES
+            // In case the microservice does not specify required microservices, use the name of the service as issue
+            // target
+            else
+                ServicePackage.Literals.MICROSERVICE__NAME
     }
 
     /**
@@ -111,7 +125,7 @@ internal class ServiceModelSourceValidator : AbstractXtextModelValidator() {
         val logicalService = querySideAspect.getPropertyValue("logicalService") ?: return
         if (!microservice.requiresCommandSide(logicalService))
             warning("Command side with matching logical service could not be found in required microservices",
-                    ServicePackage.Literals.MICROSERVICE__REQUIRED_MICROSERVICES)
+                microservice.getTargetLiteralForRequiredMicroservicesIssue())
     }
 
     /**
