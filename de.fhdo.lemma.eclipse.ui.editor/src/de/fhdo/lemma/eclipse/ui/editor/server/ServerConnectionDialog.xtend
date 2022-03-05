@@ -25,7 +25,7 @@ class ServerConnectionDialog extends TitleAreaDialog {
         "([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*" +
         "([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\\-]*[A-Za-z0-9])"
     static val MIN_DIALOG_WIDTH = 240
-    static val MIN_DIALOG_HEIGHT = 110
+    static val MIN_DIALOG_HEIGHT = 120
 
     Text hostnameField
     Text portField

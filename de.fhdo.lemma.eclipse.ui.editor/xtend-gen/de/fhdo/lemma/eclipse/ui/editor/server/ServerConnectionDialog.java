@@ -33,7 +33,7 @@ public class ServerConnectionDialog extends TitleAreaDialog {
   
   private static final int MIN_DIALOG_WIDTH = 240;
   
-  private static final int MIN_DIALOG_HEIGHT = 110;
+  private static final int MIN_DIALOG_HEIGHT = 120;
   
   private Text hostnameField;
   
