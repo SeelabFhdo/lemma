@@ -51,6 +51,14 @@ internal val ComplexTypeMapping.kafkaAlias
     get() = technologyReferences.findAliasForTechnology("Kafka")
 
 /**
+ * Get alias of Domain Events technology model from [Microservice].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal val Microservice.domainEventsAlias
+    get() = technologyReferences.findAliasForTechnology("DomainEvents")
+
+/**
  * Get alias of CQRS technology model from [Microservice].
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)

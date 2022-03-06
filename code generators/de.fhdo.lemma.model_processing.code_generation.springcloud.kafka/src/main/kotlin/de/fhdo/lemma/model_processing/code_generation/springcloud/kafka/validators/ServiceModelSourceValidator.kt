@@ -5,6 +5,7 @@ import de.fhdo.lemma.data.Type
 import de.fhdo.lemma.model_processing.annotations.Before
 import de.fhdo.lemma.model_processing.annotations.SourceModelValidator
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.cqrsAlias
+import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.domainEventsAlias
 import de.fhdo.lemma.model_processing.utils.countInputParameters
 import de.fhdo.lemma.model_processing.utils.countResultParameters
 import de.fhdo.lemma.model_processing.utils.getAllServiceAspects
@@ -172,7 +173,13 @@ internal class ServiceModelSourceValidator : AbstractXtextModelValidator() {
                 ServicePackage.Literals.IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT)
 
         // Warn if error handling was disabled by means of DomainEvents.Consumer aspect
-        if (operation.hasServiceAspect("DomainEvents.Consumer", "disableErrorHandling"))
+        val domainEventsAlias = operation.`interface`.microservice.domainEventsAlias
+        val disableErrorHandling = if (domainEventsAlias !== null)
+                operation.getServiceAspect(domainEventsAlias, "Consumer")
+                    ?.getPropertyValue("disableErrorHandling") == "true"
+            else
+                false
+        if (disableErrorHandling)
             warning("ErrorHandlingConfiguration will not be effective, because error handling was disabled via the " +
                     "DomainEvents.Consumer aspect", errorHandlingConfigurationAspect,
                 ServicePackage.Literals.IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT)
