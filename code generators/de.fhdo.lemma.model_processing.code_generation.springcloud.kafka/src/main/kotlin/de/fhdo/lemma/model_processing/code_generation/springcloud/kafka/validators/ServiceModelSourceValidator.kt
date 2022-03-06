@@ -198,51 +198,50 @@ internal class ServiceModelSourceValidator : AbstractXtextModelValidator() {
     @Check
     @Suppress("unused")
     private fun checkCommandSideSenderExistence(microservice: Microservice) {
+        val kafkaAlias = microservice.kafkaAlias ?: return
         val cqrsAlias = microservice.cqrsAlias ?: return
         val querySideAspect = microservice.getServiceAspect(cqrsAlias, "QuerySide") ?: return
-        val querySideOperations = microservice.getSideInterfaces(querySideAspect).getSideOperations(querySideAspect)
+        val querySideOperations = microservice.interfaces.map { it.operations }.flatten()
+            .filter { it.hasParticipantAspect(kafkaAlias) }
 
         // Command side microservices must be required by query side microservices to be identifiable as a corresponding
         // side
-        val commandSideOperations = microservice.requiredMicroservices
-            .filter { it.microservice.isCorrespondingSide(querySideAspect) }
-            .map { it.microservice.getCorrespondingSideInterfaces(querySideAspect) }
-            .flatten()
-            .getCorrespondingSideOperations(querySideAspect)
+        val correspondingKafkaEnabledMicroservices = microservice.requiredMicroservices
+            .filter { it.microservice.isCorrespondingSide(querySideAspect) && it.microservice.kafkaAlias != null }
+            .associateWith { it.microservice.kafkaAlias!! }
+
+        val commandSideOperations = mutableMapOf<Operation, String>()
+        correspondingKafkaEnabledMicroservices.forEach { (correspondingMicroservice, correspondingKafkaAlias) ->
+            val interfaces = correspondingMicroservice.microservice.interfaces
+            val correspondingSideOperations = interfaces.getCorrespondingSideOperations(querySideAspect)
+            correspondingSideOperations.filter { it.hasParticipantAspect(correspondingKafkaAlias) }.forEach {
+                commandSideOperations[it] = correspondingKafkaAlias
+            }
+        }
 
         // Check if type-compatible command side operation exists for each query side operation
         querySideOperations.forEach { querySideOperation ->
-            val existsCompatibleCommandSideSender = commandSideOperations.any { commandSideOperation ->
-                val kafkaAlias = commandSideOperation.`interface`.microservice.kafkaAlias
-                if (kafkaAlias != null && commandSideOperation.hasServiceAspect(kafkaAlias, "AvroParticipant"))
-                    querySideOperation.canReceiveParametersWithKafka(commandSideOperation, "AvroParticipant")
-                else
-                    querySideOperation.canReceiveParametersWithKafka(commandSideOperation, "Participant")
+            val existsCompatibleSender = commandSideOperations.any { (commandSideOperation, commandSideKafkaAlias) ->
+                when {
+                    commandSideOperation.hasServiceAspect(commandSideKafkaAlias, "AvroParticipant") ->
+                        querySideOperation.canReceiveParametersWithKafka(commandSideOperation, "AvroParticipant")
+                    else ->
+                        querySideOperation.canReceiveParametersWithKafka(commandSideOperation, "Participant")
+                }
             }
 
-            if (!existsCompatibleCommandSideSender)
+            if (!existsCompatibleSender)
                 warning("No compatible command side sender found for query side receiver", querySideOperation,
                     ServicePackage.Literals.OPERATION__NAME)
         }
     }
 
     /**
-     * Get side interfaces of this [Microservice]. The side is represented by the given [sideAspect].
+     * Check if this [Operation] is a Kafka participant aspect from the Kafka technology model with the given
+     * [kafkaAlias]
      */
-    private fun Microservice.getSideInterfaces(sideAspect: ImportedServiceAspect)
-        = getSideInterfaces(sideAspect.importedAspect.name)
-
-    /**
-     * Get all interfaces of this [Microservice], which have a CQRS aspect with the given [sideAspectName]
-     */
-    private fun Microservice.getSideInterfaces(sideAspectName: String)
-        = interfaces.filter { it.hasServiceAspect(cqrsAlias!!, sideAspectName) }
-
-    /**
-     * Get side operations from this list of [Interface] instances. The side is represented by the given [sideAspect].
-     */
-    private fun List<Interface>.getSideOperations(sideAspect: ImportedServiceAspect)
-        = getSideOperations(sideAspect.importedAspect.name)
+    private fun Operation.hasParticipantAspect(kafkaAlias: String)
+        = hasServiceAspect(kafkaAlias, "AvroParticipant") || hasServiceAspect(kafkaAlias, "Participant")
 
     /**
      * Get side operations from this list of [Interface] instances. Command side operations must exhibit asynchronous
@@ -275,14 +274,6 @@ internal class ServiceModelSourceValidator : AbstractXtextModelValidator() {
         val correspondingSideLogicalService = correspondingSideAspect.getPropertyValue("logicalService")
         return logicalService == correspondingSideLogicalService
     }
-
-    /**
-     * Get side interfaces of this [Microservice], which correspond to the side represented by the given [sideAspect].
-     * Returns, for example, all CommandSide interfaces of this [Microservice], if the [sideAspect] represents the
-     * QuerySide aspect.
-     */
-    private fun Microservice.getCorrespondingSideInterfaces(sideAspect: ImportedServiceAspect)
-        = getSideInterfaces(sideAspect.getCorrespondingSideAspectName())
 
     /**
      * Get corresponding side aspect name for this [ImportedServiceAspect]
