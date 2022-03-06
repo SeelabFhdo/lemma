@@ -40,6 +40,7 @@ import java.lang.IllegalArgumentException
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 @SourceModelValidator
+@Suppress("unused")
 internal class ServiceModelSourceValidator : AbstractXtextModelValidator() {
     override fun getSupportedFileExtensions() = setOf("services")
 
@@ -47,6 +48,7 @@ internal class ServiceModelSourceValidator : AbstractXtextModelValidator() {
      * Prepare import model paths before validation
      */
     @Before
+    @Suppress("unused")
     private fun prepareImportModelPaths(resource: Resource) {
         val sm = resource.contents[0] as ServiceModel
         sm.imports.convertToAbsoluteFileUrisInPlace(resource)
@@ -57,6 +59,7 @@ internal class ServiceModelSourceValidator : AbstractXtextModelValidator() {
      * the BootstrapAddress aspect
      */
     @Check
+    @Suppress("unused")
     private fun checkBootstrapAddress(microservice: Microservice) {
         // Check aspect existence
         val kafkaAlias = microservice.kafkaAlias ?: return
@@ -80,6 +83,7 @@ internal class ServiceModelSourceValidator : AbstractXtextModelValidator() {
      * Warn if a microservice has an Avro schema registry address, but does not comprise Avro participant operations
      */
     @Check
+    @Suppress("unused")
     private fun warnAvroRegistryAddress(microservice: Microservice) {
         val kafkaAlias = microservice.kafkaAlias ?: return
         if (!microservice.hasServiceAspect(kafkaAlias, "AvroRegistryAddress"))
@@ -96,6 +100,7 @@ internal class ServiceModelSourceValidator : AbstractXtextModelValidator() {
      * Check that a microservice with an Avro schema registry address has Avro participant operations
      */
     @Check
+    @Suppress("unused")
     private fun checkAvroRegistryAddress(operation: Operation) {
         val microservice = operation.`interface`.microservice
         val kafkaAlias = microservice.kafkaAlias ?: return
@@ -109,6 +114,7 @@ internal class ServiceModelSourceValidator : AbstractXtextModelValidator() {
      * Check source [Operation] that represents a Kafka participant as indicated by the Participant technology aspect
      */
     @Check
+    @Suppress("unused")
     private fun checkKafkaParticipant(operation: Operation) {
         val kafkaAlias = operation.`interface`.microservice.kafkaAlias ?: return
         val participantAspects = operation.getAllServiceAspects(kafkaAlias, "Participant").toMutableList()
@@ -153,6 +159,7 @@ internal class ServiceModelSourceValidator : AbstractXtextModelValidator() {
      * Check error handling configuration of an [Operation] with the ErrorHandlingConfiguration aspect
      */
     @Check
+    @Suppress("unused")
     private fun checkErrorHandlingConfiguration(operation: Operation) {
         val kafkaAlias = operation.`interface`.microservice.kafkaAlias ?: return
         val errorHandlingConfigurationAspect = operation.getServiceAspect(kafkaAlias, "ErrorHandlingConfiguration")
@@ -182,6 +189,7 @@ internal class ServiceModelSourceValidator : AbstractXtextModelValidator() {
      * synchronization purposes exist in the command side of the microservice
      */
     @Check
+    @Suppress("unused")
     private fun checkCommandSideSenderExistence(microservice: Microservice) {
         val cqrsAlias = microservice.cqrsAlias ?: return
         val querySideAspect = microservice.getServiceAspect(cqrsAlias, "QuerySide") ?: return
