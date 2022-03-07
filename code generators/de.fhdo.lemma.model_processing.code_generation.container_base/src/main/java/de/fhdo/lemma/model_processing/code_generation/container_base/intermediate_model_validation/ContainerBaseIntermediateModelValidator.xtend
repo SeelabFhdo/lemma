@@ -18,6 +18,8 @@ import de.fhdo.lemma.utils.LemmaUtils
  */
 @IntermediateModelValidator
 class ContainerBaseIntermediateModelValidator extends AbstractXmiDeclarativeValidator {
+    static val CONTAINER_BASE_TECHNOLOGY_NAME = "container_base"
+
     /**
      * Get the namespace for the intermediate operation model
      */
@@ -26,27 +28,28 @@ class ContainerBaseIntermediateModelValidator extends AbstractXmiDeclarativeVali
     }
 
     /**
-     * Check if container uses the container_base technology which is supported by the
-     * container base code generator.
+     * Check if container uses the technology supported by the container base code generator.
      */
     @Check
-    def checkContainerForContainerBase(IntermediateContainer container) {
-        val importTechnology = container.imports.findFirst[it.name == "container_base"]
+    def checkContainerForContainerBaseTechnology(IntermediateContainer container) {
+        val hasContainerBaseTechnology = container.qualifiedDeploymentTechnologyName.toLowerCase
+            .startsWith('''«CONTAINER_BASE_TECHNOLOGY_NAME».''')
 
-        if (importTechnology === null && !container.imported)
-            warning("No supported technology model found for container.",
+        if (!hasContainerBaseTechnology)
+            error("No supported technology model found for container.",
                 IntermediatePackage.Literals.INTERMEDIATE_DEPLOYMENT_TECHNOLOGY_REFERENCE__IMPORT)
     }
 
     /**
-     * Check if infrastructure node uses the container_base technology which is supported by the
-     * container base code generator.
+     * Check if infrastructure node uses the technology supported by the container base code
+     * generator.
      */
-    def checkInfrastructureNodeForContainerTechnology(IntermediateInfrastructureNode node) {
-        val importTechnology = node.imports.findFirst[it.name == "container_base"]
+    def checkInfrastructureNodeForContainerBaseTechnology(IntermediateInfrastructureNode node) {
+        val hasContainerBaseTechnology = node.qualifiedInfrastructureTechnologyName.toLowerCase
+            .startsWith('''«CONTAINER_BASE_TECHNOLOGY_NAME».''')
 
-        if (importTechnology === null && !node.imported)
-            warning("No supported technology model found for infrastructure node.",
+        if (!hasContainerBaseTechnology)
+            error("No supported technology model found for infrastructure node.",
                 IntermediatePackage.Literals.INTERMEDIATE_DEPLOYMENT_TECHNOLOGY_REFERENCE__IMPORT)
     }
 
