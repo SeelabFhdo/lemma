@@ -18,6 +18,7 @@ import org.fusesource.jansi.Ansi.ansi
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStream
+import java.io.PrintStream
 import java.io.PrintWriter
 import java.io.StringWriter
 import java.nio.file.Paths
@@ -84,15 +85,7 @@ fun String.asXmiResource() : Resource {
  */
 private fun String.toFileUri() = URI.createURI(LemmaUtils.convertToFileUri(this))
 
-private const val ERROR_COLOR = "red"
 private const val WARNING_COLOR = "yellow"
-
-/**
- * [print] to the console in a given color.
- *
- * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
- */
-internal fun printColor(message: Any, colorName: String) = print(ansi().render("@|$colorName $message|@"))
 
 /**
  * [print] a phase-specific error to the console.
@@ -107,14 +100,7 @@ internal fun printPhaseError(phase: AbstractModelProcessingPhase, message: Strin
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun printError(message: Any) = printColor(message, ERROR_COLOR)
-
-/**
- * [println] to the console in a given color.
- *
- * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
- */
-internal fun printlnColor(message: Any, colorName: String) = println(ansi().render("@|$colorName $message|@"))
+internal fun printError(message: Any) = System.err.print(message)
 
 /**
  * [println] a phase-specific error to the console.
@@ -129,14 +115,23 @@ internal fun printlnPhaseError(phase: AbstractModelProcessingPhase, message: Str
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun printlnError(message: Any) = printlnColor(message, ERROR_COLOR)
+internal fun printlnError(message: Any) = System.err.println(message)
 
 /**
  * [print] a warning to the console.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun printlnWarning(message: Any) = printlnColor(message, WARNING_COLOR)
+internal fun printlnWarning(message: Any, stream: PrintStream = System.out)
+    = printlnColor(message, WARNING_COLOR, stream)
+
+/**
+ * [println] to the console in a given color.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun printlnColor(message: Any, colorName: String, stream: PrintStream)
+    = stream.println(ansi().render("@|$colorName $message|@"))
 
 /**
  * Call all [KFunction] instances in a [List] sequentially.

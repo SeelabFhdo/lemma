@@ -2,7 +2,6 @@ package de.fhdo.lemma.model_processing.builtin_phases
 
 import de.fhdo.lemma.live_validation.model.IssueDiagnostic
 import de.fhdo.lemma.live_validation.model.IssueRange
-import de.fhdo.lemma.model_processing.printlnError
 import de.fhdo.lemma.model_processing.printlnWarning
 import org.eclipse.lsp4j.DiagnosticSeverity
 import java.lang.IllegalStateException
@@ -41,7 +40,10 @@ internal fun List<ValidationResult>.print(file: String) {
     if (withoutIgnorableResults.isEmpty())
         return
 
-    println("Validation results for file $file:")
+    val errorResults = any { it.type == ValidationResultType.ERROR }
+    val outStream = if (errorResults) System.err else System.out
+
+    outStream.println("Validation results for file $file:")
     val sortedResults = sortedWith(
         compareByDescending<ValidationResult> { it.type.severityWeight }
         .thenBy(ValidationResult::lineNumber)
@@ -50,12 +52,6 @@ internal fun List<ValidationResult>.print(file: String) {
     )
 
     for (result in sortedResults) {
-        val printResult: (Any) -> (Unit) = when (result.type) {
-            ValidationResultType.ERROR -> ::printlnError
-            ValidationResultType.WARNING -> ::printlnWarning
-            else -> ::println
-        }
-
         val printableResult = StringBuffer()
         with(result) {
             printableResult.append("\t${type.printableName}")
@@ -70,7 +66,13 @@ internal fun List<ValidationResult>.print(file: String) {
             if (printableMessage.isNotEmpty())
                 printableResult.append(": $printableMessage")
         }
-        printResult(printableResult.toString())
+
+        // We print all results to the same stream to ensure they appear in the correct order. In case of a validation
+        // result with an error severity, all results will be printed to the error stream.
+        if (errorResults || result.type != ValidationResultType.WARNING)
+            outStream.println(printableResult.toString())
+        else
+            printlnWarning(printableResult.toString(), outStream)
     }
 }
 
