@@ -2,6 +2,7 @@ package de.fhdo.lemma.model_processing.code_generation.springcloud
 
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import de.fhdo.lemma.model_processing.code_generation.springcloud.Context.State as State
+import de.fhdo.lemma.model_processing.code_generation.springcloud.Context.NonResettableState as NonResettableState
 import de.fhdo.lemma.model_processing.AbstractModelProcessor
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.AbstractGenlet
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletEvent
@@ -32,6 +33,7 @@ class SpringcloudGenerator : AbstractGenlet(BASE_PACKAGE) {
             return null
 
         // Handle finish of the current microservice's Java generation
+        NonResettableState.generationInvolvedMicroservices = true
         val microserviceClass = event.get<ClassOrInterfaceDeclaration>(GenletEventObject.GENERATED_MICROSERVICE_CLASS)!!
         val finalServiceClass = MicroserviceHandler.handleMicroserviceGenerationFinished(microserviceClass)
         State.reset()

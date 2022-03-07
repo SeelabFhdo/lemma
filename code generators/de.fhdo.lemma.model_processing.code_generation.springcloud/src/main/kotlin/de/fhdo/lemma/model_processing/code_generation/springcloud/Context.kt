@@ -17,6 +17,14 @@ import kotlin.reflect.KProperty
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 internal object Context {
+    /*
+     * Non-resettable state object of the context. By contrast to the below State object, this object does not support
+     * reset of all its attributes at once.
+     */
+    object NonResettableState {
+        var generationInvolvedMicroservices = false
+    }
+
     /* State object of the context */
     object State {
         private val asynchronousOperations = mutableMapOf<String, MutableSet<AsynchronousOperationInfo>>()
