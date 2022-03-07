@@ -102,13 +102,13 @@ object BasicCommandLine {
     var invokeOnlySpecifiedPhases: Boolean = false
 
     /*
-     * Commandline option to instruct the model processor to exit on phase errors
+     * Commandline option to instruct the model processor to continue after phase errors
      */
     @Option(
-        names = ["--exit_on_error"],
-        description = ["exit model processor when errors occur in a phase"]
+        names = ["--continue_after_phase_errors"],
+        description = ["continue model processing after the occurrence of phase errors"]
     )
-    var exitOnError: Boolean = true
+    var continueAfterPhaseErrors: Boolean = false
 
     private var parsedCommandLine: CommandLine? = null
     private var parsedOptions: List<CommandLine.Model.OptionSpec> = emptyList()

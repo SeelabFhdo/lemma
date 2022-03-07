@@ -227,7 +227,7 @@ abstract class AbstractModelProcessor(private val processorImplementationPackage
         } ?: return
 
         /* Perform further exception handling next to printing */
-        if (BasicCommandLine.exitOnError) {
+        if (!BasicCommandLine.continueAfterPhaseErrors) {
             printlnError("Model processing aborted.")
             processingFinished(4)
         }
