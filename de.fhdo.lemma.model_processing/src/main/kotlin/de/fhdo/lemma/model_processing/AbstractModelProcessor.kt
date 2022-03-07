@@ -18,6 +18,8 @@ import kotlin.system.exitProcess
 
 val MODEL_PROCESSING_PACKAGE: String = object{}.javaClass.packageName
 
+private const val ERROR_EXIT_CODE = 1
+
 /**
  * Abstract superclass for model processors.
  *
@@ -52,7 +54,7 @@ abstract class AbstractModelProcessor(private val processorImplementationPackage
             BasicCommandLine(basicParameters)
         } catch (ex: CommandLine.ParameterException) {
             printlnError(ex.message!!)
-            processingFinished(4)
+            processingFinished(ERROR_EXIT_CODE)
         }
 
         /* Set debug-related parameters and determine log level */
@@ -229,12 +231,12 @@ abstract class AbstractModelProcessor(private val processorImplementationPackage
         /* Perform further exception handling next to printing */
         if (!BasicCommandLine.continueAfterPhaseErrors) {
             printlnError("Model processing aborted.")
-            processingFinished(4)
+            processingFinished(ERROR_EXIT_CODE)
         }
 
         if (phaseExecutionException.exitModelProcessor) {
             printlnError("Model processing aborted.")
-            processingFinished(4)
+            processingFinished(ERROR_EXIT_CODE)
         } else {
             printlnError("Phase execution aborted.")
 
