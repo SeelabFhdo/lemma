@@ -27,6 +27,9 @@ private const val ERROR_EXIT_CODE = 1
  */
 @Suppress("unused")
 abstract class AbstractModelProcessor(private val processorImplementationPackage: String) {
+    @Volatile
+    private lateinit var currentlyExecutedPhase: AbstractModelProcessingPhase
+
     /**
      * Run the model processor with the given arguments
      */
@@ -91,6 +94,34 @@ abstract class AbstractModelProcessor(private val processorImplementationPackage
         /* Initialize language descriptions singleton so that the phases can make use of it */
         LanguageDescriptions.initialize(processorImplementationPackage)
 
+        /* Set global exception handler to centralize handling of PhaseExceptions during a model processor execution */
+        Thread.setDefaultUncaughtExceptionHandler { _, throwable ->
+            // Only handle PhaseExceptions and rethrow others
+            val phaseException = throwable as? PhaseException ?: throwable.cause as? PhaseException
+            if (phaseException == null) {
+                throwable.printStackTrace()
+                throw throwable
+            }
+
+            printPhaseError(currentlyExecutedPhase, phaseException.getAndDebugErrorMessage())
+            printError(" ")
+
+            exitModelProcessorIfRequested(phaseException)
+
+            // In case we got here, either the user decided to continue after model processing errors or the phase
+            // exception indicated to not stop model processing after its occurrence
+            printlnError("Phase execution aborted.")
+
+            // We still check for promised return parameters of the failed phase and warn the user in case there is
+            // anything wrong with them so that subsequent phases may fail when they depend on the parameters
+            try {
+                currentlyExecutedPhase.checkReturnParametersOrException()
+            } catch (ex: PhaseException) {
+                printlnError("\tPhase did not return parameters as expected and subsequent phases may fail because " +
+                    "of this: ${ex.message}")
+            }
+        }
+
         /* Execute phases with phase-specific parameters (if any) */
         with(phaseParameters) {
             when {
@@ -129,6 +160,34 @@ abstract class AbstractModelProcessor(private val processorImplementationPackage
     protected open fun processingFinished(returnCode: Int) {
         AnsiConsole.systemUninstall()
         exitProcess(returnCode)
+    }
+
+    /**
+     * Helper to get an error message from this [PhaseException]. The helper also prints a debug message with the
+     * exception's stack trace.
+     */
+    private fun PhaseException.getAndDebugErrorMessage() : String {
+        val stackTraceString = stackTraceAsString()
+        return if (!message.isNullOrEmpty()) {
+                debug { stackTraceString }
+                if (!message!!.endsWith(".")) "${message}." else message!!
+            } else
+                stackTraceString
+    }
+
+    /**
+     * Exit the model processor in case the user did not specify the [BasicCommandLine.continueAfterPhaseErrors] option
+     * or the occurred [phaseException] does not support processing continuation
+     */
+    private fun exitModelProcessorIfRequested(phaseException: PhaseException) {
+        if (BasicCommandLine.continueAfterPhaseErrors && !phaseException.exitModelProcessor)
+            return
+
+        if (BasicCommandLine.continueAfterPhaseErrors)
+            printlnError("Continuation after phase errors was requested but phase error is not recoverable.")
+
+        printlnError("Model processing aborted.")
+        processingFinished(ERROR_EXIT_CODE)
     }
 
     /**
@@ -201,55 +260,13 @@ abstract class AbstractModelProcessor(private val processorImplementationPackage
      * Helper to execute a single model processing phase from a given list of phases
      */
     private fun List<AbstractModelProcessingPhase>.execute(index: Int, parameters: List<String>?) {
-        val phase = this[index]
-        phase.predecessors = if (index > 0) subList(0, index).map { it.id } else emptyList()
-        phase.successors = if (index < size-1) subList(index+1, size).map { it.id } else emptyList()
+        currentlyExecutedPhase = this[index]
+        currentlyExecutedPhase.predecessors = if (index > 0) subList(0, index).map { it.id } else emptyList()
+        currentlyExecutedPhase.successors = if (index < size-1) subList(index+1, size).map { it.id } else emptyList()
 
-        var phaseProcessed = false
-        val phaseExecutionException = try {
-            phase.checkExpectedParameters()
-            phase.process(parameters?.toTypedArray() ?: emptyArray())
-            phaseProcessed = true
-            phase.checkReturnParameters()
-
-            PhaseExecutionLog.addEntry(phase.id, PhaseExecutionInfo(true))
-            null
-        } catch (ex: PhaseException) {
-            val stackTraceString = ex.stackTraceAsString()
-            val errorMessage = if (!ex.message.isNullOrEmpty()) {
-                    debug { stackTraceString }
-                    if (!ex.message!!.endsWith(".")) "${ex.message}." else ex.message!!
-                } else
-                    stackTraceString
-
-            printPhaseError(phase, errorMessage)
-            printError(" ")
-
-            ex
-        } ?: return
-
-        /* Perform further exception handling next to printing */
-        if (!BasicCommandLine.continueAfterPhaseErrors) {
-            printlnError("Model processing aborted.")
-            processingFinished(ERROR_EXIT_CODE)
-        }
-
-        if (phaseExecutionException.exitModelProcessor) {
-            printlnError("Model processing aborted.")
-            processingFinished(ERROR_EXIT_CODE)
-        } else {
-            printlnError("Phase execution aborted.")
-
-            // If the exception occurred during the processing of the phase, we still check for promised return
-            // parameters and warn the user in case there is anything wrong with them so that subsequent phases may fail
-            // when they depend on the parameters
-            if (!phaseProcessed)
-                try {
-                    phase.checkReturnParameters()
-                } catch (ex: PhaseException) {
-                    printlnError("\tPhase did not return parameters as expected and subsequent phases may fail " +
-                        "because of this: ${ex.message}")
-                }
-        }
+        currentlyExecutedPhase.checkExpectedParametersOrException()
+        currentlyExecutedPhase.process(parameters?.toTypedArray() ?: emptyArray())
+        currentlyExecutedPhase.checkReturnParametersOrException()
+        PhaseExecutionLog.addEntry(currentlyExecutedPhase.id, PhaseExecutionInfo(true))
     }
 }

@@ -103,9 +103,10 @@ abstract class AbstractModelProcessingPhase {
 
     /**
      * Helper to check that the return parameters, promised to be delivered by this phase, exist on the heap (in case
-     * they are non-optional) and have the correct type (in case they are not null)
+     * they are non-optional) and have the correct type (in case they are not null). Otherwise, the helper will throw a
+     * [PhaseException].
      */
-    internal fun checkReturnParameters() {
+    internal fun checkReturnParametersOrException() {
         returnParameters.values.forEach {
             when {
                 !it.optional && !PhaseHeap.contains(it.name) ->
@@ -126,9 +127,9 @@ abstract class AbstractModelProcessingPhase {
      * and have the correct type (in case they are not null). Note, that it is possible for a phase to expect parameters
      * that are only optionally returned by a previous phase. This helper ensures that all expected parameters exist
      * prior to invoking the expecting phase or at least when it executed successfully (depending on the parameter's
-     * specification).
+     * specification). Otherwise, it will throw a [PhaseException].
      */
-    internal fun checkExpectedParameters() {
+    internal fun checkExpectedParametersOrException() {
         expectedParameters.map { (key, value) -> Pair(key, value) }.forEach {
             val expectedFromPhase = it.first
             val phaseExecutedSuccessfully = PhaseExecutionLog.phaseExecutedSuccessfully(expectedFromPhase)
