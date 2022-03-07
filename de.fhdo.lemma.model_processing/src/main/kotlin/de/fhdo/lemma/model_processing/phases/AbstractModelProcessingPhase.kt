@@ -267,8 +267,10 @@ class OptionalPhaseReturnParametersScopeBuilder(private val phaseInstance: Abstr
 /**
  * Builder to specify the expected parameters of a phase. In Kotlin, this can be used as a DSL construct in the form
  *     ```
- *     expects from("foo_phase") {
- *         ...
+ *     expects {
+ *         from("foo_phase") {
+ *             ...
+ *         }
  *     }
  *     ```
  *
@@ -287,16 +289,20 @@ class ExpectsPhaseReturnParametersScopeBuilder(private val phaseInstance: Abstra
 /**
  * Builder to specify an expected parameters of a phase. In Kotlin, this can be used as a DSL construct in the form
  *     ```
- *     expects from("foo_phase") {
- *         "bar" withType Collection::class.java
+ *     expects {
+ *         from("foo_phase") {
+ *             "bar" withType Collection::class.java
+ *         }
  *     }
  *     ```
  *
  * and
  *
  *     ```
- *     expects from("foo_phase") {
- *         always("baz" withType String::class.java)
+ *     expects {
+ *         from("foo_phase") {
+ *             always("baz" withType String::class.java)
+ *         }
  *     }
  *     ```
  *
