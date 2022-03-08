@@ -68,7 +68,6 @@ docker run -i \
         -s "/home/user/models/Mapping.mapping" \
         -i "/home/user/intermediate models/mapping models/Mapping.xmi" \
         -t "/home/user/generated code" \
-        code_generation main \
             --code_generation_serializer=extended-generation-gap \
             --alternative_intermediate_service_model=/home/user/intermediate models/service models/Service.xmi
 ```

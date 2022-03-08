@@ -30,34 +30,9 @@ internal class MainCodeGenerationModule : CodeGenerationModuleBase() {
     override fun getLanguageNamespace() = INTERMEDIATE_SERVICE_MODEL_LANGUAGE_DESCRIPTION.nsUri
 
     /**
-     * Initialize the code generation module
-     */
-    override fun initialize(moduleArguments : Array<String>) {
-        // Setup CommandLine Singleton
-        val serializerPackage = javaClass.packageName.substringBeforeLast(".") + ".serialization.code_generation"
-        val supportedCodeGenerationSerializers = findCodeGenerationSerializers(serializerPackage)
-
-        try {
-            CommandLine(moduleArguments, supportedCodeGenerationSerializers)
-        } catch (ex: Exception) {
-            throw PhaseException(ex.message)
-        }
-    }
-
-    /**
-     * Indicate whether line count information shall be generated
-     */
-    override fun writeLineCountInfo() = CommandLine.parameterLineCountFile != null
-
-    /**
-     * Return the selected code generation serializer and the corresponding information
-     */
-    override fun codeGenerationSerializerAndInfo() = CommandLine.codeGenerationSerializer
-
-    /**
      * Initialize code generation state
      */
-    override fun initializeState() {
+    override fun initializeState(moduleArguments: Array<String>) {
         /*
          * Determine the service model to be used to generate microservices from. The generator allows for passing an
          * alternative service model file for that reason. If an alternative service model file is passed to the

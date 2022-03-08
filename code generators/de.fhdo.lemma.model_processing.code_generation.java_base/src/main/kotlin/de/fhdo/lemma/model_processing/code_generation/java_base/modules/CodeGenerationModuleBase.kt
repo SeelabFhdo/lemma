@@ -1,6 +1,7 @@
 package de.fhdo.lemma.model_processing.code_generation.java_base.modules
 
 import de.fhdo.lemma.model_processing.builtin_phases.code_generation.AbstractCodeGenerationModule
+import de.fhdo.lemma.model_processing.code_generation.java_base.commandline.CommandLine
 import de.fhdo.lemma.model_processing.code_generation.java_base.dependencies.DependencyDescription
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.DependencyModifierI
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletEvent
@@ -8,20 +9,13 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletEv
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainContext.sendEventToGenlets
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.LineCountInfo
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.code_generation.CodeGenerationSerializerI
-import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.code_generation.CodeGenerationSerializerInfo
-import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.configuration.AbstractSerializationConfiguration
-import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.configuration.DefaultSerializationConfiguration
-import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.dependencies.CountingMavenDependencySerializer
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.dependencies.DependencySerializerI
-import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.dependencies.MavenDependencySerializer
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.closeOpenedPropertyFiles
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.serializeOpenedPropertyFiles
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.serializeLineCountInfo
 import de.fhdo.lemma.model_processing.phases.PhaseException
 import org.koin.core.KoinComponent
-import org.koin.core.context.startKoin
 import org.koin.core.inject
-import org.koin.dsl.module
 import java.nio.charset.Charset
 
 /**
@@ -32,24 +26,9 @@ import java.nio.charset.Charset
  */
 internal abstract class CodeGenerationModuleBase : AbstractCodeGenerationModule(), KoinComponent {
     /**
-     * Callback to initialize the code generation module
-     */
-    abstract fun initialize(moduleArguments: Array<String>)
-
-    /**
-     * Callback to indicate whether line count information shall be generated
-     */
-    abstract fun writeLineCountInfo() : Boolean
-
-    /**
-     * Get code generation serializer and the corresponding information from implementers
-     */
-    abstract fun codeGenerationSerializerAndInfo() : Pair<CodeGenerationSerializerI, CodeGenerationSerializerInfo>
-
-    /**
      * Callback to initialize the code generation state
      */
-    abstract fun initializeState()
+    abstract fun initializeState(moduleArguments: Array<String>)
 
     /**
      * Callback for actual code generation
@@ -67,30 +46,16 @@ internal abstract class CodeGenerationModuleBase : AbstractCodeGenerationModule(
      */
     override fun execute(phaseArguments: Array<String>, moduleArguments: Array<String>)
         : Map<String, Pair<String, Charset>> {
-        initialize(moduleArguments)
-        val writeLineCountInfo = writeLineCountInfo()
-        val (codeGenerationSerializer, codeGenerationSerializerInfo) = codeGenerationSerializerAndInfo()
-
-        // If the chosen code generation serializer does not support line counting, there should be no path to the
+        // If the specified code generation serializer does not support line counting, there should be no path to the
         // line counting information file
+        val (_, codeGenerationSerializerInfo) = CommandLine.codeGenerationSerializer
+        val writeLineCountInfo = CommandLine.parameterLineCountFile != null
         if (writeLineCountInfo && !codeGenerationSerializerInfo.supportsLineCounting)
             throw PhaseException("Selected code generation serializer ${codeGenerationSerializerInfo.name} does not " +
                 "support line counting")
 
-        /* Setup dependency injection and determine the injected implementations per expected interface */
-        startKoin { modules( module {
-            factory<AbstractSerializationConfiguration> { DefaultSerializationConfiguration }
-            factory { codeGenerationSerializer }
-            factory<DependencySerializerI<*>> {
-                if (writeLineCountInfo)
-                    CountingMavenDependencySerializer()
-                else
-                    MavenDependencySerializer()
-            }
-        } ) }
-
         /* Initialize state */
-        initializeState()
+        initializeState(moduleArguments)
 
         /* Generate Code */
         generateCode()

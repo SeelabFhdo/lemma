@@ -18,6 +18,10 @@ internal object CommandLine {
     private lateinit var defaultCodeGenerationSerializer: CodeGenerationSerializerInfo
     private lateinit var supportedCodeGenerationSerializers: Map<String, CodeGenerationSerializerInfo>
 
+    /* Attribute to gather all arguments that couldn't be matched by the commandline object */
+    @CommandLine.Unmatched
+    var unmatched: Array<String> = emptyArray()
+
     /*
      * Commandline option that specifies an alternative intermediate service model file to be used
      */
@@ -43,12 +47,11 @@ internal object CommandLine {
             description = ["path to a Genlet's JAR archive"]
         )
         set(value) {
-            if (value != null)
-                value.forEach {
-                    if (!it.asFile().exists())
-                        throw CommandLine.ParameterException(commandSpec.commandLine(), "Genlet file $it does not " +
-                            "exist")
-                }
+            value?.forEach {
+                if (!it.asFile().exists())
+                    throw CommandLine.ParameterException(commandSpec.commandLine(), "Genlet file $it does not " +
+                        "exist")
+            }
 
             field = value
         }
@@ -65,12 +68,11 @@ internal object CommandLine {
             description = ["path to a Genlet's JAR archive and full qualified name of the Genlet class to load"]
         )
         set(value) {
-            if (value != null)
-                value.keys.forEach {
-                    if (!it.asFile().exists())
-                        throw CommandLine.ParameterException(commandSpec.commandLine(), "Genlet file $it does not " +
-                            "exist")
-                }
+            value?.keys?.forEach {
+                if (!it.asFile().exists())
+                    throw CommandLine.ParameterException(commandSpec.commandLine(), "Genlet file $it does not " +
+                        "exist")
+            }
 
             field = value
         }

@@ -8,9 +8,9 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainCode
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainContext.State as MainState
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainContext
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.code_generation.CodeGenerationSerializerI
-import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainContext.State as DomainState
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.code_generation.findCodeGenerationSerializers
 import de.fhdo.lemma.model_processing.phases.PhaseException
+import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainContext.State as DomainState
 import de.fhdo.lemma.model_processing.utils.filterByType
 import de.fhdo.lemma.model_processing.utils.loadModelRoot
 import de.fhdo.lemma.model_processing.utils.loadModelRootRelative
@@ -28,6 +28,7 @@ import java.util.ArrayDeque
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 @ExplicitlyInvokedCodeGenerationModule("shared")
+@Suppress("unused")
 internal class SharedCodeGenerationModule : CodeGenerationModuleBase() {
     /**
      * Return the language namespace for the intermediate model kind with which this code generator can deal, i.e.,
@@ -36,9 +37,9 @@ internal class SharedCodeGenerationModule : CodeGenerationModuleBase() {
     override fun getLanguageNamespace() = INTERMEDIATE_DATA_MODEL_LANGUAGE_DESCRIPTION.nsUri
 
     /**
-     * Initialize the code generation module
+     * Initialize code generation state
      */
-    override fun initialize(moduleArguments : Array<String>) {
+    override fun initializeState(moduleArguments: Array<String>) {
         // Setup CommandLine Singleton
         val serializerPackage = MainCodeGenerationModule::class.java.packageName
             .substringBeforeLast(".") + ".serialization.code_generation"
@@ -49,22 +50,8 @@ internal class SharedCodeGenerationModule : CodeGenerationModuleBase() {
         } catch (ex: Exception) {
             throw PhaseException(ex.message)
         }
-    }
 
-    /**
-     * Indicate whether line count information shall be generated
-     */
-    override fun writeLineCountInfo() = CommandLine.parameterLineCountFile != null
-
-    /**
-     * Return the selected code generation serializer and the corresponding information
-     */
-    override fun codeGenerationSerializerAndInfo() = CommandLine.codeGenerationSerializer
-
-    /**
-     * Initialize code generation state
-     */
-    override fun initializeState() {
+        // Initialize states
         MainState.initialize(CommandLine.sharedPackage!!, targetFolder, CommandLine.parameterLineCountFile)
         DomainState.initialize()
     }

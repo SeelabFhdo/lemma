@@ -6,8 +6,6 @@
     - buildscript: "./build.sh"
     - lemma_version_file: "../gradle.properties"
   - execution_steps:
-    - code_generation
-    - main
     - --code_generation_serializer=args.pattern
     - --alternative_intermediate_service_model=args.alternativeIntermediateServiceModel?
     - --genlet=/home/genlets/de.fhdo.lemma.model_processing.code_generation.ddd.jar
