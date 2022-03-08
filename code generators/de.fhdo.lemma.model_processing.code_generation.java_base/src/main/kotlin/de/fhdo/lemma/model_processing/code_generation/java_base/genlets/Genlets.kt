@@ -38,6 +38,8 @@ import kotlin.reflect.KProperty
  */
 abstract class AbstractGenlet(processorImplementationPackage: String)
     : AbstractModelProcessor(processorImplementationPackage) {
+    internal lateinit var filePath : String
+
     /**
      * Name of the Genlet package that clusters Genlet-specific code generation handlers
      */
@@ -464,6 +466,7 @@ internal fun loadGenlets(genletFilePathsAndClassnames: Map<String, String?>) : M
         try {
             val genletInstance = genletClass.getConstructor().newInstance()
             genletInstance.setClassLoader(genletClassLoader)
+            genletInstance.filePath = filePath
             genletInstance to genletClassLoader
         } catch (ex: Exception) {
             throw PhaseException("Genlet class ${genletClass.simpleName} from $filePath could not be loaded: " +

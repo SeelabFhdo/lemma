@@ -85,7 +85,7 @@ internal object MainContext {
             this.lineCountInfoFilePath = lineCountInfoFilePath
 
             findLocalAspectHandlers()
-            loadGenlets()
+            loadGenletsIfNecessary()
         }
 
         /**
@@ -99,7 +99,7 @@ internal object MainContext {
             this.lineCountInfoFilePath = lineCountInfoFilePath
 
             findLocalAspectHandlers()
-            loadGenlets()
+            loadGenletsIfNecessary()
         }
 
         /**
@@ -119,10 +119,13 @@ internal object MainContext {
         }
 
         /**
-         * Helper to load Genlets together with their code generation handlers, aspect handlers, and dependency
-         * modifiers
+         * Load Genlets, together with their code generation handlers, aspect handlers, and dependency modifiers, in
+         * case they haven't been loaded yet
          */
-        private fun loadGenlets() {
+        fun loadGenletsIfNecessary() {
+            if (this::genlets.isInitialized)
+                return
+
             genlets = loadGenlets(CommandLine.genlets())
             genlets.forEach { (genlet, classLoader) -> with(genlet) {
                 genletCodeGenerationHandlers[this] = findCodeGenerationHandlers(classLoader)
@@ -150,6 +153,7 @@ internal object MainContext {
                 "generatedLineCountInfo" -> generatedLineCountInfo.toList()
                 "genletCodeGenerationHandlers" -> genletCodeGenerationHandlers.toMap()
                 "genlets" -> genlets.keys
+                "genletsWithClassLoaders" -> genlets
                 "intermediateServiceModelFilePath" -> intermediateServiceModelFilePath
                 "intermediateServiceModel" -> intermediateServiceModel
                 "intermediateServiceModelForDomainModels" -> intermediateServiceModelForDomainModels

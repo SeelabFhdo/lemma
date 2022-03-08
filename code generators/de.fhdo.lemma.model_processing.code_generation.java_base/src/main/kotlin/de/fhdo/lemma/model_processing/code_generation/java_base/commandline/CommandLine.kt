@@ -115,6 +115,13 @@ internal object CommandLine {
     )
     var parameterLineCountFile: String? = null
 
+    /* Commandline option to disable the execution of Genlet validators on passed models */
+    @CommandLine.Option(
+        names = ["--disable_genlet_validations"],
+        description = ["disable execution of Genlet validators on passed models"]
+    )
+    var disableGenletValidations: Boolean = false
+
     /**
      * Get paths to all Genlets. The key of the map is the Genlet path and the value is the name of the explicitly
      * passed fully-qualified Genlet entry classname. It may be null, if it shall be automatically inferred.

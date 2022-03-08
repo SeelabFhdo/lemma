@@ -2,6 +2,7 @@ package de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.
 
 import de.fhdo.lemma.data.intermediate.IntermediateDataModel
 import de.fhdo.lemma.model_processing.annotations.ExplicitlyInvokedCodeGenerationModule
+import de.fhdo.lemma.model_processing.code_generation.java_base.commandline.CommandLine as GeneratorCommandLine
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.INTERMEDIATE_DATA_MODEL_LANGUAGE_DESCRIPTION
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.CodeGenerationModuleBase
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainCodeGenerationModule
@@ -9,6 +10,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainCont
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainContext
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.code_generation.CodeGenerationSerializerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.code_generation.findCodeGenerationSerializers
+import de.fhdo.lemma.model_processing.code_generation.java_base.validation.executeGenletValidations
 import de.fhdo.lemma.model_processing.phases.PhaseException
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainContext.State as DomainState
 import de.fhdo.lemma.model_processing.utils.filterByType
@@ -68,6 +70,21 @@ internal class SharedCodeGenerationModule : CodeGenerationModuleBase() {
         // In addition, collect the URIs of all (transitively) imported intermediate domain models of the passed models
         for (sharedModelPath in CommandLine.sharedIntermediateDomainModels!!)
             allDomainModelUris.addAll(getImportedDomainModelUrisTransitively(sharedModelPath))
+
+        // Invoke Genlet-specific validations on domain models if not disabled by user
+        if (!GeneratorCommandLine.disableGenletValidations)
+            allDomainModelUris.forEach { uri ->
+                DomainState.setCurrentIntermediateDomainModelUri(uri)
+                val currentIntermediateDomainModel: IntermediateDataModel by DomainState
+                executeGenletValidations { genlet, classLoader ->
+                    genlet.executeIntermediateModelValidatorsForLanguageNamespace(
+                        currentIntermediateDomainModel.eResource(),
+                        languageDescription,
+                        getLanguageNamespace(),
+                        classLoader
+                    )
+                }
+            }
 
         // Generate code for each loaded intermediate domain model
         allDomainModelUris.forEach { uri ->
