@@ -3,12 +3,14 @@ package de.fhdo.lemma.model_processing.phases.validation
 import de.fhdo.lemma.model_processing.builtin_phases.ValidationEndedWithErrorsException
 import de.fhdo.lemma.model_processing.builtin_phases.ValidationResult
 import de.fhdo.lemma.model_processing.builtin_phases.ValidationResultType
-import de.fhdo.lemma.model_processing.builtin_phases.find_model_validators.AvailableModelValidators
+import de.fhdo.lemma.model_processing.builtin_phases.find_model_validators.FindModelValidatorsPhase.Companion.MODEL_VALIDATOR_REGISTRY_PARAMETER
+import de.fhdo.lemma.model_processing.builtin_phases.find_model_validators.FindModelValidatorsPhase.Companion.ID as FIND_MODEL_VALIDATORS_PHASE_ID
 import de.fhdo.lemma.model_processing.builtin_phases.print
 import de.fhdo.lemma.model_processing.debugPhase
 import de.fhdo.lemma.model_processing.debugPhaseArguments
 import de.fhdo.lemma.model_processing.phases.AbstractModelProcessingPhase
 import de.fhdo.lemma.model_processing.phases.ModelKind
+import de.fhdo.lemma.model_processing.phases.PhaseHeap
 
 /**
  * Superclass for all model processor phases that conduct model validation.
@@ -26,6 +28,12 @@ internal abstract class AbstractModelValidationPhase(private val modelKind: Mode
         super.initialize(id, isOmittable, isBlocking, processorImplementationPackage)
 
         parameters {
+            expects {
+                from(FIND_MODEL_VALIDATORS_PHASE_ID) {
+                    MODEL_VALIDATOR_REGISTRY_PARAMETER withType ModelValidatorRegistry::class.java
+                }
+            }
+
             returns {
                 modelKind.validationPhaseArgumentsParameterName withType Array<String>::class.java
             }
@@ -47,8 +55,10 @@ internal abstract class AbstractModelValidationPhase(private val modelKind: Mode
         debugPhase { "Starting validation of model file \"$modelFile\"" }
 
         /* Get model validators for file extension */
+        val modelValidatorRegistry = PhaseHeap[FIND_MODEL_VALIDATORS_PHASE_ID, MODEL_VALIDATOR_REGISTRY_PARAMETER]
+            as ModelValidatorRegistry
         val fileExtension = modelKind.getExtensionOfPassedModel()!!
-        val validatorsInfo = AvailableModelValidators.getModelValidatorsForFileExtension(fileExtension, modelKind)
+        val validatorsInfo = modelValidatorRegistry.getModelValidatorsForFileExtension(fileExtension, modelKind)
             .toMutableList()
 
         if (validatorsInfo.isEmpty())
@@ -60,7 +70,7 @@ internal abstract class AbstractModelValidationPhase(private val modelKind: Mode
 
         /* Get model validators for language namespaces */
         modelKind.getLanguageNamespacesOfPassedModel()!!.forEach {
-            val namespaceValidatorsInfo = AvailableModelValidators.getModelValidatorsForLanguageNamespace(it, modelKind)
+            val namespaceValidatorsInfo = modelValidatorRegistry.getModelValidatorsForLanguageNamespace(it, modelKind)
             if (namespaceValidatorsInfo.isEmpty())
                 debugPhase { "No $kindLabel model validators found for language namespace $it" }
             else {
@@ -113,7 +123,7 @@ internal abstract class AbstractModelValidationPhase(private val modelKind: Mode
         }
 
         /* Print the validation results and exit with an error code, if there were errors among them */
-        allValidationResults.print(modelFile)
+        allValidationResults.print("Validation results for file \"$modelFile\":")
         if (allValidationResults.any { it.type == ValidationResultType.ERROR })
             throw ValidationEndedWithErrorsException()
     }

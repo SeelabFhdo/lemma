@@ -31,14 +31,20 @@ internal operator fun AnnotationInfoList.get(annotationClass: KClass<out Annotat
     = get(annotationClass.qualifiedName)
 
 /**
- * Helper for find all classes annotated with a given annotation class in a certain package.
+ * Helper for find all classes annotated with a given annotation class in a certain package. In case a set of
+ * [classLoaders] was specified, these will be used instead of the current class loader to search for annotated classes.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun findAnnotatedClasses(sourcePackage: String, annotationClass: KClass<out Annotation>) : ClassInfoList {
-    if (sourcePackage !in ScanResultsPerPackage)
-        ScanResultsPerPackage[sourcePackage] = ClassGraph().enableClassInfo().enableAnnotationInfo()
-            .whitelistPackages(sourcePackage).scan()
+internal fun findAnnotatedClasses(sourcePackage: String, annotationClass: KClass<out Annotation>,
+    vararg classLoaders: ClassLoader) : ClassInfoList {
+    if (sourcePackage !in ScanResultsPerPackage) {
+        val classGraph = ClassGraph().enableClassInfo().enableAnnotationInfo().whitelistPackages(sourcePackage)
+        if (classLoaders.isNotEmpty())
+            classGraph.overrideClassLoaders(*classLoaders)
+
+        ScanResultsPerPackage[sourcePackage] = classGraph.scan()
+    }
 
     val packageAndAnnotation = sourcePackage to annotationClass
     if (packageAndAnnotation !in ClassesPerPackageAndAnnotation)
@@ -48,7 +54,7 @@ internal fun findAnnotatedClasses(sourcePackage: String, annotationClass: KClass
     return ClassesPerPackageAndAnnotation[packageAndAnnotation]!!
 }
 
-// Cache for Classgraph scan results
+// Cache for ClassGraph scan results
 private object ScanResultsPerPackage : HashMap<String, ScanResult>()
 
 // Cache for scanned classes with annotation

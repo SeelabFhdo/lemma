@@ -1,17 +1,24 @@
 package de.fhdo.lemma.model_processing
 
+import de.fhdo.lemma.model_processing.builtin_phases.ValidationResult
 import de.fhdo.lemma.model_processing.languages.LanguageDescriptions
 import de.fhdo.lemma.model_processing.command_line.BasicCommandLine
 import de.fhdo.lemma.model_processing.command_line.BasicOption
 import de.fhdo.lemma.model_processing.command_line.parseCommandLine
+import de.fhdo.lemma.model_processing.languages.LanguageDescription
 import de.fhdo.lemma.model_processing.phases.AbstractModelProcessingPhase
+import de.fhdo.lemma.model_processing.phases.ModelKind
 import de.fhdo.lemma.model_processing.phases.PhaseException
 import de.fhdo.lemma.model_processing.phases.PhaseExecutionInfo
 import de.fhdo.lemma.model_processing.phases.PhaseExecutionLog
 import de.fhdo.lemma.model_processing.phases.loadExplicitlyInvokedProcessingPhases
 import de.fhdo.lemma.model_processing.phases.loadProcessingPhases
+import de.fhdo.lemma.model_processing.phases.validation.ModelValidatorI
+import de.fhdo.lemma.model_processing.phases.validation.ModelValidatorRegistry
+import io.github.classgraph.ClassInfo
 import org.apache.logging.log4j.Level
 import org.apache.logging.log4j.core.config.Configurator
+import org.eclipse.emf.ecore.resource.Resource
 import org.fusesource.jansi.AnsiConsole
 import picocli.CommandLine
 import kotlin.system.exitProcess
@@ -269,4 +276,127 @@ abstract class AbstractModelProcessor(private val processorImplementationPackage
         currentlyExecutedPhase.checkReturnParametersOrException()
         PhaseExecutionLog.addEntry(currentlyExecutedPhase.id, PhaseExecutionInfo(true))
     }
+
+    /**
+     * Trigger source model validation on the given [resource] which clusters a model in a language determined by the
+     * given [languageDescription] and with the given file [extension]. The [classLoaders] parameter enables to also
+     * specify the list of class loaders for the model processing framework to search for source validator
+     * implementations.
+     */
+    @Suppress("MemberVisibilityCanBePrivate")
+    fun executeSourceModelValidatorsForFileExtension(resource: Resource, languageDescription: LanguageDescription,
+        extension: String, vararg classLoaders: ClassLoader)
+        = executeValidators(ModelKind.SOURCE, resource, null, languageDescription, extension, emptySet(), *classLoaders)
+
+    /**
+     * Trigger model validations for the given [modelKind] and a [resource] with that kind. The [relevantModelElements]
+     * enables to constrain the validated model elements and must be null to consider all elements. The method will
+     * trigger all validators for the given [languageDescription] that support the specified [fileExtension] and set of
+     * [languageNamespaces]. The [classLoaders] parameter enables to also specify the list of class loaders for the
+     * model processing framework to search for validator implementations.
+     *
+     * This method is the generic variant of [executeSourceModelValidatorsForFileExtension],
+     * [executeIntermediateModelValidatorsForFileExtension], [executeSourceModelValidatorsForLanguageNamespace], and
+     * [executeIntermediateModelValidatorsForLanguageNamespace].
+     */
+    @Suppress("MemberVisibilityCanBePrivate")
+    fun executeValidators(
+        modelKind: ModelKind,
+        resource: Resource,
+        relevantModelElements: Collection<*>?,
+        languageDescription: LanguageDescription,
+        fileExtension: String?,
+        languageNamespaces: Set<String>,
+        vararg classLoaders: ClassLoader
+    ) : List<ValidationResult> {
+        // Setup model validator registry and scan for validator implementations
+        val modelValidatorRegistry = ModelValidatorRegistry()
+        modelValidatorRegistry.findAndRegisterModelValidators(processorImplementationPackage, modelKind, *classLoaders)
+        val allValidationResults = mutableListOf<ValidationResult>()
+
+        try {
+            // Invoke validators for file extension
+            if (fileExtension != null)
+                modelValidatorRegistry.getModelValidatorsForFileExtension(fileExtension, modelKind).forEach {
+                    allValidationResults.addValidationResultsFor(it, resource, languageDescription,
+                        relevantModelElements)
+                }
+
+            // Invoke validators for language namespaces
+            val namespaceValidators = languageNamespaces.map {
+                    modelValidatorRegistry.getModelValidatorsForLanguageNamespace(it, modelKind)
+                }.flatten()
+            namespaceValidators.forEach {
+                allValidationResults.addValidationResultsFor(it, resource, languageDescription, relevantModelElements)
+            }
+        } catch (ex: PhaseException) {
+            // As opposed to run(), we don't install a global exception handler because we aren't in a regular
+            // phase-driven model processor execution and thus didn't load the complete set of available phases for the
+            // exception handler to consider
+            printError(ex.getAndDebugErrorMessage())
+            exitModelProcessorIfRequested(ex)
+        }
+
+        return allValidationResults
+    }
+
+    /**
+     * Helper to add model validation results to this [MutableList]. The helper loads and executes the validator
+     * described by the given [validatorClassInfo] on the given [resource] using the specified [languageDescription] and
+     * [relevantModelElements].
+     */
+    private fun MutableList<ValidationResult>.addValidationResultsFor(validatorClassInfo: ClassInfo, resource: Resource,
+        languageDescription: LanguageDescription, relevantModelElements: Collection<*>?) {
+        addAll(loadAndExecuteValidator(validatorClassInfo, resource, languageDescription, relevantModelElements))
+    }
+
+    /**
+     * Helper to load and execute the validator described by the given [validatorClassInfo] on the given [resource]
+     * using the specified [languageDescription] and [relevantModelElements].
+     */
+    private fun loadAndExecuteValidator(validatorClassInfo: ClassInfo, resource: Resource,
+        languageDescription: LanguageDescription, relevantModelElements: Collection<*>?) : List<ValidationResult> {
+        val validatorInstance = validatorClassInfo.loadClass(ModelValidatorI::class.java).getDeclaredConstructor()
+            .newInstance()
+        return validatorInstance(resource, languageDescription, relevantModelElements)
+    }
+
+    /**
+     * Trigger intermediate model validation on the given [resource] which clusters a model in a language determined by
+     * the given [languageDescription] and with the given file [extension]. The [classLoaders] parameter enables to also
+     * specify the list of class loaders for the model processing framework to search for intermediate validator
+     * implementations.
+     */
+    @Suppress("MemberVisibilityCanBePrivate")
+    fun executeIntermediateModelValidatorsForFileExtension(resource: Resource, languageDescription: LanguageDescription,
+        extension: String, vararg classLoaders: ClassLoader)
+        = executeValidators(ModelKind.INTERMEDIATE, resource, null, languageDescription, extension, emptySet(),
+            *classLoaders)
+
+    /**
+     * Trigger source model validation on the given [resource] which clusters a model in a language determined by
+     * the given [languageDescription] and with the given language [namespace]. The [classLoaders] parameter enables to
+     * also specify the list of class loaders for the model processing framework to search for source validator
+     * implementations.
+     */
+    @Suppress("MemberVisibilityCanBePrivate")
+    fun executeSourceModelValidatorsForLanguageNamespace(resource: Resource, languageDescription: LanguageDescription,
+        namespace: String, vararg classLoaders: ClassLoader)
+        = executeValidators(ModelKind.SOURCE, resource, null, languageDescription, null, setOf(namespace),
+            *classLoaders)
+
+    /**
+     * Trigger intermediate model validation on the given [resource] which clusters a model in a language determined by
+     * the given [languageDescription] and with the given language [namespace]. The [classLoaders] parameter enables to
+     * also specify the list of class loaders for the model processing framework to search for intermediate validator
+     * implementations.
+     */
+    @Suppress("MemberVisibilityCanBePrivate")
+    fun executeIntermediateModelValidatorsForLanguageNamespace(
+        resource: Resource,
+        languageDescription: LanguageDescription,
+        namespace: String,
+        vararg classLoaders: ClassLoader
+    ) = executeValidators(ModelKind.INTERMEDIATE, resource, null, languageDescription, null, setOf(namespace),
+        *classLoaders)
 }

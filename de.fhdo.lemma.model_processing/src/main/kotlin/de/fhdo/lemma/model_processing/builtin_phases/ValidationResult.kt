@@ -32,7 +32,8 @@ class ValidationResult(var lineNumber: Int? = null, var column: Int? = null, var
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun List<ValidationResult>.print(file: String) {
+@Synchronized
+fun List<ValidationResult>.print(heading: String) {
     if (isEmpty())
         return
 
@@ -43,7 +44,7 @@ internal fun List<ValidationResult>.print(file: String) {
     val errorResults = any { it.type == ValidationResultType.ERROR }
     val outStream = if (errorResults) System.err else System.out
 
-    outStream.println("Validation results for file $file:")
+    outStream.println(heading)
     val sortedResults = sortedWith(
         compareByDescending<ValidationResult> { it.type.severityWeight }
         .thenBy(ValidationResult::lineNumber)

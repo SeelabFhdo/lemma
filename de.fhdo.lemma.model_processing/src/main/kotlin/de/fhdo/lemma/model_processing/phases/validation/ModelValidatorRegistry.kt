@@ -1,20 +1,19 @@
-package de.fhdo.lemma.model_processing.builtin_phases.find_model_validators
+package de.fhdo.lemma.model_processing.phases.validation
 
 import de.fhdo.lemma.model_processing.annotations.findAnnotatedClasses
 import de.fhdo.lemma.model_processing.debugPhase
 import de.fhdo.lemma.model_processing.phases.ModelKind
-import de.fhdo.lemma.model_processing.phases.validation.ModelValidatorI
 import io.github.classgraph.ClassInfo
 
 private const val FILE_EXTENSION_IDENTIFIER_PREFIX = "::fileExtension::"
 private const val LANGUAGE_NAMESPACE_IDENTIFIER_PREFIX = "::languageNamespace::"
 
 /**
- * Object to maintain a conveniently accessible runtime list of model validators discovered on the classpath.
+ * Class to maintain a conveniently accessible runtime list of model validators discovered on the classpath.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal object AvailableModelValidators {
+internal class ModelValidatorRegistry {
     // Registration maps for validators (key = identifier of the validator in combination with the file extension or
     // language namespace supported by the validator, value = class information about the validator in their order of
     // classpath discovery)
@@ -22,19 +21,28 @@ internal object AvailableModelValidators {
     private val intermediateModelValidators = mutableMapOf<String, LinkedHashSet<ClassInfo>>()
 
     /**
-     * Find all model validators for the given model [modelKind] on the classpath
+     * Find all model validators on the classpath for the given [processorPackage] and [modelKind]
      */
-    fun findAndRegisterModelValidators(processorPackage: String, modelKind: ModelKind) {
+    fun findAndRegisterModelValidators(processorPackage: String, modelKind: ModelKind,
+        vararg classLoaders: ClassLoader) {
         val kindLabel = modelKind.label
         debugPhase {
             "Searching for $kindLabel model validators in processor implementation package \"$processorPackage\""
         }
 
         val registeredValidatorsInfo = mutableListOf<RegistrationInfo>()
-        findAnnotatedClasses(processorPackage, modelKind.validatorAnnotation)
-            .filter { it.implementsInterface(ModelValidatorI::class.java.name) }
+        findAnnotatedClasses(processorPackage, modelKind.validatorAnnotation, *classLoaders)
+            .filter {
+                it.implementsInterface(ModelValidatorI::class.java.name) ||
+                // We also filter for validator superclasses, which implement ModelValidatorI, because ClassGraph may
+                // not succeed in retrieving an interface implementation when it is transitive. For example, when the
+                // Java Base Generator invokes validators clustered in Genlets, the transitive interface-implementation
+                // is missing from annotated validator implementations discovered by ClassGraph.
+                it.extendsSuperclass(AbstractXtextModelValidator::class.java.name) ||
+                it.extendsSuperclass(AbstractXmiDeclarativeValidator::class.java.name)
+            }
             .forEach {
-                val registrationInfo = registerValidator(it, modelKind)
+                val registrationInfo = registerValidator(modelKind, it)
                 registeredValidatorsInfo.add(registrationInfo)
             }
 
@@ -57,13 +65,9 @@ internal object AvailableModelValidators {
         val languageNamespace: String)
 
     /**
-     * Register a model validator with the given [validatorInfo] and for the given [modelKind] to the object
+     * Helper to register a model validator, represented by the given [validatorInfo], for the given [modelKind]
      */
-    private fun registerValidator(validatorInfo: ClassInfo, modelKind: ModelKind) : RegistrationInfo {
-        require(validatorInfo.implementsInterface(ModelValidatorI::class.java.name)) {
-            "Validator class does not implement interface ${ModelValidatorI::class.simpleName}"
-        }
-
+    private fun registerValidator(modelKind: ModelKind, validatorInfo: ClassInfo) : RegistrationInfo {
         val validatorInstance = validatorInfo
             .loadClass(ModelValidatorI::class.java)
             .getDeclaredConstructor()
@@ -88,8 +92,11 @@ internal object AvailableModelValidators {
     /**
      * Helper to add a found model validator to this validator registration map
      */
-    private fun MutableMap<String, LinkedHashSet<ClassInfo>>.addValidator(validatorInfo: ClassInfo,
-        fileExtensions: Set<String>, languageNamespace: String) {
+    private fun MutableMap<String, LinkedHashSet<ClassInfo>>.addValidator(
+        validatorInfo: ClassInfo,
+        fileExtensions: Set<String>,
+        languageNamespace: String
+    ) {
         // Gather all registration identifiers for the validator depending on the variety of supported file extensions
         // and the language namespace
         val identifiers = fileExtensions.map { it.identifier(FILE_EXTENSION_IDENTIFIER_PREFIX) }.toMutableList()
