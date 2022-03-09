@@ -14,5 +14,5 @@ It supports the following commandline options:
 - `-p, --port`: The server port. Defaults to `44203`.
 - `--quiet`: Do not print any messages at server runtime (will be overridden by `--debug`).
 - `--timeout_threshold`: Threshold (in milliseconds) up to which validation clients must send a response. Defaults to
-  `500`, i.e., 0.5 seconds.
+  `2000`, i.e., two seconds.
 - `--trace`: Trace messages exchanged between server and validation clients.

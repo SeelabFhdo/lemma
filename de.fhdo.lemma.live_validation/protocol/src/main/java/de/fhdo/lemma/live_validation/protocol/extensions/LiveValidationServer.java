@@ -17,7 +17,7 @@ public interface LiveValidationServer extends LanguageServer {
     // Shared Live Validation constants
     String DEFAULT_HOSTNAME = "localhost";
     int DEFAULT_PORT = 44203;
-    long DEFAULT_TIMEOUT_THRESHOLDS_IN_MILLISECONDS = 500L;
+    long DEFAULT_TIMEOUT_THRESHOLDS_IN_MILLISECONDS = 2000L;
     String EXTENSION_PREFIX = "live_validation";
 
     /**
