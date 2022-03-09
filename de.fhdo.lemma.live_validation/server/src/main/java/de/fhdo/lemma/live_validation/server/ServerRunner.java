@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.config.Configurator;
 import org.eclipse.lsp4j.services.LanguageClient;
+import picocli.CommandLine;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -31,7 +32,12 @@ public class ServerRunner {
      */
     public static void main(String[] args) {
         var commandline = LiveValidationCommandLine.instance();
-        commandline.parse(args);
+        try {
+            commandline.parse(args);
+        } catch (CommandLine.ParameterException ex) {
+            System.err.println(ex.getMessage());
+            System.exit(ERROR_EXIT_CODE);
+        }
 
         if (commandline.isDebug())
             Configurator.setRootLevel(Level.DEBUG);
