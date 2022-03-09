@@ -22,6 +22,7 @@ import java.util.concurrent.ExecutionException;
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 public class ServerRunner {
+    private static final int ERROR_EXIT_CODE = 1;
     private static final Logger LOGGER = LogManager.getRootLogger();
     static final String PROPERTY_RESOURCE_FILE = "live_validation.properties";
 
@@ -40,10 +41,10 @@ public class ServerRunner {
         try {
             runServer(commandline.getHostname(), commandline.getPort());
         } catch (Exception ex) {
-            System.out.println("Error during server execution");
+            System.err.println("Error during server execution");
             ex.printStackTrace();
-            System.out.println("Exiting.");
-            System.exit(1);
+            System.err.println("Exiting.");
+            System.exit(ERROR_EXIT_CODE);
         }
     }
 
@@ -95,9 +96,9 @@ public class ServerRunner {
             try {
                 properties.load(this.getClass().getClassLoader().getResourceAsStream(filename));
             } catch (IOException e) {
-                System.out.printf("Application properties could not be loaded from resource \"%s\". Exiting.",
+                System.err.printf("Application properties could not be loaded from resource \"%s\". Exiting.",
                     filename);
-                System.exit(1);
+                System.exit(ERROR_EXIT_CODE);
             }
         }
 
