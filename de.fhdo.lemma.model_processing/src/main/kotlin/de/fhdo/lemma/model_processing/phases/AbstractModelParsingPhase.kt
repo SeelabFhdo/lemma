@@ -94,7 +94,7 @@ internal abstract class AbstractModelParsingPhase(private val modelKind: ModelKi
         } catch (ex: Exception) {
             throw PhaseException("Could not parse model file \"$absoluteModelFilePath\", because no language " +
                 "description was provided for file extension .$fileExtension. Tried XMI parsing as fallback but the " +
-                "the following error occurred: ${ex.message}")
+                "following error occurred: ${ex.message}")
         }
 
         var matchingLanguageDescription: LanguageDescription? = null
