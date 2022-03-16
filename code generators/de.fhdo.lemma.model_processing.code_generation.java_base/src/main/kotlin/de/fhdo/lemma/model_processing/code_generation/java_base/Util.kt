@@ -809,7 +809,7 @@ internal fun findAnnotatedClasses(searchPackage: String, annotation: String, var
     val classgraph = ClassGraph()
         .enableClassInfo()
         .enableAnnotationInfo()
-        .whitelistPackages(searchPackage)
+        .acceptPackages(searchPackage)
 
     if (classLoaders.isNotEmpty())
         classgraph.overrideClassLoaders(*classLoaders)
