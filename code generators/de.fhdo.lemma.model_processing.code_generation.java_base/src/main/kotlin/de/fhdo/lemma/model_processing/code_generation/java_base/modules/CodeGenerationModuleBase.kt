@@ -24,21 +24,26 @@ import java.nio.charset.Charset
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal abstract class CodeGenerationModuleBase : AbstractCodeGenerationModule(), KoinComponent {
+internal abstract class CodeGenerationModuleBase<E: Any> : AbstractCodeGenerationModule(), KoinComponent {
     /**
      * Callback to initialize the code generation state
      */
     abstract fun initializeState(moduleArguments: Array<String>)
 
     /**
-     * Callback for actual code generation
+     * Callback for the retrieval of relevant code generation elements
      */
-    abstract fun generateCode()
+    abstract fun getGenerationElements() : List<E>
 
     /**
-     * Callback to retrieve the artifact identifier
+     * Callback for the actual code generation from a single code generation element
      */
-    abstract fun artifactIdentifier() : String?
+    abstract fun generateCode(element: E)
+
+    /**
+     * Callback to retrieve the artifact identifier for a single code generation element
+     */
+    abstract fun artifactIdentifier(element: E) : String?
 
     /**
      * Execute the code generation phase with the given [phaseArguments] and [moduleArguments] and leverage the
@@ -57,19 +62,20 @@ internal abstract class CodeGenerationModuleBase : AbstractCodeGenerationModule(
         /* Initialize state */
         initializeState(moduleArguments)
 
-        /* Generate Code */
-        generateCode()
+        /* Generate code, and serialize dependencies and property files per code generation element */
+        getGenerationElements().forEach { element ->
+            generateCode(element)
+
+            val artifactIdentifier = artifactIdentifier(element)
+            if (artifactIdentifier != null) {
+                serializeDependencies(artifactIdentifier)
+                serializeOpenedPropertyFiles()
+                closeOpenedPropertyFiles()
+            }
+        }
 
         /* Send code generation finished event to Genlets */
         sendEventToGenlets(GenletEvent(GenletEventType.OVERALL_GENERATION_FINISHED))
-
-        /* Serialize dependencies and property files */
-        val artifactIdentifier = artifactIdentifier()
-        if (artifactIdentifier != null) {
-            serializeDependencies(artifactIdentifier)
-            serializeOpenedPropertyFiles()
-            closeOpenedPropertyFiles()
-        }
 
         /*
          * Enable code generation serializers to adapt (or create even new) generated files in a "code generation

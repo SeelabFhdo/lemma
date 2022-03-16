@@ -8,7 +8,6 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainCont
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainCodeGenerationSubModule
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.services.ServicesCodeGenerationSubModule
 import de.fhdo.lemma.model_processing.code_generation.java_base.eObjectPackageName
-import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.code_generation.findCodeGenerationSerializers
 import de.fhdo.lemma.model_processing.code_generation.java_base.simpleName
 import de.fhdo.lemma.model_processing.phases.PhaseException
 import de.fhdo.lemma.model_processing.utils.asXmiResource
@@ -22,7 +21,7 @@ import de.fhdo.lemma.service.intermediate.IntermediateServiceModel
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 @CodeGenerationModule("main")
-internal class MainCodeGenerationModule : CodeGenerationModuleBase() {
+internal class MainCodeGenerationModule : CodeGenerationModuleBase<IntermediateMicroservice>() {
     /**
      * Return the language namespace for the intermediate model kind with which this code generator can deal, i.e.,
      * intermediate service models
@@ -61,13 +60,10 @@ internal class MainCodeGenerationModule : CodeGenerationModuleBase() {
     }
 
     /**
-     * Do the actual code generation
+     * Return the code generation elements, i.e., the intermediate representations of all modeled microservices that
+     * apply the Java technology model
      */
-    override fun generateCode() {
-        /*
-         * Generate domain concepts per microservice from the determined service model, as well as the services
-         * themselves
-         */
+    override fun getGenerationElements() : List<IntermediateMicroservice> {
         val intermediateServiceModel: IntermediateServiceModel by MainState
         val javaMicroservices = intermediateServiceModel.microservices.filter{ it.hasTechnology("java") }
         if (javaMicroservices.isEmpty()) {
@@ -77,33 +73,25 @@ internal class MainCodeGenerationModule : CodeGenerationModuleBase() {
                 "at least one modeled microservice.")
         }
 
-        javaMicroservices.forEach {
-            MainState.setCurrentMicroservice(it)
-            DomainCodeGenerationSubModule.invoke()
-            ServicesCodeGenerationSubModule.invoke()
-        }
+        return javaMicroservices
     }
 
     /**
-     * Return the artifact identifier
+     * Perform the actual code generation on the given [IntermediateMicroservice]
      */
-    override fun artifactIdentifier() : String? {
-        val intermediateServiceModel: IntermediateServiceModel by MainState
-        return if (intermediateServiceModel.microservices.isNotEmpty())
-                intermediateServiceModel.microservices.first().artifactIdentifier()
-            else
-                null
+    override fun generateCode(element : IntermediateMicroservice) {
+        MainState.setCurrentMicroservice(element)
+        DomainCodeGenerationSubModule.invoke()
+        ServicesCodeGenerationSubModule.invoke()
     }
 
     /**
-     * Convenience function to derive dependency artifact identifier from a microservice. The identifier consists of the
-     * package name, name, and possibly the version, if any, of the microservice. All name fragments are separated by
-     * the [DependencyDescription.PART_SEP].
+     * Return the artifact identifier of the given [IntermediateMicroservice]
      */
-    private fun IntermediateMicroservice.artifactIdentifier() : String {
-        var identifier = "$eObjectPackageName${DependencyDescription.PART_SEP}$simpleName"
-        if (version != null)
-            identifier += "${DependencyDescription.PART_SEP}$version"
+    override fun artifactIdentifier(element : IntermediateMicroservice) : String {
+        var identifier = "${element.eObjectPackageName}${DependencyDescription.PART_SEP}${element.simpleName}"
+        if (element.version != null)
+            identifier += "${DependencyDescription.PART_SEP}${element.version}"
         return identifier
     }
 }

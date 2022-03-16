@@ -107,7 +107,7 @@ internal object MainContext {
          */
         fun setCurrentMicroservice(microservice : IntermediateMicroservice) {
             currentMicroservice = microservice
-            currentMicroservicePackage = microservice.eObjectPackageName
+            currentMicroservicePackage = microservice.qualifiedName
         }
 
         /**

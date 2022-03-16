@@ -18,6 +18,7 @@ import de.fhdo.lemma.model_processing.utils.loadModelRoot
 import de.fhdo.lemma.model_processing.utils.loadModelRootRelative
 import de.fhdo.lemma.model_processing.utils.removeFileUri
 import de.fhdo.lemma.service.ImportType
+import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
 import de.fhdo.lemma.utils.LemmaUtils
 import org.eclipse.emf.ecore.EObject
 import org.koin.core.inject
@@ -31,7 +32,7 @@ import java.util.ArrayDeque
  */
 @ExplicitlyInvokedCodeGenerationModule("shared")
 @Suppress("unused")
-internal class SharedCodeGenerationModule : CodeGenerationModuleBase() {
+internal class SharedCodeGenerationModule : CodeGenerationModuleBase<Set<String>>() {
     /**
      * Return the language namespace for the intermediate model kind with which this code generator can deal, i.e.,
      * intermediate domain models
@@ -59,9 +60,11 @@ internal class SharedCodeGenerationModule : CodeGenerationModuleBase() {
     }
 
     /**
-     * Do the actual code generation
+     * Return the code generation elements, i.e., the [Set] of the URIs of all intermediate domain models to be bundled
+     * into the shared library. Note that we wrap the [Set] into a one-element [List] as expected by
+     * [CodeGenerationModuleBase].
      */
-    override fun generateCode() {
+    override fun getGenerationElements() : List<Set<String>> {
         // Map the passed intermediate domain models to their URIs
         val allDomainModelUris = CommandLine.sharedIntermediateDomainModels!!.map {
             LemmaUtils.convertToFileUri(it)
@@ -86,8 +89,14 @@ internal class SharedCodeGenerationModule : CodeGenerationModuleBase() {
                 }
             }
 
-        // Generate code for each loaded intermediate domain model
-        allDomainModelUris.forEach { uri ->
+        return listOf(allDomainModelUris)
+    }
+
+    /**
+     * Perform the actual code generation on the [Set] of the URIs of all intermediate domain models
+     */
+    override fun generateCode(element: Set<String>) {
+        element.forEach { uri ->
             DomainState.setCurrentIntermediateDomainModelUri(uri)
             val currentIntermediateDomainModel: IntermediateDataModel by DomainState
             currentIntermediateDomainModel.eAllContents().forEach { invokeVisitingCodeGenerationHandler(it) }
@@ -149,5 +158,5 @@ internal class SharedCodeGenerationModule : CodeGenerationModuleBase() {
     /**
      * Return the artifact identifier
      */
-    override fun artifactIdentifier() = CommandLine.artifactIdentifier!!
+    override fun artifactIdentifier(element: Set<String>) = CommandLine.artifactIdentifier!!
 }
