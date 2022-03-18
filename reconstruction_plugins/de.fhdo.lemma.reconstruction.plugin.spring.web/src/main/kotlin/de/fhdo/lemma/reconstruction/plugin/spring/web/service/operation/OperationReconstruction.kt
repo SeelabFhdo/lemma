@@ -144,13 +144,13 @@ private fun handleReturnPrimitiveType(type: String, name:String, pattern: Exchan
 
 private fun handleComplexType(name: String, type: String, clazz: ClassOrInterfaceType, unit: CompilationUnit,
     pattern: ExchangePattern): Parameter {
+    val dependencyUnit = getCompilationUnitForDependency(type, clazz.nameAsString, unit)
     return when {
+        dependencyUnit === null -> handleUnknownParameter(type, clazz, pattern)
         clazz.nameAsString.contains("List") -> handleListParameter(name, clazz, pattern, unit)
         clazz.nameAsString.contains("Map") -> handleMapParameter(name, clazz, pattern)
-        getCompilationUnitForDependency(type, clazz.nameAsString, unit).isClass()
-            -> handleDataStructureParameter(type, clazz, unit, pattern)
-        getCompilationUnitForDependency(type, clazz.nameAsString, unit).isEnum()
-            -> handleEnumParameter(type, clazz, unit, pattern)
+        dependencyUnit.isClass() -> handleDataStructureParameter(type, clazz, unit, pattern)
+        dependencyUnit.isEnum() -> handleEnumParameter(type, clazz, unit, pattern)
         else -> handleUnknownParameter(type, clazz, pattern)
     }
 }
@@ -176,8 +176,7 @@ private fun handleListParameter(name: String, clazz: ClassOrInterfaceType, patte
 
     // Add list type data structure
     val dependency = addDataStructureDependency(clazz.childNodes.get(1).toString(), unit)
-    if (dependency != null)
-        ReconstructionServiceInformation.addAll(dependency)
+    ReconstructionServiceInformation.addAll(dependency)
 
     // Add data structure for list
 
@@ -225,8 +224,10 @@ private fun handleEnumParameter(name: String, clazz: ClassOrInterfaceType, unit:
     val parameter = ReconstructionParameterFactory().createParameter(name,
         CommunicationType.SYNCHRONOUS, pattern)
     parameter.complexType = complexType
-    val enumType = getEnumerationDependency(dependencyUnit)
-    ReconstructionServiceInformation.add(enumType)
+    if (dependencyUnit !== null) {
+        val enumType = getEnumerationDependency(dependencyUnit)
+        ReconstructionServiceInformation.add(enumType)
+    }
     return parameter
 }
 

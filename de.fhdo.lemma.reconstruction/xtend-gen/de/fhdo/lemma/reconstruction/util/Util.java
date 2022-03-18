@@ -13,21 +13,22 @@ public class Util {
   
   public static PrimitiveType getPrimitiveFrom(final String type) {
     PrimitiveType _switchResult = null;
-    if (type != null) {
-      switch (type) {
+    String _lowerCase = type.toLowerCase();
+    if (_lowerCase != null) {
+      switch (_lowerCase) {
         case "boolean":
           _switchResult = Util.DATA_FACTORY.createPrimitiveBoolean();
           break;
-        case "Byte":
+        case "byte":
           _switchResult = Util.DATA_FACTORY.createPrimitiveByte();
           break;
-        case "Character":
+        case "character":
           _switchResult = Util.DATA_FACTORY.createPrimitiveCharacter();
           break;
-        case "Date":
+        case "date":
           _switchResult = Util.DATA_FACTORY.createPrimitiveDate();
           break;
-        case "Double":
+        case "double":
           _switchResult = Util.DATA_FACTORY.createPrimitiveDouble();
           break;
         case "float":
@@ -36,13 +37,13 @@ public class Util {
         case "int":
           _switchResult = Util.DATA_FACTORY.createPrimitiveInteger();
           break;
-        case "Long":
+        case "long":
           _switchResult = Util.DATA_FACTORY.createPrimitiveLong();
           break;
-        case "Short":
+        case "short":
           _switchResult = Util.DATA_FACTORY.createPrimitiveShort();
           break;
-        case "String":
+        case "string":
           _switchResult = Util.DATA_FACTORY.createPrimitiveString();
           break;
         default:
@@ -63,5 +64,13 @@ public class Util {
     };
     ((List<String>)Conversions.doWrapArray(parts)).forEach(_function);
     return stringBuilder.toString();
+  }
+  
+  public static String getContextNameFromQualifedName(final String qualifedName) {
+    final String[] nameParts = qualifedName.split("\\W");
+    int _size = ((List<String>)Conversions.doWrapArray(nameParts)).size();
+    int _minus = (_size - 2);
+    final String contextName = StringExtensions.toFirstUpper(nameParts[_minus]);
+    return contextName;
   }
 }

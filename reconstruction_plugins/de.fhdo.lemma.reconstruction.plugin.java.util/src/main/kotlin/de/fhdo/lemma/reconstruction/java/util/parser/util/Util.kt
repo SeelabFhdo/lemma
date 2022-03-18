@@ -22,7 +22,6 @@ fun String.extractContextTerm() : String {
 fun String.capitalizeWords(splitSymbol: String):
         String = split(splitSymbol).map { it.replaceFirstChar { it.uppercase() }}.joinToString(splitSymbol)
 
-//TODO: Fix Path resolving
 internal fun resolveContextFromNameOld(path: String): String {
     println("resolveContextFromName $path")
     val filesAndTrees = getDomainReconstructionFilesAndParseTrees()
@@ -41,7 +40,7 @@ internal fun resolveContextFromNameOld(path: String): String {
             if (contextName !== null) {
                 return "${clazz.getPackageName()}.${contextName.lowercase()}"
             } else {
-                return getClazzFromParseTree(parseTree as JavaParseTree).getPackageName()
+                return getClazzFromParseTree(parseTree).getPackageName()
             }
 
         }
@@ -51,9 +50,15 @@ internal fun resolveContextFromNameOld(path: String): String {
 
 internal fun resolveContextFromName(path: String): String {
     val filesAndTrees = getDomainReconstructionFilesAndParseTrees()
-    val applicationClass = filesAndTrees.filter {
+    var applicationClass = filesAndTrees.filter {
         path.startsWith(it.key.replaceAfterLast(File.separator, ""))
             && getApplicationClazzFromParseTree(it.value as JavaParseTree) !== null
+    }
+
+    if (applicationClass.isEmpty()) {
+       applicationClass = filesAndTrees.filter{
+           getApplicationClazzFromParseTree(it.value as JavaParseTree) !== null
+       }
     }
 
     val tree = applicationClass.values.first() as JavaParseTree
@@ -74,6 +79,20 @@ private fun getApplicationClazzFromParseTree(tree: JavaParseTree): ClassOrInterf
         return clazz
     }
     return null
+}
+
+fun getApplicationClazzFromAbstractParseTree(tree: AbstractParseTree): ClassOrInterfaceDeclaration? {
+    when (tree) {
+        is JavaParseTree -> {
+            val clazz = tree.compilationUnit.findFirst(ClassOrInterfaceDeclaration::class.java)
+             { !it.isInterface }.orElse(null)
+            if (clazz != null && clazz.hasAnnotation("SpringBootApplication")) {
+                return clazz
+            }
+            return null
+        }
+        else -> return null
+    }
 }
 
 private fun getClazzFromParseTree(tree: JavaParseTree): ClassOrInterfaceDeclaration {

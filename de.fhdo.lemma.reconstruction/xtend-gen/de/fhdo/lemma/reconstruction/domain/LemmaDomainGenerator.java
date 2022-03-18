@@ -13,7 +13,6 @@ import de.fhdo.lemma.data.EnumerationField;
 import de.fhdo.lemma.data.ListType;
 import de.fhdo.lemma.data.PrimitiveUnspecified;
 import de.fhdo.lemma.data.Version;
-import de.fhdo.lemma.reconstruction.util.Util;
 import java.util.Map;
 import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
@@ -70,7 +69,7 @@ public class LemmaDomainGenerator {
     Context _xblockexpression = null;
     {
       final Context context = LemmaDomainGenerator.DATA_FACTORY.createContext();
-      context.setName(Util.capitalizeWords("\\.", reconstructedContext.getQualifiedName()).replaceAll("\\W", ""));
+      context.setName(reconstructedContext.getName());
       final Version version = LemmaDomainGenerator.DATA_FACTORY.createVersion();
       version.setName(reconstructedContext.getName());
       context.setVersion(version);
@@ -89,18 +88,27 @@ public class LemmaDomainGenerator {
     return _xblockexpression;
   }
   
-  private Enumeration createEnumFrom(final EnumType reconstructedEnum) {
+  private ComplexType createEnumFrom(final EnumType reconstructedEnum) {
     Enumeration _xblockexpression = null;
     {
-      final Enumeration enum_ = LemmaDomainGenerator.DATA_FACTORY.createEnumeration();
-      enum_.setName(reconstructedEnum.getName());
-      final Consumer<String> _function = (String it) -> {
+      final Function1<ComplexType, Boolean> _function = (ComplexType it) -> {
+        String _name = it.getName();
+        String _name_1 = reconstructedEnum.getName();
+        return Boolean.valueOf(Objects.equal(_name, _name_1));
+      };
+      final ComplexType enum_ = IterableExtensions.<ComplexType>findFirst(LemmaDomainGenerator.context.getComplexTypes(), _function);
+      if ((enum_ != null)) {
+        return enum_;
+      }
+      final Enumeration newEnum = LemmaDomainGenerator.DATA_FACTORY.createEnumeration();
+      newEnum.setName(reconstructedEnum.getName());
+      final Consumer<String> _function_1 = (String it) -> {
         final EnumerationField field = LemmaDomainGenerator.DATA_FACTORY.createEnumerationField();
         field.setName(it);
-        enum_.getFields().add(field);
+        newEnum.getFields().add(field);
       };
-      reconstructedEnum.getValues().forEach(_function);
-      _xblockexpression = enum_;
+      reconstructedEnum.getValues().forEach(_function_1);
+      _xblockexpression = newEnum;
     }
     return _xblockexpression;
   }
@@ -207,7 +215,7 @@ public class LemmaDomainGenerator {
           _switchResult = null;
           break;
         case UNSPECIFIED:
-          _switchResult = null;
+          _switchResult = this.getUnspecifiedComplexType(field);
           break;
         default:
           break;
@@ -227,11 +235,10 @@ public class LemmaDomainGenerator {
   
   private ComplexType getComplexTypeFromEnumeration(final de.fhdo.lemma.reconstruction.domain.ComplexType complexType) {
     final Function1<ComplexType, Boolean> _function = (ComplexType it) -> {
-      String _lowerCase = it.getName().toLowerCase();
-      String _lowerCase_1 = complexType.getName().toLowerCase();
-      return Boolean.valueOf(Objects.equal(_lowerCase, _lowerCase_1));
+      return Boolean.valueOf(complexType.getQualifiedName().toLowerCase().endsWith(it.getName().toLowerCase()));
     };
-    return IterableExtensions.<ComplexType>findFirst(LemmaDomainGenerator.context.getComplexTypes(), _function);
+    final ComplexType type = IterableExtensions.<ComplexType>findFirst(LemmaDomainGenerator.context.getComplexTypes(), _function);
+    return type;
   }
   
   private ListType getListTypeFromCollection(final Field field) {
@@ -268,6 +275,17 @@ public class LemmaDomainGenerator {
     }
     LemmaDomainGenerator.context.getComplexTypes().add(list);
     return list;
+  }
+  
+  private de.fhdo.lemma.data.DataStructure getUnspecifiedComplexType(final Field field) {
+    final de.fhdo.lemma.data.DataStructure dataStructure = LemmaDomainGenerator.DATA_FACTORY.createDataStructure();
+    dataStructure.setName(StringExtensions.toFirstUpper(field.getName()));
+    final DataField dataField = LemmaDomainGenerator.DATA_FACTORY.createDataField();
+    dataField.setPrimitiveType(LemmaDomainGenerator.DATA_FACTORY.createPrimitiveUnspecified());
+    dataField.setName(field.getName());
+    dataStructure.getDataFields().add(dataField);
+    LemmaDomainGenerator.context.getComplexTypes().add(dataStructure);
+    return dataStructure;
   }
   
   private EnumerationField getListReference(final de.fhdo.lemma.reconstruction.domain.ComplexType complexType) {

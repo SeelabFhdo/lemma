@@ -51,7 +51,7 @@ internal object ReconstructionDomainHandler {
     internal fun executeDomainReconstructionStage() {
         domainReconstructionModules.forEach { module ->
             reconstructionFilesAndParseTree.forEach { path, tree ->
-                reconstructMicroserviceFromPassTree(tree, module)
+                reconstructDomainDataFromPassTree(tree, module)
             }
         }
         println()
@@ -60,7 +60,7 @@ internal object ReconstructionDomainHandler {
     /**
      * Execute the reconstruction for a microservice based on a parsing tree, provided by the technology specific plugin.
      */
-    private fun reconstructMicroserviceFromPassTree(tree: AbstractParseTree, module: AbstractReconstructionModule) {
+    private fun reconstructDomainDataFromPassTree(tree: AbstractParseTree, module: AbstractReconstructionModule) {
         val reconstruction = module.execute(tree)
         reconstruction.forEach {
             when (it) {

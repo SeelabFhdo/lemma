@@ -149,8 +149,14 @@ public class LemmaServiceGenerator {
     if (_tripleNotEquals) {
       parameter.setPrimitiveType(Util.getPrimitiveFrom(reconstructedParameter.getPrimitiveType().getName()));
     } else {
-      ImportedType _deriveImportedType = this.deriveImportedType(reconstructedParameter.getComplexType());
-      parameter.setImportedType(((ImportedType) _deriveImportedType));
+      ClassType _classType = reconstructedParameter.getComplexType().getClassType();
+      boolean _tripleEquals = (_classType == ClassType.UNSPECIFIED);
+      if (_tripleEquals) {
+        parameter.setPrimitiveType(LemmaServiceGenerator.DATA_FACTORY.createPrimitiveUnspecified());
+      } else {
+        ImportedType _deriveImportedType = this.deriveImportedType(reconstructedParameter.getComplexType());
+        parameter.setImportedType(((ImportedType) _deriveImportedType));
+      }
     }
     return parameter;
   }
@@ -196,35 +202,28 @@ public class LemmaServiceGenerator {
     importedType.setImport(import_);
     final de.fhdo.lemma.data.ComplexType type = this.deriveType(complexType);
     final Context context = LemmaServiceGenerator.DATA_FACTORY.createContext();
-    final String name = this.buildContextName(complexType.getQualifiedName(), complexType.getName());
-    context.setName(name);
+    context.setName(Util.getContextNameFromQualifedName(complexType.getQualifiedName()));
     type.setContext(context);
     importedType.setType(type);
     return importedType;
   }
   
-  private String buildContextName(final String qualifiedName, final String name) {
-    final String contextName = qualifiedName.replace(name, "");
-    final String capitalizeContextName = Util.capitalizeWords("\\.", contextName).replaceAll("\\W", "");
-    return capitalizeContextName;
-  }
-  
   private Import getOrCreateImport(final ComplexType complexType) {
-    final String capitalizeName = this.buildContextName(complexType.getQualifiedName(), complexType.getName());
+    final String contextName = Util.getContextNameFromQualifedName(complexType.getQualifiedName());
     final Function1<Import, Boolean> _function = (Import it) -> {
       String _name = it.getName();
-      return Boolean.valueOf(Objects.equal(_name, capitalizeName));
+      return Boolean.valueOf(Objects.equal(_name, contextName));
     };
     Import import_ = IterableExtensions.<Import>findFirst(this.model.getImports(), _function);
     if ((import_ == null)) {
       import_ = LemmaServiceGenerator.SERVICE_FACTORY.createImport();
-      import_.setName(capitalizeName);
+      import_.setName(contextName);
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("..");
       _builder.append(File.separator);
       _builder.append("domain");
       _builder.append(File.separator);
-      _builder.append(capitalizeName);
+      _builder.append(contextName);
       _builder.append(".data");
       import_.setImportURI(_builder.toString());
       import_.setImportType(ImportType.DATATYPES);

@@ -1,10 +1,9 @@
 package de.fhdo.lemma.reconstruction.plugin.spring.web.util
 
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
-import com.github.javaparser.ast.body.Parameter
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.hasAnnotation
 import de.fhdo.lemma.reconstruction.java.util.parser.JavaParseTree
-import de.fhdo.lemma.reconstruction.java.util.parser.getJavaParseTree
+import de.fhdo.lemma.reconstruction.java.util.parser.util.getApplicationClazzFromAbstractParseTree
 import de.fhdo.reconstruction.framework.modules.service.getServiceReconstructionFilesAndParseTrees
 import de.fhdo.reconstruction.framework.plugins.AbstractParseTree
 import java.io.File
@@ -19,7 +18,19 @@ fun compareFullQualifiedNames(service: String, identifier: String, partSeparator
     return serviceParts.subList(0, level) == identifierParts.subList(0, level)
 }
 
-internal fun getMicroserviceNameForInterface(interfaceName: String): String {
+internal fun getMicroserviceNameForInterface(path: String): String {
+    val filesAndTrees = getServiceReconstructionFilesAndParseTrees()
+    var tree = filesAndTrees.filter {
+        path.startsWith(it.key.replaceAfterLast(File.separator, ""))
+    }
+    if (tree.isEmpty()) {
+        tree = filesAndTrees.filter { path.startsWith(it.key.replaceAfterLast("/src/", "")) &&
+                getApplicationClazzFromAbstractParseTree(it.value) !== null}
+    }
+    return getServiceNameFromParseTree(tree.values.first())
+}
+
+internal fun getMicroserviceNameForInterfaceOld(interfaceName: String): String {
     val filesAndTrees = getServiceReconstructionFilesAndParseTrees()
     filesAndTrees.forEach{
         val rootPackage = it.key.replaceAfterLast(File.separator, "")

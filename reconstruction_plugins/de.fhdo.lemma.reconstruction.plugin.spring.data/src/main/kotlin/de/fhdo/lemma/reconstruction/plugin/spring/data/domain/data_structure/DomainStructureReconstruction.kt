@@ -76,10 +76,8 @@ private fun reconstructDataStructuresFromClass(clazz: ClassOrInterfaceDeclaratio
         val contextName = getComplexName(unit)
         val dataStructure = reconstructDataStructureInformation(contextName, clazz)
 
-
         val fields = reconstructDataStructureAttributes(clazz, contextName, unit)
         dataStructure.fields.addAll(fields)
-
         ReconstructionDomainInformation.add(dataStructure)
     }
 }

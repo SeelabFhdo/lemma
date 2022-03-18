@@ -22,159 +22,158 @@ import de.fhdo.lemma.service.ServiceModel
 import de.fhdo.lemma.servicedsl.extractor.ServiceDslExtractor
 
 class LemmaReconstructionHandler extends AbstractHandler {
-	/**
+    /**
      * Current shell
      */
     static val SHELL = PlatformUI.workbench.activeWorkbenchWindow.shell
 
     String mongoDbHostname
-	String mongoDbPort
+    String mongoDbPort
 
-	List<Context> initialContexts = newLinkedList
-	List<Context> selectedContexts = newLinkedList
+    List<Context> initialContexts = newLinkedList
+    List<Context> selectedContexts = newLinkedList
 
-	List<Microservice> initialMicroservices = newLinkedList
-	List<Microservice> selectedMicroservices = newLinkedList
+    List<Microservice> initialMicroservices = newLinkedList
+    List<Microservice> selectedMicroservices = newLinkedList
 
-	String reconstructionPath
+    String reconstructionPath
 
-	List<DataModel> domainDataModels = newLinkedList
-	List<ServiceModel> serviceModels = newLinkedList
+    List<DataModel> domainDataModels = newLinkedList
+    List<ServiceModel> serviceModels = newLinkedList
 
-	override execute(ExecutionEvent event) throws ExecutionException {
-		receiveMongoDbEndpoints
-		loadContextInformationFromMongoDb
-		loadMicroservicesFromMongoDB
+    override execute(ExecutionEvent event) throws ExecutionException {
+        receiveMongoDbEndpoints
+        loadContextInformationFromMongoDb
+        loadMicroservicesFromMongoDB
 
-		displayReconstructionInforation
-		selectTargetFolderForModelGeneration
-		generateModels
-		writeModelsToFolder
-		showReconstructionInformationMessage
-
-
+        displayReconstructionInforation
+        selectTargetFolderForModelGeneration
+        generateModels
+        writeModelsToFolder
+        showReconstructionInformationMessage
 
 
-		resetDialogHandler
-		return null
-	}
 
-	private def receiveMongoDbEndpoints() {
-		val dialog = new LemmaReconstructionDialog(SHELL)
-		dialog.create
-		dialog.open
-		mongoDbHostname = dialog.mongoDbHostname
-		mongoDbPort = dialog.mongoDbPort
-	}
 
-	private def displayReconstructionInforation() {
-		val dialog = new LemmaReconstructionResultsDialog(SHELL, initialContexts,
-			initialMicroservices
-		)
-		dialog.create
-		dialog.open
-		selectedContexts = dialog.selectedContexts
-		selectedMicroservices = dialog.selectedMicroservices
-	}
+        resetDialogHandler
+        return null
+    }
 
-	private def loadContextInformationFromMongoDb() {
-		val repository = new MongoDbRepository(mongoDbHostname, Integer::parseInt(mongoDbPort))
-		initialContexts.addAll(repository.getReconstructedContexts)
-	}
+    private def receiveMongoDbEndpoints() {
+        val dialog = new LemmaReconstructionDialog(SHELL)
+        dialog.create
+        dialog.open
+        mongoDbHostname = dialog.mongoDbHostname
+        mongoDbPort = dialog.mongoDbPort
+    }
 
-	private def loadMicroservicesFromMongoDB() {
-		val repository = new MongoDbRepository(mongoDbHostname, Integer::parseInt(mongoDbPort))
-		initialMicroservices.addAll(repository.reconstructedMicroservices)
+    private def displayReconstructionInforation() {
+        val dialog = new LemmaReconstructionResultsDialog(SHELL, initialContexts,
+            initialMicroservices
+        )
+        dialog.create
+        dialog.open
+        selectedContexts = dialog.selectedContexts
+        selectedMicroservices = dialog.selectedMicroservices
+    }
 
-	}
+    private def loadContextInformationFromMongoDb() {
+        val repository = new MongoDbRepository(mongoDbHostname, Integer::parseInt(mongoDbPort))
+        initialContexts.addAll(repository.getReconstructedContexts)
+    }
 
-	private def selectTargetFolderForModelGeneration() {
-		val fileDialog = new DirectoryDialog( SHELL, SWT.OPEN );
-		reconstructionPath = fileDialog.open
-	}
+    private def loadMicroservicesFromMongoDB() {
+        val repository = new MongoDbRepository(mongoDbHostname, Integer::parseInt(mongoDbPort))
+        initialMicroservices.addAll(repository.reconstructedMicroservices)
 
-	private def generateModels() {
-		generateDomainModels
-		generateServiceModels
-	}
+    }
 
-	private def generateDomainModels() {
-		val generator = new LemmaDomainGenerator
-		selectedContexts.forEach[
-			domainDataModels.addAll(generator.generateDataModel(it))
-		]
-	}
+    private def selectTargetFolderForModelGeneration() {
+        val fileDialog = new DirectoryDialog( SHELL, SWT.OPEN );
+        reconstructionPath = fileDialog.open
+    }
 
-	private def generateServiceModels() {
-		val generator = new LemmaServiceGenerator
-		selectedMicroservices.forEach[
-			val model = generator.generateModelFrom(it)
-			serviceModels.add(model)
-		]
-	}
+    private def generateModels() {
+        generateDomainModels
+        generateServiceModels
+    }
 
-	private def writeModelsToFolder() {
-		domainDataModels.forEach[
-			writeDomainDataModel(it)
-		]
+    private def generateDomainModels() {
+        val generator = new LemmaDomainGenerator
+        selectedContexts.forEach[
+            domainDataModels.addAll(generator.generateDataModel(it))
+        ]
+    }
 
-		serviceModels.forEach[
-			writeServiceModel(it)
-		]
-	}
+    private def generateServiceModels() {
+        val generator = new LemmaServiceGenerator
+        selectedMicroservices.forEach[
+            val model = generator.generateModelFrom(it)
+            serviceModels.add(model)
+        ]
+    }
 
-	private def writeDomainDataModel(DataModel model) {
-		val dataModel = new DataDslExtractor().extractToString(model)
-		val fileName = model.contexts.get(0).name
+    private def writeModelsToFolder() {
+        domainDataModels.forEach[
+            writeDomainDataModel(it)
+        ]
+
+        serviceModels.forEach[
+            writeServiceModel(it)
+        ]
+    }
+
+    private def writeDomainDataModel(DataModel model) {
+        val dataModel = new DataDslExtractor().extractToString(model)
+        val fileName = model.contexts.get(0).name
         val filePath
-        	= '''«reconstructionPath»«File.separator»domain«File.separator»«fileName».data'''
+            = '''«reconstructionPath»«File.separator»domain«File.separator»«fileName».data'''
 
-    	Files.createDirectories(Paths.get('''«reconstructionPath»«File.separator»domain'''))
-		Files.write(Paths.get(filePath), dataModel.bytes)
-	}
+        Files.createDirectories(Paths.get('''«reconstructionPath»«File.separator»domain'''))
+        Files.write(Paths.get(filePath), dataModel.bytes)
+    }
 
 
+    private def writeServiceModel(ServiceModel model) {
+        val serviceModel = new ServiceDslExtractor().extractToString(model)
+        val fileName = model.microservices.get(0).qualifiedNameParts.last
+        val filePath
+            = '''«reconstructionPath»«File.separator»service«File.separator»«fileName».services'''
+        Files.createDirectories(Paths.get('''«reconstructionPath»«File.separator»service'''))
+        Files.write(Paths.get(filePath), serviceModel.bytes)
+    }
 
-	private def writeServiceModel(ServiceModel model) {
-		val serviceModel = new ServiceDslExtractor().extractToString(model)
-		val fileName = model.microservices.get(0).qualifiedNameParts.last
-		val filePath
-			= '''«reconstructionPath»«File.separator»service«File.separator»«fileName».services'''
-		Files.createDirectories(Paths.get('''«reconstructionPath»«File.separator»service'''))
-		Files.write(Paths.get(filePath), serviceModel.bytes)
-	}
+    private def showReconstructionInformationMessage() {
+        val title = "Reconstruction Information Message"
+        val generatedLemmaModels = <String>newLinkedList
 
-	private def showReconstructionInformationMessage() {
-		val title = "Reconstruction Information Message"
-		val generatedLemmaModels = <String>newLinkedList
+        domainDataModels.forEach[ models |
+            models.contexts.forEach[context |
+                generatedLemmaModels.add('''«context.name».data''')
+            ]
+        ]
 
-		domainDataModels.forEach[ models |
-			models.contexts.forEach[context |
-				generatedLemmaModels.add('''«context.name».data''')
-			]
-		]
+        selectedMicroservices.forEach[
+            generatedLemmaModels.add('''«it.name.split("\\W").last».services''')
+        ]
 
-		selectedMicroservices.forEach[
-			generatedLemmaModels.add('''«it.name».services''')
-		]
+        val messageText = "Generated Models:"
+        val messageModels = messageText + "\n\t- " + generatedLemmaModels.join("\n\t- ") + "\n\n"
+        showInfoDialogMessage(title, messageModels)
+    }
 
-		val messageText = "Generated Models:"
-		val messageModels = messageText + "\n\t- " + generatedLemmaModels.join("\n\t- ") + "\n\n"
-		showInfoDialogMessage(title, messageModels)
-	}
+    private def showInfoDialogMessage(String title, String message) {
+        MessageDialog.openInformation(SHELL, title, message)
+    }
 
-	private def showInfoDialogMessage(String title, String message) {
-		MessageDialog.openInformation(SHELL, title, message)
-	}
+    private def resetDialogHandler() {
+        initialContexts.clear
+        selectedContexts.clear
+        domainDataModels.clear
 
-	private def resetDialogHandler() {
-		initialContexts.clear
-		selectedContexts.clear
-		domainDataModels.clear
-
-		initialMicroservices.clear
-		selectedMicroservices.clear
-		serviceModels.clear
-	}
+        initialMicroservices.clear
+        selectedMicroservices.clear
+        serviceModels.clear
+    }
 
 }

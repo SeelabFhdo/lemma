@@ -29,11 +29,11 @@
         {
           "name": "de.fhdo.lemma.reconstruction.java.util-0.8.5-SNAPSHOT.jar",
           "url": "de.fhdo.lemma.reconstruction.java.util-0.8.5-SNAPSHOT.jar",
-          "size": 16363,
-          "sha512": "9fc2283569c56e9ffe2309feb6a89b744535dc4016ec2fde4520666403b6355154a17023a230867ca5ea6543efe1f2f24579c59768aa2efa3ed959bb9b720e6d",
-          "sha256": "371b6050d5acbcd22e8dce98c3552ea04ed49478e50a0646d7b9f973c4799635",
-          "sha1": "87eb814d4688af6e0e5b2eb40bb048ab9ae52720",
-          "md5": "7b6dbe549501b0572877df9041cec2c6"
+          "size": 19969,
+          "sha512": "161aa4300ee33de825d292bfac6eb9906e08be4d8fabfee8d586b39d3585a047ae227ac7d8298d60ac219dd89f70dcfe2fd7ce26ebfb8cc72bceba2b672f74ca",
+          "sha256": "87423a880f571947a9fe1a9745fc7e7a7d5dd7c33ed4b3f5b8ca4c99f9dbaae4",
+          "sha1": "8dd54fb723de7c4d35556dd56a44a72bdd3854e6",
+          "md5": "71eea32630b1a60187cfe4aa78499713"
         }
       ]
     },
@@ -167,11 +167,11 @@
         {
           "name": "de.fhdo.lemma.reconstruction.java.util-0.8.5-SNAPSHOT.jar",
           "url": "de.fhdo.lemma.reconstruction.java.util-0.8.5-SNAPSHOT.jar",
-          "size": 16363,
-          "sha512": "9fc2283569c56e9ffe2309feb6a89b744535dc4016ec2fde4520666403b6355154a17023a230867ca5ea6543efe1f2f24579c59768aa2efa3ed959bb9b720e6d",
-          "sha256": "371b6050d5acbcd22e8dce98c3552ea04ed49478e50a0646d7b9f973c4799635",
-          "sha1": "87eb814d4688af6e0e5b2eb40bb048ab9ae52720",
-          "md5": "7b6dbe549501b0572877df9041cec2c6"
+          "size": 19969,
+          "sha512": "161aa4300ee33de825d292bfac6eb9906e08be4d8fabfee8d586b39d3585a047ae227ac7d8298d60ac219dd89f70dcfe2fd7ce26ebfb8cc72bceba2b672f74ca",
+          "sha256": "87423a880f571947a9fe1a9745fc7e7a7d5dd7c33ed4b3f5b8ca4c99f9dbaae4",
+          "sha1": "8dd54fb723de7c4d35556dd56a44a72bdd3854e6",
+          "md5": "71eea32630b1a60187cfe4aa78499713"
         }
       ]
     }

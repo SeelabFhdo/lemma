@@ -7,28 +7,28 @@
     <snapshot>
       <localCopy>true</localCopy>
     </snapshot>
-    <lastUpdated>20220114133702</lastUpdated>
+    <lastUpdated>20220119185747</lastUpdated>
     <snapshotVersions>
-      <snapshotVersion>
-        <extension>pom</extension>
-        <value>0.8.5-SNAPSHOT</value>
-        <updated>20220114133702</updated>
-      </snapshotVersion>
       <snapshotVersion>
         <extension>jar</extension>
         <value>0.8.5-SNAPSHOT</value>
-        <updated>20220114133702</updated>
+        <updated>20220119185747</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>module</extension>
+        <value>0.8.5-SNAPSHOT</value>
+        <updated>20220119185747</updated>
       </snapshotVersion>
       <snapshotVersion>
         <classifier>all-dependencies-no-kotlin</classifier>
         <extension>jar</extension>
         <value>0.8.5-SNAPSHOT</value>
-        <updated>20220114133702</updated>
+        <updated>20220119185747</updated>
       </snapshotVersion>
       <snapshotVersion>
-        <extension>module</extension>
+        <extension>pom</extension>
         <value>0.8.5-SNAPSHOT</value>
-        <updated>20220114133702</updated>
+        <updated>20220119185747</updated>
       </snapshotVersion>
     </snapshotVersions>
   </versioning>

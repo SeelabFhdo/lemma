@@ -21,6 +21,7 @@ import de.fhdo.reconstruction.framework.modules.domain.datastructure.PrimitiveTy
 import de.fhdo.reconstruction.framework.modules.domain.datastructure.ReconstructionDataStructureFactory
 import de.fhdo.reconstruction.framework.modules.domain.datastructure.ReconstructionFieldFactory
 import de.fhdo.reconstruction.framework.modules.domain.getDomainReconstructionFilesAndParseTrees
+import java.io.FileNotFoundException
 
 data class FieldWithDependencies(
     val field: Field,
@@ -34,16 +35,15 @@ fun createDataStructure(unit: CompilationUnit): List<AbstractReconstructionEleme
         .createDataStructure(contextName, clazz.nameAsString)
     val dataStructures = mutableListOf<AbstractReconstructionElement>()
     clazz.attributes.forEach {
-        val field = ReconstructionFieldFactory().createField(it.nameAsString)
+        var field = ReconstructionFieldFactory().createField(it.nameAsString)
         if (isPrimitiveTypeOrWrapper(it.typeAsString)) {
             field.primitiveType = PrimitiveType(it.typeAsString)
         } else {
 
             val path = unit.storage.get().path.toString()
-            val qualifiedName = resolveContextFromName(path)
 
             val fieldWithDependencies = handleComplexType(it, unit)
-            field.complexType = fieldWithDependencies.field.complexType
+            field = fieldWithDependencies.field
             dataStructures.addAll(fieldWithDependencies.dependencies)
         }
         dataStructure.fields.add(field)
@@ -111,23 +111,24 @@ fun isPrimitiveTypeOrWrapper(type: String): Boolean {
 
 fun addDataStructureDependency(name: String, unit: CompilationUnit): List<AbstractReconstructionElement> {
     var importName = unit.imports.find { it.nameAsString.endsWith(name) }?.nameAsString
-    val parseTree: JavaParseTree
-    println("Importname: $importName")
+    val dataStructures = mutableListOf<AbstractReconstructionElement>()
+    val parseTree: JavaParseTree?
     if (importName !== null) {
-        println("addDataStructureDependency: before parse tree")
         parseTree = getJavaParseTreeForImport(importName)
-        println("addDataStructureDependency: after parse tree")
-        return createDataStructureFromParseTree(parseTree)
+
     } else {
         importName = "${unit.getPackageName()}.$name"
-        println("Test")
         parseTree = getJavaParseTreeForImport(importName)
-        println("addDataStructureDependency: after parse tree")
-        return createDataStructureFromParseTree(parseTree)
+
+
     }
+    if (parseTree !== null)
+        dataStructures.addAll(createDataStructureFromParseTree(parseTree))
+
+    return dataStructures
 }
 
-fun getCompilationUnitForDependency(name: String, type: String, unit: CompilationUnit): CompilationUnit {
+fun getCompilationUnitForDependency(name: String, type: String, unit: CompilationUnit): CompilationUnit? {
     val importName: String
     println("getEnumFromCompilationUnit: $name")
     if (unit.imports.find { it.nameAsString.endsWith(type) } != null) {
@@ -140,24 +141,26 @@ fun getCompilationUnitForDependency(name: String, type: String, unit: Compilatio
         println("In the same  package: $importName")
         println(importName)
     }
-    val test = getJavaParseTreeForImport(importName).compilationUnit
-    println("getCompUnitForDependency: ${test.primaryTypeName}")
-    return test
+    val tree = getJavaParseTreeForImport(importName)
+    if (tree !== null)
+        return  tree.compilationUnit
+    else
+        return null
 }
 
-private fun getJavaParseTreeForImport(importName: String): JavaParseTree {
+private fun getJavaParseTreeForImport(importName: String): JavaParseTree? {
     val path = getPathFromImport(importName)
-    println(path)
-    val tree = getJavaParseTree(path).second
-    println("Tree: ${tree.compilationUnit.primaryTypeName}")
-    return tree
+    if (path !== null)
+        return getJavaParseTree(path).second
+
+    return null
 }
 
-private fun getPathFromImport(importName: String): String {
+private fun getPathFromImport(importName: String): String? {
     val fileName = "${importName.replaceBeforeLast(".", "").replace(".", "")}.java"
     println("FileName: $fileName")
     val filesAndTrees = getDomainReconstructionFilesAndParseTrees()
-    val path = filesAndTrees.keys.find { it.endsWith(fileName) }?: "unknown"
+    val path = filesAndTrees.keys.find { it.endsWith(fileName) }
     println("Path: $path")
     return path
 }
@@ -184,15 +187,23 @@ fun getEnumerationDependency(unit: CompilationUnit): EnumType{
  * maps.
  */
 fun handleComplexType(variable: VariableDeclarator, unit: CompilationUnit): FieldWithDependencies {
+    val dependencyUnit = getCompilationUnitForDependency(variable.nameAsString, variable.typeAsString, unit)
     return when {
         variable.typeAsString.contains("List") -> handleListField(variable)
         variable.typeAsString.contains("Map") -> handleMapField(variable)
-        getCompilationUnitForDependency(variable.nameAsString, variable.typeAsString, unit).isClass()
-        -> handleDataStructureField(variable, unit)
-        getCompilationUnitForDependency(variable.nameAsString, variable.typeAsString, unit).isEnum()
-        -> handleEnumField(variable, unit)
+        dependencyUnit === null -> handleUnknownField(variable)
+        dependencyUnit.isClass() -> handleDataStructureField(variable, unit)
+        dependencyUnit.isEnum() -> handleEnumField(variable, unit)
         else -> handleUnknownField(variable)
     }
+}
+
+private fun handleUnknownField(variable: VariableDeclarator): FieldWithDependencies {
+    val field = ReconstructionFieldFactory().createField(variable.nameAsString)
+    val complexType = ComplexType("unspecified", "unspecified", ClassType.UNSPECIFIED)
+    field.complexType = complexType
+    val fieldWithDependencies = FieldWithDependencies(field)
+    return fieldWithDependencies
 }
 
 private fun handleListField(variable: VariableDeclarator): FieldWithDependencies {
@@ -241,16 +252,10 @@ private fun handleEnumField(variable: VariableDeclarator, unit: CompilationUnit)
     val complexType = ComplexType(variable.nameAsString, qualifiedName, ClassType.ENUMERATION)
     val field = ReconstructionFieldFactory().createField(variable.nameAsString)
     field.complexType = complexType
-    val enumType = getEnumerationDependency(dependencyUnit)
     val fieldWithDependencies = FieldWithDependencies(field)
-    fieldWithDependencies.dependencies.add(enumType)
-    return fieldWithDependencies
-}
-
-private fun handleUnknownField(variable: VariableDeclarator): FieldWithDependencies {
-    val field = ReconstructionFieldFactory().createField(variable.nameAsString)
-    val complexType = ComplexType("unspecified", "unspecified", ClassType.UNSPECIFIED)
-    field.complexType = complexType
-    val fieldWithDependencies = FieldWithDependencies(field)
+    if (dependencyUnit !== null) {
+        val enumType = getEnumerationDependency(dependencyUnit)
+        fieldWithDependencies.dependencies.add(enumType)
+    }
     return fieldWithDependencies
 }

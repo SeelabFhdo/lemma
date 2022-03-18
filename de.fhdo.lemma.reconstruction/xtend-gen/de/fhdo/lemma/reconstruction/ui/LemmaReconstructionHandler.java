@@ -27,6 +27,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.CollectionExtensions;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
+import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
@@ -226,8 +227,8 @@ public class LemmaReconstructionHandler extends AbstractHandler {
     this.domainDataModels.forEach(_function);
     final Consumer<Microservice> _function_1 = (Microservice it) -> {
       StringConcatenation _builder = new StringConcatenation();
-      String _name = it.getName();
-      _builder.append(_name);
+      String _last = IterableExtensions.<String>last(((Iterable<String>)Conversions.doWrapArray(it.getName().split("\\W"))));
+      _builder.append(_last);
       _builder.append(".services");
       generatedLemmaModels.add(_builder.toString());
     };

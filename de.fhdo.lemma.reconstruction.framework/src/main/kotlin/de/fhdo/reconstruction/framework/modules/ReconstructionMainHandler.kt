@@ -47,6 +47,27 @@ internal object ReconstructionMainHandler {
         }
     }
 
+    private fun addReconstructionModule(module: ClassInfo) {
+        val stage = ReconstructionStage.valueOf(module.getAnnotationInfo(ReconstructionModule::class.java.name)
+            .parameterValues.getValue("stage").toString().substringAfterLast("."))
+        when (stage) {
+            ReconstructionStage.Domain -> {
+                ReconstructionDomainHandler.addDomainReconstructionModule(
+                    module.loadClass(AbstractReconstructionModule::class.java)
+                        .getDeclaredConstructor().newInstance())
+            }
+
+            ReconstructionStage.Service -> {
+                ReconstructionServiceHandler.addServiceReconstructionModule(
+                    module.loadClass(AbstractReconstructionModule::class.java)
+                        .getDeclaredConstructor().newInstance())
+            }
+            ReconstructionStage.Operation -> {
+
+            }
+        }
+    }
+
     private fun executeServiceHandler() {
         // Start domain reconstruction stage
         ReconstructionDomainHandler
@@ -72,26 +93,5 @@ internal object ReconstructionMainHandler {
         ReconstructionServiceHandler.writeReconstructedMicroservicesToDatabase()
 
 
-    }
-
-    private fun addReconstructionModule(module: ClassInfo) {
-        val stage = ReconstructionStage.valueOf(module.getAnnotationInfo(ReconstructionModule::class.java.name)
-            .parameterValues.getValue("stage").toString().substringAfterLast("."))
-        when (stage) {
-            ReconstructionStage.Domain -> {
-                ReconstructionDomainHandler.addDomainReconstructionModule(
-                    module.loadClass(AbstractReconstructionModule::class.java)
-                        .getDeclaredConstructor().newInstance())
-            }
-
-            ReconstructionStage.Service -> {
-                ReconstructionServiceHandler.addServiceReconstructionModule(
-                    module.loadClass(AbstractReconstructionModule::class.java)
-                        .getDeclaredConstructor().newInstance())
-            }
-            ReconstructionStage.Operation -> {
-
-            }
-        }
     }
 }
