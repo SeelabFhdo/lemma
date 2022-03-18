@@ -3,6 +3,8 @@ package de.fhdo.lemma.model_processing.code_generation.springcloud.mtls.validato
 import de.fhdo.lemma.data.intermediate.IntermediateImportedComplexType
 import de.fhdo.lemma.data.intermediate.IntermediatePackage
 import de.fhdo.lemma.model_processing.annotations.IntermediateModelValidator
+import de.fhdo.lemma.model_processing.code_generation.java_base.getAspect
+import de.fhdo.lemma.model_processing.code_generation.java_base.qualifiedName
 import de.fhdo.lemma.model_processing.code_generation.java_base.simpleName
 import de.fhdo.lemma.model_processing.phases.validation.AbstractXmiDeclarativeValidator
 import org.eclipse.emf.ecore.EObject
@@ -22,7 +24,11 @@ internal class MtlsValidator : AbstractXmiDeclarativeValidator() {
     }
 
     @Check
-    private fun checkCaCommonNameBeginsWithCA(){
+    private fun checkCaCommonNameBeginsWithCA(eObject: EObject){
+        println(eObject.qualifiedName)
+        println(eObject.getAspect()?.name)
+
+
 //        todo Prüfen ob der CN Name von dem CA Cert mit ca beginnt
 //        ca CN=ca.pelki.de
     }
