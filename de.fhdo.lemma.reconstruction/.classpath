@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="xtend-gen"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/jackson-annotations-2.11.0.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-core-2.11.0.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-databind-2.11.0.jar"/>
+	<classpathentry kind="lib" path="lib/avro-1.10.0.jar"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="lib" path="lib/bson-4.3.2.jar"/>
+	<classpathentry kind="lib" path="lib/mongodb-driver-core-4.3.2.jar"/>
+	<classpathentry kind="lib" path="lib/mongodb-driver-sync-4.3.2.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

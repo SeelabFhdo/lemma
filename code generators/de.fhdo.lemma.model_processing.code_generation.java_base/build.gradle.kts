@@ -152,5 +152,5 @@ val standalone = task("standalone", type = Jar::class) {
 artifacts {
     add("archives", allDependencies)
     add("archives", allDependenciesNoKotlin)
-    add("archives", standalone)
+    //add("archives", standalone)
 }

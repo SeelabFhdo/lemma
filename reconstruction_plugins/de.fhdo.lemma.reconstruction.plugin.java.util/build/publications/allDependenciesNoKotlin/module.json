@@ -1,0 +1,179 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "de.fhdo.lemma.reconstruction.java.util",
+    "module": "de.fhdo.lemma.reconstruction.java.util",
+    "version": "0.8.5-SNAPSHOT",
+    "attributes": {
+      "org.gradle.status": "integration"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "7.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 11,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.localToProject": "public",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "files": [
+        {
+          "name": "de.fhdo.lemma.reconstruction.java.util-0.8.5-SNAPSHOT.jar",
+          "url": "de.fhdo.lemma.reconstruction.java.util-0.8.5-SNAPSHOT.jar",
+          "size": 19969,
+          "sha512": "161aa4300ee33de825d292bfac6eb9906e08be4d8fabfee8d586b39d3585a047ae227ac7d8298d60ac219dd89f70dcfe2fd7ce26ebfb8cc72bceba2b672f74ca",
+          "sha256": "87423a880f571947a9fe1a9745fc7e7a7d5dd7c33ed4b3f5b8ca4c99f9dbaae4",
+          "sha1": "8dd54fb723de7c4d35556dd56a44a72bdd3854e6",
+          "md5": "71eea32630b1a60187cfe4aa78499713"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 11,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.localToProject": "public",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "1.5.21"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-reflect",
+          "version": {
+            "requires": "1.5.21"
+          }
+        },
+        {
+          "group": "de.fhdo.lemma.reconstruction.framework",
+          "module": "de.fhdo.lemma.reconstruction.framework",
+          "version": {
+            "requires": "0.8.5-SNAPSHOT"
+          },
+          "thirdPartyCompatibility": {
+            "artifactSelector": {
+              "name": "de.fhdo.lemma.reconstruction.framework",
+              "type": "jar",
+              "extension": "jar",
+              "classifier": "all-dependencies-no-kotlin"
+            }
+          }
+        },
+        {
+          "group": "com.github.javaparser",
+          "module": "javaparser-core",
+          "version": {
+            "requires": "3.23.0"
+          }
+        },
+        {
+          "group": "com.github.javaparser",
+          "module": "javaparser-symbol-solver-core",
+          "version": {
+            "requires": "3.23.0"
+          }
+        },
+        {
+          "group": "info.picocli",
+          "module": "picocli",
+          "version": {
+            "requires": "3.9.3"
+          }
+        },
+        {
+          "group": "io.github.classgraph",
+          "module": "classgraph",
+          "version": {
+            "requires": "4.8.35"
+          }
+        },
+        {
+          "group": "io.insert-koin",
+          "module": "koin-core",
+          "version": {
+            "requires": "2.0.1"
+          }
+        },
+        {
+          "group": "org.apache.commons",
+          "module": "commons-lang3",
+          "version": {
+            "requires": "3.5"
+          }
+        },
+        {
+          "group": "org.eclipse.lsp4j",
+          "module": "org.eclipse.lsp4j",
+          "version": {
+            "requires": "0.9.0"
+          }
+        },
+        {
+          "group": "org.eclipse.lsp4j",
+          "module": "org.eclipse.lsp4j.jsonrpc",
+          "version": {
+            "requires": "0.9.0"
+          }
+        },
+        {
+          "group": "org.fusesource.jansi",
+          "module": "jansi",
+          "version": {
+            "requires": "1.17.1"
+          }
+        },
+        {
+          "group": "org.redundent",
+          "module": "kotlin-xml-builder",
+          "version": {
+            "requires": "1.7.2"
+          }
+        },
+        {
+          "group": "de.fhdo.lemma.model_processing",
+          "module": "de.fhdo.lemma.model_processing",
+          "version": {
+            "requires": "0.8.5-SNAPSHOT"
+          }
+        },
+        {
+          "group": "de.fhdo.lemma.model_processing.code_generation.java_base",
+          "module": "de.fhdo.lemma.model_processing.code_generation.java_base",
+          "version": {
+            "requires": "0.8.5-SNAPSHOT"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "de.fhdo.lemma.reconstruction.java.util-0.8.5-SNAPSHOT.jar",
+          "url": "de.fhdo.lemma.reconstruction.java.util-0.8.5-SNAPSHOT.jar",
+          "size": 19969,
+          "sha512": "161aa4300ee33de825d292bfac6eb9906e08be4d8fabfee8d586b39d3585a047ae227ac7d8298d60ac219dd89f70dcfe2fd7ce26ebfb8cc72bceba2b672f74ca",
+          "sha256": "87423a880f571947a9fe1a9745fc7e7a7d5dd7c33ed4b3f5b8ca4c99f9dbaae4",
+          "sha1": "8dd54fb723de7c4d35556dd56a44a72bdd3854e6",
+          "md5": "71eea32630b1a60187cfe4aa78499713"
+        }
+      ]
+    }
+  ]
+}
