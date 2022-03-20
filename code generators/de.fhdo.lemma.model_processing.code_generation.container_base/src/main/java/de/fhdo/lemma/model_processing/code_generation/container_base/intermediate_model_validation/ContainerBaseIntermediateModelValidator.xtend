@@ -5,7 +5,6 @@ import de.fhdo.lemma.model_processing.phases.validation.AbstractXmiDeclarativeVa
 import de.fhdo.lemma.operation.intermediate.IntermediatePackage
 import de.fhdo.lemma.operation.intermediate.IntermediateContainer
 import de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode
-import de.fhdo.lemma.operation.intermediate.IntermediateOperationNode
 import org.eclipse.xtext.validation.Check
 import de.fhdo.lemma.utils.LemmaUtils
 import de.fhdo.lemma.operation.intermediate.IntermediateOperationEndpoint
@@ -84,12 +83,31 @@ class ContainerBaseIntermediateModelValidator extends AbstractXmiDeclarativeVali
     }
 
     /**
-     * Check if the intermediate operation node contains an endpoint.
+     * Check if a container applying the container base technology has at least one endpoint
      */
     @Check
-    def checkPortOfDeployedInfrastructureNode(IntermediateOperationNode node) {
+    def checkEndpoints(IntermediateContainer container) {
+        if (!container.hasContainerBaseTechnology) {
+            return
+        }
+
+        if (container.endpoints === null || container.endpoints.empty)
+            error('''Container "«container.name»" must specify at least one endpoint''',
+                IntermediatePackage.Literals.INTERMEDIATE_ENDPOINT_TECHNOLOGY__ENDPOINT)
+    }
+
+    /**
+     * Check if an infrastructure node applying the container base technology has at least one
+     * endpoint
+     */
+    @Check
+    def checkEndpoints(IntermediateInfrastructureNode node) {
+        if (!node.hasContainerBaseTechnology) {
+            return
+        }
+
         if (node.endpoints === null || node.endpoints.empty)
-            error("The endpoints are not defined, but are required by the code generator.",
+            error('''Infrastructure node "«node.name»" must specify at least one endpoint''',
                 IntermediatePackage.Literals.INTERMEDIATE_ENDPOINT_TECHNOLOGY__ENDPOINT)
     }
 
