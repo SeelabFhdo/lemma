@@ -1,7 +1,6 @@
 package de.fhdo.lemma.model_processing.code_generation.container_base.file.docker
 
 import de.fhdo.lemma.model_processing.code_generation.container_base.template.DockerFileTemplate
-import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * This class is responsible for the creation of the Dockerfile for each operation node of the
@@ -10,40 +9,28 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @author <a href="mailto:philip.wizenty@fh-dortmund.de">Philip Wizenty</a>
  */
 class DockerFile {
-    String fileContent
-    @Accessors
-    String operationEnvironment
-    @Accessors
-    String deployedServiceName
-
-    /**
-     * This attribute is necessary to support the creation of Dockerfiles from operation aspects.
-     * Otherwise the Dockerfile is build based on the operation environment of the operation
-     * node.
-     */
-    boolean createdByAspect
-
-    /**
-     * Standard constructor
-     */
-    new () {
-    }
+    var String fileContent
+    var String operationEnvironment
+    var String deployedComponentName
 
     /**
      * Constructor for creating a Dockerfile based on an operation aspect.
      */
     new(String fileContent) {
         this.fileContent = formatDockerFile(fileContent)
-        createdByAspect = true
     }
 
     /**
-     * Constructor for creating a Dockerfile based on an operation environment and deployed service
-     * name.
+     * Constructor for creating a Dockerfile based on an operation environment and deployed
+     * component name.
      */
-    new (String operationEnvironment, String deployedServieName) {
+    new(String operationEnvironment, String deployedComponentName) {
+        if (operationEnvironment.nullOrEmpty || deployedComponentName.nullOrEmpty)
+            throw new IllegalArgumentException("Operation environment and deployed component " +
+                "name must not be null or empty")
+
         this.operationEnvironment = operationEnvironment
-        this.deployedServiceName = deployedServieName
+        this.deployedComponentName = deployedComponentName
     }
 
     /**
@@ -65,9 +52,16 @@ class DockerFile {
      * otherwise the Dockerfile is created by based on the operation environment.
      */
     override String toString() {
-        if (createdByAspect)
+        if (isCreatedByAspect())
             fileContent.toString
         else
-            DockerFileTemplate::buildDockerFile(operationEnvironment, deployedServiceName)
+            DockerFileTemplate::buildDockerFile(operationEnvironment, deployedComponentName)
+    }
+
+    /**
+     * Helper to check if the Dockerfile content originates from aspect application
+     */
+    private def isCreatedByAspect() {
+        return operationEnvironment === null && deployedComponentName === null
     }
 }
