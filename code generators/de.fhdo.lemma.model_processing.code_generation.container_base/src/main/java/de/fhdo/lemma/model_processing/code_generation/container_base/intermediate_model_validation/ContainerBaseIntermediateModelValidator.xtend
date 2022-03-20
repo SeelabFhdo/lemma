@@ -42,7 +42,7 @@ class ContainerBaseIntermediateModelValidator extends AbstractXmiDeclarativeVali
      */
     private def hasContainerBaseTechnology(IntermediateContainer container) {
         return container.qualifiedDeploymentTechnologyName.toLowerCase
-            .startsWith('''«ContainerBaseGenerator.CONTAINER_BASE_TECHNOLOGY_NAME».''')
+            .startsWith('''«ContainerBaseGenerator.CONTAINER_BASE_TECHNOLOGY_NAME.toLowerCase».''')
     }
 
     /**
@@ -62,7 +62,7 @@ class ContainerBaseIntermediateModelValidator extends AbstractXmiDeclarativeVali
      */
     private def hasContainerBaseTechnology(IntermediateInfrastructureNode node) {
         return node.qualifiedInfrastructureTechnologyName.toLowerCase
-            .startsWith('''«ContainerBaseGenerator.CONTAINER_BASE_TECHNOLOGY_NAME».''')
+            .startsWith('''«ContainerBaseGenerator.CONTAINER_BASE_TECHNOLOGY_NAME.toLowerCase».''')
     }
 
     /**

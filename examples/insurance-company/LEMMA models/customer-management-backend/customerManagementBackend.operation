@@ -1,11 +1,11 @@
 import microservices from "customerManagementBackend.services" as customerManagementServices
-import technology from "../technology/container_base.technology" as container_base
+import technology from "../technology/deployment_base.technology" as deploymentBase
 import technology from "../technology/javaWithSpring.technology" as protocolTechnology
 import nodes from "../eureka-server/eurekaServer.operation" as eureka
 
-@technology(container_base)
+@technology(deploymentBase)
 @technology(protocolTechnology)
-container CustomerManagementContainer deployment technology container_base::_deployment.Kubernetes
+container CustomerManagementContainer deployment technology deploymentBase::_deployment.Kubernetes
     deploys customerManagementServices
         ::com.lakesidemutual.customerManagementBackend.CustomerManagementBackend
         depends on nodes eureka::ServiceDiscovery {

@@ -1,11 +1,11 @@
-import technology from "../technology/container_base.technology" as container_base
+import technology from "../technology/deployment_base.technology" as deploymentBase
 import technology from "../technology/javaWithSpring.technology" as springBootAdmin
 
-@technology(container_base)
+@technology(deploymentBase)
 @technology(springBootAdmin)
 SpringBootAdmin is springBootAdmin::_infrastructure.SpringBootAdmin {
     aspects {
-        container_base::_aspects.Dockerfile('
+        deploymentBase::_aspects.Dockerfile('
             # syntax=docker/dockerfile:experimental
             FROM maven:3.6.1-jdk-8-alpine AS build
             ARG BASE=/usr/src/app
@@ -22,7 +22,7 @@ SpringBootAdmin is springBootAdmin::_infrastructure.SpringBootAdmin {
             ENTRYPOINT ["java","-cp","app:app/lib/*","com.lakesidemutual.springbootadmin.SpringBootAdminApplication"]
         ');
 
-        container_base::_aspects.ComposePart('
+        deploymentBase::_aspects.ComposePart('
             spring-boot-admin:
                 build: spring-boot-admin
                 image: lakesidemutual/spring-boot-admin

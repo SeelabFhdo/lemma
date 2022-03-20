@@ -1,7 +1,7 @@
 import technology from "../technology/java.technology" as java
 import technology from "../technology/python.technology" as python
 import technology from "../technology/shared.technology" as shared
-import technology from "../technology/container_base.technology" as container_base
+import technology from "../technology/deployment_base.technology" as deploymentBase
 import microservices from "../microservices/case_study.services" as ^services
 import nodes from "eureka.operation" as eureka
 import nodes from "zuul.operation" as zuul
@@ -10,8 +10,8 @@ import nodes from "zuul.operation" as zuul
 // Current allocation
 @technology(java)
 @technology(shared)
-@technology(container_base)
-container CurrentAllocation deployment technology container_base::_deployment.Kubernetes
+@technology(deploymentBase)
+container CurrentAllocation deployment technology deploymentBase::_deployment.Kubernetes
 deploys ^services::com.example.allocationsovertime.AllocationsOverTime
 depends on nodes eureka::Eureka, zuul::Zuul {
     default values {
@@ -27,8 +27,8 @@ depends on nodes eureka::Eureka, zuul::Zuul {
 // Search for free space
 @technology(java)
 @technology(shared)
-@technology(container_base)
-container SearchForFreeSpace deployment technology container_base::_deployment.Kubernetes
+@technology(deploymentBase)
+container SearchForFreeSpace deployment technology deploymentBase::_deployment.Kubernetes
 deploys ^services::com.example.searchforfreespace.SearchForFreeSpace
 depends on nodes eureka::Eureka, zuul::Zuul {
     default values {
@@ -43,8 +43,8 @@ depends on nodes eureka::Eureka, zuul::Zuul {
 // Allocations over time
 @technology(python)
 @technology(shared)
-@technology(container_base)
-container AllocationsOverTime deployment technology container_base::_deployment.Kubernetes
+@technology(deploymentBase)
+container AllocationsOverTime deployment technology deploymentBase::_deployment.Kubernetes
 deploys ^services::com.example.allocationsovertime.AllocationsOverTime
 depends on nodes eureka::Eureka, zuul::Zuul {
     default values {
@@ -60,8 +60,8 @@ depends on nodes eureka::Eureka, zuul::Zuul {
 // Parking space management
 @technology(java)
 @technology(shared)
-@technology(container_base)
-container ParkingSpaceManagement deployment technology container_base::_deployment.Kubernetes
+@technology(deploymentBase)
+container ParkingSpaceManagement deployment technology deploymentBase::_deployment.Kubernetes
 deploys ^services::com.example.parkingspacemanagement.ParkingSpaceManagement
 depends on nodes eureka::Eureka, zuul::Zuul {
     default values {
@@ -77,8 +77,8 @@ depends on nodes eureka::Eureka, zuul::Zuul {
 // Data export
 @technology(java)
 @technology(shared)
-@technology(container_base)
-container DataExport deployment technology container_base::_deployment.Kubernetes
+@technology(deploymentBase)
+container DataExport deployment technology deploymentBase::_deployment.Kubernetes
 deploys ^services::com.example.dataexport.DataExport
 depends on nodes eureka::Eureka, zuul::Zuul {
     default values {

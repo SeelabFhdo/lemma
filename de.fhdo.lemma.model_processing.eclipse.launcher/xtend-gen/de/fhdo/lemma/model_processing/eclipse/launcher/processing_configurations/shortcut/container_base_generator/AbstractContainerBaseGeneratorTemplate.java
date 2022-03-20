@@ -48,7 +48,7 @@ public abstract class AbstractContainerBaseGeneratorTemplate extends AbstractCod
       {
         final String alias = it.getName();
         final String technologyName = technologyNamePerAlias.get(alias);
-        _xblockexpression = "container_base".equalsIgnoreCase(technologyName);
+        _xblockexpression = "DeploymentBase".equalsIgnoreCase(technologyName);
       }
       return Boolean.valueOf(_xblockexpression);
     };

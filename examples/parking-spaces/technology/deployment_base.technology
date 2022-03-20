@@ -1,12 +1,12 @@
-technology container_base {
+technology DeploymentBase {
     deployment technologies {
         Kubernetes {
-            operation environments = "openjdk:11-jdk-slim" default, "golang";
+            operation environments = "openjdk:11-jdk-slim" default;
 
             service properties {
                 // General Spring Boot configurations
-                string springApplicationName;
-                int serverPort;
+                string springApplicationName<mandatory>;
+                int serverPort<mandatory>;
 
                 // MariaDB database configuration
                 string springDatasourceUsername;
@@ -28,7 +28,7 @@ technology container_base {
     }
 
     operation aspects {
-        // Operation aspect for the configuration of custom Dockerfiles
+        // Operation aspect for the configuration of custom dockerfiles
         aspect Dockerfile<singleval> for containers, infrastructure {
             string contents <mandatory>;
         }
@@ -38,7 +38,7 @@ technology container_base {
             string contents <mandatory>;
         }
 
-        // Operation aspect for the configuration of custom Docker Compose parts
+        // Operation aspect for the configuration of custom docker-compose parts
         aspect ComposePart<singleval> for containers, infrastructure {
             string contents <mandatory>;
         }

@@ -1,11 +1,11 @@
 import technology from "../technology/zuul.technology" as Zuul
-import technology from "../technology/container_base.technology" as container_base
+import technology from "../technology/deployment_base.technology" as deploymentBase
 import technology from "../technology/shared.technology" as shared
 import nodes from "eureka.operation" as eureka
 import nodes from "case_study.operation" as deployedServices
 
 @technology(Zuul)
-@technology(container_base)
+@technology(deploymentBase)
 @technology(shared)
 Zuul is Zuul::_infrastructure.Zuul
     with operation environment "openjdk:11-jdk-slim"

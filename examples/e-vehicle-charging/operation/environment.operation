@@ -8,16 +8,16 @@ import microservices from "../microservices/environment.services" as environment
  * annotation.
  */
 import technology from "../technology/shared.technology" as environmentTech
-import technology from "../technology/container_base.technology" as container_base
+import technology from "../technology/deployment_base.technology" as deploymentBase
 
 import nodes from "eureka.operation" as eureka
 import nodes from "zuul.operation" as zuul
 
 // Operation specification for the EnvironmentService
 @technology(environmentTech)
-@technology(container_base)
+@technology(deploymentBase)
 container EnvironmentContainer
-    deployment technology container_base::_deployment.Kubernetes
+    deployment technology deploymentBase::_deployment.Kubernetes
     deploys environmentService::v01.de.fhdo.EnvironmentService
     depends on nodes eureka::Eureka, zuul::Zuul {
     default values {

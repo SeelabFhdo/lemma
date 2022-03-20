@@ -1,4 +1,4 @@
-technology container_base {
+technology DeploymentBase {
     deployment technologies {
         Kubernetes {
             operation environments = "openjdk:11-jdk-slim" default, "golang";
@@ -23,19 +23,12 @@ technology container_base {
 
                 //Eureka configuration
                 string eurekaUri;
-
-                string apiKeyHeader <singleval>;
-                string apiKeyValidKey;
-                string apiKeyValue <singleval>;
-                string ComposePart<singleval>;
-                string Dockerfile<mandatory, singleval>;
-                int rateLimitPerMinute;
             }
         }
     }
 
     operation aspects {
-        // Operation aspect for the configuration of custom dockerfiles
+        // Operation aspect for the configuration of custom Dockerfiles
         aspect Dockerfile<singleval> for containers, infrastructure {
             string contents <mandatory>;
         }
@@ -45,7 +38,7 @@ technology container_base {
             string contents <mandatory>;
         }
 
-        // Operation aspect for the configuration of custom docker-compose parts
+        // Operation aspect for the configuration of custom Docker Compose parts
         aspect ComposePart<singleval> for containers, infrastructure {
             string contents <mandatory>;
         }

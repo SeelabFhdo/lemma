@@ -1,10 +1,10 @@
-import technology from "../technology/container_base.technology" as container_base
+import technology from "../technology/deployment_base.technology" as deploymentBase
 import technology from "../technology/shared.technology" as shared
 import technology from "../technology/eureka.technology" as Eureka
 import nodes from "case_study.operation" as deployedServices
 import nodes from "zuul.operation" as zuul
 
-@technology(container_base)
+@technology(deploymentBase)
 @technology(Eureka)
 @technology(shared)
 Eureka is Eureka::_infrastructure.Eureka

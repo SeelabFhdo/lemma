@@ -10,12 +10,12 @@ import microservices from "../microservices/payment.services" as paymentService
 
  // Operation specification for the PaymentService
 import technology from "../technology/shared.technology" as paymentTech
-import technology from "../technology/container_base.technology" as container_base
+import technology from "../technology/deployment_base.technology" as deploymentBase
 
 @technology(paymentTech)
-@technology(container_base)
+@technology(deploymentBase)
 container PaymentContainer
-    deployment technology container_base::_deployment.Kubernetes
+    deployment technology deploymentBase::_deployment.Kubernetes
     deploys paymentService::de.fhdo.PaymentService {
     default values {
         springApplicationName="PaymentService"

@@ -1,12 +1,12 @@
-technology container_base {
+technology DeploymentBase {
     deployment technologies {
         Kubernetes {
-            operation environments = "openjdk:11-jdk-slim" default;
+            operation environments = "openjdk:11-jdk-slim" default, "golang";
 
             service properties {
                 // General Spring Boot configurations
-                string springApplicationName<mandatory>;
-                int serverPort<mandatory>;
+                string springApplicationName;
+                int serverPort;
 
                 // MariaDB database configuration
                 string springDatasourceUsername;
@@ -23,6 +23,13 @@ technology container_base {
 
                 //Eureka configuration
                 string eurekaUri;
+
+                string apiKeyHeader <singleval>;
+                string apiKeyValidKey;
+                string apiKeyValue <singleval>;
+                string ComposePart<singleval>;
+                string Dockerfile<mandatory, singleval>;
+                int rateLimitPerMinute;
             }
         }
     }

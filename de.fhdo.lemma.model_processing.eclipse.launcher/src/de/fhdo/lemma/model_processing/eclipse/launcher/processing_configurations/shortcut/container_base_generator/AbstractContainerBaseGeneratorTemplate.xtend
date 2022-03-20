@@ -42,7 +42,7 @@ abstract class AbstractContainerBaseGeneratorTemplate extends AbstractCodeGenera
         return  technologyReferences.exists[
             val alias = it.name
             val technologyName = technologyNamePerAlias.get(alias)
-            "container_base".equalsIgnoreCase(technologyName)
+            "DeploymentBase".equalsIgnoreCase(technologyName)
         ]
     }
 }
