@@ -6,11 +6,11 @@ import de.fhdo.lemma.operation.intermediate.IntermediatePackage
 import de.fhdo.lemma.operation.intermediate.IntermediateOperationModel
 import de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode
 import de.fhdo.lemma.operation.intermediate.IntermediateContainer
-import de.fhdo.lemma.model_processing.code_generation.container_base.exception.DeployedServiceNumberExcpetion
 import de.fhdo.lemma.model_processing.code_generation.container_base.file.docker.DockerFile
 import java.io.File
 import org.jetbrains.annotations.NotNull
 import de.fhdo.lemma.model_processing.code_generation.container_base.util.Util
+import de.fhdo.lemma.model_processing.phases.PhaseException
 
 /**
  * Main class of the docker file generation module of the container base code generator.
@@ -64,8 +64,8 @@ class DockerFileCodeGenerator extends AbstractCodeGenerationModule {
      */
     private def createDockerFileForContainer(IntermediateContainer container) {
         if (container.deployedServices.size > 1)
-            throw new DeployedServiceNumberExcpetion("The Number of deployed services in a single"
-                + "container exceeds the maximum of one service per container ")
+            throw new PhaseException('''Container «container»: The Container Base Generator ''' +
+                "supports only one deployed microservice per container", true)
 
         /**
          * The creation of the Dockerfile is supported in two different ways.
