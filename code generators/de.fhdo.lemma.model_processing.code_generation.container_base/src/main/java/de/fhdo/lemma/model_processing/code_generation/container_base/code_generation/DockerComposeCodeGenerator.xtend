@@ -7,6 +7,7 @@ import de.fhdo.lemma.operation.intermediate.IntermediatePackage
 import de.fhdo.lemma.operation.intermediate.IntermediateOperationNode
 import de.fhdo.lemma.model_processing.code_generation.container_base.file.docker.OpenedDockerComposeFile
 import org.jetbrains.annotations.NotNull
+import static de.fhdo.lemma.model_processing.code_generation.container_base.util.Util.*
 
 /**
  * Main class of the docker-compose generation module of the container base code generator.
@@ -58,8 +59,7 @@ class DockerComposeCodeGenerator extends AbstractCodeGenerationModule {
      * on whether the IntermediateOperationNode has a DockerComposeAspect or not.
      */
     private def createDockerComposeFile(IntermediateOperationNode node) {
-        val dockerComposeAspect = node.aspects.findFirst[aspect | aspect.name == "ComposePart"]
-
+        val dockerComposeAspect = getFirstAspectApplication(node, "ComposePart")
         if (dockerComposeAspect === null)
             OpenedDockerComposeFile.instance.addOrReplaceDockerComposePart(node)
         else

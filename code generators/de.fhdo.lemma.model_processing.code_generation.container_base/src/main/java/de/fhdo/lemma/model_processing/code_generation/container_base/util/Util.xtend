@@ -1,6 +1,8 @@
 package de.fhdo.lemma.model_processing.code_generation.container_base.util
 
 import java.io.File
+import de.fhdo.lemma.operation.intermediate.IntermediateOperationNode
+import de.fhdo.lemma.model_processing.code_generation.container_base.ContainerBaseGenerator
 
 class Util {
     /**
@@ -27,5 +29,26 @@ class Util {
      */
     static def String buildPathFromQualifiedName(String qualifiedName) {
         return qualifiedName.replace('.', File.separatorChar)
+    }
+
+    /**
+     * Helper to get the first application of an aspect on the given operation node. This version of
+     * the helper uses the name of the container base technology to search for the aspect.
+     */
+    static def getFirstAspectApplication(IntermediateOperationNode node, String aspectName) {
+        return node.getFirstAspectApplication(ContainerBaseGenerator.CONTAINER_BASE_TECHNOLOGY_NAME,
+            aspectName)
+    }
+
+    /**
+     * Helper to get the first application of an aspect on the given operation node. This version of
+     * the helper expects the name of the technology as well as the aspect to search for.
+     */
+    static def getFirstAspectApplication(IntermediateOperationNode node, String technologyName,
+        String aspectName) {
+        return node.aspects.findFirst[
+            it.qualifiedName.toLowerCase == '''«technologyName.toLowerCase».''' +
+                aspectName.toLowerCase
+        ]
     }
 }

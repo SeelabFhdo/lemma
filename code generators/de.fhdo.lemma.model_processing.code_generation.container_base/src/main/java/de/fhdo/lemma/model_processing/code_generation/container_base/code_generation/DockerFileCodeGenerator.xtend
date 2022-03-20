@@ -11,6 +11,7 @@ import java.io.File
 import org.jetbrains.annotations.NotNull
 import de.fhdo.lemma.model_processing.code_generation.container_base.util.Util
 import de.fhdo.lemma.model_processing.phases.PhaseException
+import de.fhdo.lemma.model_processing.code_generation.container_base.ContainerBaseGenerator
 
 /**
  * Main class of the docker file generation module of the container base code generator.
@@ -73,8 +74,9 @@ class DockerFileCodeGenerator extends AbstractCodeGenerationModule {
          * Otherwise the Dockerfile is built based on the name of the deployed microservice,
          * operation environment and exposed port, defined by the container endpoints.
          */
-        val dockerFileAspect = container.aspects.findFirst[aspect |
-            aspect.name.toLowerCase == "dockerfile"]
+        val dockerFileAspect = container.aspects.findFirst[
+            it.qualifiedName == '''«ContainerBaseGenerator.TECHNOLOGY_NAME».Dockerfile'''
+        ]
 
         val serviceName = Util.buildPathFromQualifiedName(
             container.deployedServices.get(0).qualifiedName
@@ -103,8 +105,9 @@ class DockerFileCodeGenerator extends AbstractCodeGenerationModule {
      * value of the build version constant variable
      */
     private def createDockerFileForInfrastructureNode(IntermediateInfrastructureNode node) {
-        val dockerFileAspect = node.aspects.findFirst[aspect |
-            aspect.name.toLowerCase == "dockerfile"]
+        val dockerFileAspect = node.aspects.findFirst[
+            it.qualifiedName == '''«ContainerBaseGenerator.TECHNOLOGY_NAME».Dockerfile'''
+        ]
 
         val filePath = '''«targetFolder»«File.separator»«node.name.toLowerCase»'''
             + '''«File.separator»Dockerfile'''

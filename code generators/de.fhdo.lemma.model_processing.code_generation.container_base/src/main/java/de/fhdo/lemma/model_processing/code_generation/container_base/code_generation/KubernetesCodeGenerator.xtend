@@ -6,7 +6,7 @@ import de.fhdo.lemma.model_processing.builtin_phases.code_generation.AbstractCod
 import de.fhdo.lemma.operation.intermediate.IntermediatePackage
 import de.fhdo.lemma.operation.intermediate.IntermediateContainer
 import de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode
-import de.fhdo.lemma.model_processing.code_generation.container_base.util.Util
+import static de.fhdo.lemma.model_processing.code_generation.container_base.util.Util.*
 import de.fhdo.lemma.model_processing.code_generation.container_base.template.KubernetesTemplate
 import java.io.File
 import org.jetbrains.annotations.NotNull
@@ -50,18 +50,17 @@ class KubernetesCodeGenerator extends AbstractCodeGenerationModule {
      * not exist, a generic template based on the container configuration is created.
      */
     private def createKuberntesFileForContainer(IntermediateContainer container) {
-        var aspect = container.aspects.findFirst[aspect | aspect.name == "KubernetesDeployment"]
-
-        val serviceName = Util.buildPathFromQualifiedName(
+        val aspect = getFirstAspectApplication(container, "KubernetesDeployment")
+        val serviceName = buildPathFromQualifiedName(
             container.deployedServices.get(0).qualifiedName
         )
 
         var kubernetesFileContent = ""
 
         if (aspect !== null)
-            kubernetesFileContent = Util::adjustIndentations("", aspect.propertyValues.get(0).value)
+            kubernetesFileContent = adjustIndentations("", aspect.propertyValues.get(0).value)
         else
-            kubernetesFileContent = Util::adjustIndentations("",
+            kubernetesFileContent = adjustIndentations("",
                 KubernetesTemplate::buildKubernetesFile(container))
 
         val filePath = '''«targetFolder»«File.separator»«serviceName»«File.separator»'''
@@ -76,15 +75,14 @@ class KubernetesCodeGenerator extends AbstractCodeGenerationModule {
      * not exist, a generic template based on the infrastructure node configuration is created.
      */
     private def createKubernetesFileForInfrastructureNode(IntermediateInfrastructureNode node) {
-        var aspect = node.aspects.findFirst[aspect | aspect.name == "KubernetesDeployment"]
-
+        val aspect = getFirstAspectApplication(node, "KubernetesDeployment")
         val filePath = '''«targetFolder»«File.separator»«node.name.toLowerCase»«File.separator»'''
             + '''«node.name.toLowerCase»--deployment.yaml'''
 
         if (aspect !== null)
-            content.put(filePath, Util::adjustIndentations("", aspect.propertyValues.get(0).value))
+            content.put(filePath, adjustIndentations("", aspect.propertyValues.get(0).value))
         else
             content.put(filePath,
-                Util::adjustIndentations("", KubernetesTemplate::buildKubernetesFile(node)))
+                adjustIndentations("", KubernetesTemplate::buildKubernetesFile(node)))
     }
 }

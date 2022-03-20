@@ -8,6 +8,7 @@ import de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode
 import org.eclipse.xtext.validation.Check
 import de.fhdo.lemma.utils.LemmaUtils
 import de.fhdo.lemma.operation.intermediate.IntermediateOperationEndpoint
+import de.fhdo.lemma.model_processing.code_generation.container_base.ContainerBaseGenerator
 
 /**
  * The container base intermediate model validator is responsible for checking general aspects for
@@ -17,8 +18,6 @@ import de.fhdo.lemma.operation.intermediate.IntermediateOperationEndpoint
  */
 @IntermediateModelValidator
 class ContainerBaseIntermediateModelValidator extends AbstractXmiDeclarativeValidator {
-    static val CONTAINER_BASE_TECHNOLOGY_NAME = "container_base"
-
     /**
      * Get the namespace for the intermediate operation model
      */
@@ -33,7 +32,8 @@ class ContainerBaseIntermediateModelValidator extends AbstractXmiDeclarativeVali
     def checkContainerForContainerBaseTechnology(IntermediateContainer container) {
         if (!container.hasContainerBaseTechnology)
             warning('''Ignoring container "«container.name»" as it does not apply a technology ''' +
-                '''model for the "«CONTAINER_BASE_TECHNOLOGY_NAME»" technology''',
+                '''model for the "«ContainerBaseGenerator.CONTAINER_BASE_TECHNOLOGY_NAME»" ''' +
+                "technology",
                 IntermediatePackage.Literals.INTERMEDIATE_DEPLOYMENT_TECHNOLOGY_REFERENCE__IMPORT)
     }
 
@@ -42,7 +42,7 @@ class ContainerBaseIntermediateModelValidator extends AbstractXmiDeclarativeVali
      */
     private def hasContainerBaseTechnology(IntermediateContainer container) {
         return container.qualifiedDeploymentTechnologyName.toLowerCase
-            .startsWith('''«CONTAINER_BASE_TECHNOLOGY_NAME».''')
+            .startsWith('''«ContainerBaseGenerator.CONTAINER_BASE_TECHNOLOGY_NAME».''')
     }
 
     /**
@@ -52,7 +52,8 @@ class ContainerBaseIntermediateModelValidator extends AbstractXmiDeclarativeVali
     def checkInfrastructureNodeForContainerBaseTechnology(IntermediateInfrastructureNode node) {
         if (!node.hasContainerBaseTechnology)
             warning('''Ignoring infrastructure node "«node.name»" as it does not apply a ''' +
-                '''technology model for the "«CONTAINER_BASE_TECHNOLOGY_NAME»" technology''',
+                "technology model for the " +
+                '''"«ContainerBaseGenerator.CONTAINER_BASE_TECHNOLOGY_NAME»" technology''',
                 IntermediatePackage.Literals.INTERMEDIATE_DEPLOYMENT_TECHNOLOGY_REFERENCE__IMPORT)
     }
 
@@ -61,25 +62,7 @@ class ContainerBaseIntermediateModelValidator extends AbstractXmiDeclarativeVali
      */
     private def hasContainerBaseTechnology(IntermediateInfrastructureNode node) {
         return node.qualifiedInfrastructureTechnologyName.toLowerCase
-            .startsWith('''«CONTAINER_BASE_TECHNOLOGY_NAME».''')
-    }
-
-    /**
-     * Check if the deployed microservice uses a Maven build technology as the build script
-     * code generation module only supports this technology.
-     */
-    @Check
-    def checkMavenBuildTechnologyForContainer(IntermediateContainer container) {
-        val aspect = container.aspects.findFirst[aspect | aspect.name == "MavenTechnology"]
-        val mavenBuild = if (aspect !== null)
-                Boolean.parseBoolean(aspect.propertyValues.get(0).value)
-            else
-                false
-
-        if (!mavenBuild)
-            warning("The container base generation module only support Maven as a build "
-                + "technology",
-                IntermediatePackage.Literals.INTERMEDIATE_OPERATION_NODE__ASPECTS)
+            .startsWith('''«ContainerBaseGenerator.CONTAINER_BASE_TECHNOLOGY_NAME».''')
     }
 
     /**

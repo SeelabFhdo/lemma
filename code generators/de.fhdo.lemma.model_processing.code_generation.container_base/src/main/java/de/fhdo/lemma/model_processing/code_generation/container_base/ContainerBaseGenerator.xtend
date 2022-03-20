@@ -9,6 +9,8 @@ import de.fhdo.lemma.model_processing.AbstractModelProcessor
  * @author <a href="mailto:philip.wizenty@fh-dortmund.de">Philip Wizenty</a>
  */
 class ContainerBaseGenerator extends AbstractModelProcessor {
+    public static val CONTAINER_BASE_TECHNOLOGY_NAME = "container_base"
+
     /**
      * Entry point for the model processor. Should contain the package name for the code generation
      * modules.
