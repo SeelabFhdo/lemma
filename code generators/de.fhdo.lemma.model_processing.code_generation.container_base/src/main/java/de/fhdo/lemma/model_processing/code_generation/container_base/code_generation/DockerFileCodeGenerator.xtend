@@ -86,9 +86,8 @@ class DockerFileCodeGenerator extends AbstractCodeGenerationModule {
             val dockerFile = new DockerFile(dockerFileAspect.propertyValues.get(0).value)
             dockerFileContent = dockerFile.toString
         } else {
-            val dockerFile = new DockerFile
-            dockerFile.deployedServiceName = container.name.toLowerCase
-            dockerFile.operationEnvironment = container.operationEnvironment.environmentName
+            val dockerFile = new DockerFile(container.operationEnvironment.environmentName,
+                container.name.toLowerCase)
             dockerFileContent = dockerFile.toString
         }
 
@@ -114,9 +113,8 @@ class DockerFileCodeGenerator extends AbstractCodeGenerationModule {
             val dockerFile = new DockerFile(dockerFileAspect.propertyValues.get(0).value)
             content.put(filePath, dockerFile.toString)
         } else {
-            var dockerFile = new DockerFile
-            dockerFile.deployedServiceName = node.name.toLowerCase
-            dockerFile.operationEnvironment = node.operationEnvironment.environmentName
+            var dockerFile = new DockerFile(node.operationEnvironment.environmentName,
+                node.name.toLowerCase)
             content.put(filePath,dockerFile.toString)
         }
     }
