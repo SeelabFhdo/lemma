@@ -34,12 +34,12 @@ class BuildScriptCodeGenerator extends AbstractCodeGenerationModule {
 
         // Create a build script for containers
         model.containers.forEach[container |
-            val nodeName = Util.buildPathFromQualifiedName(
+            val servicePath = Util.buildPathFromQualifiedName(
                 container.deployedServices?.get(0).qualifiedName
             )
 
-            createNodeSpecificBuildScripts(nodeName.toLowerCase, container.name.toLowerCase)
-            createRootBuildScript(nodeName.toLowerCase)
+            createNodeSpecificBuildScripts(servicePath, container.name.toLowerCase)
+            createRootBuildScript(servicePath)
         ]
 
         // Create build script for infrastructure nodes
