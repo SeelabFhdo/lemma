@@ -49,6 +49,7 @@ class ContainerBaseIntermediateModelValidator extends AbstractXmiDeclarativeVali
      * Check if infrastructure node uses the technology supported by the container base code
      * generator.
      */
+    @Check
     def checkInfrastructureNodeForContainerBaseTechnology(IntermediateInfrastructureNode node) {
         if (!node.hasContainerBaseTechnology)
             warning('''Ignoring infrastructure node "«node.name»" as it does not apply a ''' +
