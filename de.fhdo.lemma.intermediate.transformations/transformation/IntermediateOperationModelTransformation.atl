@@ -164,6 +164,11 @@ rule IntermediateDeploymentTechnologyReference(
     sourceTechnologyReference : Operation!DeploymentTechnologyReference,
     sourceEnvironment : Operation!OperationEnvironment
 ) {
+    using {
+        defaultEnvironment : Operation!OperationEnvironment
+            = sourceTechnologyReference.deploymentTechnology.operationEnvironments
+                ->any(e | e.default = true);
+    }
     to
         reference : Intermediate!IntermediateDeploymentTechnologyReference(
                 technology <- thisModule.IntermediateDeploymentTechnology(
@@ -175,12 +180,8 @@ rule IntermediateDeploymentTechnologyReference(
         -- Link an OperationEnvironment to the DeploymentTechnologyReference if present
         if(not sourceEnvironment.oclIsUndefined())
             thisModule.IntermediateOperationEnvironment(sourceEnvironment, reference.technology);
-
-        if (sourceEnvironment.oclIsUndefined()) {
-            for (env in sourceTechnologyReference.deploymentTechnology.operationEnvironments) {
-                thisModule.IntermediateOperationEnvironment(env, reference.technology);
-            }
-        }
+		else
+            thisModule.IntermediateOperationEnvironment(defaultEnvironment, reference.technology);
 
         reference.import <- Intermediate!IntermediateImport.allInstances()->any(i |
                 i.name = sourceTechnologyReference.import.name
