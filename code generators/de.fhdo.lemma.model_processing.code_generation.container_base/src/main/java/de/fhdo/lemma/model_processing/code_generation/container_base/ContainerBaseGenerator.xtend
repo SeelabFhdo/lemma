@@ -10,6 +10,7 @@ import de.fhdo.lemma.model_processing.AbstractModelProcessor
  */
 class ContainerBaseGenerator extends AbstractModelProcessor {
     public static val CONTAINER_BASE_TECHNOLOGY_NAME = "DeploymentBase"
+    public static val BUILD_MANAGEMENT_TECHNOLOGY_NAME = "BuildManagement"
 
     /**
      * Entry point for the model processor. Should contain the package name for the code generation

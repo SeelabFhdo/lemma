@@ -3,6 +3,7 @@ package de.fhdo.lemma.model_processing.code_generation.container_base.util
 import java.io.File
 import de.fhdo.lemma.operation.intermediate.IntermediateOperationNode
 import de.fhdo.lemma.model_processing.code_generation.container_base.ContainerBaseGenerator
+import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
 import de.fhdo.lemma.operation.intermediate.IntermediateContainer
 import de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode
 import de.fhdo.lemma.operation.intermediate.IntermediateOperationModel
@@ -35,6 +36,14 @@ class Util {
     }
 
     /**
+     * Helper to check if an operation node applies a certain aspect
+     */
+    static def appliesAspect(IntermediateOperationNode node, String technologyName,
+        String aspectName) {
+        return node.getFirstAspectApplication(technologyName, aspectName) !== null
+    }
+
+    /**
      * Helper to get the first application of an aspect on the given operation node. This version of
      * the helper uses the name of the container base technology to search for the aspect.
      */
@@ -53,6 +62,24 @@ class Util {
             it.qualifiedName.toLowerCase == '''«technologyName.toLowerCase».''' +
                 aspectName.toLowerCase
         ]
+    }
+
+    /**
+     * Helper to get all applications of an aspect on the given operation node
+     */
+    static def getAspectApplications(IntermediateOperationNode node, String technologyName,
+        String aspectName) {
+        return node.aspects.filter[
+            it.qualifiedName.toLowerCase == '''«technologyName.toLowerCase».''' +
+                aspectName.toLowerCase
+        ]
+    }
+
+    /**
+     * Helper to get the value of a named aspect property
+     */
+    static def getPropertyValue(IntermediateImportedAspect aspect, String propertyName) {
+        return aspect.propertyValues.findFirst[it.property.name == propertyName]?.value
     }
 
     /**

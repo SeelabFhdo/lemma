@@ -10,6 +10,8 @@ import de.fhdo.lemma.utils.LemmaUtils
 import de.fhdo.lemma.operation.intermediate.IntermediateOperationEndpoint
 import de.fhdo.lemma.model_processing.code_generation.container_base.ContainerBaseGenerator
 import static de.fhdo.lemma.model_processing.code_generation.container_base.util.Util.*
+import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
+import java.util.List
 
 /**
  * The container base intermediate model validator is responsible for checking general aspects for
@@ -39,11 +41,76 @@ class ContainerBaseIntermediateModelValidator extends AbstractXmiDeclarativeVali
     }
 
     /**
-     * Helper to check if a container applies the container base technology model
+     * Check the applications of the "ArtifactId" aspect
      */
-    private def hasContainerBaseTechnology(IntermediateContainer container) {
-        return container.qualifiedDeploymentTechnologyName.toLowerCase
-            .startsWith('''«ContainerBaseGenerator.CONTAINER_BASE_TECHNOLOGY_NAME.toLowerCase».''')
+    @Check
+    def checkArtifactIdApplications(IntermediateContainer container) {
+        val artifactIdAspects = getAspectApplications(
+            container,
+            ContainerBaseGenerator.BUILD_MANAGEMENT_TECHNOLOGY_NAME,
+            "ArtifactId"
+        ).toList
+
+        checkArtifactIdAspectApplicationForDuplicatePropertyValues(
+            artifactIdAspects,
+            "artifactId",
+            "ID",
+            container
+        )
+
+        checkArtifactIdAspectApplicationForDuplicatePropertyValues(
+            artifactIdAspects,
+            "serviceName",
+            "service",
+            container
+        )
+
+        artifactIdAspects.forEach[it.checkArtifactIdAspectApplication(container)]
+    }
+
+    /**
+     * Helper to check for duplicate property values in applications of the "ArtifactId" aspect
+     */
+    private def checkArtifactIdAspectApplicationForDuplicatePropertyValues(
+        List<IntermediateImportedAspect> aspectApplications,
+        String propertyName,
+        String printablePropertyName,
+        IntermediateContainer container
+    ) {
+        val propertyValues = aspectApplications.map[getPropertyValue(it, propertyName)].toList
+        val duplicateIndex = LemmaUtils.getDuplicateIndex(propertyValues, [it])
+        if (duplicateIndex == 0) {
+            return
+        }
+
+        val duplicateValue = propertyValues.get(duplicateIndex)
+        error('''Container «container.name»: Applications of ArtifactId aspect configure ''' +
+            '''duplicate «printablePropertyName» "«duplicateValue»"''',
+            IntermediatePackage.Literals.INTERMEDIATE_OPERATION_NODE__ASPECTS)
+    }
+
+    /**
+     * Helper to a single application of the "ArtifactId" aspect
+     */
+    private def checkArtifactIdAspectApplication(IntermediateImportedAspect aspect,
+        IntermediateContainer container) {
+        val serviceName = getPropertyValue(aspect, "serviceName")
+        if (serviceName.empty)
+            error('''Container «container.name»: "serviceName" property of ArtifactId aspect ''' +
+                "must not be empty",
+                IntermediatePackage.Literals.INTERMEDIATE_OPERATION_NODE__ASPECTS)
+
+        val deployedServiceNames = container.deployedServices.map[it.qualifiedName].toSet
+        if (!deployedServiceNames.contains(serviceName))
+            error('''Container «container.name»: ArtifactId aspect refers to service ''' +
+                '''"«serviceName»" which is not deployed to the container''',
+                IntermediatePackage.Literals.INTERMEDIATE_OPERATION_NODE__ASPECTS)
+
+        val artifactId = getPropertyValue(aspect, "artifactId")
+        if (artifactId.empty)
+            error('''Container «container.name»: "artifactId" property of ArtifactId aspect ''' +
+                "must not be empty",
+                IntermediatePackage.Literals.INTERMEDIATE_OPERATION_NODE__ASPECTS)
     }
 
     /**
