@@ -77,7 +77,7 @@ class KubernetesCodeGenerator extends AbstractCodeGenerationModule {
     private def createKubernetesFileForInfrastructureNode(IntermediateInfrastructureNode node) {
         val aspect = getFirstAspectApplication(node, "KubernetesDeployment")
         val filePath = '''«targetFolder»«File.separator»«node.name.toLowerCase»«File.separator»'''
-            + '''«node.name.toLowerCase»--deployment.yaml'''
+            + '''«node.name.toLowerCase»-deployment.yaml'''
 
         if (aspect !== null)
             content.put(filePath, adjustIndentations("", aspect.propertyValues.get(0).value))
