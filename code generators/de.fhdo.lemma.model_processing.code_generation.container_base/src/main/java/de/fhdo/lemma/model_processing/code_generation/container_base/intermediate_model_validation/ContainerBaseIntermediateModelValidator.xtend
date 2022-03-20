@@ -9,6 +9,7 @@ import org.eclipse.xtext.validation.Check
 import de.fhdo.lemma.utils.LemmaUtils
 import de.fhdo.lemma.operation.intermediate.IntermediateOperationEndpoint
 import de.fhdo.lemma.model_processing.code_generation.container_base.ContainerBaseGenerator
+import static de.fhdo.lemma.model_processing.code_generation.container_base.util.Util.*
 
 /**
  * The container base intermediate model validator is responsible for checking general aspects for
@@ -30,7 +31,7 @@ class ContainerBaseIntermediateModelValidator extends AbstractXmiDeclarativeVali
      */
     @Check
     def checkContainerForContainerBaseTechnology(IntermediateContainer container) {
-        if (!container.hasContainerBaseTechnology)
+        if (!hasContainerBaseTechnology(container))
             warning('''Ignoring container "«container.name»" as it does not apply a technology ''' +
                 '''model for the "«ContainerBaseGenerator.CONTAINER_BASE_TECHNOLOGY_NAME»" ''' +
                 "technology",
@@ -51,7 +52,7 @@ class ContainerBaseIntermediateModelValidator extends AbstractXmiDeclarativeVali
      */
     @Check
     def checkInfrastructureNodeForContainerBaseTechnology(IntermediateInfrastructureNode node) {
-        if (!node.hasContainerBaseTechnology)
+        if (!hasContainerBaseTechnology(node))
             warning('''Ignoring infrastructure node "«node.name»" as it does not apply a ''' +
                 "technology model for the " +
                 '''"«ContainerBaseGenerator.CONTAINER_BASE_TECHNOLOGY_NAME»" technology''',
@@ -59,19 +60,11 @@ class ContainerBaseIntermediateModelValidator extends AbstractXmiDeclarativeVali
     }
 
     /**
-     * Helper to check if an infrastructure node applies the container base technology model
-     */
-    private def hasContainerBaseTechnology(IntermediateInfrastructureNode node) {
-        return node.qualifiedInfrastructureTechnologyName.toLowerCase
-            .startsWith('''«ContainerBaseGenerator.CONTAINER_BASE_TECHNOLOGY_NAME.toLowerCase».''')
-    }
-
-    /**
      * Check if a container applying the container base technology has at least one endpoint
      */
     @Check
     def checkEndpoints(IntermediateContainer container) {
-        if (!container.hasContainerBaseTechnology) {
+        if (!hasContainerBaseTechnology(container)) {
             return
         }
 
@@ -86,7 +79,7 @@ class ContainerBaseIntermediateModelValidator extends AbstractXmiDeclarativeVali
      */
     @Check
     def checkEndpoints(IntermediateInfrastructureNode node) {
-        if (!node.hasContainerBaseTechnology) {
+        if (!hasContainerBaseTechnology(node)) {
             return
         }
 

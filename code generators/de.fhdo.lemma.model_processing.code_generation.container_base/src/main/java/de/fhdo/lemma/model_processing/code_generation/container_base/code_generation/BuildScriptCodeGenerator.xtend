@@ -8,8 +8,8 @@ import de.fhdo.lemma.model_processing.code_generation.container_base.template.Bu
 import de.fhdo.lemma.model_processing.code_generation.container_base.buildscript.OpenedRootBuildScript
 import java.io.File
 import org.jetbrains.annotations.NotNull
-import de.fhdo.lemma.model_processing.code_generation.container_base.util.Util
-
+import static de.fhdo.lemma.model_processing.code_generation.container_base.util.Util.*
+ 
 /**
  * Main class of the build script code generation module of the container base code generator.
  *
@@ -17,7 +17,6 @@ import de.fhdo.lemma.model_processing.code_generation.container_base.util.Util
  */
 @CodeGenerationModule(name="buildscript")
 class BuildScriptCodeGenerator extends AbstractCodeGenerationModule {
-    var IntermediateOperationModel model
     val content = <String, String> newHashMap
 
     /**
@@ -27,14 +26,14 @@ class BuildScriptCodeGenerator extends AbstractCodeGenerationModule {
      */
     override execute(String[] phaseArguments, String[] moduleArguments) {
         // Receive the intermediate operation model
-        model = resource.contents.get(0) as IntermediateOperationModel
+        val model = resource.contents.get(0) as IntermediateOperationModel
 
         // Load existing build script from file
         OpenedRootBuildScript.instance.loadExistingRootBuildScript(targetFolder)
 
         // Create a build script for containers
-        model.containers.forEach[container |
-            val servicePath = Util.buildPathFromQualifiedName(
+        getContainersWithContainerBaseTechnology(model).forEach[container |
+            val servicePath = buildPathFromQualifiedName(
                 container.deployedServices?.get(0).qualifiedName
             )
 
@@ -43,7 +42,7 @@ class BuildScriptCodeGenerator extends AbstractCodeGenerationModule {
         ]
 
         // Create build script for infrastructure nodes
-        model.infrastructureNodes.forEach[node |
+        getInfrastructureNodesWithContainerBaseTechnology(model).forEach[node |
             val imageType = node.defaultValues.findFirst[property |
                 property.technologySpecificProperty.name == "imageType"]
             val nodeName = node.name.toLowerCase

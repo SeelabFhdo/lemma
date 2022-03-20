@@ -3,6 +3,9 @@ package de.fhdo.lemma.model_processing.code_generation.container_base.util
 import java.io.File
 import de.fhdo.lemma.operation.intermediate.IntermediateOperationNode
 import de.fhdo.lemma.model_processing.code_generation.container_base.ContainerBaseGenerator
+import de.fhdo.lemma.operation.intermediate.IntermediateContainer
+import de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode
+import de.fhdo.lemma.operation.intermediate.IntermediateOperationModel
 
 class Util {
     /**
@@ -50,5 +53,37 @@ class Util {
             it.qualifiedName.toLowerCase == '''«technologyName.toLowerCase».''' +
                 aspectName.toLowerCase
         ]
+    }
+
+    /**
+     * Helper to get all containers from a given operation model that apply the container base
+     * technology model
+     */
+    static def getContainersWithContainerBaseTechnology(IntermediateOperationModel model) {
+        return model.containers.filter[hasContainerBaseTechnology(it)]
+    }
+
+    /**
+     * Helper to check if a container applies the container base technology model
+     */
+    static def hasContainerBaseTechnology(IntermediateContainer container) {
+        return container.qualifiedDeploymentTechnologyName.toLowerCase
+            .startsWith('''«ContainerBaseGenerator.CONTAINER_BASE_TECHNOLOGY_NAME.toLowerCase».''')
+    }
+
+    /**
+     * Helper to get all infrastructure nodes from a given operation model that apply the container
+     * base technology model
+     */
+    static def getInfrastructureNodesWithContainerBaseTechnology(IntermediateOperationModel model) {
+        return model.infrastructureNodes.filter[hasContainerBaseTechnology(it)]
+    }
+
+    /**
+     * Helper to check if an infrastructure node applies the container base technology model
+     */
+    static def hasContainerBaseTechnology(IntermediateInfrastructureNode node) {
+        return node.qualifiedInfrastructureTechnologyName.toLowerCase
+            .startsWith('''«ContainerBaseGenerator.CONTAINER_BASE_TECHNOLOGY_NAME.toLowerCase».''')
     }
 }

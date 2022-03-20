@@ -13,7 +13,7 @@ import java.io.File
 import java.io.ByteArrayInputStream
 import org.jetbrains.annotations.NotNull
 import de.fhdo.lemma.model_processing.code_generation.container_base.file.property.OpenedPropertyFiles
-import de.fhdo.lemma.model_processing.code_generation.container_base.util.Util
+import static de.fhdo.lemma.model_processing.code_generation.container_base.util.Util.*
 
 /**
  * Main class of the spring based service property file generation module of the container base code
@@ -23,19 +23,18 @@ import de.fhdo.lemma.model_processing.code_generation.container_base.util.Util
  */
 @CodeGenerationModule(name="propertyfile")
 class PropertyFileCodeGenerator extends AbstractCodeGenerationModule{
-    var IntermediateOperationModel model
-    val content = <String, String> newHashMap
-
     @NotNull
     override execute(String[] phaseArguments, String[] moduleArguments) {
         // Receive the intermediate operation model
-        model = resource.contents.get(0) as IntermediateOperationModel
+        val model = resource.contents.get(0) as IntermediateOperationModel
 
         // Generate all container
-        model.containers.forEach [container |
-            createDeployedMicroservice(container.deployedServices?.get(0))]
+        getContainersWithContainerBaseTechnology(model).forEach [
+            createDeployedMicroservice(it.deployedServices?.get(0))
+        ]
 
         // Create application.properties files
+        val content = <String, String> newHashMap
         OpenedPropertyFiles.instance.propertyFiles.forEach[
             content.put(it.filePath, it.buildPropertyFile)
         ]
@@ -59,7 +58,7 @@ class PropertyFileCodeGenerator extends AbstractCodeGenerationModule{
     private def createDeployedMicroservice(OperationMicroserviceReference service) {
         val property = PropertyFileTemplate::getPropertiesForServiceConfiguration(
                 service.node.getEffectiveConfigurationValues(service))
-        val buildPath =  Util.buildPathFromQualifiedName(service.qualifiedName)
+        val buildPath = buildPathFromQualifiedName(service.qualifiedName)
 
         addConfigurationToPropertyFile(buildPath, property)
     }

@@ -16,16 +16,13 @@ import static de.fhdo.lemma.model_processing.code_generation.container_base.util
  */
 @CodeGenerationModule(name="dockercompose")
 class DockerComposeCodeGenerator extends AbstractCodeGenerationModule {
-    var IntermediateOperationModel model
-    val content = <String, String> newHashMap
-
     /**
      * Main method for the creation of the docker-compose file
      */
     @NotNull
     override execute(String[] phaseArguments, String[] moduleArguments) {
         // Receive the intermediate operation model
-        model = resource.contents.get(0) as IntermediateOperationModel
+        val model = resource.contents.get(0) as IntermediateOperationModel
 
         /*
          * Set targetFolder for docker-compose.yaml file and open an existing or create a new
@@ -35,15 +32,15 @@ class DockerComposeCodeGenerator extends AbstractCodeGenerationModule {
         OpenedDockerComposeFile.instance.openExistingDockerComposeFile
 
         // Add docker-compose parts of the container to the docker compose file
-        model.containers.forEach[container | createDockerComposeFile(container)]
+        getContainersWithContainerBaseTechnology(model).forEach[createDockerComposeFile(it)]
 
         // Add docker-compose parts of the infrastructure node to the docker compose file
-        model.infrastructureNodes.forEach[node | createDockerComposeFile(node)]
+        getInfrastructureNodesWithContainerBaseTechnology(model)
+            .forEach[createDockerComposeFile(it)]
 
         // Write  docker-compose file to the file path
         val filePath = OpenedDockerComposeFile.instance.dockerComposePath
-        content.put(filePath, OpenedDockerComposeFile.instance.toString)
-        return withCharset(content, "UTF-8");
+        return withCharset(#{filePath -> OpenedDockerComposeFile.instance.toString}, "UTF-8");
     }
 
     /**

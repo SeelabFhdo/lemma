@@ -24,7 +24,6 @@ class DockerFileCodeGenerator extends AbstractCodeGenerationModule {
      * The buildVersion is set to support infrastructure nodes, e.g., Zuul or Eureka, that are
      * modeled without a specific version.
      */
-    var IntermediateOperationModel model
     val content = <String, String> newHashMap
 
     /**
@@ -32,13 +31,14 @@ class DockerFileCodeGenerator extends AbstractCodeGenerationModule {
      */
     override execute(String[] phaseArguments, String[] moduleArguments) {
         // Receive the intermediate operation model
-        model = resource.contents.get(0) as IntermediateOperationModel
+        val model = resource.contents.get(0) as IntermediateOperationModel
 
         // Create a dockerfile for containers
-        model.containers.forEach[container | createDockerFileForContainer(container)]
+        Util.getContainersWithContainerBaseTechnology(model)
+            .forEach[createDockerFileForContainer(it)]
 
         // Create dockerfile for infrastructure nodes
-        model.infrastructureNodes.forEach[node |
+        Util.getInfrastructureNodesWithContainerBaseTechnology(model).forEach[node |
             val property = node.defaultValues.findFirst[property |
                 property.technologySpecificProperty.name == "imageType"]
 

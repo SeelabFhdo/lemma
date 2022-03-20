@@ -19,19 +19,19 @@ import org.jetbrains.annotations.NotNull
  */
 @CodeGenerationModule(name="kubernetes")
 class KubernetesCodeGenerator extends AbstractCodeGenerationModule {
-    var IntermediateOperationModel model
     val content = <String, String> newHashMap
 
     @NotNull
     override execute(String[] phaseArguments, String[] moduleArguments) {
         // Receive the intermediate operation model
-        model = resource.contents.get(0) as IntermediateOperationModel
+        val model = resource.contents.get(0) as IntermediateOperationModel
 
         // Create Kubernetes deployment file for container
-        model.containers.forEach[container | createKuberntesFileForContainer(container)]
+        getContainersWithContainerBaseTechnology(model).forEach[createKuberntesFileForContainer(it)]
 
         // Create Kubernetes deployment file for infrastructure node
-        model.infrastructureNodes.forEach[node | createKubernetesFileForInfrastructureNode(node)]
+        getInfrastructureNodesWithContainerBaseTechnology(model)
+            .forEach[createKubernetesFileForInfrastructureNode(it)]
 
         return withCharset(content, "UTF-8");
     }
