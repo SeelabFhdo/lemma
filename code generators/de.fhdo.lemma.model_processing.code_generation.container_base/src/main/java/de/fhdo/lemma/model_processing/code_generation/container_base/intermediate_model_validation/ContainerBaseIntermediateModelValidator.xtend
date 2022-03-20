@@ -32,12 +32,18 @@ class ContainerBaseIntermediateModelValidator extends AbstractXmiDeclarativeVali
      */
     @Check
     def checkContainerForContainerBaseTechnology(IntermediateContainer container) {
-        val hasContainerBaseTechnology = container.qualifiedDeploymentTechnologyName.toLowerCase
-            .startsWith('''«CONTAINER_BASE_TECHNOLOGY_NAME».''')
-
-        if (!hasContainerBaseTechnology)
-            error("No supported technology model found for container.",
+        if (!container.hasContainerBaseTechnology)
+            warning('''Ignoring container "«container.name»" as it does not apply a technology ''' +
+                '''model for the "«CONTAINER_BASE_TECHNOLOGY_NAME»" technology''',
                 IntermediatePackage.Literals.INTERMEDIATE_DEPLOYMENT_TECHNOLOGY_REFERENCE__IMPORT)
+    }
+
+    /**
+     * Helper to check if a container applies the container base technology model
+     */
+    private def hasContainerBaseTechnology(IntermediateContainer container) {
+        return container.qualifiedDeploymentTechnologyName.toLowerCase
+            .startsWith('''«CONTAINER_BASE_TECHNOLOGY_NAME».''')
     }
 
     /**
@@ -45,12 +51,18 @@ class ContainerBaseIntermediateModelValidator extends AbstractXmiDeclarativeVali
      * generator.
      */
     def checkInfrastructureNodeForContainerBaseTechnology(IntermediateInfrastructureNode node) {
-        val hasContainerBaseTechnology = node.qualifiedInfrastructureTechnologyName.toLowerCase
-            .startsWith('''«CONTAINER_BASE_TECHNOLOGY_NAME».''')
-
-        if (!hasContainerBaseTechnology)
-            error("No supported technology model found for infrastructure node.",
+        if (!node.hasContainerBaseTechnology)
+            warning('''Ignoring infrastructure node "«node.name»" as it does not apply a ''' +
+                '''technology model for the "«CONTAINER_BASE_TECHNOLOGY_NAME»" technology''',
                 IntermediatePackage.Literals.INTERMEDIATE_DEPLOYMENT_TECHNOLOGY_REFERENCE__IMPORT)
+    }
+
+    /**
+     * Helper to check if an infrastructure node applies the container base technology model
+     */
+    private def hasContainerBaseTechnology(IntermediateInfrastructureNode node) {
+        return node.qualifiedInfrastructureTechnologyName.toLowerCase
+            .startsWith('''«CONTAINER_BASE_TECHNOLOGY_NAME».''')
     }
 
     /**
