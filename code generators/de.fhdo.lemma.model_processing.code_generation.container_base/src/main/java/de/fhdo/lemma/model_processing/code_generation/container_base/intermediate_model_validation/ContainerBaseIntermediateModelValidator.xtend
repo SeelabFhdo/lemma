@@ -6,9 +6,9 @@ import de.fhdo.lemma.operation.intermediate.IntermediatePackage
 import de.fhdo.lemma.operation.intermediate.IntermediateContainer
 import de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode
 import de.fhdo.lemma.operation.intermediate.IntermediateOperationNode
-import de.fhdo.lemma.service.intermediate.IntermediateEndpoint
 import org.eclipse.xtext.validation.Check
 import de.fhdo.lemma.utils.LemmaUtils
+import de.fhdo.lemma.operation.intermediate.IntermediateOperationEndpoint
 
 /**
  * The container base intermediate model validator is responsible for checking general aspects for
@@ -82,16 +82,22 @@ class ContainerBaseIntermediateModelValidator extends AbstractXmiDeclarativeVali
     }
 
     /**
-     * Check if the port of the endpoint is set correctly.
+     * Check endpoint ports for correct value
      */
     @Check
-    def checkPortsOnEndpoints(IntermediateEndpoint endpoint) {
-        endpoint.addresses.forEach[address |
-            val port = Integer.parseInt(LemmaUtils.getPortFromAddress(address))
-            if (port < 0 && port > 65353)
-                error("The value of the port is not in the specified port range between " +
-                    "0 and 65353.",
-                    IntermediatePackage.Literals.INTERMEDIATE_ENDPOINT_TECHNOLOGY__ENDPOINT)
+    def checkPorts(IntermediateOperationEndpoint endpoint) {
+        val ports = endpoint.addresses.map[LemmaUtils.getPortFromAddress(it)]
+        val invalidPorts = ports.filter[
+            val port = Integer.parseInt(it)
+            !it.empty && (port < 1 || port > 65353)
         ]
+        if (invalidPorts.empty) {
+            return
+        }
+
+        val nodeName = endpoint.node.name
+        error('''Operation node "«nodeName»" specifies an address with invalid ports ''' +
+            invalidPorts.join(", "),
+            IntermediatePackage.Literals.INTERMEDIATE_ENDPOINT_TECHNOLOGY__ENDPOINT)
     }
 }
