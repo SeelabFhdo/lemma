@@ -1,3 +1,9 @@
+./de.fhdo.lemma.eclipse.ui.editor/libs/de.fhdo.lemma.live_validation.client.jar
+./de.fhdo.lemma.eclipse.ui.editor/libs/de.fhdo.lemma.live_validation.model.jar
+./de.fhdo.lemma.eclipse.ui.editor/libs/de.fhdo.lemma.live_validation.protocol.jar
+./de.fhdo.lemma.eclipse.ui.editor/libs/de.fhdo.lemma.live_validation.util.jar
+
+
 .metadata/
 bin/
 .launch/
