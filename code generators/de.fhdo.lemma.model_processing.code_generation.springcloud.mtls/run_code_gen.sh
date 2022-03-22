@@ -6,7 +6,8 @@ SPRINGCLOUD_MTLS_PATH="$HOME/masterthesis/eclipse-workspace/lemma/code generator
 
 TARGET_PATH="$HOME/masterthesis/lemmasecuritymodelgencode"
 MODEL_PATH="$HOME/masterthesis/runtime-EclipseApplication/lemmasecuritymodel"
-./gradlew build
+
+./gradlew clean build
 
 echo "Java Base Generator - MS1"
 java -jar "$JAVABASE_PATH" \
