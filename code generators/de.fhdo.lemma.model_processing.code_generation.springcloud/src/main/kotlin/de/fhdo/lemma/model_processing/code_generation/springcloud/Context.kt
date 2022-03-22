@@ -1,4 +1,4 @@
-package de.fhdo.lemma.model_processing.code_generation.springcloud
+ package de.fhdo.lemma.model_processing.code_generation.springcloud
 
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import com.github.javaparser.ast.body.MethodDeclaration
