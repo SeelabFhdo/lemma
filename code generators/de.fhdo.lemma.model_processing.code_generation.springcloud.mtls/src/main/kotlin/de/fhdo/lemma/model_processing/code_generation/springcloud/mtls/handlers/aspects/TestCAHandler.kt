@@ -3,6 +3,7 @@ package de.fhdo.lemma.model_processing.code_generation.springcloud.mtls.handlers
 import com.github.javaparser.ast.Node
 import com.github.javaparser.ast.body.MethodDeclaration
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
+import de.fhdo.lemma.model_processing.code_generation.java_base.getAllAspects
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.EObjectNodeCombinations
@@ -19,21 +20,21 @@ import org.eclipse.emf.ecore.EObject
  */
 @AspectHandler
 internal class TestCAHandler : AspectHandlerI {
-    override fun handlesAspects() : Set<String>{
-        println("handlesAspects")
-        return setOf("mTLS.testKeystore", "mTLS.keystore")
-    }
-    override fun handlesEObjectNodeCombinations() : EObjectNodeCombinations {
-        println("handlesEObjectNodeCombinations ")
-    return combinations { IntermediateOperation::class.java with MethodDeclaration::class.java }
-    }
+    override fun handlesAspects() : Set<String> = setOf("mTLS.Keystore")
+    override fun handlesEObjectNodeCombinations() : EObjectNodeCombinations =
+        combinations { IntermediateOperation::class.java with MethodDeclaration::class.java }
+
     /**
      * Execution logic of the handler
      */
     override fun execute(eObject: EObject, node: Node, aspect: IntermediateImportedAspect) : Node {
-        println(eObject.qualifiedName)
-        println("Ich bin hier ${aspect.name}")
-        aspect.featureNames.forEach{println(it)}
+//        println("Execute hier ")
+//        var aspects = eObject.getAllAspects(
+//            "mTLS.Keystore", "mTLS.TestKeystore", "mTLS.Truststore", "mTLS.TestTruststore")
+//        println(eObject.qualifiedName)
+//        aspects.forEach {
+//            println("Aspectname: ${it.name} | Aspectvalue: ${it.properties.forEach(System.out::println)}")
+//        }
         return node
     }
 }
