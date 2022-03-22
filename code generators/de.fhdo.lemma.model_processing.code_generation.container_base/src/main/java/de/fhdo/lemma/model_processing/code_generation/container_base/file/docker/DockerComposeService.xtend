@@ -6,6 +6,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.util.Set
+import com.fasterxml.jackson.annotation.JsonIgnore
 
 /**
  * This POJO represents the data structure of a docker-compose file in a YAML format used by
@@ -15,6 +16,9 @@ import java.util.Set
  */
  @JsonInclude(NON_EMPTY)
 class DockerComposeService {
+    @JsonIgnore
+    @Accessors
+    String name
     @Accessors
     String build
     @Accessors

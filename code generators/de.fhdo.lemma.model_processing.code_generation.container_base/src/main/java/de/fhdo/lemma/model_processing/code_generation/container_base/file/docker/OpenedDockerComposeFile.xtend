@@ -46,8 +46,8 @@ class OpenedDockerComposeFile {
 
         if (new File(dockerComposePath + ".yml").exists)
             dockerComposePath = dockerComposePath + ".yml"
-            else
-                dockerComposePath = dockerComposePath + ".yaml"
+        else
+            dockerComposePath = dockerComposePath + ".yaml"
 
         initialized = true
     }
@@ -70,17 +70,19 @@ class OpenedDockerComposeFile {
      * operation node. The configuration of the docker-compose part is created by the docker-compose
      * code generation module itself.
      *
-     * Note: the docker-compose part is done separately for intermediate container and intermediate
+     * Note: The docker-compose part is done separately for intermediate container and intermediate
      * infrastructure nodes.
      */
     def addOrReplaceDockerComposePart(IntermediateOperationNode node) {
         switch (node) {
-            IntermediateInfrastructureNode : {
-                dockerComposeFile.services.put(node.name, getServiceFromNode(node))
-            }
+            IntermediateInfrastructureNode:
+                dockerComposeFile.services.put(node.name, node.serviceFromNode)
+
             IntermediateContainer: {
-                dockerComposeFile.services.put(node.name, getServiceFromContainer(node))
+                val service = node.serviceFromContainer
+                dockerComposeFile.services.put(service.name, service)
             }
+
             default : throw new IllegalArgumentException("OperationNode instance not supported.")
         }
     }
@@ -111,10 +113,14 @@ class OpenedDockerComposeFile {
     }
 
     /**
-     * Create a POJO Service from  a container
+     * Create a POJO Service from a container
      */
     private def DockerComposeService getServiceFromContainer(IntermediateContainer container) {
         val service = new DockerComposeService
+
+        val deployedServiceName = container.deployedServices.get(0).name
+        service.name = '''«deployedServiceName»_in_«container.name»'''
+
         service.build = Util.buildPathFromQualifiedName(
             container.deployedServices.get(0).qualifiedName
         )
