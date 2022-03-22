@@ -457,7 +457,7 @@ rule OperationMicroserviceReference(sourceMicroservice : Operation!ImportedMicro
     to
         reference : Intermediate!OperationMicroserviceReference(
             imported <- true,
-            name <- sourceMicroservice.microservice.name,
+            name <- sourceMicroservice.simpleName(),
             microserviceType <- sourceMicroservice.microservice.type.toString(),
             effectivelyImplemented <- sourceMicroservice.microservice.effectivelyImplemented,
             import <- Intermediate!IntermediateImport.allInstances()
@@ -472,6 +472,20 @@ rule OperationMicroserviceReference(sourceMicroservice : Operation!ImportedMicro
         reference;
     }
 }
+
+--- Helper to get the simple name from the qualified name of an imported microservice
+helper context Operation!ImportedMicroservice def : simpleName() : String =
+    -- Due to the specification of the Operation DSL's grammar (in order to enable unambiguous
+    -- microservice deployment modeling), the name of an imported microservice will always be
+    -- qualified
+    let qualifiedName : String = self.microservice.name in
+    let simpleNameSeparatorPosition : Integer = qualifiedName.lastIndexOf('.') in
+    if (qualifiedName.size() > 1 and simpleNameSeparatorPosition > -1) then
+        qualifiedName.substring(simpleNameSeparatorPosition + 2, qualifiedName.size())
+    else
+        qualifiedName
+    endif
+;
 
 --- Called rule to create an IntermediateEndPoint instance
 rule IntermediateOperationEndpoint(sourceEndpoint : Operation!BasicEndpoint,
