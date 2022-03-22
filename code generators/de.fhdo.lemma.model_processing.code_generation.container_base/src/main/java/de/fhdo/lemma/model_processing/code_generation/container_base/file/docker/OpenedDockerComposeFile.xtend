@@ -42,13 +42,7 @@ class OpenedDockerComposeFile {
         if (initialized)
             throw new IllegalStateException("OpenedDockerComposeFile is already initialized.")
 
-        dockerComposePath = '''«targetFolder»«File.separator»docker-compose'''
-
-        if (new File(dockerComposePath + ".yml").exists)
-            dockerComposePath = dockerComposePath + ".yml"
-        else
-            dockerComposePath = dockerComposePath + ".yaml"
-
+        dockerComposePath = '''«targetFolder»«File.separator»docker-compose.yaml'''
         initialized = true
     }
 
