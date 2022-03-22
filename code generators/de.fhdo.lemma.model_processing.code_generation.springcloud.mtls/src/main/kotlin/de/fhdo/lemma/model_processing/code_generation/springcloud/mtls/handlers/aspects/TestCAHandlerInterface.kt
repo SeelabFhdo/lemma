@@ -35,7 +35,25 @@ internal class TestCAHandlerInterface
     ): GenletCodeGenerationHandlerResult<ClassOrInterfaceDeclaration>? {
         if (!eObject.hasAspect("mTLS.Keystore", "mTLS.TestKeystore"))
             return GenletCodeGenerationHandlerResult(node)
-        val currentApplicationPropertiesFile: PropertyFile by State
+        var currentApplicationPropertiesFile = openPropertyFile(GenletPathSpecifier.CURRENT_MICROSERVICE_RESOURCES_PATH, "application-dev.properties")
+        var currentApplicationPropertiesFile1 = openPropertyFile(GenletPathSpecifier.CURRENT_DOMAIN_GENERATION_TARGET_PATH, "application-dev.properties")
+        var currentApplicationPropertiesFile2 = openPropertyFile(GenletPathSpecifier.CURRENT_MICROSERVICE_GENERATION_TARGET_PATH, "application-dev.properties")
+        var currentApplicationPropertiesFile3 = openPropertyFile(GenletPathSpecifier.CURRENT_INTERFACE_GENERATION_TARGET_PATH, "application-dev.properties")
+        var currentApplicationPropertiesFile4 = openPropertyFile(GenletPathSpecifier.CURRENT_MICROSERVICE_JAVA_ROOT_PATH, "application-dev.properties")
+
+
+        println("GenletPathSpecifier.CURRENT_MICROSERVICE_RESOURCES_PATH ${currentApplicationPropertiesFile.filePath}" )
+        println("GenletPathSpecifier.CURRENT_DOMAIN_GENERATION_TARGET_PATH ${currentApplicationPropertiesFile1.filePath}" )
+        println("GenletPathSpecifier.CURRENT_MICROSERVICE_GENERATION_TARGET_PATH ${currentApplicationPropertiesFile2.filePath}" )
+        println("GenletPathSpecifier.CURRENT_INTERFACE_GENERATION_TARGET_PATH ${currentApplicationPropertiesFile3.filePath}" )
+        println("GenletPathSpecifier.CURRENT_MICROSERVICE_JAVA_ROOT_PATH ${currentApplicationPropertiesFile4.filePath}" )
+
+        GenletPathSpecifier.CURRENT_MICROSERVICE_RESOURCES_PATH
+        GenletPathSpecifier.CURRENT_DOMAIN_GENERATION_TARGET_PATH
+        GenletPathSpecifier.CURRENT_MICROSERVICE_GENERATION_TARGET_PATH
+        GenletPathSpecifier.CURRENT_INTERFACE_GENERATION_TARGET_PATH
+        GenletPathSpecifier.CURRENT_MICROSERVICE_JAVA_ROOT_PATH
+
 
 
         println(eObject.qualifiedName)
@@ -57,8 +75,7 @@ internal class TestCAHandlerInterface
         currentApplicationPropertiesFile.forEach { key, value -> println("DEFAULT key ${key} value ${value}") }
 
 
-        return GenletCodeGenerationHandlerResult(node, generatedApplicationPropertiesFile())
-
+        return GenletCodeGenerationHandlerResult(node, generatedApplicationPropertiesFile(currentApplicationPropertiesFile))
     }
 
 
@@ -66,11 +83,7 @@ internal class TestCAHandlerInterface
      * Helper to create a [GenletGeneratedFileContent] instance from the current application properties file, in case
      * new properties were added during the generation of the current microservice
      */
-    private fun generatedApplicationPropertiesFile() : MutableSet<GenletGeneratedFileContent> {
-        val currentApplicationPropertiesFile: PropertyFile by State
-        return if (addedNewProperties)
-            mutableSetOf(GenletGeneratedFileContent(currentApplicationPropertiesFile))
-        else
-            mutableSetOf()
+    private fun generatedApplicationPropertiesFile(currentApplicationPropertiesFile: PropertyFile) : MutableSet<GenletGeneratedFileContent> {
+        return mutableSetOf(GenletGeneratedFileContent(currentApplicationPropertiesFile))
     }
 }
