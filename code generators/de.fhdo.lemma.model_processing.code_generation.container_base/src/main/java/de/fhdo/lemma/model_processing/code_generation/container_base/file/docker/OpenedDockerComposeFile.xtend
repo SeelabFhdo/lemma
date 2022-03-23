@@ -122,6 +122,8 @@ class OpenedDockerComposeFile {
         service.containerName = container.name.toLowerCase
         service.networks.add("default-network")
 
+        /* Derive port mappings for the deployed service */
+        val ports = <String>newHashSet
         val configuredServerPort = container.getEffectiveConfigurationValues(deployedService)
             .findFirst["serverPort".equalsIgnoreCase(it.technologySpecificProperty.name)]
             ?.value
@@ -154,9 +156,19 @@ class OpenedDockerComposeFile {
                     containerPort = hostPort
 
                 if (!hostPort.nullOrEmpty && !containerPort.nullOrEmpty)
-                    service.ports.add('''«hostPort»:«containerPort»''')
+                    ports.add('''«hostPort»:«containerPort»''')
             }
         ]
+
+        // Gather additional port mappings from the "customPortMapping" configuration property
+        val additionalPorts = container.getEffectiveConfigurationValues(deployedService)
+            .filter["customPortMapping".equalsIgnoreCase(it.technologySpecificProperty.name)]
+            .map[it.value]
+        ports.addAll(additionalPorts)
+
+        // Until here, we used a Set to gather all port mappings, thereby ensuring that they are
+        // unique in the generated Docker Compose file
+        service.ports = ports.toList.sort
 
         return service
     }

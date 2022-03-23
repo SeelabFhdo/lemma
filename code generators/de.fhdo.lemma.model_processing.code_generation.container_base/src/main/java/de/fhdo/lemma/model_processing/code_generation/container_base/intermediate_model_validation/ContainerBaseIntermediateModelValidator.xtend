@@ -13,6 +13,7 @@ import static de.fhdo.lemma.model_processing.code_generation.container_base.util
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
 import java.util.List
 import de.fhdo.lemma.operation.intermediate.OperationMicroserviceReference
+import java.util.regex.Pattern
 
 /**
  * The container base intermediate model validator is responsible for checking general aspects for
@@ -22,6 +23,8 @@ import de.fhdo.lemma.operation.intermediate.OperationMicroserviceReference
  */
 @IntermediateModelValidator
 class ContainerBaseIntermediateModelValidator extends AbstractXmiDeclarativeValidator {
+    static val PORT_MAPPING_PATTERN = Pattern.compile("(?<hostPort>\\d+):(?<containerPort>\\d+)")
+
     /**
      * Get the namespace for the intermediate operation model
      */
@@ -157,15 +160,12 @@ class ContainerBaseIntermediateModelValidator extends AbstractXmiDeclarativeVali
     }
 
     /**
-     * Check endpoint ports for correct value
+     * Check endpoint ports for correct ranges
      */
     @Check
     def checkPortRange(IntermediateOperationEndpoint endpoint) {
         val ports = endpoint.addresses.map[LemmaUtils.getPortFromAddress(it)]
-        val invalidPorts = ports.filter[
-            val port = Integer.parseInt(it)
-            !it.empty && (port < 1 || port > 65353)
-        ]
+        val invalidPorts = ports.filter[!it.validPortRange]
         if (invalidPorts.empty) {
             return
         }
@@ -174,6 +174,73 @@ class ContainerBaseIntermediateModelValidator extends AbstractXmiDeclarativeVali
         error('''Operation node "«nodeName»" specifies an address with invalid ports ''' +
             invalidPorts.join(", "),
             IntermediatePackage.Literals.INTERMEDIATE_ENDPOINT_TECHNOLOGY__ENDPOINT)
+    }
+
+    /**
+     * Helper to check if a given port string represents a port with a valid value range
+     */
+    private def isValidPortRange(String portString) {
+        val port = Integer.parseInt(portString)
+        return !portString.empty && port >= 1 && port <= 65353
+    }
+
+    /**
+     * Check custom port mappings modeled for deployed microservices using the "customPortMapping"
+     * configuration property for correctness
+     */
+    @Check
+    def checkCustomPortMappings(IntermediateContainer container) {
+        val configuredPortMappingsPerDeployedService
+            = <OperationMicroserviceReference, List<String>>newHashMap
+        container.deployedServices.forEach[service |
+            val configuredPortMappings = container.getEffectiveConfigurationValues(service)
+                .filter["customPortMapping".equalsIgnoreCase(it.technologySpecificProperty.name)]
+                .map[it.value]
+                .toList
+            configuredPortMappingsPerDeployedService.put(service, configuredPortMappings)
+        ]
+
+        configuredPortMappingsPerDeployedService.forEach[service, mappings | mappings.forEach[
+            container.checkCustomPortMapping(service, it)
+        ]]
+    }
+
+    /**
+     * Helper to check a single custom port mapping of a deployed microservice for correctness
+     */
+    private def checkCustomPortMapping(
+        IntermediateContainer container,
+        OperationMicroserviceReference service,
+        String mapping
+    ) {
+        val mappingMatcher = PORT_MAPPING_PATTERN.matcher(mapping)
+
+        // Check for correct format
+        if (!mappingMatcher.matches) {
+            error('''Invalid port mapping for container "«container.name»" and deployed ''' +
+                '''microservice "«service.qualifiedName»": Mapping "«mapping»" has invalid ''' +
+                "format (expected: <PORT>:<PORT>)",
+                IntermediatePackage.Literals.INTERMEDIATE_OPERATION_NODE__NAME)
+            return
+        }
+
+        // Check host port for valid value range
+        val hostPort = mappingMatcher.group("hostPort")
+        if (!hostPort.validPortRange) {
+            error('''Invalid port mapping for container "«container.name»" and deployed ''' +
+                '''microservice "«service.qualifiedName»": Host port «hostPort» of mapping ''' +
+                '''"«mapping»" is out of range''',
+                IntermediatePackage.Literals.INTERMEDIATE_OPERATION_NODE__NAME)
+            return
+        }
+
+        // Check container port for valid value range
+        val containerPort = mappingMatcher.group("containerPort")
+        if (!containerPort.validPortRange)
+            error('''Invalid port mapping for container "«container.name»" and deployed ''' +
+                '''microservice "«service.qualifiedName»": Container port «containerPort» of ''' +
+                '''mapping "«mapping»" is out of range''',
+                IntermediatePackage.Literals.INTERMEDIATE_OPERATION_NODE__NAME)
     }
 
     /**
@@ -236,13 +303,12 @@ class ContainerBaseIntermediateModelValidator extends AbstractXmiDeclarativeVali
          * potential values for the container-specific "serverPort" configuration property
          */
         val springPort = getSpringServerPort(service)
-        if (!springPort.nullOrEmpty && springPort != configuredPort) {
+        if (!springPort.nullOrEmpty && springPort != configuredPort)
             error('''Port specification of container "«container.name»" is ambiguous for ''' +
                 '''deployed microservice "«service.qualifiedName»": The container specifies ''' +
                 '''the port «configuredPort» using the "serverPort" property, whereas the ''' +
                 '''microservice specifies the port «springPort» using the Application aspect ''' +
                 "from the Spring technology model",
                 IntermediatePackage.Literals.INTERMEDIATE_OPERATION_NODE__NAME)
-        }
     }
 }
