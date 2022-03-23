@@ -183,12 +183,14 @@ class OpenedDockerComposeFile {
         service.containerName = node.name.toLowerCase
         service.networks.add("default-network")
 
+        val ports = <String>newArrayList
         node.endpoints.forEach[endpoint |
             endpoint.addresses.forEach[address |
                 val port = LemmaUtils.getPortFromAddress(address)
-                service.ports.add('''«port»:«port»''')
+                ports.add('''«port»:«port»''')
             ]
         ]
+        service.ports = ports.sort
 
         return service
     }
