@@ -6,11 +6,13 @@ package de.fhdo.lemma.model_processing.code_generation.container_base.template
  * @author <a href="mailto:philip.wizenty@fh-dortmund.de">Philip Wizenty</a>
  */
 class BuildScriptTemplate {
+    public static val SHEBANG = "#!/usr/bin/env bash"
+
     /**
      * Get the string content for the node-specific build script.
      */
     static def String getNodeSpecificBuildScript(String nodeName)'''
-        #!/usr/bin/env bash
+        «SHEBANG»
 
         mvn clean install
 
@@ -18,10 +20,10 @@ class BuildScriptTemplate {
     '''
 
     /**
-     * Get the first command set in the build script.
+     * Get the build command for the given deployment component's path.
      */
-    static def String getRootCommand(String nodeName)'''
-        cd "../«nodeName.toLowerCase»" && sh build.sh
+    static def String getComponentBuildCommand(String componentPath)'''
+        cd "../«componentPath»" && sh build.sh
     '''
 
     /**

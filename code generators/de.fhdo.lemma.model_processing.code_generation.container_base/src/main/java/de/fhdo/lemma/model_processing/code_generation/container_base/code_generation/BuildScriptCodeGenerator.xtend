@@ -9,7 +9,7 @@ import de.fhdo.lemma.model_processing.code_generation.container_base.buildscript
 import java.io.File
 import org.jetbrains.annotations.NotNull
 import static de.fhdo.lemma.model_processing.code_generation.container_base.util.Util.*
- 
+
 /**
  * Main class of the build script code generation module of the container base code generator.
  *
@@ -48,8 +48,8 @@ class BuildScriptCodeGenerator extends AbstractCodeGenerationModule {
             val nodeName = node.name.toLowerCase
 
             /*
-             * Infrastructure nodes that have the ImageType docherhub do not require a local build
-             * script, as the images are pulled directly from the official Docker repository.
+             * Infrastructure nodes that have the ImageType "dockerhub" do not require a local build
+             * script as the images are pulled directly from the official Docker repository.
              */
             if (imageType.value.toLowerCase != "dockerhub") {
                 createNodeSpecificBuildScripts(nodeName, nodeName)
@@ -80,11 +80,12 @@ class BuildScriptCodeGenerator extends AbstractCodeGenerationModule {
     }
 
     /**
-     * Create a root build script that uses the node specific build scripts to build all operation
-     * nodes present in the intermediate operation model.
+     * Create a root build script that uses the deployment components' specific build scripts to
+     * build all operation nodes present in the intermediate operation model.
      */
-    private def createRootBuildScript(String nodeName) {
-        OpenedRootBuildScript.instance.addBuildCommand(nodeName,
-            BuildScriptTemplate::getRootCommand(nodeName))
+    private def createRootBuildScript(String componentPath) {
+        OpenedRootBuildScript.instance.addBuildCommand(
+            componentPath, BuildScriptTemplate::getComponentBuildCommand(componentPath)
+        )
     }
 }
