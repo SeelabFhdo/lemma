@@ -26,8 +26,6 @@ internal class TestCAHandlerInterface
     override fun handlesEObjectsOfInstance() = IntermediateMicroservice::class.java
     override fun generatesNodesOfInstance() = ClassOrInterfaceDeclaration::class.java
 
-
-
     override fun execute(
         eObject: IntermediateMicroservice,
         node: ClassOrInterfaceDeclaration,
@@ -70,10 +68,9 @@ internal class TestCAHandlerInterface
 //        println(propertyFileDev.filePath)
 //        propertyFileDev.forEach { key, value -> println(" DEV key ${key} value ${value}") }
         println(currentApplicationPropertiesFile.filePath)
-        currentApplicationPropertiesFile["spring.test"] = "huhu"
+        currentApplicationPropertiesFile["spring.test"] = "huhu1"
 
         currentApplicationPropertiesFile.forEach { key, value -> println("DEFAULT key ${key} value ${value}") }
-
 
         return GenletCodeGenerationHandlerResult(node, generatedApplicationPropertiesFile(currentApplicationPropertiesFile))
     }
