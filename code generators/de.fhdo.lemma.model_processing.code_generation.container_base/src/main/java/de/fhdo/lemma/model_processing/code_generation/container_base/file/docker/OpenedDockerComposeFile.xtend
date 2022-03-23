@@ -112,8 +112,8 @@ class OpenedDockerComposeFile {
     private def DockerComposeService getServiceFromContainer(IntermediateContainer container) {
         val service = new DockerComposeService
 
-        val deployedServiceName = container.deployedServices.get(0).name
-        service.name = '''«deployedServiceName»_in_«container.name»'''
+        val deployedService = container.deployedServices.get(0)
+        service.name = '''«deployedService.name»_in_«container.name»'''
 
         service.build = Util.buildPathFromQualifiedName(
             container.deployedServices.get(0).qualifiedName
@@ -122,11 +122,40 @@ class OpenedDockerComposeFile {
         service.containerName = container.name.toLowerCase
         service.networks.add("default-network")
 
+        val configuredServerPort = container.getEffectiveConfigurationValues(deployedService)
+            .findFirst["serverPort".equalsIgnoreCase(it.technologySpecificProperty.name)]
+            ?.value
         container.endpoints.forEach[endpoint |
-            endpoint.addresses.forEach[address |
-                val port = LemmaUtils.getPortFromAddress(address)
-                service.ports.add('''«port»:«port»''')
-            ]
+            // Identify the port for the container which should be the port of the deployed
+            // microservice. According to the Container Base Generator, each container requires an
+            // endpoint. In case the container specifies and endpoint for HTTP or REST, we try to
+            // extract the port from the model of the deployed microservice, and the potential
+            // application of the Spring technology model and its Application aspect. That is,
+            // because the aspect's "port" property determines the HTTP port of a modeled
+            // microservice. If this strategy does not yield a container port, e.g., because the
+            // deployed microservice is not a Spring microservice, we leverage a potential value for
+            // the "serverPort" configuration property which allows container-based specification of
+            // the deployed microservice's port.
+            // With the described approach, either microservice developers or operators can
+            // determine a microservice's ports depending on the employed DevOps model (see also
+            // the Container Base Generator's intermediate model validator by which we prevent
+            // ambiguous port specifications on microservices and containers).
+            var containerPort = switch (endpoint.protocol.toLowerCase) {
+                case "http",
+                case "rest": Util.getSpringServerPort(deployedService)
+                default: null
+            }
+            if (containerPort === null)
+                containerPort = configuredServerPort
+
+            for (address : endpoint.addresses) {
+                val hostPort = LemmaUtils.getPortFromAddress(address)
+                if (containerPort.nullOrEmpty)
+                    containerPort = hostPort
+
+                if (!hostPort.nullOrEmpty && !containerPort.nullOrEmpty)
+                    service.ports.add('''«hostPort»:«containerPort»''')
+            }
         ]
 
         return service

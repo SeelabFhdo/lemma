@@ -12,6 +12,7 @@ import de.fhdo.lemma.model_processing.code_generation.container_base.ContainerBa
 import static de.fhdo.lemma.model_processing.code_generation.container_base.util.Util.*
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
 import java.util.List
+import de.fhdo.lemma.operation.intermediate.OperationMicroserviceReference
 
 /**
  * The container base intermediate model validator is responsible for checking general aspects for
@@ -159,7 +160,7 @@ class ContainerBaseIntermediateModelValidator extends AbstractXmiDeclarativeVali
      * Check endpoint ports for correct value
      */
     @Check
-    def checkPorts(IntermediateOperationEndpoint endpoint) {
+    def checkPortRange(IntermediateOperationEndpoint endpoint) {
         val ports = endpoint.addresses.map[LemmaUtils.getPortFromAddress(it)]
         val invalidPorts = ports.filter[
             val port = Integer.parseInt(it)
@@ -173,5 +174,75 @@ class ContainerBaseIntermediateModelValidator extends AbstractXmiDeclarativeVali
         error('''Operation node "«nodeName»" specifies an address with invalid ports ''' +
             invalidPorts.join(", "),
             IntermediatePackage.Literals.INTERMEDIATE_ENDPOINT_TECHNOLOGY__ENDPOINT)
+    }
+
+    /**
+     * Check the server ports configured for a container
+     */
+    @Check
+    def checkConfiguredServerPorts(IntermediateContainer container) {
+        val configuredPortsPerDeployedService
+            = <OperationMicroserviceReference, List<String>>newHashMap
+        container.deployedServices.forEach[service |
+            val configuredPorts = container.getEffectiveConfigurationValues(service)
+                .filter["serverPort".equalsIgnoreCase(it.technologySpecificProperty.name)]
+                .map[it.value]
+                .toList
+            configuredPortsPerDeployedService.put(service, configuredPorts)
+        ]
+
+        configuredPortsPerDeployedService.forEach[service, ports |
+            container.checkUnambiguousServerPorts(service, ports)
+        ]
+    }
+
+    /**
+     * Helper to check that the server port values specified for a deployed microservice are
+     * unambiguous
+     */
+    private def checkUnambiguousServerPorts(
+        IntermediateContainer container,
+        OperationMicroserviceReference service,
+        List<String> ports
+    ) {
+        if (ports.empty) {
+            return
+        }
+
+        /*
+         * Check that values for the container-specific "serverPort" configuration property are
+         * unambiguous
+         */
+        val configuredPort = ports.get(0)
+        val ambiguousPorts = ports.filter[it != configuredPort]
+        if (ambiguousPorts.size == 1) {
+            error('''Port specification of container "«container.name»" is ambiguous for ''' +
+                '''deployed microservice "«service.qualifiedName»": First "serverPort" value ''' +
+                '''is «configuredPort» which differs from the second value ''' +
+                ambiguousPorts.get(0),
+                IntermediatePackage.Literals.INTERMEDIATE_OPERATION_NODE__NAME)
+            return
+        } else if (ambiguousPorts.size > 1) {
+            error('''Port specification of container "«container.name»" is ambiguous for ''' +
+                '''deployed microservice "«service.qualifiedName»": First "serverPort" value ''' +
+                '''value is «configuredPort» which differs from the following values ''' +
+                ambiguousPorts.join(", "),
+                IntermediatePackage.Literals.INTERMEDIATE_OPERATION_NODE__NAME)
+            return
+        }
+
+        /*
+         * Check that a potential port value modeled for the deployed service is unambiguous w.r.t.
+         * potential values for the container-specific "serverPort" configuration property
+         */
+        val springPort = getSpringServerPort(service)
+        if (!springPort.nullOrEmpty && springPort != configuredPort) {
+            error('''Port specification of container "«container.name»" is ambiguous for ''' +
+                '''deployed microservice "«service.qualifiedName»": The container specifies ''' +
+                '''the port «configuredPort» using the "serverPort" property, whereas the ''' +
+                '''microservice specifies the port «springPort» using the Application aspect ''' +
+                "from the Spring technology model",
+                IntermediatePackage.Literals.INTERMEDIATE_OPERATION_NODE__NAME)
+        }
     }
 }

@@ -7,6 +7,9 @@ import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
 import de.fhdo.lemma.operation.intermediate.IntermediateContainer
 import de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode
 import de.fhdo.lemma.operation.intermediate.IntermediateOperationModel
+import de.fhdo.lemma.service.intermediate.IntermediateServiceModel
+import static de.fhdo.lemma.model_processing.utils.UtilsKt.*
+import de.fhdo.lemma.operation.intermediate.OperationMicroserviceReference
 
 class Util {
     /**
@@ -112,5 +115,29 @@ class Util {
     static def hasContainerBaseTechnology(IntermediateInfrastructureNode node) {
         return node.qualifiedInfrastructureTechnologyName.toLowerCase
             .startsWith('''«ContainerBaseGenerator.CONTAINER_BASE_TECHNOLOGY_NAME.toLowerCase».''')
+    }
+
+    /**
+     * Helper to extract the port information of a deployed microservice from the Application aspect
+     * of the Spring technology model and its "port" property. The helper returns null in case the
+     * given deployed microservice does not exhibit the aspect or the "port" property isn't set.
+     */
+    static def getSpringServerPort(OperationMicroserviceReference serviceReference) {
+        val Pair<String, IntermediateServiceModel> modelPathAndRoot = ParsedModels
+            .getOrParseImportedModelRoot(serviceReference.eResource, serviceReference.import)
+        val modelPath = modelPathAndRoot.key
+        val serviceModelRoot = modelPathAndRoot.value
+
+        val service = serviceModelRoot.microservices
+            .findFirst[it.qualifiedName == serviceReference.qualifiedName]
+        val applicationAspect = service.aspects.findFirst[
+            val technologyName = parseTechnologyName(uriToFilePath(it.import.importUri), modelPath)
+            "Spring".equalsIgnoreCase(technologyName) && "Application".equalsIgnoreCase(it.name)
+        ]
+
+        return if (applicationAspect !== null)
+                getPropertyValue(applicationAspect, "port")
+            else
+                null
     }
 }

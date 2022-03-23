@@ -32,6 +32,11 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
+            <groupId>de.fhdo.lemma.model_processing.utils</groupId>
+            <artifactId>de.fhdo.lemma.model_processing.utils</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>de.fhdo.lemma.operationdsl</groupId>
             <artifactId>de.fhdo.lemma.operationdsl</artifactId>
             <version>${project.version}</version>
@@ -64,6 +69,11 @@
         <dependency>
             <groupId>de.fhdo.lemma.technology.technologydsl</groupId>
             <artifactId>de.fhdo.lemma.technology.technologydsl</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.fhdo.lemma.intermediate</groupId>
+            <artifactId>de.fhdo.lemma.service.intermediate.metamodel</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

@@ -349,21 +349,31 @@ fun IntermediateMicroservice.hasTechnology(technologyNames: Set<String>, ignoreC
 fun List<TechnologyReference>.findAliasForTechnology(technologyName: String)
     = find {
         val technologyModelFilepath = it.technology.importURI.uriToFilePath()
-        val absoluteTechnologyModelFilepath = if (LemmaUtils.representsAbsolutePath(technologyModelFilepath))
-                technologyModelFilepath
-            else {
-                val referencingModelFilepath = it.eResource().uri.toString().uriToFilePath()
-                LemmaUtils.convertToAbsolutePath(technologyModelFilepath, referencingModelFilepath)
-            }
-
-        val parsedTechnologyName = if (!TechnologyModelCache.wasParsed(absoluteTechnologyModelFilepath)) {
-            val parsedTechnologyName = absoluteTechnologyModelFilepath.asFile().naiveTechnologyNameExtraction()!!
-            TechnologyModelCache.add(absoluteTechnologyModelFilepath, parsedTechnologyName)
-        } else
-            TechnologyModelCache.technologyName(absoluteTechnologyModelFilepath)
-
+        val referencingModelFilepath = it.eResource().uri.toString().uriToFilePath()
+        val parsedTechnologyName = parseTechnologyName(technologyModelFilepath, referencingModelFilepath)
         parsedTechnologyName == technologyName
     }?.technology?.name
+
+/**
+ * Parse the name of a technology expressed in the Technology Modeling Language. The [technologyModelFilepath] and
+ * [referencingModelFilepath] identify the path to the technology model and the model that references it, respectively.
+ * The [referencingModelFilepath] must be an absolute path, whereas the [technologyModelFilepath] can be relative to it.
+ * A relative [technologyModelFilepath] will be converted to an absolute path based on the [referencingModelFilepath].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun parseTechnologyName(technologyModelFilepath: String, referencingModelFilepath: String) : String {
+    val absoluteTechnologyModelFilepath = if (LemmaUtils.representsAbsolutePath(technologyModelFilepath))
+            technologyModelFilepath
+        else
+            LemmaUtils.convertToAbsolutePath(technologyModelFilepath, referencingModelFilepath)
+
+    return if (!TechnologyModelCache.wasParsed(absoluteTechnologyModelFilepath)) {
+        val parsedTechnologyName = absoluteTechnologyModelFilepath.asFile().naiveTechnologyNameExtraction()!!
+        TechnologyModelCache.add(absoluteTechnologyModelFilepath, parsedTechnologyName)
+    } else
+        TechnologyModelCache.technologyName(absoluteTechnologyModelFilepath)!!
+}
 
 /**
  * Find import alias of a technology model with one of the names in the [technologyNames] from this list of
@@ -386,7 +396,7 @@ fun List<TechnologyReference>.findAliasForTechnology(technologyNames: Set<String
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-private fun String.uriToFilePath() = URLDecoder.decode(this, StandardCharsets.UTF_8).removePrefix("file://")
+fun String.uriToFilePath() = URLDecoder.decode(this, StandardCharsets.UTF_8).removePrefix("file://")
 
 /**
  * The [findAliasForTechnology] function involves expensive scanning of technology model files. We therefore cache the
