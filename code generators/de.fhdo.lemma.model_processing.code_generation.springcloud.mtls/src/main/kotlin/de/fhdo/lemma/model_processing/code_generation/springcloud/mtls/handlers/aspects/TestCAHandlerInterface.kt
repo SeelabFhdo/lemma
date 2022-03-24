@@ -1,7 +1,16 @@
 package de.fhdo.lemma.model_processing.code_generation.springcloud.mtls.handlers.aspects
 
+import com.github.javaparser.ast.Modifier
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.SerializationCharacteristic
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addAndGetAnnotation
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addAnnotation
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addDependency
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addSerializationCharacteristic
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setBody
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerResult
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletGeneratedFileContent
@@ -52,6 +61,33 @@ internal class TestCAHandlerInterface
         GenletPathSpecifier.CURRENT_INTERFACE_GENERATION_TARGET_PATH
         GenletPathSpecifier.CURRENT_MICROSERVICE_JAVA_ROOT_PATH
 
+        /* Each modeled microservice becomes a SpringBoot application */
+        node.addSerializationCharacteristic(SerializationCharacteristic.NO_CONSTRUCTORS)
+        node.addImport("org.springframework.context.annotation.Configuration", ImportTargetElementType.METHOD_BODY,
+            SerializationCharacteristic.DONT_RELOCATE)
+        node.addImport("org.springframework.context.annotation.Profile",
+            ImportTargetElementType.ANNOTATION, SerializationCharacteristic.DONT_RELOCATE)
+        node.addImport("import javax.net.ssl.HttpsURLConnection",
+            ImportTargetElementType.ANNOTATION, SerializationCharacteristic.DONT_RELOCATE)
+        // Add main method to invoke the SpringBoot application
+        val currentMicroservicePackage: String by state()
+        node.addAndGetAnnotation("Configuration", SerializationCharacteristic.DONT_RELOCATE)
+        node.addAndGetAnnotation("Configuration", SerializationCharacteristic.DONT_RELOCATE)
+
+
+        val mainMethod = node.addMethod("main", Modifier.Keyword.PUBLIC, Modifier.Keyword.STATIC)
+        mainMethod.addParameter("String[]", "args")
+        mainMethod.setBody("SpringApplication.run(${node.nameAsString}.class, args)")
+        mainMethod.addSerializationCharacteristic(SerializationCharacteristic.DONT_RELOCATE)
+
+        /* Add dependencies and annotations for API comments if necessary */
+        if (eObject.hasApiComments) {
+            node.addDependency("io.springfox:springfox-swagger2:2.9.2")
+            node.addDependency("io.springfox:springfox-swagger-ui:2.9.2")
+            node.addImport("springfox.documentation.swagger2.annotations.EnableSwagger2",
+                ImportTargetElementType.ANNOTATION, SerializationCharacteristic.DONT_RELOCATE)
+            node.addAnnotation("EnableSwagger2", SerializationCharacteristic.DONT_RELOCATE)
+        }
 
 
         println(eObject.qualifiedName)
