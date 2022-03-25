@@ -21,10 +21,10 @@ import de.fhdo.lemma.service.ServicePackage
 internal class DescriptionProvider : LanguageDescriptionProviderI {
     override fun getLanguageDescription(forLanguageNamespace: Boolean, forFileExtension: Boolean,
         languageNamespaceOrFileExtension: String) = when(languageNamespaceOrFileExtension) {
-            DataPackage.eNS_URI -> DATA_DSL_LANGUAGE_DESCRIPTION
+            "data" -> DATA_DSL_LANGUAGE_DESCRIPTION
             IntermediateDataPackage.eNS_URI -> INTERMEDIATE_DATA_MODEL_LANGUAGE_DESCRIPTION
             IntermediateServicePackage.eNS_URI -> INTERMEDIATE_SERVICE_MODEL_LANGUAGE_DESCRIPTION
-            ServicePackage.eNS_URI -> SERVICE_DSL_LANGUAGE_DESCRIPTION
+            "services" -> SERVICE_DSL_LANGUAGE_DESCRIPTION
             else -> null
         }
 }
