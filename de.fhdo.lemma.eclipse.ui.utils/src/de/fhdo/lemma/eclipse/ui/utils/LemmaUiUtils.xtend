@@ -113,25 +113,6 @@ final class LemmaUiUtils {
     }
 
     /**
-     * Create enumeration text in Oxford comma style, e.g., "e1, e2, or e3"
-     */
-    static def createEnumerationText(List<String> elements) {
-        if (elements === null)
-            return null
-
-        switch (elements.size) {
-            case 0: return ""
-            case 1: return elements.get(0)
-            case 2: return '''«elements.get(0)» or «elements.get(1)»'''
-        }
-
-        val enumerationText = new StringBuffer
-        for (i : 0..<elements.size - 1)
-            enumerationText.append(elements.get(i) + ", ")
-        enumerationText.append("or " + elements.last)
-    }
-
-    /**
      * Create an Image for the given filename with the given resource manager
      */
     static def createImage(ResourceManager resourceManager, Class<?> clazz, String filename) {

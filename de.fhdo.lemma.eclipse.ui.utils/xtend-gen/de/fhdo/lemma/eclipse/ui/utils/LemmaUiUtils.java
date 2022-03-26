@@ -38,7 +38,6 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.resource.IResourceServiceProvider;
 import org.eclipse.xtext.resource.XtextResource;
@@ -50,7 +49,6 @@ import org.eclipse.xtext.xbase.lib.ArrayExtensions;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Exceptions;
-import org.eclipse.xtext.xbase.lib.ExclusiveRange;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
@@ -179,46 +177,6 @@ public final class LemmaUiUtils {
       return it.toLowerCase();
     };
     return ListExtensions.<String, String>map(((List<String>)Conversions.doWrapArray(fileExtensions)), _function).contains(extensionLowerCase);
-  }
-  
-  /**
-   * Create enumeration text in Oxford comma style, e.g., "e1, e2, or e3"
-   */
-  public static Object createEnumerationText(final List<String> elements) {
-    StringBuffer _xblockexpression = null;
-    {
-      if ((elements == null)) {
-        return null;
-      }
-      int _size = elements.size();
-      switch (_size) {
-        case 0:
-          return "";
-        case 1:
-          return elements.get(0);
-        case 2:
-          StringConcatenation _builder = new StringConcatenation();
-          String _get = elements.get(0);
-          _builder.append(_get);
-          _builder.append(" or ");
-          String _get_1 = elements.get(1);
-          _builder.append(_get_1);
-          return _builder.toString();
-      }
-      final StringBuffer enumerationText = new StringBuffer();
-      int _size_1 = elements.size();
-      int _minus = (_size_1 - 1);
-      ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, _minus, true);
-      for (final Integer i : _doubleDotLessThan) {
-        String _get_2 = elements.get((i).intValue());
-        String _plus = (_get_2 + ", ");
-        enumerationText.append(_plus);
-      }
-      String _last = IterableExtensions.<String>last(elements);
-      String _plus_1 = ("or " + _last);
-      _xblockexpression = enumerationText.append(_plus_1);
-    }
-    return _xblockexpression;
   }
   
   /**
