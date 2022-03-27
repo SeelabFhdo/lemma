@@ -19,7 +19,7 @@ internal class DependencyModifier : MavenDependencyModifierI {
                 "repositories" {
                     "repository" {
                         "id" { -"confluent" }
-                        "url" { -"http://packages.confluent.io/maven/" }
+                        "url" { -"https://packages.confluent.io/maven/" }
                     }
                 }
             }
