@@ -14,6 +14,7 @@ import org.eclipse.xtext.ide.editor.syntaxcoloring.ISemanticHighlightingCalculat
 import org.eclipse.xtext.service.SingletonBinding;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.model.XtextDocumentProvider;
+import org.eclipse.xtext.ui.editor.reconciler.XtextDocumentReconcileStrategy;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration;
 
 /**
@@ -43,6 +44,10 @@ public class TechnologyDslUiModule extends AbstractTechnologyDslUiModule {
   
   public Class<? extends ISemanticHighlightingCalculator> bindISemanticHighlightingCalculator() {
     return HighlightingCalculator.class;
+  }
+  
+  public Class<? extends XtextDocumentReconcileStrategy> bindXtextDocumentReconcileStrategy() {
+    return TechnologyDslReconcileStrategy.class;
   }
   
   public TechnologyDslUiModule(final AbstractUIPlugin plugin) {

@@ -1,6 +1,5 @@
 package de.fhdo.lemma.ui.autoedit;
 
-import de.fhdo.lemma.ui.autoedit.SingleLineTerminalsStrategyWithLineBreak;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.xtext.ui.editor.autoedit.AbstractEditStrategyProvider;
 import org.eclipse.xtext.ui.editor.autoedit.DefaultAutoEditStrategyProvider;

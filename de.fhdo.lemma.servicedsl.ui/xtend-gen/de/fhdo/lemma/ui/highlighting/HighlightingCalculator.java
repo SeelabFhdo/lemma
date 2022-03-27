@@ -13,7 +13,6 @@ import de.fhdo.lemma.service.ServicePackage;
 import de.fhdo.lemma.service.TechnologyReference;
 import de.fhdo.lemma.technology.TechnologyPackage;
 import de.fhdo.lemma.technology.TechnologySpecificPropertyValueAssignment;
-import de.fhdo.lemma.ui.highlighting.HighlightingConfiguration;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;

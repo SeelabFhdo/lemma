@@ -6,7 +6,6 @@ package de.fhdo.lemma.ui;
 import de.fhdo.lemma.eclipse.ui.editor.LiveValidationCapableXtextEditor;
 import de.fhdo.lemma.eclipse.ui.editor.LiveValidationXtextDocumentProvider;
 import de.fhdo.lemma.eclipse.ui.editor.server.ServerConnection;
-import de.fhdo.lemma.ui.AbstractServiceDslUiModule;
 import de.fhdo.lemma.ui.autoedit.ServiceDslAutoEditStrategyProvider;
 import de.fhdo.lemma.ui.highlighting.HighlightingCalculator;
 import de.fhdo.lemma.ui.highlighting.HighlightingConfiguration;
@@ -17,6 +16,7 @@ import org.eclipse.xtext.service.SingletonBinding;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.autoedit.DefaultAutoEditStrategyProvider;
 import org.eclipse.xtext.ui.editor.model.XtextDocumentProvider;
+import org.eclipse.xtext.ui.editor.reconciler.XtextDocumentReconcileStrategy;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration;
 
 /**
@@ -50,6 +50,10 @@ public class ServiceDslUiModule extends AbstractServiceDslUiModule {
   
   public Class<? extends DefaultAutoEditStrategyProvider> bindDefaultAutoEditStrategyProvider() {
     return ServiceDslAutoEditStrategyProvider.class;
+  }
+  
+  public Class<? extends XtextDocumentReconcileStrategy> bindXtextDocumentReconcileStrategy() {
+    return ServiceDslReconcileStrategy.class;
   }
   
   public ServiceDslUiModule(final AbstractUIPlugin plugin) {

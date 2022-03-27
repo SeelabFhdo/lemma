@@ -14,6 +14,7 @@ import de.fhdo.lemma.eclipse.ui.editor.LiveValidationXtextDocumentProvider
 import org.eclipse.xtext.ui.editor.model.XtextDocumentProvider
 import org.eclipse.xtext.service.SingletonBinding
 import de.fhdo.lemma.eclipse.ui.editor.server.ServerConnection
+import org.eclipse.xtext.ui.editor.reconciler.XtextDocumentReconcileStrategy
 
 /**
  * Use this class to register components to be used within the Eclipse IDE.
@@ -41,5 +42,9 @@ class MappingDslUiModule extends AbstractMappingDslUiModule {
 
     def Class<? extends ISemanticHighlightingCalculator> bindISemanticHighlightingCalculator() {
         HighlightingCalculator
+    }
+
+    def Class<? extends XtextDocumentReconcileStrategy> bindXtextDocumentReconcileStrategy() {
+        return MappingDslReconcileStrategy
     }
 }
