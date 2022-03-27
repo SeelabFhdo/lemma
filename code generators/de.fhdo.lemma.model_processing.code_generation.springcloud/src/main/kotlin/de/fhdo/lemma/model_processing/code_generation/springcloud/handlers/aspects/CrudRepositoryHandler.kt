@@ -56,6 +56,12 @@ internal class CrudRepositoryHandler : AspectHandlerI {
         // the repository becomes an interface.
         repositoryInterface.removeMethodsAndAllAttributes(repository.operations)
         repositoryInterface.members.forEach { (it as MethodDeclaration).removeBody() }
+
+        // Convert all implemented types (possibly resulting from other Genlets like the DDD Genlet) to extended types
+        // because the repository becomes an interface and Java doesn't support implemented types on interfaces
+        repositoryInterface.implementedTypes.forEach { repositoryInterface.addExtendedType(it) }
+        repositoryInterface.implementedTypes.clear()
+
         repositoryInterface.isInterface = true
 
         // Extend repository interface with CrudRepository interface
