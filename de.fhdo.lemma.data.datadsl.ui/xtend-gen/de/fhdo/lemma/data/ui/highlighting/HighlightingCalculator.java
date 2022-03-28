@@ -6,7 +6,6 @@ import de.fhdo.lemma.data.DataOperation;
 import de.fhdo.lemma.data.DataPackage;
 import de.fhdo.lemma.data.EnumerationField;
 import de.fhdo.lemma.data.PrimitiveValue;
-import de.fhdo.lemma.data.ui.highlighting.HighlightingConfiguration;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;

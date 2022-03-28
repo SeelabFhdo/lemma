@@ -22,25 +22,22 @@ import org.eclipse.emf.ecore.EObject
  */
 @AspectHandler
 internal class TestCAHandler : AspectHandlerI {
-    override fun handlesAspects(): Set<String> {
-        println("handlesAspects of keine Ahnung wie ich hier lande?")
-        return setOf("mTLS.Keystore")
-    }
+    override fun handlesAspects(): Set<String> =
+        setOf("mTLS.Keystore", "mTLS.TestKeystore", "mTLS.Truststore", "mTLS.TestTruststore")
 
-//    : Set<String> = setOf("mTLS.Keystore")
-    override fun handlesEObjectNodeCombinations() : EObjectNodeCombinations =
+    override fun handlesEObjectNodeCombinations(): EObjectNodeCombinations =
         combinations { IntermediateMicroservice::class.java with ClassOrInterfaceDeclaration::class.java }
 
     /**
      * Execution logic of the handler
      */
-    override fun execute(eObject: EObject, node: Node, aspect: IntermediateImportedAspect) : Node {
-        println("Execute hier ")
-        var aspects = eObject.getAllAspects("mTLS.Keystore", "mTLS.TestKeystore", "mTLS.Truststore", "mTLS.TestTruststore")
-        aspects.forEach {
-            println("Aspectname: ${it.name} | Aspectvalue: ${it.properties.forEach(System.out::println)}")
-        }
-        println("uiuiuiuiuiui")
+    override fun execute(eObject: EObject, node: Node, aspect: IntermediateImportedAspect): Node {
+//        var aspects =
+//            eObject.getAllAspects("mTLS.Keystore", "mTLS.TestKeystore", "mTLS.Truststore", "mTLS.TestTruststore")
+//        aspects.forEach {
+//            println("Aspectname: ${it.name} | Aspectvalue: ${it.properties.forEach(System.out::println)}")
+//        }
+//        println("uiuiuiuiuiui")
         return node
     }
 }

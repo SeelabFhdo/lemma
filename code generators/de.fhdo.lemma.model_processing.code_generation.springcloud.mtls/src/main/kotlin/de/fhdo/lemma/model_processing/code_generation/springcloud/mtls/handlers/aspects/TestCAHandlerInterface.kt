@@ -6,20 +6,19 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import com.github.javaparser.ast.stmt.BlockStmt
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getPackageName
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.newJavaClassOrInterface
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerResult
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletGeneratedFileContent
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletPathSpecifier
 import de.fhdo.lemma.model_processing.code_generation.java_base.getAllAspects
-import de.fhdo.lemma.model_processing.code_generation.java_base.getAspectPropertyValue
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasAspect
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.PropertyFile
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.openPropertyFile
 import de.fhdo.lemma.model_processing.code_generation.springcloud.mtls.ast.addStringVariable
 import de.fhdo.lemma.model_processing.code_generation.springcloud.mtls.ast.addVariableCheck
+import de.fhdo.lemma.model_processing.code_generation.springcloud.mtls.getAspectValueOrDefault
 import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
 import java.io.File
 
@@ -35,34 +34,53 @@ internal class TestCAHandlerInterface
     ): GenletCodeGenerationHandlerResult<ClassOrInterfaceDeclaration>? {
         if (!eObject.hasAspect("mTLS.Keystore", "mTLS.TestKeystore"))
             return GenletCodeGenerationHandlerResult(node)
-        var currentApplicationPropertiesFile =
+        val currentApplicationPropertiesFile =
             openPropertyFile(GenletPathSpecifier.CURRENT_MICROSERVICE_RESOURCES_PATH, "application-dev.properties")
 
-        println(eObject.qualifiedName)
-        var aspects = eObject.getAllAspects(
+        println("qualifiedName: ${eObject.qualifiedName}")
+        val aspects = eObject.getAllAspects(
             "mTLS.Keystore", "mTLS.TestKeystore", "mTLS.Truststore", "mTLS.TestTruststore"
         )
-        println(eObject.qualifiedName)
-        aspects.forEach {
-            println("Aspectname: ${it.name} ")
+        //todo welche defaultwerte für truststore
+        //todo truststore immer mit keystore in verbindung und wenn kein truststore ist dann der Keystore der Truststore
+        val propertiesList = eObject.getAspectValueOrDefault("mTLS.Keystore")
+
+        propertiesList.forEach {
+            println("${it.first} ${it.second}")
         }
-        println("path:${eObject.getAspectPropertyValue("mTLS.Keystore", "path")}")
-        println("password:${eObject.getAspectPropertyValue("mTLS.Keystore", "password")}")
-        println("validityInDays:${eObject.getAspectPropertyValue("mTLS.Keystore", "validityInDays")}")
-        println(
-            "hostnameVerifierBypass:${
-                eObject.getAspectPropertyValue("mTLS.Keystore", "hostnameVerifierBypass").toBoolean()
-            }"
-        )
+
+//        aspects.forEach { it ->
+//            println("Aspectname: ${it.name} ")
+//            it.properties.forEach{ property ->
+//                println("Property: ${property.name} Default Value: ${property.defaultValue}")
+//            }
+//
+//            it.propertyValues.forEach { property ->
+//                println("Property: ${property.property.name} Default Value: ${property.property.defaultValue} Property Value: ${property.value}")
+//            }
+//        }
+        /*
+        * @mtls::_aspects.Keystore(path="./keystore_MS1.p12", password="geheim1")
+        * @mtls::_aspects.Truststore(path="./truststore_MS1.p12", password="geheim1")
+        * */
+
+//        println("path:${eObject.getAspectPropertyValue("mTLS.Keystore", "path")}")
+//        println("password:${eObject.getAspectPropertyValue("mTLS.Keystore", "password")}")
+//        println("validityInDays:${eObject.getAspectPropertyValue("mTLS.Keystore", "validityInDays")}")
+//        println(
+//            "hostnameVerifierBypass:${
+//                eObject.getAspectPropertyValue("mTLS.Keystore", "hostnameVerifierBypass").toBoolean()
+//            }"
+//        )
 
 
 
         return GenletCodeGenerationHandlerResult(
             node,
             mutableSetOf(
-                GenletGeneratedFileContent(currentApplicationPropertiesFile),
-                generatSpringBypassConfigutationFile(node.getPackageName(), "mTLSBypassConfiguration"),
-                generatSpringMtlsConfigutationFile(node.getPackageName(), "MTLSConfiguration")
+                GenletGeneratedFileContent(currentApplicationPropertiesFile)
+//                generatSpringBypassConfigutationFile(node.getPackageName(), "mTLSBypassConfiguration"),
+//                generatSpringMtlsConfigutationFile(node.getPackageName(), "MTLSConfiguration")
             )
         )
     }
