@@ -42,7 +42,7 @@ internal abstract class AbstractDelegatingIntermediateModelValidator(
      * Delegate validations to Genlets if the user didn't disable them
      */
     @Before
-    private fun delegateValidationToGenlets(resource: Resource) {
+    protected fun delegateValidationToGenlets(resource: Resource) {
         if (CommandLine.disableGenletValidations)
             return
 
