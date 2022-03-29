@@ -6,6 +6,7 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import com.github.javaparser.ast.stmt.BlockStmt
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getPackageName
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.newJavaClassOrInterface
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerResult
@@ -16,6 +17,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGen
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasAspect
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.PropertyFile
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.openPropertyFile
+import de.fhdo.lemma.model_processing.code_generation.springcloud.mtls.Context.State
 import de.fhdo.lemma.model_processing.code_generation.springcloud.mtls.ast.addStringVariable
 import de.fhdo.lemma.model_processing.code_generation.springcloud.mtls.ast.addVariableCheck
 import de.fhdo.lemma.model_processing.code_generation.springcloud.mtls.getAspectValueOrDefault
@@ -34,63 +36,31 @@ internal class TestCAHandlerInterface
     ): GenletCodeGenerationHandlerResult<ClassOrInterfaceDeclaration>? {
         if (!eObject.hasAspect("mTLS.Keystore", "mTLS.TestKeystore"))
             return GenletCodeGenerationHandlerResult(node)
-        val currentApplicationPropertiesFile =
-            openPropertyFile(GenletPathSpecifier.CURRENT_MICROSERVICE_RESOURCES_PATH, "application-dev.properties")
 
         println("qualifiedName: ${eObject.qualifiedName}")
         val aspects = eObject.getAllAspects(
             "mTLS.Keystore", "mTLS.TestKeystore", "mTLS.Truststore", "mTLS.TestTruststore"
         )
-        //todo welche defaultwerte für truststore
-        //todo truststore immer mit keystore in verbindung und wenn kein truststore ist dann der Keystore der Truststore
-        val propertiesList = eObject.getAspectValueOrDefault("mTLS.Keystore")
-
-        propertiesList.forEach {
-            println("${it.first} ${it.second}")
+        aspects.forEach { aspect ->
+            when (aspect.qualifiedName) {
+                "mTLS.Keystore", "mTLS.Truststore" ->
+                    State.addPropertiesToFile(
+                        "application-mtls.properties",
+                        eObject.getAspectValueOrDefault(aspect.qualifiedName)
+                    )
+                "mTLS.TestKeystore", "mTLS.TestTruststore" ->
+                    State.addPropertiesToFile(
+                        "application-mtlslocal.properties",
+                        eObject.getAspectValueOrDefault(aspect.qualifiedName)
+                    )
+            }
         }
-
-//        aspects.forEach { it ->
-//            println("Aspectname: ${it.name} ")
-//            it.properties.forEach{ property ->
-//                println("Property: ${property.name} Default Value: ${property.defaultValue}")
-//            }
-//
-//            it.propertyValues.forEach { property ->
-//                println("Property: ${property.property.name} Default Value: ${property.property.defaultValue} Property Value: ${property.value}")
-//            }
-//        }
-        /*
-        * @mtls::_aspects.Keystore(path="./keystore_MS1.p12", password="geheim1")
-        * @mtls::_aspects.Truststore(path="./truststore_MS1.p12", password="geheim1")
-        * */
-
-//        println("path:${eObject.getAspectPropertyValue("mTLS.Keystore", "path")}")
-//        println("password:${eObject.getAspectPropertyValue("mTLS.Keystore", "password")}")
-//        println("validityInDays:${eObject.getAspectPropertyValue("mTLS.Keystore", "validityInDays")}")
-//        println(
-//            "hostnameVerifierBypass:${
-//                eObject.getAspectPropertyValue("mTLS.Keystore", "hostnameVerifierBypass").toBoolean()
-//            }"
-//        )
-
-
-
-        return GenletCodeGenerationHandlerResult(
-            node,
-            mutableSetOf(
-                GenletGeneratedFileContent(currentApplicationPropertiesFile)
-//                generatSpringBypassConfigutationFile(node.getPackageName(), "mTLSBypassConfiguration"),
-//                generatSpringMtlsConfigutationFile(node.getPackageName(), "MTLSConfiguration")
-            )
+        val fileSet = mutableSetOf(
+            generatSpringBypassConfigutationFile(node.getPackageName(), "mTLSBypassConfiguration"),
+            generatSpringMtlsConfigutationFile(node.getPackageName(), "MTLSConfiguration")
         )
-    }
-
-    /**
-     * Helper to create a [GenletGeneratedFileContent] instance from the current application properties file, in case
-     * new properties were added during the generation of the current microservice
-     */
-    private fun generatedApplicationPropertiesFile(currentApplicationPropertiesFile: PropertyFile): MutableSet<GenletGeneratedFileContent> {
-        return mutableSetOf(GenletGeneratedFileContent(currentApplicationPropertiesFile))
+        fileSet.addAll(generateSpringBootPropertyFiles())
+        return GenletCodeGenerationHandlerResult(node, fileSet)
     }
 
     private fun generatSpringBypassConfigutationFile(
@@ -152,20 +122,22 @@ internal class TestCAHandlerInterface
         )
     }
 
-
-    private fun getSpringProperty(eObject: IntermediateMicroservice): String {
-        if (!eObject.hasAspect("mTLS.Keystore", "mTLS.TestKeystore"))
-            return ""
-        return ""
-//        println(currentApplicationPropertiesFile.filePath)
-//        currentApplicationPropertiesFile["spring.test"] = "huhu1"
-//
-//        currentApplicationPropertiesFile.forEach { key, value -> println("DEFAULT key ${key} value ${value}") }
-//            "path" -> "server.ssl.key-store"
-//            "password" -> "server.ssl.key-store-password"
-//            "validityInDays" -> "server.ssl.validity-in-days"
-//            "hostnameVerifierBypass" -> "server.ssl.bypass.hostname-verifier"
-
+    private fun generateSpringBootPropertyFiles(): Set<GenletGeneratedFileContent> {
+        val propertyFiles = mutableSetOf<GenletGeneratedFileContent>()
+        State.getPropertyFiles().forEach { propertyFile ->
+            println("Filename: ${propertyFile.key}")
+            val propertyFilea =
+                openPropertyFile(GenletPathSpecifier.CURRENT_MICROSERVICE_RESOURCES_PATH, propertyFile.key)
+            propertyFile.value.forEach { property ->
+                propertyFilea[property.first] = formattingSystemVariable(property.second)
+            }
+            propertyFiles.add(GenletGeneratedFileContent(propertyFilea))
+        }
+        return propertyFiles
     }
+
+    private fun formattingSystemVariable(variable: String) =
+        if (variable.startsWith("$")) variable.uppercase() else variable
+
 }
 
