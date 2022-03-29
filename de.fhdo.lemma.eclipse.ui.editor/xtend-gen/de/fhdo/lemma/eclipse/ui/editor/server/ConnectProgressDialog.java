@@ -1,8 +1,6 @@
 package de.fhdo.lemma.eclipse.ui.editor.server;
 
 import com.google.common.base.Function;
-import de.fhdo.lemma.eclipse.ui.editor.server.ConnectThread;
-import de.fhdo.lemma.eclipse.ui.editor.server.ServerConnection;
 import de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IMessageProvider;

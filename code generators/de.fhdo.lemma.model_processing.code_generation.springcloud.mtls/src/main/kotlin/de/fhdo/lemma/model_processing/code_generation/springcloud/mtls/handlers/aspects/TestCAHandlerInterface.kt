@@ -45,6 +45,7 @@ internal class TestCAHandlerInterface
         //todo truststore immer mit keystore in verbindung und wenn kein truststore ist dann der Keystore der Truststore
         val propertiesList = eObject.getAspectValueOrDefault("mTLS.Keystore")
 
+
         propertiesList.forEach {
             println("${it.first} ${it.second}")
         }

@@ -4,8 +4,6 @@ import com.google.common.base.Objects;
 import de.fhdo.lemma.data.avro.AvroGenerator;
 import de.fhdo.lemma.data.avro.Shared;
 import de.fhdo.lemma.data.avro.ui.Util;
-import de.fhdo.lemma.data.avro.ui.to_avro.LemmaToAvroDialog;
-import de.fhdo.lemma.data.avro.ui.to_avro.ProjectFileSelectionDialog;
 import de.fhdo.lemma.data.intermediate.IntermediateComplexType;
 import de.fhdo.lemma.data.intermediate.IntermediateContext;
 import de.fhdo.lemma.data.intermediate.IntermediateDataModel;
