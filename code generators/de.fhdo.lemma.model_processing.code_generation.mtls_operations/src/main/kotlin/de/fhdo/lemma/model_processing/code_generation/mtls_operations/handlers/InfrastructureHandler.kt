@@ -1,7 +1,5 @@
 package de.fhdo.lemma.model_processing.code_generation.mtls_operations.handlers
 
-
-import de.fhdo.lemma.data.intermediate.IntermediateContext
 import de.fhdo.lemma.data.intermediate.IntermediatePackage
 import de.fhdo.lemma.model_processing.annotations.CodeGenerationModule
 import de.fhdo.lemma.model_processing.builtin_phases.code_generation.AbstractCodeGenerationModule
@@ -22,7 +20,7 @@ class InfrastructureHandler : AbstractCodeGenerationModule() {
         var node: String? = ""
         this.resource.allContents.forEach { element ->
             val elementInstanceType = element.mainInterface
-            classes.forEach { (test, handlerClassInfo) ->
+            classes.forEach { (_, handlerClassInfo) ->
                 val clazz = handlerClassInfo.loadClass()
                 val handlerInstance = clazz.getConstructor().newInstance() as CodeGenerationHandlerI<EObject>
                 if (elementInstanceType == handlerInstance.getSourceInstanceType()) {
