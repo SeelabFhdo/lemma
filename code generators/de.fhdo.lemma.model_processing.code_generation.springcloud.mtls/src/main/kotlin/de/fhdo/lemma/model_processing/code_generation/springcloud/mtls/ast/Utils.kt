@@ -44,14 +44,3 @@ internal fun getSystemProperty(property: String) = when (property) {
     "server.ssl.trust-store-password" -> "javax.net.ssl.trustStorePassword"
     else -> ""
 }
-
-//internal fun mapAspectToSpringProperty() = when (fullyQualifiedName) {
-//    //        "mTLS.Keystore", "mTLS.TestKeystore", "mTLS.Truststore", "mTLS.TestTruststore"
-//    this.pr
-//    "Keystore.path" -> "server.ssl.key-store"
-//    "mTLS.Truststore" -> ""
-//    "Truststore.path" in fullyQualifiedName -> "server.ssl.trust-store"
-//    "" -> "server.ssl.key-store-password"
-//    "1" -> "server.ssl.trust-store-password"
-//    else -> ""
-//}

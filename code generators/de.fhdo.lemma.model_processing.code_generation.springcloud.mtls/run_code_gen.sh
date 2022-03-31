@@ -12,7 +12,7 @@ MODEL_PATH="$HOME/masterthesis/runtime-EclipseApplication/lemmasecuritymodel"
 echo "Java Base Generator - MS1"
 java -jar "$JAVABASE_PATH" \
     -i "$MODEL_PATH/intermediate/service models/ms1.xmi" \
-    -t "$TARGET_PATH""/ms1" \
+    -t "$TARGET_PATH" \
     --genlet "$SPRINGCLOUD_PATH" \
     --genlet "$SPRINGCLOUD_MTLS_PATH"
 
@@ -20,7 +20,7 @@ java -jar "$JAVABASE_PATH" \
 echo "Java Base Generator - MS2"
 java -jar "$JAVABASE_PATH" \
     -i "$MODEL_PATH/intermediate/service models/ms2.xmi" \
-    -t "$TARGET_PATH""/ms2" \
+    -t "$TARGET_PATH" \
     --genlet "$SPRINGCLOUD_PATH" \
     --genlet "$SPRINGCLOUD_MTLS_PATH"
 

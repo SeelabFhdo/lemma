@@ -1,4 +1,4 @@
-package de.fhdo.lemma.model_processing.code_generation.mtls_operations.property_files
+package de.fhdo.lemma.model_processing.code_generation.mtls_operation.property_files
 
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.PropertyFile
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.SortableProperties

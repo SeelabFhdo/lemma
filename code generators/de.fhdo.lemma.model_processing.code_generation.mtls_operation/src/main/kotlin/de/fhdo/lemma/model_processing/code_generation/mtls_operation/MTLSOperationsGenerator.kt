@@ -1,8 +1,8 @@
-package de.fhdo.lemma.model_processing.code_generation.mtls_operations
+package de.fhdo.lemma.model_processing.code_generation.mtls_operation
 
 import de.fhdo.lemma.model_processing.AbstractModelProcessor
 
-private const val BASE_PACKAGE = "de.fhdo.lemma.model_processing.code_generation.mtls_operations"
+public const val BASE_PACKAGE = "de.fhdo.lemma.model_processing.code_generation.mtls_operation"
 
 class MtlsOperationsGenerator : AbstractModelProcessor(BASE_PACKAGE)
 

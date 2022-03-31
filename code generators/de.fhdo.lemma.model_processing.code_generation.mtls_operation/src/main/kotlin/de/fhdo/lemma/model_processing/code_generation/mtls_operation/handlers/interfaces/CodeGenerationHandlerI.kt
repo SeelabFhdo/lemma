@@ -1,11 +1,12 @@
-package de.fhdo.lemma.model_processing.code_generation.mtls_operations.handlers
+package de.fhdo.lemma.model_processing.code_generation.mtls_operation.handlers.interfaces
 
+import de.fhdo.lemma.model_processing.code_generation.mtls_operation.BASE_PACKAGE
 import org.eclipse.emf.ecore.EObject
 import io.github.classgraph.ClassGraph
 
-const val packageName = "de.fhdo.lemma.model_processing.code_generation.mtls_operations"
-const val annotationName = "de.fhdo.lemma.model_processing.code_generation.mtls_operations.handlers.CodeGenerationHandler"
-const val interfaceName = "de.fhdo.lemma.model_processing.code_generation.mtls_operations.handlers.CodeGenerationHandlerI"
+const val packageName = BASE_PACKAGE
+const val annotationName = "${BASE_PACKAGE}.handlers.interfaces.CodeGenerationHandler"
+const val interfaceName = "${BASE_PACKAGE}.handlers.interfaces.CodeGenerationHandlerI"
 
 @Target(AnnotationTarget.CLASS)
 annotation class CodeGenerationHandler()
