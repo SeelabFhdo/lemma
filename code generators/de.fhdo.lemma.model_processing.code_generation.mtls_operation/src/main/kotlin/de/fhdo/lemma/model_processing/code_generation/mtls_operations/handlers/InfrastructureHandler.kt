@@ -28,8 +28,8 @@ class InfrastructureHandler : AbstractCodeGenerationModule() {
                 }
             }
         }
-        println(node)
-
+        if (!node.isNullOrEmpty())
+            content["${targetFolder}/key/${"test"}.var"] = node!!
         return withCharset(content, "UTF-8")
     }
 

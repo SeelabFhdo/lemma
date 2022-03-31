@@ -13,13 +13,13 @@ repositories {
 }
 
 buildscript {
-    extra.set("classgraphVersion", "4.8.35")
-    extra.set("commonsVersion", "3.5")
+    extra.set("classgraphVersion", "4.8.141")
+    extra.set("commonsVersion", "3.12.0")
     extra.set("javaBaseGeneratorVersion", version)
     extra.set("javaParserVersion", "3.14.10")
     extra.set("lemmaEclipsePluginsVersion", version)
     extra.set("modelProcessingVersion", version)
-    extra.set("xmlBuilderVersion", "1.7.2")
+    extra.set("xmlBuilderVersion", "1.7.3")
 }
 
 dependencies {

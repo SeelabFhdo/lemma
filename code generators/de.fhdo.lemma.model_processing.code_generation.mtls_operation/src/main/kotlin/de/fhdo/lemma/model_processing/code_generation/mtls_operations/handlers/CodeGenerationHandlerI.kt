@@ -1,6 +1,5 @@
 package de.fhdo.lemma.model_processing.code_generation.mtls_operations.handlers
 
-import de.fhdo.lemma.model_processing.utils.mainInterface
 import org.eclipse.emf.ecore.EObject
 import io.github.classgraph.ClassGraph
 
