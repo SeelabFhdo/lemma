@@ -1,11 +1,11 @@
 package de.fhdo.lemma.model_processing.code_generation.mtls_operation.handlers
 
-import de.fhdo.lemma.model_processing.code_generation.java_base.forEachAspect
-import de.fhdo.lemma.model_processing.code_generation.java_base.fullyQualifiedClassname
-import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.SortableProperties
 import de.fhdo.lemma.model_processing.code_generation.mtls_operation.handlers.interfaces.CodeGenerationHandler
 import de.fhdo.lemma.model_processing.code_generation.mtls_operation.handlers.interfaces.CodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.mtls_operation.modul_handler.MainContext
+import de.fhdo.lemma.model_processing.code_generation.mtls_operation.modul_handler.generateFilePath
+import de.fhdo.lemma.model_processing.code_generation.mtls_operation.utils.asFormattedString
+import de.fhdo.lemma.model_processing.code_generation.mtls_operation.utils.loadPropertiesFile
 import de.fhdo.lemma.operation.intermediate.IntermediateContainer
 
 @CodeGenerationHandler
@@ -13,12 +13,16 @@ class IntermediateContainerNodeHandler : CodeGenerationHandlerI<IntermediateCont
     override fun getSourceInstanceType() = IntermediateContainer::class.java
 
     override fun execute(eObject: IntermediateContainer): String? {
-//        println("container")
 
         eObject.deployedServices.forEach { deployedService ->
-            MainContext.State.addPropertyFile(deployedService.name, SortableProperties(), "certs" )
+            val filePath = generateFilePath(deployedService.name, "certs", "file.var")
+            val properties = loadPropertiesFile(filePath)
+            properties["key"] = deployedService.name
+            println(properties.asFormattedString())
+            MainContext.State.addPropertyFile(deployedService.name, properties, "certs", "file.var" )
         }
 
         return "IntermediateContainerNodeHandler.${eObject.name}"
     }
 }
+
