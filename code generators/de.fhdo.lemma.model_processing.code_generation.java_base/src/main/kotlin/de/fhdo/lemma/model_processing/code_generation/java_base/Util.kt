@@ -6,6 +6,7 @@ import de.fhdo.lemma.data.DataModel
 import de.fhdo.lemma.data.DataStructure
 import de.fhdo.lemma.data.Enumeration
 import de.fhdo.lemma.data.CollectionType
+import de.fhdo.lemma.data.intermediate.IntermediateCollectionType
 import de.fhdo.lemma.data.intermediate.IntermediateComplexType
 import de.fhdo.lemma.data.intermediate.IntermediateDataField
 import de.fhdo.lemma.data.intermediate.IntermediateDataModel
@@ -15,6 +16,8 @@ import de.fhdo.lemma.data.intermediate.IntermediateDataStructure
 import de.fhdo.lemma.data.intermediate.IntermediateEnumeration
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
 import de.fhdo.lemma.data.intermediate.IntermediateImportedComplexType
+import de.fhdo.lemma.data.intermediate.IntermediateTypeKind
+import de.fhdo.lemma.data.intermediate.IntermediateTypeOrigin
 import de.fhdo.lemma.model_processing.asFile
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addGetter
@@ -28,6 +31,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.languages.getTyp
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.PropertyFile
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.services.ServicesContext.State as ServicesState
 import de.fhdo.lemma.model_processing.loadXtextResource
+import de.fhdo.lemma.model_processing.phases.PhaseException
 import de.fhdo.lemma.model_processing.utils.loadModelRootRelative
 import de.fhdo.lemma.model_processing.utils.mainInterface
 import de.fhdo.lemma.model_processing.utils.packageToPath
@@ -73,12 +77,109 @@ val EObject.simpleName
  */
 val EObject.classname
     get() = when(this) {
-        is IntermediateComplexType -> name.capitalize()
+        is IntermediateComplexType -> resolveIfCollectionType()?.classname ?: name.capitalize()
         is IntermediateMicroservice -> simpleName.capitalize()
         is IntermediateInterface -> simpleName.capitalize()
         is IntermediateOperation -> name.capitalize()
         else -> throw IllegalArgumentException("EObject of type ${this.mainInterface.name} does not have a classname")
     }
+
+/**
+ * Resolve this [IntermediateComplexType] in case it points to an [IntermediateCollectionType]. Otherwise return null.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun IntermediateComplexType.resolveIfCollectionType()
+    = if (this is IntermediateCollectionType)
+            this
+        else if (kind == IntermediateTypeKind.COLLECTION && origin == IntermediateTypeOrigin.DATA_MODEL)
+            resolve() as IntermediateCollectionType
+        else
+            null
+
+/**
+ * Property representing the classname of this [IntermediateCollectionType]. The classname corresponds to the fully
+ * qualified name of the Java counterpart of the [IntermediateCollectionType], e.g., "java.util.List".
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private val IntermediateCollectionType.classname
+    get() = getJavaCollectionTypeDescription().fullyQualifiedClassname.substringAfterLast(".")
+
+/**
+ * Get the [JavaCollectionTypeDescription] which maps to this [IntermediateCollectionType].
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun IntermediateCollectionType.getJavaCollectionTypeDescription() : JavaCollectionTypeDescription {
+    // The Java Collection type can be prescribed by modelers leveraging aspects. If no supported aspect was specified,
+    // the default one is used.
+    val collectionAspect = aspects.find { it.qualifiedName in SUPPORTED_JAVA_COLLECTION_TYPES }?.qualifiedName
+        ?: DEFAULT_JAVA_COLLECTION_ASPECT
+    val collectionTypeDescription = SUPPORTED_JAVA_COLLECTION_TYPES[collectionAspect]!!
+
+    // Some Collection types like java.util.Map only make sense when they are parameterized with other types. In LEMMA,
+    // we force the modeler to use structured collection types for such Collection types. For instance, a collection
+    // type like
+    //      @java::_aspects.Map
+    //      collection MyMap { int key, string value }
+    // will result in applications of the type "Map<Integer, String">, e.g., on generated attributes.
+    val expectedTypeArgumentCount = collectionTypeDescription.typeArgumentCount
+    if (expectedTypeArgumentCount > 1 && dataFields.size != expectedTypeArgumentCount)
+        throw PhaseException("Cannot determine Java collection type for LEMMA collection type $name: The number of " +
+            "data fields (${dataFields.size}) does not match the number of data fields expected by the Java " +
+            "collection type $collectionAspect (${expectedTypeArgumentCount})")
+
+    return collectionTypeDescription
+}
+
+/**
+ * The default Java Collection aspect.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private const val DEFAULT_JAVA_COLLECTION_ASPECT = "java.List"
+
+/**
+ * The map of supported Java Collection aspects and their type descriptions
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private val SUPPORTED_JAVA_COLLECTION_TYPES = mapOf(
+    DEFAULT_JAVA_COLLECTION_ASPECT to JavaCollectionTypeDescription("java.util.List", 1),
+    "java.LinkedList" to JavaCollectionTypeDescription("java.util.LinkedList", 1),
+    "java.Map" to JavaCollectionTypeDescription("java.util.Map", 2),
+    "java.Set" to JavaCollectionTypeDescription("java.util.Set", 1)
+)
+
+/**
+ * Helper class that clusters the description of a Java Collection type.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal class JavaCollectionTypeDescription(val fullyQualifiedClassname: String, val typeArgumentCount: Int,
+    val imports: Set<String>) {
+    /**
+     * Convenience constructor for single imports. The [fullyQualifiedClassname] is also treated as the initial entry
+     * of the [imports] set.
+     */
+    constructor(fullyQualifiedClassname: String, typeArgumentCount: Int)
+        : this(fullyQualifiedClassname, typeArgumentCount, mutableSetOf(fullyQualifiedClassname))
+
+    /**
+     * Two [JavaCollectionTypeDescription] instances are equal if their [fullyQualifiedClassname] values are equal
+     */
+    override fun equals(other : Any?)
+        = if (this === other) true
+            else if (other == null) false
+            else if (other is JavaCollectionTypeDescription) fullyQualifiedClassname == other.fullyQualifiedClassname
+            else false
+
+    /**
+     * The hash code of a [JavaCollectionTypeDescription] is equal to the hash code of its [fullyQualifiedClassname]
+     */
+    override fun hashCode() = fullyQualifiedClassname.hashCode()
+}
 
 /**
  * Property representing the Java filename of an [EObject], e.g., an [IntermediateMicroservice] or
@@ -163,7 +264,9 @@ internal fun EObject.buildOperationPackageName(targetInterfaceName: String = "",
  */
 val EObject.fullyQualifiedClassname
     get() = when(this) {
-        is IntermediateComplexType -> "$eObjectPackageName.$classname"
+        is IntermediateComplexType ->
+            resolveIfCollectionType()?.getJavaCollectionTypeDescription()?.fullyQualifiedClassname
+                ?: "$eObjectPackageName.$classname"
         is IntermediateMicroservice -> "$eObjectPackageName.$classname"
         else -> throw IllegalArgumentException("EObject of type ${this.mainInterface.name} does not have a " +
             "fully-qualified classname")

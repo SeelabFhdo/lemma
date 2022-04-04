@@ -177,7 +177,10 @@ internal class DataFieldHandler :
         intermediateType : IntermediateType) {
         typeMapping.getImports().forEach { addImport(it, ImportTargetElementType.METHOD) }
 
-        if (typeMapping.isComplexTypeMapping) {
+        // For structure or enumeration type mappings, we add the corresponding import to the generated type. Note that
+        // for LEMMA collection types we don't add a type name since LEMMA collection types are mapped to instances of
+        // Java Collection types and thus don't represent standalone types.
+        if (typeMapping.isStructureOrEnumerationTypeMapping) {
             val currentDomainPackage: String by DomainState
             val typeClassname = (intermediateType as IntermediateComplexType).fullyQualifiedClassname
             val complexTypeFullyQualifiedName = "$currentDomainPackage.$typeClassname"

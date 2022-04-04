@@ -43,8 +43,8 @@ internal class IntermediateDataOperationHandler
 
                 originalReturnType.dataFields.size == 1 -> {
                     val type = originalReturnType.dataFields[0].type
-                    val (typeName, isComplexTypeMapping, imports, dependencies) = type.getTypeMapping()!!
-                    if (isComplexTypeMapping) {
+                    val (typeName, isStructureOrEnumerationTypeMapping, imports, dependencies) = type.getTypeMapping()!!
+                    if (isStructureOrEnumerationTypeMapping) {
                         val currentDomainPackage: String by state()
                         val fullyQualifiedClassname = (type as IntermediateComplexType).fullyQualifiedClassname
                         node.addImport("$currentDomainPackage.$fullyQualifiedClassname", ImportTargetElementType.METHOD)
