@@ -5,6 +5,9 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import de.fhdo.lemma.data.intermediate.IntermediateDataStructure
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.SerializationCharacteristic
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addAndGetAnnotation
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addAnnotation
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addDependency
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.hasAnnotation
@@ -37,16 +40,19 @@ internal class TableHandler : AspectHandlerI {
 
         /* Each Table automatically becomes an Entity, too */
         if (!generatedClass.hasAnnotation("Entity")) {
-            generatedClass.addAnnotation("Entity")
-            generatedClass.addImport("javax.persistence.Entity", ImportTargetElementType.ANNOTATION)
+            generatedClass.addAnnotation("Entity", SerializationCharacteristic.KEEP_ON_RELOCATION)
+            generatedClass.addImport("javax.persistence.Entity", ImportTargetElementType.ANNOTATION,
+                SerializationCharacteristic.KEEP_ON_RELOCATION)
         }
 
         /* Add the Table annotation together with its "name" value if specified for the aspect */
-        val tableAnnotation = generatedClass.addAndGetAnnotation("Table")
+        val tableAnnotation = generatedClass.addAndGetAnnotation("Table",
+            SerializationCharacteristic.KEEP_ON_RELOCATION)
         val tableName = aspect.getPropertyValue("name")
         if (tableName != null)
             tableAnnotation.addPair("name", "\"$tableName\"")
-        generatedClass.addImport("javax.persistence.Table", ImportTargetElementType.ANNOTATION)
+        generatedClass.addImport("javax.persistence.Table", ImportTargetElementType.ANNOTATION,
+            SerializationCharacteristic.KEEP_ON_RELOCATION)
 
         /*
          * Add Id annotation to all attributes of the generated class whose corresponding data structure fields are
