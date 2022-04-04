@@ -21,7 +21,6 @@ internal object MainContext {
 
         fun addPropertyFile(name: String, properties: SortableProperties, vararg  folders: String){
             val test = generateFilePath(name, *folders)
-            println(test)
             propertyFiles[generateFilePath(name, *folders)] = properties
         }
 
