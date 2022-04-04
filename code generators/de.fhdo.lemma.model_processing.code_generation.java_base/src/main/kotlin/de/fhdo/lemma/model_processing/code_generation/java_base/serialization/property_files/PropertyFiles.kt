@@ -103,7 +103,7 @@ class PropertyFile(val filePath: String, private val properties: SortablePropert
     override fun toString() : String {
         val writer = StringWriter()
         properties.store(writer, null)
-        var fileContent = writer.toString()
+        val fileContent = writer.toString()
         return if (fileContent.startsWith("#"))
                 fileContent.lines().drop(1).joinToString("\n")
             else
@@ -126,9 +126,28 @@ class PropertyFile(val filePath: String, private val properties: SortablePropert
 }
 
 /**
- * Store to keep track of all [PropertyFile] references being opened leveraging one of the [openPropertyFile] methods.
- * This allows for performing bulk actions like [serializeOpenedPropertyFiles] or [closeOpenedPropertyFiles] on all
- * property files produced during code generation.
+ * Open the property file at the given [filePath]. If the path does not represent an existing property file, a new
+ * [PropertyFile] instance is created. In any case, the [PropertyFile] instance is stored in the [OpenedPropertyFiles].
+ * These instances are reused upon calling this function, i.e., if the [OpenedPropertyFiles] contains an instance for
+ * the given [filePath] it is returned by the function.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun openPropertyFile(filePath: String) : PropertyFile {
+    val propertyFile = OpenedPropertyFiles[filePath] ?:
+        if (filePath.asFile().exists())
+            PropertyFile.loadFromFilePath(filePath)
+        else
+            PropertyFile(filePath, SortableProperties())
+
+    OpenedPropertyFiles.addOrReplace(propertyFile)
+    return propertyFile
+}
+
+/**
+ * Store to keep track of all [PropertyFile] references being opened leveraging one of the internal [openPropertyFile]
+ * methods. This allows for performing bulk actions like [serializeOpenedPropertyFiles] or [closeOpenedPropertyFiles] on
+ * all property files produced during code generation.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
@@ -150,25 +169,6 @@ private object OpenedPropertyFiles {
 }
 
 /**
- * Open the property file at the given [filePath]. If the path does not represent an existing property file, a new
- * [PropertyFile] instance is created. In any case, the [PropertyFile] instance is stored in the [OpenedPropertyFiles].
- * These instances are reused upon calling this function, i.e., if the [OpenedPropertyFiles] contains an instance for
- * the given [filePath] it is returned by the function.
- *
- * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
- */
-internal fun openPropertyFile(filePath: String) : PropertyFile {
-    val propertyFile = OpenedPropertyFiles[filePath] ?:
-        if (filePath.asFile().exists())
-            PropertyFile.loadFromFilePath(filePath)
-        else
-            PropertyFile(filePath, SortableProperties())
-
-    OpenedPropertyFiles.addOrReplace(propertyFile)
-    return propertyFile
-}
-
-/**
  * Open a property file named [filename] at the given [folderPath].
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
@@ -184,7 +184,10 @@ internal fun openPropertyFile(folderPath: String, filename: String)
  */
 fun openPropertyFile(genletPathSpecifier: GenletPathSpecifier, filename: String) : PropertyFile {
     val filePath = "${GenletPathSpecifier.resolvePathSpecifier(genletPathSpecifier)}${File.separator}$filename"
-    return PropertyFile(filePath, SortableProperties())
+    return if (filePath.asFile().exists())
+            PropertyFile.loadFromFilePath(filePath)
+        else
+            PropertyFile(filePath, SortableProperties())
 }
 
 /**
