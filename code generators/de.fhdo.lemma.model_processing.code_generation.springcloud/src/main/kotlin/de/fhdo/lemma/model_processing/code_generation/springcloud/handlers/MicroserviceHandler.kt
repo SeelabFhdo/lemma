@@ -43,6 +43,8 @@ internal class MicroserviceHandler
     override fun generatesNodesOfInstance() = ClassOrInterfaceDeclaration::class.java
 
     companion object {
+        private const val H2_DATABASE_CONSOLE_ENABLED_PROPERTY = "spring.h2.console.enabled"
+
         /**
          * Callback to react to the finish of the current microservice's Java generation
          */
@@ -199,8 +201,12 @@ internal class MicroserviceHandler
         aspect.newApplicationProperty("password", "spring.datasource.password")
 
         val driver = aspect.newApplicationProperty("driverClassName", "spring.datasource.driverClassName") ?: return
-        if (driver == "org.h2.Driver")
+        val currentApplicationPropertiesFile: PropertyFile by State
+        if (driver == "org.h2.Driver") {
             serviceClass.addDependency("com.h2database:h2")
+            currentApplicationPropertiesFile[H2_DATABASE_CONSOLE_ENABLED_PROPERTY] = "true"
+        } else if (H2_DATABASE_CONSOLE_ENABLED_PROPERTY in currentApplicationPropertiesFile)
+            currentApplicationPropertiesFile[H2_DATABASE_CONSOLE_ENABLED_PROPERTY] = "false"
     }
 
     /**
