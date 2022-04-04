@@ -6,7 +6,6 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.findCod
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.invokeCodeGenerationHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainCodeGenerationModule
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.services.ServicesContext.State.visitingServicesCodeGenerationHandlers
-import de.fhdo.lemma.model_processing.code_generation.java_base.simpleName
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainContext.State as MainState
 import de.fhdo.lemma.model_processing.utils.mainInterface
 import org.eclipse.emf.ecore.EObject
@@ -23,7 +22,6 @@ import kotlin.reflect.KProperty
 internal object ServicesContext {
     /* State object of the context */
     object State {
-        private const val SERVICE_SUBFOLDER_NAME = "service"
         private const val INTERFACE_SUBFOLDER_NAME = "interfaces"
 
         internal lateinit var visitingServicesCodeGenerationHandlers
@@ -60,7 +58,19 @@ internal object ServicesContext {
          */
         private fun currentMicroserviceGenerationPackage() : String {
             val currentMicroservicePackage: String by MainState
-            return "$currentMicroservicePackage.${currentMicroserviceGenerationQualifiedNameFragment()}"
+            val currentMicroserviceVersion = currentMicroserviceVersion()
+            return if (currentMicroserviceVersion.isNotEmpty())
+                    "$currentMicroservicePackage.$currentMicroserviceVersion"
+                else
+                    currentMicroservicePackage
+        }
+
+        /**
+         * Helper to return the version of the current microservice or an empty string in case no version was specified
+         */
+        private fun currentMicroserviceVersion() : String {
+            val currentMicroservice = MainState.currentMicroservice
+            return currentMicroservice.version ?: ""
         }
 
         /**
@@ -68,25 +78,11 @@ internal object ServicesContext {
          */
         private fun currentMicroserviceGenerationTargetFolderPath() : String {
             val currentMicroserviceTargetFolderPathForJavaFiles: String by MainState
-            return "$currentMicroserviceTargetFolderPathForJavaFiles${File.separator}" +
-                currentMicroserviceGenerationQualifiedNameFragment(File.separator)
-        }
-
-        /**
-         * Helper to build the name fragment that qualifies the current microservice. It consists of the service's
-         * name and version, preceded by the [SERVICE_SUBFOLDER_NAME]
-         */
-        private fun currentMicroserviceGenerationQualifiedNameFragment(separator: String = ".") : String {
-            val currentMicroservice = MainState.currentMicroservice
-            val microserviceVersion = currentMicroservice.version ?: ""
-            val microserviceName = currentMicroservice.simpleName
-
-            val fragmentParts = mutableListOf(SERVICE_SUBFOLDER_NAME)
-            fragmentParts.add(microserviceName)
-            if (microserviceVersion.isNotEmpty())
-                fragmentParts.add(microserviceVersion)
-
-            return fragmentParts.joinToString(separator)
+            val currentMicroserviceVersion = currentMicroserviceVersion()
+            return if (currentMicroserviceVersion.isNotEmpty())
+                    "$currentMicroserviceTargetFolderPathForJavaFiles${File.separator}$currentMicroserviceVersion"
+                else
+                    currentMicroserviceTargetFolderPathForJavaFiles
         }
 
         /**
