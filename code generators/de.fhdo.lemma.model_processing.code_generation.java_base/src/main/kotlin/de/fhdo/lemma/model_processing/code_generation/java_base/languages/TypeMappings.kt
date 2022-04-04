@@ -12,15 +12,18 @@ import de.fhdo.lemma.data.intermediate.IntermediatePrimitiveType
 import de.fhdo.lemma.data.intermediate.IntermediateType
 import de.fhdo.lemma.data.intermediate.IntermediateTypeKind
 import de.fhdo.lemma.data.intermediate.IntermediateTypeOrigin
+import de.fhdo.lemma.model_processing.code_generation.java_base.JavaCollectionTypeDescription
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addDependencies
 import de.fhdo.lemma.model_processing.code_generation.java_base.classname
 import de.fhdo.lemma.model_processing.code_generation.java_base.dependencies.DependencyDescription
+import de.fhdo.lemma.model_processing.code_generation.java_base.eObjectPackageName
 import de.fhdo.lemma.model_processing.code_generation.java_base.fullyQualifiedClassname
+import de.fhdo.lemma.model_processing.code_generation.java_base.getJavaCollectionTypeDescription
 import de.fhdo.lemma.model_processing.code_generation.java_base.resolve
+import de.fhdo.lemma.model_processing.code_generation.java_base.resolveIfCollectionType
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainContext.State as DomainState
 import de.fhdo.lemma.model_processing.phases.PhaseException
 import de.fhdo.lemma.model_processing.utils.trimToSingleLine
-import java.lang.IllegalArgumentException
 import java.time.format.DateTimeFormatter
 
 /**
@@ -75,9 +78,98 @@ fun IntermediateType.getTypeMapping() : TypeMappingDescription? {
     return when(this) {
         is IntermediatePrimitiveType -> primitiveTypeMappings[this]
         is IntermediateImportedTechnologySpecificType -> primitiveTypeMappings[this]
-        is IntermediateComplexType -> TypeMappingDescription(classname, classname, true)
+        is IntermediateComplexType -> resolveIfCollectionType()?.getTypeMapping()
+            ?: TypeMappingDescription(classname, true)
         else -> throw PhaseException("Cannot derive Java type for unknown type kind ${this::class.java.name}")
     }
+}
+
+/**
+ * Helper to get the [TypeMappingDescription] of an [IntermediateCollectionType]. [TypeMappingDescription]s of
+ * [IntermediateCollectionType]s cluster the String representation of the Java Collection type which corresponds to the
+ * modeled collection type as well as all necessary imports, e.g., of type parameters.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun IntermediateCollectionType.getTypeMapping() : TypeMappingDescription {
+    val collectionTypeDescription = getJavaCollectionTypeDescription()
+    val (itemClassnames, imports) = getItemClassnamesAndImports(collectionTypeDescription)
+    val basicMappedClassname = collectionTypeDescription.fullyQualifiedClassname.substringAfterLast(".")
+    val mappedTypeArgumentString = itemClassnames.joinToString(", ")
+    val mappedClassname = "$basicMappedClassname<${mappedTypeArgumentString}>"
+
+    val mappingDescription = TypeMappingDescription(mappedClassname, false)
+    imports.forEach { mappingDescription.addImport(it) }
+    return mappingDescription
+}
+
+/**
+ * Get the classnames of the items of this [IntermediateCollectionType] and all necessary imports including those of the
+ * [IntermediateCollectionType]s Java Collection type.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun IntermediateCollectionType.getItemClassnamesAndImports(
+    collectionTypeDescription : JavaCollectionTypeDescription
+) : Pair<Set<String>, Set<String>> {
+    val imports = collectionTypeDescription.imports.toMutableSet()
+
+    /*
+     * In case the collection type clusters a single anonymous primitive type, the set of item classnames contains only
+     * the name of the object representation of the primitive type, e.g., Integer.
+     */
+    return if (isPrimitiveCollection)
+        setOf(primitiveType.getObjectWrapperMapping().mappedTypeName) to imports
+    /**
+     * In case the Java Collection type requires more than one type argument or the collection type clusters only a
+     * single data field, the set of item classnames comprises all names of the object representations of the data
+     * fields' types. Furthermore, the set of imports gathers all required imports, e.g., of data fields' object
+     * representations.
+     */
+    else if (collectionTypeDescription.typeArgumentCount > 1 || dataFields.size == 1) {
+        val classnames = mutableSetOf<String>()
+        dataFields.forEach {
+            val typeMapping = if (it.type is IntermediatePrimitiveType)
+                    (it.type as IntermediatePrimitiveType).getObjectWrapperMapping()
+                else
+                    it.type.getTypeMapping()!!
+            classnames.add(typeMapping.mappedTypeName)
+            imports.addAll(typeMapping.getImports())
+
+            if (typeMapping.isStructureOrEnumerationTypeMapping) {
+                val currentDomainPackage: String by DomainState
+                val fullyQualifiedClassname = (it.type as IntermediateComplexType).fullyQualifiedClassname
+                imports.add("$currentDomainPackage.${fullyQualifiedClassname}")
+            }
+        }
+        classnames to imports
+    /**
+     * In case the Java Collection type requires one type argument or gathers more than one data field, the sets of item
+     * classnames and imports comprises the name of the generated compound item classname and its import, respectively
+     * (see the CollectionTypeHandler class for more details).
+     */
+    } else {
+        val fullyQualifiedCompoundItemClassname = getFullyQualifiedCompoundItemClassName()
+        imports.add(fullyQualifiedCompoundItemClassname)
+        val simpleItemClassname = fullyQualifiedCompoundItemClassname.substringAfterLast(".")
+        setOf(simpleItemClassname) to imports
+    }
+}
+
+/**
+ * Helper to get the classname for the compound item classname of this [IntermediateCollectionType]. For this purpose,
+ * the [IntermediateCollectionType] must consist of more than one data field.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun IntermediateCollectionType.getFullyQualifiedCompoundItemClassName() : String {
+    require(isStructuredCollection && dataFields.size > 1) { "Compound classname for intermediate collection type " +
+        "items is only derivable for collection types with more than one data field" }
+    val currentDomainPackage: String by DomainState
+    // To prevent duplicate classes when a modeler accidentally specified a complex type with the same name as the
+    // generated compound item class, the latter receives its own Java package
+    val packageName = "$currentDomainPackage.$eObjectPackageName.$name"
+    return "$packageName.${name}Item"
 }
 
 /**
@@ -108,12 +200,12 @@ internal fun IntermediatePrimitiveType.getObjectWrapperMapping() : TypeMappingDe
 }
 
 /**
- * Description of a type mapping, i.e., the name of an original type is mapped to the name of another type.
+ * A type mapping clusters the name of a Java type that results from a LEMMA type, and all required Java imports and
+ * dependencies to resolve the mapped type at runtime or compile time.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-class TypeMappingDescription(val originalTypeName: String, var mappedTypeName: String,
-    val isComplexTypeMapping: Boolean) {
+class TypeMappingDescription(var mappedTypeName: String, val isStructureOrEnumerationTypeMapping: Boolean) {
     private val imports = mutableSetOf<String>()
     private val dependencies = mutableSetOf<DependencyDescription>()
 
@@ -125,7 +217,7 @@ class TypeMappingDescription(val originalTypeName: String, var mappedTypeName: S
     }
 
     /**
-     * Get the imports hold by this type mapping description
+     * Get the imports of this type mapping
      */
     fun getImports() = imports.toSet()
 
@@ -144,9 +236,9 @@ class TypeMappingDescription(val originalTypeName: String, var mappedTypeName: S
 
     /**
      * Second component to enable destructuring declarations in the context of type mappings. This component reflects
-     * the flag tha indicates whether this type mapping is for a complex type.
+     * the flag which indicates whether this type mapping concerns a LEMMA structure or enumeration.
      */
-    operator fun component2() = isComplexTypeMapping
+    operator fun component2() = isStructureOrEnumerationTypeMapping
 
     /**
      * Third component to enable destructuring declarations in the context of type mappings. This component reflects
@@ -179,7 +271,7 @@ class PrimitiveTypeMappingsBuilder(private val targetMap: MutableMap<String, Typ
      * collection of primitive type mappings managed by this [PrimitiveTypeMappingsBuilder].
      */
     private fun addToMap(originalTypeName: String, mappedTypeName: String) : Pair<String, TypeMappingDescription> {
-        val typeMappingDescription = TypeMappingDescription(originalTypeName, mappedTypeName, false)
+        val typeMappingDescription = TypeMappingDescription(mappedTypeName, false)
         targetMap[originalTypeName] = typeMappingDescription
         return originalTypeName to typeMappingDescription
     }

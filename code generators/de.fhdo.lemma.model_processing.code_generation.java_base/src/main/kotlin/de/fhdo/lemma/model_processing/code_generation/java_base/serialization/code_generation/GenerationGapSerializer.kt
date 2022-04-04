@@ -356,7 +356,7 @@ internal class GenerationGapSerializerBase : KoinComponent {
             copyImportsForType(ImportTargetElementType.SUPER, genImplClass, genImplClass)
 
             // If the superclass has type parameters with qualifiers, e.g., ArrayList<OriginalClassname.NestedClass>,
-            // the will be adapted according to the *GenImpl classname, e.g.,
+            // they will be adapted according to the *GenImpl classname, e.g.,
             // ArrayList<OriginalClassnameGenImpl.NestedClass>,
             replaceSuperclassTypeParameterQualifiers(genImplClass, superclassInfo, oldClassname)
 
