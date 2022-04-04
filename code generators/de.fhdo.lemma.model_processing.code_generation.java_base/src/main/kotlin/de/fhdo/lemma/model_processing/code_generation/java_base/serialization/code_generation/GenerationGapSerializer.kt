@@ -293,18 +293,6 @@ internal class GenerationGapSerializerBase : KoinComponent {
         get() = isRelocatable && isPublic && !isStatic
 
     /**
-     * Helper to copy relocatable imports from the [source] class/interface to the [target] class/interface
-     */
-    private fun copyImportsForType(targetElementType: ImportTargetElementType, source: Node,
-        target: ClassOrInterfaceDeclaration, onlyWhenRelocatable: Boolean = false) {
-        val imports = source.getImportsInfo().filter {
-            val isRelocatable = !onlyWhenRelocatable || it.isRelocatable
-            isRelocatable && it.targetElementType == targetElementType
-        }
-        target.addImports(imports)
-    }
-
-    /**
      * Shorthand convenience property to determine if a [Node] is relocatable
      */
     private val Node.isRelocatable
@@ -413,6 +401,18 @@ internal class GenerationGapSerializerBase : KoinComponent {
      */
     private fun copyAllImports(source: Node, target: ClassOrInterfaceDeclaration)
         = target.addImports(source.getImportsInfo().getAllImportInfo())
+
+    /**
+     * Helper to copy relocatable imports from the [source] class/interface to the [target] class/interface
+     */
+    private fun copyImportsForType(targetElementType: ImportTargetElementType, source: Node,
+        target: ClassOrInterfaceDeclaration, onlyWhenRelocatable: Boolean = false) {
+        val imports = source.getImportsInfo().filter {
+            val isRelocatable = !onlyWhenRelocatable || it.isRelocatable
+            isRelocatable && it.targetElementType == targetElementType
+        }
+        target.addImports(imports)
+    }
 
     /**
      * Helper to replace qualifiers in type parameters of superclasses with the name of the given [clazz]
@@ -528,6 +528,9 @@ internal class GenerationGapSerializerBase : KoinComponent {
         /* Remove top-level elements that exhibit the "remove on relocation" serialization characteristic */
         removeTopLevelElementsOnRelocation(genImplClass, customImplClass)
 
+        /* Keep top-level elements that exhibit the "keep on relocation" serialization characteristic */
+        keepTopLevelElementsOnRelocation(genImplClass, customImplClass)
+
         return customImplClass
     }
 
@@ -631,8 +634,8 @@ internal class GenerationGapSerializerBase : KoinComponent {
     }
 
     /**
-     * Remove top-level elements from the [generatedClass] that exhibit the "remove on relocation" serialization
-     * characteristic within the [originalClass]
+     * Remove top-level elements, which exhibit the "remove on relocation" serialization characteristic in the
+     * [originalClass], from the [generatedClass]
      */
     private fun removeTopLevelElementsOnRelocation(originalClass: ClassOrInterfaceDeclaration,
         generatedClass: ClassOrInterfaceDeclaration) {
@@ -644,6 +647,24 @@ internal class GenerationGapSerializerBase : KoinComponent {
         // Class annotations
         val annotationsToRemove = originalClass.annotations.filter { it.removeOnRelocation }
         annotationsToRemove.forEach { generatedClass.remove(it) }
+    }
+
+    /**
+     * Keep top-level elements, which exhibit the "keep on relocation" serialization characteristic in the
+     * [originalClass], in the [generatedClass]
+     */
+    private fun keepTopLevelElementsOnRelocation(originalClass: ClassOrInterfaceDeclaration,
+        generatedClass: ClassOrInterfaceDeclaration) {
+        // Class imports
+        val keepImports = originalClass
+            .getAllImportsWithSerializationCharacteristics(SerializationCharacteristic.KEEP_ON_RELOCATION)
+        keepImports.forEach { generatedClass.addImport(it.import, it.targetElementType) }
+
+        // Class annotations
+        val keepAnnotations = originalClass.annotations.filter {
+            it.hasSerializationCharacteristic(SerializationCharacteristic.KEEP_ON_RELOCATION)
+        }
+        keepAnnotations.forEach { generatedClass.addAnnotation(it) }
     }
 
     /**
