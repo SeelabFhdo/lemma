@@ -4,7 +4,6 @@ import de.fhdo.lemma.data.intermediate.IntermediatePackage
 import de.fhdo.lemma.model_processing.annotations.CodeGenerationModule
 import de.fhdo.lemma.model_processing.builtin_phases.code_generation.AbstractCodeGenerationModule
 import de.fhdo.lemma.model_processing.builtin_phases.code_generation.CharsetAwareFileContent
-import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.SortableProperties
 import de.fhdo.lemma.model_processing.code_generation.mtls_operation.handlers.interfaces.CodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.mtls_operation.handlers.interfaces.annotationName
 import de.fhdo.lemma.model_processing.code_generation.mtls_operation.handlers.interfaces.findClassesWithAnnotationAndInterface

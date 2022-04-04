@@ -6,6 +6,7 @@ import de.fhdo.lemma.model_processing.code_generation.mtls_operation.handlers.in
 import de.fhdo.lemma.model_processing.code_generation.mtls_operation.modul_handler.MainContext
 
 import de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode
+import de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureTechnology
 
 @CodeGenerationHandler
 class IntermediateInfrastructureNodeHandler : CodeGenerationHandlerI<IntermediateInfrastructureNode> {
@@ -13,14 +14,17 @@ class IntermediateInfrastructureNodeHandler : CodeGenerationHandlerI<Intermediat
 
     override fun execute(eObject: IntermediateInfrastructureNode): String {
 
-        val sortableProperties = SortableProperties()
 
-        if(eObject.qualifiedInfrastructureTechnologyName == "mTLS.CaAuthority"){
-            println(eObject.getEffectiveConfigurationValues())
-        }
-        else{
+        val systemProperties = eObject.getServicePropteriesWithValues()
 
-        }
+        println("Hier ")
+//        eObject.
+//        if(eObject.qualifiedInfrastructureTechnologyName == "mTLS.CaAuthority"){
+//            println(eObject.getEffectiveConfigurationValues())
+//        }
+//        else{
+//
+//        }
 
 
 //        eObject.deployedServices.forEach { deployedService ->
@@ -32,9 +36,25 @@ class IntermediateInfrastructureNodeHandler : CodeGenerationHandlerI<Intermediat
 //        }
 
 
+        val sortableProperties = SortableProperties()
         MainContext.State.addPropertyFile(eObject.name, sortableProperties, "certs", "filename.var" )
 
 
         return "IntermediateInfrastructureNodeHandler.${eObject.name}"
     }
+}
+
+fun IntermediateInfrastructureNode.getServicePropteriesWithValues(): Map<String,String> {
+    val resultMap = mutableMapOf<String, String>()
+    val systemProperties = (operationEnvironment.eContainer() as IntermediateInfrastructureTechnology).properties
+
+    systemProperties.forEach {
+        if(!it.featureNames.contains("MANDATORY") && !it.defaultValue.isNullOrEmpty() )
+            resultMap[it.name] = it.defaultValue
+    }
+    defaultValues.forEach {
+        if(!it.value.isNullOrEmpty() )
+            resultMap[it.technologySpecificProperty.name] = it.value
+    }
+    return resultMap
 }

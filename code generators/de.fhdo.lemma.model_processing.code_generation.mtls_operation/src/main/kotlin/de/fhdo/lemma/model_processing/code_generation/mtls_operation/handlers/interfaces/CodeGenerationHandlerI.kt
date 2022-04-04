@@ -5,8 +5,8 @@ import org.eclipse.emf.ecore.EObject
 import io.github.classgraph.ClassGraph
 
 const val packageName = BASE_PACKAGE
-const val annotationName = "${BASE_PACKAGE}.handlers.interfaces.CodeGenerationHandler"
-const val interfaceName = "${BASE_PACKAGE}.handlers.interfaces.CodeGenerationHandlerI"
+const val annotationName = "$BASE_PACKAGE.handlers.interfaces.CodeGenerationHandler"
+const val interfaceName = "$BASE_PACKAGE.handlers.interfaces.CodeGenerationHandlerI"
 
 @Target(AnnotationTarget.CLASS)
 annotation class CodeGenerationHandler()

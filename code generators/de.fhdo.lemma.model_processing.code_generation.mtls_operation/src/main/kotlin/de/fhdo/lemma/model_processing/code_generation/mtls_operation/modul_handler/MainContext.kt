@@ -13,11 +13,11 @@ internal object MainContext {
         private lateinit var targetFolder: String
 
         fun initialize(targetFolder: String) {
-            this.targetFolder = targetFolder
+            State.targetFolder = targetFolder
             propertyFiles.clear()
         }
 
-        fun getTargetFolder() = this.targetFolder
+        fun getTargetFolder() = targetFolder
 
         fun addPropertyFile(name: String, properties: SortableProperties, vararg  folders: String){
             val test = generateFilePath(name, *folders)
@@ -25,7 +25,7 @@ internal object MainContext {
             propertyFiles[generateFilePath(name, *folders)] = properties
         }
 
-        fun getPropertyFiles() = this.propertyFiles.toMap()
+        fun getPropertyFiles() = propertyFiles.toMap()
 
 
     }
