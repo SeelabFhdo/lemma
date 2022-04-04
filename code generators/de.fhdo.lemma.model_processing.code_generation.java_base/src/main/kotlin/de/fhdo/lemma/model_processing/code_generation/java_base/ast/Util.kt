@@ -90,21 +90,48 @@ internal fun <T: CallableDeclaration<*>> diffCallables(source: List<T>, target: 
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 enum class SerializationCharacteristic {
-    // Do not relocate elements from their defining compilation unit. For instance, do not pull up methods to
-    // interfaces.
-    DONT_RELOCATE,
-
-    // Merge method bodies on relocation
-    MERGE_ON_RELOCATION,
-
-    // Adapt method bodies to delegate to super methods on relocation
+    /**
+     * Adapt method bodies to delegate to super methods on relocation.
+     *
+     * Affects: Methods.
+     */
     DELEGATE_ON_RELOCATION,
 
-    // Remove node on relocation
-    REMOVE_ON_RELOCATION,
+    /**
+     * Do not relocate elements from their defining compilation unit. For instance, do not pull up methods to
+     * interfaces.
+     *
+     * Affects: Annotations, attributes, classes, imports, and methods.
+     */
+    DONT_RELOCATE,
 
-    // Do not generate additional constructors for the class exhibiting this characteristic
-    NO_CONSTRUCTORS
+    /**
+     * Keep original node on relocation.
+     *
+     * Affects: Annotations and imports.
+     */
+    KEEP_ON_RELOCATION,
+
+    /**
+     * Merge method bodies on relocation.
+     *
+     * Affects: Methods.
+     */
+    MERGE_ON_RELOCATION,
+
+    /**
+     * Do not generate additional constructors for the class exhibiting this characteristic.
+     *
+     * Affects: Classes.
+     */
+    NO_CONSTRUCTORS,
+
+    /**
+     * Remove node on relocation.
+     *
+     * Affects: Annotations, imports, and methods.
+     */
+    REMOVE_ON_RELOCATION,
 }
 
 /**
