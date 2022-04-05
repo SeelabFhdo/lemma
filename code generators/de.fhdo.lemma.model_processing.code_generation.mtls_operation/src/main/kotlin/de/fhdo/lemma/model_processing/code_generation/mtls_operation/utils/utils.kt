@@ -46,3 +46,4 @@ internal fun IntermediateOperationNode.getNodeAspectsWithValues(aspectName: Stri
 internal fun SortableProperties.addProperty(property: Pair<String,String>){
     this[property.first] = property.second
 }
+

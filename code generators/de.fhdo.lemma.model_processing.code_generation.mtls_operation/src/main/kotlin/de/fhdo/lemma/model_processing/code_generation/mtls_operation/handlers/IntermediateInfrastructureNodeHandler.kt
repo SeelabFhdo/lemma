@@ -4,6 +4,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.pr
 import de.fhdo.lemma.model_processing.code_generation.mtls_operation.handlers.interfaces.CodeGenerationHandler
 import de.fhdo.lemma.model_processing.code_generation.mtls_operation.handlers.interfaces.CodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.mtls_operation.modul_handler.MainContext
+import de.fhdo.lemma.model_processing.code_generation.mtls_operation.modul_handler.PathSpecifier
 import de.fhdo.lemma.model_processing.code_generation.mtls_operation.utils.getNodeAspectsWithValues
 import de.fhdo.lemma.model_processing.code_generation.mtls_operation.utils.hasAspect
 
@@ -22,14 +23,14 @@ class IntermediateInfrastructureNodeHandler : CodeGenerationHandlerI<Intermediat
 
         if(eObject.qualifiedInfrastructureTechnologyName == "mTLS.certificateAuthority"){
             sortableProperties.putAll(eObject.getServicePropertiesWithValues())
-            MainContext.State.addPropertyFile(eObject.name, sortableProperties, "certs", "${eObject.name}.var" )
+            MainContext.State.addPropertyFile("${eObject.name}.var", sortableProperties, PathSpecifier.CURRENT_MICROSERVICE_CERTIFICATIONS_TARGET_PATH)
             systemProperties = eObject.getServicePropertiesWithValues()
         } else{
             if (!eObject.hasAspect(handlesAspects()))
                 return null
             eObject.aspects.forEach {
                 sortableProperties.putAll(eObject.getNodeAspectsWithValues(it.name))
-                MainContext.State.addPropertyFile(eObject.name, sortableProperties, "certs", "${eObject.name}.var")
+                MainContext.State.addPropertyFile("${eObject.name}.var", sortableProperties, PathSpecifier.CURRENT_MICROSERVICE_CERTIFICATIONS_TARGET_PATH)
                 systemProperties = eObject.getNodeAspectsWithValues(it.name)
             }
 

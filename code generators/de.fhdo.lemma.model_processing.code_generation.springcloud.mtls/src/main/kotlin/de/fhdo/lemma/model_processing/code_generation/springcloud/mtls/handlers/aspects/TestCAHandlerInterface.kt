@@ -29,6 +29,7 @@ internal class TestCAHandlerInterface
     override fun handlesEObjectsOfInstance() = IntermediateMicroservice::class.java
     override fun generatesNodesOfInstance() = ClassOrInterfaceDeclaration::class.java
     private fun handlesAspects() = setOf("mTLS.mtls", "mTLS.mtlsdev")
+    private fun configFolder() = "configuration"
     override fun execute(
         eObject: IntermediateMicroservice,
         node: ClassOrInterfaceDeclaration,
@@ -69,9 +70,8 @@ internal class TestCAHandlerInterface
         packageName: String,
         className: String
     ): GenletGeneratedFileContent {
-        val configFolder = "configuration"
 
-        val node = newJavaClassOrInterface("${packageName}.${configFolder}", className, isInterface = false)
+        val node = newJavaClassOrInterface("${packageName}.${configFolder()}", className, isInterface = false)
         node.addImport(
             "org.springframework.boot.autoconfigure.condition.ConditionalOnExpression",
             ImportTargetElementType.ANNOTATION
@@ -87,14 +87,14 @@ internal class TestCAHandlerInterface
 
         return GenletGeneratedFileContent(
             GenletPathSpecifier.CURRENT_MICROSERVICE_GENERATION_TARGET_PATH,
-            "${configFolder}${File.separator}${node.nameAsString}.java",
+            "${configFolder()}${File.separator}${node.nameAsString}.java",
             node
         )
     }
 
     private fun generateSpringMtlsConfigurationFile(packageName: String, className: String): GenletGeneratedFileContent {
-        val configFolder = "configuration"
-        val node = newJavaClassOrInterface("${packageName}.${configFolder}", className, isInterface = false)
+
+        val node = newJavaClassOrInterface("${packageName}.${configFolder()}", className, isInterface = false)
             .addImplementedType("EnvironmentAware")
         node.addImport("org.springframework.context.EnvironmentAware", ImportTargetElementType.IMPLEMENTED_INTERFACE)
         node.addImport("org.springframework.core.env.Environment", ImportTargetElementType.METHOD_BODY)
@@ -119,7 +119,7 @@ internal class TestCAHandlerInterface
 
         return GenletGeneratedFileContent(
             GenletPathSpecifier.CURRENT_MICROSERVICE_GENERATION_TARGET_PATH,
-            "${configFolder}${File.separator}${node.nameAsString}.java",
+            "${configFolder()}${File.separator}${node.nameAsString}.java",
             node
         )
     }

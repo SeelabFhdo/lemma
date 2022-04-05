@@ -49,8 +49,8 @@ dependencies {
     implementation("de.fhdo.lemma.live_validation:de.fhdo.lemma.live_validation.client:$lemmaEclipsePluginsVersion")
     implementation("de.fhdo.lemma.model_processing.code_generation.java_base:" +
             "de.fhdo.lemma.model_processing.code_generation.java_base:$javaBaseGeneratorVersion")
-    implementation("de.fhdo.lemma.model_processing.code_generation.springcloud.mtls:" +
-            "de.fhdo.lemma.model_processing.code_generation.springcloud.mtls:$lemmaEclipsePluginsVersion")
+//    implementation("de.fhdo.lemma.model_processing.code_generation.springcloud.mtls:" +
+//            "de.fhdo.lemma.model_processing.code_generation.springcloud.mtls:$lemmaEclipsePluginsVersion")
     implementation("de.fhdo.lemma.model_processing:de.fhdo.lemma.model_processing:$modelProcessingVersion")
     implementation("de.fhdo.lemma.model_processing.utils:de.fhdo.lemma.model_processing.utils:$modelProcessingVersion")
     implementation("de.fhdo.lemma.servicedsl:de.fhdo.lemma.servicedsl:$lemmaEclipsePluginsVersion")
