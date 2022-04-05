@@ -474,9 +474,17 @@ internal class GenerationGapSerializerBase : KoinComponent {
          */
         copyImportsForType(ImportTargetElementType.ATTRIBUTE_TYPE, genImplClass, customImplClass)
 
-        /* Remove imports that exhibit the "remove on relocation" characteristic */
-        genImplClass.getAllImportsWithSerializationCharacteristics(SerializationCharacteristic.REMOVE_ON_RELOCATION)
-            .forEach { customImplClass.removeImport(it.import, it.targetElementType) }
+        /*
+         * Remove imports that exhibit the "add on relocation" or "remove on relocation" characteristic. Note that the
+         * removal of imports with the "add on relocation" characteristic has the same effect as when removing imports
+         * with the "remove on relocation" characteristic. That is, because the removal only occurs in the custom
+         * implementation class so that the elements remain in the *GenImpl class which is the intended semantics of
+         * "add on relocation".
+         */
+        genImplClass.getAllImportsWithSerializationCharacteristics(
+               SerializationCharacteristic.ADD_ON_RELOCATION,
+               SerializationCharacteristic.REMOVE_ON_RELOCATION
+            ).forEach { customImplClass.removeImport(it.import, it.targetElementType) }
 
         /*
          * For each non-trivial getter/setter generate a stub delegating implementation that can be replaced with custom
@@ -501,7 +509,7 @@ internal class GenerationGapSerializerBase : KoinComponent {
             }
 
             // When the method is relocatable, remove members depending on their serialization characteristics
-            removeNotRelocatableElements(originalMethod)
+            removeNonRelocatableElements(originalMethod)
             removeElementsFromGeneratedMethodOnRelocation(originalMethod, method)
 
             // Create body of the method that delegated to the relocated version in the *GenImpl class
@@ -525,7 +533,10 @@ internal class GenerationGapSerializerBase : KoinComponent {
         /* Undo element top-level relocations, if necessary */
         undoTopLevelElementRelocations(genImplClass, customImplClass)
 
-        /* Remove top-level elements that exhibit the "remove on relocation" serialization characteristic */
+        /*
+         * Remove top-level elements that exhibit the "add on relocation" or "remove on relocation" serialization
+         * characteristic
+         */
         removeTopLevelElementsOnRelocation(genImplClass, customImplClass)
 
         /* Keep top-level elements that exhibit the "keep on relocation" serialization characteristic */
@@ -538,12 +549,13 @@ internal class GenerationGapSerializerBase : KoinComponent {
      * Shorthand convenience property to determine if a [Node] needs to be removed upon relocation
      */
     private val Node.removeOnRelocation
-        get() = hasSerializationCharacteristic(SerializationCharacteristic.REMOVE_ON_RELOCATION)
+        get() = hasSerializationCharacteristic(SerializationCharacteristic.ADD_ON_RELOCATION) ||
+            hasSerializationCharacteristic(SerializationCharacteristic.REMOVE_ON_RELOCATION)
 
     /**
-     * Helper to remove not relocatable elements from a [MethodDeclaration]
+     * Helper to remove non-relocatable elements from a [MethodDeclaration]
      */
-    private fun removeNotRelocatableElements(method: MethodDeclaration) {
+    private fun removeNonRelocatableElements(method: MethodDeclaration) {
         // Method annotations
         method.annotations.removeAll(method.annotations.filter { !it.isRelocatable })
 
@@ -587,8 +599,8 @@ internal class GenerationGapSerializerBase : KoinComponent {
 
     /**
      * Helper to adapt method-call-statements in the body of the given [method] so that they delegate to the body of the
-     * the relocated version of the [method]. This only happens when code generators specify the "delegate on
-     * relocation" serialization characteristic on the method's body.
+     * relocated version of the [method]. This only happens when code generators specify the "delegate on relocation"
+     * serialization characteristic on the method's body.
      */
     private fun delegateBodyIfSpecified(method: MethodDeclaration, genImplAdaptationResult: GenImplAdaptationResult) {
         val bodyToDelegate = genImplAdaptationResult.methodBodiesToDelegate[method.nameAsString] ?: return
@@ -634,19 +646,21 @@ internal class GenerationGapSerializerBase : KoinComponent {
     }
 
     /**
-     * Remove top-level elements, which exhibit the "remove on relocation" serialization characteristic in the
-     * [originalClass], from the [generatedClass]
+     * Remove top-level elements, which exhibit the "add on relocation" or "remove on relocation" serialization
+     * characteristics in the [genImplClass], from the [customImplClass]
      */
-    private fun removeTopLevelElementsOnRelocation(originalClass: ClassOrInterfaceDeclaration,
-        generatedClass: ClassOrInterfaceDeclaration) {
+    private fun removeTopLevelElementsOnRelocation(genImplClass: ClassOrInterfaceDeclaration,
+        customImplClass: ClassOrInterfaceDeclaration) {
         // Class imports
-        val importsToRemove = originalClass
-            .getAllImportsWithSerializationCharacteristics(SerializationCharacteristic.REMOVE_ON_RELOCATION)
-        importsToRemove.forEach { generatedClass.removeImport(it.import, it.targetElementType) }
+        val importsToRemove = genImplClass.getAllImportsWithSerializationCharacteristics(
+                SerializationCharacteristic.ADD_ON_RELOCATION,
+                SerializationCharacteristic.REMOVE_ON_RELOCATION
+            )
+        importsToRemove.forEach { customImplClass.removeImport(it.import, it.targetElementType) }
 
         // Class annotations
-        val annotationsToRemove = originalClass.annotations.filter { it.removeOnRelocation }
-        annotationsToRemove.forEach { generatedClass.remove(it) }
+        val annotationsToRemove = genImplClass.annotations.filter { it.removeOnRelocation }
+        annotationsToRemove.forEach { customImplClass.remove(it) }
     }
 
     /**

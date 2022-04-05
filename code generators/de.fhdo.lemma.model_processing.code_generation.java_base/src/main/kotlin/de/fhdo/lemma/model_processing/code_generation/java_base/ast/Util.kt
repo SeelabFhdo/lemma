@@ -91,6 +91,13 @@ internal fun <T: CallableDeclaration<*>> diffCallables(source: List<T>, target: 
  */
 enum class SerializationCharacteristic {
     /**
+     * Add node only on relocation.
+     *
+     * Affects: Annotations, imports, and methods.
+     */
+    ADD_ON_RELOCATION,
+
+    /**
      * Adapt method bodies to delegate to super methods on relocation.
      *
      * Affects: Methods.
@@ -446,7 +453,8 @@ inline fun <reified T: Node> Node.findParentNode() : T? {
 }
 
 /**
- * Helper to retrieve the [ClassOrInterfaceDeclaration] from a [Node]. This only returns classes, not interfaces.
+ * Helper to retrieve the [ClassOrInterfaceDeclaration] from a [Node]. In case this [Node] is a [CompilationUnit], the
+ * [ClassOrInterfaceDeclaration] will always constitute a class or null, if the unit clusters an interface.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */

@@ -5,10 +5,14 @@ import com.github.javaparser.ast.Node
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import com.github.javaparser.ast.body.EnumDeclaration
 import com.github.javaparser.printer.PrettyPrinter
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.SerializationCharacteristic
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.appendStatement
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.asClassOrInterfaceDeclaration
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getAllImportsWithSerializationCharacteristics
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.hasReturnStatement
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.hasSerializationCharacteristic
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.hasThrowStatement
+import de.fhdo.lemma.model_processing.code_generation.java_base.ast.removeImport
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.serialize
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainContext.State as MainState
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.configuration.AbstractSerializationConfiguration
@@ -83,6 +87,7 @@ private class CodeGenerationSerializerBase : KoinComponent {
      */
     fun serialize(node: Node, targetFolderPath: String, targetFilePath: String) : Pair<String, Pair<String, Node?>> {
         val originalClass = node.asClassOrInterfaceDeclaration()
+        originalClass?.removeAddOnRelocationElements()
 
         /* If the node does not comprise a class (e.g., it's an enum) do the plain serialization */
         if (originalClass == null) {
@@ -107,6 +112,24 @@ private class CodeGenerationSerializerBase : KoinComponent {
 
         val codeToNode = (node.parentNode.get() as CompilationUnit).serialize() to node
         return "$targetFolderPath${File.separator}$targetFilePath" to codeToNode
+    }
+
+    /**
+     * Helper to remove elements of this [ClassOrInterfaceDeclaration] that exhibit the "add on relocation"
+     * characteristic. By definition, AST relocation does not appear in plain serialization.
+     */
+    private fun ClassOrInterfaceDeclaration.removeAddOnRelocationElements() {
+        val importsToRemove
+            = getAllImportsWithSerializationCharacteristics(SerializationCharacteristic.ADD_ON_RELOCATION)
+        importsToRemove.forEach { removeImport(it.import, it.targetElementType) }
+
+        val annotationsToRemove = annotations
+            .filter { it.hasSerializationCharacteristic(SerializationCharacteristic.ADD_ON_RELOCATION) }
+        annotationsToRemove.forEach { remove(it) }
+
+        val methodsToRemove = methods
+            .filter { it.hasSerializationCharacteristic(SerializationCharacteristic.ADD_ON_RELOCATION) }
+        methodsToRemove.forEach { members.remove(it) }
     }
 
     /**
