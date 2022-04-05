@@ -4,6 +4,7 @@ import de.fhdo.lemma.model_processing.annotations.Before
 import de.fhdo.lemma.model_processing.annotations.SourceModelValidator
 import de.fhdo.lemma.model_processing.code_generation.java_base.qualifiedName
 import de.fhdo.lemma.model_processing.code_generation.java_base.simpleName
+import de.fhdo.lemma.model_processing.code_generation.mtls_operation.utils.isCertificateAuthority
 import de.fhdo.lemma.model_processing.languages.convertToAbsoluteFileUrisInPlace
 import de.fhdo.lemma.model_processing.phases.validation.AbstractXtextModelValidator
 import de.fhdo.lemma.operation.InfrastructureNode
@@ -30,9 +31,9 @@ class MTLSOperationModelSourceValidator : AbstractXtextModelValidator() {
     * */
     @Check
     private fun checkNoAspectsForCaAuthority(infrastructureNode: InfrastructureNode) {
-        if (infrastructureNode.infrastructureTechnology.infrastructureTechnology.name != "certificateAuthority"
-            && infrastructureNode.infrastructureTechnology.infrastructureTechnology.technology.name == "mTLS")
+        if (!infrastructureNode.isCertificateAuthority())
             return
+
         if (infrastructureNode.aspects.isNotEmpty())
             error(
                 "No aspects can be defined for Certificate Authority.",
@@ -45,8 +46,7 @@ class MTLSOperationModelSourceValidator : AbstractXtextModelValidator() {
     * */
     @Check
     private fun checkNoAspectsForCaAuthority1(infrastructureNode: InfrastructureNode) {
-        if (infrastructureNode.infrastructureTechnology.infrastructureTechnology.name != "certificateAuthority"
-            && infrastructureNode.infrastructureTechnology.infrastructureTechnology.technology.name == "mTLS")
+        if (!infrastructureNode.isCertificateAuthority())
             return
 
         if (infrastructureNode.deploymentSpecifications.isNotEmpty())

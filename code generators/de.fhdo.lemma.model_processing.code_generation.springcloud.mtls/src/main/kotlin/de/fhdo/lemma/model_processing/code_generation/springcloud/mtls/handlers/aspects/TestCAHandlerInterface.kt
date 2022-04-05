@@ -15,7 +15,6 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletPa
 import de.fhdo.lemma.model_processing.code_generation.java_base.getAllAspects
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasAspect
-import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.PropertyFile
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.openPropertyFile
 import de.fhdo.lemma.model_processing.code_generation.springcloud.mtls.Context.State
 import de.fhdo.lemma.model_processing.code_generation.springcloud.mtls.ast.addStringVariable
@@ -29,26 +28,29 @@ internal class TestCAHandlerInterface
     : GenletCodeGenerationHandlerI<IntermediateMicroservice, ClassOrInterfaceDeclaration, Nothing> {
     override fun handlesEObjectsOfInstance() = IntermediateMicroservice::class.java
     override fun generatesNodesOfInstance() = ClassOrInterfaceDeclaration::class.java
+    private fun handlesAspects() = setOf("mTLS.mtls", "mTLS.mtlsdev")
     override fun execute(
         eObject: IntermediateMicroservice,
         node: ClassOrInterfaceDeclaration,
         context: Nothing?
     ): GenletCodeGenerationHandlerResult<ClassOrInterfaceDeclaration>? {
-        if (!eObject.hasAspect("mTLS.Keystore", "mTLS.TestKeystore"))
+        eObject.aspects.forEach {
+            print("${it.name}\t")
+        }
+
+        if (!eObject.hasAspect(*handlesAspects().toTypedArray()))
             return GenletCodeGenerationHandlerResult(node)
 
         println("qualifiedName: ${eObject.qualifiedName}")
-        val aspects = eObject.getAllAspects(
-            "mTLS.Keystore", "mTLS.TestKeystore", "mTLS.Truststore", "mTLS.TestTruststore"
-        )
+        val aspects = eObject.getAllAspects(*handlesAspects().toTypedArray())
         aspects.forEach { aspect ->
             when (aspect.qualifiedName) {
-                "mTLS.Keystore", "mTLS.Truststore" ->
+                "mTLS.mtls" ->
                     State.addPropertiesToFile(
                         "application-mtls.properties",
                         eObject.getAspectValueOrDefault(aspect.qualifiedName)
                     )
-                "mTLS.TestKeystore", "mTLS.TestTruststore" ->
+                "mTLS.mtlsdev" ->
                     State.addPropertiesToFile(
                         "application-mtlslocal.properties",
                         eObject.getAspectValueOrDefault(aspect.qualifiedName)
@@ -56,14 +58,14 @@ internal class TestCAHandlerInterface
             }
         }
         val fileSet = mutableSetOf(
-            generatSpringBypassConfigutationFile(node.getPackageName(), "mTLSBypassConfiguration"),
-            generatSpringMtlsConfigutationFile(node.getPackageName(), "MTLSConfiguration")
+            generateSpringBypassConfigurationFile(node.getPackageName(), "mTLSBypassConfiguration"),
+            generateSpringMtlsConfigurationFile(node.getPackageName(), "MTLSConfiguration")
         )
         fileSet.addAll(generateSpringBootPropertyFiles())
         return GenletCodeGenerationHandlerResult(node, fileSet)
     }
 
-    private fun generatSpringBypassConfigutationFile(
+    private fun generateSpringBypassConfigurationFile(
         packageName: String,
         className: String
     ): GenletGeneratedFileContent {
@@ -90,7 +92,7 @@ internal class TestCAHandlerInterface
         )
     }
 
-    private fun generatSpringMtlsConfigutationFile(packageName: String, className: String): GenletGeneratedFileContent {
+    private fun generateSpringMtlsConfigurationFile(packageName: String, className: String): GenletGeneratedFileContent {
         val configFolder = "configuration"
         val node = newJavaClassOrInterface("${packageName}.${configFolder}", className, isInterface = false)
             .addImplementedType("EnvironmentAware")
@@ -126,17 +128,19 @@ internal class TestCAHandlerInterface
         val propertyFiles = mutableSetOf<GenletGeneratedFileContent>()
         State.getPropertyFiles().forEach { propertyFile ->
             println("Filename: ${propertyFile.key}")
-            val propertyFilea =
+            val propFile =
                 openPropertyFile(GenletPathSpecifier.CURRENT_MICROSERVICE_RESOURCES_PATH, propertyFile.key)
             propertyFile.value.forEach { property ->
-                propertyFilea[property.first] = formattingSystemVariable(property.second)
+                propFile[property.first] = formattingSystemVariable(property.second)
             }
-            propertyFiles.add(GenletGeneratedFileContent(propertyFilea))
+            propertyFiles.add(GenletGeneratedFileContent(propFile))
         }
         return propertyFiles
     }
 
-    private fun formattingSystemVariable(variable: String) =
+    private fun formattingSystemVariable(variable: String?) =
+        if (variable.isNullOrEmpty()) ""
+    else
         if (variable.startsWith("$")) variable.uppercase() else variable
 
 }

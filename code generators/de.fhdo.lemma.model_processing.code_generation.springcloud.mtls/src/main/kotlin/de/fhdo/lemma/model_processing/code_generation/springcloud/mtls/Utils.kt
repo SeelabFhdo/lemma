@@ -11,7 +11,7 @@ internal fun EObject.getAspectValueOrDefault(fullyQualifiedName: String): Set<Pa
         aspect.properties.forEach { property ->
             setOfProperties.add(
                 Pair(
-                    springPropertyMapping(aspect.qualifiedName + "." + property.name),
+                    springPropertyMapping(property.name),
                     aspect.propertyValues.findValue(property.name) ?: property.defaultValue
                 )
             )
@@ -23,15 +23,14 @@ internal fun EObject.getAspectValueOrDefault(fullyQualifiedName: String): Set<Pa
 private fun EList<IntermediateAspectPropertyValue>.findValue(name: String) =
     find { it.property.name.equals(name) }?.value
 
-private fun springPropertyMapping(property: String) = when (property) {
-    "mTLS.Keystore.path", "mTLS.TestKeystore.path" -> "server.ssl.key-store"
-    "mTLS.Keystore.password", "mTLS.TestKeystore.password" -> "server.ssl.key-store-password"
-    "mTLS.Truststore.path", "mTLS.TestTruststore.path" -> "server.ssl.trust-store"
-    "mTLS.Truststore.password", "mTLS.TestTruststore.password" -> "server.ssl.trust-store-password"
-    "mTLS.Keystore.validityInDays", "mTLS.TestKeystore.validityInDays" -> "server.ssl.key-store.validityInDays"
-    "mTLS.Truststore.validityDays", "mTLS.TestTruststore.validityInDays" -> "server.ssl.trust-store.validityInDays"
-    "mTLS.Keystore.hostnameVerifierBypass",
-    "mTLS.TestKeystore.hostnameVerifierBypass" -> "server.ssl.bypass.hostname-verifier"
-    "mTLS.Keystore.alias", "mTLS.TestKeystore.alias" -> "server.ssl.key-alias"
+public fun springPropertyMapping(property: String) = when (property) {
+    "keyStoreRelativPath" -> "server.ssl.key-store"
+    "keyStorePassword" -> "server.ssl.key-store-password"
+    "aliasPrefix", "aliasSuffix" -> "server.ssl.key-alias"
+    "trustStoreRelativPath" -> "server.ssl.trust-store"
+    "trustStorePassword" -> "server.ssl.trust-store-password"
+    "hostnameVerifierBypass" -> "server.ssl.bypass.hostname-verifier"
+    "validityInDays" -> "server.ssl.key-store.validityInDays"
+    "bitLength" -> "server.ssl.bitLength"
     else -> property
 }
