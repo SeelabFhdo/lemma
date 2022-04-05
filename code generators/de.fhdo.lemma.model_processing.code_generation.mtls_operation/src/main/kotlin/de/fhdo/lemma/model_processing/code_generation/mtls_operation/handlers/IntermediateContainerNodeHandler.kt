@@ -54,6 +54,7 @@ class IntermediateContainerNodeHandler : CodeGenerationHandlerI<IntermediateCont
 
 private fun generatePropertiesFile(){
     //todo hier müssen die Sachen aufgeteilt werden auf die application-mtls.properties, application-mtlsdev.properties und die certs/name.var
+    //properties truststore checken
 }
 
 
