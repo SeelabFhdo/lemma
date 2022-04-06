@@ -25,7 +25,6 @@ internal fun InfrastructureNode.isCertificateAuthority() =
     (infrastructureTechnology.infrastructureTechnology.name == "certificateAuthority"
             && infrastructureTechnology.infrastructureTechnology.technology.name == "mTLS")
 
-
 internal fun IntermediateOperationNode.hasAspect(aspectsSet: Set<String>) = aspects.any { aspectsSet.contains(it.name) }
 
 internal fun IntermediateOperationNode.getNodeAspectsWithValues(aspectName: String): Map<String,String> {
@@ -34,16 +33,29 @@ internal fun IntermediateOperationNode.getNodeAspectsWithValues(aspectName: Stri
         aspect.properties.filter {
             !it.defaultValue.isNullOrEmpty()
         }.forEach { property ->
-            resultMap[property.name] = property.defaultValue
+            resultMap[springPropertyMapping(property.name)] = property.defaultValue
         }
         aspect.propertyValues.forEach { propertyValue ->
-            resultMap[propertyValue.property.name] = propertyValue.value
+            resultMap[springPropertyMapping(propertyValue.property.name)] = propertyValue.value
         }
     }
     return resultMap
 }
 
 internal fun SortableProperties.addProperty(property: Pair<String,String>){
-    this[property.first] = property.second
+    this[springPropertyMapping(property.first)] = property.second
 }
 
+fun springPropertyMapping(property: String) = when (property) {
+    "keyStoreRelativPath" -> "server.ssl.key-store"
+    "keyStorePassword" -> "server.ssl.key-store-password"
+//    "aliasPrefix", "aliasSuffix" -> "server.ssl.key-alias"
+    "aliasPrefix" -> "server.ssl.key-aliasPrefix"
+    "aliasSuffix" -> "server.ssl.key-aliasSuffix"
+    "trustStoreRelativPath" -> "server.ssl.trust-store"
+    "trustStorePassword" -> "server.ssl.trust-store-password"
+    "hostnameVerifierBypass" -> "server.ssl.bypass.hostname-verifier"
+    "validityInDays" -> "server.ssl.key-store.validityInDays"
+    "bitLength" -> "server.ssl.bitLength"
+    else -> property
+}

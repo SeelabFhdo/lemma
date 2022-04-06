@@ -53,7 +53,7 @@ internal class TestCAHandlerInterface
                     )
                 "mTLS.mtlsdev" ->
                     State.addPropertiesToFile(
-                        "application-mtlslocal.properties",
+                        "application-mtlsdev.properties",
                         eObject.getAspectValueOrDefault(aspect.qualifiedName)
                     )
             }

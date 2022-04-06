@@ -23,7 +23,7 @@ internal fun EObject.getAspectValueOrDefault(fullyQualifiedName: String): Set<Pa
 private fun EList<IntermediateAspectPropertyValue>.findValue(name: String) =
     find { it.property.name.equals(name) }?.value
 
-public fun springPropertyMapping(property: String) = when (property) {
+fun springPropertyMapping(property: String) = when (property) {
     "keyStoreRelativPath" -> "server.ssl.key-store"
     "keyStorePassword" -> "server.ssl.key-store-password"
     "aliasPrefix", "aliasSuffix" -> "server.ssl.key-alias"
