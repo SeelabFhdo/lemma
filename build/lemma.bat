@@ -21,6 +21,7 @@ set modules=%modules%;de.fhdo.lemma.operationdsl.parent
 REM Transformations
 set modules=%modules%;de.fhdo.lemma.intermediate.transformations.parent
 set modules=%modules%;de.fhdo.lemma.data.avro.parent
+set modules=%modules%;de.fhdo.lemma.service.openapi.parent
 
 REM Live Validation Framework
 set modules=%modules%;de.fhdo.lemma.live_validation
