@@ -1,0 +1,132 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <relativePath>../de.fhdo.lemma.service.openapi.parent/pom.xml</relativePath>
+        <groupId>de.fhdo.lemma.service.openapi</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.8.5-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>de.fhdo.lemma.service.openapi.tests</artifactId>
+    <packaging>eclipse-test-plugin</packaging>
+
+
+    <dependencies>
+
+        <!-- swagger/openapi dependencies -->
+        <dependency>
+            <groupId>io.swagger.parser.v3</groupId>
+            <artifactId>swagger-parser</artifactId>
+            <version>2.0.29</version>
+        </dependency>
+
+        <!-- ONLY FOR DEVELOPMENT PURPOSE, DO NOT DEPLOY -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.6</version>
+        </dependency>
+
+        <!-- For testing -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit-version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+
+    <build>
+        <testSourceDirectory>${project.basedir}/xtend-gen</testSourceDirectory>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>gen-clean</id>
+                        <phase>clean</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <!-- Clear generated artifacts -->
+                            <directory>${basedir}/test-model-gen</directory>
+                            <includes>
+                                <include>*.data</include>
+                                <include>*.services</include>
+                            </includes>
+                            <excludes>
+                                <exclude>*.gitignore</exclude>
+                            </excludes>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+
+             <plugin>
+                <groupId>org.eclipse.xtend</groupId>
+                <artifactId>xtend-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <!--
+                        By default, the Surefire plugin searches compiled test classes in the
+                        "target/test-classes" folder. However, since we treat test code regular
+                        source code in the DSL's "tests" sub-project (i.e., the code resides in the
+                        "src" folder rather than "src/test/java"), we adapt the search folder for
+                        test classes to "target/classes", which Maven by default uses as the target
+                        folder for compiled Java classes.
+                    -->
+                    <testClassesDirectory>${project.build.directory}/classes</testClassesDirectory>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+            </plugin>
+
+            <!-- This copies the maven specific dependencies into a dedicated folder -->
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>${maven-assembly-plugin-version}</version>
+                <configuration>
+                    <descriptors>
+                        <descriptor>assembly/assembly.xml</descriptor>
+                    </descriptors>
+                    <outputDirectory>${basedir}</outputDirectory>
+                    <finalName>lib</finalName>
+                    <appendAssemblyId>false</appendAssemblyId>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <id>external-maven-dependencies</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </reporting>
+
+</project>
