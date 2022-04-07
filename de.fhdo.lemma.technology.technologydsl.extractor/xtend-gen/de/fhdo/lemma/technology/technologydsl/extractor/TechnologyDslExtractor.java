@@ -28,8 +28,8 @@ public class TechnologyDslExtractor {
   /**
    * Extract TechnologyModel
    */
-  public CharSequence extractToString(final Technology techModel) {
-    CharSequence _xblockexpression = null;
+  public String extractToString(final Technology techModel) {
+    String _xblockexpression = null;
     {
       String _xifexpression = null;
       boolean _isNullOrEmpty = IterableExtensions.isNullOrEmpty(techModel.getPrimitiveTypes());
@@ -133,7 +133,7 @@ public class TechnologyDslExtractor {
       _builder_3.append("        ");
       _builder_3.append("}");
       _builder_3.newLine();
-      _xblockexpression = _builder_3;
+      _xblockexpression = _builder_3.toString();
     }
     return _xblockexpression;
   }
