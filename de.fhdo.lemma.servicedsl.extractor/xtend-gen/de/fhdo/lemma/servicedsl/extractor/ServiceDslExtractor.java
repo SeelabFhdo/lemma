@@ -393,18 +393,23 @@ public class ServiceDslExtractor {
         _xifexpression = _builder.toString();
       }
       final String comment = _xifexpression;
-      StringConcatenation _builder_1 = new StringConcatenation();
-      _builder_1.append("@endpoints(");
-      {
-        EList<Endpoint> _endpoints = operation.getEndpoints();
-        for(final Endpoint e : _endpoints) {
-          CharSequence _generate = this.generate(e);
-          _builder_1.append(_generate);
+      String endpoints = "";
+      boolean _isNullOrEmpty = IterableExtensions.isNullOrEmpty(operation.getEndpoints());
+      boolean _not = (!_isNullOrEmpty);
+      if (_not) {
+        StringConcatenation _builder_1 = new StringConcatenation();
+        _builder_1.append("@endpoints(");
+        {
+          EList<Endpoint> _endpoints = operation.getEndpoints();
+          for(final Endpoint e : _endpoints) {
+            CharSequence _generate = this.generate(e);
+            _builder_1.append(_generate);
+          }
         }
+        _builder_1.append(")");
+        _builder_1.newLineIfNotEmpty();
+        endpoints = _builder_1.toString();
       }
-      _builder_1.append(")");
-      _builder_1.newLineIfNotEmpty();
-      final String endpoints = _builder_1.toString();
       StringConcatenation _builder_2 = new StringConcatenation();
       {
         EList<ImportedServiceAspect> _aspects = operation.getAspects();
@@ -557,20 +562,19 @@ public class ServiceDslExtractor {
    * Extract Parameter
    */
   private String generateType(final Parameter parameter) {
-    final Type paramType = parameter.getEffectiveType();
     String _xifexpression = null;
-    if ((paramType instanceof PrimitiveType)) {
-      _xifexpression = this.generate(((PrimitiveType)paramType));
+    PrimitiveType _primitiveType = parameter.getPrimitiveType();
+    boolean _tripleNotEquals = (_primitiveType != null);
+    if (_tripleNotEquals) {
+      _xifexpression = this.generate(parameter.getPrimitiveType());
     } else {
       String _xifexpression_1 = null;
-      if ((paramType instanceof ImportedType)) {
-        _xifexpression_1 = this.generate(((ImportedType)paramType));
+      ImportedType _importedType = parameter.getImportedType();
+      boolean _tripleNotEquals_1 = (_importedType != null);
+      if (_tripleNotEquals_1) {
+        _xifexpression_1 = this.generate(parameter.getImportedType());
       } else {
-        StringConcatenation _builder = new StringConcatenation();
-        _builder.append("Type ");
-        _builder.append(paramType);
-        _builder.append(" is not supported.");
-        throw new IllegalArgumentException(_builder.toString());
+        _xifexpression_1 = null;
       }
       _xifexpression = _xifexpression_1;
     }
@@ -645,54 +649,38 @@ public class ServiceDslExtractor {
    * Extract ImportedType
    */
   private String generate(final ImportedType importedType) {
+    final Type type = importedType.getType();
     String _switchResult = null;
-    ImportType _importType = importedType.getImport().getImportType();
-    if (_importType != null) {
-      switch (_importType) {
-        case TECHNOLOGY:
-          StringConcatenation _builder = new StringConcatenation();
-          String _name = importedType.getImport().getName();
-          _builder.append(_name);
-          _builder.append("::");
-          Type _type = importedType.getType();
-          _builder.append(_type);
-          _switchResult = _builder.toString();
-          break;
-        case DATATYPES:
-          String _xblockexpression = null;
-          {
-            Type _type_1 = importedType.getType();
-            final String importedTypeName = ((ComplexType) _type_1).buildQualifiedName(".");
-            StringConcatenation _builder_1 = new StringConcatenation();
-            String _name_1 = importedType.getImport().getName();
-            _builder_1.append(_name_1);
-            _builder_1.append("::");
-            _builder_1.append(importedTypeName);
-            _xblockexpression = _builder_1.toString();
-          }
-          _switchResult = _xblockexpression;
-          break;
-        default:
-          StringConcatenation _builder_1 = new StringConcatenation();
-          _builder_1.append("Type ");
-          ImportType _importType_1 = importedType.getImport().getImportType();
-          _builder_1.append(_importType_1);
-          _builder_1.append(" is not");
-          _builder_1.newLineIfNotEmpty();
-          _builder_1.append("                 ");
-          _builder_1.append("supported.");
-          throw new IllegalArgumentException(_builder_1.toString());
+    boolean _matched = false;
+    if (type instanceof PrimitiveType) {
+      _matched=true;
+      StringConcatenation _builder = new StringConcatenation();
+      String _name = importedType.getImport().getName();
+      _builder.append(_name);
+      _builder.append("::");
+      String _typeName = ((PrimitiveType)type).getTypeName();
+      _builder.append(_typeName);
+      _switchResult = _builder.toString();
+    }
+    if (!_matched) {
+      if (type instanceof ComplexType) {
+        _matched=true;
+        StringConcatenation _builder = new StringConcatenation();
+        String _name = importedType.getImport().getName();
+        _builder.append(_name);
+        _builder.append("::");
+        String _buildQualifiedName = ((ComplexType)type).buildQualifiedName(".");
+        _builder.append(_buildQualifiedName);
+        _switchResult = _builder.toString();
       }
-    } else {
-      StringConcatenation _builder_1 = new StringConcatenation();
-      _builder_1.append("Type ");
-      ImportType _importType_1 = importedType.getImport().getImportType();
-      _builder_1.append(_importType_1);
-      _builder_1.append(" is not");
-      _builder_1.newLineIfNotEmpty();
-      _builder_1.append("                 ");
-      _builder_1.append("supported.");
-      throw new IllegalArgumentException(_builder_1.toString());
+    }
+    if (!_matched) {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("Type ");
+      String _simpleName = type.getClass().getSimpleName();
+      _builder.append(_simpleName);
+      _builder.append(" is not supported.");
+      throw new IllegalArgumentException(_builder.toString());
     }
     return _switchResult;
   }
