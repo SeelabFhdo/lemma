@@ -18,16 +18,17 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectH
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.combinations
 import de.fhdo.lemma.model_processing.code_generation.java_base.resolve
 import de.fhdo.lemma.model_processing.code_generation.springcloud.addTypeInformationTo
+import de.fhdo.lemma.model_processing.code_generation.springcloud.forAllTechnologies
 import org.eclipse.emf.ecore.EObject
 
 /**
- * Handler for the java.Multimap aspect.
+ * Handler for the Multimap aspect.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 @AspectHandler
 internal class MultimapHandler : AspectHandlerI {
-    override fun handlesAspects() = setOf("java.Multimap")
+    override fun handlesAspects() = "Multimap".forAllTechnologies()
     override fun handlesEObjectNodeCombinations() = combinations {
         IntermediateDataOperation::class.java with MethodDeclaration::class.java
     }

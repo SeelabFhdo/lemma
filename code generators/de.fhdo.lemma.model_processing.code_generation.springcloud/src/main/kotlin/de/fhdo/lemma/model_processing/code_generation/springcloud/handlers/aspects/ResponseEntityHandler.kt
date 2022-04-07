@@ -10,6 +10,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.ast.isGenericTyp
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.combinations
+import de.fhdo.lemma.model_processing.code_generation.springcloud.forSpringTechnology
 import org.eclipse.emf.ecore.EObject
 
 /**
@@ -19,7 +20,11 @@ import org.eclipse.emf.ecore.EObject
  */
 @AspectHandler
 internal class ResponseEntityHandler : AspectHandlerI {
-    override fun handlesAspects() = setOf("java.ResponseEntity", "Spring.ResponseEntity")
+    companion object {
+        internal val RESPONSE_ENTITY_ASPECT_NAMES = "ResponseEntity".forSpringTechnology()
+    }
+
+    override fun handlesAspects() = RESPONSE_ENTITY_ASPECT_NAMES
     override fun handlesEObjectNodeCombinations() = combinations {
         IntermediateDataOperationReturnType::class.java with MethodDeclaration::class.java
     }

@@ -11,6 +11,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setSuperclas
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.combinations
+import de.fhdo.lemma.model_processing.code_generation.springcloud.forSpringTechnology
 import org.eclipse.emf.ecore.EObject
 
 /**
@@ -20,7 +21,7 @@ import org.eclipse.emf.ecore.EObject
  */
 @AspectHandler
 internal class ResourceSupportHandler : AspectHandlerI {
-    override fun handlesAspects() = setOf("java.ResourceSupport", "Spring.ResourceSupport")
+    override fun handlesAspects() = "ResourceSupport".forSpringTechnology()
     override fun handlesEObjectNodeCombinations() = combinations {
         IntermediateDataStructure::class.java with ClassOrInterfaceDeclaration::class.java
     }

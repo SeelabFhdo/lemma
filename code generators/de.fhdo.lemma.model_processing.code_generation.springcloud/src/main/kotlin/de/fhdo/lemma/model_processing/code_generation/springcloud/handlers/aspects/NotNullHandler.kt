@@ -9,16 +9,17 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.combinations
+import de.fhdo.lemma.model_processing.code_generation.springcloud.forAllTechnologies
 import org.eclipse.emf.ecore.EObject
 
 /**
- * Handler for the java.NotNull aspect.
+ * Handler for the NotNull aspect.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 @AspectHandler
 internal class NotNullHandler : AspectHandlerI {
-    override fun handlesAspects() = setOf("java.NotNull")
+    override fun handlesAspects() = "NotNull".forAllTechnologies()
     override fun handlesEObjectNodeCombinations() = combinations {
         IntermediateDataField::class.java with FieldDeclaration::class.java
     }

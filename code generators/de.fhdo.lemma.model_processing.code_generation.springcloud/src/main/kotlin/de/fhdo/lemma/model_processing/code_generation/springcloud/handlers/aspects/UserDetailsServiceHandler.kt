@@ -11,6 +11,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.combinations
+import de.fhdo.lemma.model_processing.code_generation.springcloud.forSpringTechnology
 import org.eclipse.emf.ecore.EObject
 
 /**
@@ -20,7 +21,7 @@ import org.eclipse.emf.ecore.EObject
  */
 @AspectHandler
 internal class UserDetailsServiceHandler : AspectHandlerI {
-    override fun handlesAspects() = setOf("java.UserDetailsService", "Spring.UserDetailsService")
+    override fun handlesAspects() = "UserDetailsService".forSpringTechnology()
     override fun handlesEObjectNodeCombinations() = combinations {
         IntermediateDataStructure::class.java with ClassOrInterfaceDeclaration::class.java
     }

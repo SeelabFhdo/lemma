@@ -10,6 +10,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.getPropertyValue
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.combinations
+import de.fhdo.lemma.model_processing.code_generation.springcloud.forSpringTechnology
 import org.eclipse.emf.ecore.EObject
 
 /**
@@ -19,7 +20,7 @@ import org.eclipse.emf.ecore.EObject
  */
 @AspectHandler
 internal class ValueHandler : AspectHandlerI {
-    override fun handlesAspects() = setOf("java.Value", "Spring.Value")
+    override fun handlesAspects() = "Value".forSpringTechnology()
     override fun handlesEObjectNodeCombinations() = combinations {
         IntermediateDataField::class.java with FieldDeclaration::class.java
     }

@@ -11,26 +11,18 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.getPropertyValue
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.combinations
+import de.fhdo.lemma.model_processing.code_generation.springcloud.forAllTechnologies
 import org.eclipse.emf.ecore.EObject
 
 /**
- * Handler JSON-related aspects.
+ * Handler for JSON-related aspects.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 @AspectHandler
 internal class JsonHandler : AspectHandlerI {
-    override fun handlesAspects() = setOf(
-        "java.JsonFormat",
-        "java.JsonIgnore",
-        "java.JsonProperty",
-        "java.JsonUnwrapped",
-
-        "Spring.JsonFormat",
-        "Spring.JsonIgnore",
-        "Spring.JsonProperty",
-        "Spring.JsonUnwrapped"
-    )
+    override fun handlesAspects() = setOf("JsonFormat", "JsonIgnore", "JsonProperty", "JsonUnwrapped")
+        .forAllTechnologies()
 
     override fun handlesEObjectNodeCombinations() = combinations {
         IntermediateDataField::class.java with FieldDeclaration::class.java

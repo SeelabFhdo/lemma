@@ -16,16 +16,17 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectH
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.combinations
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasFeature
+import de.fhdo.lemma.model_processing.code_generation.springcloud.forAllTechnologies
 import org.eclipse.emf.ecore.EObject
 
 /**
- * Handler for the java.Table aspect.
+ * Handler for the Table aspect.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 @AspectHandler
 internal class TableHandler : AspectHandlerI {
-    override fun handlesAspects() = setOf("java.Table")
+    override fun handlesAspects() = "Table".forAllTechnologies()
     override fun handlesEObjectNodeCombinations() = combinations {
         IntermediateDataStructure::class.java with ClassOrInterfaceDeclaration::class.java
     }

@@ -17,6 +17,10 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGen
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasAspect
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasInputParameters
 import de.fhdo.lemma.model_processing.code_generation.java_base.isResultParameter
+import de.fhdo.lemma.model_processing.code_generation.springcloud.forAllTechnologies
+import de.fhdo.lemma.model_processing.code_generation.springcloud.forSpringTechnology
+import de.fhdo.lemma.model_processing.code_generation.springcloud.handlers.aspects.ResponseEntityHandler
+import de.fhdo.lemma.model_processing.code_generation.springcloud.handlers.aspects.ResponseEntityHandler.Companion.RESPONSE_ENTITY_ASPECT_NAMES
 import de.fhdo.lemma.model_processing.code_generation.springcloud.spring.addResponseStatusAnnotation
 import de.fhdo.lemma.model_processing.code_generation.springcloud.Context.State as State
 import de.fhdo.lemma.service.intermediate.IntermediateOperation
@@ -30,6 +34,10 @@ import de.fhdo.lemma.technology.CommunicationType
 @CodeGenerationHandler
 internal class OperationHandler
     : GenletCodeGenerationHandlerI<IntermediateOperation, MethodDeclaration, ClassOrInterfaceDeclaration> {
+    companion object {
+        private val RESPONSE_STATUS_ASPECT_NAMES = "ResponseStatus".forSpringTechnology().toTypedArray()
+    }
+
     override fun handlesEObjectsOfInstance() = IntermediateOperation::class.java
     override fun generatesNodesOfInstance() = MethodDeclaration::class.java
 
@@ -57,7 +65,7 @@ internal class OperationHandler
          * however, is only possible when the return type is a ClassOrInterfaceType.
          */
         val hasResponseEntityParameter = eObject.parameters.any {
-            it.hasAspect("java.ResponseEntity", "Spring.ResponseEntity")
+            it.hasAspect(*RESPONSE_ENTITY_ASPECT_NAMES.toTypedArray())
         }
         if (hasResponseEntityParameter && node.type is ClassOrInterfaceType) {
             val currentReturnType = (node.type as ClassOrInterfaceType).nameAsString
@@ -75,8 +83,8 @@ internal class OperationHandler
         val responseStatusAnnotation = eObject.parameters.firstOrNull {
             it.isResultParameter &&
             it.communicationType == CommunicationType.SYNCHRONOUS.name &&
-            it.hasAspect("java.ResponseStatus", "Spring.ResponseStatus")
-        }?.getAspect("java.ResponseStatus", "Spring.ResponseStatus")
+            it.hasAspect(*RESPONSE_STATUS_ASPECT_NAMES)
+        }?.getAspect(*RESPONSE_STATUS_ASPECT_NAMES)
         if (responseStatusAnnotation != null)
             node.addResponseStatusAnnotation(responseStatusAnnotation)
 
