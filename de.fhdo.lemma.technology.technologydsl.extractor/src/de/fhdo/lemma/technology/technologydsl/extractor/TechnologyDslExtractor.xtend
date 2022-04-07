@@ -50,7 +50,7 @@ class TechnologyDslExtractor {
             «protocols»
             «aspects»
         }
-        '''
+        '''.toString
     }
 
     /**
