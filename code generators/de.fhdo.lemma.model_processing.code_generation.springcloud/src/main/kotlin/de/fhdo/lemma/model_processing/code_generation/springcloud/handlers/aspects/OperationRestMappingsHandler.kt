@@ -14,6 +14,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectH
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.combinations
 import de.fhdo.lemma.model_processing.code_generation.springcloud.addValue
+import de.fhdo.lemma.model_processing.code_generation.springcloud.forSpringTechnology
 import de.fhdo.lemma.model_processing.code_generation.springcloud.hasValue
 import de.fhdo.lemma.service.intermediate.IntermediateOperation
 import org.eclipse.emf.ecore.EObject
@@ -26,27 +27,20 @@ import org.eclipse.emf.ecore.EObject
 @AspectHandler
 internal class OperationRestMappingsHandler : AspectHandlerI {
     private val aspectToAnnotationMapping = mapOf(
-        "java.GetMapping" to "GetMapping",
-        "java.PutMapping" to "PutMapping",
-        "java.PostMapping" to "PostMapping",
-        "java.DeleteMapping" to "DeleteMapping",
-        "java.PatchMapping" to "PatchMapping",
+        "GetMapping" to "GetMapping",
+        "PutMapping" to "PutMapping",
+        "PostMapping" to "PostMapping",
+        "DeleteMapping" to "DeleteMapping",
+        "PatchMapping" to "PatchMapping",
 
-        "Spring.Get" to "GetMapping",
-        "Spring.Put" to "PutMapping",
-        "Spring.Post" to "PostMapping",
-        "Spring.Delete" to "DeleteMapping",
-        "Spring.Patch" to "PatchMapping",
-
-        "Spring.GetMapping" to "GetMapping",
-        "Spring.PutMapping" to "PutMapping",
-        "Spring.PostMapping" to "PostMapping",
-        "Spring.DeleteMapping" to "DeleteMapping",
-        "Spring.PatchMapping" to "PatchMapping"
+        "Get" to "GetMapping",
+        "Put" to "PutMapping",
+        "Post" to "PostMapping",
+        "Delete" to "DeleteMapping",
+        "Patch" to "PatchMapping"
     )
 
-    override fun handlesAspects() = aspectToAnnotationMapping.keys
-
+    override fun handlesAspects() = aspectToAnnotationMapping.keys.forSpringTechnology()
     override fun handlesEObjectNodeCombinations() = combinations {
         IntermediateOperation::class.java with MethodDeclaration::class.java
     }
@@ -55,7 +49,7 @@ internal class OperationRestMappingsHandler : AspectHandlerI {
      * Execution logic of the handler
      */
     override fun execute(eObject: EObject, node: Node, aspect: IntermediateImportedAspect) : Node {
-        val annotation = aspectToAnnotationMapping[aspect.qualifiedName]!!
+        val annotation = aspectToAnnotationMapping[aspect.name]!!
 
         /*
          * Add aspect-dependent import to the generated method. In case of a relocation, this import sticks to the

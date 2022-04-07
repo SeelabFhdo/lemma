@@ -16,6 +16,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectH
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.combinations
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasFeature
 import de.fhdo.lemma.model_processing.code_generation.java_base.resolve
+import de.fhdo.lemma.model_processing.code_generation.springcloud.forSpringTechnology
 import de.fhdo.lemma.model_processing.code_generation.springcloud.javaType
 import org.eclipse.emf.ecore.EObject
 
@@ -26,7 +27,7 @@ import org.eclipse.emf.ecore.EObject
  */
 @AspectHandler
 internal class CrudRepositoryHandler : AspectHandlerI {
-    override fun handlesAspects() = setOf("java.CrudRepository", "Spring.CrudRepository")
+    override fun handlesAspects() = "CrudRepository".forSpringTechnology()
     override fun handlesEObjectNodeCombinations() = combinations {
         IntermediateDataStructure::class.java with ClassOrInterfaceDeclaration::class.java
     }

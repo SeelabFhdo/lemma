@@ -163,3 +163,67 @@ internal fun ClassOrInterfaceDeclaration.addPrivateConstant(name: String, type: 
     newConstant.addSerializationCharacteristic(SerializationCharacteristic.DONT_RELOCATE)
     return newConstant
 }
+
+/**
+ * Build the [Set] of qualified aspect names for all supported technologies from this [String] representing a simple
+ * aspect name. For instance, for the simple name "Access" this function returns the [Set] {"Java.Accesss",
+ * "java.Accesss", "Spring.Accesss", "spring.Accesss"}.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun String.forAllTechnologies() = forTechnologies(ALL_TECHNOLOGY_NAMES)
+
+/**
+ * Generic helper to build the [Set] of qualified aspect names from the given [Set] of [technologyNames] for this
+ * [String] representing a simple aspect name.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun String.forTechnologies(technologyNames: Set<String>) = technologyNames.map { "$it.$this" }.toSet()
+
+/**
+ * Build the [Set] of qualified aspect names for the Java technology from this [String] representing a simple aspect
+ * name. For instance, for the simple name "Constant" this function returns the [Set] {"Java.Constant",
+ * "java.Constant"}.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun String.forJavaTechnology() = forTechnologies(JAVA_TECHNOLOGY_NAMES)
+
+/**
+ * Build the [Set] of qualified aspect names for the Spring technology from this [String] representing a simple aspect
+ * name. For instance, for the simple name "Value" this function returns the [Set] {"Spring.Value", "spring.Value"}.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun String.forSpringTechnology() = forTechnologies(SPRING_TECHNOLOGY_NAMES)
+
+/**
+ * Build the [Set] of qualified aspect names for all supported technologies from this [Set] clustering simple aspect
+ * name synonyms. For instance, for the [Set] of simple aspect names {"DecimalMax", "DecimalMin"} this function returns
+ * the [Set] {"Java.DecimalMax", "java.DecimalMax", "Spring.DecimalMax", "spring.DecimalMax", "Java.DecimalMin",
+ * "java.DecimalMin", "Spring.DecimalMin", "spring.DecimalMin"}.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun Set<String>.forAllTechnologies() = forTechnologies(ALL_TECHNOLOGY_NAMES)
+
+/**
+ * Generic helper to build the [Set] of qualified aspect names from the given [Set] of [technologyNames] for this [Set]
+ * clustering simple aspect name synonyms.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun Set<String>.forTechnologies(technologyNames: Set<String>)
+    = technologyNames.map { technologyName -> this.map { aspectName ->
+        "$technologyName.$aspectName"
+    }}.flatten().toSet()
+
+/**
+ * Build the [Set] of qualified aspect names for the Spring technology from this [Set] clustering simple aspect
+ * name synonyms. For instance, for the [Set] of simple aspect names {"MessageMapping", "SendTo"} this function returns
+ * the [Set] {"Spring.MessageMapping", "spring.MessageMapping", "Spring.SendTo", "spring.SendTo"}.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal fun Set<String>.forSpringTechnology() = forTechnologies(SPRING_TECHNOLOGY_NAMES)

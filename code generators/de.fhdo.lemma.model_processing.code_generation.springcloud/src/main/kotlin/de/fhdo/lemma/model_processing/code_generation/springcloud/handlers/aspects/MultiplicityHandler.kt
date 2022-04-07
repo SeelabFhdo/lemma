@@ -11,6 +11,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.getPropertyValue
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.combinations
+import de.fhdo.lemma.model_processing.code_generation.springcloud.forAllTechnologies
 import org.eclipse.emf.ecore.EObject
 
 /**
@@ -20,7 +21,7 @@ import org.eclipse.emf.ecore.EObject
  */
 @AspectHandler
 internal class MultiplicityHandler : AspectHandlerI {
-    override fun handlesAspects() = setOf("java.OneToOne", "java.OneToMany")
+    override fun handlesAspects() = setOf("OneToOne", "OneToMany").forAllTechnologies()
     override fun handlesEObjectNodeCombinations() = combinations {
         IntermediateDataField::class.java with FieldDeclaration::class.java
     }

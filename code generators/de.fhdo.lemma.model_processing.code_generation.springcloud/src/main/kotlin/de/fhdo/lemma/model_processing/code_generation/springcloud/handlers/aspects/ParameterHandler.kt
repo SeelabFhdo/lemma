@@ -12,6 +12,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.getPropertyValue
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.combinations
+import de.fhdo.lemma.model_processing.code_generation.springcloud.forSpringTechnology
 import de.fhdo.lemma.model_processing.code_generation.springcloud.spring.addResponseStatusAnnotation
 import de.fhdo.lemma.service.intermediate.IntermediateParameter
 import org.eclipse.emf.ecore.EObject
@@ -24,21 +25,14 @@ import org.eclipse.emf.ecore.EObject
 @AspectHandler
 internal class ParameterHandler : AspectHandlerI {
     private val aspectNodeTypeCombinations = mapOf<String, List<Class<out Node>>>(
-        "java.ResponseStatus" to listOf(ClassOrInterfaceDeclaration::class.java),
-        "java.PathVariable" to listOf(MethodDeclaration::class.java),
-        "java.RequestBody" to listOf(MethodDeclaration::class.java),
-        "java.RequestParam" to listOf(MethodDeclaration::class.java),
-        "java.Valid" to listOf(MethodDeclaration::class.java),
-
-        "Spring.ResponseStatus" to listOf(ClassOrInterfaceDeclaration::class.java),
-        "Spring.PathVariable" to listOf(MethodDeclaration::class.java),
-        "Spring.RequestBody" to listOf(MethodDeclaration::class.java),
-        "Spring.RequestParam" to listOf(MethodDeclaration::class.java),
-        "Spring.Valid" to listOf(MethodDeclaration::class.java)
+        "PathVariable" to listOf(MethodDeclaration::class.java),
+        "ResponseStatus" to listOf(ClassOrInterfaceDeclaration::class.java),
+        "RequestBody" to listOf(MethodDeclaration::class.java),
+        "RequestParam" to listOf(MethodDeclaration::class.java),
+        "Valid" to listOf(MethodDeclaration::class.java)
     )
 
-    override fun handlesAspects() = aspectNodeTypeCombinations.keys
-
+    override fun handlesAspects() = aspectNodeTypeCombinations.keys.forSpringTechnology()
     override fun handlesEObjectNodeCombinations() = combinations {
         IntermediateParameter::class.java with MethodDeclaration::class.java
         IntermediateParameter::class.java with ClassOrInterfaceDeclaration::class.java
@@ -48,7 +42,7 @@ internal class ParameterHandler : AspectHandlerI {
      * Execution logic of the handler
      */
     override fun execute(eObject: EObject, node: Node, aspect: IntermediateImportedAspect) : Node {
-        val supportedNodeTypes = aspectNodeTypeCombinations[aspect.qualifiedName]!!
+        val supportedNodeTypes = aspectNodeTypeCombinations[aspect.name]!!
         if (node::class.java !in supportedNodeTypes)
             return node
 

@@ -14,6 +14,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.combinations
+import de.fhdo.lemma.model_processing.code_generation.springcloud.forAllTechnologies
 import org.eclipse.emf.ecore.EObject
 
 /**
@@ -23,12 +24,7 @@ import org.eclipse.emf.ecore.EObject
  */
 @AspectHandler
 internal class EmbeddingsHandler : AspectHandlerI {
-    override fun handlesAspects() = setOf(
-        "java.Embeddable",
-        "java.Embedded",
-        "java.EmbeddedId"
-    )
-
+    override fun handlesAspects() = setOf("Embeddable", "Embedded", "EmbeddedId").forAllTechnologies()
     override fun handlesEObjectNodeCombinations() = combinations {
         IntermediateDataField::class.java with FieldDeclaration::class.java
         IntermediateDataStructure::class.java with ClassOrInterfaceDeclaration::class.java
@@ -42,7 +38,7 @@ internal class EmbeddingsHandler : AspectHandlerI {
 
         when(node) {
             is ClassOrInterfaceDeclaration -> {
-                if (aspect.qualifiedName == "java.Embeddable") {
+                if (aspect.name == "Embeddable") {
                     // For the Embeddable aspect, we add the eponymous annotation and instrument the Java Base Generator
                     // to keep it upon relocation because persistence frameworks like Hibernate expect the annotation
                     // both on managed subclasses and super classes.

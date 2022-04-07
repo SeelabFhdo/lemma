@@ -15,6 +15,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.getPropertyValue
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.combinations
+import de.fhdo.lemma.model_processing.code_generation.springcloud.forSpringTechnology
 import de.fhdo.lemma.service.intermediate.IntermediateOperation
 import org.eclipse.emf.ecore.EObject
 
@@ -25,14 +26,7 @@ import org.eclipse.emf.ecore.EObject
  */
 @AspectHandler
 internal class OperationMessageMappingHandler : AspectHandlerI {
-    override fun handlesAspects() = setOf(
-        "java.MessageMapping",
-        "java.SendTo",
-
-        "Spring.MessageMapping",
-        "Spring.SendTo"
-    )
-
+    override fun handlesAspects() = setOf("MessageMapping", "SendTo").forSpringTechnology()
     override fun handlesEObjectNodeCombinations() = combinations {
         IntermediateOperation::class.java with MethodDeclaration::class.java
     }

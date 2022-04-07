@@ -15,6 +15,15 @@ import de.fhdo.lemma.model_processing.code_generation.springcloud.handlers.Micro
 private const val BASE_PACKAGE = "de.fhdo.lemma.model_processing.code_generation.springcloud"
 
 /**
+ * Names of all technologies supported by the Genlet and their possible variants.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal val JAVA_TECHNOLOGY_NAMES = setOf("java", "Java")
+internal val SPRING_TECHNOLOGY_NAMES = setOf("spring", "Spring")
+internal val ALL_TECHNOLOGY_NAMES = JAVA_TECHNOLOGY_NAMES + SPRING_TECHNOLOGY_NAMES
+
+/**
  * Main class of the Spring Cloud generator realized on the basis of LEMMA's model processing framework as an
  * [AbstractModelProcessor].
  *
