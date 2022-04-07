@@ -58,8 +58,9 @@ class ServiceDslExtractor {
                 '''Type «^import.importType» is not supported.''')
         }
         // If it is a technology add it to the names list for later use in the generation
-        if (importTypeKeyword == "technology") 
-        	de.fhdo.lemma.servicedsl.extractor.ServiceDslExtractor.importedTechnologyAliases.add(^import.name)
+        if (importTypeKeyword == "technology")
+            de.fhdo.lemma.servicedsl.extractor.ServiceDslExtractor.importedTechnologyAliases
+                .add(^import.name)
 
         return '''import «importTypeKeyword» from "«^import.importURI»" as «^import.name»'''
     }
@@ -67,7 +68,7 @@ class ServiceDslExtractor {
     /**
      * Extract Microservice
      */
-    private def generate(Microservice service) { 
+    private def generate(Microservice service) {
         val preamble = '''«service.visibility.generate» «service.type.generate»'''
         '''
         «service.generateTechAnnotation»
@@ -97,19 +98,19 @@ class ServiceDslExtractor {
      */
     private def generate(Visibility visibility) {
         return switch(visibility) {
-        	case ARCHITECTURE: 'architecture'
+            case ARCHITECTURE: 'architecture'
             case INTERNAL: 'internal'
             case PUBLIC: 'public'
             default: throw new IllegalArgumentException('''Type «visibility» is not supported.''')
         }
     }
-    
+
     /**
      * Extract MicroserviceType of a Microservice
      */
     private def generate(MicroserviceType type) {
         return switch(type) {
-        	case FUNCTIONAL: 'functional'
+            case FUNCTIONAL: 'functional'
             case INFRASTRUCTURE: 'infrastructure'
             case UTILITY: 'utility'
             default: throw new IllegalArgumentException('''Type «type» is not supported.''')
@@ -132,13 +133,13 @@ class ServiceDslExtractor {
      * Extract Endpoint
      */
     private def generate(Endpoint endpoint) {
-    	// Formatting is kinda ugly because otherwise xtend's string 
-    	// templates have additional not intended linebreaks
+        // Formatting is kinda ugly because otherwise xtend's string
+        // templates have additional not intended linebreaks
         '''«FOR ep: endpoint.protocols SEPARATOR '; '»
-        	«ep.importedProtocol.generate»:«
+            «ep.importedProtocol.generate»:«
         ENDFOR
         »«FOR ea: endpoint.addresses SEPARATOR ', '
-        	»"«ea»"«
+            »"«ea»"«
         ENDFOR»;'''
     }
 
@@ -155,21 +156,24 @@ class ServiceDslExtractor {
             «ENDFOR»
             «FOR param : operation.parameters.filter[it.isOptional]»
             @param «param.name» [INSERT PARAMETER DESC HERE]
-            «ENDFOR»            
+            «ENDFOR»
             ---
             '''
         }
 
-        val endpoints ='''
-        @endpoints(«FOR e: operation.endpoints»«e.generate»«ENDFOR»)
-        '''
-        
+        var endpoints = ""
+        if (!operation.endpoints.nullOrEmpty) {
+            endpoints ='''
+            @endpoints(«FOR e: operation.endpoints»«e.generate»«ENDFOR»)
+            '''
+        }
+
         val aspects = '''
         «FOR a: operation.aspects»«a.generate»«ENDFOR»
         '''
-        
+
         val parameters = String.join(", ", operation.parameters.map[generate])
-        
+
         '''«comment»«endpoints»«aspects»«operation.name»(«parameters»);'''
     }
 
@@ -177,14 +181,14 @@ class ServiceDslExtractor {
      * Extract Parameter
      */
     private def generate(Parameter parameter) {
-    	// Formatting is kinda ugly because otherwise xtend's string 
-    	// templates have additional not intended linebreaks
+        // Formatting is kinda ugly because otherwise xtend's string
+        // templates have additional not intended linebreaks
         '''«FOR a : parameter.aspects SEPARATOR ' '»«a.generate»«ENDFOR
         » «parameter.communicationType.generate» «parameter.exchangePattern.generate» «
         parameter.name» : «parameter.generateType
         »'''
     }
-    
+
     /**
      * Extract CommunicationType
      */
@@ -220,16 +224,13 @@ class ServiceDslExtractor {
      * Extract Parameter
      */
     private def generateType(Parameter parameter) {
-    	val paramType = parameter.getEffectiveType
-    	return if(paramType instanceof PrimitiveType)
-    		paramType.generate	
-    	else {
-            if(paramType instanceof ImportedType)
-    		    paramType.generate
-    	    else
-    	        throw new IllegalArgumentException('''Type «paramType» is not supported.''')
-        }
-    } 
+        return if (parameter.primitiveType !== null)
+            parameter.primitiveType.generate
+        else if (parameter.importedType !== null)
+            parameter.importedType.generate
+        else
+            null
+    }
 
     /**
      * Extract PrimitiveType
@@ -237,38 +238,34 @@ class ServiceDslExtractor {
     private def generate(PrimitiveType type) {
         return type.typeName
     }
-    
+
     /**
      * Extract Technology Annotations of a Microservice
-     */   
+     */
     private def generateTechAnnotation(Microservice service) {
         '''«FOR tech : service.serviceModel.imports.filter[it.importType == ImportType.TECHNOLOGY]
             »@technology(«tech.name»)«ENDFOR»'''
     }
-    
+
     /**
      * Extract Protocol
-     */    
+     */
     private def generate(Protocol protocol) {
         val techName = protocol.technology?.name ?: '''[PROTOCOL TECHNOLOGY URI NOT DEFINED]'''
         return '''«techName»::«FOR p : protocol.qualifiedNameParts SEPARATOR '.'»«p»«ENDFOR»'''
     }
-    
+
     /**
      * Extract ImportedType
-     */ 
+     */
     private def generate(ImportedType importedType) {
-        return switch (importedType.import.importType) {
-            case ImportType.TECHNOLOGY:
-            	'''«importedType.import.name»::«importedType.type»'''
-            case ImportType.DATATYPES: {
-                val importedTypeName = (importedType.type as ComplexType).buildQualifiedName(".")
-                '''«importedType.import.name»::«importedTypeName»'''
-            }
-            default:
-                throw new IllegalArgumentException('''Type «importedType.import.importType» is not
-                 supported.''')
-        }
+        val type = importedType.type
+       return switch(type) {
+               PrimitiveType: '''«importedType.import.name»::«type.typeName»'''
+               ComplexType: '''«importedType.import.name»::«type.buildQualifiedName(".")»'''
+               default: throw new
+                   IllegalArgumentException('''Type «type.class.simpleName» is not supported.''')
+       }
     }
 
 }
