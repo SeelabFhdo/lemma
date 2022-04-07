@@ -1,6 +1,7 @@
 package de.fhdo.lemma.technology.mappingdsl.ui;
 
 import de.fhdo.lemma.service.Import;
+import de.fhdo.lemma.service.ServiceModel;
 import de.fhdo.lemma.technology.mapping.TechnologyMapping;
 import de.fhdo.lemma.utils.LemmaUtils;
 import java.util.function.Consumer;
@@ -47,6 +48,11 @@ public class MappingDslReconcileStrategy extends XtextDocumentReconcileStrategy 
           it.getImportURI());
         importedResource.unload();
         importedResource.load(CollectionLiterals.<Object, Object>emptyMap());
+        if (((!importedResource.getContents().isEmpty()) && 
+          (importedResource.getContents().get(0) instanceof ServiceModel))) {
+          EObject _get_1 = importedResource.getContents().get(0);
+          this.reloadImportedDataModels(((ServiceModel) _get_1));
+        }
       } catch (final Throwable _t) {
         if (_t instanceof Exception) {
         } else {
@@ -55,5 +61,26 @@ public class MappingDslReconcileStrategy extends XtextDocumentReconcileStrategy 
       }
     };
     mappingModel.getImports().forEach(_function);
+  }
+  
+  /**
+   * Helper to reload data models being imported into a mapping model transitively via a service
+   * model
+   */
+  private void reloadImportedDataModels(final ServiceModel serviceModel) {
+    final Consumer<Import> _function = (Import it) -> {
+      try {
+        final Resource importedResource = LemmaUtils.getResourceFromUri(serviceModel.eResource(), 
+          it.getImportURI());
+        importedResource.unload();
+        importedResource.load(CollectionLiterals.<Object, Object>emptyMap());
+      } catch (final Throwable _t) {
+        if (_t instanceof Exception) {
+        } else {
+          throw Exceptions.sneakyThrow(_t);
+        }
+      }
+    };
+    serviceModel.getImports().forEach(_function);
   }
 }
