@@ -2,6 +2,8 @@
  */
 package de.fhdo.lemma.data.intermediate;
 
+import java.util.Map;
+
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
@@ -263,5 +265,13 @@ public interface IntermediateImportedAspect extends EObject {
      * @generated
      */
     void setDataField(IntermediateDataField value);
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @model kind="operation" dataType="de.fhdo.lemma.data.intermediate.EffectivePropertyValuesMap" unique="false"
+     * @generated
+     */
+    Map<IntermediateAspectProperty, String> getEffectivePropertyValues();
 
 } // IntermediateImportedAspect

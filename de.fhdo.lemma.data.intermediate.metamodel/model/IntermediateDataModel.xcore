@@ -2,6 +2,7 @@
 package de.fhdo.lemma.data.intermediate
 
 import de.fhdo.lemma.service.ImportType
+import java.util.Map
 
 /**
  * Metamodel of intermediate data models.
@@ -289,6 +290,19 @@ class IntermediateImportedAspect {
     container IntermediateDataOperationReturnType returnType opposite aspects
     container IntermediateDataOperationParameter parameter opposite aspects
     container IntermediateDataField dataField opposite aspects
+
+    op EffectivePropertyValuesMap getEffectivePropertyValues() {
+        return properties.toMap(
+            [it],
+            [
+                val actualValue = propertyValues.findFirst[value | value.property.name == it.name]
+                if (actualValue !== null)
+                    actualValue.value
+                else
+                    it.defaultValue
+            ]
+        )
+    }
 }
 
 /**
@@ -317,3 +331,5 @@ class IntermediateAspectPropertyValue {
 
     container IntermediateImportedAspect aspect opposite propertyValues
 }
+
+type EffectivePropertyValuesMap wraps Map<IntermediateAspectProperty, String>
