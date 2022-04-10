@@ -342,7 +342,7 @@ fun IntermediateMicroservice.hasTechnology(technologyNames: Set<String>, ignoreC
     = technologyNames.any { hasTechnology(it, ignoreCase) }
 
 /**
- * Find alias of a technology model expressed in the Technology Modeling Language from a [TechnologyReference] list.
+ * Find import alias of a technology model with name [technologyName] from this list of [TechnologyReference]s.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
@@ -364,6 +364,22 @@ fun List<TechnologyReference>.findAliasForTechnology(technologyName: String)
 
         parsedTechnologyName == technologyName
     }?.technology?.name
+
+/**
+ * Find import alias of a technology model with one of the names in the [technologyNames] from this list of
+ * [TechnologyReference]s.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun List<TechnologyReference>.findAliasForTechnology(technologyNames: Set<String>) : String? {
+    technologyNames.forEach {
+        val alias = findAliasForTechnology(it)
+        if (alias !== null)
+            return alias
+    }
+
+    return null
+}
 
 /**
  * Convert this URI to a file path.

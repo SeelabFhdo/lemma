@@ -6,6 +6,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCo
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerResult
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasAspect
+import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.forKafkaTechnology
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.hasParametersOfCommunicationType
 import de.fhdo.lemma.service.intermediate.IntermediateOperation
 import de.fhdo.lemma.technology.CommunicationType
@@ -34,7 +35,8 @@ internal class OperationHandler
         // it. Note that at this point in processing time, all possibly existing asynchronous parameters were removed
         // already by KafkaGenerator.processIntermediateOperation(). Consequently, the Java Base Generator will only be
         // confronted with existing synchronous parameters if any.
-        if (eObject.hasAspect("Kafka.Participant", "Kafka.AvroParticipant") &&
+        val allParticipantAspectNames = setOf("Participant", "AvroParticipant").forKafkaTechnology()
+        if (eObject.hasAspect(*allParticipantAspectNames.toTypedArray()) &&
             !eObject.hasParametersOfCommunicationType(CommunicationType.SYNCHRONOUS))
             context!!.members.remove(node)
         return null

@@ -24,6 +24,20 @@ import org.eclipse.emf.ecore.EObject
 private const val BASE_PACKAGE = "de.fhdo.lemma.model_processing.code_generation.springcloud.kafka"
 
 /**
+ * Supported names for the Kafka technology.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal val KAFKA_TECHNOLOGY_NAMES = setOf("kafka", "Kafka")
+
+/**
+ * Supported names for the DomainEvents technology.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal val DOMAIN_EVENTS_TECHNOLOGY_NAMES = setOf("domainEvents", "DomainEvents")
+
+/**
  * Heap for this Genlet.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
@@ -94,7 +108,7 @@ class KafkaGenerator : AbstractGenlet(BASE_PACKAGE) {
         // Handle all "pure" Kafka operations of the interface. A pure Kafka operation is an operation with the
         // Participant aspect from the Kafka technology model and no synchronous parameter.
         val pureKafkaOperations = iface.operations.filter {
-            it.hasAspect("Kafka.Participant") &&
+            it.hasAspect("Participant".forKafkaTechnology()) &&
             !it.hasParametersOfCommunicationType(CommunicationType.SYNCHRONOUS)
         }
         pureKafkaOperations.forEach { processIntermediateOperation(it) }
@@ -116,7 +130,7 @@ class KafkaGenerator : AbstractGenlet(BASE_PACKAGE) {
         // Add Kafka producer and consumer elements for all Kafka participant operations and their topics to the
         // KafkaConfiguration class
         operation.addProducerConsumerElementsToKafkaConfiguration(
-            "Kafka.Participant",
+            "Participant".forKafkaTechnology(),
             KafkaConfiguration::addProducerElements,
             KafkaConfiguration::addConsumerElements,
             asynchronousParameters
@@ -125,7 +139,7 @@ class KafkaGenerator : AbstractGenlet(BASE_PACKAGE) {
         // Add Avro-specific Kafka producer and consumer elements for all Avro-specific Kafka participant operations and
         // their topics to the KafkaConfiguration class
         operation.addProducerConsumerElementsToKafkaConfiguration(
-            "Kafka.AvroParticipant",
+            "AvroParticipant".forKafkaTechnology(),
             KafkaConfiguration::addAvroProducerElements,
             KafkaConfiguration::addAvroConsumerElements,
             asynchronousParameters
@@ -140,19 +154,19 @@ class KafkaGenerator : AbstractGenlet(BASE_PACKAGE) {
 
     /**
      * Generic helper to add Kafka producer and consumer elements for all Kafka participant operations and their topics
-     * to the KafkaConfiguration class. The given [participantAspectName] identifies the concrete Kafka participant
-     * aspect to use, and the [addProducerElements] and [addConsumerElements] lambdas identify the operations on the
+     * to the KafkaConfiguration class. The given [participantAspectNames] identify the concrete Kafka participant
+     * aspects to use, and the [addProducerElements] and [addConsumerElements] lambdas identify the operations on the
      * [KafkaConfiguration] Singleton to be invoked to add the producer and consumer elements to the resulting Java
      * class. The producer and consumer elements are derived for each operation parameter in the given [parameters]
      * list.
      */
     private fun IntermediateOperation.addProducerConsumerElementsToKafkaConfiguration(
-        participantAspectName: String,
+        participantAspectNames: Set<String>,
         addProducerElements: (String, IntermediateParameter) -> Unit,
         addConsumerElements: (String, String, IntermediateParameter) -> Unit,
         parameters: List<IntermediateParameter>
     ) {
-        val topicsAndGroups = getTopicsAndGroups(participantAspectName)
+        val topicsAndGroups = getTopicsAndGroups(participantAspectNames)
         parameters.forEach { parameter ->
             // For each input and result parameter, consumer and producer elements are added to the KafkaConfiguration
             // class. That is, an operation with both an input and result parameter, will result in two operations and
@@ -169,10 +183,10 @@ class KafkaGenerator : AbstractGenlet(BASE_PACKAGE) {
 
     /**
      * Get topics and corresponding consumer groups, if any, from this [IntermediateOperation] and all of its aspects
-     * with the given [participantAspectName]
+     * with the given [participantAspectNames]
      */
-    private fun IntermediateOperation.getTopicsAndGroups(participantAspectName: String)
-        = getAllAspects(participantAspectName).map {
+    private fun IntermediateOperation.getTopicsAndGroups(participantAspectNames: Set<String>)
+        = getAllAspects(*participantAspectNames.toTypedArray()).map {
                 it.getPropertyValue("topic")!! to it.getPropertyValue("consumerGroup")
             }
 }

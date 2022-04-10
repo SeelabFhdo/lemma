@@ -7,9 +7,11 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCo
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerResult
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.getGenletNodeInfoOrElseNull
 import de.fhdo.lemma.model_processing.code_generation.java_base.getAspectPropertyValue
+import de.fhdo.lemma.model_processing.code_generation.java_base.getFirstMatchingAspectPropertyValue
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.genletHeap
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.avro.AvroConverters
+import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.forDomainEventsTechnology
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.shared.EventGroupInterfaceTypes
 
 /**
@@ -36,7 +38,8 @@ internal class DataStructureHandler
 
         // Get and register event group interface. To this end, the Domain Event Genlet must be executed prior to the
         // Kafka Genlet.
-        val eventGroup = eObject.getAspectPropertyValue("DomainEvents.EventGroup", "name") ?: return null
+        val eventGroup = eObject.getFirstMatchingAspectPropertyValue("EventGroup".forDomainEventsTechnology(), "name")
+            ?: return null
         val groupInterfaceType = node.implementedTypes.find {
             it is ClassOrInterfaceType &&
             it.getGenletNodeInfoOrElseNull("DomainEventGroupInterface") == eventGroup

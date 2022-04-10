@@ -25,6 +25,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.hasAspect
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasFeature
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.addRelocatableImport
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.booleanAspectPropertyValueOrFalse
+import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.forKafkaTechnology
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.getterName
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.isAvroProtocolFile
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.javaType
@@ -87,7 +88,7 @@ internal object AvroConverters {
      * Add Avro converters for serialization and deserialization to AvroConverters class
      */
     fun addConverters(structure: IntermediateDataStructure) {
-        val avroSchemaAspect = structure.getAspect("Kafka.AvroSchema") ?: return
+        val avroSchemaAspect = structure.getAspect("AvroSchema".forKafkaTechnology()) ?: return
         addStructureToAvroConverter(structure, avroSchemaAspect)
         addAvroToStructureConverter(structure)
     }
@@ -104,7 +105,8 @@ internal object AvroConverters {
             return
 
         val schemaFile = avroSchemaAspect.getPropertyValue("file")!!
-        val fileFromResources = structure.booleanAspectPropertyValueOrFalse("Kafka.AvroSchema", "fromResources")
+        val fileFromResources = structure.booleanAspectPropertyValueOrFalse("AvroSchema".forKafkaTechnology(),
+            "fromResources")
         val avroTypeName = avroSchemaAspect.getPropertyValue("type")
 
         /* Create converter method */
@@ -202,8 +204,11 @@ internal object AvroConverters {
     private fun createNestedStructureToAvroConverters(structure: IntermediateDataStructure) {
         // Only target visible fields with a structure type and the AvroSchema aspect
         val nestedAvroStructures = structure.visibleFieldsAndTypes()
-            .filter { (field, type) -> type is IntermediateDataStructure && field.hasAspect("Kafka.AvroSchema") }
-            .map { (_, type) -> type as IntermediateDataStructure to type.getAspect("Kafka.AvroSchema")!! }.toMap()
+            .filter { (field, type) ->
+                type is IntermediateDataStructure && field.hasAspect("AvroSchema".forKafkaTechnology())
+            }.associate { (_, type) ->
+                type as IntermediateDataStructure to type.getAspect("AvroSchema".forKafkaTechnology())!!
+            }
 
         nestedAvroStructures.forEach { (structure, avroSchemaAspect) ->
             addStructureToAvroConverter(structure, avroSchemaAspect)
