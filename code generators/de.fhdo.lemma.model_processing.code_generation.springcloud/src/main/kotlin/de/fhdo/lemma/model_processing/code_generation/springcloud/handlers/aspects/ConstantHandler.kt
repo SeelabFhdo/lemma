@@ -4,10 +4,10 @@ import com.github.javaparser.ast.Node
 import com.github.javaparser.ast.body.FieldDeclaration
 import de.fhdo.lemma.data.intermediate.IntermediateDataField
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
+import de.fhdo.lemma.model_processing.code_generation.java_base.forJavaTechnology
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.combinations
-import de.fhdo.lemma.model_processing.code_generation.springcloud.forJavaTechnology
 import org.eclipse.emf.ecore.EObject
 
 /**

@@ -7,6 +7,7 @@ import com.github.javaparser.ast.body.ConstructorDeclaration
 import com.github.javaparser.ast.body.MethodDeclaration
 import de.fhdo.lemma.data.intermediate.IntermediateDataOperation
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setBody
+import de.fhdo.lemma.model_processing.code_generation.java_base.forJavaTechnology
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CallableCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.invokeCodeGenerationHandler
@@ -39,10 +40,10 @@ internal class DataOperationHandler :
     override fun execute(eObject: IntermediateDataOperation, context: ClassOrInterfaceDeclaration?)
         : Pair<CallableDeclaration<*>, String?>? {
         /* Add the basic callable, i.e., a constructor or method, for the intermediate operation to the class */
-        val callable = if (eObject.hasAspect("java.constructor"))
-                    context!!.addAsConstructor(eObject)
-                else
-                    context!!.addAsMethod(eObject)
+        val callable = if (eObject.hasAspect("Constructor".forJavaTechnology()))
+                context!!.addAsConstructor(eObject)
+            else
+                context!!.addAsMethod(eObject)
 
         /* Handle parameters */
         eObject.parameters.forEach { DataOperationParameterHandler.invoke(it, callable) }
@@ -88,7 +89,8 @@ internal class DataOperationHandler :
     private fun ClassOrInterfaceDeclaration.addAsMethod(operation : IntermediateDataOperation)
         : CallableDeclaration<MethodDeclaration> {
         val method = addMethod(operation.name)
-        method.isStatic = operation.hasAspect("java.static") || operation.dataStructure.hasFeature("FACTORY")
+        method.isStatic = operation.hasAspect("Static".forJavaTechnology()) ||
+            operation.dataStructure.hasFeature("FACTORY")
 
         if (!operation.isInherited) {
             method.addModifier(if (operation.isHidden) Modifier.Keyword.PRIVATE else Modifier.Keyword.PUBLIC)

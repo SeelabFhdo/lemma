@@ -332,6 +332,16 @@ fun IntermediateMicroservice.hasTechnology(technologyName: String, ignoreCase: B
     = technologies.any { it.name.equals(technologyName, ignoreCase = ignoreCase) }
 
 /**
+ * Check if one of the technologies with a name from the [technologyNames] set was assigned to this
+ * [IntermediateMicroservice]. By default, the check is case-sensitive. This behavior can be altered by means of the
+ * [ignoreCase] parameter.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun IntermediateMicroservice.hasTechnology(technologyNames: Set<String>, ignoreCase: Boolean = false)
+    = technologyNames.any { hasTechnology(it, ignoreCase) }
+
+/**
  * Find alias of a technology model expressed in the Technology Modeling Language from a [TechnologyReference] list.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)

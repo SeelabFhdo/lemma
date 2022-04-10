@@ -12,6 +12,13 @@ import org.koin.core.context.startKoin
 import org.koin.dsl.module
 
 /**
+ * Supported names for the Java technology.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+val JAVA_TECHNOLOGY_NAMES = setOf("java", "Java")
+
+/**
  * Main class of the Java base generator realized on the basis of LEMMA's model processing framework as an
  * [AbstractModelProcessor].
  *

@@ -35,7 +35,7 @@ import de.fhdo.lemma.technology.CommunicationType
 internal class OperationHandler
     : GenletCodeGenerationHandlerI<IntermediateOperation, MethodDeclaration, ClassOrInterfaceDeclaration> {
     companion object {
-        private val RESPONSE_STATUS_ASPECT_NAMES = "ResponseStatus".forSpringTechnology().toTypedArray()
+        private val RESPONSE_STATUS_ASPECT_NAMES = "ResponseStatus".forSpringTechnology()
     }
 
     override fun handlesEObjectsOfInstance() = IntermediateOperation::class.java
@@ -64,9 +64,7 @@ internal class OperationHandler
          * generated method will be adapted to be ResponseEntity with the current return type as type argument. This,
          * however, is only possible when the return type is a ClassOrInterfaceType.
          */
-        val hasResponseEntityParameter = eObject.parameters.any {
-            it.hasAspect(*RESPONSE_ENTITY_ASPECT_NAMES.toTypedArray())
-        }
+        val hasResponseEntityParameter = eObject.parameters.any { it.hasAspect(RESPONSE_ENTITY_ASPECT_NAMES) }
         if (hasResponseEntityParameter && node.type is ClassOrInterfaceType) {
             val currentReturnType = (node.type as ClassOrInterfaceType).nameAsString
             if (currentReturnType != "ResponseEntity") {
@@ -83,8 +81,8 @@ internal class OperationHandler
         val responseStatusAnnotation = eObject.parameters.firstOrNull {
             it.isResultParameter &&
             it.communicationType == CommunicationType.SYNCHRONOUS.name &&
-            it.hasAspect(*RESPONSE_STATUS_ASPECT_NAMES)
-        }?.getAspect(*RESPONSE_STATUS_ASPECT_NAMES)
+            it.hasAspect(RESPONSE_STATUS_ASPECT_NAMES)
+        }?.getAspect(RESPONSE_STATUS_ASPECT_NAMES)
         if (responseStatusAnnotation != null)
             node.addResponseStatusAnnotation(responseStatusAnnotation)
 
