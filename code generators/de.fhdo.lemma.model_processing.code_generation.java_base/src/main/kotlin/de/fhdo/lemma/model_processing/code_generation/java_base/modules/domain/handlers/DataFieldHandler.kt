@@ -95,46 +95,17 @@ internal class DataFieldHandler :
      */
     private fun FieldDeclaration.determineAndGetTypeMapping(field: IntermediateDataField)
         : Pair<TypeMappingDescription?, IntermediateType> {
-        /*
-         * Handle multi-value aspects, such as Array or Collection. When the intermediate field exhibits one of those
-         * aspects, its basic type for the multi-value specification will be determined. In all cases except for an
-         * intermediate collection type, this basic type corresponds to the intermediate field's type. For intermediate
-         * collection types, however, the basic type is either the primitive type of the collection or the type of a
-         * single data field in a structured collection. Ultimately, this results in type mappings such as "String[]"
-         * (i.e., the aspect is "Array" and the basic type is String, which could be the type of a primitive collection)
-         * or "Collection<Address>" (i.e., the aspect is "Collection" and the basic type is Address, which could be the
-         * type of the single data field of a structured collection).
-         */
-        var mappedForMultiValueAspect = false
-        val hasMultivalueAspect = field.hasAspect("Array".forJavaTechnology()) ||
-            field.hasAspect("Collection".forJavaTechnology())
-        val intermediateType = if (hasMultivalueAspect) {
-            val basicTypeForMultiValueAspect = field.type.getBasicType()
-            mappedForMultiValueAspect = basicTypeForMultiValueAspect != null
-            basicTypeForMultiValueAspect ?: field.type
-        } else
-            field.type
-
-        /* Set the (basic) type of the attribute */
-        val typeMapping = variables[0].setJavaTypeFrom(intermediateType, this) {
+        val typeMapping = variables[0].setJavaTypeFrom(field.type, this) {
             addImport(it, ImportTargetElementType.ATTRIBUTE_TYPE)
         }
 
-        if (!mappedForMultiValueAspect || typeMapping == null)
-            return typeMapping to intermediateType
+        if (typeMapping !== null && field.hasAspect("Array".forJavaTechnology())) {
+            val mappedTypeName = "${variables[0].typeAsString}[]"
+            variables[0].setType(mappedTypeName)
+            typeMapping.mappedTypeName = mappedTypeName
+        }
 
-        /* Adapt the basic type of the attribute to multi-value aspects */
-        val mappedTypeName = if (field.hasAspect("Array".forJavaTechnology()))
-                "${variables[0].typeAsString}[]"
-            else {
-                typeMapping.addImport("java.util.Collection")
-                addImport("java.util.Collection", ImportTargetElementType.ATTRIBUTE_TYPE)
-                "Collection<${variables[0].typeAsString}>"
-            }
-
-        variables[0].setType(mappedTypeName)
-        typeMapping.mappedTypeName = mappedTypeName
-        return typeMapping to intermediateType
+        return typeMapping to field.type
     }
 
     /**

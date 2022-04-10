@@ -153,6 +153,7 @@ private object SupportedJavaCollectionTypes {
 
     init {
         registerType(DEFAULT_JAVA_COLLECTION_ASPECT_NAMES, DEFAULT_JAVA_COLLECTION_TYPE_DESCRIPTION)
+        registerType("Collection".forJavaTechnology(), JavaCollectionTypeDescription("java.util.Collection", 1))
         registerType("LinkedList".forJavaTechnology(), JavaCollectionTypeDescription("java.util.LinkedList", 1))
         registerType("Map".forJavaTechnology(), JavaCollectionTypeDescription("java.util.Map", 2))
         registerType("Set".forJavaTechnology(), JavaCollectionTypeDescription("java.util.Set", 1))
