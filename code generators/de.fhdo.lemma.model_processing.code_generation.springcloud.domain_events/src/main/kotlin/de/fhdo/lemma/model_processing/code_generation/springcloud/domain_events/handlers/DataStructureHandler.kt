@@ -10,8 +10,9 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getPackageNa
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerResult
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.setGenletNodeInfo
-import de.fhdo.lemma.model_processing.code_generation.java_base.getAspectPropertyValue
+import de.fhdo.lemma.model_processing.code_generation.java_base.getFirstMatchingAspectPropertyValue
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
+import de.fhdo.lemma.model_processing.code_generation.springcloud.domain_events.forDomainEventsTechnology
 import de.fhdo.lemma.model_processing.code_generation.springcloud.domain_events.state.EventGroups
 
 /**
@@ -34,7 +35,8 @@ internal class DataStructureHandler
          * Add an event group interface to the node generated for the data structure, in case the EventGroup aspect is
          * present
          */
-        val eventGroup = eObject.getAspectPropertyValue("DomainEvents.EventGroup", "name") ?: return null
+        val eventGroup = eObject.getFirstMatchingAspectPropertyValue("EventGroup".forDomainEventsTechnology(), "name")
+            ?: return null
 
         // Add event group interface to node
         val currentDomainPackage: String by state()

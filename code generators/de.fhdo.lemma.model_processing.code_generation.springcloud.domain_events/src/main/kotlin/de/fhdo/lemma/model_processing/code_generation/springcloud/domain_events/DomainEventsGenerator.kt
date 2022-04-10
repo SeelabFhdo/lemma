@@ -11,6 +11,13 @@ import de.fhdo.lemma.model_processing.code_generation.springcloud.domain_events.
 private const val BASE_PACKAGE = "de.fhdo.lemma.model_processing.code_generation.springcloud.domain_events"
 
 /**
+ * Supported names for the DomainEvents technology.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+internal val DOMAIN_EVENTS_TECHNOLOGY_NAMES = setOf("domainEvents", "DomainEvents")
+
+/**
  * Main class of the Domain Events generator realized on the basis of LEMMA's model processing framework as an
  * [AbstractModelProcessor].
  *
