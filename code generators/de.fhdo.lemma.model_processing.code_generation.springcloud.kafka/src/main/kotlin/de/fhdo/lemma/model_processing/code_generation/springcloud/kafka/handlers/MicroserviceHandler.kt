@@ -8,6 +8,8 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.getAllAspects
 import de.fhdo.lemma.model_processing.code_generation.java_base.getAspect
 import de.fhdo.lemma.model_processing.code_generation.java_base.getPropertyValue
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
+import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.KAFKA_TECHNOLOGY_NAMES
+import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.forKafkaTechnology
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.genletHeap
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.shared.ApplicationProperties
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.shared.ApplicationProperties.newApplicationProperty
@@ -36,7 +38,7 @@ internal class MicroserviceHandler
      */
     override fun execute(eObject: IntermediateMicroservice, node: ClassOrInterfaceDeclaration, context: Nothing?)
         : GenletCodeGenerationHandlerResult<ClassOrInterfaceDeclaration>? {
-        if (!eObject.hasTechnology("Kafka"))
+        if (!eObject.hasTechnology(KAFKA_TECHNOLOGY_NAMES))
             return null
 
         /* Add Kafka dependency */
@@ -50,7 +52,7 @@ internal class MicroserviceHandler
         KafkaConfiguration.initialize(currentMicroservicePackage, currentDomainPackage, genletHeap)
 
         // Add elements to KafkaConfiguration related to Kafka bootstrap address
-        val bootstrapAddressAspect = eObject.getAspect("Kafka.BootstrapAddress")!!
+        val bootstrapAddressAspect = eObject.getAspect("BootstrapAddress".forKafkaTechnology())!!
         bootstrapAddressAspect.newApplicationProperty("address", BOOTSTRAP_ADDRESS_PROPERTY)
         KafkaConfiguration.addBootstrapAddressElements(BOOTSTRAP_ADDRESS_PROPERTY)
 
@@ -58,10 +60,11 @@ internal class MicroserviceHandler
          * Create Spring application properties for Kafka topics and consumer groups. Both are registered "on the fly"
          * as being found in the Participant aspects of the microservice's operations.
          */
+        val allParticipantAspectNames = setOf("Participant", "AvroParticipant").forKafkaTechnology()
         eObject.interfaces
             .map { it.operations }
             .flatten()
-            .mapNotNull { it.getAllAspects("Kafka.Participant", "Kafka.AvroParticipant") }
+            .mapNotNull { it.getAllAspects(*allParticipantAspectNames.toTypedArray()) }
             .flatten()
             .forEach {
                 val topicName = it.getPropertyValue("topic")!!.decapitalize()
@@ -73,11 +76,11 @@ internal class MicroserviceHandler
             }
 
         /* Add dependencies, properties, and KafkaConfiguration elements for Avro, if it is used */
-        val avroRegistryAddessAspect = eObject.getAspect("Kafka.AvroRegistryAddress")
-        if (avroRegistryAddessAspect != null) {
+        val avroRegistryAddressAspect = eObject.getAspect("AvroRegistryAddress".forKafkaTechnology())
+        if (avroRegistryAddressAspect != null) {
             node.addDependency("io.confluent:kafka-avro-serializer:5.5.0")
             node.addDependency("org.apache.avro:avro:1.9.2")
-            avroRegistryAddessAspect.newApplicationProperty("address", AVRO_REGISTRY_ADDRESS_PROPERTY)
+            avroRegistryAddressAspect.newApplicationProperty("address", AVRO_REGISTRY_ADDRESS_PROPERTY)
             KafkaConfiguration.addAvroRegistryAddressProperty(AVRO_REGISTRY_ADDRESS_PROPERTY)
         }
 

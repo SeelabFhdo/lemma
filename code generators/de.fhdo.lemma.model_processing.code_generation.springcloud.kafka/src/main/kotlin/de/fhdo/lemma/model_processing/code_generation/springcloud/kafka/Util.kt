@@ -19,6 +19,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addAndGetAnn
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addPrivateAttribute
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addSerializationCharacteristic
+import de.fhdo.lemma.model_processing.code_generation.java_base.forTechnologies
 import de.fhdo.lemma.model_processing.code_generation.java_base.getAspect
 import de.fhdo.lemma.model_processing.code_generation.java_base.getPropertyValue
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasInputParameters
@@ -40,7 +41,7 @@ import org.eclipse.emf.ecore.EObject
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 internal val Microservice.kafkaAlias
-    get() = technologyReferences.findAliasForTechnology("Kafka")
+    get() = technologyReferences.findAliasForTechnology(KAFKA_TECHNOLOGY_NAMES)
 
 /**
  * Get alias of Kafka technology model from [ComplexTypeMapping].
@@ -48,7 +49,7 @@ internal val Microservice.kafkaAlias
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 internal val ComplexTypeMapping.kafkaAlias
-    get() = technologyReferences.findAliasForTechnology("Kafka")
+    get() = technologyReferences.findAliasForTechnology(KAFKA_TECHNOLOGY_NAMES)
 
 /**
  * Get alias of Domain Events technology model from [Microservice].
@@ -56,7 +57,7 @@ internal val ComplexTypeMapping.kafkaAlias
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 internal val Microservice.domainEventsAlias
-    get() = technologyReferences.findAliasForTechnology("DomainEvents")
+    get() = technologyReferences.findAliasForTechnology(DOMAIN_EVENTS_TECHNOLOGY_NAMES)
 
 /**
  * Get alias of CQRS technology model from [Microservice].
@@ -231,18 +232,16 @@ internal fun ClassOrInterfaceDeclaration.addBeanMethod(methodName: String) : Met
 }
 
 /**
- * Get value of property with name [propertyName] of this EObject's aspect with name [qualifiedAspectName] as Boolean.
- * Returns true if the value of the property is the case-sensitive String "true" and false otherwise.
+ * Get value of property with name [propertyName] of this EObject's aspect with one of the given [qualifiedAspectNames]
+ * as Boolean. Returns the Boolean representation of the property's value if it exists and false otherwise.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun EObject.booleanAspectPropertyValueOrFalse(qualifiedAspectName: String, propertyName: String) : Boolean {
-    val aspect = getAspect(qualifiedAspectName) ?: return false
+internal fun EObject.booleanAspectPropertyValueOrFalse(qualifiedAspectNames: Set<String>, propertyName: String)
+    : Boolean {
+    val aspect = getAspect(qualifiedAspectNames) ?: return false
     val propertyValue = aspect.getPropertyValue(propertyName) ?: return false
-    return when(propertyValue) {
-        "true" -> true
-        else -> false
-    }
+    return propertyValue.toBoolean()
 }
 
 /**
@@ -324,3 +323,30 @@ internal fun IntermediateComplexType.getContainingDataModel() : IntermediateData
         container = container.eContainer()
     return container
 }
+
+/**
+ * Build the [Set] of qualified aspect names for the Kafka technology from this [String] representing a simple aspect
+ * name. For instance, for the simple name "Participant" this function returns the [Set] {"Kafka.Participant",
+ * "kafka.Participant"}.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun String.forKafkaTechnology() = forTechnologies(KAFKA_TECHNOLOGY_NAMES)
+
+/**
+ * Build the [Set] of qualified aspect names for the Kafka technology from this [Set] clustering simple aspect names.
+ * For instance, for the [Set] of simple aspect names {"AvroParticipant", "Participant"} this function returns the [Set]
+ * {"Kafka.AvroParticipant", "kafka.AvroParticipant", "Kafka.Participant", "kafka.Participant"}.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun Set<String>.forKafkaTechnology() = forTechnologies(KAFKA_TECHNOLOGY_NAMES)
+
+/**
+ * Build the [Set] of qualified aspect names for the DomainEvents technology from this [String] representing a simple
+ * aspect name. For instance, for the simple name "Consumer" this function returns the [Set] {"DomainEvents.Consumer",
+ * "domainEvents.Consumer"}.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun String.forDomainEventsTechnology() = forTechnologies(DOMAIN_EVENTS_TECHNOLOGY_NAMES)

@@ -20,10 +20,12 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.ast.newJavaClass
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletGeneratedNode
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletPathSpecifier
 import de.fhdo.lemma.model_processing.code_generation.java_base.getAspectPropertyValue
+import de.fhdo.lemma.model_processing.code_generation.java_base.getFirstMatchingAspectPropertyValue
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.addBeanMethod
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.addRelocatableImport
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.booleanAspectPropertyValueOrFalse
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.findMethod
+import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.forDomainEventsTechnology
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.setterExists
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.shared.buildConsumerGroupPropertyName
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.shared.buildTopicPropertyName
@@ -113,7 +115,10 @@ internal object KafkaListeners {
      * application.
      */
     private fun addOrGetConsumerService(parameter: IntermediateParameter) : KafkaConsumerService {
-        val consumerServiceName = parameter.operation.getAspectPropertyValue("DomainEvents.Consumer", "handlerName")
+        val consumerServiceName = parameter.operation.getFirstMatchingAspectPropertyValue(
+            "Consumer".forDomainEventsTechnology(),
+            "handlerName"
+        )
         if (consumerServiceName !in consumerServices)
             consumerServices[consumerServiceName] = if (consumerServiceName != null)
                 KafkaConsumerService(domainPackage!!, genletHeap!!, consumerServiceName)
@@ -229,8 +234,10 @@ internal object KafkaListeners {
      */
     fun MethodDeclaration.adaptToErrorHandlerIfRequired(parameter: IntermediateParameter,
         consumerElements: Pair<MethodDeclaration, FieldDeclaration>) {
-        val disableErrorHandling = parameter.operation.booleanAspectPropertyValueOrFalse("DomainEvents.Consumer",
-            "disableErrorHandling")
+        val disableErrorHandling = parameter.operation.booleanAspectPropertyValueOrFalse(
+            "Consumer".forDomainEventsTechnology(),
+            "disableErrorHandling"
+        )
         if (disableErrorHandling)
             return
 

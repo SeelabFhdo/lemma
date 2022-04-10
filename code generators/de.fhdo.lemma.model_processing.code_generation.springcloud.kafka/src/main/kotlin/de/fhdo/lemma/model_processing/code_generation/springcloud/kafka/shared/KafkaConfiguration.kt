@@ -21,6 +21,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletGe
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletPathSpecifier
 import de.fhdo.lemma.model_processing.code_generation.java_base.getAspect
 import de.fhdo.lemma.model_processing.code_generation.java_base.getAspectPropertyValue
+import de.fhdo.lemma.model_processing.code_generation.java_base.getFirstMatchingAspectPropertyValue
 import de.fhdo.lemma.model_processing.code_generation.java_base.getPropertyValue
 import de.fhdo.lemma.model_processing.code_generation.java_base.resolve
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.addBeanMethod
@@ -32,6 +33,8 @@ import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.consumer
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.consumer.KafkaListeners.adaptToErrorHandlerIfRequired
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.countMethodsWithPrefix
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.findMethod
+import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.forDomainEventsTechnology
+import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.forKafkaTechnology
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.getTypeArg
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.methodExists
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.producer.KafkaProducerService
@@ -260,7 +263,8 @@ internal object KafkaConfiguration {
     private fun addOrGetProducerService(operation: IntermediateOperation) : KafkaProducerService {
         // The producer service name may be adapted by means of the DomainEvents.Producer aspect and its handlerName
         // property
-        val producerServiceName = operation.getAspectPropertyValue("DomainEvents.Producer", "handlerName")
+        val producerServiceName = operation.getFirstMatchingAspectPropertyValue("Producer".forDomainEventsTechnology(),
+            "handlerName")
         var producerService = producerServices[producerServiceName]
         if (producerService != null)
             return producerService
@@ -322,8 +326,10 @@ internal object KafkaConfiguration {
     fun addConsumerElements(topic: String, consumerGroup: String, parameter: IntermediateParameter) {
         val consumerGroupAttributeName = addConsumerGroupAttribute(consumerGroup)
 
-        val groupEventsOnly = parameter.operation.booleanAspectPropertyValueOrFalse("DomainEvents.Consumer",
-            "groupEventsOnly")
+        val groupEventsOnly = parameter.operation.booleanAspectPropertyValueOrFalse(
+            "Consumer".forDomainEventsTechnology(),
+            "groupEventsOnly"
+        )
         if (!groupEventsOnly) {
             val factoryPrefix = topic.decapitalize() + consumerGroup.capitalize()
             val (valueType, valueTypeImports) = parameter.classOrInterfaceType()!!
@@ -449,13 +455,13 @@ internal object KafkaConfiguration {
         listenerFactoryName: String) {
         val operation = parameter.operation
         /* Check if error handling is enabled at all */
-        val disableErrorHandling = operation.booleanAspectPropertyValueOrFalse("DomainEvents.Consumer",
+        val disableErrorHandling = operation.booleanAspectPropertyValueOrFalse("Consumer".forDomainEventsTechnology(),
             "disableErrorHandling")
         if (disableErrorHandling)
             return
 
         /* Check for error handling configuration and get configuration properties */
-        val errorHandlingAspect = operation.getAspect("Kafka.ErrorHandlingConfiguration")
+        val errorHandlingAspect = operation.getAspect("ErrorHandlingConfiguration".forKafkaTechnology())
         val (retriesUponError, retryInterval) = if (errorHandlingAspect != null) {
             errorHandlingAspect.getPropertyValue("retriesUponError")?.toLong() to
                     errorHandlingAspect.getPropertyValue("retryInterval")?.toLong()
