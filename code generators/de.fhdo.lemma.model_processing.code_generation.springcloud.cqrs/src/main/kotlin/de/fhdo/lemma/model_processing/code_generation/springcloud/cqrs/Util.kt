@@ -8,4 +8,4 @@ import de.fhdo.lemma.service.Microservice
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun Microservice.cqrsAlias() = technologyReferences.findAliasForTechnology("CQRS")
+internal fun Microservice.cqrsAlias() = technologyReferences.findAliasForTechnology(CQRS_TECHNOLOGY_NAMES)
