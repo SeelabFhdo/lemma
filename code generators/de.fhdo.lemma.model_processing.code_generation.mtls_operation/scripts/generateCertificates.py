@@ -7,12 +7,29 @@ from enum import Enum
 from shutil import which
 from typing import List
 
-target_path = "/home/dominik/masterthesis/lemmasecuritymodelgencode"
+target_path = os.path.expanduser("~/masterthesis/lemmasecuritymodelgencode")
 
 
 class Profiletype(Enum):
     MTLS = "mtls"
     MTLSDEV = "mtlsdev"
+
+
+# todo
+def get_absolute_path(path: str) -> str:
+    if path.startswith("~"):
+        path = os.path.expanduser(path)
+
+
+def system_environment_variable(variable: str) -> str:
+    if variable.find("${") > -1:
+        var = variable[variable.find("${") + 2:variable.find("}")]
+        env = os.getenv(var)
+        if env:
+            return str(env) + variable[variable.find("}") + 1:]
+        else:
+            sys.exit("The system environment variable \"{var}\" is not defined!".format(var=var))
+    return variable
 
 
 @dataclass
@@ -26,12 +43,15 @@ class CertificateConfigFile:
         return "CertificationAuthority" in self.filename
 
     def get_profile(self) -> Profiletype:
-        if "mtlsdev" in self.filename:
+        if Profiletype.MTLSDEV.value in self.filename:
             return Profiletype.MTLSDEV
         return Profiletype.MTLS
 
-    # def get_config_parameter(self, parameter: str) -> str:
-    #     return self.configParameter[parameter] if self.configParameter[parameter] else ""
+    def get_config_parameter(self, parameter: str) -> str:
+        for tuple in self.configParameter:
+            if tuple[0] == parameter:
+                return tuple[1]
+        return ""
 
 
 @dataclass
@@ -93,8 +113,15 @@ def check_openssl_is_installed():
         sys.exit(message)
 
 
-def create_certificate_authority(configFile: CertificateConfigFile):
-    generate_rsa_privat_key()
+def create_certificate_authority(config_file: CertificateConfigFile):
+    # (path: str, filename: str, password: str, cipher: str = "aes256", bitrate: int = 4096)
+    path = system_environment_variable(config_file.rootDir)
+    filename = system_environment_variable(config_file.filename)
+    password = system_environment_variable(config_file.get_config_parameter("caCertificatPassword"))
+    cipher = system_environment_variable(config_file.get_config_parameter("cipher"))
+    bitrate = int(system_environment_variable(config_file.get_config_parameter("server.ssl.bitLength")))
+
+    generate_rsa_privat_key(path, filename, password, cipher, bitrate)
     command1 = "openssl genrsa -aes256 -passout pass:$PASS -out $KEYPATH/ca/ca_key.pem 4096 "
     command2 = "openssl req -new -passin pass:$PASS -key $KEYPATH/ca/ca_key.pem -x509 -days 365 -out $KEYPATH/ca/ca_cert.pem -subj \"/CN=ca.$DOMAIN\""
 
@@ -132,23 +159,25 @@ def generate_rsa_privat_key(path: str, filename: str, password: str, cipher: str
         password = os.environ.get(password_var)
     if password == "":
         sys.exit("The system {systemvar} variable is not set or the password is empty!".format(systemvar=password_var))
-    if os.path.exists(os.path.join(path, filename)):
+    if not os.path.exists(os.path.join(path, filename)):
         sys.exit("Directory or file not found! {file}".format(
             file=os.path.join(path, filename)))
     run_cli_command(
         "openssl genrsa -{cipher} -passout pass:\"{password}\" -out \"{path}/{filename}_key.pem\" {bitrate}".format(
-            cipher=cipher, password=password, path=path, filename=filename, bitrate=bitrate))
+            cipher=cipher, password=password, path=path, filename=filename.replace(".var", ""), bitrate=bitrate))
 
 
 def run_cli_command(command: str) -> bool:
     if command == "" or command is None:
         sys.exit("Command can't be empty!")
-    proc = subprocess.Popen(command, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+    print(command)
+    proc = subprocess.Popen(command, stderr=subprocess.PIPE, stdout=subprocess.PIPE, shell=True)
+    logging.info(command)
     for line in proc.stderr:
         logging.error(line)
     for line in proc.stdout:
         logging.info(line)
-    return proc.stderr > 0 if True else False
+    return proc.returncode if True else False
 
 
 # -----------------------------------------------------------------------------------------
@@ -158,6 +187,7 @@ def generate_cetificates():
     for profile in profiles:
         print("Profile: {profile}".format(profile=profile.type.value))
         print("CA:")
+        create_certificate_authority(profile.ca_config)
         for caparam in profile.ca_config.configParameter:
             print("CA Param: {key} = {value}".format(key=caparam[0], value=caparam[1]))
         for client_config in profile.client_configs:
@@ -176,6 +206,7 @@ def generate_cetificates():
 
 
 if __name__ == '__main__':
+    print(target_path)
     logging.basicConfig(filename=os.path.join(target_path, "generateCertificates.log"), level=logging.INFO,
                         format='%(asctime)s %(message)s')
     logging.info('Started')

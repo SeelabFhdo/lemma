@@ -56,4 +56,11 @@ class MTLSOperationModelSourceValidator : AbstractXtextModelValidator() {
                 OperationPackage.Literals.OPERATION_NODE__DEPLOYMENT_SPECIFICATIONS
             )
     }
+    /*
+    * It checks if the values of aspects or system settings do not contain a hyphen or a dot.
+    * */
+    @Check
+    private fun checkSystemEnvironmentVariables(){
+
+    }
 }
