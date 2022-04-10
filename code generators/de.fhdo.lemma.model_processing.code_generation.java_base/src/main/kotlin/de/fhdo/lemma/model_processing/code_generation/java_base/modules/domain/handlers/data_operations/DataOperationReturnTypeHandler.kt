@@ -4,6 +4,7 @@ import com.github.javaparser.ast.body.MethodDeclaration
 import de.fhdo.lemma.data.intermediate.IntermediateDataOperationReturnType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
+import de.fhdo.lemma.model_processing.code_generation.java_base.forJavaTechnology
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CallableCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.invokeCodeGenerationHandler
@@ -38,7 +39,7 @@ internal class DataOperationReturnTypeHandler
         context!!.setJavaTypeFrom(eObject.type, context) { context.addImport(it, ImportTargetElementType.METHOD) }
 
         // Add Optional return type
-        if (eObject.hasAspect("java.Optional") && !context.type.isVoidType) {
+        if (eObject.hasAspect("Optional".forJavaTechnology()) && !context.type.isVoidType) {
             context.addImport("java.util.Optional", ImportTargetElementType.METHOD)
             context.setType("Optional<${context.typeAsString}>")
         }

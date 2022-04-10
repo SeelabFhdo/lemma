@@ -14,7 +14,9 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGen
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.handlers.data_operations.DataOperationHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainContext.State as DomainState
 import de.fhdo.lemma.model_processing.code_generation.java_base.eObjectPackageName
+import de.fhdo.lemma.model_processing.code_generation.java_base.forJavaTechnology
 import de.fhdo.lemma.model_processing.code_generation.java_base.getAspectPropertyValue
+import de.fhdo.lemma.model_processing.code_generation.java_base.getFirstMatchingAspectPropertyValue
 
 /**
  * Code generation handler for IntermediateDataStructure instances.
@@ -64,14 +66,19 @@ internal class DataStructureHandler
      * case. However, the modeler may deactivate it by means of technology aspects.
      */
     private fun IntermediateDataStructure.shallHaveAttributesConstructor()
-        = getAspectPropertyValue("java.constructor", "initializing")?.equals("true") ?: true
+        = getFirstMatchingAspectPropertyValue("Constructor".forJavaTechnology(), "initializing")
+            ?.equals("true", ignoreCase = true)
+            ?: true
 
     /**
      * Determine visibility of a constructor for initializing all data fields. By default, such constructors are public.
      * However, the modeler may constrain their visibility by means of technology aspects.
      */
     private fun IntermediateDataStructure.attributesConstructorVisibility() : Modifier.Keyword {
-        val protectAttributesConstructor = getAspectPropertyValue("java.constructor", "protectInitializing") == "true"
+        val protectAttributesConstructor
+            = getFirstMatchingAspectPropertyValue("Constructor".forJavaTechnology(), "protectInitializing")
+                ?.toBoolean()
+                ?: false
         return if (protectAttributesConstructor)
                 Modifier.Keyword.PROTECTED
             else

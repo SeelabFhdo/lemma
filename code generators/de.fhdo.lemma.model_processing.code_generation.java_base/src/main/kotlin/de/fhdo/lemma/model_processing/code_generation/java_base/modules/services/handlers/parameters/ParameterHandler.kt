@@ -4,6 +4,7 @@ import com.github.javaparser.ast.body.MethodDeclaration
 import com.github.javaparser.ast.body.Parameter
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
+import de.fhdo.lemma.model_processing.code_generation.java_base.forJavaTechnology
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CallableCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.invokeCodeGenerationHandler
@@ -47,7 +48,7 @@ internal class ParameterHandler
         val generatedParameter = Parameter()
         generatedParameter.setName(eObject.name)
 
-        val parameterType = if (eObject.hasAspect("java.Set")) {
+        val parameterType = if (eObject.hasAspect("Set".forJavaTechnology())) {
             context!!.addImport("java.util.Set", ImportTargetElementType.METHOD)
             eObject.type.getBasicType() ?: eObject.type
         } else
@@ -57,7 +58,7 @@ internal class ParameterHandler
             context.addImport(it, ImportTargetElementType.METHOD)
         }
 
-        if (eObject.hasAspect("java.Set"))
+        if (eObject.hasAspect("Set".forJavaTechnology()))
             generatedParameter.setType("Set<${generatedParameter.typeAsString}>")
 
         context.addParameter(generatedParameter)

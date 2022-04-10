@@ -15,6 +15,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addSetter
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.insertStatement
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setBody
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setInitializationValue
+import de.fhdo.lemma.model_processing.code_generation.java_base.forJavaTechnology
 import de.fhdo.lemma.model_processing.code_generation.java_base.fullyQualifiedClassname
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CallableCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
@@ -105,7 +106,9 @@ internal class DataFieldHandler :
          * type of the single data field of a structured collection).
          */
         var mappedForMultiValueAspect = false
-        val intermediateType = if (field.hasAspect("java.Array") || field.hasAspect("java.Collection")) {
+        val hasMultivalueAspect = field.hasAspect("Array".forJavaTechnology()) ||
+            field.hasAspect("Collection".forJavaTechnology())
+        val intermediateType = if (hasMultivalueAspect) {
             val basicTypeForMultiValueAspect = field.type.getBasicType()
             mappedForMultiValueAspect = basicTypeForMultiValueAspect != null
             basicTypeForMultiValueAspect ?: field.type
@@ -121,7 +124,7 @@ internal class DataFieldHandler :
             return typeMapping to intermediateType
 
         /* Adapt the basic type of the attribute to multi-value aspects */
-        val mappedTypeName = if (field.hasAspect("java.Array"))
+        val mappedTypeName = if (field.hasAspect("Array".forJavaTechnology()))
                 "${variables[0].typeAsString}[]"
             else {
                 typeMapping.addImport("java.util.Collection")

@@ -19,6 +19,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.buildExceptionCl
 import de.fhdo.lemma.model_processing.code_generation.java_base.buildFullyQualifiedCompositeClassName
 import de.fhdo.lemma.model_processing.code_generation.java_base.buildFullyQualifiedExceptionClassName
 import de.fhdo.lemma.model_processing.code_generation.java_base.buildRequiredInputParameterGuardName
+import de.fhdo.lemma.model_processing.code_generation.java_base.forJavaTechnology
 import de.fhdo.lemma.model_processing.code_generation.java_base.getFaultParameters
 import de.fhdo.lemma.model_processing.code_generation.java_base.getInputParameters
 import de.fhdo.lemma.model_processing.code_generation.java_base.getRequiredInputParameters
@@ -216,7 +217,8 @@ internal class OperationHandler
         }
 
         /* Add import of java.util.Set in case one of the synchronous result parameters exhibits the java.Set aspect */
-        val resultIsSet = operation.getResultParameters(CommunicationType.SYNCHRONOUS).any { it.hasAspect("java.Set") }
+        val resultIsSet = operation.getResultParameters(CommunicationType.SYNCHRONOUS)
+            .any { it.hasAspect("Set".forJavaTechnology()) }
         if (resultIsSet)
             generatedMethod.addImport("java.util.Set", ImportTargetElementType.METHOD)
 

@@ -1,6 +1,7 @@
 package de.fhdo.lemma.model_processing.code_generation.java_base.modules
 
 import de.fhdo.lemma.model_processing.annotations.CodeGenerationModule
+import de.fhdo.lemma.model_processing.code_generation.java_base.JAVA_TECHNOLOGY_NAMES
 import de.fhdo.lemma.model_processing.code_generation.java_base.commandline.CommandLine
 import de.fhdo.lemma.model_processing.code_generation.java_base.dependencies.DependencyDescription
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.INTERMEDIATE_SERVICE_MODEL_LANGUAGE_DESCRIPTION
@@ -65,12 +66,13 @@ internal class MainCodeGenerationModule : CodeGenerationModuleBase<IntermediateM
      */
     override fun getGenerationElements() : List<IntermediateMicroservice> {
         val intermediateServiceModel: IntermediateServiceModel by MainState
-        val javaMicroservices = intermediateServiceModel.microservices.filter{ it.hasTechnology("java") }
+        val javaMicroservices = intermediateServiceModel.microservices
+            .filter { it.hasTechnology(JAVA_TECHNOLOGY_NAMES) }
         if (javaMicroservices.isEmpty()) {
             val intermediateServiceModelFilePath: String by MainState
             throw PhaseException("No Java microservices found in intermediate service model " +
-                "\"$intermediateServiceModelFilePath\". You need to assign a technology model with name \"Java\" to " +
-                "at least one modeled microservice.")
+                "\"$intermediateServiceModelFilePath\". You need to assign a technology model with one of the names " +
+                "${JAVA_TECHNOLOGY_NAMES.joinToString(", ") { "\"$it\"" }} to at least one modeled microservice.")
         }
 
         return javaMicroservices

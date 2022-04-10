@@ -45,7 +45,7 @@ internal class MicroserviceHandler
     override fun generatesNodesOfInstance() = ClassOrInterfaceDeclaration::class.java
 
     companion object {
-        private val APPLICATION_ASPECT_NAMES = "Application".forSpringTechnology().toTypedArray()
+        private val APPLICATION_ASPECT_NAMES = "Application".forSpringTechnology()
         private const val H2_DATABASE_CONSOLE_ENABLED_PROPERTY = "spring.h2.console.enabled"
 
         /**
@@ -140,9 +140,7 @@ internal class MicroserviceHandler
      * Handle CustomProperty aspect
      */
     private fun handleCustomPropertyAspect(intermediateService: IntermediateMicroservice)
-        = intermediateService.forEachAspect(
-            *setOf("ApplicationProperty", "CustomProperty").forAllTechnologies().toTypedArray()
-        ) {
+        = intermediateService.forEachAspect(setOf("ApplicationProperty", "CustomProperty").forAllTechnologies()) {
             val customPropertyName = it.getPropertyValue("name")!!
             it.newApplicationProperty("value", customPropertyName)
         }
@@ -164,7 +162,7 @@ internal class MicroserviceHandler
      * Handle Spring Application aspect
      */
     private fun handleSpringApplicationAspect(intermediateService: IntermediateMicroservice) {
-        val aspect = intermediateService.getAspect(*APPLICATION_ASPECT_NAMES) ?: return
+        val aspect = intermediateService.getAspect(APPLICATION_ASPECT_NAMES) ?: return
         aspect.newApplicationProperty("name", "spring.application.name")
         aspect.newApplicationProperty("port", "server.port")
     }
@@ -173,10 +171,10 @@ internal class MicroserviceHandler
      * Handle ApplicationName aspect
      */
     private fun handleApplicationNameAspect(intermediateService: IntermediateMicroservice) {
-        if (intermediateService.hasAspect(*APPLICATION_ASPECT_NAMES))
+        if (intermediateService.hasAspect(APPLICATION_ASPECT_NAMES))
             return
 
-        intermediateService.getAspect(*"ApplicationName".forSpringTechnology().toTypedArray())
+        intermediateService.getAspect("ApplicationName".forSpringTechnology())
             ?.newApplicationProperty("value", "spring.application.name")
     }
 
@@ -184,8 +182,7 @@ internal class MicroserviceHandler
      * Handle JacksonConfiguration aspect
      */
     private fun handleJacksonConfigurationAspect(intermediateService: IntermediateMicroservice) {
-        val aspect = intermediateService.getAspect(*"JacksonConfiguration".forSpringTechnology().toTypedArray())
-            ?: return
+        val aspect = intermediateService.getAspect("JacksonConfiguration".forSpringTechnology()) ?: return
         aspect.newApplicationProperty("INDENT_OUTPUT", "spring.jackson.serialization.INDENT_OUTPUT")
         aspect.newApplicationProperty("defaultPropertyInclusion", "spring.jackson.default-property-inclusion")
     }
@@ -195,8 +192,7 @@ internal class MicroserviceHandler
      */
     private fun handleDatasourceConfigurationAspect(intermediateService: IntermediateMicroservice,
         serviceClass: ClassOrInterfaceDeclaration) {
-        val aspect = intermediateService.getAspect(*"DatasourceConfiguration".forSpringTechnology().toTypedArray())
-            ?: return
+        val aspect = intermediateService.getAspect("DatasourceConfiguration".forSpringTechnology()) ?: return
         aspect.newApplicationProperty("url", "spring.datasource.url")
         aspect.newApplicationProperty("username", "spring.datasource.username")
         aspect.newApplicationProperty("password", "spring.datasource.password")
@@ -214,8 +210,7 @@ internal class MicroserviceHandler
      * Handle java.HibernateConfiguration aspect
      */
     private fun handleHibernateConfigurationAspect(intermediateService: IntermediateMicroservice) {
-        val aspect = intermediateService.getAspect(*"HibernateConfiguration".forAllTechnologies().toTypedArray())
-            ?: return
+        val aspect = intermediateService.getAspect("HibernateConfiguration".forAllTechnologies()) ?: return
         aspect.newApplicationProperty("ddlAuto", "spring.jpa.hibernate.ddl-auto")
     }
 
@@ -223,7 +218,7 @@ internal class MicroserviceHandler
      * Handle java.JpaShowSql aspect
      */
     private fun handleJpaShowSqlAspect(intermediateService: IntermediateMicroservice) {
-        val aspect = intermediateService.getAspect(*"JpaShowSql".forSpringTechnology().toTypedArray()) ?: return
+        val aspect = intermediateService.getAspect("JpaShowSql".forSpringTechnology()) ?: return
         aspect.newApplicationProperty("showSql", "spring.jpa.show-sql")
     }
 

@@ -112,11 +112,13 @@ private val IntermediateCollectionType.classname
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 internal fun IntermediateCollectionType.getJavaCollectionTypeDescription() : JavaCollectionTypeDescription {
-    // The Java Collection type can be prescribed by modelers leveraging aspects. If no supported aspect was specified,
-    // the default one is used.
-    val collectionAspect = aspects.find { it.qualifiedName in SUPPORTED_JAVA_COLLECTION_TYPES }?.qualifiedName
-        ?: DEFAULT_JAVA_COLLECTION_ASPECT
-    val collectionTypeDescription = SUPPORTED_JAVA_COLLECTION_TYPES[collectionAspect]!!
+    // The Java Collection type can be prescribed by modelers leveraging aspects. If no supported aspects were applied,
+    // the default Java Collection type is used.
+    val collectionAspect = aspects.find { it.qualifiedName in SupportedJavaCollectionTypes }?.qualifiedName
+    val collectionTypeDescription = if (collectionAspect != null)
+            SupportedJavaCollectionTypes[collectionAspect]!!
+        else
+            DEFAULT_JAVA_COLLECTION_TYPE_DESCRIPTION
 
     // Some Collection types like java.util.Map only make sense when they are parameterized with other types. In LEMMA,
     // we force the modeler to use structured collection types for such Collection types. For instance, a collection
@@ -134,23 +136,45 @@ internal fun IntermediateCollectionType.getJavaCollectionTypeDescription() : Jav
 }
 
 /**
- * The default Java Collection aspect.
+ * The names and type description of the default Java Collection aspect.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-private const val DEFAULT_JAVA_COLLECTION_ASPECT = "java.List"
+private val DEFAULT_JAVA_COLLECTION_ASPECT_NAMES = "List".forJavaTechnology()
+private val DEFAULT_JAVA_COLLECTION_TYPE_DESCRIPTION = JavaCollectionTypeDescription("java.util.List", 1)
 
 /**
- * The map of supported Java Collection aspects and their type descriptions
+ * Object representing the map of supported Java Collection aspects and their type descriptions.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-private val SUPPORTED_JAVA_COLLECTION_TYPES = mapOf(
-    DEFAULT_JAVA_COLLECTION_ASPECT to JavaCollectionTypeDescription("java.util.List", 1),
-    "java.LinkedList" to JavaCollectionTypeDescription("java.util.LinkedList", 1),
-    "java.Map" to JavaCollectionTypeDescription("java.util.Map", 2),
-    "java.Set" to JavaCollectionTypeDescription("java.util.Set", 1)
-)
+private object SupportedJavaCollectionTypes {
+    private val collectionTypes = mutableMapOf<String, JavaCollectionTypeDescription>()
+
+    init {
+        registerType(DEFAULT_JAVA_COLLECTION_ASPECT_NAMES, DEFAULT_JAVA_COLLECTION_TYPE_DESCRIPTION)
+        registerType("LinkedList".forJavaTechnology(), JavaCollectionTypeDescription("java.util.LinkedList", 1))
+        registerType("Map".forJavaTechnology(), JavaCollectionTypeDescription("java.util.Map", 2))
+        registerType("Set".forJavaTechnology(), JavaCollectionTypeDescription("java.util.Set", 1))
+    }
+
+    /**
+     * Helper to register the JavaCollectionTypeDescription for the given set of aspect names
+     */
+    private fun registerType(aspectNames: Set<String>, typeDescription : JavaCollectionTypeDescription) {
+        aspectNames.forEach { collectionTypes[it] = typeDescription }
+    }
+
+    /**
+     * Get the JavaCollectionTypeDescription for the given aspect
+     */
+    operator fun get(aspectName: String) = collectionTypes[aspectName]
+
+    /**
+     * Check if a JavaCollectionTypeDescription has been registered for the given aspect
+     */
+    operator fun contains(aspectName: String) = aspectName in collectionTypes
+}
 
 /**
  * Helper class that clusters the description of a Java Collection type.
@@ -362,6 +386,14 @@ fun EObject.getAllAspects(vararg fullyQualifiedAspectNames: String)
     = getAllAspects().filter { it.qualifiedName in fullyQualifiedAspectNames }
 
 /**
+ * Check if an [EObject] has one of the aspects with a name from the given set of [fullyQualifiedAspectNames]. Throws an
+ * [IllegalArgumentException] if the [EObject] does not support having aspects.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun EObject.hasAspect(fullyQualifiedAspectNames: Set<String>) = hasAspect(*fullyQualifiedAspectNames.toTypedArray())
+
+/**
  * Check if an [EObject] has one of the aspects with the given [fullyQualifiedAspectNames] assigned. Throws an
  * [IllegalArgumentException] if the [EObject] does not support having aspects.
  *
@@ -369,6 +401,14 @@ fun EObject.getAllAspects(vararg fullyQualifiedAspectNames: String)
  */
 fun EObject.hasAspect(vararg fullyQualifiedAspectNames: String)
     = getAllAspects().any { it.qualifiedName in fullyQualifiedAspectNames }
+
+/**
+ * Get the [IntermediateImportedAspect] instances of this [EObject] with a name from the given set of
+ * [fullyQualifiedAspectNames]. Throws an [IllegalArgumentException] if the [EObject] does not support having aspects.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun EObject.getAspect(fullyQualifiedAspectNames: Set<String>) = getAspect(*fullyQualifiedAspectNames.toTypedArray())
 
 /**
  * Get the [IntermediateImportedAspect] instances of this [EObject] with one of the given [fullyQualifiedAspectNames]
@@ -386,16 +426,35 @@ fun EObject.getAspect(vararg fullyQualifiedAspectNames: String)
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 fun EObject.forEachAspect(vararg fullyQualifiedAspectNames: String, action: (IntermediateImportedAspect) -> Unit)
+    = forEachAspect(fullyQualifiedAspectNames.toSet(), action)
+
+/**
+ * Iterate over all [IntermediateImportedAspect] instances of this [EObject] with a name from the given set of
+ * [fullyQualifiedAspectNames]. Throws an [IllegalArgumentException] if the [EObject] does not support having aspects.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun EObject.forEachAspect(fullyQualifiedAspectNames: Set<String>, action: (IntermediateImportedAspect) -> Unit)
     = getAllAspects().forEach { if (it.qualifiedName in fullyQualifiedAspectNames) action(it) }
 
 /**
- * Get the value of the property [propertyName] of the aspect [fullyQualifiedAspectName] being specified for this
- * [EObject]. Throws an [IllegalArgumentException] if the [EObject] does not support having aspects.
+ * Get the value of the property [propertyName] of this [EObject]'s aspect with name [fullyQualifiedAspectName]. Throws
+ * an [IllegalArgumentException] if the [EObject] does not support having aspects.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 fun EObject.getAspectPropertyValue(fullyQualifiedAspectName: String, propertyName: String)
     = getAspect(fullyQualifiedAspectName)?.getPropertyValue(propertyName)
+
+/**
+ * Get the value of the property [propertyName] of an aspect being applied to this [EObject] and having one of the names
+ * from the [fullyQualifiedAspectNames] set. Throws an [IllegalArgumentException] if the [EObject] does not support
+ * having aspects.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun EObject.getFirstMatchingAspectPropertyValue(fullyQualifiedAspectNames: Set<String>, propertyName: String)
+    = getAspect(fullyQualifiedAspectNames)?.getPropertyValue(propertyName)
 
 /**
  * Load the original [EObject] of the given intermediate [EObject] from the specified [originalModelFilePath]. The
@@ -962,3 +1021,31 @@ internal inline fun <reified T> findAndMapAnnotatedClassesWithInterface(searchPa
 
     return resultMap
 }
+
+/**
+ * Generic helper to build the [Set] of qualified aspect names from the given [Set] of [technologyNames] for this
+ * [String] representing a simple aspect name.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun String.forTechnologies(technologyNames: Set<String>) = technologyNames.map { "$it.$this" }.toSet()
+
+/**
+ * Build the [Set] of qualified aspect names for the Java technology from this [String] representing a simple aspect
+ * name. For instance, for the simple name "Constant" this function returns the [Set] {"Java.Constant",
+ * "java.Constant"}.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun String.forJavaTechnology() = forTechnologies(JAVA_TECHNOLOGY_NAMES)
+
+/**
+ * Generic helper to build the [Set] of qualified aspect names from the given [Set] of [technologyNames] for this [Set]
+ * clustering simple aspect name synonyms.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+fun Set<String>.forTechnologies(technologyNames: Set<String>)
+    = technologyNames.map { technologyName -> this.map { aspectName ->
+        "$technologyName.$aspectName"
+    }}.flatten().toSet()

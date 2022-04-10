@@ -19,6 +19,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addPrivateAt
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addSerializationCharacteristic
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addStatements
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getValueAsString
+import de.fhdo.lemma.model_processing.code_generation.java_base.forTechnologies
 import de.fhdo.lemma.model_processing.code_generation.java_base.fullyQualifiedClassname
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletStateAccess
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.TypeMappingDescription
@@ -174,23 +175,6 @@ internal fun ClassOrInterfaceDeclaration.addPrivateConstant(name: String, type: 
 internal fun String.forAllTechnologies() = forTechnologies(ALL_TECHNOLOGY_NAMES)
 
 /**
- * Generic helper to build the [Set] of qualified aspect names from the given [Set] of [technologyNames] for this
- * [String] representing a simple aspect name.
- *
- * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
- */
-private fun String.forTechnologies(technologyNames: Set<String>) = technologyNames.map { "$it.$this" }.toSet()
-
-/**
- * Build the [Set] of qualified aspect names for the Java technology from this [String] representing a simple aspect
- * name. For instance, for the simple name "Constant" this function returns the [Set] {"Java.Constant",
- * "java.Constant"}.
- *
- * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
- */
-internal fun String.forJavaTechnology() = forTechnologies(JAVA_TECHNOLOGY_NAMES)
-
-/**
  * Build the [Set] of qualified aspect names for the Spring technology from this [String] representing a simple aspect
  * name. For instance, for the simple name "Value" this function returns the [Set] {"Spring.Value", "spring.Value"}.
  *
@@ -207,17 +191,6 @@ internal fun String.forSpringTechnology() = forTechnologies(SPRING_TECHNOLOGY_NA
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 internal fun Set<String>.forAllTechnologies() = forTechnologies(ALL_TECHNOLOGY_NAMES)
-
-/**
- * Generic helper to build the [Set] of qualified aspect names from the given [Set] of [technologyNames] for this [Set]
- * clustering simple aspect name synonyms.
- *
- * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
- */
-private fun Set<String>.forTechnologies(technologyNames: Set<String>)
-    = technologyNames.map { technologyName -> this.map { aspectName ->
-        "$technologyName.$aspectName"
-    }}.flatten().toSet()
 
 /**
  * Build the [Set] of qualified aspect names for the Spring technology from this [Set] clustering simple aspect
