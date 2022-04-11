@@ -8,8 +8,7 @@ import de.fhdo.lemma.operation.intermediate.IntermediateOperationNode
 internal fun loadPropertiesFile(filePath: String): SortableProperties {
     val file = filePath.asFile()
     val sortableProperties = SortableProperties()
-    if (file.exists())
-        sortableProperties.load(file.inputStream())
+    if (file.exists()) sortableProperties.load(file.inputStream())
     return sortableProperties
 }
 
@@ -22,12 +21,13 @@ internal fun SortableProperties.asFormattedString(): String {
 }
 
 internal fun InfrastructureNode.isCertificateAuthority() =
-    (infrastructureTechnology.infrastructureTechnology.name == "certificateAuthority"
-            && infrastructureTechnology.infrastructureTechnology.technology.name == "mTLS")
+    (infrastructureTechnology.infrastructureTechnology.name == "certificateAuthority" && infrastructureTechnology.infrastructureTechnology.technology.name == "mTLS")
 
 internal fun IntermediateOperationNode.hasAspect(aspectsSet: Set<String>) = aspects.any { aspectsSet.contains(it.name) }
 
-internal fun IntermediateOperationNode.getNodeAspectsWithValues(aspectName: String): Map<String,String> {
+internal fun IntermediateOperationNode.getNodeAspectsWithValues(aspectName: String): Map<String, String> {
+
+
     val resultMap = mutableMapOf<String, String>()
     aspects.filter { it.name == aspectName }.forEach { aspect ->
         aspect.properties.filter {
@@ -42,7 +42,7 @@ internal fun IntermediateOperationNode.getNodeAspectsWithValues(aspectName: Stri
     return resultMap
 }
 
-internal fun SortableProperties.addProperty(property: Pair<String,String>){
+internal fun SortableProperties.addProperty(property: Pair<String, String>) {
     this[springPropertyMapping(property.first)] = property.second
 }
 
@@ -59,3 +59,27 @@ fun springPropertyMapping(property: String) = when (property) {
     "bitLength" -> "server.ssl.bitLength"
     else -> property
 }
+
+fun isConformApplicationNames(applicationNames: String): Boolean {
+/*  ([a-z0-9_.]+[ ]?[=][ ]?[a-z0-9_.]+)((,)([a-z0-9_.]+[ ]?[=][ ]?[a-z0-9_.]+))*
+    matches follow strings:
+    "com.myexample.name1=ms1"
+    "com.myexample.name1=ms1,com.myexample.name2=name2"
+    "com.myexample.name1 =ms1,com.myexample.name2= name2,com.myexample.name3 = ms3"
+*/
+    val nameChars = "[a-z0-9_.]+"
+    val equal = "[ ]?[=][ ]?"
+    return applicationNames.matches(
+        """(${nameChars}${equal}${nameChars})((,)(${nameChars}${equal}${nameChars}))*""".toRegex())
+}
+
+fun parseApplicationNames(applicationNames: String): Map<String, String> {
+    val retval = mutableMapOf<String, String>()
+    if (!isConformApplicationNames(applicationNames))
+        return retval
+    applicationNames.split(",").forEach {
+        retval[it.split("=")[0]] = it.split("=")[1]
+    }
+    return retval
+}
+

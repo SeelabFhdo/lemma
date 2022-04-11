@@ -1,5 +1,6 @@
 import os
 import sys
+import traceback
 import subprocess
 import logging
 from dataclasses import dataclass
@@ -10,12 +11,16 @@ from typing import List
 target_path = os.path.expanduser("~/masterthesis/lemmasecuritymodelgencode")
 
 
+class ConfigurationException(Exception):
+    pass
+
+
 class Profiletype(Enum):
     MTLS = "mtls"
     MTLSDEV = "mtlsdev"
 
 
-# todo
+# todo check path for windows
 def get_absolute_path(path: str) -> str:
     if path.startswith("~"):
         path = os.path.expanduser(path)
@@ -28,7 +33,7 @@ def system_environment_variable(variable: str) -> str:
         if env:
             return str(env) + variable[variable.find("}") + 1:]
         else:
-            sys.exit("The system environment variable \"{var}\" is not defined!".format(var=var))
+            throw_configuration_exception("The system environment variable \"{var}\" is not defined!".format(var=var))
     return variable
 
 
@@ -70,7 +75,7 @@ def read_config_files(target_path: str):
         for file in files:
             if ".var" in file:
                 config_files.append(
-                    CertificateConfigFile(rootdir, file, load_config_files(os.path.join(rootdir, file))))
+                    CertificateConfigFile(rootdir, file, __load_config_files(os.path.join(rootdir, file))))
 
     profiles.append(create_profile(config_files, Profiletype.MTLS))
     profiles.append(create_profile(config_files, Profiletype.MTLSDEV))
@@ -86,31 +91,69 @@ def create_profile(config_files: List[CertificateConfigFile], profile_type: Prof
             else:
                 client_configs.append(config_file)
     if not ca_config:
-        sys.exit("No configuration found for the certificate authority in profile {profile_type}!".format(
-            profile_type=profile_type.value))
+        raise ConfigurationException(
+            "No configuration found for the certificate authority in profile {profile_type}!".format(
+                profile_type=profile_type.value))
     return Profile(profile_type, ca_config, client_configs)
 
 
-def load_config_files(path) -> list:
+def __load_config_files(path) -> list:
     retval = list()
     with open(path, 'r', encoding='utf-8') as infile:
         for line in infile:
-            retval.append(split_config_param(line))
+            retval.append(__split_config_param(line))
     infile.close()
     return retval
 
 
-def split_config_param(param: str) -> tuple:
+def __split_config_param(param: str) -> tuple:
     return tuple(param.replace("\n", "").split("=", 1))
+
+
+def throw_configuration_exception(message: str):
+    logging.error(message)
+    raise ConfigurationException(message)
 
 
 # -----------------------------------------------------------------------------------------
 # OpenSSL functions
 def check_openssl_is_installed():
     if which("openssl") is None:
-        message = "This script requires an installation of openssl!"
-        logging.error(message)
-        sys.exit(message)
+        throw_configuration_exception("This script requires an installation of openssl!")
+
+
+def __check_password(password: str):
+    password = system_environment_variable(password)
+    if password == "":
+        throw_configuration_exception("The system variable is not set or the password is empty!")
+    return password
+
+
+def generate_rsa_privat_key(path: str, filename: str, password: str, cipher: str = "aes256", bitrate: int = 4096):
+    """Generating a private key for the application or certificate authority!"""
+    password = __check_password(password)
+
+    if not os.path.exists(os.path.join(path, filename)):
+        throw_configuration_exception("Directory or file not found! {file}".format(
+            file=os.path.join(path, filename)))
+    run_cli_command(
+        "openssl genrsa -{cipher} -passout pass:\"{password}\" -out \"{path}/{filename}_key.pem\" {bitrate}".format(
+            cipher=cipher, password=password, path=path, filename=filename.replace(".var", ""), bitrate=bitrate))
+
+
+def generate_public_key(path: str, filename: str, password: str, domain: str, cert_type: str = "x509",
+                        expiration_time_days: int = 365):
+    """Generating a public key for the certificate authority"""
+    password = __check_password(password)
+    if domain == "":
+        domain = "mytest.domain"
+        logging.info("No domain was specified!")
+
+    run_cli_command(
+        "openssl req -new -passin pass:{password} -key {path}/{filename}_key.pem -{cert_type}" +
+        " -days {expiration_time_days} -out {path}/{filename}_ca_cert.pem -subj \"/CN=ca.{domain}\"".format(
+            password=password, path=path, filename=filename.replace(".var", ""), cert_type=cert_type,
+            expiration_time_days=expiration_time_days, domain=domain))
 
 
 def create_certificate_authority(config_file: CertificateConfigFile):
@@ -120,10 +163,15 @@ def create_certificate_authority(config_file: CertificateConfigFile):
     password = system_environment_variable(config_file.get_config_parameter("caCertificatPassword"))
     cipher = system_environment_variable(config_file.get_config_parameter("cipher"))
     bitrate = int(system_environment_variable(config_file.get_config_parameter("server.ssl.bitLength")))
+    domain = system_environment_variable(config_file.get_config_parameter(""))
+    cert_type = system_environment_variable(config_file.get_config_parameter(""))
+    expiration_time_days = system_environment_variable(
+        config_file.get_config_parameter("server.ssl.key-store.validityInDays"))
 
+    # todo remove this line command1 = "openssl genrsa -aes256 -passout pass:$PASS -out $KEYPATH/ca/ca_key.pem 4096 "
     generate_rsa_privat_key(path, filename, password, cipher, bitrate)
-    command1 = "openssl genrsa -aes256 -passout pass:$PASS -out $KEYPATH/ca/ca_key.pem 4096 "
-    command2 = "openssl req -new -passin pass:$PASS -key $KEYPATH/ca/ca_key.pem -x509 -days 365 -out $KEYPATH/ca/ca_cert.pem -subj \"/CN=ca.$DOMAIN\""
+    # todo remove this line command2 = "openssl req -new -passin pass:$PASS -key $KEYPATH/ca/ca_key.pem -x509 -days 365 -out $KEYPATH/ca/ca_cert.pem -subj \"/CN=ca.$DOMAIN\""
+    generate_public_key(path, filename, password, domain, cert_type, expiration_time_days)
 
 
 def create_client_keystore(configFile: CertificateConfigFile):
@@ -153,23 +201,9 @@ def create_client_truststore(configFile: CertificateConfigFile):
     command1 = "keytool -import -file $KEYPATH/ca/ca_cert.pem -alias ca -noprompt -keystore $appfolder/truststore_$1.p12 -storepass $PASS"
 
 
-def generate_rsa_privat_key(path: str, filename: str, password: str, cipher: str = "aes256", bitrate: int = 4096):
-    if password.startswith("${"):
-        password_var = password.replace("${", "").replace("}", "")
-        password = os.environ.get(password_var)
-    if password == "":
-        sys.exit("The system {systemvar} variable is not set or the password is empty!".format(systemvar=password_var))
-    if not os.path.exists(os.path.join(path, filename)):
-        sys.exit("Directory or file not found! {file}".format(
-            file=os.path.join(path, filename)))
-    run_cli_command(
-        "openssl genrsa -{cipher} -passout pass:\"{password}\" -out \"{path}/{filename}_key.pem\" {bitrate}".format(
-            cipher=cipher, password=password, path=path, filename=filename.replace(".var", ""), bitrate=bitrate))
-
-
 def run_cli_command(command: str) -> bool:
     if command == "" or command is None:
-        sys.exit("Command can't be empty!")
+        throw_configuration_exception("Command can't be empty!")
     print(command)
     proc = subprocess.Popen(command, stderr=subprocess.PIPE, stdout=subprocess.PIPE, shell=True)
     logging.info(command)
@@ -205,12 +239,22 @@ def generate_cetificates():
         #     # create_client_truststore(file)
 
 
-if __name__ == '__main__':
+def main():
     print(target_path)
-    logging.basicConfig(filename=os.path.join(target_path, "generateCertificates.log"), level=logging.INFO,
-                        format='%(asctime)s %(message)s')
     logging.info('Started')
     check_openssl_is_installed()
     read_config_files(target_path)
     generate_cetificates()
     logging.info('Finished')
+
+
+if __name__ == '__main__':
+    logging.basicConfig(filename=os.path.join(target_path, "generateCertificates.log"), level=logging.INFO,
+                        format='%(asctime)s %(message)s')
+    try:
+        main()
+    except SystemExit as err:
+        pass
+    except ConfigurationException as err:  # catch *all* exceptions
+        print("Es ist ein Fehler aufgetreten: {0}\n{1}\n{2}".format(__file__, err, traceback.format_exc()))
+        sys.exit(1)
