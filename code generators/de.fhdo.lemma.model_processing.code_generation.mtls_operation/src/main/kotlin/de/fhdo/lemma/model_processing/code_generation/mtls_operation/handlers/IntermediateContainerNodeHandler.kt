@@ -4,6 +4,7 @@ import de.fhdo.lemma.model_processing.code_generation.mtls_operation.handlers.in
 import de.fhdo.lemma.model_processing.code_generation.mtls_operation.handlers.interfaces.CodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.mtls_operation.modul_handler.PathSpecifier
 import de.fhdo.lemma.model_processing.code_generation.mtls_operation.modul_handler.MainContext
+import de.fhdo.lemma.model_processing.code_generation.mtls_operation.utils.*
 import de.fhdo.lemma.model_processing.code_generation.mtls_operation.utils.getNodeAspectsWithValues
 import de.fhdo.lemma.model_processing.code_generation.mtls_operation.utils.hasAspect
 import de.fhdo.lemma.model_processing.code_generation.mtls_operation.utils.loadPropertiesFile
@@ -50,7 +51,11 @@ private fun loadOrGeneratePropertiesEntries(
     val filePath = MainContext.State.generateFilePath(filename, MainContext.State.getPath(pathSpecifier))
     val sortableProperties = loadPropertiesFile(filePath)
     properties.forEach {
-        sortableProperties[it.key] = it.value
+        if (it.key == springPropertyMapping("applicationName"))
+            sortableProperties[it.key] =
+                parseApplicationNames(it.value)[MainContext.State.getCurrentMicroservicePackage()]
+        else
+            sortableProperties[it.key] = it.value
     }
     MainContext.State.addPropertyFile(filename, sortableProperties, pathSpecifier)
 }

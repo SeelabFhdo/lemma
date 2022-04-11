@@ -2,24 +2,16 @@ package de.fhdo.lemma.model_processing.code_generation.mtls_operation.validation
 
 import de.fhdo.lemma.model_processing.annotations.Before
 import de.fhdo.lemma.model_processing.annotations.SourceModelValidator
-import de.fhdo.lemma.model_processing.code_generation.java_base.getAspect
-import de.fhdo.lemma.model_processing.code_generation.java_base.getAspectPropertyValue
-import de.fhdo.lemma.model_processing.code_generation.java_base.qualifiedName
-import de.fhdo.lemma.model_processing.code_generation.java_base.simpleName
 import de.fhdo.lemma.model_processing.code_generation.mtls_operation.utils.isCertificateAuthority
 import de.fhdo.lemma.model_processing.code_generation.mtls_operation.utils.isConformApplicationNames
 import de.fhdo.lemma.model_processing.code_generation.mtls_operation.utils.parseApplicationNames
 import de.fhdo.lemma.model_processing.languages.convertToAbsoluteFileUrisInPlace
 import de.fhdo.lemma.model_processing.phases.validation.AbstractXtextModelValidator
 import de.fhdo.lemma.operation.Container
-import de.fhdo.lemma.operation.ImportedOperationAspect
 import de.fhdo.lemma.operation.InfrastructureNode
 import org.eclipse.emf.ecore.resource.Resource
 import de.fhdo.lemma.operation.OperationModel
 import de.fhdo.lemma.operation.OperationPackage
-import de.fhdo.lemma.technology.TechnologyAspect
-import de.fhdo.lemma.technology.TechnologySpecificProperty
-import de.fhdo.lemma.technology.TechnologySpecificPropertyValueAssignment
 import org.eclipse.xtext.validation.Check
 
 
@@ -62,7 +54,7 @@ class MTLSOperationModelSourceValidator : AbstractXtextModelValidator() {
 
     @Check
     private fun checkNamingForServicesInContainers(container: Container) {
-        if (container.deployedServices.size < 2) return
+//        if (container.deployedServices.size < 2) return
         container.aspects.forEach { importedOperationAspect ->
             importedOperationAspect.values.forEachIndexed { index, technologySpecificPropertyValueAssignment ->
                 if (technologySpecificPropertyValueAssignment.property.name != "applicationName") return@forEachIndexed

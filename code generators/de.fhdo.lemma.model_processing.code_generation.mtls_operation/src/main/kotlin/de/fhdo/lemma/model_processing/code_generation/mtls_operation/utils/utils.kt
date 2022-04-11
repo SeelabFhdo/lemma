@@ -2,6 +2,7 @@ package de.fhdo.lemma.model_processing.code_generation.mtls_operation.utils
 
 import de.fhdo.lemma.model_processing.asFile
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.SortableProperties
+import de.fhdo.lemma.model_processing.code_generation.mtls_operation.modul_handler.MainContext
 import de.fhdo.lemma.operation.InfrastructureNode
 import de.fhdo.lemma.operation.intermediate.IntermediateOperationNode
 
@@ -21,14 +22,14 @@ internal fun SortableProperties.asFormattedString(): String {
 }
 
 internal fun InfrastructureNode.isCertificateAuthority() =
-    (infrastructureTechnology.infrastructureTechnology.name == "certificateAuthority" && infrastructureTechnology.infrastructureTechnology.technology.name == "mTLS")
+    (infrastructureTechnology.infrastructureTechnology.name == "certificateAuthority"
+            && infrastructureTechnology.infrastructureTechnology.technology.name == "mTLS")
 
 internal fun IntermediateOperationNode.hasAspect(aspectsSet: Set<String>) = aspects.any { aspectsSet.contains(it.name) }
 
 internal fun IntermediateOperationNode.getNodeAspectsWithValues(aspectName: String): Map<String, String> {
-
-
     val resultMap = mutableMapOf<String, String>()
+
     aspects.filter { it.name == aspectName }.forEach { aspect ->
         aspect.properties.filter {
             !it.defaultValue.isNullOrEmpty()
@@ -47,26 +48,32 @@ internal fun SortableProperties.addProperty(property: Pair<String, String>) {
 }
 
 fun springPropertyMapping(property: String) = when (property) {
-    "keyStoreRelativPath" -> "server.ssl.key-store"
+    "keyStoreRelativePath" -> "server.ssl.key-store"
     "keyStorePassword" -> "server.ssl.key-store-password"
-//    "aliasPrefix", "aliasSuffix" -> "server.ssl.key-alias"
-    "aliasPrefix" -> "server.ssl.key-aliasPrefix"
-    "aliasSuffix" -> "server.ssl.key-aliasSuffix"
-    "trustStoreRelativPath" -> "server.ssl.trust-store"
+    "trustStoreRelativePath" -> "server.ssl.trust-store"
     "trustStorePassword" -> "server.ssl.trust-store-password"
     "hostnameVerifierBypass" -> "server.ssl.bypass.hostname-verifier"
     "validityInDays" -> "server.ssl.key-store.validityInDays"
     "bitLength" -> "server.ssl.bitLength"
+    "caName" -> "server.ssl.ca-name"
+    "caCertificatePassword" -> "server.ssl.server.ca-password"
+    "caDomain" -> "server.ssl.ca-domain.name"
+    "certificateStandard" -> "server.ssl.certificateStandard"
+    "cipher" -> "server.ssl.cipher"
+    "caKeyFile" -> "server.ssl.ca-key.file"
+    "caCertFile" -> "server.ssl.ca-Cert.file"
+    "subject" -> "server.ssl.subject"
+    "applicationName" ->  "server.ssl.applicationName"
     else -> property
 }
 
 fun isConformApplicationNames(applicationNames: String): Boolean {
-/*  ([a-z0-9_.]+[ ]?[=][ ]?[a-z0-9_.]+)((,)([a-z0-9_.]+[ ]?[=][ ]?[a-z0-9_.]+))*
-    matches follow strings:
-    "com.myexample.name1=ms1"
-    "com.myexample.name1=ms1,com.myexample.name2=name2"
-    "com.myexample.name1 =ms1,com.myexample.name2= name2,com.myexample.name3 = ms3"
-*/
+//    ([a-z0-9_.]+[ ]?[=][ ]?[a-z0-9_.]+)((,)([a-z0-9_.]+[ ]?[=][ ]?[a-z0-9_.]+))*
+//    matches follow strings:
+//    "com.myexample.name1=ms1"
+//    "com.myexample.name1=ms1,com.myexample.name2=name2"
+//    "com.myexample.name1 =ms1,com.myexample.name2= name2,com.myexample.name3 = ms3"
+
     val nameChars = "[a-z0-9_.]+"
     val equal = "[ ]?[=][ ]?"
     return applicationNames.matches(
@@ -78,7 +85,7 @@ fun parseApplicationNames(applicationNames: String): Map<String, String> {
     if (!isConformApplicationNames(applicationNames))
         return retval
     applicationNames.split(",").forEach {
-        retval[it.split("=")[0]] = it.split("=")[1]
+        retval[it.split("=")[0].trim()] = it.split("=")[1].trim()
     }
     return retval
 }

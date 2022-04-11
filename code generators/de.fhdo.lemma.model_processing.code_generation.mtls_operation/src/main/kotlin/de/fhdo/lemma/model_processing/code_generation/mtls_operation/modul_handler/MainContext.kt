@@ -2,6 +2,7 @@ package de.fhdo.lemma.model_processing.code_generation.mtls_operation.modul_hand
 
 
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.SortableProperties
+import de.fhdo.lemma.model_processing.code_generation.mtls_operation.utils.springPropertyMapping
 import de.fhdo.lemma.model_processing.utils.packageToPath
 
 import java.io.File
@@ -13,13 +14,16 @@ internal object MainContext {
         private lateinit var targetFolder: String
         private lateinit var currentMicroservicePackage: String
 
+
         fun initialize(targetFolder: String) {
             State.targetFolder = targetFolder
             propertyFiles.clear()
         }
 
+        fun getCurrentMicroservicePackage() = this.currentMicroservicePackage
+
         fun setCurrentMicroservicePackage(currentMicroservicePackage: String) {
-            State.currentMicroservicePackage = currentMicroservicePackage
+            this.currentMicroservicePackage = currentMicroservicePackage
         }
 
         fun getTargetFolder() = targetFolder
@@ -28,7 +32,31 @@ internal object MainContext {
             propertyFiles[generateFilePath(getPath(pathSpecifier), fileName)] = properties
         }
 
-        fun getPropertyFiles() = propertyFiles.toMap()
+        fun getPropertyFiles(): Map<String, SortableProperties> {
+            generateCombinedProperties("mtls")
+            generateCombinedProperties("mtlsdev")
+
+            return propertyFiles.toMap()
+        }
+
+        private fun generateCombinedProperties(profile: String) {
+            if (profile !in setOf("mtls", "mtlsdev"))
+                return
+            var domain = ""
+            // Subject is the combination of caName and caDomain
+            propertyFiles.filter { it.key.contains("${profile}.var") && it.key.contains("CertificationAuthority") }
+                .forEach {
+                    domain = it.value[springPropertyMapping("caDomain")] as String
+                    it.value[springPropertyMapping("subject")] =
+                        "${it.value[springPropertyMapping("caName")]}${if (domain.isNotEmpty()) ".${domain}" else ""}"
+                }
+            propertyFiles.filter { it.key.contains("${profile}.var") && it.key.contains("Certificate") }
+                .forEach {
+                    it.value[springPropertyMapping("subject")] =
+                        "${it.value[springPropertyMapping("applicationName")]}${if (domain.isNotEmpty()) ".${domain}" else ""}"
+                }
+            // Set correct
+        }
 
         /**
          * Helper to calculate the target folder path of the state's [currentMicroservicePackage]
@@ -64,6 +92,7 @@ internal object MainContext {
                 "src", "main", "resources"
             ).joinToString(File.separator)
         }
+
         /**
          * Helper to calculate the target folder path for resource files of the state's [currentMicroservicePackage]
          */

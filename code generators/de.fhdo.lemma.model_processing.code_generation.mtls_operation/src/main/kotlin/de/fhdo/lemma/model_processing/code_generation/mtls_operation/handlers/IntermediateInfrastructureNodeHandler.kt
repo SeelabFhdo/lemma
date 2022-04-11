@@ -19,7 +19,6 @@ class IntermediateInfrastructureNodeHandler : CodeGenerationHandlerI<Intermediat
     override fun execute(eObject: IntermediateInfrastructureNode): String? {
         var systemProperties = mapOf<String, String>()
 
-
         if (eObject.qualifiedInfrastructureTechnologyName == "mTLS.certificateAuthority") {
             MainContext.State.setCurrentMicroservicePackage("CertificationAuthority")
             val sortableProperties = SortableProperties()
@@ -29,8 +28,8 @@ class IntermediateInfrastructureNodeHandler : CodeGenerationHandlerI<Intermediat
                 sortableProperties,
                 PathSpecifier.CURRENT_MICROSERVICE_CERTIFICATIONS_TARGET_PATH
             )
-            generateDefaultEmptyCertificationAuthority()
             systemProperties = eObject.getServicePropertiesWithValues()
+            generateDefaultEmptyCertificationAuthority()
         } else {
             if (!eObject.hasAspect(handlesAspects()))
                 return null
@@ -40,7 +39,8 @@ class IntermediateInfrastructureNodeHandler : CodeGenerationHandlerI<Intermediat
             }.forEach {
                 val sortableProperties = SortableProperties()
                 sortableProperties.putAll(eObject.getNodeAspectsWithValues(it.name))
-                MainContext.State.addPropertyFile("Certificate-${eObject.name}-${it.name}.var",
+                MainContext.State.addPropertyFile(
+                    "Certificate-${eObject.name}-${it.name}.var",
                     sortableProperties,
                     PathSpecifier.CURRENT_MICROSERVICE_CERTIFICATIONS_TARGET_PATH
                 )
@@ -68,16 +68,19 @@ private fun IntermediateInfrastructureNode.getServicePropertiesWithValues(): Map
     return resultMap
 }
 
-private fun generateDefaultEmptyCertificationAuthority(){
+private fun generateDefaultEmptyCertificationAuthority() {
     MainContext.State.setCurrentMicroservicePackage("CertificationAuthority")
     val sortableProperties = SortableProperties()
-    sortableProperties[springPropertyMapping("caCommonDomainName")] = "caCommonDomainName"
-    sortableProperties[springPropertyMapping("caCertificatPassword")] = "\${caCertificatPassword}"
+    sortableProperties[springPropertyMapping("caKeyFile")] = "ca_key_private.pem"
+    sortableProperties[springPropertyMapping("caCertFile")] = "ca_cert.pem"
+    sortableProperties[springPropertyMapping("caCertificatePassword")] = "\${caCertificatPassword}"
+    sortableProperties[springPropertyMapping("caName")] = "ca"
+    sortableProperties[springPropertyMapping("caDomain")] = "example.de"
     sortableProperties[springPropertyMapping("validityInDays")] = 365
     sortableProperties[springPropertyMapping("bitLength")] = 4096
+    sortableProperties[springPropertyMapping("certificateStandard")] = "X509"
     sortableProperties[springPropertyMapping("cipher")] = "aes256"
-    sortableProperties[springPropertyMapping("caKeyFile")] = "ca_key_privat.pem"
-    sortableProperties[springPropertyMapping("caCertFile")] = "ca_cert.pem"
+
     MainContext.State.addPropertyFile(
         "CertificationAuthority-mtls.var",
         sortableProperties,
