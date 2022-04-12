@@ -1,6 +1,7 @@
 package de.fhdo.lemma.analyzer.lib
 
 import de.fhdo.lemma.analyzer.lib.impl.domain.basic.DomainBasicAnalyzer
+import de.fhdo.lemma.analyzer.lib.impl.operation.antipattern.ContainerNameAnalyzer
 import de.fhdo.lemma.analyzer.lib.impl.service.basic.ServiceBasicAnalyzer
 import de.fhdo.lemma.analyzer.lib.impl.service.metrics.athanasopoulos.AthanasopoulosMetricsAnalyzer
 import de.fhdo.lemma.analyzer.lib.impl.service.metrics.engel.EngelMetricsAnalyzer
@@ -39,6 +40,7 @@ interface MetricBasedAnalyzerI : AnalyzerI
 enum class Analyzers(val analyzerName: String) {
     DOMAIN_BASIC("domain"),
     SERVICE_BASIC("service"),
+    OPERATION_BASIC("operation"),
     SERVICE_METRICS_ATHANASOPOULOS("athanasopoulos"),
     SERVICE_METRICS_ENGEL("engel"),
     SERVICE_METRICS_HAUPT("haupt"),
@@ -56,6 +58,7 @@ fun Analyzers.createAnalyzer() : AnalyzerI
     = when(this) {
         Analyzers.DOMAIN_BASIC -> DomainBasicAnalyzer()
         Analyzers.SERVICE_BASIC -> ServiceBasicAnalyzer()
+        Analyzers.OPERATION_BASIC -> ContainerNameAnalyzer()
         Analyzers.SERVICE_METRICS_ATHANASOPOULOS -> AthanasopoulosMetricsAnalyzer()
         Analyzers.SERVICE_METRICS_ENGEL -> EngelMetricsAnalyzer()
         Analyzers.SERVICE_METRICS_HAUPT -> HauptMetricsAnalyzer()

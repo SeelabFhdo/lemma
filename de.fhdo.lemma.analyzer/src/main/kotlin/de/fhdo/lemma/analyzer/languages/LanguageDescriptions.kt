@@ -5,10 +5,13 @@ import de.fhdo.lemma.ServiceDslStandaloneSetup
 import de.fhdo.lemma.data.DataDslStandaloneSetup
 import de.fhdo.lemma.data.DataPackage
 import de.fhdo.lemma.service.intermediate.IntermediatePackage as IntermediateServicePackage
+import de.fhdo.lemma.operation.intermediate.IntermediatePackage as IntermediateOperationPackage
 import de.fhdo.lemma.model_processing.annotations.LanguageDescriptionProvider
 import de.fhdo.lemma.model_processing.languages.LanguageDescriptionProviderI
 import de.fhdo.lemma.model_processing.languages.XmiLanguageDescription
 import de.fhdo.lemma.model_processing.languages.XtextLanguageDescription
+import de.fhdo.lemma.operation.OperationPackage
+import de.fhdo.lemma.operationdsl.OperationDslStandaloneSetup
 import de.fhdo.lemma.service.ServicePackage
 
 /**
@@ -25,6 +28,8 @@ internal class DescriptionProvider : LanguageDescriptionProviderI {
             IntermediateDataPackage.eNS_URI -> INTERMEDIATE_DATA_MODEL_LANGUAGE_DESCRIPTION
             IntermediateServicePackage.eNS_URI -> INTERMEDIATE_SERVICE_MODEL_LANGUAGE_DESCRIPTION
             "services" -> SERVICE_DSL_LANGUAGE_DESCRIPTION
+            IntermediateOperationPackage.eNS_URI -> INTERMEDIATE_OPERATION_MODEL_LANGUAGE_DESCRIPTION
+            "operation" -> OPERATION_DSL_LANGUAGE_DESCRIPTION
             else -> null
         }
 }
@@ -45,6 +50,15 @@ internal val SERVICE_DSL_LANGUAGE_DESCRIPTION = XtextLanguageDescription(Service
     ServiceDslStandaloneSetup())
 
 /**
+ * [XtextLanguageDescription] for the Operation DSL.
+ *
+ * @author [Philip Wizenty](mailto:philip.wizenty@fh-dortmund.de)
+ */
+internal val OPERATION_DSL_LANGUAGE_DESCRIPTION = XtextLanguageDescription(OperationPackage.eINSTANCE,
+    OperationDslStandaloneSetup()
+)
+
+/**
  * [XmiLanguageDescription] for intermediate data models.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
@@ -58,3 +72,11 @@ internal val INTERMEDIATE_DATA_MODEL_LANGUAGE_DESCRIPTION = XmiLanguageDescripti
  */
 internal val INTERMEDIATE_SERVICE_MODEL_LANGUAGE_DESCRIPTION
     = XmiLanguageDescription(IntermediateServicePackage.eINSTANCE)
+
+/**
+ * [XmiLanguageDescription] for intermediate operation models.
+ *
+ * @author [Philip Wizenty](mailto:philip.wizentyr@fh-dortmund.de)
+ */
+internal val INTERMEDIATE_OPERATION_MODEL_LANGUAGE_DESCRIPTION
+        = XmiLanguageDescription(IntermediateOperationPackage.eINSTANCE)
