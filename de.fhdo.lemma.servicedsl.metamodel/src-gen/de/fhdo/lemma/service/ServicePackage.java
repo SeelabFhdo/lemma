@@ -243,13 +243,22 @@ public interface ServicePackage extends EPackage {
     int MAPPED_COMPLEX_TYPE__TSOURCE_MODEL_URI = 0;
 
     /**
+     * The feature id for the '<em><b>Tmapping Model Uri</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MAPPED_COMPLEX_TYPE__TMAPPING_MODEL_URI = 1;
+
+    /**
      * The feature id for the '<em><b>Ttype Definition Technology Import</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int MAPPED_COMPLEX_TYPE__TTYPE_DEFINITION_TECHNOLOGY_IMPORT = 1;
+    int MAPPED_COMPLEX_TYPE__TTYPE_DEFINITION_TECHNOLOGY_IMPORT = 2;
 
     /**
      * The feature id for the '<em><b>Ttype Definition Technology</b></em>' reference.
@@ -258,7 +267,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MAPPED_COMPLEX_TYPE__TTYPE_DEFINITION_TECHNOLOGY = 2;
+    int MAPPED_COMPLEX_TYPE__TTYPE_DEFINITION_TECHNOLOGY = 3;
 
     /**
      * The feature id for the '<em><b>Technology References</b></em>' containment reference list.
@@ -267,7 +276,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MAPPED_COMPLEX_TYPE__TECHNOLOGY_REFERENCES = 3;
+    int MAPPED_COMPLEX_TYPE__TECHNOLOGY_REFERENCES = 4;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' containment reference.
@@ -276,7 +285,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MAPPED_COMPLEX_TYPE__TYPE = 4;
+    int MAPPED_COMPLEX_TYPE__TYPE = 5;
 
     /**
      * The feature id for the '<em><b>Mapped Fields</b></em>' containment reference list.
@@ -285,7 +294,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MAPPED_COMPLEX_TYPE__MAPPED_FIELDS = 5;
+    int MAPPED_COMPLEX_TYPE__MAPPED_FIELDS = 6;
 
     /**
      * The feature id for the '<em><b>Mapped Operations</b></em>' containment reference list.
@@ -294,7 +303,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MAPPED_COMPLEX_TYPE__MAPPED_OPERATIONS = 6;
+    int MAPPED_COMPLEX_TYPE__MAPPED_OPERATIONS = 7;
 
     /**
      * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
@@ -303,7 +312,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MAPPED_COMPLEX_TYPE__ASPECTS = 7;
+    int MAPPED_COMPLEX_TYPE__ASPECTS = 8;
 
     /**
      * The feature id for the '<em><b>Service Model</b></em>' container reference.
@@ -312,7 +321,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MAPPED_COMPLEX_TYPE__SERVICE_MODEL = 8;
+    int MAPPED_COMPLEX_TYPE__SERVICE_MODEL = 9;
 
     /**
      * The number of structural features of the '<em>Mapped Complex Type</em>' class.
@@ -321,7 +330,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MAPPED_COMPLEX_TYPE_FEATURE_COUNT = 9;
+    int MAPPED_COMPLEX_TYPE_FEATURE_COUNT = 10;
 
     /**
      * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
@@ -752,13 +761,22 @@ public interface ServicePackage extends EPackage {
     int MICROSERVICE__TSOURCE_MODEL_URI = 5;
 
     /**
+     * The feature id for the '<em><b>Tmapping Model Uri</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MICROSERVICE__TMAPPING_MODEL_URI = 6;
+
+    /**
      * The feature id for the '<em><b>Technology References</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int MICROSERVICE__TECHNOLOGY_REFERENCES = 6;
+    int MICROSERVICE__TECHNOLOGY_REFERENCES = 7;
 
     /**
      * The feature id for the '<em><b>Ttype Definition Technology Import</b></em>' reference.
@@ -767,7 +785,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE__TTYPE_DEFINITION_TECHNOLOGY_IMPORT = 7;
+    int MICROSERVICE__TTYPE_DEFINITION_TECHNOLOGY_IMPORT = 8;
 
     /**
      * The feature id for the '<em><b>Ttype Definition Technology</b></em>' reference.
@@ -776,7 +794,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE__TTYPE_DEFINITION_TECHNOLOGY = 8;
+    int MICROSERVICE__TTYPE_DEFINITION_TECHNOLOGY = 9;
 
     /**
      * The feature id for the '<em><b>Endpoints</b></em>' containment reference list.
@@ -785,7 +803,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE__ENDPOINTS = 9;
+    int MICROSERVICE__ENDPOINTS = 10;
 
     /**
      * The feature id for the '<em><b>Required Microservices</b></em>' containment reference list.
@@ -794,7 +812,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE__REQUIRED_MICROSERVICES = 10;
+    int MICROSERVICE__REQUIRED_MICROSERVICES = 11;
 
     /**
      * The feature id for the '<em><b>Required Interfaces</b></em>' containment reference list.
@@ -803,7 +821,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE__REQUIRED_INTERFACES = 11;
+    int MICROSERVICE__REQUIRED_INTERFACES = 12;
 
     /**
      * The feature id for the '<em><b>Required Operations</b></em>' containment reference list.
@@ -812,7 +830,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE__REQUIRED_OPERATIONS = 12;
+    int MICROSERVICE__REQUIRED_OPERATIONS = 13;
 
     /**
      * The feature id for the '<em><b>Protocols</b></em>' containment reference list.
@@ -821,7 +839,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE__PROTOCOLS = 13;
+    int MICROSERVICE__PROTOCOLS = 14;
 
     /**
      * The feature id for the '<em><b>Interfaces</b></em>' containment reference list.
@@ -830,7 +848,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE__INTERFACES = 14;
+    int MICROSERVICE__INTERFACES = 15;
 
     /**
      * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
@@ -839,7 +857,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE__ASPECTS = 15;
+    int MICROSERVICE__ASPECTS = 16;
 
     /**
      * The feature id for the '<em><b>Service Model</b></em>' container reference.
@@ -848,7 +866,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE__SERVICE_MODEL = 16;
+    int MICROSERVICE__SERVICE_MODEL = 17;
 
     /**
      * The feature id for the '<em><b>Effectively Implemented</b></em>' attribute.
@@ -857,7 +875,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE__EFFECTIVELY_IMPLEMENTED = 17;
+    int MICROSERVICE__EFFECTIVELY_IMPLEMENTED = 18;
 
     /**
      * The feature id for the '<em><b>Effective Visibility</b></em>' attribute.
@@ -866,7 +884,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE__EFFECTIVE_VISIBILITY = 18;
+    int MICROSERVICE__EFFECTIVE_VISIBILITY = 19;
 
     /**
      * The feature id for the '<em><b>Effectively Internal</b></em>' attribute.
@@ -875,7 +893,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE__EFFECTIVELY_INTERNAL = 19;
+    int MICROSERVICE__EFFECTIVELY_INTERNAL = 20;
 
     /**
      * The number of structural features of the '<em>Microservice</em>' class.
@@ -884,7 +902,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MICROSERVICE_FEATURE_COUNT = 20;
+    int MICROSERVICE_FEATURE_COUNT = 21;
 
     /**
      * The operation id for the '<em>Teffective Protocol Specifications</em>' operation.
@@ -2726,6 +2744,17 @@ public interface ServicePackage extends EPackage {
     EAttribute getMappedComplexType_T_sourceModelUri();
 
     /**
+     * Returns the meta object for the attribute '{@link de.fhdo.lemma.service.MappedComplexType#getT_mappingModelUri <em>Tmapping Model Uri</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Tmapping Model Uri</em>'.
+     * @see de.fhdo.lemma.service.MappedComplexType#getT_mappingModelUri()
+     * @see #getMappedComplexType()
+     * @generated
+     */
+    EAttribute getMappedComplexType_T_mappingModelUri();
+
+    /**
      * Returns the meta object for the reference '{@link de.fhdo.lemma.service.MappedComplexType#getT_typeDefinitionTechnologyImport <em>Ttype Definition Technology Import</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3217,6 +3246,17 @@ public interface ServicePackage extends EPackage {
      * @generated
      */
     EAttribute getMicroservice_T_sourceModelUri();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.lemma.service.Microservice#getT_mappingModelUri <em>Tmapping Model Uri</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Tmapping Model Uri</em>'.
+     * @see de.fhdo.lemma.service.Microservice#getT_mappingModelUri()
+     * @see #getMicroservice()
+     * @generated
+     */
+    EAttribute getMicroservice_T_mappingModelUri();
 
     /**
      * Returns the meta object for the containment reference list '{@link de.fhdo.lemma.service.Microservice#getTechnologyReferences <em>Technology References</em>}'.
@@ -5153,6 +5193,14 @@ public interface ServicePackage extends EPackage {
         EAttribute MAPPED_COMPLEX_TYPE__TSOURCE_MODEL_URI = eINSTANCE.getMappedComplexType_T_sourceModelUri();
 
         /**
+         * The meta object literal for the '<em><b>Tmapping Model Uri</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute MAPPED_COMPLEX_TYPE__TMAPPING_MODEL_URI = eINSTANCE.getMappedComplexType_T_mappingModelUri();
+
+        /**
          * The meta object literal for the '<em><b>Ttype Definition Technology Import</b></em>' reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -5529,6 +5577,14 @@ public interface ServicePackage extends EPackage {
          * @generated
          */
         EAttribute MICROSERVICE__TSOURCE_MODEL_URI = eINSTANCE.getMicroservice_T_sourceModelUri();
+
+        /**
+         * The meta object literal for the '<em><b>Tmapping Model Uri</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute MICROSERVICE__TMAPPING_MODEL_URI = eINSTANCE.getMicroservice_T_mappingModelUri();
 
         /**
          * The meta object literal for the '<em><b>Technology References</b></em>' containment reference list feature.

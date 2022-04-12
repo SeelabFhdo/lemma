@@ -107,6 +107,10 @@ class MappedComplexType {
     //                      Service Models and later used in executing refinements of Intermediate
     //                      Data Models.
     String t_sourceModelUri
+    // TRANSFORMATION ONLY: The path to the source Mapping Model in which the complex type is
+    //                      mapped. This property is only filled in transformations of Mapping
+    //                      Models to Service Models.
+    String t_mappingModelUri
     // TRANSFORMATION ONLY: Import of technology that contains the default types (there can only be
     //                      one)
     refers Import t_typeDefinitionTechnologyImport
@@ -393,6 +397,10 @@ class Microservice {
     //                      Mapping Model. That is, because Mapping Models may consist of
     //                      microservices being imported from different Service Models.
     String t_sourceModelUri
+    // TRANSFORMATION ONLY: The path to the source Mapping Model in which the microservice is
+    //                      mapped. This property is only filled in transformations of Mapping
+    //                      Models to Service Models.
+    String t_mappingModelUri
 
     // TODO: Inheritance of microservices
     //refers Microservice[0..1] ^super

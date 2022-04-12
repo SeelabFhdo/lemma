@@ -145,7 +145,6 @@ public class OperationReferenceImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getName() {
         return name;
     }
@@ -155,7 +154,6 @@ public class OperationReferenceImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -168,7 +166,6 @@ public class OperationReferenceImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getQualifiedName() {
         return qualifiedName;
     }
@@ -178,7 +175,6 @@ public class OperationReferenceImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setQualifiedName(String newQualifiedName) {
         String oldQualifiedName = qualifiedName;
         qualifiedName = newQualifiedName;
@@ -191,7 +187,6 @@ public class OperationReferenceImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public boolean isImported() {
         return imported;
     }
@@ -201,7 +196,6 @@ public class OperationReferenceImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setImported(boolean newImported) {
         boolean oldImported = imported;
         imported = newImported;
@@ -214,7 +208,6 @@ public class OperationReferenceImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateImport getImport() {
         if (import_ != null && import_.eIsProxy()) {
             InternalEObject oldImport = (InternalEObject)import_;
@@ -241,7 +234,6 @@ public class OperationReferenceImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setImport(IntermediateImport newImport) {
         IntermediateImport oldImport = import_;
         import_ = newImport;
@@ -254,7 +246,6 @@ public class OperationReferenceImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateOperation getLocalOperation() {
         if (localOperation != null && localOperation.eIsProxy()) {
             InternalEObject oldLocalOperation = (InternalEObject)localOperation;
@@ -281,7 +272,6 @@ public class OperationReferenceImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setLocalOperation(IntermediateOperation newLocalOperation) {
         IntermediateOperation oldLocalOperation = localOperation;
         localOperation = newLocalOperation;
@@ -294,7 +284,6 @@ public class OperationReferenceImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateMicroservice getRequiringMicroservice() {
         if (eContainerFeatureID() != IntermediatePackage.OPERATION_REFERENCE__REQUIRING_MICROSERVICE) return null;
         return (IntermediateMicroservice)eContainer();
@@ -325,7 +314,6 @@ public class OperationReferenceImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setRequiringMicroservice(IntermediateMicroservice newRequiringMicroservice) {
         if (newRequiringMicroservice != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.OPERATION_REFERENCE__REQUIRING_MICROSERVICE && newRequiringMicroservice != null)) {
             if (EcoreUtil.isAncestor(this, newRequiringMicroservice))
@@ -347,7 +335,6 @@ public class OperationReferenceImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateParameter getInitializedParameter() {
         if (eContainerFeatureID() != IntermediatePackage.OPERATION_REFERENCE__INITIALIZED_PARAMETER) return null;
         return (IntermediateParameter)eContainer();
@@ -378,7 +365,6 @@ public class OperationReferenceImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setInitializedParameter(IntermediateParameter newInitializedParameter) {
         if (newInitializedParameter != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.OPERATION_REFERENCE__INITIALIZED_PARAMETER && newInitializedParameter != null)) {
             if (EcoreUtil.isAncestor(this, newInitializedParameter))

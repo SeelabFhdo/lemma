@@ -109,7 +109,6 @@ public class IntermediateApiParameterCommentImpl extends MinimalEObjectImpl.Cont
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getComment() {
         return comment;
     }
@@ -119,7 +118,6 @@ public class IntermediateApiParameterCommentImpl extends MinimalEObjectImpl.Cont
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setComment(String newComment) {
         String oldComment = comment;
         comment = newComment;
@@ -132,7 +130,6 @@ public class IntermediateApiParameterCommentImpl extends MinimalEObjectImpl.Cont
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public boolean isRequired() {
         return required;
     }
@@ -142,7 +139,6 @@ public class IntermediateApiParameterCommentImpl extends MinimalEObjectImpl.Cont
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setRequired(boolean newRequired) {
         boolean oldRequired = required;
         required = newRequired;
@@ -155,7 +151,6 @@ public class IntermediateApiParameterCommentImpl extends MinimalEObjectImpl.Cont
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateParameter getParameter() {
         if (parameter != null && parameter.eIsProxy()) {
             InternalEObject oldParameter = (InternalEObject)parameter;
@@ -182,7 +177,6 @@ public class IntermediateApiParameterCommentImpl extends MinimalEObjectImpl.Cont
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setParameter(IntermediateParameter newParameter) {
         IntermediateParameter oldParameter = parameter;
         parameter = newParameter;
@@ -195,7 +189,6 @@ public class IntermediateApiParameterCommentImpl extends MinimalEObjectImpl.Cont
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateApiOperationComment getOperationComment() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_API_PARAMETER_COMMENT__OPERATION_COMMENT) return null;
         return (IntermediateApiOperationComment)eContainer();
@@ -226,7 +219,6 @@ public class IntermediateApiParameterCommentImpl extends MinimalEObjectImpl.Cont
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setOperationComment(IntermediateApiOperationComment newOperationComment) {
         if (newOperationComment != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_API_PARAMETER_COMMENT__OPERATION_COMMENT && newOperationComment != null)) {
             if (EcoreUtil.isAncestor(this, newOperationComment))

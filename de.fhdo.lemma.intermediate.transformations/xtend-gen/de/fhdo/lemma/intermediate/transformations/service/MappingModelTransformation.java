@@ -446,6 +446,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
   @Override
   public void prepareInputModel(final TransformationModelDescription modelDescription, final EObject modelRoot) {
     this.inputMappingModel = ((TechnologyMapping) modelRoot);
+    this.inputMappingModel.setT_modelUri(LemmaUtils.convertToFileUri(this.absoluteInputModelFilePath));
     this.convertImportUrisToAbsoluteFileUris(this.inputMappingModel.getImports(), this.absoluteInputModelFilePath);
     this.setSourceModelUris(this.inputMappingModel);
   }

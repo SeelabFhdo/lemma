@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link de.fhdo.lemma.service.MappedComplexType#getT_sourceModelUri <em>Tsource Model Uri</em>}</li>
+ *   <li>{@link de.fhdo.lemma.service.MappedComplexType#getT_mappingModelUri <em>Tmapping Model Uri</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.MappedComplexType#getT_typeDefinitionTechnologyImport <em>Ttype Definition Technology Import</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.MappedComplexType#getT_typeDefinitionTechnology <em>Ttype Definition Technology</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.MappedComplexType#getTechnologyReferences <em>Technology References</em>}</li>
@@ -60,6 +61,28 @@ public interface MappedComplexType extends EObject {
      * @generated
      */
     void setT_sourceModelUri(String value);
+
+    /**
+     * Returns the value of the '<em><b>Tmapping Model Uri</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Tmapping Model Uri</em>' attribute.
+     * @see #setT_mappingModelUri(String)
+     * @see de.fhdo.lemma.service.ServicePackage#getMappedComplexType_T_mappingModelUri()
+     * @model unique="false"
+     * @generated
+     */
+    String getT_mappingModelUri();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.service.MappedComplexType#getT_mappingModelUri <em>Tmapping Model Uri</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Tmapping Model Uri</em>' attribute.
+     * @see #getT_mappingModelUri()
+     * @generated
+     */
+    void setT_mappingModelUri(String value);
 
     /**
      * Returns the value of the '<em><b>Ttype Definition Technology Import</b></em>' reference.

@@ -237,9 +237,9 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
         isInited = true;
 
         // Initialize simple dependencies
+        EcorePackage.eINSTANCE.eClass();
         ServicePackage.eINSTANCE.eClass();
         TechnologyPackage.eINSTANCE.eClass();
-        EcorePackage.eINSTANCE.eClass();
         DataPackage.eINSTANCE.eClass();
 
         // Create package meta-data objects
@@ -270,8 +270,8 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getTechnologyMapping_Imports() {
-        return (EReference)technologyMappingEClass.getEStructuralFeatures().get(0);
+    public EAttribute getTechnologyMapping_T_modelUri() {
+        return (EAttribute)technologyMappingEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -279,7 +279,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getTechnologyMapping_TypeMappings() {
+    public EReference getTechnologyMapping_Imports() {
         return (EReference)technologyMappingEClass.getEStructuralFeatures().get(1);
     }
 
@@ -288,8 +288,17 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getTechnologyMapping_ServiceMappings() {
+    public EReference getTechnologyMapping_TypeMappings() {
         return (EReference)technologyMappingEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getTechnologyMapping_ServiceMappings() {
+        return (EReference)technologyMappingEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -1446,6 +1455,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
 
         // Create classes and their features
         technologyMappingEClass = createEClass(TECHNOLOGY_MAPPING);
+        createEAttribute(technologyMappingEClass, TECHNOLOGY_MAPPING__TMODEL_URI);
         createEReference(technologyMappingEClass, TECHNOLOGY_MAPPING__IMPORTS);
         createEReference(technologyMappingEClass, TECHNOLOGY_MAPPING__TYPE_MAPPINGS);
         createEReference(technologyMappingEClass, TECHNOLOGY_MAPPING__SERVICE_MAPPINGS);
@@ -1620,8 +1630,8 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
         setNsURI(eNS_URI);
 
         // Obtain other dependent packages
-        ServicePackage theServicePackage = (ServicePackage)EPackage.Registry.INSTANCE.getEPackage(ServicePackage.eNS_URI);
         EcorePackage theEcorePackage = (EcorePackage)EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
+        ServicePackage theServicePackage = (ServicePackage)EPackage.Registry.INSTANCE.getEPackage(ServicePackage.eNS_URI);
         TechnologyPackage theTechnologyPackage = (TechnologyPackage)EPackage.Registry.INSTANCE.getEPackage(TechnologyPackage.eNS_URI);
         DataPackage theDataPackage = (DataPackage)EPackage.Registry.INSTANCE.getEPackage(DataPackage.eNS_URI);
 
@@ -1635,6 +1645,7 @@ public class MappingPackageImpl extends EPackageImpl implements MappingPackage {
 
         // Initialize classes, features, and operations; add parameters
         initEClass(technologyMappingEClass, TechnologyMapping.class, "TechnologyMapping", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getTechnologyMapping_T_modelUri(), theEcorePackage.getEString(), "t_modelUri", null, 0, 1, TechnologyMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getTechnologyMapping_Imports(), theServicePackage.getImport(), null, "imports", null, 1, -1, TechnologyMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getTechnologyMapping_TypeMappings(), this.getComplexTypeMapping(), this.getComplexTypeMapping_MappingModel(), "typeMappings", null, 0, -1, TechnologyMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getTechnologyMapping_ServiceMappings(), this.getMicroserviceMapping(), this.getMicroserviceMapping_MappingModel(), "serviceMappings", null, 0, -1, TechnologyMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

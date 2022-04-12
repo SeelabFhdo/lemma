@@ -94,7 +94,6 @@ public class IntermediateApiOperationCommentImpl extends MinimalEObjectImpl.Cont
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getComment() {
         return comment;
     }
@@ -104,7 +103,6 @@ public class IntermediateApiOperationCommentImpl extends MinimalEObjectImpl.Cont
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setComment(String newComment) {
         String oldComment = comment;
         comment = newComment;
@@ -117,7 +115,6 @@ public class IntermediateApiOperationCommentImpl extends MinimalEObjectImpl.Cont
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<IntermediateApiParameterComment> getParameterComments() {
         if (parameterComments == null) {
             parameterComments = new EObjectContainmentWithInverseEList<IntermediateApiParameterComment>(IntermediateApiParameterComment.class, this, IntermediatePackage.INTERMEDIATE_API_OPERATION_COMMENT__PARAMETER_COMMENTS, IntermediatePackage.INTERMEDIATE_API_PARAMETER_COMMENT__OPERATION_COMMENT);
@@ -130,7 +127,6 @@ public class IntermediateApiOperationCommentImpl extends MinimalEObjectImpl.Cont
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateOperation getOperation() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_API_OPERATION_COMMENT__OPERATION) return null;
         return (IntermediateOperation)eContainer();
@@ -161,7 +157,6 @@ public class IntermediateApiOperationCommentImpl extends MinimalEObjectImpl.Cont
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setOperation(IntermediateOperation newOperation) {
         if (newOperation != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_API_OPERATION_COMMENT__OPERATION && newOperation != null)) {
             if (EcoreUtil.isAncestor(this, newOperation))

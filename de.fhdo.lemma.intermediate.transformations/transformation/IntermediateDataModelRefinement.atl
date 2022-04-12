@@ -492,7 +492,9 @@ rule RefineIntermediateComplexType {
         mappedComplexType: Service!MappedComplexType = thisModule.findMappedComplexType(s);
     }
     to
-        t: Intermediate!IntermediateComplexType
+        t: Intermediate!IntermediateComplexType(
+            sourceMappingModelUri <- mappedComplexType.t_mappingModelUri
+        )
     do {
         for (aspect in mappedComplexType.aspects) {
             t.aspects <- t.aspects -> append(

@@ -40,6 +40,9 @@ class TechnologyMapping {
      *          Ensured by: DSL validator.
      */
 
+    // TRANSFORMATION ONLY: The file path of the model in the form of a URI with a "file" scheme
+    String t_modelUri
+
     contains Import[1..*] imports
     contains ComplexTypeMapping[] typeMappings opposite mappingModel
     contains MicroserviceMapping[] serviceMappings opposite mappingModel

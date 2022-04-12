@@ -27,6 +27,8 @@ class IntermediateServiceModel {
  */
 class IntermediateMicroservice {
     String sourceModelUri
+    // "file" URI to the mapping model that may have mapped the original microservice
+    String sourceMappingModelUri
     String name
     String version
     String qualifiedName

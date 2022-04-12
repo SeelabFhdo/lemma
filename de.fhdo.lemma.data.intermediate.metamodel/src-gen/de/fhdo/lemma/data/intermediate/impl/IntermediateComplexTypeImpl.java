@@ -33,6 +33,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateComplexTypeImpl#getSourceMappingModelUri <em>Source Mapping Model Uri</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateComplexTypeImpl#getQualifiedName <em>Qualified Name</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateComplexTypeImpl#getAspects <em>Aspects</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateComplexTypeImpl#getDataModel <em>Data Model</em>}</li>
@@ -43,6 +44,26 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * @generated
  */
 public class IntermediateComplexTypeImpl extends IntermediateTypeImpl implements IntermediateComplexType {
+    /**
+     * The default value of the '{@link #getSourceMappingModelUri() <em>Source Mapping Model Uri</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getSourceMappingModelUri()
+     * @generated
+     * @ordered
+     */
+    protected static final String SOURCE_MAPPING_MODEL_URI_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getSourceMappingModelUri() <em>Source Mapping Model Uri</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getSourceMappingModelUri()
+     * @generated
+     * @ordered
+     */
+    protected String sourceMappingModelUri = SOURCE_MAPPING_MODEL_URI_EDEFAULT;
+
     /**
      * The default value of the '{@link #getQualifiedName() <em>Qualified Name</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -90,6 +111,27 @@ public class IntermediateComplexTypeImpl extends IntermediateTypeImpl implements
     @Override
     protected EClass eStaticClass() {
         return IntermediatePackage.Literals.INTERMEDIATE_COMPLEX_TYPE;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getSourceMappingModelUri() {
+        return sourceMappingModelUri;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setSourceMappingModelUri(String newSourceMappingModelUri) {
+        String oldSourceMappingModelUri = sourceMappingModelUri;
+        sourceMappingModelUri = newSourceMappingModelUri;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__SOURCE_MAPPING_MODEL_URI, oldSourceMappingModelUri, sourceMappingModelUri));
     }
 
     /**
@@ -351,6 +393,8 @@ public class IntermediateComplexTypeImpl extends IntermediateTypeImpl implements
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
+            case IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__SOURCE_MAPPING_MODEL_URI:
+                return getSourceMappingModelUri();
             case IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__QUALIFIED_NAME:
                 return getQualifiedName();
             case IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__ASPECTS:
@@ -377,6 +421,9 @@ public class IntermediateComplexTypeImpl extends IntermediateTypeImpl implements
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
+            case IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__SOURCE_MAPPING_MODEL_URI:
+                setSourceMappingModelUri((String)newValue);
+                return;
             case IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__QUALIFIED_NAME:
                 setQualifiedName((String)newValue);
                 return;
@@ -405,6 +452,9 @@ public class IntermediateComplexTypeImpl extends IntermediateTypeImpl implements
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
+            case IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__SOURCE_MAPPING_MODEL_URI:
+                setSourceMappingModelUri(SOURCE_MAPPING_MODEL_URI_EDEFAULT);
+                return;
             case IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__QUALIFIED_NAME:
                 setQualifiedName(QUALIFIED_NAME_EDEFAULT);
                 return;
@@ -432,6 +482,8 @@ public class IntermediateComplexTypeImpl extends IntermediateTypeImpl implements
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
+            case IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__SOURCE_MAPPING_MODEL_URI:
+                return SOURCE_MAPPING_MODEL_URI_EDEFAULT == null ? sourceMappingModelUri != null : !SOURCE_MAPPING_MODEL_URI_EDEFAULT.equals(sourceMappingModelUri);
             case IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__QUALIFIED_NAME:
                 return QUALIFIED_NAME_EDEFAULT == null ? qualifiedName != null : !QUALIFIED_NAME_EDEFAULT.equals(qualifiedName);
             case IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__ASPECTS:
@@ -456,7 +508,9 @@ public class IntermediateComplexTypeImpl extends IntermediateTypeImpl implements
         if (eIsProxy()) return super.toString();
 
         StringBuilder result = new StringBuilder(super.toString());
-        result.append(" (qualifiedName: ");
+        result.append(" (sourceMappingModelUri: ");
+        result.append(sourceMappingModelUri);
+        result.append(", qualifiedName: ");
         result.append(qualifiedName);
         result.append(')');
         return result.toString();

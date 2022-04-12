@@ -153,7 +153,6 @@ public class IntermediateReferredOperationImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getNameInReferringInterface() {
         return nameInReferringInterface;
     }
@@ -163,7 +162,6 @@ public class IntermediateReferredOperationImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setNameInReferringInterface(String newNameInReferringInterface) {
         String oldNameInReferringInterface = nameInReferringInterface;
         nameInReferringInterface = newNameInReferringInterface;
@@ -176,7 +174,6 @@ public class IntermediateReferredOperationImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getQualifiedNameInReferringInterface() {
         return qualifiedNameInReferringInterface;
     }
@@ -186,7 +183,6 @@ public class IntermediateReferredOperationImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setQualifiedNameInReferringInterface(String newQualifiedNameInReferringInterface) {
         String oldQualifiedNameInReferringInterface = qualifiedNameInReferringInterface;
         qualifiedNameInReferringInterface = newQualifiedNameInReferringInterface;
@@ -199,7 +195,6 @@ public class IntermediateReferredOperationImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateOperation getOperation() {
         if (operation != null && operation.eIsProxy()) {
             InternalEObject oldOperation = (InternalEObject)operation;
@@ -226,7 +221,6 @@ public class IntermediateReferredOperationImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setOperation(IntermediateOperation newOperation) {
         IntermediateOperation oldOperation = operation;
         operation = newOperation;
@@ -239,7 +233,6 @@ public class IntermediateReferredOperationImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<IntermediateEndpoint> getEndpoints() {
         if (endpoints == null) {
             endpoints = new EObjectContainmentWithInverseEList<IntermediateEndpoint>(IntermediateEndpoint.class, this, IntermediatePackage.INTERMEDIATE_REFERRED_OPERATION__ENDPOINTS, IntermediatePackage.INTERMEDIATE_ENDPOINT__REFERRED_OPERATION);
@@ -252,7 +245,6 @@ public class IntermediateReferredOperationImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<IntermediateProtocolSpecification> getProtocols() {
         if (protocols == null) {
             protocols = new EObjectContainmentEList<IntermediateProtocolSpecification>(IntermediateProtocolSpecification.class, this, IntermediatePackage.INTERMEDIATE_REFERRED_OPERATION__PROTOCOLS);
@@ -265,7 +257,6 @@ public class IntermediateReferredOperationImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<IntermediateImportedAspect> getAspects() {
         if (aspects == null) {
             aspects = new EObjectContainmentEList<IntermediateImportedAspect>(IntermediateImportedAspect.class, this, IntermediatePackage.INTERMEDIATE_REFERRED_OPERATION__ASPECTS);
@@ -278,7 +269,6 @@ public class IntermediateReferredOperationImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateInterface getReferringInterface() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_REFERRED_OPERATION__REFERRING_INTERFACE) return null;
         return (IntermediateInterface)eContainer();
@@ -309,7 +299,6 @@ public class IntermediateReferredOperationImpl extends MinimalEObjectImpl.Contai
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setReferringInterface(IntermediateInterface newReferringInterface) {
         if (newReferringInterface != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_REFERRED_OPERATION__REFERRING_INTERFACE && newReferringInterface != null)) {
             if (EcoreUtil.isAncestor(this, newReferringInterface))

@@ -345,7 +345,8 @@ rule CreateMappedComplexType(
         t : Service!MappedComplexType(
             serviceModel <- thisModule.ServiceModel(),
             type <- thisModule.ImportedType(typeImport, type, serviceImport.name),
-            t_sourceModelUri <- sourceModelUri
+            t_sourceModelUri <- sourceModelUri,
+            t_mappingModelUri <- Mapping!TechnologyMapping.allInstancesFrom('IN').first().t_modelUri
         )
     do {
         for (technologyReference in technologyReferences) {
@@ -391,6 +392,8 @@ rule Microservice(sourceMicroservice : Service!Microservice,
     to
         t : Service!Microservice(
             t_sourceModelUri <- thisModule.getCreatedImportByAlias(importAlias).importURI,
+            t_mappingModelUri <- Mapping!TechnologyMapping.allInstancesFrom('IN').first()
+                .t_modelUri,
             name <- sourceMicroservice.name,
             version <- sourceMicroservice.version,
             type <- sourceMicroservice.type,
