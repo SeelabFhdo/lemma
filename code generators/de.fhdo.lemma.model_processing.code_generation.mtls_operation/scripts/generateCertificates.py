@@ -23,12 +23,15 @@ class Profiletype(Enum):
 # todo check path for windows
 def get_absolute_path(path: str) -> str:
     if path.startswith("~"):
-        path = os.path.expanduser(path)
+        return os.path.expanduser(path)
+    return path
 
 
-def system_environment_variable(variable: str) -> str:
+def get_sys_env_var(variable: str) -> str:
+    print("xxx: " + variable)
     if variable.find("${") > -1:
         var = variable[variable.find("${") + 2:variable.find("}")]
+        print("yyy:" + var)
         env = os.getenv(var)
         if env:
             return str(env) + variable[variable.find("}") + 1:]
@@ -107,7 +110,10 @@ def __load_config_files(path) -> list:
 
 
 def __split_config_param(param: str) -> tuple:
-    return tuple(param.replace("\n", "").split("=", 1))
+    retval = param.replace("\n", "").split("=", 1)
+    if retval[1].find("${") > -1:
+        run_cli_command("export {var}=geheim; ".format(var=retval[1][retval[1].find("${") + 2:retval[1].find("}")]))
+    return tuple(retval)
 
 
 def throw_configuration_exception(message: str):
@@ -123,13 +129,13 @@ def check_openssl_is_installed():
 
 
 def __check_password(password: str):
-    password = system_environment_variable(password)
+    password = get_sys_env_var(password)
     if password == "":
         throw_configuration_exception("The system variable is not set or the password is empty!")
     return password
 
 
-def generate_rsa_privat_key(path: str, filename: str, password: str, cipher: str = "aes256", bitrate: int = 4096):
+def generate_rsa_privat_key(path: str, filename: str, password: str, cipher: str = "aes256", bitlength: int = 4096):
     """Generating a private key for the application or certificate authority!"""
     password = __check_password(password)
 
@@ -138,54 +144,53 @@ def generate_rsa_privat_key(path: str, filename: str, password: str, cipher: str
             file=os.path.join(path, filename)))
     run_cli_command(
         "openssl genrsa -{cipher} -passout pass:\"{password}\" -out \"{path}/{filename}_key.pem\" {bitrate}".format(
-            cipher=cipher, password=password, path=path, filename=filename.replace(".var", ""), bitrate=bitrate))
+            cipher=cipher, password=password, path=path, filename=filename.replace(".var", ""), bitrate=bitlength))
 
 
-def generate_public_key(path: str, filename: str, password: str, domain: str, cert_type: str = "x509",
+def generate_public_key(path: str, filename: str, password: str, subject: str, cert_type: str = "x509",
                         expiration_time_days: int = 365):
     """Generating a public key for the certificate authority"""
     password = __check_password(password)
-    if domain == "":
-        domain = "mytest.domain"
-        logging.info("No domain was specified!")
+    if subject == "":
+        raise ConfigurationException("No subject was specified!")
 
     run_cli_command(
         "openssl req -new -passin pass:{password} -key {path}/{filename}_key.pem -{cert_type}" +
-        " -days {expiration_time_days} -out {path}/{filename}_ca_cert.pem -subj \"/CN=ca.{domain}\"".format(
+        " -days {expiration_time_days} -out {path}/{filename}_ca_cert.pem -subj \"/CN={subject}\"".format(
             password=password, path=path, filename=filename.replace(".var", ""), cert_type=cert_type,
-            expiration_time_days=expiration_time_days, domain=domain))
+            expiration_time_days=expiration_time_days, subject=subject))
 
 
 def create_certificate_authority(config_file: CertificateConfigFile):
-    # (path: str, filename: str, password: str, cipher: str = "aes256", bitrate: int = 4096)
-    path = system_environment_variable(config_file.rootDir)
-    filename = system_environment_variable(config_file.filename)
-    password = system_environment_variable(config_file.get_config_parameter("caCertificatPassword"))
-    cipher = system_environment_variable(config_file.get_config_parameter("cipher"))
-    bitrate = int(system_environment_variable(config_file.get_config_parameter("server.ssl.bitLength")))
-    domain = system_environment_variable(config_file.get_config_parameter(""))
-    cert_type = system_environment_variable(config_file.get_config_parameter(""))
-    expiration_time_days = system_environment_variable(
-        config_file.get_config_parameter("server.ssl.key-store.validityInDays"))
+    """Generate a Certificat Authority by given CertificateConfigFile"""
+    path = get_sys_env_var(config_file.rootDir)
+    filename = get_sys_env_var(config_file.filename)
+    password = get_sys_env_var(config_file.get_config_parameter("server.ssl.server.ca-password"))
+    cipher = get_sys_env_var(config_file.get_config_parameter("server.ssl.cipher"))
+    bitrate = int(get_sys_env_var(config_file.get_config_parameter("server.ssl.bitLength")))
+    subject = get_sys_env_var(config_file.get_config_parameter("server.ssl.subject"))
+    cert_type = get_sys_env_var(config_file.get_config_parameter("server.ssl.certificateStandard"))
+    expiration_time_days = get_sys_env_var(config_file.get_config_parameter("server.ssl.key-store.validityInDays"))
 
-    # todo remove this line command1 = "openssl genrsa -aes256 -passout pass:$PASS -out $KEYPATH/ca/ca_key.pem 4096 "
+    # run commands for generating ca key file and cert file
     generate_rsa_privat_key(path, filename, password, cipher, bitrate)
-    # todo remove this line command2 = "openssl req -new -passin pass:$PASS -key $KEYPATH/ca/ca_key.pem -x509 -days 365 -out $KEYPATH/ca/ca_cert.pem -subj \"/CN=ca.$DOMAIN\""
-    generate_public_key(path, filename, password, domain, cert_type, expiration_time_days)
+    generate_public_key(path, filename, password, subject, cert_type, expiration_time_days)
 
 
-def create_client_keystore(configFile: CertificateConfigFile):
-    bitLength = configFile.configParameter['server.ssl.bitLength']
-    bypass_hostname_verifier = configFile.configParameter['server.ssl.bypass.hostname-verifier']
-    key_aliasSuffix = configFile.configParameter['server.ssl.key-aliasSuffix']
-    key_store = configFile.configParameter['server.ssl.key-store']
-    key_store_password = configFile.configParameter['server.ssl.key-store-password']
-    trust_store = configFile.configParameter['server.ssl.trust-store']
-    trust_store_password = configFile.configParameter['server.ssl.trust-store-password']
-    path = configFile.rootDir
-    filename = configFile.filename
-    # Generating a private key for the application
-    generate_rsa_privat_key(path, filename, key_store_password, bitrate=bitLength)
+def create_client_keystore(profile: Profile):
+    """Generate for each client a java keystore by given spring boot config profile"""
+
+    for client_config in profile.client_configs:
+        path = get_sys_env_var(client_config.rootDir)
+        filename = get_sys_env_var(client_config.filename)
+        bitLength = get_sys_env_var(client_config.get_config_parameter("server.ssl.bitLength"))
+        cipher = get_sys_env_var(client_config.get_config_parameter("server.ssl.cipher"))
+        # key_store = get_sys_env_var(client_config.get_config_parameter("server.ssl.key-store"))
+        key_store_password = get_sys_env_var(client_config.get_config_parameter("server.ssl.key-store-password"))
+
+        # Generating a private key for the application
+        generate_rsa_privat_key(path, filename, key_store_password, cipher=cipher, bitlength=bitLength)
+
     # Generating a certificate-signing request for the application
     command2 = "openssl req -passin pass:$PASS -new -key $appfolder/$1_key.pem -out $appfolder/csr-for-$1 -subj \"/CN=$1.$DOMAIN\""
     # Generating the application’s CA signed certificate
@@ -198,6 +203,7 @@ def create_client_keystore(configFile: CertificateConfigFile):
 
 
 def create_client_truststore(configFile: CertificateConfigFile):
+    """Generate client java truststore by given CertificateConfigFile"""
     command1 = "keytool -import -file $KEYPATH/ca/ca_cert.pem -alias ca -noprompt -keystore $appfolder/truststore_$1.p12 -storepass $PASS"
 
 
@@ -222,6 +228,7 @@ def generate_cetificates():
         print("Profile: {profile}".format(profile=profile.type.value))
         print("CA:")
         create_certificate_authority(profile.ca_config)
+        create_client_keystore(profile)
         for caparam in profile.ca_config.configParameter:
             print("CA Param: {key} = {value}".format(key=caparam[0], value=caparam[1]))
         for client_config in profile.client_configs:

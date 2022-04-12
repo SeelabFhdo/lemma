@@ -4,6 +4,7 @@ import de.fhdo.lemma.model_processing.asFile
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.SortableProperties
 import de.fhdo.lemma.model_processing.code_generation.mtls_operation.modul_handler.MainContext
 import de.fhdo.lemma.operation.InfrastructureNode
+import de.fhdo.lemma.operation.intermediate.IntermediateOperationEnvironment
 import de.fhdo.lemma.operation.intermediate.IntermediateOperationNode
 
 internal fun loadPropertiesFile(filePath: String): SortableProperties {
@@ -63,7 +64,7 @@ fun springPropertyMapping(property: String) = when (property) {
     "caKeyFile" -> "server.ssl.ca-key.file"
     "caCertFile" -> "server.ssl.ca-Cert.file"
     "subject" -> "server.ssl.subject"
-    "applicationName" ->  "server.ssl.applicationName"
+    "applicationName" -> "server.ssl.applicationName"
     else -> property
 }
 
@@ -77,8 +78,21 @@ fun isConformApplicationNames(applicationNames: String): Boolean {
     val nameChars = "[a-z0-9_.]+"
     val equal = "[ ]?[=][ ]?"
     return applicationNames.matches(
-        """(${nameChars}${equal}${nameChars})((,)(${nameChars}${equal}${nameChars}))*""".toRegex())
+        """(${nameChars}${equal}${nameChars})((,)(${nameChars}${equal}${nameChars}))*""".toRegex()
+    )
 }
+fun isValidSystemEnvironmentVariable(environmentVariable: String) =
+    environmentVariable.matches("[\$][{]([\\w_])+[}]".toRegex())
+
+private fun getAllSystemEnvironmentVariable(environmentVariable: String) =
+    "[\$][{][\\w-#~,+*?^(){\$\\[\\]|.]+[}]".toRegex().findAll(environmentVariable).toList()
+
+fun hasAnyInvalidSystemEnvironmentVariable(environmentVariable: String) =
+    getAllSystemEnvironmentVariable(environmentVariable).any { matchResult ->
+        !matchResult.groupValues.any { isValidSystemEnvironmentVariable(it) }
+    }
+
+
 
 fun parseApplicationNames(applicationNames: String): Map<String, String> {
     val retval = mutableMapOf<String, String>()

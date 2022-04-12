@@ -73,7 +73,7 @@ private fun generateDefaultEmptyCertificationAuthority() {
     val sortableProperties = SortableProperties()
     sortableProperties[springPropertyMapping("caKeyFile")] = "ca_key_private.pem"
     sortableProperties[springPropertyMapping("caCertFile")] = "ca_cert.pem"
-    sortableProperties[springPropertyMapping("caCertificatePassword")] = "\${caCertificatPassword}"
+    sortableProperties[springPropertyMapping("caCertificatePassword")] = "\${caCertificatePassword}"
     sortableProperties[springPropertyMapping("caName")] = "ca"
     sortableProperties[springPropertyMapping("caDomain")] = "example.de"
     sortableProperties[springPropertyMapping("validityInDays")] = 365

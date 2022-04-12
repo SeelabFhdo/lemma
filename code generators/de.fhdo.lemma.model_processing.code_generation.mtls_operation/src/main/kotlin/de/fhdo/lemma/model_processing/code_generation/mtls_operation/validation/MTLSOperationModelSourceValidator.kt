@@ -2,12 +2,14 @@ package de.fhdo.lemma.model_processing.code_generation.mtls_operation.validation
 
 import de.fhdo.lemma.model_processing.annotations.Before
 import de.fhdo.lemma.model_processing.annotations.SourceModelValidator
+import de.fhdo.lemma.model_processing.code_generation.mtls_operation.utils.hasAnyInvalidSystemEnvironmentVariable
 import de.fhdo.lemma.model_processing.code_generation.mtls_operation.utils.isCertificateAuthority
 import de.fhdo.lemma.model_processing.code_generation.mtls_operation.utils.isConformApplicationNames
 import de.fhdo.lemma.model_processing.code_generation.mtls_operation.utils.parseApplicationNames
 import de.fhdo.lemma.model_processing.languages.convertToAbsoluteFileUrisInPlace
 import de.fhdo.lemma.model_processing.phases.validation.AbstractXtextModelValidator
 import de.fhdo.lemma.operation.Container
+import de.fhdo.lemma.operation.ImportedOperationAspect
 import de.fhdo.lemma.operation.InfrastructureNode
 import org.eclipse.emf.ecore.resource.Resource
 import de.fhdo.lemma.operation.OperationModel
@@ -34,9 +36,11 @@ class MTLSOperationModelSourceValidator : AbstractXtextModelValidator() {
     private fun checkNoAspectsForCaAuthority(infrastructureNode: InfrastructureNode) {
         if (!infrastructureNode.isCertificateAuthority()) return
 
-        if (infrastructureNode.aspects.isNotEmpty()) error(
-            "No aspects can be defined for Certificate Authority.", OperationPackage.Literals.OPERATION_NODE__ASPECTS
-        )
+        if (infrastructureNode.aspects.isNotEmpty())
+            error(
+                "No aspects can be defined for Certificate Authority.",
+                OperationPackage.Literals.OPERATION_NODE__ASPECTS
+            )
     }
 
     /*
@@ -46,15 +50,47 @@ class MTLSOperationModelSourceValidator : AbstractXtextModelValidator() {
     private fun checkNoAspectsForCaAuthority1(infrastructureNode: InfrastructureNode) {
         if (!infrastructureNode.isCertificateAuthority()) return
 
-        if (infrastructureNode.deploymentSpecifications.isNotEmpty()) error(
-            "No deployment specifications can be defined for the services that " + "the Certification Authority uses.",
-            OperationPackage.Literals.OPERATION_NODE__DEPLOYMENT_SPECIFICATIONS
-        )
+        if (infrastructureNode.deploymentSpecifications.isNotEmpty())
+            error(
+                "No deployment specifications can be defined for the services that the Certification Authority uses.",
+                OperationPackage.Literals.OPERATION_NODE__DEPLOYMENT_SPECIFICATIONS
+            )
     }
+
+    /*
+    * It checks if the values of aspects do not contain a hyphen or a dot.
+    * */
+    @Check
+    private fun checkSystemEnvironmentVariabelChars(aspect: ImportedOperationAspect) {
+        aspect.values.forEachIndexed() { index, it ->
+            if (hasAnyInvalidSystemEnvironmentVariable(it.value.stringValue))
+                error(
+                    "The system variable can only consist of letters, digits and underscores.",
+                    OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__VALUES,
+                    index
+                )
+        }
+    }
+    /*
+    * It checks if the values of service properties do not contain a hyphen or a dot.
+    * */
+    @Check
+    private fun checkSystemEnvironmentVariabelChars(infrastructureNode: InfrastructureNode) {
+        if (infrastructureNode.isCertificateAuthority()) {
+            infrastructureNode.defaultServicePropertyValues.forEachIndexed { index, it ->
+                if (hasAnyInvalidSystemEnvironmentVariable(it.value.stringValue))
+                    error(
+                        "The system variable can only consist of letters, digits and underscores.",
+                        OperationPackage.Literals.OPERATION_NODE__DEFAULT_SERVICE_PROPERTY_VALUES,
+                        index
+                    )
+            }
+        }
+    }
+
 
     @Check
     private fun checkNamingForServicesInContainers(container: Container) {
-//        if (container.deployedServices.size < 2) return
         container.aspects.forEach { importedOperationAspect ->
             importedOperationAspect.values.forEachIndexed { index, technologySpecificPropertyValueAssignment ->
                 if (technologySpecificPropertyValueAssignment.property.name != "applicationName") return@forEachIndexed
@@ -67,22 +103,20 @@ class MTLSOperationModelSourceValidator : AbstractXtextModelValidator() {
                         index
                     )
                 if (parseApplicationNames(technologySpecificPropertyValueAssignment.value.valueAsString()).size
-                    < container.deployedServices.size)
-                    warning("There are more defined names in the aspect applicationName than deployed services!",
-                        importedOperationAspect, OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__VALUES, index)
+                    < container.deployedServices.size
+                )
+                    warning(
+                        "There are more defined names in the aspect applicationName than deployed services!",
+                        importedOperationAspect, OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__VALUES, index
+                    )
                 if (parseApplicationNames(technologySpecificPropertyValueAssignment.value.valueAsString()).size
-                    > container.deployedServices.size)
-                    warning("There are more deployed services than defined names in the aspect applicationName!",
-                        importedOperationAspect, OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__VALUES, index)
+                    > container.deployedServices.size
+                )
+                    warning(
+                        "There are more deployed services than defined names in the aspect applicationName!",
+                        importedOperationAspect, OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__VALUES, index
+                    )
             }
         }
-    }
-
-    /*
-    * It checks if the values of aspects or system settings do not contain a hyphen or a dot.
-    * */
-    @Check
-    private fun checkSystemEnvironmentVariables() {
-
     }
 }
