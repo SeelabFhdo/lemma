@@ -245,7 +245,7 @@ helper def : getImportTypeName(import : Service!Import) : String =
     endif
 ;
 
---- Transform a source Microservice, to a target IntermediateMicroservice
+--- Transform a source Microservice to a target IntermediateMicroservice
 rule IntermediateMicroservice {
     from
         m : Service!Microservice
@@ -256,6 +256,7 @@ rule IntermediateMicroservice {
                 else
                     thisModule.IntermediateServiceModel().sourceModelUri
                 endif,
+            sourceMappingModelUri <- m.t_mappingModelUri,
             name <- m.name,
             version <- m.version,
             qualifiedName <- m.buildQualifiedName('.'),

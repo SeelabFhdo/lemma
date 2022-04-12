@@ -89,7 +89,6 @@ public class IntermediateTechnologyImpl extends MinimalEObjectImpl.Container imp
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getName() {
         return name;
     }
@@ -99,7 +98,6 @@ public class IntermediateTechnologyImpl extends MinimalEObjectImpl.Container imp
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -112,7 +110,6 @@ public class IntermediateTechnologyImpl extends MinimalEObjectImpl.Container imp
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateImport getImport() {
         if (import_ != null && import_.eIsProxy()) {
             InternalEObject oldImport = (InternalEObject)import_;
@@ -139,7 +136,6 @@ public class IntermediateTechnologyImpl extends MinimalEObjectImpl.Container imp
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setImport(IntermediateImport newImport) {
         IntermediateImport oldImport = import_;
         import_ = newImport;
@@ -152,7 +148,6 @@ public class IntermediateTechnologyImpl extends MinimalEObjectImpl.Container imp
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateMicroservice getMicroservice() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_TECHNOLOGY__MICROSERVICE) return null;
         return (IntermediateMicroservice)eContainer();
@@ -183,7 +178,6 @@ public class IntermediateTechnologyImpl extends MinimalEObjectImpl.Container imp
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setMicroservice(IntermediateMicroservice newMicroservice) {
         if (newMicroservice != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_TECHNOLOGY__MICROSERVICE && newMicroservice != null)) {
             if (EcoreUtil.isAncestor(this, newMicroservice))

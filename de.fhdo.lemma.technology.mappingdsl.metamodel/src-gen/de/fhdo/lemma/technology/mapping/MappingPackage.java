@@ -69,13 +69,22 @@ public interface MappingPackage extends EPackage {
     int TECHNOLOGY_MAPPING = 0;
 
     /**
+     * The feature id for the '<em><b>Tmodel Uri</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TECHNOLOGY_MAPPING__TMODEL_URI = 0;
+
+    /**
      * The feature id for the '<em><b>Imports</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_MAPPING__IMPORTS = 0;
+    int TECHNOLOGY_MAPPING__IMPORTS = 1;
 
     /**
      * The feature id for the '<em><b>Type Mappings</b></em>' containment reference list.
@@ -84,7 +93,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_MAPPING__TYPE_MAPPINGS = 1;
+    int TECHNOLOGY_MAPPING__TYPE_MAPPINGS = 2;
 
     /**
      * The feature id for the '<em><b>Service Mappings</b></em>' containment reference list.
@@ -93,7 +102,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_MAPPING__SERVICE_MAPPINGS = 2;
+    int TECHNOLOGY_MAPPING__SERVICE_MAPPINGS = 3;
 
     /**
      * The number of structural features of the '<em>Technology Mapping</em>' class.
@@ -102,7 +111,7 @@ public interface MappingPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TECHNOLOGY_MAPPING_FEATURE_COUNT = 3;
+    int TECHNOLOGY_MAPPING_FEATURE_COUNT = 4;
 
     /**
      * The operation id for the '<em>Get Mapped Interfaces</em>' operation.
@@ -1647,6 +1656,17 @@ public interface MappingPackage extends EPackage {
     EClass getTechnologyMapping();
 
     /**
+     * Returns the meta object for the attribute '{@link de.fhdo.lemma.technology.mapping.TechnologyMapping#getT_modelUri <em>Tmodel Uri</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Tmodel Uri</em>'.
+     * @see de.fhdo.lemma.technology.mapping.TechnologyMapping#getT_modelUri()
+     * @see #getTechnologyMapping()
+     * @generated
+     */
+    EAttribute getTechnologyMapping_T_modelUri();
+
+    /**
      * Returns the meta object for the containment reference list '{@link de.fhdo.lemma.technology.mapping.TechnologyMapping#getImports <em>Imports</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3057,6 +3077,14 @@ public interface MappingPackage extends EPackage {
          * @generated
          */
         EClass TECHNOLOGY_MAPPING = eINSTANCE.getTechnologyMapping();
+
+        /**
+         * The meta object literal for the '<em><b>Tmodel Uri</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute TECHNOLOGY_MAPPING__TMODEL_URI = eINSTANCE.getTechnologyMapping_T_modelUri();
 
         /**
          * The meta object literal for the '<em><b>Imports</b></em>' containment reference list feature.

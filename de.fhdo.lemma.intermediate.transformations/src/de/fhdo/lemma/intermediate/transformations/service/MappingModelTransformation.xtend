@@ -93,6 +93,9 @@ class MappingModelTransformation
     override prepareInputModel(TransformationModelDescription modelDescription, EObject modelRoot) {
         inputMappingModel = modelRoot as TechnologyMapping
 
+        // Set source model URI
+        inputMappingModel.t_modelUri = LemmaUtils.convertToFileUri(absoluteInputModelFilePath)
+
         // Convert import URIs to absolute URIs
         convertImportUrisToAbsoluteFileUris(inputMappingModel.imports, absoluteInputModelFilePath)
 

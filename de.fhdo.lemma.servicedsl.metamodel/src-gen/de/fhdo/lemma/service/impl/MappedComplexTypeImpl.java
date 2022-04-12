@@ -57,6 +57,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  * </p>
  * <ul>
  *   <li>{@link de.fhdo.lemma.service.impl.MappedComplexTypeImpl#getT_sourceModelUri <em>Tsource Model Uri</em>}</li>
+ *   <li>{@link de.fhdo.lemma.service.impl.MappedComplexTypeImpl#getT_mappingModelUri <em>Tmapping Model Uri</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.impl.MappedComplexTypeImpl#getT_typeDefinitionTechnologyImport <em>Ttype Definition Technology Import</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.impl.MappedComplexTypeImpl#getT_typeDefinitionTechnology <em>Ttype Definition Technology</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.impl.MappedComplexTypeImpl#getTechnologyReferences <em>Technology References</em>}</li>
@@ -89,6 +90,26 @@ public class MappedComplexTypeImpl extends MinimalEObjectImpl.Container implemen
      * @ordered
      */
     protected String t_sourceModelUri = TSOURCE_MODEL_URI_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getT_mappingModelUri() <em>Tmapping Model Uri</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getT_mappingModelUri()
+     * @generated
+     * @ordered
+     */
+    protected static final String TMAPPING_MODEL_URI_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getT_mappingModelUri() <em>Tmapping Model Uri</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getT_mappingModelUri()
+     * @generated
+     * @ordered
+     */
+    protected String t_mappingModelUri = TMAPPING_MODEL_URI_EDEFAULT;
 
     /**
      * The cached value of the '{@link #getT_typeDefinitionTechnologyImport() <em>Ttype Definition Technology Import</em>}' reference.
@@ -198,6 +219,27 @@ public class MappedComplexTypeImpl extends MinimalEObjectImpl.Container implemen
         t_sourceModelUri = newT_sourceModelUri;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, ServicePackage.MAPPED_COMPLEX_TYPE__TSOURCE_MODEL_URI, oldT_sourceModelUri, t_sourceModelUri));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getT_mappingModelUri() {
+        return t_mappingModelUri;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setT_mappingModelUri(String newT_mappingModelUri) {
+        String oldT_mappingModelUri = t_mappingModelUri;
+        t_mappingModelUri = newT_mappingModelUri;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ServicePackage.MAPPED_COMPLEX_TYPE__TMAPPING_MODEL_URI, oldT_mappingModelUri, t_mappingModelUri));
     }
 
     /**
@@ -634,6 +676,8 @@ public class MappedComplexTypeImpl extends MinimalEObjectImpl.Container implemen
         switch (featureID) {
             case ServicePackage.MAPPED_COMPLEX_TYPE__TSOURCE_MODEL_URI:
                 return getT_sourceModelUri();
+            case ServicePackage.MAPPED_COMPLEX_TYPE__TMAPPING_MODEL_URI:
+                return getT_mappingModelUri();
             case ServicePackage.MAPPED_COMPLEX_TYPE__TTYPE_DEFINITION_TECHNOLOGY_IMPORT:
                 if (resolve) return getT_typeDefinitionTechnologyImport();
                 return basicGetT_typeDefinitionTechnologyImport();
@@ -668,6 +712,9 @@ public class MappedComplexTypeImpl extends MinimalEObjectImpl.Container implemen
         switch (featureID) {
             case ServicePackage.MAPPED_COMPLEX_TYPE__TSOURCE_MODEL_URI:
                 setT_sourceModelUri((String)newValue);
+                return;
+            case ServicePackage.MAPPED_COMPLEX_TYPE__TMAPPING_MODEL_URI:
+                setT_mappingModelUri((String)newValue);
                 return;
             case ServicePackage.MAPPED_COMPLEX_TYPE__TTYPE_DEFINITION_TECHNOLOGY_IMPORT:
                 setT_typeDefinitionTechnologyImport((Import)newValue);
@@ -712,6 +759,9 @@ public class MappedComplexTypeImpl extends MinimalEObjectImpl.Container implemen
             case ServicePackage.MAPPED_COMPLEX_TYPE__TSOURCE_MODEL_URI:
                 setT_sourceModelUri(TSOURCE_MODEL_URI_EDEFAULT);
                 return;
+            case ServicePackage.MAPPED_COMPLEX_TYPE__TMAPPING_MODEL_URI:
+                setT_mappingModelUri(TMAPPING_MODEL_URI_EDEFAULT);
+                return;
             case ServicePackage.MAPPED_COMPLEX_TYPE__TTYPE_DEFINITION_TECHNOLOGY_IMPORT:
                 setT_typeDefinitionTechnologyImport((Import)null);
                 return;
@@ -750,6 +800,8 @@ public class MappedComplexTypeImpl extends MinimalEObjectImpl.Container implemen
         switch (featureID) {
             case ServicePackage.MAPPED_COMPLEX_TYPE__TSOURCE_MODEL_URI:
                 return TSOURCE_MODEL_URI_EDEFAULT == null ? t_sourceModelUri != null : !TSOURCE_MODEL_URI_EDEFAULT.equals(t_sourceModelUri);
+            case ServicePackage.MAPPED_COMPLEX_TYPE__TMAPPING_MODEL_URI:
+                return TMAPPING_MODEL_URI_EDEFAULT == null ? t_mappingModelUri != null : !TMAPPING_MODEL_URI_EDEFAULT.equals(t_mappingModelUri);
             case ServicePackage.MAPPED_COMPLEX_TYPE__TTYPE_DEFINITION_TECHNOLOGY_IMPORT:
                 return t_typeDefinitionTechnologyImport != null;
             case ServicePackage.MAPPED_COMPLEX_TYPE__TTYPE_DEFINITION_TECHNOLOGY:
@@ -804,6 +856,8 @@ public class MappedComplexTypeImpl extends MinimalEObjectImpl.Container implemen
         StringBuilder result = new StringBuilder(super.toString());
         result.append(" (t_sourceModelUri: ");
         result.append(t_sourceModelUri);
+        result.append(", t_mappingModelUri: ");
+        result.append(t_mappingModelUri);
         result.append(')');
         return result.toString();
     }

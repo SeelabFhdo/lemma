@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link de.fhdo.lemma.service.intermediate.IntermediateMicroservice#getSourceModelUri <em>Source Model Uri</em>}</li>
+ *   <li>{@link de.fhdo.lemma.service.intermediate.IntermediateMicroservice#getSourceMappingModelUri <em>Source Mapping Model Uri</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.intermediate.IntermediateMicroservice#getName <em>Name</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.intermediate.IntermediateMicroservice#getVersion <em>Version</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.intermediate.IntermediateMicroservice#getQualifiedName <em>Qualified Name</em>}</li>
@@ -66,6 +67,28 @@ public interface IntermediateMicroservice extends EObject {
      * @generated
      */
     void setSourceModelUri(String value);
+
+    /**
+     * Returns the value of the '<em><b>Source Mapping Model Uri</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Source Mapping Model Uri</em>' attribute.
+     * @see #setSourceMappingModelUri(String)
+     * @see de.fhdo.lemma.service.intermediate.IntermediatePackage#getIntermediateMicroservice_SourceMappingModelUri()
+     * @model unique="false"
+     * @generated
+     */
+    String getSourceMappingModelUri();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.service.intermediate.IntermediateMicroservice#getSourceMappingModelUri <em>Source Mapping Model Uri</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Source Mapping Model Uri</em>' attribute.
+     * @see #getSourceMappingModelUri()
+     * @generated
+     */
+    void setSourceMappingModelUri(String value);
 
     /**
      * Returns the value of the '<em><b>Name</b></em>' attribute.

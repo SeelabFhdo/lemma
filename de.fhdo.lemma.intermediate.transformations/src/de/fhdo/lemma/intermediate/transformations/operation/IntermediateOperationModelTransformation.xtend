@@ -66,7 +66,7 @@ class IntermediateOperationModelTransformation
     override prepareInputModel(TransformationModelDescription modelDescription, EObject modelRoot) {
         val operationModel = modelRoot as OperationModel
 
-        // Set source model URI.
+        // Set source model URI
         operationModel.t_modelUri = LemmaUtils.convertToFileUri(absoluteInputModelFilePath)
 
         // Convert import URIs to absolute URIs

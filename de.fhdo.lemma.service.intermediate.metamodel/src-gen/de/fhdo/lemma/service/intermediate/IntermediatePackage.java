@@ -131,13 +131,22 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_MICROSERVICE__SOURCE_MODEL_URI = 0;
 
     /**
+     * The feature id for the '<em><b>Source Mapping Model Uri</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_MICROSERVICE__SOURCE_MAPPING_MODEL_URI = 1;
+
+    /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MICROSERVICE__NAME = 1;
+    int INTERMEDIATE_MICROSERVICE__NAME = 2;
 
     /**
      * The feature id for the '<em><b>Version</b></em>' attribute.
@@ -146,7 +155,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MICROSERVICE__VERSION = 2;
+    int INTERMEDIATE_MICROSERVICE__VERSION = 3;
 
     /**
      * The feature id for the '<em><b>Qualified Name</b></em>' attribute.
@@ -155,7 +164,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MICROSERVICE__QUALIFIED_NAME = 3;
+    int INTERMEDIATE_MICROSERVICE__QUALIFIED_NAME = 4;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -164,7 +173,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MICROSERVICE__TYPE = 4;
+    int INTERMEDIATE_MICROSERVICE__TYPE = 5;
 
     /**
      * The feature id for the '<em><b>Visibility</b></em>' attribute.
@@ -173,7 +182,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MICROSERVICE__VISIBILITY = 5;
+    int INTERMEDIATE_MICROSERVICE__VISIBILITY = 6;
 
     /**
      * The feature id for the '<em><b>Effectively Implemented</b></em>' attribute.
@@ -182,7 +191,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MICROSERVICE__EFFECTIVELY_IMPLEMENTED = 6;
+    int INTERMEDIATE_MICROSERVICE__EFFECTIVELY_IMPLEMENTED = 7;
 
     /**
      * The feature id for the '<em><b>Technologies</b></em>' containment reference list.
@@ -191,7 +200,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MICROSERVICE__TECHNOLOGIES = 7;
+    int INTERMEDIATE_MICROSERVICE__TECHNOLOGIES = 8;
 
     /**
      * The feature id for the '<em><b>Endpoints</b></em>' containment reference list.
@@ -200,7 +209,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MICROSERVICE__ENDPOINTS = 8;
+    int INTERMEDIATE_MICROSERVICE__ENDPOINTS = 9;
 
     /**
      * The feature id for the '<em><b>Protocols</b></em>' containment reference list.
@@ -209,7 +218,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MICROSERVICE__PROTOCOLS = 9;
+    int INTERMEDIATE_MICROSERVICE__PROTOCOLS = 10;
 
     /**
      * The feature id for the '<em><b>Required Microservices</b></em>' containment reference list.
@@ -218,7 +227,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MICROSERVICE__REQUIRED_MICROSERVICES = 10;
+    int INTERMEDIATE_MICROSERVICE__REQUIRED_MICROSERVICES = 11;
 
     /**
      * The feature id for the '<em><b>Required Interfaces</b></em>' containment reference list.
@@ -227,7 +236,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MICROSERVICE__REQUIRED_INTERFACES = 11;
+    int INTERMEDIATE_MICROSERVICE__REQUIRED_INTERFACES = 12;
 
     /**
      * The feature id for the '<em><b>Required Operations</b></em>' containment reference list.
@@ -236,7 +245,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MICROSERVICE__REQUIRED_OPERATIONS = 12;
+    int INTERMEDIATE_MICROSERVICE__REQUIRED_OPERATIONS = 13;
 
     /**
      * The feature id for the '<em><b>Interfaces</b></em>' containment reference list.
@@ -245,7 +254,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MICROSERVICE__INTERFACES = 13;
+    int INTERMEDIATE_MICROSERVICE__INTERFACES = 14;
 
     /**
      * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
@@ -254,7 +263,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MICROSERVICE__ASPECTS = 14;
+    int INTERMEDIATE_MICROSERVICE__ASPECTS = 15;
 
     /**
      * The feature id for the '<em><b>Service Model</b></em>' container reference.
@@ -263,7 +272,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MICROSERVICE__SERVICE_MODEL = 15;
+    int INTERMEDIATE_MICROSERVICE__SERVICE_MODEL = 16;
 
     /**
      * The number of structural features of the '<em>Microservice</em>' class.
@@ -272,7 +281,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_MICROSERVICE_FEATURE_COUNT = 16;
+    int INTERMEDIATE_MICROSERVICE_FEATURE_COUNT = 17;
 
     /**
      * The number of operations of the '<em>Microservice</em>' class.
@@ -1503,6 +1512,17 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      */
     EAttribute getIntermediateMicroservice_SourceModelUri();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.lemma.service.intermediate.IntermediateMicroservice#getSourceMappingModelUri <em>Source Mapping Model Uri</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Source Mapping Model Uri</em>'.
+     * @see de.fhdo.lemma.service.intermediate.IntermediateMicroservice#getSourceMappingModelUri()
+     * @see #getIntermediateMicroservice()
+     * @generated
+     */
+    EAttribute getIntermediateMicroservice_SourceMappingModelUri();
 
     /**
      * Returns the meta object for the attribute '{@link de.fhdo.lemma.service.intermediate.IntermediateMicroservice#getName <em>Name</em>}'.
@@ -2841,6 +2861,14 @@ public interface IntermediatePackage extends EPackage {
          * @generated
          */
         EAttribute INTERMEDIATE_MICROSERVICE__SOURCE_MODEL_URI = eINSTANCE.getIntermediateMicroservice_SourceModelUri();
+
+        /**
+         * The meta object literal for the '<em><b>Source Mapping Model Uri</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERMEDIATE_MICROSERVICE__SOURCE_MAPPING_MODEL_URI = eINSTANCE.getIntermediateMicroservice_SourceMappingModelUri();
 
         /**
          * The meta object literal for the '<em><b>Name</b></em>' attribute feature.

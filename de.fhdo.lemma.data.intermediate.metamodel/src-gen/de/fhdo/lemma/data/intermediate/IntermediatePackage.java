@@ -598,13 +598,22 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_COMPLEX_TYPE__DATA_FIELD = INTERMEDIATE_TYPE__DATA_FIELD;
 
     /**
+     * The feature id for the '<em><b>Source Mapping Model Uri</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_COMPLEX_TYPE__SOURCE_MAPPING_MODEL_URI = INTERMEDIATE_TYPE_FEATURE_COUNT + 0;
+
+    /**
      * The feature id for the '<em><b>Qualified Name</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_COMPLEX_TYPE__QUALIFIED_NAME = INTERMEDIATE_TYPE_FEATURE_COUNT + 0;
+    int INTERMEDIATE_COMPLEX_TYPE__QUALIFIED_NAME = INTERMEDIATE_TYPE_FEATURE_COUNT + 1;
 
     /**
      * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
@@ -613,7 +622,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_COMPLEX_TYPE__ASPECTS = INTERMEDIATE_TYPE_FEATURE_COUNT + 1;
+    int INTERMEDIATE_COMPLEX_TYPE__ASPECTS = INTERMEDIATE_TYPE_FEATURE_COUNT + 2;
 
     /**
      * The feature id for the '<em><b>Data Model</b></em>' container reference.
@@ -622,7 +631,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_COMPLEX_TYPE__DATA_MODEL = INTERMEDIATE_TYPE_FEATURE_COUNT + 2;
+    int INTERMEDIATE_COMPLEX_TYPE__DATA_MODEL = INTERMEDIATE_TYPE_FEATURE_COUNT + 3;
 
     /**
      * The feature id for the '<em><b>Version</b></em>' container reference.
@@ -631,7 +640,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_COMPLEX_TYPE__VERSION = INTERMEDIATE_TYPE_FEATURE_COUNT + 3;
+    int INTERMEDIATE_COMPLEX_TYPE__VERSION = INTERMEDIATE_TYPE_FEATURE_COUNT + 4;
 
     /**
      * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -640,7 +649,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_COMPLEX_TYPE__CONTEXT = INTERMEDIATE_TYPE_FEATURE_COUNT + 4;
+    int INTERMEDIATE_COMPLEX_TYPE__CONTEXT = INTERMEDIATE_TYPE_FEATURE_COUNT + 5;
 
     /**
      * The number of structural features of the '<em>Complex Type</em>' class.
@@ -649,7 +658,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_COMPLEX_TYPE_FEATURE_COUNT = INTERMEDIATE_TYPE_FEATURE_COUNT + 5;
+    int INTERMEDIATE_COMPLEX_TYPE_FEATURE_COUNT = INTERMEDIATE_TYPE_FEATURE_COUNT + 6;
 
     /**
      * The number of operations of the '<em>Complex Type</em>' class.
@@ -723,6 +732,15 @@ public interface IntermediatePackage extends EPackage {
      * @ordered
      */
     int INTERMEDIATE_IMPORTED_COMPLEX_TYPE__DATA_FIELD = INTERMEDIATE_COMPLEX_TYPE__DATA_FIELD;
+
+    /**
+     * The feature id for the '<em><b>Source Mapping Model Uri</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_IMPORTED_COMPLEX_TYPE__SOURCE_MAPPING_MODEL_URI = INTERMEDIATE_COMPLEX_TYPE__SOURCE_MAPPING_MODEL_URI;
 
     /**
      * The feature id for the '<em><b>Qualified Name</b></em>' attribute.
@@ -959,6 +977,15 @@ public interface IntermediatePackage extends EPackage {
      * @ordered
      */
     int INTERMEDIATE_DATA_STRUCTURE__DATA_FIELD = INTERMEDIATE_COMPLEX_TYPE__DATA_FIELD;
+
+    /**
+     * The feature id for the '<em><b>Source Mapping Model Uri</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_DATA_STRUCTURE__SOURCE_MAPPING_MODEL_URI = INTERMEDIATE_COMPLEX_TYPE__SOURCE_MAPPING_MODEL_URI;
 
     /**
      * The feature id for the '<em><b>Qualified Name</b></em>' attribute.
@@ -1379,6 +1406,15 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_COLLECTION_TYPE__DATA_FIELD = INTERMEDIATE_COMPLEX_TYPE__DATA_FIELD;
 
     /**
+     * The feature id for the '<em><b>Source Mapping Model Uri</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_COLLECTION_TYPE__SOURCE_MAPPING_MODEL_URI = INTERMEDIATE_COMPLEX_TYPE__SOURCE_MAPPING_MODEL_URI;
+
+    /**
      * The feature id for the '<em><b>Qualified Name</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1694,6 +1730,15 @@ public interface IntermediatePackage extends EPackage {
      * @ordered
      */
     int INTERMEDIATE_ENUMERATION__DATA_FIELD = INTERMEDIATE_COMPLEX_TYPE__DATA_FIELD;
+
+    /**
+     * The feature id for the '<em><b>Source Mapping Model Uri</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_ENUMERATION__SOURCE_MAPPING_MODEL_URI = INTERMEDIATE_COMPLEX_TYPE__SOURCE_MAPPING_MODEL_URI;
 
     /**
      * The feature id for the '<em><b>Qualified Name</b></em>' attribute.
@@ -2521,6 +2566,17 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      */
     EClass getIntermediateComplexType();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.fhdo.lemma.data.intermediate.IntermediateComplexType#getSourceMappingModelUri <em>Source Mapping Model Uri</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Source Mapping Model Uri</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateComplexType#getSourceMappingModelUri()
+     * @see #getIntermediateComplexType()
+     * @generated
+     */
+    EAttribute getIntermediateComplexType_SourceMappingModelUri();
 
     /**
      * Returns the meta object for the attribute '{@link de.fhdo.lemma.data.intermediate.IntermediateComplexType#getQualifiedName <em>Qualified Name</em>}'.
@@ -3833,6 +3889,14 @@ public interface IntermediatePackage extends EPackage {
          * @generated
          */
         EClass INTERMEDIATE_COMPLEX_TYPE = eINSTANCE.getIntermediateComplexType();
+
+        /**
+         * The meta object literal for the '<em><b>Source Mapping Model Uri</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERMEDIATE_COMPLEX_TYPE__SOURCE_MAPPING_MODEL_URI = eINSTANCE.getIntermediateComplexType_SourceMappingModelUri();
 
         /**
          * The meta object literal for the '<em><b>Qualified Name</b></em>' attribute feature.

@@ -116,7 +116,6 @@ public class DataFieldAspectsImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getName() {
         return name;
     }
@@ -126,7 +125,6 @@ public class DataFieldAspectsImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -139,7 +137,6 @@ public class DataFieldAspectsImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getQualifiedName() {
         return qualifiedName;
     }
@@ -149,7 +146,6 @@ public class DataFieldAspectsImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setQualifiedName(String newQualifiedName) {
         String oldQualifiedName = qualifiedName;
         qualifiedName = newQualifiedName;
@@ -162,7 +158,6 @@ public class DataFieldAspectsImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<IntermediateImportedAspect> getAspects() {
         if (aspects == null) {
             aspects = new EObjectContainmentEList<IntermediateImportedAspect>(IntermediateImportedAspect.class, this, IntermediatePackage.DATA_FIELD_ASPECTS__ASPECTS);
@@ -175,7 +170,6 @@ public class DataFieldAspectsImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateParameter getParameter() {
         if (eContainerFeatureID() != IntermediatePackage.DATA_FIELD_ASPECTS__PARAMETER) return null;
         return (IntermediateParameter)eContainer();
@@ -206,7 +200,6 @@ public class DataFieldAspectsImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setParameter(IntermediateParameter newParameter) {
         if (newParameter != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.DATA_FIELD_ASPECTS__PARAMETER && newParameter != null)) {
             if (EcoreUtil.isAncestor(this, newParameter))

@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.fhdo.lemma.technology.mapping.TechnologyMapping#getT_modelUri <em>Tmodel Uri</em>}</li>
  *   <li>{@link de.fhdo.lemma.technology.mapping.TechnologyMapping#getImports <em>Imports</em>}</li>
  *   <li>{@link de.fhdo.lemma.technology.mapping.TechnologyMapping#getTypeMappings <em>Type Mappings</em>}</li>
  *   <li>{@link de.fhdo.lemma.technology.mapping.TechnologyMapping#getServiceMappings <em>Service Mappings</em>}</li>
@@ -36,8 +37,7 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface TechnologyMapping extends EObject {
     /**
-     * Returns the value of the '<em><b>Imports</b></em>' containment reference list.
-     * The list contents are of type {@link de.fhdo.lemma.service.Import}.
+     * Returns the value of the '<em><b>Tmodel Uri</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
@@ -48,6 +48,29 @@ public interface TechnologyMapping extends EObject {
      *     (C2) A microservice may only be mapped once.
      *          Ensured by: DSL validator.
      * <!-- end-model-doc -->
+     * @return the value of the '<em>Tmodel Uri</em>' attribute.
+     * @see #setT_modelUri(String)
+     * @see de.fhdo.lemma.technology.mapping.MappingPackage#getTechnologyMapping_T_modelUri()
+     * @model unique="false"
+     * @generated
+     */
+    String getT_modelUri();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.technology.mapping.TechnologyMapping#getT_modelUri <em>Tmodel Uri</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Tmodel Uri</em>' attribute.
+     * @see #getT_modelUri()
+     * @generated
+     */
+    void setT_modelUri(String value);
+
+    /**
+     * Returns the value of the '<em><b>Imports</b></em>' containment reference list.
+     * The list contents are of type {@link de.fhdo.lemma.service.Import}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @return the value of the '<em>Imports</em>' containment reference list.
      * @see de.fhdo.lemma.technology.mapping.MappingPackage#getTechnologyMapping_Imports()
      * @model containment="true" required="true"

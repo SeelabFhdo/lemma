@@ -112,7 +112,6 @@ public class IntermediateProtocolSpecificationImpl extends MinimalEObjectImpl.Co
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getCommunicationType() {
         return communicationType;
     }
@@ -122,7 +121,6 @@ public class IntermediateProtocolSpecificationImpl extends MinimalEObjectImpl.Co
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setCommunicationType(String newCommunicationType) {
         String oldCommunicationType = communicationType;
         communicationType = newCommunicationType;
@@ -135,7 +133,6 @@ public class IntermediateProtocolSpecificationImpl extends MinimalEObjectImpl.Co
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getProtocol() {
         return protocol;
     }
@@ -145,7 +142,6 @@ public class IntermediateProtocolSpecificationImpl extends MinimalEObjectImpl.Co
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setProtocol(String newProtocol) {
         String oldProtocol = protocol;
         protocol = newProtocol;
@@ -158,7 +154,6 @@ public class IntermediateProtocolSpecificationImpl extends MinimalEObjectImpl.Co
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getDataFormat() {
         return dataFormat;
     }
@@ -168,7 +163,6 @@ public class IntermediateProtocolSpecificationImpl extends MinimalEObjectImpl.Co
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setDataFormat(String newDataFormat) {
         String oldDataFormat = dataFormat;
         dataFormat = newDataFormat;

@@ -35,6 +35,7 @@ import org.eclipse.xtext.xbase.lib.Pair;
  *   <li>{@link de.fhdo.lemma.service.Microservice#getVisibility <em>Visibility</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.Microservice#getT_defaultProtocols <em>Tdefault Protocols</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.Microservice#getT_sourceModelUri <em>Tsource Model Uri</em>}</li>
+ *   <li>{@link de.fhdo.lemma.service.Microservice#getT_mappingModelUri <em>Tmapping Model Uri</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.Microservice#getTechnologyReferences <em>Technology References</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.Microservice#getT_typeDefinitionTechnologyImport <em>Ttype Definition Technology Import</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.Microservice#getT_typeDefinitionTechnology <em>Ttype Definition Technology</em>}</li>
@@ -230,6 +231,28 @@ public interface Microservice extends EObject {
      * @generated
      */
     void setT_sourceModelUri(String value);
+
+    /**
+     * Returns the value of the '<em><b>Tmapping Model Uri</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Tmapping Model Uri</em>' attribute.
+     * @see #setT_mappingModelUri(String)
+     * @see de.fhdo.lemma.service.ServicePackage#getMicroservice_T_mappingModelUri()
+     * @model unique="false"
+     * @generated
+     */
+    String getT_mappingModelUri();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.service.Microservice#getT_mappingModelUri <em>Tmapping Model Uri</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Tmapping Model Uri</em>' attribute.
+     * @see #getT_mappingModelUri()
+     * @generated
+     */
+    void setT_mappingModelUri(String value);
 
     /**
      * Returns the value of the '<em><b>Technology References</b></em>' containment reference list.

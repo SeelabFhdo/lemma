@@ -86,6 +86,7 @@ import org.eclipse.xtext.xbase.lib.Pair;
  *   <li>{@link de.fhdo.lemma.service.impl.MicroserviceImpl#getVisibility <em>Visibility</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.impl.MicroserviceImpl#getT_defaultProtocols <em>Tdefault Protocols</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.impl.MicroserviceImpl#getT_sourceModelUri <em>Tsource Model Uri</em>}</li>
+ *   <li>{@link de.fhdo.lemma.service.impl.MicroserviceImpl#getT_mappingModelUri <em>Tmapping Model Uri</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.impl.MicroserviceImpl#getTechnologyReferences <em>Technology References</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.impl.MicroserviceImpl#getT_typeDefinitionTechnologyImport <em>Ttype Definition Technology Import</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.impl.MicroserviceImpl#getT_typeDefinitionTechnology <em>Ttype Definition Technology</em>}</li>
@@ -214,6 +215,26 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
      * @ordered
      */
     protected String t_sourceModelUri = TSOURCE_MODEL_URI_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getT_mappingModelUri() <em>Tmapping Model Uri</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getT_mappingModelUri()
+     * @generated
+     * @ordered
+     */
+    protected static final String TMAPPING_MODEL_URI_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getT_mappingModelUri() <em>Tmapping Model Uri</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getT_mappingModelUri()
+     * @generated
+     * @ordered
+     */
+    protected String t_mappingModelUri = TMAPPING_MODEL_URI_EDEFAULT;
 
     /**
      * The cached value of the '{@link #getTechnologyReferences() <em>Technology References</em>}' containment reference list.
@@ -488,6 +509,27 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
         t_sourceModelUri = newT_sourceModelUri;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, ServicePackage.MICROSERVICE__TSOURCE_MODEL_URI, oldT_sourceModelUri, t_sourceModelUri));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getT_mappingModelUri() {
+        return t_mappingModelUri;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setT_mappingModelUri(String newT_mappingModelUri) {
+        String oldT_mappingModelUri = t_mappingModelUri;
+        t_mappingModelUri = newT_mappingModelUri;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ServicePackage.MICROSERVICE__TMAPPING_MODEL_URI, oldT_mappingModelUri, t_mappingModelUri));
     }
 
     /**
@@ -1279,6 +1321,8 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
                 return getT_defaultProtocols();
             case ServicePackage.MICROSERVICE__TSOURCE_MODEL_URI:
                 return getT_sourceModelUri();
+            case ServicePackage.MICROSERVICE__TMAPPING_MODEL_URI:
+                return getT_mappingModelUri();
             case ServicePackage.MICROSERVICE__TECHNOLOGY_REFERENCES:
                 return getTechnologyReferences();
             case ServicePackage.MICROSERVICE__TTYPE_DEFINITION_TECHNOLOGY_IMPORT:
@@ -1340,6 +1384,9 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
                 return;
             case ServicePackage.MICROSERVICE__TSOURCE_MODEL_URI:
                 setT_sourceModelUri((String)newValue);
+                return;
+            case ServicePackage.MICROSERVICE__TMAPPING_MODEL_URI:
+                setT_mappingModelUri((String)newValue);
                 return;
             case ServicePackage.MICROSERVICE__TECHNOLOGY_REFERENCES:
                 getTechnologyReferences().clear();
@@ -1412,6 +1459,9 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
             case ServicePackage.MICROSERVICE__TSOURCE_MODEL_URI:
                 setT_sourceModelUri(TSOURCE_MODEL_URI_EDEFAULT);
                 return;
+            case ServicePackage.MICROSERVICE__TMAPPING_MODEL_URI:
+                setT_mappingModelUri(TMAPPING_MODEL_URI_EDEFAULT);
+                return;
             case ServicePackage.MICROSERVICE__TECHNOLOGY_REFERENCES:
                 getTechnologyReferences().clear();
                 return;
@@ -1469,6 +1519,8 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
                 return t_defaultProtocols != null;
             case ServicePackage.MICROSERVICE__TSOURCE_MODEL_URI:
                 return TSOURCE_MODEL_URI_EDEFAULT == null ? t_sourceModelUri != null : !TSOURCE_MODEL_URI_EDEFAULT.equals(t_sourceModelUri);
+            case ServicePackage.MICROSERVICE__TMAPPING_MODEL_URI:
+                return TMAPPING_MODEL_URI_EDEFAULT == null ? t_mappingModelUri != null : !TMAPPING_MODEL_URI_EDEFAULT.equals(t_mappingModelUri);
             case ServicePackage.MICROSERVICE__TECHNOLOGY_REFERENCES:
                 return technologyReferences != null && !technologyReferences.isEmpty();
             case ServicePackage.MICROSERVICE__TTYPE_DEFINITION_TECHNOLOGY_IMPORT:
@@ -1565,6 +1617,8 @@ public class MicroserviceImpl extends MinimalEObjectImpl.Container implements Mi
         result.append(t_defaultProtocols);
         result.append(", t_sourceModelUri: ");
         result.append(t_sourceModelUri);
+        result.append(", t_mappingModelUri: ");
+        result.append(t_mappingModelUri);
         result.append(')');
         return result.toString();
     }

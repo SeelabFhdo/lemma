@@ -18,6 +18,7 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateComplexType#getSourceMappingModelUri <em>Source Mapping Model Uri</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateComplexType#getQualifiedName <em>Qualified Name</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateComplexType#getAspects <em>Aspects</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateComplexType#getDataModel <em>Data Model</em>}</li>
@@ -30,6 +31,28 @@ import org.eclipse.emf.common.util.EList;
  * @generated
  */
 public interface IntermediateComplexType extends IntermediateType {
+    /**
+     * Returns the value of the '<em><b>Source Mapping Model Uri</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Source Mapping Model Uri</em>' attribute.
+     * @see #setSourceMappingModelUri(String)
+     * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateComplexType_SourceMappingModelUri()
+     * @model unique="false"
+     * @generated
+     */
+    String getSourceMappingModelUri();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.data.intermediate.IntermediateComplexType#getSourceMappingModelUri <em>Source Mapping Model Uri</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Source Mapping Model Uri</em>' attribute.
+     * @see #getSourceMappingModelUri()
+     * @generated
+     */
+    void setSourceMappingModelUri(String value);
+
     /**
      * Returns the value of the '<em><b>Qualified Name</b></em>' attribute.
      * <!-- begin-user-doc -->
