@@ -20,7 +20,7 @@ class Profiletype(Enum):
     MTLSDEV = "mtlsdev"
 
 
-# todo check path for windows
+# todo check path for windows os
 def get_absolute_path(path: str) -> str:
     if path.startswith("~"):
         return os.path.expanduser(path)
@@ -28,10 +28,8 @@ def get_absolute_path(path: str) -> str:
 
 
 def get_sys_env_var(variable: str) -> str:
-    print("xxx: " + variable)
     if variable.find("${") > -1:
         var = variable[variable.find("${") + 2:variable.find("}")]
-        print("yyy:" + var)
         env = os.getenv(var)
         if env:
             return str(env) + variable[variable.find("}") + 1:]
@@ -61,6 +59,25 @@ class CertificateConfigFile:
                 return tuple[1]
         return ""
 
+    def __post_init__(self):
+        if not self.is_ca_config_file():
+            app_name = self.get_config_parameter("server.ssl.applicationName")
+            self.privat_key_filename = f"{app_name}_private_key.pem"
+            self.certificate_filename = f"{app_name}_cert.pem"
+            self.certificate_signing_request_filename = f"csr-for-{app_name}"
+            self.key_store_filename = self.__get_filename_with_extension("server.ssl.key-store")
+            self.trust_store_filename = self.__get_filename_with_extension("server.ssl.trust-store")
+        else:
+            self.ca_key_filename = self.__get_filename_with_extension("server.ssl.ca-key.file")
+            self.ca_cert_filename = self.__get_filename_with_extension("server.ssl.ca-Cert.file")
+
+    def __get_filename_with_extension(self, config_param: str) -> str:
+        config_value = self.get_config_parameter(config_param)
+        if config_param.find("store") > -1:
+            return config_value if any(x in config_value for x in [".pfx", ".p12"]) else f"{config_value}.p12"
+        else:
+            return config_value if any(x in config_value for x in [".pem", ".crt"]) else f"{config_value}.pem"
+
 
 @dataclass
 class Profile:
@@ -76,9 +93,10 @@ def read_config_files(target_path: str):
     config_files: List[CertificateConfigFile] = list()
     for rootdir, _, files in os.walk(target_path):
         for file in files:
-            if ".var" in file:
+            if file.endswith(".var"):
+                print(file)
                 config_files.append(
-                    CertificateConfigFile(rootdir, file, __load_config_files(os.path.join(rootdir, file))))
+                    CertificateConfigFile(rootdir, file, __load_config_files(__check_file_path(rootdir, file))))
 
     profiles.append(create_profile(config_files, Profiletype.MTLS))
     profiles.append(create_profile(config_files, Profiletype.MTLSDEV))
@@ -116,6 +134,15 @@ def __split_config_param(param: str) -> tuple:
     return tuple(retval)
 
 
+def __check_file_path(path: str, filename: str) -> str:
+    """Checks if file path and file exist and returns the file path in the format of the operating system
+    otherwise throws on throw_configuration_exception"""
+    filepath = os.path.join(path, filename)
+    if not os.path.exists(filepath):
+        throw_configuration_exception("Directory or file not found! {file}".format(file=filepath))
+    return filepath
+
+
 def throw_configuration_exception(message: str):
     logging.error(message)
     raise ConfigurationException(message)
@@ -124,82 +151,100 @@ def throw_configuration_exception(message: str):
 # -----------------------------------------------------------------------------------------
 # OpenSSL functions
 def check_openssl_is_installed():
-    if which("openssl") is None:
-        throw_configuration_exception("This script requires an installation of openssl!")
+    __is_installed("openssl")
 
 
-def __check_password(password: str):
+def check_keytool_is_installed():
+    __is_installed("keytool")
+
+
+def __is_installed(command: str):
+    if which(command) is None:
+        throw_configuration_exception(
+            f"The command '{command}' was not found! This command is required to create the certificates!")
+
+
+def __check_password(password: str) -> str:
     password = get_sys_env_var(password)
     if password == "":
         throw_configuration_exception("The system variable is not set or the password is empty!")
     return password
 
 
-def generate_rsa_privat_key(path: str, filename: str, password: str, cipher: str = "aes256", bitlength: int = 4096):
+def generate_rsa_privat_key(path: str, private_key_filename: str, password: str, cipher: str = "aes256", bitlength: int = 4096):
     """Generating a private key for the application or certificate authority!"""
     password = __check_password(password)
+    filepath = __check_file_path(path, private_key_filename).replace(".var", "")
 
-    if not os.path.exists(os.path.join(path, filename)):
-        throw_configuration_exception("Directory or file not found! {file}".format(
-            file=os.path.join(path, filename)))
     run_cli_command(
-        "openssl genrsa -{cipher} -passout pass:\"{password}\" -out \"{path}/{filename}_key.pem\" {bitrate}".format(
-            cipher=cipher, password=password, path=path, filename=filename.replace(".var", ""), bitrate=bitlength))
+        f"openssl genrsa -{cipher} -passout pass:\"{password}\" -out \"{filepath}\" {bitlength}")
 
 
-def generate_public_key(path: str, filename: str, password: str, subject: str, cert_type: str = "x509",
+
+def generate_public_key(path: str, private_key_filename: str, password: str, subject: str, cert_type: str = "x509",
                         expiration_time_days: int = 365):
     """Generating a public key for the certificate authority"""
     password = __check_password(password)
+    private_key_file = os.path.join(path, private_key_filename)
     if subject == "":
         raise ConfigurationException("No subject was specified!")
 
     run_cli_command(
-        "openssl req -new -passin pass:{password} -key {path}/{filename}_key.pem -{cert_type}" +
-        " -days {expiration_time_days} -out {path}/{filename}_ca_cert.pem -subj \"/CN={subject}\"".format(
-            password=password, path=path, filename=filename.replace(".var", ""), cert_type=cert_type,
-            expiration_time_days=expiration_time_days, subject=subject))
+        f"openssl req -new -passin pass:{password} -key -{cert_type} -days {expiration_time_days} -out {private_key_file} -subj \"/CN={subject}\")
 
 
 def create_certificate_authority(config_file: CertificateConfigFile):
     """Generate a Certificat Authority by given CertificateConfigFile"""
     path = get_sys_env_var(config_file.rootDir)
-    filename = get_sys_env_var(config_file.filename)
+    private_key_filename = get_sys_env_var(config_file.ca_key_filename)
+    filepath = __check_file_path(path, filename)
     password = get_sys_env_var(config_file.get_config_parameter("server.ssl.server.ca-password"))
     cipher = get_sys_env_var(config_file.get_config_parameter("server.ssl.cipher"))
     bitrate = int(get_sys_env_var(config_file.get_config_parameter("server.ssl.bitLength")))
     subject = get_sys_env_var(config_file.get_config_parameter("server.ssl.subject"))
     cert_type = get_sys_env_var(config_file.get_config_parameter("server.ssl.certificateStandard"))
-    expiration_time_days = get_sys_env_var(config_file.get_config_parameter("server.ssl.key-store.validityInDays"))
+    expiration_time_days = int(get_sys_env_var(config_file.get_config_parameter("server.ssl.key-store.validityInDays")))
 
     # run commands for generating ca key file and cert file
-    generate_rsa_privat_key(path, filename, password, cipher, bitrate)
+    generate_rsa_privat_key(path, private_key_filename, password, cipher, bitrate)
     generate_public_key(path, filename, password, subject, cert_type, expiration_time_days)
 
 
 def create_client_keystore(profile: Profile):
     """Generate for each client a java keystore by given spring boot config profile"""
+    cipher = get_sys_env_var(profile.ca_config.get_config_parameter("server.ssl.cipher"))
 
     for client_config in profile.client_configs:
         path = get_sys_env_var(client_config.rootDir)
         filename = get_sys_env_var(client_config.filename)
         bitLength = get_sys_env_var(client_config.get_config_parameter("server.ssl.bitLength"))
-        cipher = get_sys_env_var(client_config.get_config_parameter("server.ssl.cipher"))
+
         # key_store = get_sys_env_var(client_config.get_config_parameter("server.ssl.key-store"))
         key_store_password = get_sys_env_var(client_config.get_config_parameter("server.ssl.key-store-password"))
+        subject = get_sys_env_var(client_config.get_config_parameter("server.ssl.subject"))
 
-        # Generating a private key for the application
         generate_rsa_privat_key(path, filename, key_store_password, cipher=cipher, bitlength=bitLength)
+        generate_certificate_signing_request(key_store_password, path, filename, subject)
 
-    # Generating a certificate-signing request for the application
-    command2 = "openssl req -passin pass:$PASS -new -key $appfolder/$1_key.pem -out $appfolder/csr-for-$1 -subj \"/CN=$1.$DOMAIN\""
     # Generating the application’s CA signed certificate
     command3 = "openssl x509 -req -passin pass:$PASS -days 365 -in $appfolder/csr-for-$1 -CA $KEYPATH/ca/ca_cert.pem -CAkey $KEYPATH/ca/ca_key.pem -set_serial 01 -out $appfolder/$1_cert.pem"
     # Creating a Java KeyStore with the application’s public/private keys
-    command4 = "openssl rsa -passin pass:$PASS -in $appfolder/$1_key.pem -out $appfolder/$1_key.pem "
-    command5 = "cat $appfolder/$1_key.pem $appfolder/$1_cert.pem >> $appfolder/$1_keys.pem"
-    command6 = "openssl pkcs12 -export -passout pass:$PASS -in $appfolder/$1_keys.pem -out $appfolder/keystore_$1.p12 -name $1"
-    command7 = "keytool -importkeystore -srcstorepass $PASS -srckeystore $appfolder/keystore_$1.p12 -srcstoretype pkcs12 -deststorepass $PASS -destkeystore $appfolder/$1.jks -deststoretype JKS"
+    command4bis7 = "openssl pkcs12 -export -passout pass:$PASS -passin pass:$PASS -in $appfolder/$1_cert.pem -inkey $appfolder/$1_key.pem -out $appfolder/keystore_$1_1.p12 -name $1"
+
+    # geht auch besser Creating a Java KeyStore with the application’s public/private keys
+    # command4 = "openssl rsa -passin pass:$PASS -in $appfolder/$1_key.pem -out $appfolder/$1_key.pem "
+    # command5 = "cat $appfolder/$1_key.pem $appfolder/$1_cert.pem >> $appfolder/$1_keys.pem"
+    # command6 = "openssl pkcs12 -export -passout pass:$PASS -in $appfolder/$1_keys.pem -out $appfolder/keystore_$1.p12 -name $1"
+    # command7 = "keytool -importkeystore -srcstorepass $PASS -srckeystore $appfolder/keystore_$1.p12 -srcstoretype pkcs12 -deststorepass $PASS -destkeystore $appfolder/$1.jks -deststoretype JKS"
+
+
+def generate_certificate_signing_request(password: str, path: str, filename: str, subject: str):
+    """Generating a certificate-signing request for the application"""
+    password = __check_password(password)
+
+    command = f"openssl req -passin pass:{password} -new -key {path}/{filename}_key.pem -out {path}/csr-for-{filename} -subj \"/CN={subject}\""
+
+    run_cli_command(command)
 
 
 def create_client_truststore(configFile: CertificateConfigFile):
@@ -207,17 +252,14 @@ def create_client_truststore(configFile: CertificateConfigFile):
     command1 = "keytool -import -file $KEYPATH/ca/ca_cert.pem -alias ca -noprompt -keystore $appfolder/truststore_$1.p12 -storepass $PASS"
 
 
-def run_cli_command(command: str) -> bool:
+def run_cli_command(command: str):
+    print("command: " + command)
     if command == "" or command is None:
         throw_configuration_exception("Command can't be empty!")
-    print(command)
     proc = subprocess.Popen(command, stderr=subprocess.PIPE, stdout=subprocess.PIPE, shell=True)
-    logging.info(command)
+    logging.info("Command {0}".format(command))
     for line in proc.stderr:
-        logging.error(line)
-    for line in proc.stdout:
-        logging.info(line)
-    return proc.returncode if True else False
+        logging.info(str(line))
 
 
 # -----------------------------------------------------------------------------------------
@@ -228,13 +270,19 @@ def generate_cetificates():
         print("Profile: {profile}".format(profile=profile.type.value))
         print("CA:")
         create_certificate_authority(profile.ca_config)
-        create_client_keystore(profile)
-        for caparam in profile.ca_config.configParameter:
-            print("CA Param: {key} = {value}".format(key=caparam[0], value=caparam[1]))
-        for client_config in profile.client_configs:
-            print("File: {filename}".format(filename=client_config.filename))
-            for param in client_config.configParameter:
-                print("Param: {key} = {value}".format(key=param[0], value=param[1]))
+        print("Clients:")
+        # create_client_keystore(profile)
+        # for caparam in profile.ca_config.configParameter:
+        #     print("CA Param: {key} = {value}".format(key=caparam[0], value=caparam[1]))
+        # for client_config in profile.client_configs:
+        #     print(f"File: {client_config.filename}")
+        #     print(f"privat_key_filename {client_config.privat_key_filename}")
+        #     print(f"key_store_filename {client_config.key_store_filename}")
+        #     print(f"trust_store_filename {client_config.trust_store_filename}")
+        #     print(f"certificate_signing_request_filename {client_config.certificate_signing_request_filename}")
+
+        #     for param in client_config.configParameter:
+        #         print("Param: {key} = {value}".format(key=param[0], value=param[1]))
 
         # print("\n")
         # if file.is_ca_config:
@@ -250,6 +298,7 @@ def main():
     print(target_path)
     logging.info('Started')
     check_openssl_is_installed()
+    check_keytool_is_installed()
     read_config_files(target_path)
     generate_cetificates()
     logging.info('Finished')
@@ -257,7 +306,8 @@ def main():
 
 if __name__ == '__main__':
     logging.basicConfig(filename=os.path.join(target_path, "generateCertificates.log"), level=logging.INFO,
-                        format='%(asctime)s %(message)s')
+                        format='%(asctime)s %(levelname)s %(message)s')
+
     try:
         main()
     except SystemExit as err:
