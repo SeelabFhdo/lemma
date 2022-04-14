@@ -78,7 +78,7 @@ private fun generateDefaultEmptyCertificationAuthority() {
     sortableProperties[springPropertyMapping("caDomain")] = "example.de"
     sortableProperties[springPropertyMapping("validityInDays")] = 365
     sortableProperties[springPropertyMapping("bitLength")] = 4096
-    sortableProperties[springPropertyMapping("certificateStandard")] = "X509"
+    sortableProperties[springPropertyMapping("certificateStandard")] = "x509"
     sortableProperties[springPropertyMapping("cipher")] = "aes256"
 
     MainContext.State.addPropertyFile(
