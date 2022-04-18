@@ -2,6 +2,7 @@ package de.fhdo.lemma.model_processing.code_generation.mtls_operation.validation
 
 import de.fhdo.lemma.model_processing.annotations.Before
 import de.fhdo.lemma.model_processing.annotations.SourceModelValidator
+import de.fhdo.lemma.model_processing.code_generation.java_base.simpleName
 import de.fhdo.lemma.model_processing.code_generation.mtls_operation.utils.hasAnyInvalidSystemEnvironmentVariable
 import de.fhdo.lemma.model_processing.code_generation.mtls_operation.utils.isCertificateAuthority
 import de.fhdo.lemma.model_processing.code_generation.mtls_operation.utils.isConformApplicationNames
@@ -58,10 +59,33 @@ class MTLSOperationModelSourceValidator : AbstractXtextModelValidator() {
     }
 
     /*
+    * Checks if the keystore or truststore files have a valid file extension.
+    * */
+    @Check
+    private fun checkStoreFileName(aspect: ImportedOperationAspect) {
+        aspect.values.forEachIndexed() { index, it ->
+            if (it.property.name in listOf("keyStoreRelativePath", "trustStoreRelativePath")) {
+                if (!it.value.stringValue.endsWith(".p12")) {
+                    val filetype = when (it.property.name) {
+                        "keyStoreRelativePath" -> "keystore"
+                        "trustStoreRelativePath" -> "truststore"
+                        else -> ""
+                    }
+                    error(
+                        "The Java ${filetype} file needs the file extension ${it.value.stringValue}.p12",
+                        OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__VALUES,
+                        index
+                    )
+                }
+            }
+        }
+    }
+
+    /*
     * It checks if the values of aspects do not contain a hyphen or a dot.
     * */
     @Check
-    private fun checkSystemEnvironmentVariabelChars(aspect: ImportedOperationAspect) {
+    private fun checkSystemEnvironmentVariableChars(aspect: ImportedOperationAspect) {
         aspect.values.forEachIndexed() { index, it ->
             if (hasAnyInvalidSystemEnvironmentVariable(it.value.stringValue))
                 error(
@@ -71,11 +95,12 @@ class MTLSOperationModelSourceValidator : AbstractXtextModelValidator() {
                 )
         }
     }
+
     /*
     * It checks if the values of service properties do not contain a hyphen or a dot.
     * */
     @Check
-    private fun checkSystemEnvironmentVariabelChars(infrastructureNode: InfrastructureNode) {
+    private fun checkSystemEnvironmentVariableChars(infrastructureNode: InfrastructureNode) {
         if (infrastructureNode.isCertificateAuthority()) {
             infrastructureNode.defaultServicePropertyValues.forEachIndexed { index, it ->
                 if (hasAnyInvalidSystemEnvironmentVariable(it.value.stringValue))

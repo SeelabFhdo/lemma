@@ -1,6 +1,7 @@
 import os
 import subprocess
 import logging
+import sys
 import traceback
 from dataclasses import dataclass
 from enum import Enum
@@ -9,18 +10,14 @@ from typing import List
 
 target_path = os.path.expanduser("~/masterthesis/lemmasecuritymodelgencode")
 
-# todo's
-# Funktion für defaultwerte (Tage gültig, Bitrate, X509-> x509)
-# Jede Config auf get_sys_env abfragen
-# target_path as commandline arg
-# subprocess return code?????
 
+# todo target_path as commandline arg
 
 class ConfigurationException(Exception):
     pass
 
 
-class Profiletype(Enum):
+class ProfileType(Enum):
     MTLS = "mtls"
     MTLSDEV = "mtlsdev"
 
@@ -32,13 +29,10 @@ def get_absolute_path(path: str) -> str:
     return path
 
 
-def get_sys_env_var(variable: str) -> str:
+def check_empty_sys_env_var(variable: str) -> str:
     if variable.find("${") > -1:
         var = variable[variable.find("${") + 2:variable.find("}")]
-        env = os.getenv(var)
-        if env:
-            return str(env) + variable[variable.find("}") + 1:]
-        else:
+        if not os.getenv(var):
             throw_configuration_exception("The system environment variable \"{var}\" is not defined!".format(var=var))
     return variable
 
@@ -53,10 +47,10 @@ class CertificateConfigFile:
     def is_ca_config_file(self) -> bool:
         return "CertificationAuthority" in self.filename
 
-    def get_profile(self) -> Profiletype:
-        if Profiletype.MTLSDEV.value in self.filename:
-            return Profiletype.MTLSDEV
-        return Profiletype.MTLS
+    def get_profile(self) -> ProfileType:
+        if ProfileType.MTLSDEV.value in self.filename:
+            return ProfileType.MTLSDEV
+        return ProfileType.MTLS
 
     def get_config_parameter(self, parameter: str, mandatory: bool = False) -> str:
         """Returns the value to a parameter. If the value is empty or not present,
@@ -69,9 +63,10 @@ class CertificateConfigFile:
                 return config_parameter[1]
 
     def __post_init__(self):
+        self.rootDir = os.path.join(self.rootDir, self.get_profile().name)
         if not self.is_ca_config_file():
             app_name = self.get_config_parameter("server.ssl.applicationName")
-            self.privat_key_filename = f"{app_name}_private_key.pem"
+            self.private_key_filename = f"{app_name}_private_key.pem"
             self.certificate_filename = f"{app_name}_cert.pem"
             self.certificate_signing_request_filename = f"csr-for-{app_name}"
             self.key_store_filename = self.__get_filename_with_extension("server.ssl.key-store")
@@ -90,7 +85,7 @@ class CertificateConfigFile:
 
 @dataclass
 class Profile:
-    type: Profiletype
+    type: ProfileType
     ca_config: CertificateConfigFile
     client_configs: List[CertificateConfigFile]
 
@@ -107,11 +102,11 @@ def read_config_files(target_path: str):
                 config_files.append(
                     CertificateConfigFile(rootdir, file, __load_config_files(__check_file_path(rootdir, file))))
 
-    profiles.append(create_profile(config_files, Profiletype.MTLS))
-    profiles.append(create_profile(config_files, Profiletype.MTLSDEV))
+    profiles.append(create_profile(config_files, ProfileType.MTLS))
+    profiles.append(create_profile(config_files, ProfileType.MTLSDEV))
 
 
-def create_profile(config_files: List[CertificateConfigFile], profile_type: Profiletype) -> Profile:
+def create_profile(config_files: List[CertificateConfigFile], profile_type: ProfileType) -> Profile:
     ca_config: CertificateConfigFile
     client_configs: List[CertificateConfigFile] = list()
     for config_file in config_files:
@@ -139,7 +134,8 @@ def __load_config_files(path) -> list:
 def __split_config_param(param: str) -> tuple:
     retval = param.replace("\n", "").split("=", 1)
     if retval[1].find("${") > -1:
-        run_cli_command("export {var}=geheim; ".format(var=retval[1][retval[1].find("${") + 2:retval[1].find("}")]))
+        print("export {var}=geheim; ".format(var=retval[1][retval[1].find("${") + 2:retval[1].find("}")]))
+        # run_cli_command("export {var}=geheim; ".format(var=retval[1][retval[1].find("${") + 2:retval[1].find("}")]))
     return tuple(retval)
 
 
@@ -174,36 +170,33 @@ def __is_installed(command: str):
 
 
 def __check_password(password: str) -> str:
-    password = get_sys_env_var(password)
+    password = check_empty_sys_env_var(password)
     if password == "":
         throw_configuration_exception("The system variable is not set or the password is empty!")
     return password
 
 
-def generate_public_key(path: str, private_key_filename: str, password: str, subject: str, cert_type: str = "x509",
-                        expiration_time_days: int = 365):
-    """Generating a public key for the certificate authority"""
-    password = __check_password(password)
-    private_key_file = os.path.join(path, private_key_filename)
-    if subject == "":
-        raise ConfigurationException("No subject was specified!")
-
-
 def create_certificate_authority(config_file: CertificateConfigFile):
     """Generate a certificate authority by given CertificateConfigFile"""
-    absolute_path = get_sys_env_var(config_file.rootDir)
+    absolute_path = check_empty_sys_env_var(config_file.rootDir)
     ca_key_filename = os.path.join(absolute_path, config_file.ca_key_filename)
     ca_cert_filename = os.path.join(absolute_path, config_file.ca_cert_filename)
-    ca_password = get_sys_env_var(config_file.get_config_parameter("server.ssl.server.ca-password", mandatory=True))
-    cipher = get_sys_env_var(config_file.get_config_parameter("server.ssl.cipher", mandatory=True))
-    bitLength = get_sys_env_var(config_file.get_config_parameter("server.ssl.bitLength", mandatory=True))
-    subject = get_sys_env_var(config_file.get_config_parameter("server.ssl.subject", mandatory=True))
-    cert_type = get_sys_env_var(config_file.get_config_parameter("server.ssl.certificateStandard", mandatory=True))
-    expiration_time_days = get_sys_env_var(config_file.get_config_parameter("server.ssl.key-store.validityInDays"))
+    ca_password = check_empty_sys_env_var(
+        config_file.get_config_parameter("server.ssl.server.ca-password", mandatory=True))
+    cipher = check_empty_sys_env_var(config_file.get_config_parameter("server.ssl.cipher", mandatory=True))
+    bit_length = check_empty_sys_env_var(config_file.get_config_parameter("server.ssl.bitLength", mandatory=True))
+    subject = check_empty_sys_env_var(config_file.get_config_parameter("server.ssl.subject", mandatory=True))
+    cert_type = check_empty_sys_env_var(
+        config_file.get_config_parameter("server.ssl.certificateStandard", mandatory=True))
+    expiration_time_days = check_empty_sys_env_var(
+        config_file.get_config_parameter("server.ssl.key-store.validityInDays"))
+
+    # Create profile directory
+    run_cli_command(f"mkdir -p {absolute_path}")
 
     # Generating a private key for the certificate authority
     run_cli_command(
-        f"openssl genrsa -{cipher} -passout pass:\"{ca_password}\" -out \"{ca_key_filename}\" {bitLength}")
+        f"openssl genrsa -{cipher} -passout pass:\"{ca_password}\" -out \"{ca_key_filename}\" {bit_length}")
     # Generating a certificat for the certificate authority
     run_cli_command(
         f"openssl req -new -passin pass:\"{ca_password}\" -key \"{ca_key_filename}\" -{cert_type} "
@@ -218,33 +211,37 @@ def create_client_keystore(profile: Profile):
     """Generate for each client a java keystore by given spring boot config profile"""
     create_certificate_authority(profile.ca_config)
 
-    ca_absolute_path = get_sys_env_var(profile.ca_config.rootDir)
-    cipher = get_sys_env_var(profile.ca_config.get_config_parameter("server.ssl.cipher"))
+    ca_absolute_path = check_empty_sys_env_var(profile.ca_config.rootDir)
+    cipher = check_empty_sys_env_var(profile.ca_config.get_config_parameter("server.ssl.cipher"))
     ca_key_file = os.path.join(ca_absolute_path, profile.ca_config.ca_key_filename)
     ca_cert_file = os.path.join(ca_absolute_path, profile.ca_config.ca_cert_filename)
     ca_name = profile.ca_config.get_config_parameter("server.ssl.ca-name", mandatory=True)
+    ca_password = profile.ca_config.get_config_parameter("server.ssl.server.ca-password", mandatory=True)
 
     for client_config in profile.client_configs:
-        absolute_path = get_sys_env_var(client_config.rootDir)
+        absolute_path = check_empty_sys_env_var(client_config.rootDir)
         csr_file = os.path.join(absolute_path, client_config.certificate_signing_request_filename)
         client_cert_file = os.path.join(absolute_path, client_config.certificate_filename)
-        client_key_file = os.path.join(absolute_path, client_config.privat_key_filename)
+        client_key_file = os.path.join(absolute_path, client_config.private_key_filename)
         client_keystore_file = os.path.join(absolute_path, client_config.key_store_filename)
         client_truststore_file = os.path.join(absolute_path, client_config.trust_store_filename)
         client_name = client_config.get_config_parameter("server.ssl.applicationName", mandatory=True)
 
-        bitLength = get_sys_env_var(client_config.get_config_parameter("server.ssl.bitLength"))
-        expiration_time_days = get_sys_env_var(
+        bit_length = check_empty_sys_env_var(client_config.get_config_parameter("server.ssl.bitLength"))
+        expiration_time_days = check_empty_sys_env_var(
             client_config.get_config_parameter("server.ssl.key-store.validityInDays", mandatory=True))
-        key_store_password = get_sys_env_var(
+        key_store_password = check_empty_sys_env_var(
             client_config.get_config_parameter("server.ssl.key-store-password", mandatory=True))
-        trust_store_password = get_sys_env_var(
+        trust_store_password = check_empty_sys_env_var(
             client_config.get_config_parameter("server.ssl.trust-store-password", mandatory=True))
-        subject = get_sys_env_var(client_config.get_config_parameter("server.ssl.subject", mandatory=True))
+        subject = check_empty_sys_env_var(client_config.get_config_parameter("server.ssl.subject", mandatory=True))
+
+        # Create profile directory
+        run_cli_command(f"mkdir -p {absolute_path}")
 
         # Generating a private key for the client
         run_cli_command(
-            f"openssl genrsa -{cipher} -passout pass:\"{key_store_password}\" -out \"{client_key_file}\" {bitLength}")
+            f"openssl genrsa -{cipher} -passout pass:\"{key_store_password}\" -out \"{client_key_file}\" {bit_length}")
 
         # Generating a certificate-signing request for the client
         run_cli_command(f"openssl req -passin pass:{key_store_password} -new -key {client_key_file} "
@@ -252,34 +249,28 @@ def create_client_keystore(profile: Profile):
 
         # # Generating the client's CA signed certificate
         run_cli_command(
-            f"openssl x509 -req -passin pass:{key_store_password} -days {expiration_time_days} -in {csr_file} "
+            f"openssl x509 -req -passin pass:{ca_password} -days {expiration_time_days} -in {csr_file} "
             f"-CA {ca_cert_file} -CAkey {ca_key_file} -set_serial 01 -out {client_cert_file}")
 
         # Creating a Java KeyStore with the clients’s public/private keys
         run_cli_command(
             f"openssl pkcs12 -export -passout pass:{key_store_password} -passin pass:{key_store_password} "
-            f"-in {client_cert_file} -inkey {client_cert_file} -out {client_keystore_file} -name {client_name}")
+            f"-in {client_cert_file} -inkey {client_key_file} -out {client_keystore_file} -name {client_name}")
 
-        # Creating a Java TrustStore with the ca’s certificate
+        # Remove truststore and creating a new Java TrustStore with the ca’s certificate
+        run_cli_command(f"rm -rf {client_truststore_file}")
         run_cli_command(
             f"keytool -import -file {ca_cert_file} -alias {ca_name} -noprompt -keystore {client_truststore_file} "
             f"-storepass {trust_store_password}")
-
-    # geht auch besser Creating a Java KeyStore with the application’s public/private keys
-    # command4 = "openssl rsa -passin pass:$PASS -in $appfolder/$1_key.pem -out $appfolder/$1_key.pem "
-    # command5 = "cat $appfolder/$1_key.pem $appfolder/$1_cert.pem >> $appfolder/$1_keys.pem"
-    # command6 = "openssl pkcs12 -export -passout pass:$PASS -in $appfolder/$1_keys.pem -out $appfolder/keystore_$1.p12 -name $1"
-    # command7 = "keytool -importkeystore -srcstorepass $PASS -srckeystore $appfolder/keystore_$1.p12 -srcstoretype pkcs12 -deststorepass $PASS -destkeystore $appfolder/$1.jks -deststoretype JKS"
 
 
 def run_cli_command(command: str):
     print("command: " + command)
     if command == "" or command is None:
         throw_configuration_exception("Command can't be empty!")
-    proc = subprocess.Popen(command, stderr=subprocess.PIPE, stdout=subprocess.PIPE, shell=True)
-    logging.info("Command {0}".format(command))
-    for line in proc.stderr:
-        logging.info(str(line))
+    proc = subprocess.run(command, shell=True)
+    if proc.returncode != 0:
+        throw_configuration_exception(f"Command has an error: {command}")
 
 
 # -----------------------------------------------------------------------------------------
