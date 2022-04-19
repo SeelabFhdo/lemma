@@ -1,4 +1,0 @@
-Manifest-Version: 1.0
-Main-Class: de.fhdo.software.architecture.reconstruction.framework.Softw
- areArchitectureReconstructionKt
-

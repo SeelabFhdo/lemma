@@ -20,6 +20,7 @@ de.fhdo.ddmm.ocl/
 out/
 de.fhdo.lemma*/build/
 code generators/de.fhdo.lemma*/build/
+reconstruction_plugins/de.fhdo.lemma.*/build/
 de.fhdo.lemma.live_validation/*/build/
 .idea/
 set_java_home.sh
