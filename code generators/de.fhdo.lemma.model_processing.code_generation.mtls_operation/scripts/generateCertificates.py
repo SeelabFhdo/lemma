@@ -1,6 +1,6 @@
 import os
 from subprocess import run
-import logging
+from logging import info, error
 import sys
 import traceback
 from dataclasses import dataclass
@@ -120,7 +120,7 @@ def create_profile(config_files: List[CertificateConfigFile], profile_type: Prof
 
 def __load_config_files(path) -> list:
     retval = list()
-    logging.info(f"Read config file: {path}")
+    info(f"Read config file: {path}")
     with open(path, 'r', encoding='utf-8') as infile:
         for line in infile:
             retval.append(__split_config_param(line))
@@ -129,12 +129,7 @@ def __load_config_files(path) -> list:
 
 
 def __split_config_param(param: str) -> tuple:
-    retval = param.replace("\n", "").split("=", 1)
-    if retval[1].find("${") > -1:
-        pass
-        # print("export {var}=geheim; ".format(var=retval[1][retval[1].find("${") + 2:retval[1].find("}")]))
-        # run_cli_command("export {var}=geheim; ".format(var=retval[1][retval[1].find("${") + 2:retval[1].find("}")]))
-    return tuple(retval)
+    return tuple(param.replace("\n", "").split("=", 1))
 
 
 def __check_file_path(path: str, filename: str = "") -> str:
@@ -149,7 +144,7 @@ def __check_file_path(path: str, filename: str = "") -> str:
 
 
 def throw_configuration_exception(message: str):
-    logging.error(message)
+    error(message)
     raise ConfigurationException(message)
 
 
@@ -168,7 +163,7 @@ def __is_installed(command: str):
         throw_configuration_exception(
             f"The command '{command}' was not found! This command is required to create the certificates!")
     else:
-        logging.info(f"The command '{command}' was found!")
+        info(f"The command '{command}' was found!")
 
 
 def __check_password(password: str) -> str:
@@ -271,9 +266,9 @@ def run_cli_command(command: str):
         throw_configuration_exception(f"Command has an error: {command}")
     else:
         if len(proc.stdout) > 0:
-            logging.info(proc.stdout.decode('utf-8'))
+            info(proc.stdout.decode('utf-8'))
         if len(proc.stderr) > 0:
-            logging.info(proc.stderr.decode('utf-8'))
+            info(proc.stderr.decode('utf-8'))
 
 
 # -----------------------------------------------------------------------------------------
@@ -281,7 +276,7 @@ def run_cli_command(command: str):
 
 def generate_cetificates():
     for profile in profiles:
-        logging.info(f"Generate Certificates for profile: {profile.type.value} ")
+        info(f"Generate Certificates for profile: {profile.type.value} ")
         create_client_keystore(profile)
 
 
@@ -296,23 +291,23 @@ def main(argv: list):
     target_path = __check_file_path(argv[1])
     logging.basicConfig(filename=os.path.join(target_path, "generateCertificates.log"), level=logging.INFO,
                         format='%(asctime)s %(levelname)s %(message)s')
-    logging.info('Started')
-    logging.info(f"Generated target sources folder: {target_path}")
+    info('Started')
+    info(f"Generated target sources folder: {target_path}")
     profile_types: list
     if len(argv) > 2:
-        if argv[2] in [ProfileType.MTLS.value, ProfileType.MTLSDEV.value]:
+        if str(argv[2]).lower() in [ProfileType.MTLS.value, ProfileType.MTLSDEV.value]:
             profile_types = [ProfileType[str(argv[2]).upper()]]
         else:
             throw_configuration_exception(f"Invalid argument: {argv[2]}")
     else:
         profile_types = [ProfileType.MTLS, ProfileType.MTLSDEV]
 
-    logging.info(f"Process the profiles: {', '.join(profile.value for profile in profile_types)}")
+    info(f"Process the profiles: {', '.join(profile.value for profile in profile_types)}")
     check_openssl_is_installed()
     check_keytool_is_installed()
     read_config_files(target_path, profile_types)
     generate_cetificates()
-    logging.info('Finished')
+    info('Finished')
 
 
 if __name__ == '__main__':
