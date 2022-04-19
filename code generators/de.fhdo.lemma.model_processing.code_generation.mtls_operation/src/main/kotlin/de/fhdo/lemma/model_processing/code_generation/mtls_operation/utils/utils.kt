@@ -1,6 +1,8 @@
 package de.fhdo.lemma.model_processing.code_generation.mtls_operation.utils
 
+import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
 import de.fhdo.lemma.model_processing.asFile
+import de.fhdo.lemma.model_processing.code_generation.java_base.qualifiedName
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.SortableProperties
 import de.fhdo.lemma.model_processing.code_generation.mtls_operation.modul_handler.MainContext
 import de.fhdo.lemma.operation.InfrastructureNode
@@ -32,15 +34,53 @@ internal fun IntermediateOperationNode.getNodeAspectsWithValues(aspectName: Stri
     val resultMap = mutableMapOf<String, String>()
 
     aspects.filter { it.name == aspectName }.forEach { aspect ->
-        aspect.properties.filter {
-            !it.defaultValue.isNullOrEmpty()
-        }.forEach { property ->
-            resultMap[springPropertyMapping(property.name)] = property.defaultValue
+        aspect.properties.forEach { property ->
+            when (property.name) {
+                "applicationName" -> {
+                    println(
+                        "${property.name} = ${if (!property.defaultValue.isNullOrEmpty()) property.defaultValue else "leer"}  ${
+                            aspect.propertyValues.filter { property.name == it.property.name }.apply {
+                                this.joinToString(", ")
+                            }
+                        }  "
+                    )
+                    resultMap[springPropertyMapping(property.name)] =
+                        if (!property.defaultValue.isNullOrEmpty()) property.defaultValue else "leer"
+                    aspect.propertyValues.filter { property.name == it.property.name }.forEach { propertyValue ->
+                        resultMap[springPropertyMapping(propertyValue.property.name)] = propertyValue.value
+                    }
+                }
+                "keyStoreFileName" -> {
+
+                }
+                "trustStoreFileName" -> {
+
+                }
+                else -> {
+                    resultMap[springPropertyMapping(property.name)] =
+                        if (!property.defaultValue.isNullOrEmpty()) property.defaultValue else ""
+                    aspect.propertyValues.filter { property.name == it.property.name }.forEach { propertyValue ->
+                        resultMap[springPropertyMapping(propertyValue.property.name)] = propertyValue.value
+                    }
+                }
+            }
+
+//            resultMap[springPropertyMapping(property.name)] = property.defaultValue
         }
-        aspect.propertyValues.forEach { propertyValue ->
-            resultMap[springPropertyMapping(propertyValue.property.name)] = propertyValue.value
-        }
+//        aspect.propertyValues.forEach { propertyValue ->
+//            resultMap[springPropertyMapping(propertyValue.property.name)] = propertyValue.value
+//        }
     }
+//    aspects.filter { it.name == aspectName }.forEach { aspect ->
+//        aspect.properties.filter {
+//            !it.defaultValue.isNullOrEmpty()
+//        }.forEach { property ->
+//            resultMap[springPropertyMapping(property.name)] = property.defaultValue
+//        }
+//        aspect.propertyValues.forEach { propertyValue ->
+//            resultMap[springPropertyMapping(propertyValue.property.name)] = propertyValue.value
+//        }
+//    }
     return resultMap
 }
 
@@ -81,6 +121,7 @@ fun isConformApplicationNames(applicationNames: String): Boolean {
         """(${nameChars}${equal}${nameChars})((,)(${nameChars}${equal}${nameChars}))*""".toRegex()
     )
 }
+
 fun isValidSystemEnvironmentVariable(environmentVariable: String) =
     environmentVariable.matches("[\$][{]([\\w_])+[}]".toRegex())
 
@@ -92,8 +133,6 @@ fun hasAnyInvalidSystemEnvironmentVariable(environmentVariable: String) =
         !matchResult.groupValues.any { isValidSystemEnvironmentVariable(it) }
     }
 
-
-
 fun parseApplicationNames(applicationNames: String): Map<String, String> {
     val retval = mutableMapOf<String, String>()
     if (!isConformApplicationNames(applicationNames))
@@ -104,3 +143,11 @@ fun parseApplicationNames(applicationNames: String): Map<String, String> {
     return retval
 }
 
+fun IntermediateImportedAspect.getAspectValueOrDefault(aspectName: String): String {
+    var retval = ""
+    this.propertyValues.find {
+        it.
+    }
+
+    retrun retval
+}
