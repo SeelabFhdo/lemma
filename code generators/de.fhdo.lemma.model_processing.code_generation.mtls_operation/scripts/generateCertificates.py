@@ -1,5 +1,5 @@
 import os
-import subprocess
+from subprocess import run
 import logging
 import sys
 import traceback
@@ -8,10 +8,6 @@ from enum import Enum
 from shutil import which
 from typing import List
 
-target_path = os.path.expanduser("~/masterthesis/lemmasecuritymodelgencode")
-
-
-# todo target_path as commandline arg
 
 class ConfigurationException(Exception):
     pass
@@ -93,17 +89,17 @@ class Profile:
 profiles: List[Profile] = list()
 
 
-def read_config_files(target_path: str):
+def read_config_files(target_path: str, profile_types: list):
     config_files: List[CertificateConfigFile] = list()
     for rootdir, _, files in os.walk(target_path):
         for file in files:
-            if file.endswith(".var"):
-                print(file)
-                config_files.append(
-                    CertificateConfigFile(rootdir, file, __load_config_files(__check_file_path(rootdir, file))))
+            for profile_type in profile_types:
+                if file.endswith(f"{profile_type.value}.var"):
+                    config_files.append(
+                        CertificateConfigFile(rootdir, file, __load_config_files(__check_file_path(rootdir, file))))
 
-    profiles.append(create_profile(config_files, ProfileType.MTLS))
-    profiles.append(create_profile(config_files, ProfileType.MTLSDEV))
+    for profile_type in profile_types:
+        profiles.append(create_profile(config_files, profile_type))
 
 
 def create_profile(config_files: List[CertificateConfigFile], profile_type: ProfileType) -> Profile:
@@ -124,6 +120,7 @@ def create_profile(config_files: List[CertificateConfigFile], profile_type: Prof
 
 def __load_config_files(path) -> list:
     retval = list()
+    logging.info(f"Read config file: {path}")
     with open(path, 'r', encoding='utf-8') as infile:
         for line in infile:
             retval.append(__split_config_param(line))
@@ -134,14 +131,17 @@ def __load_config_files(path) -> list:
 def __split_config_param(param: str) -> tuple:
     retval = param.replace("\n", "").split("=", 1)
     if retval[1].find("${") > -1:
-        print("export {var}=geheim; ".format(var=retval[1][retval[1].find("${") + 2:retval[1].find("}")]))
+        pass
+        # print("export {var}=geheim; ".format(var=retval[1][retval[1].find("${") + 2:retval[1].find("}")]))
         # run_cli_command("export {var}=geheim; ".format(var=retval[1][retval[1].find("${") + 2:retval[1].find("}")]))
     return tuple(retval)
 
 
-def __check_file_path(path: str, filename: str) -> str:
+def __check_file_path(path: str, filename: str = "") -> str:
     """Checks if file path and file exist and returns the file path in the format of the operating system
     otherwise throws on throw_configuration_exception"""
+    if path.startswith("~"):
+        path = os.path.expanduser(path)
     filepath = os.path.join(path, filename)
     if not os.path.exists(filepath):
         throw_configuration_exception("Directory or file not found! {file}".format(file=filepath))
@@ -167,6 +167,8 @@ def __is_installed(command: str):
     if which(command) is None:
         throw_configuration_exception(
             f"The command '{command}' was not found! This command is required to create the certificates!")
+    else:
+        logging.info(f"The command '{command}' was found!")
 
 
 def __check_password(password: str) -> str:
@@ -197,14 +199,11 @@ def create_certificate_authority(config_file: CertificateConfigFile):
     # Generating a private key for the certificate authority
     run_cli_command(
         f"openssl genrsa -{cipher} -passout pass:\"{ca_password}\" -out \"{ca_key_filename}\" {bit_length}")
+
     # Generating a certificat for the certificate authority
     run_cli_command(
         f"openssl req -new -passin pass:\"{ca_password}\" -key \"{ca_key_filename}\" -{cert_type} "
         f"-days {expiration_time_days} -out {ca_cert_filename} -subj \"/CN={subject}\"")
-
-    # run commands for generating ca key file and cert file
-    # generate_rsa_privat_key(path, private_key_filename, password, cipher, bitrate)
-    # generate_public_key(path, filename, password, subject, cert_type, expiration_time_days)
 
 
 def create_client_keystore(profile: Profile):
@@ -265,12 +264,16 @@ def create_client_keystore(profile: Profile):
 
 
 def run_cli_command(command: str):
-    print("command: " + command)
     if command == "" or command is None:
         throw_configuration_exception("Command can't be empty!")
-    proc = subprocess.run(command, shell=True)
+    proc = run(command, shell=True, capture_output=True)
     if proc.returncode != 0:
         throw_configuration_exception(f"Command has an error: {command}")
+    else:
+        if len(proc.stdout) > 0:
+            logging.info(proc.stdout.decode('utf-8'))
+        if len(proc.stderr) > 0:
+            logging.info(proc.stderr.decode('utf-8'))
 
 
 # -----------------------------------------------------------------------------------------
@@ -278,25 +281,46 @@ def run_cli_command(command: str):
 
 def generate_cetificates():
     for profile in profiles:
+        logging.info(f"Generate Certificates for profile: {profile.type.value} ")
         create_client_keystore(profile)
 
 
-def main():
-    print(target_path)
+def main(argv: list):
+    if len(argv) < 2:
+        print(
+            f"Missing command line argument: \n\t"
+            f"First argument: generated target sources folder\n\t"
+            f"Second optional argument: profile {ProfileType.MTLS.value} or {ProfileType.MTLSDEV.value}\n\t"
+            f"Default are both profiles")
+        sys.exit(1)
+    target_path = __check_file_path(argv[1])
+    logging.basicConfig(filename=os.path.join(target_path, "generateCertificates.log"), level=logging.INFO,
+                        format='%(asctime)s %(levelname)s %(message)s')
     logging.info('Started')
+    logging.info(f"Generated target sources folder: {target_path}")
+    profile_types: list
+    if len(argv) > 2:
+        if argv[2] in [ProfileType.MTLS.value, ProfileType.MTLSDEV.value]:
+            profile_types = [ProfileType[str(argv[2]).upper()]]
+        else:
+            throw_configuration_exception(f"Invalid argument: {argv[2]}")
+    else:
+        profile_types = [ProfileType.MTLS, ProfileType.MTLSDEV]
+
+    logging.info(f"Process the profiles: {', '.join(profile.value for profile in profile_types)}")
     check_openssl_is_installed()
     check_keytool_is_installed()
-    read_config_files(target_path)
+    read_config_files(target_path, profile_types)
     generate_cetificates()
     logging.info('Finished')
 
 
 if __name__ == '__main__':
-    logging.basicConfig(filename=os.path.join(target_path, "generateCertificates.log"), level=logging.INFO,
-                        format='%(asctime)s %(levelname)s %(message)s')
+    # todo remove when development is complete
+    sys.argv = ["name", "~/masterthesis/lemmasecuritymodelgencode"]
 
     try:
-        main()
+        main(sys.argv)
     except SystemExit as err:
         pass
     except ConfigurationException as err:  # catch *all* exceptions
