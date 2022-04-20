@@ -1,6 +1,5 @@
 package de.fhdo.lemma.analyzer.analyses
 
-import de.fhdo.lemma.analyzer.*
 import de.fhdo.lemma.analyzer.blankLine
 import de.fhdo.lemma.analyzer.item
 import de.fhdo.lemma.analyzer.itemText

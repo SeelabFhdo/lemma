@@ -3,13 +3,13 @@ package de.fhdo.lemma.analyzer.lib.analyzers
 import de.fhdo.lemma.analyzer.lib.AnalyzerI
 
 /**
- * Perform basic analyses on operation models.
+ * Perform basic analyses on service models.
  *
  * @author [Philip Wizenty](mailto:philip.wizenty@fh-dortmund.de)
  */
-interface AntiPatternAnalyzerI : AnalyzerI {
+interface MicroserviceNameAnalyzerI : AnalyzerI {
     /**
-     * Print the name of a container
+     * Print the name of a microservice
      */
-    fun findContainerName() : List<String>
+    fun findMicroserviceNames(): List<String>
 }
