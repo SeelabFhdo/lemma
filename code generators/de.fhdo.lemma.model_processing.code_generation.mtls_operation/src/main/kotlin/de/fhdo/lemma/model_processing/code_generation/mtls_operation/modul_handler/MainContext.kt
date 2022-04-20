@@ -28,8 +28,8 @@ internal object MainContext {
 
         fun getTargetFolder() = targetFolder
 
-        fun addPropertyFile(fileName: String, properties: SortableProperties, pathSpecifier: PathSpecifier) {
-            propertyFiles[generateFilePath(getPath(pathSpecifier), fileName)] = properties
+        fun addPropertyFile(fileName: String, properties: SortableProperties, pathSpecifier: PathSpecifier, servicePackage: String) {
+            propertyFiles[generateFilePath(getPath(pathSpecifier, servicePackage), fileName)] = properties
         }
 
         fun getPropertyFiles(): Map<String, SortableProperties> {
@@ -61,56 +61,53 @@ internal object MainContext {
         /**
          * Helper to calculate the target folder path of the state's [currentMicroservicePackage]
          */
-        private fun currentMicroserviceTargetFolderPath(): String {
-            val microservicePackageFolderPath = currentMicroservicePackage.packageToPath()
-            return "${targetFolder}${File.separator}$microservicePackageFolderPath"
-        }
+        private fun currentMicroserviceTargetFolderPath(servicePackage: String) =
+            "${targetFolder}${File.separator}$servicePackage.packageToPath()"
+
 
         /**
          * Helper to calculate the target folder path for Java files of the state's [currentMicroservicePackage]
          */
-        private fun currentMicroserviceTargetFolderPathForJavaFiles(): String {
-            val microservicePackageFolderPath = currentMicroservicePackage.packageToPath()
+        private fun currentMicroserviceTargetFolderPathForJavaFiles(servicePackage: String) = listOf(
+            targetFolder,
+            servicePackage.packageToPath(),
+            "src", "main", "java",
+            servicePackage.packageToPath()
+        ).joinToString(File.separator)
 
-            return listOf(
-                targetFolder,
-                microservicePackageFolderPath,
-                "src", "main", "java",
-                microservicePackageFolderPath
-            ).joinToString(File.separator)
-        }
 
         /**
          * Helper to calculate the target folder path for resource files of the state's [currentMicroservicePackage]
          */
-        private fun currentMicroserviceTargetFolderPathForResourceFiles(): String {
-            val microservicePackageFolderPath = currentMicroservicePackage.packageToPath()
+        private fun currentMicroserviceTargetFolderPathForResourceFiles(servicePackage: String) = listOf(
+            targetFolder,
+            servicePackage.packageToPath(),
+            "src", "main", "resources"
+        ).joinToString(File.separator)
 
-            return listOf(
-                targetFolder,
-                microservicePackageFolderPath,
-                "src", "main", "resources"
-            ).joinToString(File.separator)
-        }
 
         /**
          * Helper to calculate the target folder path for resource files of the state's [currentMicroservicePackage]
          */
-        private fun currentMicroserviceTargetFolderPathForCertifications(): String {
-            val microservicePackageFolderPath = currentMicroservicePackage.packageToPath()
+        private fun currentMicroserviceTargetFolderPathForCertifications(servicePackage: String) = listOf(
+            targetFolder,
+            servicePackage.packageToPath(),
+            "certs"
+        ).joinToString(File.separator)
 
-            return listOf(
-                targetFolder,
-                microservicePackageFolderPath,
-                "certs"
-            ).joinToString(File.separator)
-        }
-
-        fun getPath(pathSpecifier: PathSpecifier) = when (pathSpecifier) {
-            PathSpecifier.CURRENT_MICROSERVICE_GENERATION_TARGET_PATH -> currentMicroserviceTargetFolderPath()
-            PathSpecifier.CURRENT_MICROSERVICE_JAVA_ROOT_PATH -> currentMicroserviceTargetFolderPathForJavaFiles()
-            PathSpecifier.CURRENT_MICROSERVICE_RESOURCES_PATH -> currentMicroserviceTargetFolderPathForResourceFiles()
-            PathSpecifier.CURRENT_MICROSERVICE_CERTIFICATIONS_TARGET_PATH -> currentMicroserviceTargetFolderPathForCertifications()
+        fun getPath(pathSpecifier: PathSpecifier, servicePackage: String) = when (pathSpecifier) {
+            PathSpecifier.CURRENT_MICROSERVICE_GENERATION_TARGET_PATH -> currentMicroserviceTargetFolderPath(
+                servicePackage
+            )
+            PathSpecifier.CURRENT_MICROSERVICE_JAVA_ROOT_PATH -> currentMicroserviceTargetFolderPathForJavaFiles(
+                servicePackage
+            )
+            PathSpecifier.CURRENT_MICROSERVICE_RESOURCES_PATH -> currentMicroserviceTargetFolderPathForResourceFiles(
+                servicePackage
+            )
+            PathSpecifier.CURRENT_MICROSERVICE_CERTIFICATIONS_TARGET_PATH -> currentMicroserviceTargetFolderPathForCertifications(
+                servicePackage
+            )
         }
 
         fun generateFilePath(path: String, fileName: String) =

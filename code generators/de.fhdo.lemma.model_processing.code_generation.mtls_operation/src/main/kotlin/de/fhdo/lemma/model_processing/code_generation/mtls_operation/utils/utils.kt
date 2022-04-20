@@ -2,12 +2,14 @@ package de.fhdo.lemma.model_processing.code_generation.mtls_operation.utils
 
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
 import de.fhdo.lemma.model_processing.asFile
-import de.fhdo.lemma.model_processing.code_generation.java_base.qualifiedName
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.SortableProperties
 import de.fhdo.lemma.model_processing.code_generation.mtls_operation.modul_handler.MainContext
+import de.fhdo.lemma.model_processing.code_generation.mtls_operation.modul_handler.PathSpecifier
 import de.fhdo.lemma.operation.InfrastructureNode
-import de.fhdo.lemma.operation.intermediate.IntermediateOperationEnvironment
+import de.fhdo.lemma.operation.intermediate.IntermediateContainer
+import de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode
 import de.fhdo.lemma.operation.intermediate.IntermediateOperationNode
+import java.io.File
 
 internal fun loadPropertiesFile(filePath: String): SortableProperties {
     val file = filePath.asFile()
@@ -25,73 +27,73 @@ internal fun SortableProperties.asFormattedString(): String {
 }
 
 internal fun InfrastructureNode.isCertificateAuthority() =
-    (infrastructureTechnology.infrastructureTechnology.name == "certificateAuthority"
-            && infrastructureTechnology.infrastructureTechnology.technology.name == "mTLS")
+    (infrastructureTechnology.infrastructureTechnology.name == "certificateAuthority" && infrastructureTechnology.infrastructureTechnology.technology.name == "mTLS")
 
 internal fun IntermediateOperationNode.hasAspect(aspectsSet: Set<String>) = aspects.any { aspectsSet.contains(it.name) }
 
-internal fun IntermediateOperationNode.getNodeAspectsWithValues(aspectName: String): Map<String, String> {
-    val resultMap = mutableMapOf<String, String>()
-
-    aspects.filter { it.name == aspectName }.forEach { aspect ->
-        aspect.properties.forEach { property ->
-            when (property.name) {
-                "applicationName" -> {
-                    println(
-                        "${property.name} = ${if (!property.defaultValue.isNullOrEmpty()) property.defaultValue else "leer"}  ${
-                            aspect.propertyValues.filter { property.name == it.property.name }.apply {
-                                this.joinToString(", ")
-                            }
-                        }  "
-                    )
-                    resultMap[springPropertyMapping(property.name)] =
-                        if (!property.defaultValue.isNullOrEmpty()) property.defaultValue else "leer"
-                    aspect.propertyValues.filter { property.name == it.property.name }.forEach { propertyValue ->
-                        resultMap[springPropertyMapping(propertyValue.property.name)] = propertyValue.value
-                    }
-                }
-                "keyStoreFileName" -> {
-
-                }
-                "trustStoreFileName" -> {
-
-                }
-                else -> {
-                    resultMap[springPropertyMapping(property.name)] =
-                        if (!property.defaultValue.isNullOrEmpty()) property.defaultValue else ""
-                    aspect.propertyValues.filter { property.name == it.property.name }.forEach { propertyValue ->
-                        resultMap[springPropertyMapping(propertyValue.property.name)] = propertyValue.value
-                    }
-                }
-            }
-
-//            resultMap[springPropertyMapping(property.name)] = property.defaultValue
-        }
-//        aspect.propertyValues.forEach { propertyValue ->
-//            resultMap[springPropertyMapping(propertyValue.property.name)] = propertyValue.value
-//        }
+internal fun loadOrGeneratePropertiesEntries(
+    filename: String, properties: Map<String, String>, pathSpecifier: PathSpecifier, serviceName: String
+) {
+    val filePath = MainContext.State.generateFilePath(MainContext.State.getPath(pathSpecifier, serviceName), filename)
+    val sortableProperties = loadPropertiesFile(filePath)
+    properties.forEach {
+        if (it.key == springPropertyMapping("applicationName")) sortableProperties[it.key] =
+            parseApplicationNames(it.value)[serviceName.lowercase()]
+        else sortableProperties[it.key] = it.value
     }
-//    aspects.filter { it.name == aspectName }.forEach { aspect ->
-//        aspect.properties.filter {
-//            !it.defaultValue.isNullOrEmpty()
-//        }.forEach { property ->
-//            resultMap[springPropertyMapping(property.name)] = property.defaultValue
-//        }
-//        aspect.propertyValues.forEach { propertyValue ->
-//            resultMap[springPropertyMapping(propertyValue.property.name)] = propertyValue.value
-//        }
-//    }
+    MainContext.State.addPropertyFile(filename, sortableProperties, pathSpecifier, serviceName)
+}
+
+internal fun IntermediateInfrastructureNode.getPropertiesFormNodeAspectsForDeployedServices(aspectName: String): Map<String, Map<String, String>>? {
+    if (!hasAspect(setOf(aspectName))) return null
+    return mapOf(Pair(name, getAspectsAsMap(this, aspectName)))
+}
+
+internal fun IntermediateContainer.getPropertiesFormNodeAspectsForDeployedServices(aspectName: String): Map<String, Map<String, String>>? {
+    if (!hasAspect(setOf(aspectName))) return null
+    val resultMap = mutableMapOf<String, Map<String, String>>()
+    deployedServices.forEach { service ->
+        resultMap[service.qualifiedName] = getAspectsAsMap(this, aspectName)
+    }
     return resultMap
+}
+
+private fun getAspectsAsMap(intermediateOperationNode: IntermediateOperationNode, aspectName: String) =
+    intermediateOperationNode.aspects.findLast { it.name == aspectName }.let { aspect ->
+        val propertyMap = mutableMapOf<String, String>()
+        aspect!!.properties.forEach { property ->
+            getPropertyValue(aspect, property.name)?.let {
+                propertyMap[springPropertyMapping(property.name)] = it
+            }
+        }
+        propertyMap.toMap()
+    }
+
+private fun getPropertyValue(aspect: IntermediateImportedAspect, propertyName: String) = when (propertyName) {
+    "keyStoreRelativePath", "trustStoreRelativePath" -> null
+    "keyStoreFileName" -> setOf(
+        aspect.getAspectValueOrDefault("trustStoreRelativePath"), aspect.getAspectValueOrDefault(propertyName)
+    ).joinToString(File.separator)
+    "trustStoreFileName" -> setOf(
+        aspect.getAspectValueOrDefault("keyStoreRelativePath"), aspect.getAspectValueOrDefault(propertyName)
+    ).joinToString(File.separator)
+    else -> aspect.getAspectValueOrDefault(propertyName)
 }
 
 internal fun SortableProperties.addProperty(property: Pair<String, String>) {
     this[springPropertyMapping(property.first)] = property.second
 }
 
+private fun IntermediateImportedAspect.getAspectValueOrDefault(aspectName: String): String? {
+    val defaultValue = properties.find { it.name == aspectName }?.defaultValue
+    val aspectValue = propertyValues.find { it.property.name == aspectName }?.value
+    return if (aspectValue.isNullOrEmpty()) defaultValue else aspectValue
+}
+
 fun springPropertyMapping(property: String) = when (property) {
-    "keyStoreRelativePath" -> "server.ssl.key-store"
+    "keyStoreFileName" -> "server.ssl.key-store"
     "keyStorePassword" -> "server.ssl.key-store-password"
-    "trustStoreRelativePath" -> "server.ssl.trust-store"
+    "trustStoreFileName" -> "server.ssl.trust-store"
     "trustStorePassword" -> "server.ssl.trust-store-password"
     "hostnameVerifierBypass" -> "server.ssl.bypass.hostname-verifier"
     "validityInDays" -> "server.ssl.key-store.validityInDays"
@@ -135,19 +137,9 @@ fun hasAnyInvalidSystemEnvironmentVariable(environmentVariable: String) =
 
 fun parseApplicationNames(applicationNames: String): Map<String, String> {
     val retval = mutableMapOf<String, String>()
-    if (!isConformApplicationNames(applicationNames))
-        return retval
+    if (!isConformApplicationNames(applicationNames)) return mapOf(Pair(applicationNames, applicationNames))
     applicationNames.split(",").forEach {
         retval[it.split("=")[0].trim()] = it.split("=")[1].trim()
     }
     return retval
-}
-
-fun IntermediateImportedAspect.getAspectValueOrDefault(aspectName: String): String {
-    var retval = ""
-    this.propertyValues.find {
-        it.
-    }
-
-    retrun retval
 }
