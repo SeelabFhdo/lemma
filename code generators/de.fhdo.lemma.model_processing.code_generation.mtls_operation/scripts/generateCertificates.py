@@ -1,6 +1,6 @@
 import os
 from subprocess import run
-from logging import info, error
+from logging import info, error, basicConfig, INFO
 import sys
 import traceback
 from dataclasses import dataclass
@@ -263,10 +263,10 @@ def run_cli_command(command: str):
         throw_configuration_exception("Command can't be empty!")
     proc = run(command, shell=True, capture_output=True)
     if proc.returncode != 0:
+        if len(proc.stderr) > 0:
+            info(proc.stderr.decode('utf-8'))
         throw_configuration_exception(f"Command has an error: {command}")
     else:
-        if len(proc.stdout) > 0:
-            info(proc.stdout.decode('utf-8'))
         if len(proc.stderr) > 0:
             info(proc.stderr.decode('utf-8'))
 
@@ -289,7 +289,7 @@ def main(argv: list):
             f"Default are both profiles")
         sys.exit(1)
     target_path = __check_file_path(argv[1])
-    logging.basicConfig(filename=os.path.join(target_path, "generateCertificates.log"), level=logging.INFO,
+    basicConfig(filename=os.path.join(target_path, "generateCertificates.log"), level=INFO,
                         format='%(asctime)s %(levelname)s %(message)s')
     info('Started')
     info(f"Generated target sources folder: {target_path}")
