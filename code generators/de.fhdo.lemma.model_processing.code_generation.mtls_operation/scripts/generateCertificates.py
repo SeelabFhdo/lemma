@@ -33,6 +33,13 @@ def is_path_and_filename(path: str) -> bool:
         print("Hallo")
 
 
+def create_path_if_not_exists(path):
+    path = os.path.dirname(path)
+    if not os.path.exists(path):
+        info(f"Create Path: {path}")
+        print(f"Create Path: {path}")
+        run_cli_command(f"mkdir -p {path}")
+
 
 @dataclass
 class CertificateConfigFile:
@@ -81,7 +88,7 @@ class CertificateConfigFile:
 
     def __get_filename_with_extension(self, config_param: str) -> str:
         config_value = self.__get_path_or_default_path(self.get_config_parameter(config_param))
-        print(config_value)
+        create_path_if_not_exists(config_value)
         if config_param.find("store") > -1:
             return config_value if any(x in config_value for x in [".pfx", ".p12"]) else f"{config_value}.p12"
         else:
