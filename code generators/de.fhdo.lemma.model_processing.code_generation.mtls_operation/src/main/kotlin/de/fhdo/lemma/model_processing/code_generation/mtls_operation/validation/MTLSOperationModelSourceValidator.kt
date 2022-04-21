@@ -62,9 +62,28 @@ class MTLSOperationModelSourceValidator : AbstractXtextModelValidator() {
     * Checks if the keystore or truststore files have a valid file extension.
     * */
     @Check
-    private fun checkStoreFileName(aspect: ImportedOperationAspect) {
+    private fun checkRelativePath(aspect: ImportedOperationAspect) {
         aspect.values.forEachIndexed() { index, it ->
             if (it.property.name in listOf("keyStoreRelativePath", "trustStoreRelativePath")) {
+                if (!it.value.stringValue.startsWith("./") and !it.value.stringValue.startsWith("../")) {
+                    error(
+                        "The specified path is not relative! ${it.value.stringValue}",
+                        OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__VALUES,
+                        index
+                    )
+                }
+            }
+        }
+    }
+
+
+    /*
+    * Checks if the keystore or truststore files have a valid file extension.
+    * */
+    @Check
+    private fun checkStoreFileName(aspect: ImportedOperationAspect) {
+        aspect.values.forEachIndexed() { index, it ->
+            if (it.property.name in listOf("keyStoreFileName", "trustStoreFileName")) {
                 if (!it.value.stringValue.endsWith(".p12")) {
                     val filetype = when (it.property.name) {
                         "keyStoreRelativePath" -> "keystore"

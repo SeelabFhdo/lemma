@@ -18,13 +18,6 @@ class ProfileType(Enum):
     MTLSDEV = "mtlsdev"
 
 
-# todo check path for windows os
-def get_absolute_path(path: str) -> str:
-    if path.startswith("~"):
-        return os.path.expanduser(path)
-    return path
-
-
 def check_empty_sys_env_var(variable: str) -> str:
     if variable.find("${") > -1:
         var = variable[variable.find("${") + 2:variable.find("}")]
@@ -33,10 +26,19 @@ def check_empty_sys_env_var(variable: str) -> str:
     return variable
 
 
+def is_path_and_filename(path: str) -> bool:
+    if path:
+        return path != path.replace(os.path.dirname(path), "")
+    else:
+        print("Hallo")
+
+
+
 @dataclass
 class CertificateConfigFile:
     """Class for keeping the certification parameter"""
-    rootDir: str
+    target_path: str
+    absolute_path: str
     filename: str
     configParameter: List[tuple]
 
@@ -59,7 +61,7 @@ class CertificateConfigFile:
                 return config_parameter[1]
 
     def __post_init__(self):
-        self.rootDir = os.path.join(self.rootDir, self.get_profile().name)
+        self.absolute_path = os.path.join(self.absolute_path, self.get_profile().name)
         if not self.is_ca_config_file():
             app_name = self.get_config_parameter("server.ssl.applicationName")
             self.private_key_filename = f"{app_name}_private_key.pem"
@@ -71,8 +73,15 @@ class CertificateConfigFile:
             self.ca_key_filename = self.__get_filename_with_extension("server.ssl.ca-key.file")
             self.ca_cert_filename = self.__get_filename_with_extension("server.ssl.ca-Cert.file")
 
+    def __get_path_or_default_path(self, file: str):
+        if is_path_and_filename(file):
+            return os.path.join(self.target_path, file)
+        else:
+            return os.path.join(self.absolute_path, file)
+
     def __get_filename_with_extension(self, config_param: str) -> str:
-        config_value = self.get_config_parameter(config_param)
+        config_value = self.__get_path_or_default_path(self.get_config_parameter(config_param))
+        print(config_value)
         if config_param.find("store") > -1:
             return config_value if any(x in config_value for x in [".pfx", ".p12"]) else f"{config_value}.p12"
         else:
@@ -91,12 +100,13 @@ profiles: List[Profile] = list()
 
 def read_config_files(target_path: str, profile_types: list):
     config_files: List[CertificateConfigFile] = list()
-    for rootdir, _, files in os.walk(target_path):
+    for absolute_path, _, files in os.walk(target_path):
         for file in files:
             for profile_type in profile_types:
                 if file.endswith(f"{profile_type.value}.var"):
                     config_files.append(
-                        CertificateConfigFile(rootdir, file, __load_config_files(__check_file_path(rootdir, file))))
+                        CertificateConfigFile(target_path, absolute_path, file,
+                                              __load_config_files(__check_file_path(absolute_path, file))))
 
     for profile_type in profile_types:
         profiles.append(create_profile(config_files, profile_type))
@@ -175,7 +185,7 @@ def __check_password(password: str) -> str:
 
 def create_certificate_authority(config_file: CertificateConfigFile):
     """Generate a certificate authority by given CertificateConfigFile"""
-    absolute_path = check_empty_sys_env_var(config_file.rootDir)
+    absolute_path = check_empty_sys_env_var(config_file.absolute_path)
     ca_key_filename = os.path.join(absolute_path, config_file.ca_key_filename)
     ca_cert_filename = os.path.join(absolute_path, config_file.ca_cert_filename)
     ca_password = check_empty_sys_env_var(
@@ -205,7 +215,7 @@ def create_client_keystore(profile: Profile):
     """Generate for each client a java keystore by given spring boot config profile"""
     create_certificate_authority(profile.ca_config)
 
-    ca_absolute_path = check_empty_sys_env_var(profile.ca_config.rootDir)
+    ca_absolute_path = check_empty_sys_env_var(profile.ca_config.absolute_path)
     cipher = check_empty_sys_env_var(profile.ca_config.get_config_parameter("server.ssl.cipher"))
     ca_key_file = os.path.join(ca_absolute_path, profile.ca_config.ca_key_filename)
     ca_cert_file = os.path.join(ca_absolute_path, profile.ca_config.ca_cert_filename)
@@ -213,12 +223,12 @@ def create_client_keystore(profile: Profile):
     ca_password = profile.ca_config.get_config_parameter("server.ssl.server.ca-password", mandatory=True)
 
     for client_config in profile.client_configs:
-        absolute_path = check_empty_sys_env_var(client_config.rootDir)
+        absolute_path = check_empty_sys_env_var(client_config.absolute_path)
         csr_file = os.path.join(absolute_path, client_config.certificate_signing_request_filename)
         client_cert_file = os.path.join(absolute_path, client_config.certificate_filename)
         client_key_file = os.path.join(absolute_path, client_config.private_key_filename)
-        client_keystore_file = os.path.join(absolute_path, client_config.key_store_filename)
-        client_truststore_file = os.path.join(absolute_path, client_config.trust_store_filename)
+        client_keystore_file = client_config.key_store_filename
+        client_truststore_file = client_config.trust_store_filename
         client_name = client_config.get_config_parameter("server.ssl.applicationName", mandatory=True)
 
         bit_length = check_empty_sys_env_var(client_config.get_config_parameter("server.ssl.bitLength"))
@@ -290,7 +300,7 @@ def main(argv: list):
         sys.exit(1)
     target_path = __check_file_path(argv[1])
     basicConfig(filename=os.path.join(target_path, "generateCertificates.log"), level=INFO,
-                        format='%(asctime)s %(levelname)s %(message)s')
+                format='%(asctime)s %(levelname)s %(message)s')
     info('Started')
     info(f"Generated target sources folder: {target_path}")
     profile_types: list

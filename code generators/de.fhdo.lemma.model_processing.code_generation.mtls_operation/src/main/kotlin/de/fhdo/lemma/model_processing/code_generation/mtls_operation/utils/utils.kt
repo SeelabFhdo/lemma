@@ -2,9 +2,11 @@ package de.fhdo.lemma.model_processing.code_generation.mtls_operation.utils
 
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
 import de.fhdo.lemma.model_processing.asFile
+import de.fhdo.lemma.model_processing.code_generation.java_base.hasAspect
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.SortableProperties
 import de.fhdo.lemma.model_processing.code_generation.mtls_operation.modul_handler.MainContext
 import de.fhdo.lemma.model_processing.code_generation.mtls_operation.modul_handler.PathSpecifier
+import de.fhdo.lemma.model_processing.utils.packageToPath
 import de.fhdo.lemma.operation.InfrastructureNode
 import de.fhdo.lemma.operation.intermediate.IntermediateContainer
 import de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode
@@ -27,7 +29,8 @@ internal fun SortableProperties.asFormattedString(): String {
 }
 
 internal fun InfrastructureNode.isCertificateAuthority() =
-    (infrastructureTechnology.infrastructureTechnology.name == "certificateAuthority" && infrastructureTechnology.infrastructureTechnology.technology.name == "mTLS")
+    (infrastructureTechnology.infrastructureTechnology.name == "certificateAuthority"
+            && infrastructureTechnology.infrastructureTechnology.technology.name == "mTLS")
 
 internal fun IntermediateOperationNode.hasAspect(aspectsSet: Set<String>) = aspects.any { aspectsSet.contains(it.name) }
 
@@ -36,20 +39,28 @@ internal fun loadOrGeneratePropertiesEntries(
 ) {
     val filePath = MainContext.State.generateFilePath(MainContext.State.getPath(pathSpecifier, serviceName), filename)
     val sortableProperties = loadPropertiesFile(filePath)
-    properties.forEach {
-        if (it.key == springPropertyMapping("applicationName")) sortableProperties[it.key] =
-            parseApplicationNames(it.value)[serviceName.lowercase()]
-        else sortableProperties[it.key] = it.value
+    properties.forEach { property ->
+        when (property.key) {
+            springPropertyMapping("applicationName") -> sortableProperties[property.key] =
+                parseApplicationNames(property.value)[serviceName.lowercase()]
+            springPropertyMapping("keyStoreFileName"), springPropertyMapping("trustStoreFileName") -> {
+                sortableProperties[property.key] =
+                    property.value.replace("##applicationName##", serviceName.packageToPath()).replace("//", "/")
+            }
+            else -> sortableProperties[property.key] = property.value
+        }
     }
     MainContext.State.addPropertyFile(filename, sortableProperties, pathSpecifier, serviceName)
 }
 
-internal fun IntermediateInfrastructureNode.getPropertiesFormNodeAspectsForDeployedServices(aspectName: String): Map<String, Map<String, String>>? {
+internal fun IntermediateInfrastructureNode.getPropertiesFormNodeAspectsForDeployedServices(aspectName: String):
+        Map<String, Map<String, String>>? {
     if (!hasAspect(setOf(aspectName))) return null
     return mapOf(Pair(name, getAspectsAsMap(this, aspectName)))
 }
 
-internal fun IntermediateContainer.getPropertiesFormNodeAspectsForDeployedServices(aspectName: String): Map<String, Map<String, String>>? {
+internal fun IntermediateContainer.getPropertiesFormNodeAspectsForDeployedServices(aspectName: String):
+        Map<String, Map<String, String>>? {
     if (!hasAspect(setOf(aspectName))) return null
     val resultMap = mutableMapOf<String, Map<String, String>>()
     deployedServices.forEach { service ->
