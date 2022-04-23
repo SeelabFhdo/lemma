@@ -1,5 +1,7 @@
 package de.fhdo.lemma.analyzer.lib
 
+import de.fhdo.lemma.analyzer.lib.impl.antipattern.AntipatternOperationAnalyzer
+import de.fhdo.lemma.analyzer.lib.impl.antipattern.AntipatternServiceAnalyzer
 import de.fhdo.lemma.analyzer.lib.impl.domain.basic.DomainBasicAnalyzer
 import de.fhdo.lemma.analyzer.lib.impl.service.basic.ServiceBasicAnalyzer
 import de.fhdo.lemma.analyzer.lib.impl.service.metrics.athanasopoulos.AthanasopoulosMetricsAnalyzer
@@ -42,7 +44,9 @@ enum class Analyzers(val analyzerName: String) {
     SERVICE_METRICS_ATHANASOPOULOS("athanasopoulos"),
     SERVICE_METRICS_ENGEL("engel"),
     SERVICE_METRICS_HAUPT("haupt"),
-    SERVICE_METRICS_HIRZALLA("hirzalla")
+    SERVICE_METRICS_HIRZALLA("hirzalla"),
+    OPERATION_ANTIPATTERN("operation-antipattern"),
+    SERVICE_ANTIPATTERN("service-antipattern"),
 }
 
 /**
@@ -60,4 +64,6 @@ fun Analyzers.createAnalyzer() : AnalyzerI
         Analyzers.SERVICE_METRICS_ENGEL -> EngelMetricsAnalyzer()
         Analyzers.SERVICE_METRICS_HAUPT -> HauptMetricsAnalyzer()
         Analyzers.SERVICE_METRICS_HIRZALLA -> HirzallaMetricsAnalyzer()
+        Analyzers.OPERATION_ANTIPATTERN -> AntipatternOperationAnalyzer()
+        Analyzers.SERVICE_ANTIPATTERN -> AntipatternServiceAnalyzer()
     }

@@ -13,6 +13,7 @@ import de.fhdo.lemma.data.intermediate.IntermediateComplexType
 import de.fhdo.lemma.data.intermediate.IntermediateDataModel
 import de.fhdo.lemma.data.intermediate.IntermediateImportedComplexType
 import de.fhdo.lemma.model_processing.utils.asXmiResource
+import de.fhdo.lemma.operation.intermediate.IntermediateOperationModel
 import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
 import de.fhdo.lemma.service.intermediate.IntermediateOperation
 import de.fhdo.lemma.service.intermediate.IntermediateReferredOperation
@@ -37,12 +38,14 @@ internal data class CacheId(val id: String, val modelClazz: Class<*>) {
 
 internal val DOMAIN_MODEL_CLASS = IntermediateDataModel::class.java
 internal val SERVICE_MODEL_CLASS = IntermediateServiceModel::class.java
+internal val OPERATION_MODEL_CLASS = IntermediateOperationModel::class.java
 
 /* Global, reusable CacheIds */
 internal val ALL_CONTEXTS_CACHE_ID = CacheId("allContexts", DOMAIN_MODEL_CLASS)
 internal val ALL_INTERFACES_CACHE_ID = CacheId("allInterfaces", SERVICE_MODEL_CLASS)
 internal val ALL_MICROSERVICES_CACHE_ID = CacheId("allMicroservices", SERVICE_MODEL_CLASS)
 internal val ALL_OPERATIONS_CACHE_ID = CacheId("allOperations", SERVICE_MODEL_CLASS)
+internal val ALL_OPERATION_NODES_CACHE_ID = CacheId("allOperationNodes", OPERATION_MODEL_CLASS)
 internal val ALL_EFFECTIVE_PROTOCOLS_CACHE_ID = CacheId("allEffectiveProtocols", SERVICE_MODEL_CLASS)
 internal val ALL_REFERRED_OPERATIONS_CACHE_ID = CacheId("allReferredOperations", SERVICE_MODEL_CLASS)
 internal val MICROSERVICE_DEPENDENCIES_CACHE_ID = CacheId("microserviceDependencies", SERVICE_MODEL_CLASS)
@@ -84,6 +87,13 @@ internal object Cache : HashMap<CacheId, Any?>() {
      */
     internal fun allContexts() = addOrGetCacheIterable(ALL_CONTEXTS_CACHE_ID) {
         allModelsOfType(DOMAIN_MODEL_CLASS).map { it.contexts }.flatten()
+    }
+
+    /**
+     * returns all OperationNodes
+     */
+    internal fun allOperationNodes() = addOrGetCacheIterable(ALL_OPERATION_NODES_CACHE_ID) {
+        allModelsOfType(OPERATION_MODEL_CLASS).map{it.containers}.flatten()
     }
 
     /**
