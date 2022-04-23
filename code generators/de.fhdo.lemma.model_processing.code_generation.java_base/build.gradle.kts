@@ -17,7 +17,7 @@ buildscript {
     extra.set("commonsVersion", "3.5")
     extra.set("groovyVersion", "3.0.3")
     extra.set("jansiVersion", "1.17.1")
-    extra.set("javaParserVersion", "3.14.10")
+    extra.set("javaParserVersion", "3.24.2")
     extra.set("koinVersion", "2.0.1")
     extra.set("lemmaEclipsePluginsVersion", version)
     extra.set("log4jVersion", "2.16.0")
@@ -113,10 +113,9 @@ val allDependenciesNoKotlin = task("allDependenciesNoKotlin", type = Jar::class)
     archiveClassifier.set("all-dependencies-no-kotlin")
 
     // Build fat JAR excluding Kotlin standard lib
-    from(configurations.compileClasspath.get().filter {
-        it.exists() &&
-            !it.name.startsWith("kotlin")
-    }.map { if (it.isDirectory) it else zipTree(it) })
+    from(configurations.compileClasspath.get()
+        .filter { it.exists() && !it.name.startsWith("kotlin") }
+        .map { if (it.isDirectory) it else zipTree(it) })
     with(tasks["jar"] as CopySpec)
 
     manifest {

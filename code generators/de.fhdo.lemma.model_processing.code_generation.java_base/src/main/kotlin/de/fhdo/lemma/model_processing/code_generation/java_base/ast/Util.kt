@@ -1,6 +1,8 @@
 package de.fhdo.lemma.model_processing.code_generation.java_base.ast
 
+import com.github.javaparser.JavaParser
 import com.github.javaparser.ParseProblemException
+import com.github.javaparser.ParserConfiguration
 import com.github.javaparser.StaticJavaParser
 import com.github.javaparser.ast.CompilationUnit
 import com.github.javaparser.ast.DataKey
@@ -34,31 +36,56 @@ import com.github.javaparser.ast.type.ClassOrInterfaceType
 import com.github.javaparser.ast.type.ReferenceType
 import com.github.javaparser.ast.type.Type
 import com.github.javaparser.ast.type.TypeParameter
-import com.github.javaparser.printer.PrettyPrinter
+import com.github.javaparser.printer.DefaultPrettyPrinter
+import com.github.javaparser.printer.lexicalpreservation.LexicalPreservingPrinter
 import de.fhdo.lemma.data.intermediate.IntermediateType
 import de.fhdo.lemma.model_processing.code_generation.java_base.dependencies.DependencyDescription
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.setJavaTypeFrom
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.configuration.AbstractSerializationConfiguration
 import de.fhdo.lemma.technology.CommunicationType
 import java.io.File
-import java.lang.Exception
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.MainContext.State as MainState
-import java.lang.IllegalArgumentException
 
 /**
- * Helper to get a [ClassOrInterfaceDeclaration] that has the same name as this [File] instance.
+ * Helper to get a [ClassOrInterfaceDeclaration] that has the same name as this [File] instance. Note that this function
+ * parses the file using lexical preservation.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 internal fun File.getEponymousJavaClassOrInterface()
     = try {
-        val parsedCompilationUnit = StaticJavaParser.parse(this)
+        val parsedCompilationUnit = this.parseCompilationUnitWithLexicalPreservation()
         parsedCompilationUnit.findFirst(ClassOrInterfaceDeclaration::class.java) {
             it.nameAsString == nameWithoutExtension
         }.orElse(null)
     } catch (ex: Exception) {
         null
     }
+
+/**
+ * Parse a Java [CompilationUnit] from this [File] with preserving its lexical layout, e.g., manually added empty lines.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private fun File.parseCompilationUnitWithLexicalPreservation() : CompilationUnit {
+    val result = JavaParser(ParserConfiguration().setLexicalPreservationEnabled(true)).parse(this)
+
+    if (!result.isSuccessful)
+        throw ParseProblemException(result.problems)
+
+    val parsedCompilationUnit = result.result.get()
+    // Remember the compilation unit to being the result of parsing with lexical preservation so that we can later again
+    // serialize it correspondingly
+    parsedCompilationUnit.setData(ParsedWithLexicalPreservation, true)
+    return parsedCompilationUnit
+}
+
+/**
+ * Data key for the information that a [CompilationUnit] was the result from parsing with lexical preservation.
+ *
+ * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
+ */
+private object ParsedWithLexicalPreservation : DataKey<Boolean>()
 
 /**
  * Helper to diff two classes based on their [CallableDeclaration] lists, i.e., their constructors or methods. The
@@ -479,8 +506,13 @@ internal fun Node.serialize(serializationConfiguration: AbstractSerializationCon
             "supported")
     }
 
-    val prettyPrinter = PrettyPrinter(serializationConfiguration)
-    return prettyPrinter.print(compilationUnit)
+    return if (compilationUnit.containsData(ParsedWithLexicalPreservation) &&
+        compilationUnit.getData(ParsedWithLexicalPreservation))
+            // We need to use a dedicated JavaParser utility for serializing compilation units that resulted from
+            // parsing with lexical preservation
+            LexicalPreservingPrinter.print(compilationUnit)
+        else
+            DefaultPrettyPrinter(serializationConfiguration).print(compilationUnit)
 }
 
 /**

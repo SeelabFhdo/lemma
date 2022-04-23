@@ -14,7 +14,7 @@ repositories {
 
 buildscript {
     extra.set("javaBaseGeneratorVersion", version)
-    extra.set("javaParserVersion", "3.14.10")
+    extra.set("javaParserVersion", "3.24.2")
     extra.set("lemmaEclipsePluginsVersion", version)
     extra.set("modelProcessingVersion", version)
 }
