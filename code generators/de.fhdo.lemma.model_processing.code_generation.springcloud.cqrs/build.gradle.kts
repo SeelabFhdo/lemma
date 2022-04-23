@@ -14,7 +14,7 @@ buildscript {
     extra.set("groovyVersion", "3.0.3")
     extra.set("jansiVersion", "1.17.1")
     extra.set("javaBaseGeneratorVersion", version)
-    extra.set("javaParserVersion", "3.14.10")
+    extra.set("javaParserVersion", "3.24.2")
     extra.set("coroutinesVersion", "1.1.1")
     extra.set("lemmaEclipsePluginsVersion", version)
     extra.set("log4jVersion", "2.16.0")

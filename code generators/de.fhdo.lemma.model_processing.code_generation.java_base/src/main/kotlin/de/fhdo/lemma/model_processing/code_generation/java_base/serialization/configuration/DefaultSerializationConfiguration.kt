@@ -1,5 +1,7 @@
 package de.fhdo.lemma.model_processing.code_generation.java_base.serialization.configuration
 
+import com.github.javaparser.printer.configuration.DefaultConfigurationOption
+import com.github.javaparser.printer.configuration.Indentation
 import java.nio.charset.Charset
 
 /**
@@ -9,8 +11,7 @@ import java.nio.charset.Charset
  */
 internal object DefaultSerializationConfiguration : AbstractSerializationConfiguration(Charset.forName("UTF-8")) {
     init {
-        indentType = IndentType.SPACES
-        indentSize = 4
-        isOrderImports = true
+        addOption(DefaultConfigurationOption(ConfigOption.INDENTATION, Indentation(Indentation.IndentType.SPACES, 4)))
+        addOption(DefaultConfigurationOption(ConfigOption.ORDER_IMPORTS, true))
     }
 }

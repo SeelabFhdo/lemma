@@ -4,7 +4,7 @@ import com.github.javaparser.ast.CompilationUnit
 import com.github.javaparser.ast.Node
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import com.github.javaparser.ast.body.EnumDeclaration
-import com.github.javaparser.printer.PrettyPrinter
+import com.github.javaparser.printer.DefaultPrettyPrinter
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.SerializationCharacteristic
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.appendStatement
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.asClassOrInterfaceDeclaration
@@ -136,7 +136,7 @@ private class CodeGenerationSerializerBase : KoinComponent {
      * Helper to serialize a [CompilationUnit]
      */
     private fun CompilationUnit.serialize() : String {
-        val prettyPrinter = PrettyPrinter(serializationConfiguration)
+        val prettyPrinter = DefaultPrettyPrinter(serializationConfiguration)
         return prettyPrinter.print(this)
     }
 }
