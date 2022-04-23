@@ -53,10 +53,14 @@ internal class CrudRepositoryHandler : AspectHandlerI {
         }
 
         // Remove all methods and attributes that haven't been defined in the original intermediate data structure,
-        // e.g., constructors, setters, and getters. In addition, remove the bodies of the remaining methods, because
-        // the repository becomes an interface.
+        // e.g., constructors, setters, and getters. In addition, remove the modifiers and bodies of the remaining
+        // methods, because the repository becomes an interface.
         repositoryInterface.removeMethodsAndAllAttributes(repository.operations)
-        repositoryInterface.members.forEach { (it as MethodDeclaration).removeBody() }
+        repositoryInterface.members.forEach {
+            val method =  it as MethodDeclaration
+            method.setModifiers()
+            method.removeBody()
+        }
 
         // Convert all implemented types (possibly resulting from other Genlets like the DDD Genlet) to extended types
         // because the repository becomes an interface and Java doesn't support implemented types on interfaces
