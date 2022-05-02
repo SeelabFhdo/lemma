@@ -9,7 +9,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.toProperty
 
 /**
  * Singleton that represents the contents of the Spring "application.properties" file and the properties contributed by
- * the Kafka Genlet.
+ * the springcloud.mtls Genlet.
  */
 internal object ApplicationProperties {
     private var propertyFile: PropertyFile? = null

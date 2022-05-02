@@ -45,9 +45,4 @@ internal class MtlsValidator : AbstractXmiDeclarativeValidator() {
             }
         }
     }
-
-    @Check
-    private fun checkThis(intermediateImportedComplexType: IntermediateImportedComplexType) {
-        println("Oder hier${intermediateImportedComplexType.name}")
-    }
 }

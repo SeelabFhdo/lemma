@@ -15,11 +15,6 @@ import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
 
 import org.eclipse.emf.ecore.EObject
 
-/**
- * Handler for the java.Access aspect.
- *
- * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
- */
 @AspectHandler
 internal class TestCAHandler : AspectHandlerI {
     override fun handlesAspects(): Set<String> =

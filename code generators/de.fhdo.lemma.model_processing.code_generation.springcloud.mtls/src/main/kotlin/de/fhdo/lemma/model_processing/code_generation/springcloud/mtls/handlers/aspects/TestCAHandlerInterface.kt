@@ -35,29 +35,16 @@ internal class TestCAHandlerInterface
         node: ClassOrInterfaceDeclaration,
         context: Nothing?
     ): GenletCodeGenerationHandlerResult<ClassOrInterfaceDeclaration>? {
-        eObject.aspects.forEach {
-            print("${it.name}\t")
-        }
-
         if (!eObject.hasAspect(*handlesAspects().toTypedArray()))
             return GenletCodeGenerationHandlerResult(node)
 
-        println("qualifiedName: ${eObject.qualifiedName}")
-        val aspects = eObject.getAllAspects(*handlesAspects().toTypedArray())
-        aspects.forEach { aspect ->
-            when (aspect.qualifiedName) {
-                "mTLS.mtls" ->
-                    State.addPropertiesToFile(
-                        "application-mtls.properties",
-                        eObject.getAspectValueOrDefault(aspect.qualifiedName)
-                    )
-                "mTLS.mtlsdev" ->
-                    State.addPropertiesToFile(
-                        "application-mtlsdev.properties",
-                        eObject.getAspectValueOrDefault(aspect.qualifiedName)
-                    )
-            }
+        eObject.aspects.filter { it.qualifiedName in handlesAspects() }.forEach { aspect ->
+            State.addPropertiesToFile(
+                "application-${aspect.name}.properties",
+                eObject.getAspectValueOrDefault(aspect.qualifiedName)
+            )
         }
+
         val fileSet = mutableSetOf(
             generateSpringBypassConfigurationFile(node.getPackageName(), "mTLSBypassConfiguration"),
             generateSpringMtlsConfigurationFile(node.getPackageName(), "MTLSConfiguration")
@@ -92,7 +79,10 @@ internal class TestCAHandlerInterface
         )
     }
 
-    private fun generateSpringMtlsConfigurationFile(packageName: String, className: String): GenletGeneratedFileContent {
+    private fun generateSpringMtlsConfigurationFile(
+        packageName: String,
+        className: String
+    ): GenletGeneratedFileContent {
 
         val node = newJavaClassOrInterface("${packageName}.${configFolder()}", className, isInterface = false)
             .addImplementedType("EnvironmentAware")
@@ -140,8 +130,8 @@ internal class TestCAHandlerInterface
 
     private fun formattingSystemVariable(variable: String?) =
         if (variable.isNullOrEmpty()) ""
-    else
-        if (variable.startsWith("$")) variable.uppercase() else variable
+        else
+            if (variable.startsWith("$")) variable.uppercase() else variable
 
 }
 

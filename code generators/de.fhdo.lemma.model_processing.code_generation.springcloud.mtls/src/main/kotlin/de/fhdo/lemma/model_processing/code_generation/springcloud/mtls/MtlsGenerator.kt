@@ -18,13 +18,8 @@ class MtlsGenerator : AbstractGenlet(BASE_PACKAGE) {
      * React to a code generation event
      */
     override fun onEvent(event: GenletEvent): Pair<Set<GenletGeneratedNode>, Set<GenletGeneratedFileContent>>? {
-
-//        println(event.type.name)
         if (event.type != GenletEventType.MICROSERVICE_GENERATION_FINISHED)
             return null
-
-
-
         return null
     }
 }
