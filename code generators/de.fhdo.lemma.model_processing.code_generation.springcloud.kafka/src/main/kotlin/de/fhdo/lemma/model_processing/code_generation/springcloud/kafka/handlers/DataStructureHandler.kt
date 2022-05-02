@@ -6,13 +6,15 @@ import de.fhdo.lemma.data.intermediate.IntermediateDataStructure
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerResult
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.getGenletNodeInfoOrElseNull
-import de.fhdo.lemma.model_processing.code_generation.java_base.getAspectPropertyValue
 import de.fhdo.lemma.model_processing.code_generation.java_base.getFirstMatchingAspectPropertyValue
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
+import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.avro.AvroConversionHelpersGenerator
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.genletHeap
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.avro.AvroConverters
+import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.avro.configuresAvroSchema
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.forDomainEventsTechnology
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.shared.EventGroupInterfaceTypes
+import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
 
 /**
  * Code generation handler for IntermediateDataStructure instances.
@@ -31,10 +33,19 @@ internal class DataStructureHandler
     override fun execute(eObject: IntermediateDataStructure, node: ClassOrInterfaceDeclaration, context: Nothing?)
         : GenletCodeGenerationHandlerResult<ClassOrInterfaceDeclaration>? {
         // Register data structure for Avro converters
-        val currentDomainPackage: String by state()
-        if (!AvroConverters.initialized)
+        if (!AvroConverters.initialized) {
+            val currentDomainPackage: String by state()
             AvroConverters.initialize(currentDomainPackage, genletHeap)
-        AvroConverters.addConverters(eObject)
+        }
+        //AvroConverters.addConverters(eObject)
+
+        initializeAvroConversionHelpersGeneratorIfNecessary()
+        AvroConversionHelpersGenerator.registerJavaTypeGeneratedFromComplexType(eObject, node)
+
+        if (eObject.configuresAvroSchema()) {
+            AvroConversionHelpersGenerator.registerStructureForGenericRecordBuilderGeneration(eObject)
+            AvroConversionHelpersGenerator.compileSchema(eObject)
+        }
 
         // Get and register event group interface. To this end, the Domain Event Genlet must be executed prior to the
         // Kafka Genlet.
@@ -48,5 +59,23 @@ internal class DataStructureHandler
         EventGroupInterfaceTypes[eventGroup] = groupInterfaceType
         EventGroupInterfaceTypes[eObject] = eventGroup
         return null
+    }
+
+    private fun initializeAvroConversionHelpersGeneratorIfNecessary() {
+        if (AvroConversionHelpersGenerator.initialized)
+            return
+
+        val currentDomainPackage: String by state()
+        val currentMicroservice: IntermediateMicroservice by state()
+        val currentMicroservicePackage: String by state()
+        val currentMicroserviceTargetFolderPathForJavaFilesWithoutMicroservicePackage: String by state()
+        val currentMicroserviceTargetFolderPathForResourceFiles: String by state()
+        AvroConversionHelpersGenerator.initialize(
+            currentDomainPackage,
+            currentMicroservice,
+            currentMicroservicePackage,
+            currentMicroserviceTargetFolderPathForJavaFilesWithoutMicroservicePackage,
+            currentMicroserviceTargetFolderPathForResourceFiles
+        )
     }
 }

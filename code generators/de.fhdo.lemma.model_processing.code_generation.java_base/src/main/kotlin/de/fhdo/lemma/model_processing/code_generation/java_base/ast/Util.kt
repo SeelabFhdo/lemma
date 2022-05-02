@@ -1241,7 +1241,7 @@ fun MethodDeclaration.getParameter(name: String) = parameters.find { it.nameAsSt
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal val MethodDeclaration.emptyBody
+val MethodDeclaration.emptyBody
     get() = body.orElse(null)?.statements?.isEmpty() ?: true
 
 /**

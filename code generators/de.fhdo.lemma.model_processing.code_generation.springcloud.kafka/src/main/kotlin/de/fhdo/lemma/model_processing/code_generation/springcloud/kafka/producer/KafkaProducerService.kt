@@ -66,15 +66,15 @@ internal class KafkaProducerService(packageName: String, genletHeap: MutableMap<
      */
     fun addProducerAttributeAndSetter(producerNamePrefix: String, type: ClassOrInterfaceType, typeImports: Set<String>)
         : FieldDeclaration {
-        val producerAttribute = addProducerAttribute(producerNamePrefix, type, typeImports)
+        val producerAttribute = addOrGetProducerAttribute(producerNamePrefix, type, typeImports)
         addProducerAttributeSetter(producerAttribute, typeImports)
         return producerAttribute
     }
 
     /**
-     * Add attribute that holds a producer instance
+     * Add or get attribute that holds a producer instance
      */
-    private fun addProducerAttribute(namePrefix: String, type: ClassOrInterfaceType, typeImports: Set<String>)
+    private fun addOrGetProducerAttribute(namePrefix: String, type: ClassOrInterfaceType, typeImports: Set<String>)
         : FieldDeclaration {
         val attributeName = "${namePrefix.decapitalize()}Producer"
         val existingAttribute = kafkaProducerService!!.fields.find { it.variables[0].nameAsString == attributeName }

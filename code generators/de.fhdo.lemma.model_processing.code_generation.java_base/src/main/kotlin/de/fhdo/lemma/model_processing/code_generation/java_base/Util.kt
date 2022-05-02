@@ -1,6 +1,8 @@
 package de.fhdo.lemma.model_processing.code_generation.java_base
 
+import com.github.javaparser.StaticJavaParser
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
+import com.github.javaparser.ast.stmt.ExpressionStmt
 import de.fhdo.lemma.data.ComplexType
 import de.fhdo.lemma.data.DataModel
 import de.fhdo.lemma.data.DataStructure
@@ -106,6 +108,9 @@ internal fun IntermediateComplexType.resolveIfCollectionType()
 private val IntermediateCollectionType.classname
     get() = getJavaCollectionTypeDescription().fullyQualifiedClassname.substringAfterLast(".")
 
+val IntermediateCollectionType.instantiableClassName
+    get() = getJavaCollectionTypeDescription().instantiableFullyQualifiedClassname
+
 /**
  * Get the [JavaCollectionTypeDescription] which maps to this [IntermediateCollectionType].
  *
@@ -141,7 +146,8 @@ internal fun IntermediateCollectionType.getJavaCollectionTypeDescription() : Jav
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 private val DEFAULT_JAVA_COLLECTION_ASPECT_NAMES = "List".forJavaTechnology()
-private val DEFAULT_JAVA_COLLECTION_TYPE_DESCRIPTION = JavaCollectionTypeDescription("java.util.List", 1)
+private val DEFAULT_JAVA_COLLECTION_TYPE_DESCRIPTION = JavaCollectionTypeDescription("java.util.List", 1,
+    "java.util.ArrayList")
 
 /**
  * Object representing the map of supported Java Collection aspects and their type descriptions.
@@ -153,10 +159,38 @@ private object SupportedJavaCollectionTypes {
 
     init {
         registerType(DEFAULT_JAVA_COLLECTION_ASPECT_NAMES, DEFAULT_JAVA_COLLECTION_TYPE_DESCRIPTION)
-        registerType("Collection".forJavaTechnology(), JavaCollectionTypeDescription("java.util.Collection", 1))
-        registerType("LinkedList".forJavaTechnology(), JavaCollectionTypeDescription("java.util.LinkedList", 1))
-        registerType("Map".forJavaTechnology(), JavaCollectionTypeDescription("java.util.Map", 2))
-        registerType("Set".forJavaTechnology(), JavaCollectionTypeDescription("java.util.Set", 1))
+        registerType(
+            "Collection".forJavaTechnology(),
+            JavaCollectionTypeDescription(
+                "java.util.Collection",
+                1,
+                DEFAULT_JAVA_COLLECTION_TYPE_DESCRIPTION.instantiableFullyQualifiedClassname
+            )
+        )
+        registerType(
+            "LinkedList".forJavaTechnology(),
+            JavaCollectionTypeDescription(
+                "java.util.LinkedList",
+                1,
+                "java.util.LinkedList"
+            )
+        )
+        registerType(
+            "Map".forJavaTechnology(),
+            JavaCollectionTypeDescription(
+                "java.util.Map",
+                2,
+                "java.util.HashMap"
+            )
+        )
+        registerType(
+            "Set".forJavaTechnology(),
+            JavaCollectionTypeDescription(
+                "java.util.Set",
+                1,
+                "java.util.HashSet"
+            )
+        )
     }
 
     /**
@@ -183,13 +217,15 @@ private object SupportedJavaCollectionTypes {
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 internal class JavaCollectionTypeDescription(val fullyQualifiedClassname: String, val typeArgumentCount: Int,
-    val imports: Set<String>) {
+    val instantiableFullyQualifiedClassname: String, val imports: Set<String>) {
     /**
      * Convenience constructor for single imports. The [fullyQualifiedClassname] is also treated as the initial entry
+     * of the [imports] set. Note that the [instantiableFullyQualifiedClassname] does not automatically become an entry
      * of the [imports] set.
      */
-    constructor(fullyQualifiedClassname: String, typeArgumentCount: Int)
-        : this(fullyQualifiedClassname, typeArgumentCount, mutableSetOf(fullyQualifiedClassname))
+    constructor(fullyQualifiedClassname: String, typeArgumentCount: Int, instantiableFullyQualifiedClassname: String)
+        : this(fullyQualifiedClassname, typeArgumentCount, instantiableFullyQualifiedClassname,
+            mutableSetOf(fullyQualifiedClassname))
 
     /**
      * Two [JavaCollectionTypeDescription] instances are equal if their [fullyQualifiedClassname] values are equal

@@ -101,7 +101,7 @@ internal object AvroConverters {
     private fun addStructureToAvroConverter(structure: IntermediateDataStructure,
         avroSchemaAspect: IntermediateImportedAspect) {
         val (javaType, typeImports) = structure.javaType()
-        if (avroConverters!!.methodExists(TO_RECORD_CONVERTER_NAME, listOf(javaType)))
+        if (avroConverters!!.methodExists(TO_RECORD_CONVERTER_NAME, javaType))
             return
 
         val schemaFile = avroSchemaAspect.getPropertyValue("file")!!
@@ -222,7 +222,7 @@ internal object AvroConverters {
     private fun addAvroToStructureConverter(structure: IntermediateDataStructure) {
         val converterName = FROM_RECORD_CONVERTER_NAME_TEMPLATE.replace("{STRUCTURE_NAME}", structure.name)
         val parameterType = StaticJavaParser.parseClassOrInterfaceType("GenericData.Record")
-        if (avroConverters!!.methodExists(converterName, listOf(parameterType)))
+        if (avroConverters!!.methodExists(converterName, parameterType))
             return
 
         /* Create converter method */
@@ -275,7 +275,7 @@ internal object AvroConverters {
 
         // Prepare catch statement for AvroRuntimeException
         val catchStatement = if (neverEmptyFieldFound)
-            //Setter methods for never-empty data fields comprise a guard that throws an IllegalArgumentException when
+            // Setter methods for never-empty data fields comprise a guard that throws an IllegalArgumentException when
             // the passed value to be set is null
             "catch (AvroRuntimeException | IllegalArgumentException ex) {}"
         else

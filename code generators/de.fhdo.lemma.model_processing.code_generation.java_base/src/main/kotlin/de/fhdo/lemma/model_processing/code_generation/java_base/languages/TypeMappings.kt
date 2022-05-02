@@ -23,6 +23,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.resolve
 import de.fhdo.lemma.model_processing.code_generation.java_base.resolveIfCollectionType
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainContext.State as DomainState
 import de.fhdo.lemma.model_processing.phases.PhaseException
+import de.fhdo.lemma.model_processing.utils.map
 import de.fhdo.lemma.model_processing.utils.trimToSingleLine
 import java.time.format.DateTimeFormatter
 
@@ -51,20 +52,20 @@ private val primitiveTypeMappings = primitiveTypeMappings {
      * Java's standard library such as BigDecimal and Currency
      */
     technology {
-        "Boolean".mapsToSelf()
-        "BigDecimal" withImport "java.math.BigDecimal"
-        "Byte".mapsToSelf()
-        "Character".mapsToSelf()
-        "Currency" withImport "java.util.Currency"
-        "Date".mapsToSelf() withImport "java.util.Date"
-        "Double".mapsToSelf()
-        "Float".mapsToSelf()
-        "Integer".mapsToSelf()
-        "Long".mapsToSelf()
-        "Object".mapsToSelf()
-        "Short".mapsToSelf()
-        "String".mapsToSelf()
-        "UUID" withImport "java.util.UUID"
+        ("Boolean" to "java.lang.Boolean").mapsToSelf()
+        ("BigDecimal" to "java.math.BigDecimal").mapsToSelfWithImportForFullyQualifiedName()
+        ("Byte" to "java.lang.Byte").mapsToSelf()
+        ("Character" to "java.lang.Character").mapsToSelf()
+        ("Currency" to "java.util.Currency").mapsToSelfWithImportForFullyQualifiedName()
+        ("Date" to "java.util.Date").mapsToSelfWithImportForFullyQualifiedName()
+        ("Double" to "java.lang.Double").mapsToSelf()
+        ("Float" to "java.lang.Float").mapsToSelf()
+        ("Integer" to "java.lang.Integer").mapsToSelf()
+        ("Long" to "java.lang.Long").mapsToSelf()
+        ("Object" to "java.lang.Object").mapsToSelf()
+        ("Short" to "java.lang.Short").mapsToSelf()
+        ("String" to "java.lang.String").mapsToSelf()
+        ("UUID" to "java.util.UUID").mapsToSelfWithImportForFullyQualifiedName()
     }
 }
 
@@ -79,7 +80,7 @@ fun IntermediateType.getTypeMapping() : TypeMappingDescription? {
         is IntermediatePrimitiveType -> primitiveTypeMappings[this]
         is IntermediateImportedTechnologySpecificType -> primitiveTypeMappings[this]
         is IntermediateComplexType -> resolveIfCollectionType()?.getTypeMapping()
-            ?: TypeMappingDescription(classname, true)
+            ?: TypeMappingDescription(classname, qualifiedName, true)
         else -> throw PhaseException("Cannot derive Java type for unknown type kind ${this::class.java.name}")
     }
 }
@@ -93,33 +94,45 @@ fun IntermediateType.getTypeMapping() : TypeMappingDescription? {
  */
 private fun IntermediateCollectionType.getTypeMapping() : TypeMappingDescription {
     val collectionTypeDescription = getJavaCollectionTypeDescription()
-    val (itemClassnames, imports) = getItemClassnamesAndImports(collectionTypeDescription)
+    val imports = mutableSetOf<String>()
+    imports.addAll(collectionTypeDescription.imports)
+
+    val (itemClassnames, itemImports) = getItemClassnamesAndImports()
+    imports.addAll(itemImports)
+
     val basicMappedClassname = collectionTypeDescription.fullyQualifiedClassname.substringAfterLast(".")
     val mappedTypeArgumentString = itemClassnames.joinToString(", ")
     val mappedClassname = "$basicMappedClassname<${mappedTypeArgumentString}>"
 
-    val mappingDescription = TypeMappingDescription(mappedClassname, false)
+    val fullyQualifiedListTypeName = collectionTypeDescription.imports.first {
+        val simpleName = it.substringAfterLast(".")
+        basicMappedClassname.startsWith(simpleName)
+    }
+    val fullyQualifiedMappedClassname = "$fullyQualifiedListTypeName<${mappedTypeArgumentString}>"
+
+    val mappingDescription = TypeMappingDescription(mappedClassname, fullyQualifiedMappedClassname, false)
     imports.forEach { mappingDescription.addImport(it) }
     return mappingDescription
 }
 
 /**
- * Get the classnames of the items of this [IntermediateCollectionType] and all necessary imports including those of the
- * [IntermediateCollectionType]s Java Collection type.
+ * Get the classnames of the items of this [IntermediateCollectionType] and all necessary imports.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun IntermediateCollectionType.getItemClassnamesAndImports(
-    collectionTypeDescription : JavaCollectionTypeDescription
-) : Pair<Set<String>, Set<String>> {
+fun IntermediateCollectionType.getItemClassnamesAndImports() : Pair<Set<String>, Set<String>> {
+    val collectionTypeDescription = getJavaCollectionTypeDescription()
     val imports = collectionTypeDescription.imports.toMutableSet()
 
     /*
-     * In case the collection type clusters a single anonymous primitive type, the set of item classnames contains only
-     * the name of the object representation of the primitive type, e.g., Integer.
+     * In case the collection type has effectively a primitive type argument, i.e., the type either clusters a single
+     * anonymous primitive type (and thus is a "primitive collection" in LEMMA terms) or has a single named field of a
+     * primitive type, the set of item classnames contains only the name of the object representation of the primitive
+     * type, e.g., Integer, and the corresponding imports.
      */
-    return if (isPrimitiveCollection)
-        setOf(primitiveType.getObjectWrapperMapping().mappedTypeName) to imports
+    val typeArgumentObjectWrapperMapping = typeArgumentObjectWrapperMapping()
+    return if (typeArgumentObjectWrapperMapping != null)
+        setOf(typeArgumentObjectWrapperMapping.mappedTypeName) to typeArgumentObjectWrapperMapping.getImports()
     /**
      * In case the Java Collection type requires more than one type argument or the collection type clusters only a
      * single data field, the set of item classnames comprises all names of the object representations of the data
@@ -129,10 +142,7 @@ internal fun IntermediateCollectionType.getItemClassnamesAndImports(
     else if (collectionTypeDescription.typeArgumentCount > 1 || dataFields.size == 1) {
         val classnames = mutableSetOf<String>()
         dataFields.forEach {
-            val typeMapping = if (it.type is IntermediatePrimitiveType)
-                    (it.type as IntermediatePrimitiveType).getObjectWrapperMapping()
-                else
-                    it.type.getTypeMapping()!!
+            val typeMapping = it.type.getTypeMapping()!!
             classnames.add(typeMapping.mappedTypeName)
             imports.addAll(typeMapping.getImports())
 
@@ -156,6 +166,14 @@ internal fun IntermediateCollectionType.getItemClassnamesAndImports(
     }
 }
 
+fun IntermediateCollectionType.typeArgumentObjectWrapperMapping()
+    = if (isPrimitiveCollection)
+            primitiveType.getObjectWrapperMapping()
+        else if (dataFields.size == 1 && dataFields.first().type is IntermediatePrimitiveType)
+            (dataFields.first().type as IntermediatePrimitiveType).getObjectWrapperMapping()
+        else
+            null
+
 /**
  * Helper to get the classname for the compound item classname of this [IntermediateCollectionType]. For this purpose,
  * the [IntermediateCollectionType] must consist of more than one data field.
@@ -178,7 +196,7 @@ internal fun IntermediateCollectionType.getFullyQualifiedCompoundItemClassName()
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-internal fun IntermediatePrimitiveType.getObjectWrapperMapping() : TypeMappingDescription {
+fun IntermediatePrimitiveType.getObjectWrapperMapping() : TypeMappingDescription {
     require(origin == IntermediateTypeOrigin.BUILTIN) { "A Java object type mapping may only be derived for built-in " +
         "primitive types" }
 
@@ -205,9 +223,29 @@ internal fun IntermediatePrimitiveType.getObjectWrapperMapping() : TypeMappingDe
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
-class TypeMappingDescription(var mappedTypeName: String, val isStructureOrEnumerationTypeMapping: Boolean) {
+class TypeMappingDescription(mappedTypeName: String, fullyQualifiedMappedTypeName: String?,
+    val isStructureOrEnumerationTypeMapping: Boolean) {
     private val imports = mutableSetOf<String>()
     private val dependencies = mutableSetOf<DependencyDescription>()
+
+    var mappedTypeName: String
+        private set
+    var fullyQualifiedMappedTypeName: String?
+        private set
+
+    init {
+        if ("." in mappedTypeName)
+            throw IllegalArgumentException("Mapped type name must be simple name and thus not comprise dots as " +
+                "qualifiers")
+
+        this.mappedTypeName = mappedTypeName
+        this.fullyQualifiedMappedTypeName = fullyQualifiedMappedTypeName
+    }
+
+    fun setMappedTypeName(mappedTypeName: String, fullyQualifiedMappedTypeName: String?) {
+        this.mappedTypeName = mappedTypeName
+        this.fullyQualifiedMappedTypeName = fullyQualifiedMappedTypeName
+    }
 
     /**
      * Add an import to the type mapping, e.g., when the mapped type originates from a special package or framework
@@ -264,14 +302,15 @@ class PrimitiveTypeMappingsBuilder(private val targetMap: MutableMap<String, Typ
      * Specify a mapping for a string that represents the name of the original type to the given [typeName] of the
      * mapped type
      */
-    infix fun String.mapsTo(typeName: String) = addToMap(this, typeName)
+    infix fun String.mapsTo(typeName: String) = addToMap(this, null, typeName)
 
     /**
      * Helper function to create a [Pair] of original type name and [TypeMappingDescription] instance, and add it to the
      * collection of primitive type mappings managed by this [PrimitiveTypeMappingsBuilder].
      */
-    private fun addToMap(originalTypeName: String, mappedTypeName: String) : Pair<String, TypeMappingDescription> {
-        val typeMappingDescription = TypeMappingDescription(mappedTypeName, false)
+    private fun addToMap(originalTypeName: String, fullyQualifiedOriginalTypeName: String?, mappedTypeName: String)
+        : Pair<String, TypeMappingDescription> {
+        val typeMappingDescription = TypeMappingDescription(mappedTypeName, fullyQualifiedOriginalTypeName, false)
         targetMap[originalTypeName] = typeMappingDescription
         return originalTypeName to typeMappingDescription
     }
@@ -280,7 +319,9 @@ class PrimitiveTypeMappingsBuilder(private val targetMap: MutableMap<String, Typ
      * Map the name of a type to itself. This is useful when the original type has the same name in the target
      * technology, e.g., Boolean or String.
      */
-    fun String.mapsToSelf() = addToMap(this, this)
+    fun Pair<String, String>.mapsToSelf() = addToMap(first, second, first)
+
+    fun Pair<String, String>.mapsToSelfWithImportForFullyQualifiedName() = mapsToSelf() withImport(second)
 
     /**
      * Assign an import to a [Pair] of original type name and [TypeMappingDescription]
@@ -297,11 +338,6 @@ class PrimitiveTypeMappingsBuilder(private val targetMap: MutableMap<String, Typ
     infix fun Pair<String, TypeMappingDescription>.andImport(import: String) = withImport(import)
 
     /**
-     * Assign an import to a type that has is mapped to itself
-     */
-    infix fun String.withImport(import: String) = this.mapsToSelf() withImport import
-
-    /**
      * Assign a dependency to a [Pair] of original type name and [TypeMappingDescription]
      */
     infix fun Pair<String, TypeMappingDescription>.withDependency(dependency: String)
@@ -310,16 +346,6 @@ class PrimitiveTypeMappingsBuilder(private val targetMap: MutableMap<String, Typ
         targetMap[this.first] = this.second
         return this
     }
-
-    /**
-     * Assign an additional dependency to a [Pair] of original type name and [TypeMappingDescription]
-     */
-    infix fun Pair<String, TypeMappingDescription>.andDependency(dependency: String) = withDependency(dependency)
-
-    /**
-     * Assign a dependency to a type that has is mapped to itself
-     */
-    infix fun String.withDependency(dependency: String) = this.mapsToSelf() withDependency dependency
 }
 
 /**

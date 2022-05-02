@@ -6,6 +6,7 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import com.github.javaparser.ast.body.FieldDeclaration
 import com.github.javaparser.ast.body.MethodDeclaration
 import com.github.javaparser.ast.type.ClassOrInterfaceType
+import de.fhdo.lemma.data.intermediate.IntermediateComplexType
 import de.fhdo.lemma.data.intermediate.IntermediateDataStructure
 import de.fhdo.lemma.data.intermediate.IntermediateImportedComplexType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
@@ -20,13 +21,15 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.ast.setBody
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletGeneratedNode
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletPathSpecifier
 import de.fhdo.lemma.model_processing.code_generation.java_base.getAspect
-import de.fhdo.lemma.model_processing.code_generation.java_base.getAspectPropertyValue
 import de.fhdo.lemma.model_processing.code_generation.java_base.getFirstMatchingAspectPropertyValue
 import de.fhdo.lemma.model_processing.code_generation.java_base.getPropertyValue
+import de.fhdo.lemma.model_processing.code_generation.java_base.hasAspect
+import de.fhdo.lemma.model_processing.code_generation.java_base.qualifiedName
 import de.fhdo.lemma.model_processing.code_generation.java_base.resolve
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.addBeanMethod
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.addPropertyInjectedAttribute
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.addRelocatableImport
+import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.avro.AvroConversionTypeManager
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.booleanAspectPropertyValueOrFalse
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.classOrInterfaceType
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.consumer.KafkaListeners
@@ -65,9 +68,10 @@ internal object KafkaConfiguration {
     private var packageName: String? = null
     private var genletHeap: MutableMap<String, Any?>? = null
     private var kafkaConfiguration: ClassOrInterfaceDeclaration? = null
-    private val AVRO_PRODUCER_TYPE = StaticJavaParser.parseClassOrInterfaceType("GenericRecord")
-    private val AVRO_PRODUCER_TYPE_IMPORTS = setOf("org.apache.avro.generic.GenericRecord")
-    private var avroProducer: MethodDeclaration? = null
+    private val AVRO_SUFFIX = AVRO_PREFIX.capitalize()
+    private val AVRO_GENERIC_RECORD_TYPE = StaticJavaParser.parseClassOrInterfaceType("GenericRecord")
+    private val AVRO_GENERIC_RECORD_TYPE_IMPORTS = setOf("org.apache.avro.generic.GenericRecord")
+    private var genericAvroProducer: MethodDeclaration? = null
     private val producerServices = mutableMapOf<String?, KafkaProducerService>()
 
     /**
@@ -104,7 +108,7 @@ internal object KafkaConfiguration {
         genletHeap = null
         kafkaConfiguration = null
         producerServices.clear()
-        avroProducer = null
+        genericAvroProducer = null
     }
 
     /**
@@ -171,7 +175,7 @@ internal object KafkaConfiguration {
     private fun addOrGetProducerMethod(prefix: String, valueType: ClassOrInterfaceType, valueTypeImports: Set<String>,
         producerFactoryGenerator: (prefix: String, type: ClassOrInterfaceType, typeImports: Set<String>) -> String
             = KafkaConfiguration::addProducerFactory) : MethodDeclaration {
-        var methodName = "${prefix}Producer"
+        val methodName = "${prefix}Producer"
         var method = kafkaConfiguration!!.findMethod(methodName)
         if (method != null)
             return method
@@ -373,7 +377,7 @@ internal object KafkaConfiguration {
     private fun addListenerContainerFactory(prefix: String, groupAttributeName: String, valueType: ClassOrInterfaceType,
         valueTypeImports: Set<String>, parameter: IntermediateParameter,
         factoryGenerator: (String, ClassOrInterfaceType, Set<String>, String) -> MethodDeclaration
-            = KafkaConfiguration::addConsumerFactory
+            = KafkaConfiguration::addJsonConsumerFactory
     ) : String {
         // Check if listener factory already exists
         val factoryName = "${prefix}KafkaListenerContainerFactory"
@@ -415,9 +419,9 @@ internal object KafkaConfiguration {
     }
 
     /**
-     * Add Kafka consumer factory from asynchronous input [IntermediateParameter] to KafkaConfiguration
+     * Add JSON-specific Kafka consumer factory from asynchronous input [IntermediateParameter] to KafkaConfiguration
      */
-    private fun addConsumerFactory(factoryPrefix: String, type: ClassOrInterfaceType, typeImports: Set<String>,
+    private fun addJsonConsumerFactory(factoryPrefix: String, type: ClassOrInterfaceType, typeImports: Set<String>,
         groupAttributeName: String) : MethodDeclaration {
         val consumerFactory = addFactory(
             "${factoryPrefix}ConsumerFactory",
@@ -531,20 +535,30 @@ internal object KafkaConfiguration {
      * producer service
      */
     fun addAvroProducerElements(topic: String, parameter: IntermediateParameter) {
-        if (avroProducer == null)
-            avroProducer = addOrGetProducerMethod(AVRO_PREFIX, AVRO_PRODUCER_TYPE, AVRO_PRODUCER_TYPE_IMPORTS,
-                KafkaConfiguration::addAvroProducerFactory)
+        addGenericAvroProducerElements(topic, parameter)
+        addSchemaSpecificAvroProducerElements(topic, parameter)
+    }
+
+    private fun addGenericAvroProducerElements(topic: String, parameter: IntermediateParameter) {
+        if (genericAvroProducer == null)
+            genericAvroProducer = addOrGetProducerMethod(
+                "generic$AVRO_SUFFIX",
+                AVRO_GENERIC_RECORD_TYPE,
+                AVRO_GENERIC_RECORD_TYPE_IMPORTS,
+                KafkaConfiguration::addGenericAvroProducerFactory
+            )
 
         val operation = parameter.operation
-        val (producerService, producerAttribute) = addElementsToProducerService(operation, avroProducer!!, AVRO_PREFIX)
-        producerService.addSendMethod(operation.name, topic, avroProducer!!, producerAttribute, "new ProducerRecord<>",
-            setOf("org.apache.kafka.clients.producer.ProducerRecord"))
+        val (producerService, producerAttribute) = addElementsToProducerService(operation, genericAvroProducer!!,
+            "generic$AVRO_SUFFIX")
+        producerService.addSendMethod(operation.name, topic, genericAvroProducer!!, producerAttribute,
+            "new ProducerRecord<>", setOf("org.apache.kafka.clients.producer.ProducerRecord"))
     }
 
     /**
-     * Add Avro producer factory to KafkaConfiguration
+     * Add Avro producer factory for GenericRecords to KafkaConfiguration
      */
-    private fun addAvroProducerFactory(factoryPrefix: String, producerType: ClassOrInterfaceType,
+    private fun addGenericAvroProducerFactory(factoryPrefix: String, producerType: ClassOrInterfaceType,
         typeImports: Set<String>)
         = addFactory(
             "${factoryPrefix}ProducerFactory".toUniqueMethodName(),
@@ -582,6 +596,53 @@ internal object KafkaConfiguration {
             this + (existingMethodsCount + 1)
     }
 
+    private fun addSchemaSpecificAvroProducerElements(topic: String, parameter: IntermediateParameter) {
+        val avroSchemaRootClass = parameter.getAvroSchemaRootClass() ?: return
+
+        val producerMethod = addOrGetProducerMethod(
+            "${parameter.type.name.decapitalize()}$AVRO_SUFFIX",
+            StaticJavaParser.parseClassOrInterfaceType(parameter.type.name),
+            setOf(avroSchemaRootClass.fullyQualifiedName.get()),
+            KafkaConfiguration::addSchemaSpecificAvroProducerFactory
+        )
+
+        val operation = parameter.operation
+        val (producerService, producerAttribute) = addElementsToProducerService(operation, producerMethod,
+            "${parameter.type.name.decapitalize()}$AVRO_SUFFIX")
+        producerService.addSendMethod(operation.name, topic, producerMethod, producerAttribute,
+            "new ProducerRecord<>", setOf("org.apache.kafka.clients.producer.ProducerRecord"))
+    }
+
+    private fun IntermediateParameter.getAvroSchemaRootClass() : ClassOrInterfaceDeclaration? {
+        val importedType = type as? IntermediateImportedComplexType ?: return null
+        return AvroConversionTypeManager.getRootType(importedType.qualifiedName)
+    }
+
+    private fun addSchemaSpecificAvroProducerFactory(factoryPrefix: String, producerType: ClassOrInterfaceType,
+        typeImports: Set<String>)
+        = addFactory(
+            "${factoryPrefix}ProducerFactory".toUniqueMethodName(),
+            "ProducerFactory".toGenericTypeWithStringKey(producerType),
+            typeImports,
+            """
+                |Map<String, Object> configProps = new HashMap<>();
+                |configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, $BOOTSTRAP_ADDRESS_ATTRIBUTE_NAME);
+                |configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+                |configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, KafkaAvroSerializer.class);
+                |configProps.put(KafkaAvroSerializerConfig.SCHEMA_REGISTRY_URL_CONFIG, $AVRO_REGISTRY_ADDRESS_ATTRIBUTE_NAME);
+                |return new DefaultKafkaProducerFactory<>(configProps);
+            """.trimMargin(),
+            setOf(
+                "java.util.Map",
+                "java.util.HashMap",
+                "org.apache.kafka.clients.producer.ProducerConfig",
+                "org.apache.kafka.common.serialization.StringSerializer",
+                "io.confluent.kafka.serializers.KafkaAvroSerializerConfig",
+                "io.confluent.kafka.serializers.KafkaAvroSerializer",
+                "org.springframework.kafka.core.DefaultKafkaProducerFactory"
+            )
+        ).nameAsString
+
     /**
      * Add Avro consumer for [topic], [consumerGroup], and from asynchronous input [IntermediateParameter] to
      * KafkaConfiguration, Listeners class, and corresponding consumer service
@@ -591,25 +652,111 @@ internal object KafkaConfiguration {
         val consumerGroupAttributeName = addConsumerGroupAttribute(consumerGroup, AVRO_PREFIX)
 
         // Add listener container factory
-        val factoryType = StaticJavaParser.parseClassOrInterfaceType("Object")
-        val listenerFactoryName = addListenerContainerFactory(AVRO_PREFIX.decapitalize() + topic.capitalize(),
-            consumerGroupAttributeName, factoryType, emptySet(), parameter, KafkaConfiguration::addAvroConsumerFactory)
+        val avroSchemaRootClass = parameter.getAvroSchemaRootClass()
+        if (avroSchemaRootClass != null) {
+            addAvroConsumerListenerElements(
+                topic,
+                consumerGroup,
+                consumerGroupAttributeName,
+                parameter,
+                avroSchemaRootClass.nameAsString,
+                setOf(avroSchemaRootClass.fullyQualifiedName.get()),
+                KafkaConfiguration::addSpecificReaderAvroConsumerFactory
+            )
+
+            /*addAvroConsumerListenerElements(
+                topic,
+                consumerGroup,
+                consumerGroupAttributeName,
+                parameter,
+                AVRO_GENERIC_RECORD_TYPE.nameAsString,
+                AVRO_GENERIC_RECORD_TYPE_IMPORTS,
+                KafkaConfiguration::addUnspecificReaderAvroConsumerFactory,
+                AVRO_PREFIX.decapitalize() + AVRO_GENERIC_RECORD_TYPE.nameAsString + topic.capitalize(),
+                AVRO_PREFIX.decapitalize() + AVRO_GENERIC_RECORD_TYPE.nameAsString +
+                    parameter.operation.name.capitalize()
+            )*/
+        } else
+            addAvroConsumerListenerElements(topic, consumerGroup, consumerGroupAttributeName, parameter, "Object",
+                emptySet())
+    }
+
+    private fun addAvroConsumerListenerElements(
+        topic: String,
+        consumerGroup: String,
+        consumerGroupAttributeName: String,
+        parameter: IntermediateParameter,
+        factoryTypeName: String,
+        typeImports: Set<String>,
+        factoryGenerator: (String, ClassOrInterfaceType, Set<String>, String) -> MethodDeclaration
+            = KafkaConfiguration::addGenericAvroConsumerFactory,
+        factoryName: String = AVRO_PREFIX.decapitalize() + topic.capitalize(),
+        listenerPrefix: String = AVRO_PREFIX.decapitalize() + parameter.operation.name.capitalize()
+    ) {
+        val factoryType = StaticJavaParser.parseClassOrInterfaceType(factoryTypeName)
+        val listenerFactoryName = addListenerContainerFactory(
+            factoryName,
+            consumerGroupAttributeName,
+            factoryType,
+            typeImports,
+            parameter,
+            factoryGenerator
+        )
 
         // Add Listeners elements
-        val consumerElements = KafkaListeners.addConsumerElements(parameter, factoryType, AVRO_PREFIX)
-        val listenerPrefix = "${AVRO_PREFIX.decapitalize()}${parameter.operation.name.capitalize()}"
-        val listenerMethod = KafkaListeners.addOrGetListenerMethod(listenerPrefix, consumerElements, topic, consumerGroup,
-            listenerFactoryName)
+        val consumerElements = KafkaListeners.addConsumerElements(parameter, factoryType, typeImports, AVRO_PREFIX)
+        val listenerMethod = KafkaListeners.addOrGetListenerMethod(listenerPrefix, consumerElements, topic,
+            consumerGroup, listenerFactoryName)
 
         // Adapt to error handler, if required
         listenerMethod.adaptToErrorHandlerIfRequired(parameter, consumerElements)
     }
 
+    private fun addSpecificReaderAvroConsumerFactory(factoryPrefix: String, type: ClassOrInterfaceType,
+        typeImports: Set<String>, groupAttributeName: String)
+        = addReaderAvroConsumerFactory(factoryPrefix, type, typeImports, groupAttributeName, true)
+
     /**
-     * Add Avro consumer factory from asynchronous input [IntermediateParameter] to KafkaConfiguration
+     * Add Avro consumer factory with explicitly activated or deactivated specific-reader feature from asynchronous
+     * input [IntermediateParameter] to KafkaConfiguration
      */
-    private fun addAvroConsumerFactory(factoryPrefix: String, type: ClassOrInterfaceType, typeImports: Set<String>,
-        groupAttributeName: String)
+    private fun addReaderAvroConsumerFactory(factoryPrefix: String, type: ClassOrInterfaceType,
+        typeImports: Set<String>, groupAttributeName: String, specificAvroReaderConfig: Boolean)
+        = addFactory(
+            "${factoryPrefix}ConsumerFactory".toUniqueMethodName(),
+            "ConsumerFactory".toGenericTypeWithStringKey(type),
+            typeImports,
+            """
+                |Map<String, Object> configProps = new HashMap<>();
+                |configProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, $BOOTSTRAP_ADDRESS_ATTRIBUTE_NAME);
+                |configProps.put(ConsumerConfig.GROUP_ID_CONFIG, $groupAttributeName);
+                |configProps.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+                |configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, KafkaAvroDeserializer.class);
+                |configProps.put(KafkaAvroDeserializerConfig.SCHEMA_REGISTRY_URL_CONFIG, $AVRO_REGISTRY_ADDRESS_ATTRIBUTE_NAME);
+                |configProps.put(KafkaAvroDeserializerConfig.SPECIFIC_AVRO_READER_CONFIG, true);
+                |return new DefaultKafkaConsumerFactory<>(configProps);
+            """.trimMargin(),
+            setOf(
+                "java.util.Map",
+                "java.util.HashMap",
+                "org.apache.kafka.clients.consumer.ConsumerConfig",
+                "org.apache.kafka.common.serialization.StringDeserializer",
+                "io.confluent.kafka.serializers.KafkaAvroDeserializer",
+                "io.confluent.kafka.serializers.KafkaAvroDeserializerConfig",
+                "org.springframework.kafka.core.DefaultKafkaConsumerFactory"
+            )
+        )
+
+    private fun addUnspecificReaderAvroConsumerFactory(factoryPrefix: String, type: ClassOrInterfaceType,
+        typeImports: Set<String>, groupAttributeName: String)
+        = addReaderAvroConsumerFactory(factoryPrefix, type, typeImports, groupAttributeName, false)
+
+    /**
+     * Add generic Avro consumer factory from asynchronous input [IntermediateParameter] to KafkaConfiguration. In
+     * particular, this kind of Avro consumer factory doesn't have the specific-reader feature activated.
+     */
+    private fun addGenericAvroConsumerFactory(factoryPrefix: String, type: ClassOrInterfaceType,
+        typeImports: Set<String>, groupAttributeName: String)
         = addFactory(
             "${factoryPrefix}ConsumerFactory".toUniqueMethodName(),
             "ConsumerFactory".toGenericTypeWithStringKey(type),
@@ -621,7 +768,7 @@ internal object KafkaConfiguration {
                 |configProps.put(ConsumerConfig.GROUP_ID_CONFIG, $groupAttributeName);
                 |configProps.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
                 |configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, KafkaAvroDeserializer.class);
-                |configProps.put(KafkaAvroSerializerConfig.SCHEMA_REGISTRY_URL_CONFIG, $AVRO_REGISTRY_ADDRESS_ATTRIBUTE_NAME);
+                |configProps.put(KafkaAvroDeserializerConfig.SCHEMA_REGISTRY_URL_CONFIG, $AVRO_REGISTRY_ADDRESS_ATTRIBUTE_NAME);
                 |deserializer.configure(configProps, false);
                 |return new DefaultKafkaConsumerFactory<>(configProps, new StringDeserializer(), deserializer);
             """.trimMargin(),
@@ -630,11 +777,14 @@ internal object KafkaConfiguration {
                 "java.util.HashMap",
                 "org.apache.kafka.clients.consumer.ConsumerConfig",
                 "org.apache.kafka.common.serialization.StringDeserializer",
-                "io.confluent.kafka.serializers.KafkaAvroSerializerConfig",
                 "io.confluent.kafka.serializers.KafkaAvroDeserializer",
+                "io.confluent.kafka.serializers.KafkaAvroDeserializerConfig",
                 "org.springframework.kafka.core.DefaultKafkaConsumerFactory"
             )
         )
+
+    private fun buildGenericAvroConsumerFactoryName(topic: String)
+        = AVRO_PREFIX.decapitalize() + AVRO_GENERIC_RECORD_TYPE.nameAsString + topic.capitalize()
 
     /**
      * Get the KafkaConfiguration, producer service, and consumer service classes as JavaParser AST nodes

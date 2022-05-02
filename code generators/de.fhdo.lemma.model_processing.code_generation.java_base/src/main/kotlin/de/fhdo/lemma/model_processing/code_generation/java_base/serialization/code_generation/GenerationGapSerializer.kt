@@ -58,6 +58,8 @@ import org.koin.core.inject
 import java.io.File
 import java.nio.charset.Charset
 
+const val GENERATED_CODE_SUBFOLDER_NAME = "gen"
+
 /**
  * Serializes an AST [Node] following the Generation Gap Pattern (cf.
  * [Stahl and Völter](www.voelter.de/data/books/mdsd-en.pdf) and [GenerationGapSerializerBase]).
@@ -168,7 +170,6 @@ internal class GenerationGapSerializerBase : KoinComponent {
     private val serializationConfiguration: AbstractSerializationConfiguration by inject()
 
     companion object {
-        internal const val GENERATION_SUBFOLDER = "gen"
         private const val GEN_IMPL_CLASS_SUFFIX = "GenImpl"
     }
 
@@ -190,7 +191,7 @@ internal class GenerationGapSerializerBase : KoinComponent {
         val fullTargetFolderPath = fullTargetFile.parent
         val targetClassname = fullTargetFile.nameWithoutExtension
 
-        return generate(originalClass, fullTargetFolderPath, GENERATION_SUBFOLDER, targetClassname)
+        return generate(originalClass, fullTargetFolderPath, GENERATED_CODE_SUBFOLDER_NAME, targetClassname)
     }
 
     /**
@@ -517,6 +518,7 @@ internal class GenerationGapSerializerBase : KoinComponent {
                 method.addMarkerAnnotation("Override")
             val parameterString = method.parameters.map { it.name }.joinToString()
             val delegatingClassName = if (!method.isStatic) "super" else genImplClass.nameAsString
+
             method.setBody(
                 if (method.type.isVoidType)
                     "$delegatingClassName.${method.name}($parameterString)"

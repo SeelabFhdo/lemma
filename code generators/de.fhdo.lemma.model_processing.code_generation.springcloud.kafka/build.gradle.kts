@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     kotlin("jvm") version "1.3.72"
     maven
@@ -11,9 +13,9 @@ repositories {
 }
 
 buildscript {
-    extra.set("commonsVersion", "3.5")
     extra.set("coroutinesVersion", "1.1.1")
     extra.set("groovyVersion", "3.0.3")
+    extra.set("gsonVersion", "2.9.0")
     extra.set("jansiVersion", "1.17.1")
     extra.set("javaBaseGeneratorVersion", version)
     extra.set("javaParserVersion", "3.24.2")
@@ -27,9 +29,15 @@ buildscript {
 }
 
 dependencies {
-    val commonsVersion: String by rootProject.extra
+    val resourcesPath = sourceSets.main.get().resources.srcDirs.first().absolutePath
+    val propertiesPath = resourcesPath + File.separator + "kafka.genlet.properties"
+    val properties = Properties()
+    properties.load(File(propertiesPath).inputStream())
+    val avroVersion = properties.getProperty("avro.version")
+
     val coroutinesVersion: String by rootProject.extra
     val groovyVersion: String by rootProject.extra
+    val gsonVersion: String by rootProject.extra
     val jansiVersion: String by rootProject.extra
     val javaBaseGeneratorVersion: String by rootProject.extra
     val javaParserVersion: String by rootProject.extra
@@ -44,6 +52,7 @@ dependencies {
     implementation(kotlin("stdlib"))
     implementation(kotlin("reflect"))
     implementation("com.github.javaparser:javaparser-core:$javaParserVersion")
+    implementation("com.google.code.gson:gson:$gsonVersion")
     implementation("de.fhdo.lemma:de.fhdo.lemma.typechecking:$lemmaEclipsePluginsVersion")
     implementation("de.fhdo.lemma.data.datadsl:de.fhdo.lemma.data.datadsl:$lemmaEclipsePluginsVersion")
     implementation("de.fhdo.lemma.data.datadsl:de.fhdo.lemma.data.datadsl.metamodel:$lemmaEclipsePluginsVersion")
@@ -68,14 +77,15 @@ dependencies {
     implementation("de.fhdo.lemma.technology.technologydsl:de.fhdo.lemma.technology.technologydsl.metamodel:" +
         lemmaEclipsePluginsVersion)
     implementation("info.picocli:picocli:$picocliVersion")
+    implementation("io.github.microutils:kotlin-logging:$loggingVersion")
+    implementation("org.apache.avro:avro:$avroVersion")
+    implementation("org.apache.avro:avro-compiler:$avroVersion")
     implementation("org.apache.logging.log4j:log4j-api:$log4jVersion")
     implementation("org.apache.logging.log4j:log4j-core:$log4jVersion")
     implementation("org.apache.logging.log4j:log4j-slf4j-impl:$log4jVersion")
-    implementation("io.github.microutils:kotlin-logging:$loggingVersion")
     // Required by log4j (Groovy execution engine)
     implementation("org.codehaus.groovy:groovy-jsr223:$groovyVersion")
     // Required by kotlin-xml-builder
-    implementation("org.apache.commons:commons-lang3:$commonsVersion")
     implementation("org.fusesource.jansi:jansi:$jansiVersion")
     implementation("org.eclipse.lsp4j:org.eclipse.lsp4j:$lsp4jVersion")
     implementation("org.eclipse.lsp4j:org.eclipse.lsp4j.jsonrpc:$lsp4jVersion")
@@ -93,6 +103,17 @@ tasks {
         kotlinOptions.jvmTarget = "11"
         // Java Base Generator uses @JvmDefault annotation
         kotlinOptions.freeCompilerArgs = listOf("-Xjvm-default=compatibility")
+    }
+    jar {
+        from(configurations.compileClasspath.get()
+            .filter{
+                it.exists() && (
+                    it.name.startsWith("avro") ||
+                    it.name.startsWith("jackson") ||
+                    it.name.startsWith("velocity")
+                )
+            }
+            .map { if (it.isDirectory) it else zipTree(it) })
     }
 }
 

@@ -18,6 +18,7 @@ import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.shared.b
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.shared.buildTopicPropertyName
 import de.fhdo.lemma.model_processing.utils.hasTechnology
 import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
+import java.util.*
 
 private const val BOOTSTRAP_ADDRESS_PROPERTY = "kafka.bootstrapAddress"
 private const val AVRO_REGISTRY_ADDRESS_PROPERTY = "kafka.avro.schemaRegistryAddress"
@@ -79,11 +80,16 @@ internal class MicroserviceHandler
         val avroRegistryAddressAspect = eObject.getAspect("AvroRegistryAddress".forKafkaTechnology())
         if (avroRegistryAddressAspect != null) {
             node.addDependency("io.confluent:kafka-avro-serializer:5.5.0")
-            node.addDependency("org.apache.avro:avro:1.9.2")
+            node.addDependency("org.apache.avro:avro:${parseAvroVersion()}")
             avroRegistryAddressAspect.newApplicationProperty("address", AVRO_REGISTRY_ADDRESS_PROPERTY)
             KafkaConfiguration.addAvroRegistryAddressProperty(AVRO_REGISTRY_ADDRESS_PROPERTY)
         }
 
         return GenletCodeGenerationHandlerResult(node, ApplicationProperties.getGeneratedFile())
     }
+
+    private fun parseAvroVersion()
+        = this::class.java.classLoader.getResourceAsStream("kafka.genlet.properties")
+            ?.use { Properties().apply { load(it) } }
+            ?.getProperty("avro.version")!!
 }

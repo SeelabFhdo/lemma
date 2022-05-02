@@ -19,6 +19,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.findAsp
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.findCodeGenerationHandlers as baseFindCodeGenerationHandlers
 import de.fhdo.lemma.model_processing.phases.PhaseException
 import de.fhdo.lemma.model_processing.utils.countLines
+import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
 import org.eclipse.emf.ecore.EObject
 import java.io.File
 import java.net.URLClassLoader
@@ -417,17 +418,32 @@ object GenletStateAccess {
     /**
      * Get the value of a specific state information
      */
-    @Suppress("UNCHECKED_CAST")
+    @Suppress("UNCHECKED_CAST", "IMPLICIT_CAST_TO_ANY")
     operator fun <T: Any> getValue(thisRef: Any?, property: KProperty<*>) : T {
         val value = when(property.name) {
+            "currentDomainPackage" -> {
+                val currentDomainPackage: String by DomainState
+                currentDomainPackage
+            }
+
+            "currentMicroservice" -> {
+                val currentMicroservice: IntermediateMicroservice by MainState
+                currentMicroservice
+            }
+
             "currentMicroservicePackage" -> {
                 val currentMicroservicePackage: String by MainState
                 currentMicroservicePackage
             }
 
-            "currentDomainPackage" -> {
-                val currentDomainPackage: String by DomainState
-                currentDomainPackage
+            "currentMicroserviceTargetFolderPathForJavaFilesWithoutMicroservicePackage" -> {
+                val currentMicroserviceTargetFolderPathForJavaFilesWithoutMicroservicePackage: String by MainState
+                currentMicroserviceTargetFolderPathForJavaFilesWithoutMicroservicePackage
+            }
+
+            "currentMicroserviceTargetFolderPathForResourceFiles" -> {
+                val currentMicroserviceTargetFolderPathForResourceFiles: String by MainState
+                currentMicroserviceTargetFolderPathForResourceFiles
             }
 
             else -> throw IllegalArgumentException("Genlet state does not comprise property ${property.name}")

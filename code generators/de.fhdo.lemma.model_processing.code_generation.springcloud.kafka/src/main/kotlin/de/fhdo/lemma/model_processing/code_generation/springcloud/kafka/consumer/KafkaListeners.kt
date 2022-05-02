@@ -93,7 +93,7 @@ internal object KafkaListeners {
     /**
      * Add elements to [KafkaConsumerService] as required by the Listeners class to consume Kafka messages
      */
-    private fun addConsumerElements(parameter: IntermediateParameter, handlerType: ClassOrInterfaceType,
+    fun addConsumerElements(parameter: IntermediateParameter, handlerType: ClassOrInterfaceType,
         handlerTypeImports: Set<String>, prefix: String) : Pair<MethodDeclaration, FieldDeclaration> {
         // A new KafkaConsumerService is created, if it does not exist, based on the given parameter
         val consumerService = addOrGetConsumerService(parameter)
@@ -104,7 +104,7 @@ internal object KafkaListeners {
         addConsumerServiceAttributeSetter(consumerAttribute, attributeTypeImport)
 
         // Add method for handling incoming messages to the consumer service
-        val consumerMethod = consumerService.addHandlerMethod(parameter, handlerType, handlerTypeImports, prefix)
+        val consumerMethod = consumerService.addOrGetHandlerMethod(parameter, handlerType, handlerTypeImports, prefix)
 
         return consumerMethod to consumerAttribute
     }

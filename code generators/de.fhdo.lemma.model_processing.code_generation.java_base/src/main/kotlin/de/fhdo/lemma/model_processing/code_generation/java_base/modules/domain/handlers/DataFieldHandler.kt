@@ -24,7 +24,6 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.hasAspect
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasFeature
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.TypeMappingDescription
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.createTypeSpecificValueString
-import de.fhdo.lemma.model_processing.code_generation.java_base.languages.getBasicType
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.getTypeMapping
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.isNullable
 import de.fhdo.lemma.model_processing.code_generation.java_base.languages.setJavaTypeFrom
@@ -102,7 +101,7 @@ internal class DataFieldHandler :
         if (typeMapping !== null && field.hasAspect("Array".forJavaTechnology())) {
             val mappedTypeName = "${variables[0].typeAsString}[]"
             variables[0].setType(mappedTypeName)
-            typeMapping.mappedTypeName = mappedTypeName
+            typeMapping.setMappedTypeName(mappedTypeName, null)
         }
 
         return typeMapping to field.type

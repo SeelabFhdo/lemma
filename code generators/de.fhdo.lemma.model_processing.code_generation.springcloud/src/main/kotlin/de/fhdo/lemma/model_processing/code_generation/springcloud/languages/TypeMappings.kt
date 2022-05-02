@@ -14,17 +14,17 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.languages.primit
 private val genletTypeMappings = primitiveTypeMappings {
     technology {
         (
-            "AuthenticationException"
-                    withImport "org.springframework.security.core.AuthenticationException"
-                    withDependency "org.springframework.security:spring-security-core:5.1.6.RELEASE"
+            ("AuthenticationException" to "org.springframework.security.core.AuthenticationException")
+                .mapsToSelfWithImportForFullyQualifiedName()
+                withDependency "org.springframework.security:spring-security-core:5.1.6.RELEASE"
         )
         (
             "GrantedAuthorities" mapsTo "Collection<? extends GrantedAuthority>"
-                    withImport "org.springframework.security.core.GrantedAuthority" andImport "java.util.Collection"
-                    withDependency "org.springframework.security:spring-security-core:5.1.6.RELEASE"
+                withImport "org.springframework.security.core.GrantedAuthority" andImport "java.util.Collection"
+                withDependency "org.springframework.security:spring-security-core:5.1.6.RELEASE"
         )
-            "HttpServletRequest" withImport "javax.servlet.http.HttpServletRequest"
-
+            ("HttpServletRequest" to "javax.servlet.http.HttpServletRequest")
+                .mapsToSelfWithImportForFullyQualifiedName()
         (
             "UserDetails" mapsTo "UserDetails"
                     withImport "org.springframework.security.core.userdetails.UserDetails"

@@ -167,11 +167,10 @@ private class ExtendedGenerationGapSerializerBase : KoinComponent {
 
         val extensionInterface = findExtensionInterface(fullTargetFolderPath, targetClassname)
         return if (extensionInterface == null)
-                generateWithoutGap(originalClass, fullTargetFolderPath,
-                    GenerationGapSerializerBase.GENERATION_SUBFOLDER, targetClassname)
+                generateWithoutGap(originalClass, fullTargetFolderPath, GENERATED_CODE_SUBFOLDER_NAME, targetClassname)
             else
-                generateWithGap(originalClass, extensionInterface, fullTargetFolderPath,
-                    GenerationGapSerializerBase.GENERATION_SUBFOLDER, targetClassname)
+                generateWithGap(originalClass, extensionInterface, fullTargetFolderPath, GENERATED_CODE_SUBFOLDER_NAME,
+                    targetClassname)
     }
 
     /**

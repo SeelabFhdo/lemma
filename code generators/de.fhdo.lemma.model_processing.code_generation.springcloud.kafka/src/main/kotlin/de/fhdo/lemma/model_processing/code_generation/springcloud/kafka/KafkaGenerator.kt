@@ -10,6 +10,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletGe
 import de.fhdo.lemma.model_processing.code_generation.java_base.getAllAspects
 import de.fhdo.lemma.model_processing.code_generation.java_base.getPropertyValue
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasAspect
+import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.avro.AvroConversionHelpersGenerator
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.shared.ApplicationProperties
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.avro.AvroConverters
 import de.fhdo.lemma.model_processing.code_generation.springcloud.kafka.consumer.KafkaListeners
@@ -70,6 +71,12 @@ class KafkaGenerator : AbstractGenlet(BASE_PACKAGE) {
             GenletEventType.INTERMEDIATE_EOBJECT_PROCESSING_STARTS -> {
                 processIntermediateEObject(event[GenletEventObject.INTERMEDIATE_EOBJECT]!!)
                 null
+            }
+
+            GenletEventType.MICROSERVICE_GENERATION_FINISHED -> {
+                AvroConversionHelpersGenerator.generateConversionHelpers()
+                val generatedNodes = AvroConversionHelpersGenerator.getGeneratedNodesAndReset()
+                return generatedNodes to emptySet()
             }
 
             /* Overall code generation has finished */

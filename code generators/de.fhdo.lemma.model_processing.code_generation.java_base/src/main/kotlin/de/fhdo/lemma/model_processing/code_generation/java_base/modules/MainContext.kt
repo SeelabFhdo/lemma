@@ -143,10 +143,13 @@ internal object MainContext {
             val value = when(property.name) {
                 "aspectHandlers" -> aspectHandlers.toMap()
                 "collectedDependencies" -> collectedDependencies.toSet()
+                "currentMicroservice" -> currentMicroservice
                 "currentMicroservicePackage" -> currentMicroservicePackage
                 "currentMicroserviceTargetFolderPathRootPath" -> targetFolderPath
                 "currentMicroserviceTargetFolderPath" -> currentMicroserviceTargetFolderPath()
                 "currentMicroserviceTargetFolderPathForJavaFiles" -> currentMicroserviceTargetFolderPathForJavaFiles()
+                "currentMicroserviceTargetFolderPathForJavaFilesWithoutMicroservicePackage" ->
+                    currentMicroserviceTargetFolderPathForJavaFiles(false)
                 "currentMicroserviceTargetFolderPathForResourceFiles" ->
                     currentMicroserviceTargetFolderPathForResourceFiles()
                 "dependencyModifierInstances" -> dependencyModifierInstances()
@@ -179,15 +182,19 @@ internal object MainContext {
         /**
          * Helper to calculate the target folder path for Java files of the state's [currentMicroservicePackage]
          */
-        private fun currentMicroserviceTargetFolderPathForJavaFiles() : String {
+        private fun currentMicroserviceTargetFolderPathForJavaFiles(includeMicroservicePackage: Boolean = true)
+            : String {
             val microservicePackageFolderPath = currentMicroservicePackage.packageToPath()
+            val targetFolderWithoutMicroservicePackage = listOf(
+                    targetFolderPath,
+                    microservicePackageFolderPath,
+                    "src", "main", "java"
+                ).joinToString(File.separator)
 
-            return listOf(
-                targetFolderPath,
-                microservicePackageFolderPath,
-                "src", "main", "java",
-                microservicePackageFolderPath
-            ).joinToString(File.separator)
+            return if (includeMicroservicePackage)
+                    targetFolderWithoutMicroservicePackage + File.separator + microservicePackageFolderPath
+                else
+                    targetFolderWithoutMicroservicePackage
         }
 
         /**

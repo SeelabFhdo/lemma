@@ -5,10 +5,12 @@ import com.github.javaparser.ast.Modifier
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import com.github.javaparser.ast.body.FieldDeclaration
 import com.github.javaparser.ast.body.MethodDeclaration
+import com.github.javaparser.ast.stmt.ExpressionStmt
 import com.github.javaparser.ast.type.ClassOrInterfaceType
 import com.github.javaparser.ast.type.Type
 import com.github.javaparser.ast.type.WildcardType
 import de.fhdo.lemma.data.intermediate.IntermediateComplexType
+import de.fhdo.lemma.data.intermediate.IntermediateDataField
 import de.fhdo.lemma.data.intermediate.IntermediateDataModel
 import de.fhdo.lemma.data.intermediate.IntermediateDataStructure
 import de.fhdo.lemma.data.intermediate.IntermediateType
@@ -178,6 +180,31 @@ internal fun ClassOrInterfaceDeclaration.setterExists(attribute: FieldDeclaratio
     return methodExists(fakeSetter.nameAsString, fakeSetter.parameters.map { it.type })
 }
 
+internal fun ClassOrInterfaceDeclaration.getExistingSetter(name: String, parameterType: String) : MethodDeclaration? {
+    val fakeClass = ClassOrInterfaceDeclaration()
+    val fakeAttribute = fakeClass.addField("TODO", name)
+    val fakeSetter = fakeAttribute.createSetter()
+    return findMethod(fakeSetter.nameAsString, parameterType)
+}
+
+internal fun ClassOrInterfaceDeclaration.getExistingGetter(name: String, returnType: String) : MethodDeclaration? {
+    val fakeClass = ClassOrInterfaceDeclaration()
+    val fakeAttribute = fakeClass.addField("TODO", name)
+    val fakeGetter = fakeAttribute.createGetter()
+    return findMethodByReturnType(fakeGetter.nameAsString, returnType)
+}
+
+internal fun ClassOrInterfaceDeclaration.getExistingGetter(field: IntermediateDataField) : MethodDeclaration? {
+    val fakeClass = ClassOrInterfaceDeclaration()
+    val fakeAttribute = fakeClass.addField("TODO", field.name)
+    fakeAttribute.variables[0].setJavaTypeFrom(field.type, fakeClass) {}
+    val fakeGetter = fakeAttribute.createGetter()
+    return findMethodByReturnType(fakeGetter.nameAsString, fakeGetter.typeAsString)
+}
+
+private fun ClassOrInterfaceDeclaration.findMethodByReturnType(methodName: String, returnTypeName: String)
+    = methods.find { it.nameAsString == methodName && it.typeAsString == returnTypeName }
+
 /**
  * Check if a method with the given signature ([methodName] and [parameterTypes]) exists in this
  * [ClassOrInterfaceDeclaration].
@@ -185,7 +212,10 @@ internal fun ClassOrInterfaceDeclaration.setterExists(attribute: FieldDeclaratio
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 internal fun ClassOrInterfaceDeclaration.methodExists(methodName: String, parameterTypes: List<Type> = emptyList())
-    = findMethod(methodName, parameterTypes) != null
+    = methodExists(methodName, *parameterTypes.toTypedArray())
+
+internal fun ClassOrInterfaceDeclaration.methodExists(methodName: String, vararg parameterTypes: Type)
+    = findMethod(methodName, *parameterTypes.map { it.asString() }.toTypedArray()) != null
 
 /**
  * Find method with the given signature ([methodName] and [parameterTypes]) in this [ClassOrInterfaceDeclaration].
@@ -193,13 +223,16 @@ internal fun ClassOrInterfaceDeclaration.methodExists(methodName: String, parame
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 internal fun ClassOrInterfaceDeclaration.findMethod(methodName: String, parameterTypes: List<Type> = emptyList())
+    = findMethod(methodName, *parameterTypes.map { it.asString() }.toTypedArray())
+
+internal fun ClassOrInterfaceDeclaration.findMethod(methodName: String, vararg parameterTypeNames: String)
     = methods.find { method ->
             method.nameAsString == methodName &&
-            method.parameters.size == parameterTypes.size &&
+            method.parameters.size == parameterTypeNames.size &&
             method.parameters
                 .map { it.type }
                 .withIndex()
-                .all { (index, type) -> type.asString() == parameterTypes[index].asString() }
+                .all { (index, type) -> type.asString() == parameterTypeNames[index] }
         }
 
 /**

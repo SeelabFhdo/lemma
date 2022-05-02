@@ -16,6 +16,8 @@ import java.io.File
 import java.lang.IllegalArgumentException
 import kotlin.reflect.KProperty
 
+const val DOMAIN_SUBFOLDER_NAME = "domain"
+
 /**
  * Represents the context for the [DomainCodeGenerationSubModule]. The context provides state handling for the sub-
  * module and sub-module-specific helpers.
@@ -25,8 +27,6 @@ import kotlin.reflect.KProperty
 internal object DomainContext {
     /* State object of the context */
     object State {
-        private const val DOMAIN_SUBFOLDER_NAME = "domain"
-
         private lateinit var currentIntermediateDomainModelUri: String
         private lateinit var currentIntermediateDomainModelFilePath: String
         private var currentIntermediateDomainModel: IntermediateDataModel? = null

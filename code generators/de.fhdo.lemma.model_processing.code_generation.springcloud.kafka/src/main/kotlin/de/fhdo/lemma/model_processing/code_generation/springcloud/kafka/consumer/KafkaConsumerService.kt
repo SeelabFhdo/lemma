@@ -59,9 +59,9 @@ internal class KafkaConsumerService(val packageName: String, genletHeap: Mutable
     }
 
     /**
-     * Add method to the consumer service for handling incoming messages
+     * Add or get method to the consumer service for handling incoming messages
      */
-    fun addHandlerMethod(intermediateParameter: IntermediateParameter, handlerType: ClassOrInterfaceType,
+    fun addOrGetHandlerMethod(intermediateParameter: IntermediateParameter, handlerType: ClassOrInterfaceType,
         typeImports: Set<String>, prefix: String) : MethodDeclaration {
         val methodName = buildConsumerServiceHandlerName(intermediateParameter, prefix)
         var method = kafkaConsumerService!!.findMethod(methodName, listOf(handlerType))
