@@ -5,6 +5,7 @@ import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.core.runtime.IProgressMonitor
 import de.fhdo.lemma.utils.LemmaUtils
 import de.fhdo.lemma.technology.mapping.TechnologyMapping
+import de.fhdo.lemma.service.ServiceModel
 
 /**
  * Reconcile strategy that is capable of reloading imported models of a currently constructed model.
@@ -38,6 +39,29 @@ class MappingDslReconcileStrategy extends XtextDocumentReconcileStrategy {
                     it.importURI)
                 // Reloading an EMF resource boils down to first unloading it and then immediately
                 // loading it again
+                importedResource.unload()
+                importedResource.load(emptyMap)
+
+                // Reload transitively imported data models to enable referencing of newly defined
+                // domain concepts and their elements
+                if (!importedResource.contents.empty &&
+                    importedResource.contents.get(0) instanceof ServiceModel)
+                    (importedResource.contents.get(0) as ServiceModel).reloadImportedDataModels
+            } catch (Exception ex) {
+                // NOOP
+            }
+        ]
+    }
+
+    /**
+     * Helper to reload data models being imported into a mapping model transitively via a service
+     * model
+     */
+    private def reloadImportedDataModels(ServiceModel serviceModel) {
+        serviceModel.imports.forEach[
+            try {
+                val importedResource = LemmaUtils.getResourceFromUri(serviceModel.eResource,
+                    it.importURI)
                 importedResource.unload()
                 importedResource.load(emptyMap)
             } catch (Exception ex) {

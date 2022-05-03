@@ -4,6 +4,7 @@ package de.fhdo.lemma.data.intermediate;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
@@ -1967,13 +1968,22 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_IMPORTED_ASPECT_FEATURE_COUNT = 11;
 
     /**
+     * The operation id for the '<em>Get Effective Property Values</em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_IMPORTED_ASPECT___GET_EFFECTIVE_PROPERTY_VALUES = 0;
+
+    /**
      * The number of operations of the '<em>Imported Aspect</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_IMPORTED_ASPECT_OPERATION_COUNT = 0;
+    int INTERMEDIATE_IMPORTED_ASPECT_OPERATION_COUNT = 1;
 
     /**
      * The meta object id for the '{@link de.fhdo.lemma.data.intermediate.impl.IntermediateAspectPropertyImpl <em>Aspect Property</em>}' class.
@@ -2122,6 +2132,16 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      */
     int INTERMEDIATE_TYPE_ORIGIN = 21;
+
+    /**
+     * The meta object id for the '<em>Effective Property Values Map</em>' data type.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see java.util.Map
+     * @see de.fhdo.lemma.data.intermediate.impl.IntermediatePackageImpl#getEffectivePropertyValuesMap()
+     * @generated
+     */
+    int EFFECTIVE_PROPERTY_VALUES_MAP = 22;
 
 
     /**
@@ -3349,6 +3369,16 @@ public interface IntermediatePackage extends EPackage {
     EReference getIntermediateImportedAspect_DataField();
 
     /**
+     * Returns the meta object for the '{@link de.fhdo.lemma.data.intermediate.IntermediateImportedAspect#getEffectivePropertyValues() <em>Get Effective Property Values</em>}' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the '<em>Get Effective Property Values</em>' operation.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateImportedAspect#getEffectivePropertyValues()
+     * @generated
+     */
+    EOperation getIntermediateImportedAspect__GetEffectivePropertyValues();
+
+    /**
      * Returns the meta object for class '{@link de.fhdo.lemma.data.intermediate.IntermediateAspectProperty <em>Aspect Property</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3475,6 +3505,17 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      */
     EEnum getIntermediateTypeOrigin();
+
+    /**
+     * Returns the meta object for data type '{@link java.util.Map <em>Effective Property Values Map</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for data type '<em>Effective Property Values Map</em>'.
+     * @see java.util.Map
+     * @model instanceClass="java.util.Map&lt;de.fhdo.lemma.data.intermediate.IntermediateAspectProperty, java.lang.String&gt;"
+     * @generated
+     */
+    EDataType getEffectivePropertyValuesMap();
 
     /**
      * Returns the factory that creates the instances of the model.
@@ -4440,6 +4481,14 @@ public interface IntermediatePackage extends EPackage {
         EReference INTERMEDIATE_IMPORTED_ASPECT__DATA_FIELD = eINSTANCE.getIntermediateImportedAspect_DataField();
 
         /**
+         * The meta object literal for the '<em><b>Get Effective Property Values</b></em>' operation.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EOperation INTERMEDIATE_IMPORTED_ASPECT___GET_EFFECTIVE_PROPERTY_VALUES = eINSTANCE.getIntermediateImportedAspect__GetEffectivePropertyValues();
+
+        /**
          * The meta object literal for the '{@link de.fhdo.lemma.data.intermediate.impl.IntermediateAspectPropertyImpl <em>Aspect Property</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -4542,6 +4591,16 @@ public interface IntermediatePackage extends EPackage {
          * @generated
          */
         EEnum INTERMEDIATE_TYPE_ORIGIN = eINSTANCE.getIntermediateTypeOrigin();
+
+        /**
+         * The meta object literal for the '<em>Effective Property Values Map</em>' data type.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see java.util.Map
+         * @see de.fhdo.lemma.data.intermediate.impl.IntermediatePackageImpl#getEffectivePropertyValuesMap()
+         * @generated
+         */
+        EDataType EFFECTIVE_PROPERTY_VALUES_MAP = eINSTANCE.getEffectivePropertyValuesMap();
 
     }
 
