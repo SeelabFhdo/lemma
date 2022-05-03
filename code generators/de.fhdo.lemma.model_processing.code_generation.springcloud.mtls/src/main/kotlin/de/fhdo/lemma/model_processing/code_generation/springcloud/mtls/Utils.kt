@@ -2,13 +2,9 @@ package de.fhdo.lemma.model_processing.code_generation.springcloud.mtls
 
 import de.fhdo.lemma.data.intermediate.IntermediateAspectPropertyValue
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
-import de.fhdo.lemma.model_processing.code_generation.java_base.classname
 import de.fhdo.lemma.model_processing.code_generation.java_base.getAllAspects
-import de.fhdo.lemma.model_processing.code_generation.java_base.qualifiedName
-import de.fhdo.lemma.model_processing.code_generation.java_base.simpleName
 import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
 import org.eclipse.emf.common.util.EList
-import org.eclipse.emf.ecore.EObject
 import java.io.File
 
 internal fun IntermediateMicroservice.getAspectValueOrDefault(fullyQualifiedName: String): Set<Pair<String, String>> {
@@ -35,13 +31,12 @@ internal fun IntermediateMicroservice.getAspectValueOrDefault(fullyQualifiedName
                         ).joinToString(File.separator)
                     )
                 )
-                else ->
-                    setOfProperties.add(
-                        Pair(
-                            property.name,
-                            aspect.propertyValues.findValue(property.name) ?: property.defaultValue
-                        )
+                else -> setOfProperties.add(
+                    Pair(
+                        property.name,
+                        aspect.propertyValues.findValue(property.name) ?: property.defaultValue
                     )
+                )
             }
         }
     }

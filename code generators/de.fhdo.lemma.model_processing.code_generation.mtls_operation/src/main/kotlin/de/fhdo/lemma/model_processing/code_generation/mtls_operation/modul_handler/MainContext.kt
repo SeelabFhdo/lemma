@@ -16,7 +16,7 @@ internal object MainContext {
 
 
         fun initialize(targetFolder: String) {
-            State.targetFolder = targetFolder
+            State.targetFolder = targetFolder.trimEnd(File.separatorChar)
             propertyFiles.clear()
         }
 
