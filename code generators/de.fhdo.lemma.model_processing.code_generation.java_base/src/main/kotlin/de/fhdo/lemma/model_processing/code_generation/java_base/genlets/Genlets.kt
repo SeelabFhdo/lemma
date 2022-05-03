@@ -361,6 +361,7 @@ class GenletGeneratedFileContent {
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 enum class GenletPathSpecifier {
+    CURRENT_MICROSERVICE_ROOT_PATH,
     CURRENT_MICROSERVICE_JAVA_ROOT_PATH,
     CURRENT_MICROSERVICE_RESOURCES_PATH,
     CURRENT_MICROSERVICE_GENERATION_TARGET_PATH,
@@ -373,6 +374,11 @@ enum class GenletPathSpecifier {
          */
         internal fun resolvePathSpecifier(specifier: GenletPathSpecifier) : String {
             return when (specifier) {
+                CURRENT_MICROSERVICE_ROOT_PATH -> {
+                    val currentMicroserviceTargetFolderPathRootPath: String by MainState
+                    currentMicroserviceTargetFolderPathRootPath
+                }
+
                 CURRENT_MICROSERVICE_JAVA_ROOT_PATH -> {
                     val currentMicroserviceTargetFolderPathForJavaFiles: String by MainState
                     currentMicroserviceTargetFolderPathForJavaFiles
