@@ -73,7 +73,11 @@ internal class MtlsPropertiesHandler
                             propFile[springPropertyMapping(property.first)] =
                                 property.second.replace("##applicationName##", applicationName.packageToPath())
                                     .fixPath()
-
+                        }
+                        "caDomain" -> {
+                            val applicationName =
+                                propertyFile.value.propertiesSet.find { it.first == "applicationName" }!!.second
+                            propFile[springPropertyMapping("subject")] = "$applicationName.${property.second}"
                         }
                         else -> {
                             propFile[springPropertyMapping(property.first)] = property.second

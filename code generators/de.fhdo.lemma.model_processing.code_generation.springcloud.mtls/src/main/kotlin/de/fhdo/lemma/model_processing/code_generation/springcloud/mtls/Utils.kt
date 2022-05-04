@@ -84,38 +84,39 @@ enum class FileType {
         internal fun filter(fileType: FileType) = when (fileType) {
             APPLICATION_PROPERTIES -> {
                 listOf(
+                    "applicationName", springPropertyMapping("applicationName"),
+                    "clientAuth", springPropertyMapping("clientAuth"),
+                    "hostnameVerifierBypass", springPropertyMapping("hostnameVerifierBypass"),
                     "keyStoreFileName", springPropertyMapping("keyStoreFileName"),
                     "keyStorePassword", springPropertyMapping("keyStorePassword"),
                     "trustStoreFileName", springPropertyMapping("trustStoreFileName"),
                     "trustStorePassword", springPropertyMapping("trustStorePassword"),
-                    "hostnameVerifierBypass", springPropertyMapping("hostnameVerifierBypass"),
-                    "applicationName", springPropertyMapping("applicationName"),
-                    "clientAuth", springPropertyMapping("clientAuth"),
                 )
             }
             CLIENT_CERTIFICATE_PROPERTIES -> {
                 listOf(
+                    "applicationName", springPropertyMapping("applicationName"),
+                    "bitLength", springPropertyMapping("bitLength"),
                     "keyStoreFileName", springPropertyMapping("keyStoreFileName"),
                     "keyStorePassword", springPropertyMapping("keyStorePassword"),
+                    "caDomain", springPropertyMapping("caDomain"),
                     "trustStoreFileName", springPropertyMapping("trustStoreFileName"),
                     "trustStorePassword", springPropertyMapping("trustStorePassword"),
                     "validityInDays", springPropertyMapping("validityInDays"),
-                    "bitLength", springPropertyMapping("bitLength"),
-                    "applicationName", springPropertyMapping("applicationName"),
                 )
             }
             CA_CERTIFICATE_PROPERTIES -> {
                 listOf(
                     "bitLength", springPropertyMapping("bitLength"),
-                    "validityInDays", springPropertyMapping("validityInDays"),
-                    "caName", springPropertyMapping("caName"),
+                    "caCertFile", springPropertyMapping("caCertFile"),
                     "caCertificatePassword", springPropertyMapping("caCertificatePassword"),
                     "caDomain", springPropertyMapping("caDomain"),
+                    "caKeyFile", springPropertyMapping("caKeyFile"),
+                    "caName", springPropertyMapping("caName"),
                     "certificateStandard", springPropertyMapping("certificateStandard"),
                     "cipher", springPropertyMapping("cipher"),
-                    "caKeyFile", springPropertyMapping("caKeyFile"),
-                    "caCertFile", springPropertyMapping("caCertFile"),
                     "subject", springPropertyMapping("subject"),
+                    "validityInDays", springPropertyMapping("validityInDays"),
                 )
             }
         }
