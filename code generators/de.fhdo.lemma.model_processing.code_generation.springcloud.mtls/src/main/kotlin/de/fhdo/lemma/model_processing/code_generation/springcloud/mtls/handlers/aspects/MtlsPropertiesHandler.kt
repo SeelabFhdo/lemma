@@ -1,13 +1,6 @@
 package de.fhdo.lemma.model_processing.code_generation.springcloud.mtls.handlers.aspects
 
-
-import com.github.javaparser.ast.Modifier
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
-import com.github.javaparser.ast.stmt.BlockStmt
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getPackageName
-import de.fhdo.lemma.model_processing.code_generation.java_base.ast.newJavaClassOrInterface
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerResult
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletGeneratedFileContent
@@ -16,9 +9,11 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGen
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasAspect
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.openPropertyFile
 import de.fhdo.lemma.model_processing.code_generation.springcloud.mtls.Context.State
-import de.fhdo.lemma.model_processing.code_generation.springcloud.mtls.ast.addStringVariable
-import de.fhdo.lemma.model_processing.code_generation.springcloud.mtls.ast.addVariableCheck
+import de.fhdo.lemma.model_processing.code_generation.springcloud.mtls.FileType
+import de.fhdo.lemma.model_processing.code_generation.springcloud.mtls.fixPath
 import de.fhdo.lemma.model_processing.code_generation.springcloud.mtls.getAspectValueOrDefault
+import de.fhdo.lemma.model_processing.code_generation.springcloud.mtls.propertyFilter
+import de.fhdo.lemma.model_processing.utils.packageToPath
 import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
 import java.io.File
 
@@ -28,7 +23,6 @@ internal class MtlsPropertiesHandler
     override fun handlesEObjectsOfInstance() = IntermediateMicroservice::class.java
     override fun generatesNodesOfInstance() = ClassOrInterfaceDeclaration::class.java
     private fun handlesAspects() = setOf("mTLS.mtls", "mTLS.mtlsdev")
-    private fun configFolder() = "configuration"
 
     override fun execute(
         eObject: IntermediateMicroservice,
@@ -38,12 +32,26 @@ internal class MtlsPropertiesHandler
         if (!eObject.hasAspect(*handlesAspects().toTypedArray()))
             return GenletCodeGenerationHandlerResult(node)
 
+        State.initialize()
+
         eObject.aspects.filter { it.qualifiedName in handlesAspects() }.forEach { aspect ->
+            val aspectsSet = eObject.getAspectValueOrDefault(aspect.qualifiedName)
             State.addPropertiesToFile(
                 "application-${aspect.name}.properties",
-                eObject.getAspectValueOrDefault(aspect.qualifiedName)
+                aspectsSet,
+                FileType.APPLICATION_PROPERTIES
+            )
+            State.addPropertiesToFile(
+                setOf(
+                    eObject.qualifiedName.packageToPath(),
+                    "certs",
+                    "Certificate-${eObject.qualifiedName}-${aspect.name}.var"
+                ).joinToString(File.separator),
+                aspectsSet,
+                FileType.CLIENT_CERTIFICATE_PROPERTIES
             )
         }
+
         return GenletCodeGenerationHandlerResult(node, generateSpringBootPropertyFiles())
     }
 
@@ -51,11 +59,28 @@ internal class MtlsPropertiesHandler
         val propertyFiles = mutableSetOf<GenletGeneratedFileContent>()
         State.getPropertyFiles().forEach { propertyFile ->
             println("Filename: ${propertyFile.key}")
+            propertyFile.value.fileType
+
             val propFile =
-                openPropertyFile(GenletPathSpecifier.CURRENT_MICROSERVICE_RESOURCES_PATH, propertyFile.key)
-            propertyFile.value.forEach { property ->
-                propFile[property.first] = property.second
-            }
+                openPropertyFile(FileType.filePath(propertyFile.value.fileType), propertyFile.key)
+            propertyFile.value.propertiesSet.filter { it.first in FileType.filter(propertyFile.value.fileType) }
+                .forEach { property ->
+                    println("property.first ${property.first}")
+                    when (property.first) {
+                        "keyStoreRelativePath", "trustStoreRelativePath", "qualifiedName" -> {}
+                        "keyStoreFileName", "trustStoreFileName" -> {
+                            val applicationName =
+                                propertyFile.value.propertiesSet.find { it.first == "qualifiedName" }!!.second
+                            propFile[property.first] =
+                                property.second.replace("##applicationName##", applicationName.packageToPath())
+                                    .fixPath()
+
+                        }
+                        else -> {
+                            propFile[property.first] = property.second
+                        }
+                    }
+                }
             propertyFiles.add(GenletGeneratedFileContent(propFile))
         }
         return propertyFiles

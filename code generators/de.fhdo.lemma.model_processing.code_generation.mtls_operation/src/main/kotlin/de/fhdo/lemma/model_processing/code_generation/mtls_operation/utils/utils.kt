@@ -118,6 +118,7 @@ fun springPropertyMapping(property: String) = when (property) {
     "caCertFile" -> "server.ssl.ca-Cert.file"
     "subject" -> "server.ssl.subject"
     "applicationName" -> "server.ssl.applicationName"
+    "clientAuth" -> "server.ssl.client-auth"
     else -> property
 }
 

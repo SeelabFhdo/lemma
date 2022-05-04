@@ -48,7 +48,7 @@ class MTLSOperationModelSourceValidator : AbstractXtextModelValidator() {
     * It is checked that no deployment specifications are defined for services that use the Certification Authority.
     * */
     @Check
-    private fun checkNoAspectsForCaAuthority1(infrastructureNode: InfrastructureNode) {
+    private fun checkNoDeploymentSpecificationsForCaAuthority(infrastructureNode: InfrastructureNode) {
         if (!infrastructureNode.isCertificateAuthority()) return
 
         if (infrastructureNode.deploymentSpecifications.isNotEmpty())

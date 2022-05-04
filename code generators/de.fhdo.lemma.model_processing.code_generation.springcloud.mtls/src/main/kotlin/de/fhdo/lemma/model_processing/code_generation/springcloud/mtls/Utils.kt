@@ -2,6 +2,7 @@ package de.fhdo.lemma.model_processing.code_generation.springcloud.mtls
 
 import de.fhdo.lemma.data.intermediate.IntermediateAspectPropertyValue
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
+import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletPathSpecifier
 import de.fhdo.lemma.model_processing.code_generation.java_base.getAllAspects
 import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
 import org.eclipse.emf.common.util.EList
@@ -53,7 +54,7 @@ private fun IntermediateImportedAspect.getAspectValueOrDefault(aspectName: Strin
 private fun EList<IntermediateAspectPropertyValue>.findValue(name: String) =
     find { it.property.name.equals(name) }?.value
 
-fun springPropertyMapping(property: String) = when (property) {
+internal fun springPropertyMapping(property: String) = when (property) {
     "keyStoreFileName" -> "server.ssl.key-store"
     "keyStorePassword" -> "server.ssl.key-store-password"
     "trustStoreFileName" -> "server.ssl.trust-store"
@@ -70,5 +71,67 @@ fun springPropertyMapping(property: String) = when (property) {
     "caCertFile" -> "server.ssl.ca-Cert.file"
     "subject" -> "server.ssl.subject"
     "applicationName" -> "server.ssl.applicationName"
+    "clientAuth" -> "server.ssl.client-auth"
     else -> property
 }
+
+enum class FileType {
+    APPLICATION_PROPERTIES,
+    CLIENT_CERTIFICATE_PROPERTIES,
+    CA_CERTIFICATE_PROPERTIES;
+
+    companion object {
+        internal fun filter(fileType: FileType) = when (fileType) {
+            APPLICATION_PROPERTIES -> {
+                listOf(
+                    "keyStoreFileName", springPropertyMapping("keyStoreFileName"),
+                    "keyStorePassword", springPropertyMapping("keyStorePassword"),
+                    "trustStoreFileName", springPropertyMapping("trustStoreFileName"),
+                    "trustStorePassword", springPropertyMapping("trustStorePassword"),
+                    "hostnameVerifierBypass", springPropertyMapping("hostnameVerifierBypass"),
+                    "applicationName", springPropertyMapping("applicationName"),
+                    "clientAuth", springPropertyMapping("clientAuth"),
+                )
+            }
+            CLIENT_CERTIFICATE_PROPERTIES -> {
+                listOf(
+                    "keyStoreFileName", springPropertyMapping("keyStoreFileName"),
+                    "keyStorePassword", springPropertyMapping("keyStorePassword"),
+                    "trustStoreFileName", springPropertyMapping("trustStoreFileName"),
+                    "trustStorePassword", springPropertyMapping("trustStorePassword"),
+                    "validityInDays", springPropertyMapping("validityInDays"),
+                    "bitLength", springPropertyMapping("bitLength"),
+                    "applicationName", springPropertyMapping("applicationName"),
+                )
+            }
+            CA_CERTIFICATE_PROPERTIES -> {
+                listOf(
+                    "caName", springPropertyMapping("caName"),
+                    "caCertificatePassword", springPropertyMapping("caCertificatePassword"),
+                    "caDomain", springPropertyMapping("caDomain"),
+                    "certificateStandard", springPropertyMapping("certificateStandard"),
+                    "cipher", springPropertyMapping("cipher"),
+                    "caKeyFile", springPropertyMapping("caKeyFile"),
+                    "caCertFile", springPropertyMapping("caCertFile"),
+                    "subject", springPropertyMapping("subject"),
+                )
+            }
+        }
+        internal fun filePath(fileType: FileType) = when (fileType) {
+            APPLICATION_PROPERTIES -> {
+                GenletPathSpecifier.CURRENT_MICROSERVICE_RESOURCES_PATH
+            }
+            CLIENT_CERTIFICATE_PROPERTIES, CA_CERTIFICATE_PROPERTIES -> {
+                GenletPathSpecifier.CURRENT_MICROSERVICE_ROOT_PATH
+            }
+        }
+    }
+}
+internal fun propertyFilter(properties: Set<Pair<String, String>>, fileType: FileType): Set<Pair<String, String>> {
+    properties.filter {
+        it.first in FileType.filter(fileType)
+    }.let { return it.toSet() }
+
+}
+
+fun String.fixPath() = this.replace("/./", "/").replace("//", "/")

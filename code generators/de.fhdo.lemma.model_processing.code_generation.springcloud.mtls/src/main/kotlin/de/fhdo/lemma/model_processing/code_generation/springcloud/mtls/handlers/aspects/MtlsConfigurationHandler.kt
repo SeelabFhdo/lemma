@@ -27,8 +27,10 @@ internal class MtlsConfigurationHandler
     : GenletCodeGenerationHandlerI<IntermediateMicroservice, ClassOrInterfaceDeclaration, Nothing> {
     override fun handlesEObjectsOfInstance() = IntermediateMicroservice::class.java
     override fun generatesNodesOfInstance() = ClassOrInterfaceDeclaration::class.java
+
     private fun handlesAspects() = setOf("mTLS.mtls", "mTLS.mtlsdev")
     private fun configFolder() = "configuration"
+
     override fun execute(
         eObject: IntermediateMicroservice,
         node: ClassOrInterfaceDeclaration,
