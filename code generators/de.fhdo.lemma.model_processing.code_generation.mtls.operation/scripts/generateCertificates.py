@@ -18,12 +18,20 @@ class ProfileType(Enum):
     MTLSDEV = "mtlsdev"
 
 
-def check_empty_sys_env_var(variable: str) -> str:
+def check_sys_env_var_is_set(variable: str) -> tuple[str, bool]:
     if variable.find("${") > -1:
         var = variable[variable.find("${") + 2:variable.find("}")]
         if not os.getenv(var):
-            throw_configuration_exception("The system environment variable \"{var}\" is not defined!".format(var=var))
-    return variable
+            return var, False
+    return variable, True
+
+def check_empty_sys_env_var(variable: str) -> str:
+    retval = check_sys_env_var_is_set(variable)
+    if retval[1]:
+        return retval[0]
+    else:
+        throw_configuration_exception("The system environment variable \"{var}\" is not defined!".format(var=retval[0]))
+
 
 
 def is_path_and_filename(path: str) -> bool:
@@ -291,6 +299,25 @@ def run_cli_command(command: str):
 # -----------------------------------------------------------------------------------------
 
 
+def check_system_environment_variables():
+    error = False
+    for profile in profiles:
+        for parameter in profile.ca_config.configParameter:
+            retval = check_sys_env_var_is_set(parameter[1])
+            if not retval[1]:
+                info("The system environment variable \"{var}\" is not defined!".format(var=retval[0]))
+                error = True
+
+        for client_config in profile.client_configs:
+            for parameter in client_config.configParameter:
+                retval = check_sys_env_var_is_set(parameter[1])
+                if not retval[1]:
+                    info("The system environment variable \"{var}\" is not defined!".format(var=retval[0]))
+                    error = True
+    if error:
+        throw_configuration_exception("There are system variables that are not set!")
+
+
 def generate_cetificates():
     for profile in profiles:
         info(f"Generate Certificates for profile: {profile.type.value} ")
@@ -323,6 +350,7 @@ def main(argv: list):
     check_openssl_is_installed()
     check_keytool_is_installed()
     read_config_files(target_path, profile_types)
+    check_system_environment_variables()
     generate_cetificates()
     info('Finished')
 
