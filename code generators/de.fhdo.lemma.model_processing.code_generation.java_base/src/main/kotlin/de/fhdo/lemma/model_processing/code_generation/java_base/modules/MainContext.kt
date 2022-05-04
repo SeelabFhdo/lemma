@@ -144,6 +144,7 @@ internal object MainContext {
                 "aspectHandlers" -> aspectHandlers.toMap()
                 "collectedDependencies" -> collectedDependencies.toSet()
                 "currentMicroservicePackage" -> currentMicroservicePackage
+                "currentMicroserviceTargetFolderPathRootPath" -> currentMicroserviceTargetFolderPathRootPath()
                 "currentMicroserviceTargetFolderPath" -> currentMicroserviceTargetFolderPath()
                 "currentMicroserviceTargetFolderPathForJavaFiles" -> currentMicroserviceTargetFolderPathForJavaFiles()
                 "currentMicroserviceTargetFolderPathForResourceFiles" ->
@@ -165,6 +166,13 @@ internal object MainContext {
             }
 
             return value as T
+        }
+
+        /**
+         * Helper to calculate the target root folder path of the state's [currentMicroservicePackage]
+         */
+        private fun currentMicroserviceTargetFolderPathRootPath() : String {
+            return targetFolderPath
         }
 
         /**
