@@ -28,7 +28,7 @@ internal class MtlsTestCAHandler
         Pair("server.ssl.certificateStandard", "x509"),
         Pair("server.ssl.cipher", "aes256"),
         Pair("server.ssl.key-store.validityInDays", "365"),
-        Pair("server.ssl.server.ca-password", "\${CATESTPASSWORD}"),
+        Pair("server.ssl.server.ca-password", "\${CA_TEST_PASSWORD}"),
         Pair("server.ssl.subject", "ca.localhost")
     )
 

@@ -106,6 +106,8 @@ enum class FileType {
             }
             CA_CERTIFICATE_PROPERTIES -> {
                 listOf(
+                    "bitLength", springPropertyMapping("bitLength"),
+                    "validityInDays", springPropertyMapping("validityInDays"),
                     "caName", springPropertyMapping("caName"),
                     "caCertificatePassword", springPropertyMapping("caCertificatePassword"),
                     "caDomain", springPropertyMapping("caDomain"),

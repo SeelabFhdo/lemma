@@ -329,7 +329,7 @@ def main(argv: list):
 
 if __name__ == '__main__':
     # todo remove when development is complete
-    sys.argv = ["name", "~/masterthesis/lemmasecuritymodelgencode"]
+    sys.argv = ["name", "~/masterthesis/lemmasecuritymodelgencode", "mtlsdev"]
 
     try:
         main(sys.argv)

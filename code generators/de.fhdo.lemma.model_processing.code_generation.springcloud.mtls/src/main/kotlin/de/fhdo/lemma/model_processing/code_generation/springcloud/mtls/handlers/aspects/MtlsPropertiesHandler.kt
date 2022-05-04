@@ -4,7 +4,6 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerResult
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletGeneratedFileContent
-import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletPathSpecifier
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasAspect
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.openPropertyFile
@@ -12,7 +11,7 @@ import de.fhdo.lemma.model_processing.code_generation.springcloud.mtls.Context.S
 import de.fhdo.lemma.model_processing.code_generation.springcloud.mtls.FileType
 import de.fhdo.lemma.model_processing.code_generation.springcloud.mtls.fixPath
 import de.fhdo.lemma.model_processing.code_generation.springcloud.mtls.getAspectValueOrDefault
-import de.fhdo.lemma.model_processing.code_generation.springcloud.mtls.propertyFilter
+import de.fhdo.lemma.model_processing.code_generation.springcloud.mtls.springPropertyMapping
 import de.fhdo.lemma.model_processing.utils.packageToPath
 import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
 import java.io.File
@@ -71,13 +70,13 @@ internal class MtlsPropertiesHandler
                         "keyStoreFileName", "trustStoreFileName" -> {
                             val applicationName =
                                 propertyFile.value.propertiesSet.find { it.first == "qualifiedName" }!!.second
-                            propFile[property.first] =
+                            propFile[springPropertyMapping(property.first)] =
                                 property.second.replace("##applicationName##", applicationName.packageToPath())
                                     .fixPath()
 
                         }
                         else -> {
-                            propFile[property.first] = property.second
+                            propFile[springPropertyMapping(property.first)] = property.second
                         }
                     }
                 }
