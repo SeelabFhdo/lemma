@@ -1,11 +1,11 @@
-package de.fhdo.lemma.model_processing.code_generation.mtls_operation.utils
+package de.fhdo.lemma.model_processing.code_generation.mtls.operation.utils
 
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
 import de.fhdo.lemma.model_processing.asFile
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasAspect
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.SortableProperties
-import de.fhdo.lemma.model_processing.code_generation.mtls_operation.modul_handler.MainContext
-import de.fhdo.lemma.model_processing.code_generation.mtls_operation.modul_handler.PathSpecifier
+import de.fhdo.lemma.model_processing.code_generation.mtls.operation.modul_handler.MainContext
+import de.fhdo.lemma.model_processing.code_generation.mtls.operation.modul_handler.PathSpecifier
 import de.fhdo.lemma.model_processing.utils.packageToPath
 import de.fhdo.lemma.operation.InfrastructureNode
 import de.fhdo.lemma.operation.intermediate.IntermediateContainer

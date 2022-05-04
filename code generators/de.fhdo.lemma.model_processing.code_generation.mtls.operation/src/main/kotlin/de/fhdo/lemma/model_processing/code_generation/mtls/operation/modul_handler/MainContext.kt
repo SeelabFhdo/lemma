@@ -1,8 +1,8 @@
-package de.fhdo.lemma.model_processing.code_generation.mtls_operation.modul_handler
+package de.fhdo.lemma.model_processing.code_generation.mtls.operation.modul_handler
 
 
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.SortableProperties
-import de.fhdo.lemma.model_processing.code_generation.mtls_operation.utils.springPropertyMapping
+import de.fhdo.lemma.model_processing.code_generation.mtls.operation.utils.springPropertyMapping
 import de.fhdo.lemma.model_processing.utils.packageToPath
 
 import java.io.File
@@ -20,10 +20,10 @@ internal object MainContext {
             propertyFiles.clear()
         }
 
-        fun getCurrentMicroservicePackage() = this.currentMicroservicePackage
+        fun getCurrentMicroservicePackage() = currentMicroservicePackage
 
         fun setCurrentMicroservicePackage(currentMicroservicePackage: String) {
-            this.currentMicroservicePackage = currentMicroservicePackage
+            State.currentMicroservicePackage = currentMicroservicePackage
         }
 
         fun getTargetFolder() = targetFolder
@@ -62,7 +62,7 @@ internal object MainContext {
          * Helper to calculate the target folder path of the state's [currentMicroservicePackage]
          */
         private fun currentMicroserviceTargetFolderPath(servicePackage: String) =
-            "${targetFolder}${File.separator}$servicePackage.packageToPath()"
+            "$targetFolder${File.separator}$servicePackage.packageToPath()"
 
 
         /**

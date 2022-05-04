@@ -5,7 +5,7 @@ plugins {
     maven
 }
 
-group = "de.fhdo.lemma.model_processing.code_generation.mtls_operations"
+group = "de.fhdo.lemma.model_processing.code_generation.mtls.operations"
 
 repositories {
     mavenCentral()

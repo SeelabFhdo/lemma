@@ -1,6 +1,6 @@
-package de.fhdo.lemma.model_processing.code_generation.mtls_operation.handlers.interfaces
+package de.fhdo.lemma.model_processing.code_generation.mtls.operation.handlers.interfaces
 
-import de.fhdo.lemma.model_processing.code_generation.mtls_operation.BASE_PACKAGE
+import de.fhdo.lemma.model_processing.code_generation.mtls.operation.BASE_PACKAGE
 import org.eclipse.emf.ecore.EObject
 import io.github.classgraph.ClassGraph
 

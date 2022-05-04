@@ -1,4 +1,4 @@
-package de.fhdo.lemma.model_processing.code_generation.mtls_operation.languages
+package de.fhdo.lemma.model_processing.code_generation.mtls.operation.languages
 
 import de.fhdo.lemma.model_processing.annotations.LanguageDescriptionProvider
 import de.fhdo.lemma.model_processing.languages.LanguageDescription

@@ -129,6 +129,7 @@ enum class FileType {
         }
     }
 }
+
 internal fun propertyFilter(properties: Set<Pair<String, String>>, fileType: FileType): Set<Pair<String, String>> {
     properties.filter {
         it.first in FileType.filter(fileType)

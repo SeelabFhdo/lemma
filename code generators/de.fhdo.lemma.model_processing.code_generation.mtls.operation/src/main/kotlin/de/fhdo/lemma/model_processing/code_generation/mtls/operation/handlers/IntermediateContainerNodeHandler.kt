@@ -1,15 +1,15 @@
-package de.fhdo.lemma.model_processing.code_generation.mtls_operation.handlers
+package de.fhdo.lemma.model_processing.code_generation.mtls.operation.handlers
 
-import de.fhdo.lemma.model_processing.code_generation.mtls_operation.handlers.interfaces.CodeGenerationHandler
-import de.fhdo.lemma.model_processing.code_generation.mtls_operation.handlers.interfaces.CodeGenerationHandlerI
-import de.fhdo.lemma.model_processing.code_generation.mtls_operation.modul_handler.PathSpecifier
-import de.fhdo.lemma.model_processing.code_generation.mtls_operation.modul_handler.MainContext
-import de.fhdo.lemma.model_processing.code_generation.mtls_operation.utils.getPropertiesFormNodeAspectsForDeployedServices
-import de.fhdo.lemma.model_processing.code_generation.mtls_operation.utils.hasAspect
-import de.fhdo.lemma.model_processing.code_generation.mtls_operation.utils.loadOrGeneratePropertiesEntries
-import de.fhdo.lemma.model_processing.code_generation.mtls_operation.utils.loadPropertiesFile
-import de.fhdo.lemma.model_processing.code_generation.mtls_operation.utils.parseApplicationNames
-import de.fhdo.lemma.model_processing.code_generation.mtls_operation.utils.springPropertyMapping
+import de.fhdo.lemma.model_processing.code_generation.mtls.operation.handlers.interfaces.CodeGenerationHandler
+import de.fhdo.lemma.model_processing.code_generation.mtls.operation.handlers.interfaces.CodeGenerationHandlerI
+import de.fhdo.lemma.model_processing.code_generation.mtls.operation.modul_handler.PathSpecifier
+import de.fhdo.lemma.model_processing.code_generation.mtls.operation.modul_handler.MainContext
+import de.fhdo.lemma.model_processing.code_generation.mtls.operation.utils.getPropertiesFormNodeAspectsForDeployedServices
+import de.fhdo.lemma.model_processing.code_generation.mtls.operation.utils.hasAspect
+import de.fhdo.lemma.model_processing.code_generation.mtls.operation.utils.loadOrGeneratePropertiesEntries
+import de.fhdo.lemma.model_processing.code_generation.mtls.operation.utils.loadPropertiesFile
+import de.fhdo.lemma.model_processing.code_generation.mtls.operation.utils.parseApplicationNames
+import de.fhdo.lemma.model_processing.code_generation.mtls.operation.utils.springPropertyMapping
 import de.fhdo.lemma.operation.intermediate.IntermediateContainer
 
 @CodeGenerationHandler

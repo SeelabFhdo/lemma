@@ -1,12 +1,12 @@
-package de.fhdo.lemma.model_processing.code_generation.mtls_operation.validation
+package de.fhdo.lemma.model_processing.code_generation.mtls.operation.validation
 
 import de.fhdo.lemma.model_processing.annotations.Before
 import de.fhdo.lemma.model_processing.annotations.SourceModelValidator
 import de.fhdo.lemma.model_processing.code_generation.java_base.simpleName
-import de.fhdo.lemma.model_processing.code_generation.mtls_operation.utils.hasAnyInvalidSystemEnvironmentVariable
-import de.fhdo.lemma.model_processing.code_generation.mtls_operation.utils.isCertificateAuthority
-import de.fhdo.lemma.model_processing.code_generation.mtls_operation.utils.isConformApplicationNames
-import de.fhdo.lemma.model_processing.code_generation.mtls_operation.utils.parseApplicationNames
+import de.fhdo.lemma.model_processing.code_generation.mtls.operation.utils.hasAnyInvalidSystemEnvironmentVariable
+import de.fhdo.lemma.model_processing.code_generation.mtls.operation.utils.isCertificateAuthority
+import de.fhdo.lemma.model_processing.code_generation.mtls.operation.utils.isConformApplicationNames
+import de.fhdo.lemma.model_processing.code_generation.mtls.operation.utils.parseApplicationNames
 import de.fhdo.lemma.model_processing.languages.convertToAbsoluteFileUrisInPlace
 import de.fhdo.lemma.model_processing.phases.validation.AbstractXtextModelValidator
 import de.fhdo.lemma.operation.Container

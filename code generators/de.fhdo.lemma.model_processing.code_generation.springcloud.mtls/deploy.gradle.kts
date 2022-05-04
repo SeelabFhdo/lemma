@@ -8,9 +8,9 @@ publishing {
     publications {
         create<MavenPublication>("maven") {
             groupId = "de.fhdo.lemma.model_processing.code_generation" +
-                ".springcloud"
+                ".springcloud.mtls"
             artifactId = "de.fhdo.lemma.model_processing.code_generation" +
-                ".springcloud"
+                ".springcloud.mtls"
             version = version
 
             File("build/libs").listFiles().forEach {
