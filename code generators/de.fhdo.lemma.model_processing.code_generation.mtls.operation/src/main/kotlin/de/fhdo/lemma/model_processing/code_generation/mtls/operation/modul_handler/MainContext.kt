@@ -2,7 +2,8 @@ package de.fhdo.lemma.model_processing.code_generation.mtls.operation.modul_hand
 
 
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.SortableProperties
-import de.fhdo.lemma.model_processing.code_generation.mtls.operation.utils.springPropertyMapping
+import de.fhdo.lemma.model_processing.code_generation.mtls.operation.utils.FileType
+import de.fhdo.lemma.model_processing.code_generation.mtls.operation.utils.generateFilePath
 import de.fhdo.lemma.model_processing.utils.packageToPath
 
 import java.io.File
@@ -28,7 +29,13 @@ internal object MainContext {
 
         fun getTargetFolder() = targetFolder
 
-        fun addPropertyFile(fileName: String, properties: SortableProperties, pathSpecifier: PathSpecifier, servicePackage: String) {
+        fun addPropertyFile(
+            fileName: String,
+            properties: SortableProperties,
+            fileType: FileType,
+            servicePackage: String
+        ) {
+            val pathSpecifier = fileType.filePath()
             propertyFiles[generateFilePath(getPath(pathSpecifier, servicePackage), fileName)] = properties
         }
 
@@ -46,14 +53,14 @@ internal object MainContext {
             // Subject is the combination of caName and caDomain
             propertyFiles.filter { it.key.contains("${profile}.var") && it.key.contains("CertificationAuthority") }
                 .forEach {
-                    domain = it.value[springPropertyMapping("caDomain")] as String
-                    it.value[springPropertyMapping("subject")] =
-                        "${it.value[springPropertyMapping("caName")]}${if (domain.isNotEmpty()) ".${domain}" else ""}"
+                    domain = it.value["caDomain"] as String
+                    it.value["subject"] =
+                        "${it.value["caName"]}${if (domain.isNotEmpty()) ".${domain}" else ""}"
                 }
             propertyFiles.filter { it.key.contains("${profile}.var") && it.key.contains("Certificate") }
                 .forEach {
-                    it.value[springPropertyMapping("subject")] =
-                        "${it.value[springPropertyMapping("applicationName")]}${if (domain.isNotEmpty()) ".${domain}" else ""}"
+                    it.value["subject"] =
+                        "${it.value["applicationName"]}${if (domain.isNotEmpty()) ".${domain}" else ""}"
                 }
             // Set correct
         }
@@ -110,11 +117,16 @@ internal object MainContext {
             )
         }
 
-        fun generateFilePath(path: String, fileName: String) =
-            listOf(
-                path,
-                fileName
-            ).joinToString(File.separator)
+
+    }
+}
+
+internal fun FileType.filePath() = when (this) {
+    FileType.APPLICATION_PROPERTIES -> {
+        PathSpecifier.CURRENT_MICROSERVICE_RESOURCES_PATH
+    }
+    FileType.CLIENT_CERTIFICATE_PROPERTIES, FileType.CA_CERTIFICATE_PROPERTIES -> {
+        PathSpecifier.CURRENT_MICROSERVICE_CERTIFICATIONS_TARGET_PATH
     }
 }
 

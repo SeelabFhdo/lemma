@@ -2,10 +2,9 @@ package de.fhdo.lemma.model_processing.code_generation.mtls.operation.utils
 
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
 import de.fhdo.lemma.model_processing.asFile
-import de.fhdo.lemma.model_processing.code_generation.java_base.hasAspect
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.SortableProperties
 import de.fhdo.lemma.model_processing.code_generation.mtls.operation.modul_handler.MainContext
-import de.fhdo.lemma.model_processing.code_generation.mtls.operation.modul_handler.PathSpecifier
+import de.fhdo.lemma.model_processing.code_generation.mtls.operation.modul_handler.filePath
 import de.fhdo.lemma.model_processing.utils.packageToPath
 import de.fhdo.lemma.operation.InfrastructureNode
 import de.fhdo.lemma.operation.intermediate.IntermediateContainer
@@ -35,22 +34,23 @@ internal fun InfrastructureNode.isCertificateAuthority() =
 internal fun IntermediateOperationNode.hasAspect(aspectsSet: Set<String>) = aspects.any { aspectsSet.contains(it.name) }
 
 internal fun loadOrGeneratePropertiesEntries(
-    filename: String, properties: Map<String, String>, pathSpecifier: PathSpecifier, serviceName: String
+    filename: String, properties: Map<String, String>, fileType: FileType, serviceName: String
 ) {
-    val filePath = MainContext.State.generateFilePath(MainContext.State.getPath(pathSpecifier, serviceName), filename)
+    val pathSpecifier = fileType.filePath()
+    val filePath = generateFilePath(MainContext.State.getPath(pathSpecifier, serviceName), filename)
     val sortableProperties = loadPropertiesFile(filePath)
-    properties.forEach { property ->
+    properties.filter { it.key in FileType.filter(fileType) }.forEach { property ->
         when (property.key) {
-            springPropertyMapping("applicationName") -> sortableProperties[property.key] =
+            "applicationName" -> sortableProperties[springPropertyMapping(property.key)] =
                 parseApplicationNames(property.value)[serviceName.lowercase()]
-            springPropertyMapping("keyStoreFileName"), springPropertyMapping("trustStoreFileName") -> {
-                sortableProperties[property.key] =
-                    property.value.replace("##applicationName##", serviceName.packageToPath()).replace("//", "/")
+            "keyStoreFileName", "trustStoreFileName" -> {
+                sortableProperties[springPropertyMapping(property.key)] =
+                    property.value.replace("##applicationName##", serviceName.packageToPath()).fixPath()
             }
-            else -> sortableProperties[property.key] = property.value
+            else -> sortableProperties[springPropertyMapping(property.key)] = property.value
         }
     }
-    MainContext.State.addPropertyFile(filename, sortableProperties, pathSpecifier, serviceName)
+    MainContext.State.addPropertyFile(filename, sortableProperties, fileType, serviceName)
 }
 
 internal fun IntermediateInfrastructureNode.getPropertiesFormNodeAspectsForDeployedServices(aspectName: String):
@@ -74,7 +74,7 @@ private fun getAspectsAsMap(intermediateOperationNode: IntermediateOperationNode
         val propertyMap = mutableMapOf<String, String>()
         aspect!!.properties.forEach { property ->
             getPropertyValue(aspect, property.name)?.let {
-                propertyMap[springPropertyMapping(property.name)] = it
+                propertyMap[property.name] = it
             }
         }
         propertyMap.toMap()
@@ -92,7 +92,7 @@ private fun getPropertyValue(aspect: IntermediateImportedAspect, propertyName: S
 }
 
 internal fun SortableProperties.addProperty(property: Pair<String, String>) {
-    this[springPropertyMapping(property.first)] = property.second
+    this[property.first] = property.second
 }
 
 private fun IntermediateImportedAspect.getAspectValueOrDefault(aspectName: String): String? {
@@ -155,3 +155,9 @@ fun parseApplicationNames(applicationNames: String): Map<String, String> {
     }
     return retval
 }
+
+fun generateFilePath(path: String, fileName: String) =
+    listOf(
+        path,
+        fileName
+    ).joinToString(File.separator)
