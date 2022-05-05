@@ -1,7 +1,5 @@
 package de.fhdo.lemma.model_processing.code_generation.mtls.operation.utils
 
-import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletPathSpecifier
-
 enum class FileType {
     APPLICATION_PROPERTIES,
     CLIENT_CERTIFICATE_PROPERTIES,

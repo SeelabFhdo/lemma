@@ -45,7 +45,6 @@ def create_path_if_not_exists(path):
     path = os.path.dirname(path)
     if not os.path.exists(path):
         info(f"Create Path: {path}")
-        print(f"Create Path: {path}")
         run_cli_command(f"mkdir -p {path}")
 
 
@@ -128,7 +127,7 @@ def read_config_files(target_path: str, profile_types: list):
 
 
 def create_profile(config_files: List[CertificateConfigFile], profile_type: ProfileType) -> Profile:
-    ca_config: CertificateConfigFile
+    ca_config: CertificateConfigFile = None
     client_configs: List[CertificateConfigFile] = list()
     for config_file in config_files:
         if config_file.get_profile() == profile_type:

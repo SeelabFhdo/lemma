@@ -20,6 +20,9 @@ internal fun loadPropertiesFile(filePath: String): SortableProperties {
 }
 
 internal fun SortableProperties.asFormattedString(): String {
+    val x = this.stringPropertyNames()
+
+
     var formattedString = ""
     entries.forEach {
         formattedString += "${it.key}=${it.value}\n"
@@ -41,11 +44,23 @@ internal fun loadOrGeneratePropertiesEntries(
     val sortableProperties = loadPropertiesFile(filePath)
     properties.filter { it.key in FileType.filter(fileType) }.forEach { property ->
         when (property.key) {
-            "applicationName" -> sortableProperties[springPropertyMapping(property.key)] =
-                parseApplicationNames(property.value)[serviceName.lowercase()]
+            "applicationName" -> {
+                val appName = parseApplicationNames(property.value)[serviceName.lowercase()]
+                properties["caDomain"]?.let {
+                    sortableProperties[springPropertyMapping("subject")] =
+                        "${appName}.$it"
+                }
+                sortableProperties[springPropertyMapping(property.key)] = appName
+            }
             "keyStoreFileName", "trustStoreFileName" -> {
                 sortableProperties[springPropertyMapping(property.key)] =
                     property.value.replace("##applicationName##", serviceName.packageToPath()).fixPath()
+            }
+            "caName" -> {
+                properties["caDomain"]?.let {
+                    sortableProperties[springPropertyMapping("subject")] = "${property.value}.$it"
+                }
+                sortableProperties[springPropertyMapping(property.key)] = property.value
             }
             else -> sortableProperties[springPropertyMapping(property.key)] = property.value
         }

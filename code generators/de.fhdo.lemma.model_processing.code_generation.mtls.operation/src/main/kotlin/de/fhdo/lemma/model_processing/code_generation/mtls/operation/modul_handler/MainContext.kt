@@ -40,29 +40,7 @@ internal object MainContext {
         }
 
         fun getPropertyFiles(): Map<String, SortableProperties> {
-            generateCombinedProperties("mtls")
-            generateCombinedProperties("mtlsdev")
-
             return propertyFiles.toMap()
-        }
-
-        private fun generateCombinedProperties(profile: String) {
-            if (profile !in setOf("mtls", "mtlsdev"))
-                return
-            var domain = ""
-            // Subject is the combination of caName and caDomain
-            propertyFiles.filter { it.key.contains("${profile}.var") && it.key.contains("CertificationAuthority") }
-                .forEach {
-                    domain = it.value["caDomain"] as String
-                    it.value["subject"] =
-                        "${it.value["caName"]}${if (domain.isNotEmpty()) ".${domain}" else ""}"
-                }
-            propertyFiles.filter { it.key.contains("${profile}.var") && it.key.contains("Certificate") }
-                .forEach {
-                    it.value["subject"] =
-                        "${it.value["applicationName"]}${if (domain.isNotEmpty()) ".${domain}" else ""}"
-                }
-            // Set correct
         }
 
         /**

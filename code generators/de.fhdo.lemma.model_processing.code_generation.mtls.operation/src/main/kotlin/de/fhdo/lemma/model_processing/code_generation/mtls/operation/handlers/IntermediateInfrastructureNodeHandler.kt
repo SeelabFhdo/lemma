@@ -1,10 +1,8 @@
 package de.fhdo.lemma.model_processing.code_generation.mtls.operation.handlers
 
-import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.SortableProperties
 import de.fhdo.lemma.model_processing.code_generation.mtls.operation.handlers.interfaces.CodeGenerationHandler
 import de.fhdo.lemma.model_processing.code_generation.mtls.operation.handlers.interfaces.CodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.mtls.operation.modul_handler.MainContext
-import de.fhdo.lemma.model_processing.code_generation.mtls.operation.modul_handler.PathSpecifier
 import de.fhdo.lemma.model_processing.code_generation.mtls.operation.utils.FileType
 import de.fhdo.lemma.model_processing.code_generation.mtls.operation.utils.getPropertiesFormNodeAspectsForDeployedServices
 import de.fhdo.lemma.model_processing.code_generation.mtls.operation.utils.hasAspect
@@ -20,12 +18,10 @@ class IntermediateInfrastructureNodeHandler : CodeGenerationHandlerI<Intermediat
     override fun execute(eObject: IntermediateInfrastructureNode): String? {
         if (eObject.qualifiedInfrastructureTechnologyName == "mTLS.certificateAuthority") {
             MainContext.State.setCurrentMicroservicePackage("CertificationAuthority")
-            val sortableProperties = SortableProperties()
-            sortableProperties.putAll(eObject.getServicePropertiesWithValues())
-            MainContext.State.addPropertyFile(
+            loadOrGeneratePropertiesEntries(
                 "CertificationAuthority-mtlsdev.var",
-                sortableProperties,
-                PathSpecifier.CURRENT_MICROSERVICE_CERTIFICATIONS_TARGET_PATH,
+                eObject.getServicePropertiesWithValues(),
+                FileType.CA_CERTIFICATE_PROPERTIES,
                 "CertificationAuthority"
             )
             generateDefaultEmptyCertificationAuthority()
@@ -40,7 +36,7 @@ class IntermediateInfrastructureNodeHandler : CodeGenerationHandlerI<Intermediat
                         loadOrGeneratePropertiesEntries(
                             "Certificate-${it1.key}-${aspectName}.var",
                             it1.value,
-                            FileType.CA_CERTIFICATE_PROPERTIES,
+                            FileType.CLIENT_CERTIFICATE_PROPERTIES,
                             eObject.name
                         )
                     }
@@ -67,21 +63,22 @@ class IntermediateInfrastructureNodeHandler : CodeGenerationHandlerI<Intermediat
 
     private fun generateDefaultEmptyCertificationAuthority() {
         MainContext.State.setCurrentMicroservicePackage("CertificationAuthority")
-        val sortableProperties = SortableProperties()
-        sortableProperties["caKeyFile"] = "ca_key_private.pem"
-        sortableProperties["caCertFile"] = "ca_cert.pem"
-        sortableProperties["caCertificatePassword"] = "\${caCertificatePassword}"
-        sortableProperties["caName"] = "ca"
-        sortableProperties["caDomain"] = "example.de"
-        sortableProperties["validityInDays"] = 365
-        sortableProperties["bitLength"] = 4096
-        sortableProperties["certificateStandard"] = "x509"
-        sortableProperties["cipher"] = "aes256"
 
-        MainContext.State.addPropertyFile(
+        val caMap = mapOf<String, String>(
+            "caKeyFile" to "ca_key_private.pem",
+            "caCertFile" to "ca_cert.pem",
+            "caCertificatePassword" to "\${caCertificatePassword}",
+            "caName" to "ca",
+            "caDomain" to "example.de",
+            "validityInDays" to "365",
+            "bitLength" to "4096",
+            "certificateStandard" to "x509",
+            "cipher" to "aes256",
+        )
+        loadOrGeneratePropertiesEntries(
             "CertificationAuthority-mtls.var",
-            sortableProperties,
-            PathSpecifier.CURRENT_MICROSERVICE_CERTIFICATIONS_TARGET_PATH,
+            caMap,
+            FileType.CA_CERTIFICATE_PROPERTIES,
             "CertificationAuthority"
         )
     }
