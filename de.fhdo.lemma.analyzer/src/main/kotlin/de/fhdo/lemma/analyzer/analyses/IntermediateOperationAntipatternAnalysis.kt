@@ -31,7 +31,7 @@ internal class IntermediateOperationAntipatternAnalysis : AbstractAnalysisModule
     override fun analysis(args: Map<String, String>) {
         analyzer.setAnalysisModels(loadedModels)
         val result = analyzer.checkExistingAntipattern()
-        section("test")
+        AntipatternAnalysisPrinting.printAntipatternAnalysis(result, "Operation")
     }
 
     override fun getLanguageNamespace() = IntermediatePackage.eNS_URI

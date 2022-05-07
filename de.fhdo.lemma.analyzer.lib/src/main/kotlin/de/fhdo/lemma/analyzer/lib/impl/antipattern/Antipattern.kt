@@ -2,13 +2,13 @@ package de.fhdo.lemma.analyzer.lib.impl.antipattern
 
 enum class AntipatternType(val displayName: String) {
     API_VERSIONING("API-Versioning"),
-    CYCLIC_DEPENDENCY("Zyklische Abhängigkeiten"),
-    USAGE_ESB("Verwendung eines Enterprise Service"),
-    HARDCODED_ENDPOINTS("Hardcodierte Endpoints"),
-    NO_API_GATEWAY("Kein API-Gateway"),
-    SHARED_PERSISTENCE("Geteilte Persistenz"),
-    LOCAL_LOGGING("Lokales Logging"),
-    NO_MONITORING("Mangelndes Monitoring"),
+    CYCLIC_DEPENDENCY("Cyclic Dependencies"),
+    USAGE_ESB("Usage Enterprise Service Bus"),
+    HARDCODED_ENDPOINTS("Hardcoded Endpoints"),
+    NO_API_GATEWAY("No API-Gateway"),
+    SHARED_PERSISTENCE("Shared Persistence Persistenz"),
+    LOCAL_LOGGING("Local Logging"),
+    NO_MONITORING("Missing Monitoring"),
 }
 
 data class Antipattern(val type: AntipatternType, val message: String)

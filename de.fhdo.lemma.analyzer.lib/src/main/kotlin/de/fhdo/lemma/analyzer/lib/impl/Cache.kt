@@ -45,7 +45,8 @@ internal val ALL_CONTEXTS_CACHE_ID = CacheId("allContexts", DOMAIN_MODEL_CLASS)
 internal val ALL_INTERFACES_CACHE_ID = CacheId("allInterfaces", SERVICE_MODEL_CLASS)
 internal val ALL_MICROSERVICES_CACHE_ID = CacheId("allMicroservices", SERVICE_MODEL_CLASS)
 internal val ALL_OPERATIONS_CACHE_ID = CacheId("allOperations", SERVICE_MODEL_CLASS)
-internal val ALL_OPERATION_NODES_CACHE_ID = CacheId("allOperationNodes", OPERATION_MODEL_CLASS)
+internal val ALL_CONTAINERS_CACHE_ID = CacheId("allContainers", OPERATION_MODEL_CLASS)
+internal val ALL_INFRASTRUCTURE_NODES_CACHE_ID = CacheId("allInfrastructureNodes", OPERATION_MODEL_CLASS)
 internal val ALL_EFFECTIVE_PROTOCOLS_CACHE_ID = CacheId("allEffectiveProtocols", SERVICE_MODEL_CLASS)
 internal val ALL_REFERRED_OPERATIONS_CACHE_ID = CacheId("allReferredOperations", SERVICE_MODEL_CLASS)
 internal val MICROSERVICE_DEPENDENCIES_CACHE_ID = CacheId("microserviceDependencies", SERVICE_MODEL_CLASS)
@@ -92,8 +93,12 @@ internal object Cache : HashMap<CacheId, Any?>() {
     /**
      * returns all OperationNodes
      */
-    internal fun allOperationNodes() = addOrGetCacheIterable(ALL_OPERATION_NODES_CACHE_ID) {
+    internal fun allContainer() = addOrGetCacheIterable(ALL_CONTAINERS_CACHE_ID) {
         allModelsOfType(OPERATION_MODEL_CLASS).map{it.containers}.flatten()
+    }
+
+    internal fun allInfrastuctureNodes() = addOrGetCacheIterable(ALL_INFRASTRUCTURE_NODES_CACHE_ID) {
+        allModelsOfType(OPERATION_MODEL_CLASS).map{it.infrastructureNodes}.flatten()
     }
 
     /**

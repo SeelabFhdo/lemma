@@ -6,8 +6,10 @@ import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
 class CircleStrategy : AntipatternServiceAnalyzerStrategy {
     override fun analyzeOperationNodes(microservices: Iterable<IntermediateMicroservice>): Collection<Antipattern> {
         val microserviceMap = getMicroserviceMap(microservices)
+        val setOfServiceLists: Set<List<String>> = mutableSetOf()
         for (key in microserviceMap.keys) {
-            // TODO Circle
+
+            //set Mit einzigartigen Loops füllen. Doppelte filtern
         }
         return listOf()
     }

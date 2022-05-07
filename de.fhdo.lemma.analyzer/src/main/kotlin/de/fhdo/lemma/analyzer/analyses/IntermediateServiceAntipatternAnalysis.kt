@@ -1,5 +1,6 @@
 package de.fhdo.lemma.analyzer.analyses
 
+import de.fhdo.lemma.analyzer.AntipatternAnalysisPrinting
 import de.fhdo.lemma.analyzer.lib.Analyzers
 import de.fhdo.lemma.analyzer.lib.analyzers.AntipatternServiceAnalyzerI
 import de.fhdo.lemma.analyzer.lib.createAnalyzer
@@ -28,7 +29,8 @@ internal class IntermediateServiceAntipatternAnalysis : AbstractAnalysisModule<I
 
     override fun analysis(args: Map<String, String>) {
         analyzer.setAnalysisModels(loadedModels)
-        analyzer.checkExistingAntipattern()
+        val antipattern = analyzer.checkExistingAntipattern()
+        AntipatternAnalysisPrinting.printAntipatternAnalysis(antipattern, "Service")
     }
 
     override fun getLanguageNamespace() = IntermediatePackage.eNS_URI
