@@ -70,7 +70,7 @@ internal fun springPropertyMapping(property: String) = when (property) {
     "caKeyFile" -> "server.ssl.ca-key.file"
     "caCertFile" -> "server.ssl.ca-Cert.file"
     "subject" -> "server.ssl.subject"
-    "applicationName" -> "server.ssl.applicationName"
+    "applicationName" -> "server.ssl.key-alias"
     "clientAuth" -> "server.ssl.client-auth"
     else -> property
 }

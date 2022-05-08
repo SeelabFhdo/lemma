@@ -77,7 +77,7 @@ class CertificateConfigFile:
     def __post_init__(self):
         self.absolute_path = os.path.join(self.absolute_path, self.get_profile().name)
         if not self.is_ca_config_file():
-            app_name = self.get_config_parameter("server.ssl.applicationName")
+            app_name = self.get_config_parameter("server.ssl.key-alias")
             self.private_key_filename = f"{app_name}_private_key.pem"
             self.certificate_filename = f"{app_name}_cert.pem"
             self.certificate_signing_request_filename = f"csr-for-{app_name}"
@@ -243,7 +243,7 @@ def create_client_keystore(profile: Profile):
         client_key_file = os.path.join(absolute_path, client_config.private_key_filename)
         client_keystore_file = client_config.key_store_filename
         client_truststore_file = client_config.trust_store_filename
-        client_name = client_config.get_config_parameter("server.ssl.applicationName", mandatory=True)
+        client_name = client_config.get_config_parameter("server.ssl.key-alias", mandatory=True)
 
         bit_length = check_empty_sys_env_var(client_config.get_config_parameter("server.ssl.bitLength"))
         expiration_time_days = check_empty_sys_env_var(
