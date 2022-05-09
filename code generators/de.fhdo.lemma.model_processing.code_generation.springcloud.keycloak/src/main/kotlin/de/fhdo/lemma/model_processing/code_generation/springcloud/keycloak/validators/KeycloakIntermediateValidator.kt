@@ -1,4 +1,4 @@
-package de.fhdo.lemma.model_processing.code_generation.springcloud.mtls.validators
+package de.fhdo.lemma.model_processing.code_generation.springcloud.keycloak.validators
 
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
 import de.fhdo.lemma.service.intermediate.IntermediatePackage

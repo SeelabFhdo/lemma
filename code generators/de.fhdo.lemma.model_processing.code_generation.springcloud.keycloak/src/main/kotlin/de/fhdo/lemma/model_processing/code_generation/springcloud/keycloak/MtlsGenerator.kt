@@ -1,4 +1,4 @@
-package de.fhdo.lemma.model_processing.code_generation.springcloud.mtls
+package de.fhdo.lemma.model_processing.code_generation.springcloud.keycloak
 
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.AbstractGenlet
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletEvent
@@ -6,10 +6,10 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletEv
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletGeneratedFileContent
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletGeneratedNode
 
-private const val BASE_PACKAGE = "de.fhdo.lemma.model_processing.code_generation.springcloud.mtls"
+private const val BASE_PACKAGE = "de.fhdo.lemma.model_processing.code_generation.springcloud.keycloak"
 
 
-class MtlsGenerator : AbstractGenlet(BASE_PACKAGE) {
+class KeycloakGenerator : AbstractGenlet(BASE_PACKAGE) {
     override fun nameOfCodeGenerationHandlerPackage() = "$BASE_PACKAGE.handlers"
     override fun nameOfAspectHandlerPackage() = "${nameOfCodeGenerationHandlerPackage()}.aspects"
 
@@ -25,5 +25,5 @@ class MtlsGenerator : AbstractGenlet(BASE_PACKAGE) {
 }
 
 fun main(args: Array<String>) {
-    MtlsGenerator().run(args)
+    KeycloakGenerator().run(args)
 }
