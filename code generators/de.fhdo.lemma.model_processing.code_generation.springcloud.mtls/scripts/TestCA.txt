@@ -1,3 +1,0 @@
-PASS="lemma1234"
-DOMAIN="pelki.de"
-KEYPATH=$PWD/key
