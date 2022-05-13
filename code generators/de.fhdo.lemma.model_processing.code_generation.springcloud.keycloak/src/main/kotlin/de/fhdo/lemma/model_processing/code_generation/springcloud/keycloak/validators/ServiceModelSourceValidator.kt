@@ -3,6 +3,7 @@ package de.fhdo.lemma.model_processing.code_generation.springcloud.mtls.validato
 import de.fhdo.lemma.model_processing.annotations.Before
 import de.fhdo.lemma.model_processing.annotations.SourceModelValidator
 import de.fhdo.lemma.model_processing.phases.validation.AbstractXtextModelValidator
+import de.fhdo.lemma.service.ImportedServiceAspect
 import de.fhdo.lemma.service.Operation
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.validation.Check
@@ -26,7 +27,7 @@ class ServiceModelSourceValidator : AbstractXtextModelValidator() {
      * Check event producers
      */
     @Check
-    private fun checkProducer(operation: Operation) {
+    private fun checkUserActions(aspect: ImportedServiceAspect) {
 //        val domainEventsAlias = operation.`interface`.microservice.domainEventsAlias ?: return
 //
 //        // Operations with the Producer aspect must exhibit a result parameter
