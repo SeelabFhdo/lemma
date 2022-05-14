@@ -14,4 +14,5 @@ data class Realm(
     val editUsernameAllowed: Boolean,
     val bruteForceProtected: Boolean,
     val additionalJsonProperties: String,
+    val roles: Roles,
 )
