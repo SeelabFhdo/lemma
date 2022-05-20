@@ -10,28 +10,27 @@ class AspectUsageStrategy(val architecturePatternName: String, val antipatternTy
         val antipatterns = mutableListOf<Antipattern>()
         for (node in allOperationNodes) {
             if(AspectExtractor.isArchitecturePatternDefined(node.aspects,architecturePatternName)){
-                val (connectedElements, tooManyDependent) = getConnectedElements(node, allOperationNodes)
+                val tooManyDependent = getConnectedElements(node, allOperationNodes)
                 if(tooManyDependent){
-                    antipatterns.add(Antipattern(antipatternType, "$description. Nodes $connectedElements are dependend on ${node.name} with ArchitecturePattern $architecturePatternName."))
+                    antipatterns.add(Antipattern(antipatternType, "$description. Too many Nodes are dependend on ${node.name} with ArchitecturePattern $architecturePatternName."))
                 }
             }
         }
         return antipatterns
     }
 
-    private fun getConnectedElements(node: IntermediateOperationNode, allOperationNodes: Iterable<IntermediateOperationNode>): Pair<MutableSet<String>, Boolean> {
-        val mutableSet = mutableSetOf<String>()
-        mutableSet.addAll(node.usedByNodes.map { it.name }.toList())
+    private fun getConnectedElements(node: IntermediateOperationNode, allOperationNodes: Iterable<IntermediateOperationNode>):Boolean {
+        var count=node.usedByNodes.size;
         for (operationNode in allOperationNodes) {
             val dependonnodes = operationNode.dependsOnNodes
             for (dependonnode in dependonnodes) {
                 if(dependonnode.name.equals(node.name)){
-                    mutableSet.add(node.name)
+                    count++
                 }
             }
         }
-        val dependendOnMoreThan1 = mutableSet.size > 1
-        return mutableSet to dependendOnMoreThan1
+        val dependendOnMoreThan1 = count > 1
+        return dependendOnMoreThan1
 
     }
 }

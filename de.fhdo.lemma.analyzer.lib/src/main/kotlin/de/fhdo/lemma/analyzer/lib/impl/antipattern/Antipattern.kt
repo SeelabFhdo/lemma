@@ -6,7 +6,7 @@ enum class AntipatternType(val displayName: String) {
     USAGE_ESB("Usage Enterprise Service Bus"),
     HARDCODED_ENDPOINTS("Hardcoded Endpoints"),
     NO_API_GATEWAY("No API-Gateway"),
-    SHARED_PERSISTENCE("Shared Persistence Persistenz"),
+    SHARED_PERSISTENCE("Shared Persistence"),
     LOCAL_LOGGING("Local Logging"),
     NO_MONITORING("Missing Monitoring"),
 }

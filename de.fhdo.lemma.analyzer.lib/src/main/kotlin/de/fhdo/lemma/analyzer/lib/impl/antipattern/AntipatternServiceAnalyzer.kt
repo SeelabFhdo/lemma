@@ -17,7 +17,6 @@ internal class AntipatternServiceAnalyzer : AbstractSingleModelTypeAnalyzer<Inte
         val microservices = Cache.allMicroservices()
         val result = mutableListOf<Antipattern>()
         strategies.forEach { result.addAll(it.analyzeOperationNodes(microservices)) }
-        return listOf()
+        return result
     }
-
 }
