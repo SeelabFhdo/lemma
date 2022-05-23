@@ -42,5 +42,5 @@ internal fun getSystemProperty(property: String) = when (property) {
     "server.ssl.key-store-password" -> "javax.net.ssl.keyStorePassword"
     "server.ssl.trust-store" -> "javax.net.ssl.trustStore"
     "server.ssl.trust-store-password" -> "javax.net.ssl.trustStorePassword"
-    else -> ""
+    else -> property
 }
