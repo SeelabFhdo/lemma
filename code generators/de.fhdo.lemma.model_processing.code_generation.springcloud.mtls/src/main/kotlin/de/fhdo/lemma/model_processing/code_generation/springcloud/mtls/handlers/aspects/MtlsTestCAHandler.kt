@@ -34,9 +34,7 @@ internal class MtlsTestCAHandler
 
 
     override fun execute(
-        eObject: IntermediateMicroservice,
-        node: ClassOrInterfaceDeclaration,
-        context: Nothing?
+        eObject: IntermediateMicroservice, node: ClassOrInterfaceDeclaration, context: Nothing?
     ): GenletCodeGenerationHandlerResult<ClassOrInterfaceDeclaration> {
         if (!eObject.hasAspect(*handlesAspects().toTypedArray()))
             return GenletCodeGenerationHandlerResult(node)
