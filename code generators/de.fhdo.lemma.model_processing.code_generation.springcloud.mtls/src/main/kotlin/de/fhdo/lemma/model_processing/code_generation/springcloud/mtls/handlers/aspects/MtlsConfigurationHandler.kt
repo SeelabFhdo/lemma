@@ -57,9 +57,6 @@ internal class MtlsConfigurationHandler
     private fun generateSpringBootPropertyFiles(): MutableSet<GenletGeneratedFileContent> {
         val propertyFiles = mutableSetOf<GenletGeneratedFileContent>()
         State.getPropertyFiles().forEach { propertyFile ->
-            println("Filename: ${propertyFile.key}")
-            propertyFile.value.fileType
-
             val propFile =
                 openPropertyFile(FileType.filePath(propertyFile.value.fileType), propertyFile.key)
             propertyFile.value.propertiesSet.filter { it.first in FileType.filter(propertyFile.value.fileType) }
