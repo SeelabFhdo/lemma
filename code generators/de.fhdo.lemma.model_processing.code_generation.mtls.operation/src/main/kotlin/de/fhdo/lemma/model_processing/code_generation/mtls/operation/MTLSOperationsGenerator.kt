@@ -22,24 +22,6 @@ fun isConformSystemEnvironmentVariable(environmentVariable: String) {
     }
 }
 
-
 fun main(args: Array<String>) {
-//    println("${hasAnyInvalidSystemEnvironmentVariable("\${my_password}")}")
-//    println("${hasAnyInvalidSystemEnvironmentVariable("\${my.password}")}")
-//    println("${hasAnyInvalidSystemEnvironmentVariable("my.password")}")
-
-//    parseApplicationNames("de.pelki.ms1=ms1")
-//    parseApplicationNames("de.pelki.ms1=ms1=")
-//    parseApplicationNames("de.pelki.ms1=ms1,")
-//    parseApplicationNames("de.pelki.ms1= ms1")
-//    parseApplicationNames("de.pelki.ms1=ms1,de.pelki.ms1=ms1")
-//    parseApplicationNames("de.pelki.ms1 = ms1,de.pelki.ms1=ms1")
-//    parseApplicationNames("de.pelki.ms1 =ms1,de.pelki.ms1=ms1")
-//    parseApplicationNames("de.pelki.ms1= ms1,de.pelki.ms1=ms1")
-//    parseApplicationNames("de.pelki.ms1=ms1,de.pelki.ms1=ms1,")
-//    parseApplicationNames("de.pelki.ms1=ms1,de.pelki.ms1=ms1,de.pelki.ms1=ms1")
-//    parseApplicationNames("de.pelki.ms1=ms1,de.pelki.ms1=ms1,de.pelki.ms1=ms1,")
-//    parseApplicationNames("de.pelki.ms1=ms1,de.pelki.ms1=ms1,de.pelki.ms1=ms1,de.pelki.ms1=ms1")
-//    parseApplicationNames("de.pelki.ms1=ms1,de.pelki.ms1=ms1,de.pelki.ms1=ms1,de.pelki.ms1=ms1,")
     MtlsOperationsGenerator().run(args)
 }

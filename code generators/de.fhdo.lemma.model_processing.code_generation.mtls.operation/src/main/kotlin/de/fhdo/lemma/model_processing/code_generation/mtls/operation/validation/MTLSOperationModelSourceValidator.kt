@@ -2,7 +2,6 @@ package de.fhdo.lemma.model_processing.code_generation.mtls.operation.validation
 
 import de.fhdo.lemma.model_processing.annotations.Before
 import de.fhdo.lemma.model_processing.annotations.SourceModelValidator
-import de.fhdo.lemma.model_processing.code_generation.java_base.simpleName
 import de.fhdo.lemma.model_processing.code_generation.mtls.operation.utils.hasAnyInvalidSystemEnvironmentVariable
 import de.fhdo.lemma.model_processing.code_generation.mtls.operation.utils.isCertificateAuthority
 import de.fhdo.lemma.model_processing.code_generation.mtls.operation.utils.isConformApplicationNames
@@ -135,32 +134,35 @@ class MTLSOperationModelSourceValidator : AbstractXtextModelValidator() {
 
     @Check
     private fun checkNamingForServicesInContainers(container: Container) {
-        container.aspects.forEach { importedOperationAspect ->
-            importedOperationAspect.values.forEachIndexed { index, technologySpecificPropertyValueAssignment ->
-                if (technologySpecificPropertyValueAssignment.property.name != "applicationName") return@forEachIndexed
-                if (!isConformApplicationNames(technologySpecificPropertyValueAssignment.value.valueAsString()))
-                    error(
-                        "The applicationName has the wrong format! " +
-                                "Example: ([QualifiedName]=[Name])((,)[QualifiedName]=[Name]))*",
-                        importedOperationAspect,
-                        OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__VALUES,
-                        index
+        val x = container.aspects
+        container.aspects.filter { it.aspect.name in setOf("mtls", "mtlsdev") }
+            .forEach { importedOperationAspect ->
+                importedOperationAspect.values.forEachIndexed { index, technologySpecificPropertyValueAssignment ->
+                    if (technologySpecificPropertyValueAssignment.property.name != "applicationName") return@forEachIndexed
+                    if (!isConformApplicationNames(technologySpecificPropertyValueAssignment.value.valueAsString()))
+                        error(
+                            "The applicationName has the wrong format! " +
+                                    "Example: ([QualifiedName]=[Name])((,)[QualifiedName]=[Name]))*",
+                            importedOperationAspect,
+                            OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__VALUES,
+                            index
+                        )
+                    if (parseApplicationNames(technologySpecificPropertyValueAssignment.value.valueAsString()).size
+                        < container.deployedServices.size
                     )
-                if (parseApplicationNames(technologySpecificPropertyValueAssignment.value.valueAsString()).size
-                    < container.deployedServices.size
-                )
-                    warning(
-                        "There are more defined names in the aspect applicationName than deployed services!",
-                        importedOperationAspect, OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__VALUES, index
+                        error(
+                            "There are more defined names in the aspect applicationName than deployed " +
+                                    " services!",
+                            importedOperationAspect, OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__VALUES, index
+                        )
+                    if (parseApplicationNames(technologySpecificPropertyValueAssignment.value.valueAsString()).size
+                        > container.deployedServices.size
                     )
-                if (parseApplicationNames(technologySpecificPropertyValueAssignment.value.valueAsString()).size
-                    > container.deployedServices.size
-                )
-                    warning(
-                        "There are more deployed services than defined names in the aspect applicationName!",
-                        importedOperationAspect, OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__VALUES, index
-                    )
+                        error(
+                            "There are more deployed services than defined names in the aspect applicationName!",
+                            importedOperationAspect, OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__VALUES, index
+                        )
+                }
             }
-        }
     }
 }
