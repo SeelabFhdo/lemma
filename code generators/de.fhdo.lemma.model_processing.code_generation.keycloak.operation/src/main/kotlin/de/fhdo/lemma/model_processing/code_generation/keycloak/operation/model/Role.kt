@@ -1,4 +1,4 @@
-package de.fhdo.lemma.model_processing.code_generation.springcloud.keycloak.keycloakObjects
+package de.fhdo.lemma.model_processing.code_generation.keycloak.operation.model
 
 abstract class Role {
     abstract val name: String
@@ -14,7 +14,7 @@ data class ClientRole(
     ) : Role()
 
 
-data class RealmRole (
+data class RealmRole(
     override val name: String,
     override val clientRole: Boolean = false,
     override val containerId: String,
@@ -22,7 +22,12 @@ data class RealmRole (
     val composites: List<ClientRole>,
 ) : Role()
 
+data class ClientRoles(
+    val client: List<ClientRole>
+)
+
+
 data class Roles(
     val realm: List<RealmRole>,
-    val client: List<ClientRole>,
+    val ClientSet : MutableSet<ClientRoles>
 )

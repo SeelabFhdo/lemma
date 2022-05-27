@@ -1,4 +1,4 @@
-package de.fhdo.lemma.model_processing.code_generation.springcloud.keycloak.keycloakObjects
+package de.fhdo.lemma.model_processing.code_generation.keycloak.operation.model
 
 data class User (
    val username: String,

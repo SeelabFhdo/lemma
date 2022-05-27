@@ -1,8 +1,8 @@
-package de.fhdo.lemma.model_processing.code_generation.springcloud.keycloak.keycloakObjects
+package de.fhdo.lemma.model_processing.code_generation.keycloak.operation.model
 
 data class Realm(
-    val name: String,
-    val displayName: String?,
+    val id: String,
+    val realm: String?,
     val enabled: Boolean,
     val realmName: String,
     val loginWithEmailAllowed: Boolean,
@@ -15,4 +15,7 @@ data class Realm(
     val bruteForceProtected: Boolean,
     val additionalJsonProperties: String,
     val roles: Roles,
+    val users: MutableSet<User>,
+    val groups: MutableSet<Group>,
+    val clients: MutableSet<Client>
 )
