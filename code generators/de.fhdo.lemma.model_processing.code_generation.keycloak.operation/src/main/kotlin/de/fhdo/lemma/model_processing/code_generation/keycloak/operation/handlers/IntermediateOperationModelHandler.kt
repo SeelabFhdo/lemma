@@ -12,20 +12,20 @@ class IntermediateOperationModelHandler : CodeGenerationHandlerI<IntermediateOpe
     override fun getSourceInstanceType() = IntermediateOperationModel::class.java
 
     override fun execute(eObject: IntermediateOperationModel): String? {
-        println("hallo Hier bin ich.")
-
-        eObject.imports.filter { it.importTypeName.equals("MICROSERVICES") }.forEach{
-            println(it.name)
-            println(it.importUri)
-            val definingModelUri = if (eObject is IntermediateOperationModel) it.importUri else null
-            val importingModelFilePath = eObject.eResource().uri.toString().removeFileUri()
-
-            val definingModel = definingModelUri?.let{
-                val importingModelFilePath = eObject.eResource().uri.toString().removeFileUri()
-                loadModelRootRelative(definingModelUri, importingModelFilePath) as IntermediateServiceModel
-            }
-
-        }
+//        println("hallo Hier bin ich.")
+//
+//        eObject.imports.filter { it.importTypeName.equals("MICROSERVICES") }.forEach{
+//            println(it.name)
+//            println(it.importUri)
+//            val definingModelUri = if (eObject is IntermediateOperationModel) it.importUri else null
+//            val importingModelFilePath = eObject.eResource().uri.toString().removeFileUri()
+//
+//            val definingModel = definingModelUri?.let{
+//                val importingModelFilePath = eObject.eResource().uri.toString().removeFileUri()
+//                loadModelRootRelative(definingModelUri, importingModelFilePath) as IntermediateServiceModel
+//            }
+//
+//        }
 
 
         return ""
