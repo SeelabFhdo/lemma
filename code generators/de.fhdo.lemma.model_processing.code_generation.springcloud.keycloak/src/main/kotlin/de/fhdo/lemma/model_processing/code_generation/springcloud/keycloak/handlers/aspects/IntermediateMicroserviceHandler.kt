@@ -35,6 +35,7 @@ import de.fhdo.lemma.model_processing.code_generation.springcloud.keycloak.Conte
 import de.fhdo.lemma.model_processing.code_generation.springcloud.keycloak.model.Operations
 import de.fhdo.lemma.model_processing.code_generation.springcloud.keycloak.model.PermissionsInterface
 import de.fhdo.lemma.model_processing.code_generation.springcloud.keycloak.model.PermissionsOperation
+import de.fhdo.lemma.model_processing.code_generation.springcloud.keycloak.model.getPermissions
 import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
 import java.io.File
 
@@ -55,9 +56,11 @@ class IntermediateMicroserviceHandler :
             val interfaceRoles = mutableSetOf<String>()
             val interfacePaths = mutableSetOf<String>()
             val interfaceOperations = mutableListOf<PermissionsOperation>()
+
             intermediateInterface.getAllAspects("Keycloak.role").forEach { aspect ->
                 aspect.getPropertyValue("rolename")?.let { interfaceRoles.add(it) }
             }
+
             intermediateInterface.endpoints.forEach { endpoint ->
                 endpoint.addresses.forEach { address ->
                     interfacePaths.add(address)
@@ -98,10 +101,15 @@ class IntermediateMicroserviceHandler :
                     interfaceOperations
                 )
             )
-            val x = Context.State.getInterfaces()
-            println("x: $x")
         }
+        val x = Context.State.getInterfaces()
 
+        x.forEach { c ->
+            val tt = c.getPermissions()
+            tt.forEach {
+                println(it)
+            }
+        }
 
         return GenletCodeGenerationHandlerResult(node)
     }

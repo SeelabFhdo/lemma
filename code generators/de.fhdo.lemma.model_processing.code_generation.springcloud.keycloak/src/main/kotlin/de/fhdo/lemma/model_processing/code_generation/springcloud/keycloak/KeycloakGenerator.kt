@@ -26,6 +26,8 @@ class KeycloakGenerator : AbstractGenlet(BASE_PACKAGE) {
         val x = event.get<ClassOrInterfaceDeclaration>(GenletEventObject.GENERATED_MICROSERVICE_CLASS)
         x?.let { println("onEvent: ${x.name}") }
 
+
+
         return null
     }
 }
