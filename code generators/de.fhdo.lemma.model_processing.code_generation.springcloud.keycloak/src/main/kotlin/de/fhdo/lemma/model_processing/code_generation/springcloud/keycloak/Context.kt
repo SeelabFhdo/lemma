@@ -1,18 +1,17 @@
 package de.fhdo.lemma.model_processing.code_generation.springcloud.keycloak
 
-import de.fhdo.lemma.model_processing.code_generation.springcloud.keycloak.model.Interface
-import org.eclipse.jdt.internal.compiler.ast.FakedTrackingVariable.IteratorForReporting
+import de.fhdo.lemma.model_processing.code_generation.springcloud.keycloak.model.PermissionsInterface
 
 internal object Context {
 
     object State {
-        private val interfaces = mutableListOf<Interface>()
+        private val interfaces = mutableListOf<PermissionsInterface>()
 
         fun initialize() {
             interfaces.clear()
         }
 
-        fun addInterface(myInterface : Interface){
+        fun addInterface(myInterface : PermissionsInterface){
             interfaces.add(myInterface)
         }
 

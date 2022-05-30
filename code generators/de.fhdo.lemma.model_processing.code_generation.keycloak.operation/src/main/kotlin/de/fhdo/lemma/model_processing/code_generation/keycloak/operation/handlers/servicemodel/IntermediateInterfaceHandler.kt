@@ -13,8 +13,15 @@ class IntermediateInterfaceHandler : CodeGenerationHandlerI<IntermediateInterfac
     override fun execute(eObject: IntermediateInterface): String? {
         println(eObject.qualifiedName)
         eObject.endpoints.forEach { endpoint ->
-            endpoint.addresses.forEach { address->
-                println(address)
+            endpoint.addresses.forEach { address ->
+                println("interface-endpoint: $address")
+            }
+        }
+        eObject.operations.forEach { operation ->
+            operation.endpoints.forEach { endpoint ->
+                endpoint.addresses.forEach { address ->
+                    println("operation-endpoint: $address")
+                }
 
             }
         }

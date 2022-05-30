@@ -48,9 +48,6 @@ internal class MicroserviceHandler
          */
         fun handleMicroserviceGenerationFinished(microserviceClass: ClassOrInterfaceDeclaration)
             : Pair<Set<GenletGeneratedNode>, Set<GenletGeneratedFileContent>>? {
-            val currentIntermediateMicroservice: IntermediateMicroservice by State
-            if (!currentIntermediateMicroservice.usesProtocol("amqp"))
-                return null
 
             /* Add AMQP-related class mappings for serialization purposes */
             microserviceClass.addClassMappingBeanMethod()

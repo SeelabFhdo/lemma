@@ -28,7 +28,6 @@ internal class InterfaceHandler
 
         println("Interface: ${eObject.qualifiedName}")
 
-
         return GenletCodeGenerationHandlerResult(node)
     }
 }

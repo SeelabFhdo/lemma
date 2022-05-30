@@ -2,13 +2,14 @@ package de.fhdo.lemma.model_processing.code_generation.keycloak.operation.model.
 
 data class Interface(
     val roles: List<String>,
-    val path: String,
+    val path: List<String>,
     val operations: List<Operation>,
 )
 
 data class Operation(
     val roles: List<String>,
-    val path: String,
+    val path: List<String>,
+    val vars: MutableList<Pair<String, String>>
 )
 
 fun Interface.getPermissions(): List<Pair<String, List<String>>> {
