@@ -3,7 +3,6 @@ package de.fhdo.lemma.model_processing.code_generation.springcloud.keycloak.depe
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.DependencyModifier
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.dependencies.MavenDependencyModifierI
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.dependencies.addChild
-import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.dependencies.addChildIfNotExists
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.dependencies.elements
 import org.redundent.kotlin.xml.Node
 
@@ -22,7 +21,15 @@ internal class DependencyModifier : MavenDependencyModifierI {
             },
             elements { "dependencies"{ } }
         )
-
+        inputDependencyModel.addChild(
+            elements {
+                "dependency"{
+                    "groupId" { -"org.keycloak" }
+                    "artifactId" { -"keycloak-spring-boot-starter" }
+                }
+            },
+            elements { "dependencies"{ } }
+        )
         inputDependencyModel.addChild(
             elements {
                 "dependency" {
