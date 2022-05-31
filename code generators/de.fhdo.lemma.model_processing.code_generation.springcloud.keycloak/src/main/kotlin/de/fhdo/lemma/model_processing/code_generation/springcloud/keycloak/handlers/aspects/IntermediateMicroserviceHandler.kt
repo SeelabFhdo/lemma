@@ -98,14 +98,6 @@ class IntermediateMicroserviceHandler :
                 )
             )
         }
-        val x = Context.State.getInterfaces()
-
-        x.forEach { c ->
-            val tt = c.getPermissions()
-            tt.forEach {
-                println(it)
-            }
-        }
 
         return GenletCodeGenerationHandlerResult(node)
     }
@@ -114,27 +106,35 @@ class IntermediateMicroserviceHandler :
         private const val CONFIG_FOLDER = "configuration"
         fun handleMicroserviceGenerationFinished()
                 : Pair<Set<GenletGeneratedNode>, Set<GenletGeneratedFileContent>> {
-            val classname = "SecurityConfig.java"
+            val classNameSecurityConfig = "SecurityConfig"
+            val classNameKeycloakConfig = "KeycloakConfig"
 
-            val classOrInterfaceDeclaration = generateSecurityConfig(classname)
-
-            val generatedStaticClasses = mutableSetOf<GenletGeneratedNode>()
+            val generatedStaticClasses = mutableSetOf<GenletGeneratedFileContent>()
 
             generatedStaticClasses.add(
-                GenletGeneratedNode(
-                    GenletPathSpecifier.CURRENT_MICROSERVICE_GENERATION_TARGET_PATH,
-                    setOf(CONFIG_FOLDER, classname).joinToString(File.separator),
-                    classOrInterfaceDeclaration
+                GenletGeneratedFileContent(
+                    GenletPathSpecifier.CURRENT_MICROSERVICE_JAVA_ROOT_PATH,
+                    setOf(CONFIG_FOLDER, "$classNameSecurityConfig.java").joinToString(File.separator),
+                    generateSecurityConfig(classNameSecurityConfig)
                 )
             )
-            return generatedStaticClasses to setOf<GenletGeneratedFileContent>()
+            generatedStaticClasses.add(
+                GenletGeneratedFileContent(
+                    GenletPathSpecifier.CURRENT_MICROSERVICE_JAVA_ROOT_PATH,
+                    setOf(CONFIG_FOLDER, "$classNameKeycloakConfig.java").joinToString(File.separator),
+                    generateKeycloakConfig(classNameKeycloakConfig)
+                )
+            )
+
+
+            return mutableSetOf<GenletGeneratedNode>() to generatedStaticClasses
         }
 
         private fun generateSecurityConfig(className: String): ClassOrInterfaceDeclaration {
             val node =
                 newJavaClassOrInterface(
                     setOf(Context.State.getPackage()!!, CONFIG_FOLDER).joinToString("."),
-                    if (className.endsWith("*.java")) className else "$className.java",
+                    className,
                     isInterface = false
                 ).addExtendedType("KeycloakWebSecurityConfigurerAdapter")
 
@@ -222,9 +222,13 @@ class IntermediateMicroserviceHandler :
             )
             val methodPermissionList = mutableListOf<Pair<String, List<String>>>()
 
+
+
             Context.State.getInterfaces().forEach {
                 methodPermissionList.addAll(it.getPermissions())
             }
+
+            println(methodPermissionList)
 
             val methodEndList = listOf(
                 Pair("anyRequest", listOf("")),
@@ -327,6 +331,30 @@ class IntermediateMicroserviceHandler :
                 "org.springframework.security.web.authentication.session.SessionAuthenticationStrategy",
                 ImportTargetElementType.METHOD
             )
+        }
+
+        private fun generateKeycloakConfig(className: String) : ClassOrInterfaceDeclaration {
+
+            val node =
+                newJavaClassOrInterface(
+                    setOf(Context.State.getPackage()!!, CONFIG_FOLDER).joinToString("."),
+                    className,
+                    isInterface = false
+                )
+            node.addImport("org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver", ImportTargetElementType.METHOD)
+            node.addImport("org.springframework.context.annotation.Bean", ImportTargetElementType.ANNOTATION)
+            node.addImport("org.springframework.context.annotation.Configuration", ImportTargetElementType.ANNOTATION)
+
+            node.addMarkerAnnotation("Configuration")
+
+            val method = node.addMethod("keycloakConfigResolver")
+            method.type = ClassOrInterfaceType().setName("KeycloakSpringBootConfigResolver")
+
+            method.addMarkerAnnotation("Bean")
+            method.modifiers.add(Modifier().setKeyword(Modifier.Keyword.PROTECTED))
+            method.addStatements("return new KeycloakSpringBootConfigResolver();")
+
+            return node
         }
     }
 }

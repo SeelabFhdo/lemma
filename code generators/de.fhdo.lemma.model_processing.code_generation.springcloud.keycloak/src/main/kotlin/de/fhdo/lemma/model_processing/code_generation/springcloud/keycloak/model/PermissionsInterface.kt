@@ -16,12 +16,12 @@ fun PermissionsInterface.getPermissions(): List<Pair<String, List<String>>> {
     val permissions = mutableListOf<Pair<String, List<String>>>()
     operations.forEach { operation ->
         val operationPaths = this.paths combine operation.paths
-        permissions.add(Pair("antMatchers", operationPaths))
+        permissions.add(Pair("antMatchers", operationPaths.ifEmpty { operation.paths }))
         val allRoles = operation.roles.toSet().toList()
         permissions.add(Pair(if (allRoles.size > 1) "hasAnyRole" else "hasRole", allRoles))
     }
 
-    if (roles.size >= 1) {
+    if (roles.isNotEmpty()) {
         permissions.add(Pair("antMatchers", paths.toSet().toList()))
         permissions.add(Pair(if (roles.size > 1) "hasAnyRole" else "hasRole", roles))
     }

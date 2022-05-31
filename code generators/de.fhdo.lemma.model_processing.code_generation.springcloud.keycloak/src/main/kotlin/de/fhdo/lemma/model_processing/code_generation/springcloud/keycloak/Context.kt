@@ -1,6 +1,5 @@
 package de.fhdo.lemma.model_processing.code_generation.springcloud.keycloak
 
-import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import de.fhdo.lemma.model_processing.code_generation.java_base.fullyQualifiedClassname
 import de.fhdo.lemma.model_processing.code_generation.springcloud.keycloak.model.PermissionsInterface
 import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
@@ -16,7 +15,7 @@ internal object Context {
             this.currentIntermediateMicroservice = currentIntermediateMicroservice
         }
 
-        fun getPackage() = currentIntermediateMicroservice?.fullyQualifiedClassname
+        fun getPackage() = currentIntermediateMicroservice?.fullyQualifiedClassname?.lowercase()
 
         fun addInterface(myInterface : PermissionsInterface){
             interfaces.add(myInterface)
