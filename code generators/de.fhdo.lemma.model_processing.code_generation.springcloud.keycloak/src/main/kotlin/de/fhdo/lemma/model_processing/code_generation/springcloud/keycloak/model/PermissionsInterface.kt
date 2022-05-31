@@ -14,34 +14,26 @@ data class PermissionsOperation(
 
 fun PermissionsInterface.getPermissions(): List<Pair<String, List<String>>> {
     val permissions = mutableListOf<Pair<String, List<String>>>()
-    // Zuerst die spezifischsten Rollen
-
     operations.forEach { operation ->
-        val operationPaths = mutableListOf<String>()
-        operation.path.forEach { operationPath ->
-            paths.forEach { interfacePath ->
-                operationPaths.add("$interfacePath/$operationPath")
-            }
-        }
-
-        permissions.add(Pair("antMatchers", listOf(this.path + operation.path)))
-        val allRoles = (this.roles + operation.roles).toSet().toList()
+        val operationPaths = this.paths combine operation.paths
+        permissions.add(Pair("antMatchers", operationPaths))
+        val allRoles = operation.roles.toSet().toList()
         permissions.add(Pair(if (allRoles.size > 1) "hasAnyRole" else "hasRole", allRoles))
     }
-    // Dann Permissions für interfaces, wenn diese eine Rolle besitzen
+
     if (roles.size >= 1) {
-        permissions.add(Pair("antMatchers", listOf(path)))
+        permissions.add(Pair("antMatchers", paths.toSet().toList()))
         permissions.add(Pair(if (roles.size > 1) "hasAnyRole" else "hasRole", roles))
     }
     return permissions.toList()
 }
 
-private fun PermissionsInterface.combinePaths(): List<String> {
-    val paths = mutableSetOf<String>()
-    operations.forEach { operation ->
-        paths.addAll(operation.paths.zip(this.paths) { a, b -> "$a/$b".replace("//", "/") })
+infix fun List<String>.combine(list: List<String>): List<String> {
+    val combinedList = mutableSetOf<String>()
+    this.forEach { it2 ->
+        list.forEach { it1 ->
+            combinedList.add("$it2/$it1".replace("//", "/"))
+        }
     }
-    paths.addAll(this.paths)
-    paths.forEach { a -> println(a) }
-    return paths.toList()
+    return combinedList.toList()
 }
