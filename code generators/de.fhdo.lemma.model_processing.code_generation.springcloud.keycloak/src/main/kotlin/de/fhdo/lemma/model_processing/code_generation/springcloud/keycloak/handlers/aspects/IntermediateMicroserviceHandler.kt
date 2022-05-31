@@ -81,7 +81,6 @@ class IntermediateMicroserviceHandler :
                 intermediateOperation.parameters.filter { it.hasAspect("Spring.PathVariable") }.forEach { parameter ->
                     parameter.getAspectPropertyValue("Spring.PathVariable", "value")?.let {
                         operationPathVars.add(it to parameter.type.name)
-
                     }
                 }
                 interfaceOperations.add(
@@ -147,7 +146,9 @@ class IntermediateMicroserviceHandler :
             node.addPublicField("KeycloakClientRequestFactory", "keycloakClientRequestFactory")
             node.addConstructor(Modifier.Keyword.PUBLIC).body
                 .addStatement("this.keycloakClientRequestFactory = keycloakClientRequestFactory;")
-                .addStatement("SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);")
+                .addStatement(
+                    "SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);"
+                )
 
             methodKeycloakRestTemplate(node)
             methodConfigureGlobal(node)
@@ -184,7 +185,9 @@ class IntermediateMicroserviceHandler :
                 "KeycloakAuthenticationProvider keycloakAuthenticationProvider " +
                         "= keycloakAuthenticationProvider();"
             )
-            method.addStatements("keycloakAuthenticationProvider.setGrantedAuthoritiesMapper(new SimpleAuthorityMapper());")
+            method.addStatements(
+                "keycloakAuthenticationProvider.setGrantedAuthoritiesMapper(new SimpleAuthorityMapper());"
+            )
             method.addStatements("auth.authenticationProvider(keycloakAuthenticationProvider);")
         }
 
@@ -333,7 +336,7 @@ class IntermediateMicroserviceHandler :
             )
         }
 
-        private fun generateKeycloakConfig(className: String) : ClassOrInterfaceDeclaration {
+        private fun generateKeycloakConfig(className: String): ClassOrInterfaceDeclaration {
 
             val node =
                 newJavaClassOrInterface(
@@ -341,7 +344,10 @@ class IntermediateMicroserviceHandler :
                     className,
                     isInterface = false
                 )
-            node.addImport("org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver", ImportTargetElementType.METHOD)
+            node.addImport(
+                "org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver",
+                ImportTargetElementType.METHOD
+            )
             node.addImport("org.springframework.context.annotation.Bean", ImportTargetElementType.ANNOTATION)
             node.addImport("org.springframework.context.annotation.Configuration", ImportTargetElementType.ANNOTATION)
 
