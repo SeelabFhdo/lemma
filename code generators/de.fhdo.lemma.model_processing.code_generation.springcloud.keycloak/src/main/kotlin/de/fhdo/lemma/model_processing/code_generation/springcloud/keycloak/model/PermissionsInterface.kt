@@ -30,9 +30,9 @@ fun PermissionsInterface.getPermissions(): List<Pair<String, List<String>>> {
 
 infix fun List<String>.combine(list: List<String>): List<String> {
     val combinedList = mutableSetOf<String>()
-    this.forEach { it2 ->
-        list.forEach { it1 ->
-            combinedList.add("$it2/$it1".replace("//", "/"))
+    this.forEach { it1 ->
+        list.forEach { it2 ->
+            combinedList.add("$it1/$it2".replace("//", "/"))
         }
     }
     return combinedList.toList()

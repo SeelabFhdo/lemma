@@ -16,6 +16,7 @@ private const val BASE_PACKAGE = "de.fhdo.lemma.model_processing.code_generation
 class KeycloakGenerator : AbstractGenlet(BASE_PACKAGE) {
     override fun nameOfCodeGenerationHandlerPackage() = "$BASE_PACKAGE.handlers"
     override fun nameOfAspectHandlerPackage() = "${nameOfCodeGenerationHandlerPackage()}.aspects"
+    override fun nameOfDependencyModifierPackage() = "$BASE_PACKAGE.dependencies"
 
     /**
      * React to a code generation event
