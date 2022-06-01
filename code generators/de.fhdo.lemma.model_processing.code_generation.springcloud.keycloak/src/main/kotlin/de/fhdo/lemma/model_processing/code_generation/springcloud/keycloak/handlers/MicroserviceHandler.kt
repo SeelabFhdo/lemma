@@ -1,4 +1,4 @@
-package de.fhdo.lemma.model_processing.code_generation.springcloud.keycloak.handlers.aspects
+package de.fhdo.lemma.model_processing.code_generation.springcloud.keycloak.handlers
 
 import com.github.javaparser.ast.Modifier
 import com.github.javaparser.ast.NodeList
@@ -36,7 +36,7 @@ import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
 import java.io.File
 
 @CodeGenerationHandler
-class IntermediateMicroserviceHandler :
+class MicroserviceHandler :
     GenletCodeGenerationHandlerI<IntermediateMicroservice, ClassOrInterfaceDeclaration, Nothing> {
     override fun handlesEObjectsOfInstance() = IntermediateMicroservice::class.java
     override fun generatesNodesOfInstance() = ClassOrInterfaceDeclaration::class.java
@@ -46,57 +46,7 @@ class IntermediateMicroserviceHandler :
         node: ClassOrInterfaceDeclaration,
         context: Nothing?
     ): GenletCodeGenerationHandlerResult<ClassOrInterfaceDeclaration> {
-//       if (!eObject.hasAspect(*handlesAspects().toTypedArray()))
-//            return GenletCodeGenerationHandlerResult(node)
-        eObject.interfaces.forEach { intermediateInterface ->
-            val interfaceRoles = mutableSetOf<String>()
-            val interfacePaths = mutableSetOf<String>()
-            val interfaceOperations = mutableListOf<PermissionsOperation>()
-
-            Context.State.initialize(eObject)
-            intermediateInterface.getAllAspects("Keycloak.role").forEach { aspect ->
-                aspect.getPropertyValue("rolename")?.let { interfaceRoles.add(it) }
-            }
-
-            intermediateInterface.endpoints.forEach { endpoint ->
-                endpoint.addresses.forEach { address ->
-                    interfacePaths.add(address)
-                }
-            }
-
-            intermediateInterface.operations.forEach { intermediateOperation ->
-                val operationRoles = mutableSetOf<String>()
-                val operationPaths = mutableSetOf<String>()
-                val operationPathVars = mutableSetOf<Pair<String, String>>()
-                intermediateOperation.endpoints.forEach { endpoint ->
-                    endpoint.addresses.forEach { address ->
-                        operationPaths.add(address)
-                    }
-                }
-
-                intermediateOperation.getAllAspects("Keycloak.role").forEach { aspect ->
-                    aspect.getPropertyValue("rolename")?.let { operationRoles.add(it) }
-                }
-
-                intermediateOperation.parameters.filter { it.hasAspect("Spring.PathVariable") }.forEach { parameter ->
-                    parameter.getAspectPropertyValue("Spring.PathVariable", "value")?.let {
-                        operationPathVars.add(it to parameter.type.name)
-                    }
-                }
-                interfaceOperations.add(
-                    PermissionsOperation(
-                        operationRoles.toList(), operationPaths.toList(), operationPathVars.toList()
-                    )
-                )
-            }
-            Context.State.addInterface(
-                PermissionsInterface(
-                    interfaceRoles.toList(),
-                    interfacePaths.toList(),
-                    interfaceOperations
-                )
-            )
-        }
+        Context.State.initialize(eObject)
 
         return GenletCodeGenerationHandlerResult(node)
     }
@@ -136,7 +86,7 @@ class IntermediateMicroserviceHandler :
                     className,
                     isInterface = false
                 ).addExtendedType("KeycloakWebSecurityConfigurerAdapter")
-
+            node.removeModifier(Modifier.Keyword.PUBLIC)
             addImports(node)
 
             node.addMarkerAnnotation("EnableWebSecurity")
@@ -144,11 +94,16 @@ class IntermediateMicroserviceHandler :
             node.addAndGetAnnotation("ComponentScan").addPair("basePackageClasses", "KeycloakSecurityComponents.class")
 
             node.addPublicField("KeycloakClientRequestFactory", "keycloakClientRequestFactory")
-            node.addConstructor(Modifier.Keyword.PUBLIC).body
+            val constructor = node.addConstructor(Modifier.Keyword.PUBLIC)
+            constructor.body
                 .addStatement("this.keycloakClientRequestFactory = keycloakClientRequestFactory;")
                 .addStatement(
                     "SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);"
                 )
+            constructor.parameters.add(Parameter(
+                ClassOrInterfaceType().setName("KeycloakClientRequestFactory"),
+                "keycloakClientRequestFactory"
+            ))
 
             methodKeycloakRestTemplate(node)
             methodConfigureGlobal(node)
@@ -225,13 +180,9 @@ class IntermediateMicroserviceHandler :
             )
             val methodPermissionList = mutableListOf<Pair<String, List<String>>>()
 
-
-
             Context.State.getInterfaces().forEach {
                 methodPermissionList.addAll(it.getPermissions())
             }
-
-            println(methodPermissionList)
 
             val methodEndList = listOf(
                 Pair("anyRequest", listOf("")),

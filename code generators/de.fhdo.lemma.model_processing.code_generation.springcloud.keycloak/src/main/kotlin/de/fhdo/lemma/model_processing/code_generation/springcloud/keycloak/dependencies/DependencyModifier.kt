@@ -9,9 +9,6 @@ import org.redundent.kotlin.xml.Node
 @DependencyModifier
 internal class DependencyModifier : MavenDependencyModifierI {
     override fun modify(inputDependencyModel: Node): Node {
-
-        println("DependencyModifier")
-
         inputDependencyModel.addChild(
             elements {
                 "dependency"{
