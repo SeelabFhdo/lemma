@@ -35,6 +35,6 @@ class IntermediateImportHandler : CodeGenerationHandlerI<IntermediateImport> {
             }
         }
 
-        return ""
+        return null
     }
 }
