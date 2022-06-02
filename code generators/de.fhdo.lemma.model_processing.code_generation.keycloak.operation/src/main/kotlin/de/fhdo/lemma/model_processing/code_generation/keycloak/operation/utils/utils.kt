@@ -171,6 +171,15 @@ fun parseApplicationNames(applicationNames: String): Map<String, String> {
     return retval
 }
 
+fun checkJsonKeyValue(jsonKeyValueString: String): Boolean{
+    val quot ="[[\"]|[\']]"
+    val key = "$quot{1}[\\w]+$quot{1}"
+    val value = "$quot?[\\w]+$quot?"
+    val keyValue = "$key\\s*:\\s*$value"
+    val jsonKeyValueRegex = "[{][\\s]*$keyValue+[\\s]*[,$keyValue]*[\\s]*[}]".toRegex()
+    return jsonKeyValueString.matches(jsonKeyValueRegex)
+}
+
 fun generateFilePath(path: String, fileName: String) =
     listOf(
         path,

@@ -10,24 +10,22 @@ data class ClientRole(
     override val name: String,
     override val clientRole: Boolean = true,
     override val containerId: String,
-
-    ) : Role()
-
+) : Role()
 
 data class RealmRole(
     override val name: String,
     override val clientRole: Boolean = false,
     override val containerId: String,
-    val composite: Boolean,
-    val composites: List<ClientRole>,
+//    val composite: Boolean,
+//    val composites: List<ClientRole>,
 ) : Role()
 
 data class ClientRoles(
-    val client: List<ClientRole>
+    val client: MutableList<ClientRole> = mutableListOf()
 )
-
 
 data class Roles(
-    val realm: List<RealmRole>,
-    val ClientSet : MutableSet<ClientRoles>
+    val realm: MutableList<RealmRole> = mutableListOf(),
+    val ClientSet: MutableSet<ClientRoles> = mutableSetOf()
 )
+

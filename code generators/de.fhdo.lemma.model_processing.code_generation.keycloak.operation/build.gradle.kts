@@ -24,6 +24,7 @@ buildscript {
     extra.set("jansiVersion", "1.17.1")
     extra.set("log4jVersion", "2.17.2")
     extra.set("loggingVersion", "1.7.9")
+    extra.set("fasterxmlVersion", "2.13.3")
 }
 
 dependencies {
@@ -38,6 +39,7 @@ dependencies {
     val jansiVersion: String by rootProject.extra
     val log4jVersion: String by rootProject.extra
     val loggingVersion: String by rootProject.extra
+    val fasterxmlVersion: String by rootProject.extra
 
 
     implementation(kotlin("stdlib"))
@@ -79,6 +81,7 @@ dependencies {
     // Required by kotlin-xml-builder
     implementation("org.apache.commons:commons-lang3:$commonsVersion")
     implementation("org.redundent:kotlin-xml-builder:$xmlBuilderVersion")
+    implementation("com.fasterxml.jackson.core:jackson-databind:$fasterxmlVersion")
 }
 
 tasks.withType<KotlinCompile> {
