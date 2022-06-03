@@ -37,20 +37,19 @@ class Realm {
 
     fun getRealmAsJsonString(): String {
         val realmNode = ObjectMapper().createObjectNode()
+        realmNode.put("id", id)
         properties.forEach{
-            realmNode.put(it.key, addAndCastTo(it.value))
+            realmNode.addAndCastTo(it.key, it.value)
         }
-        return realmNode.asText()
+        return ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(realmNode)
     }
 
-    private fun ObjectNode.addAndCastTo(value: Any) = when(value){
-        is Int -> this.put value as Int
-        is Long -> value as Long
-        is Double -> value as Double
-        is String -> value as String
-        is Boolean -> value as Boolean
-        else -> value.toString()
+    private fun ObjectNode.addAndCastTo(key: String, value: Any) = when(value){
+        is Int -> this.put(key, value as Int)
+        is Long -> this.put(key, value as Long)
+        is Double -> this.put(key, value as Double)
+        is String -> this.put(key, value as String)
+        is Boolean -> this.put(key, value as Boolean)
+        else -> this.put(key, value.toString())
     }
-
-
 }

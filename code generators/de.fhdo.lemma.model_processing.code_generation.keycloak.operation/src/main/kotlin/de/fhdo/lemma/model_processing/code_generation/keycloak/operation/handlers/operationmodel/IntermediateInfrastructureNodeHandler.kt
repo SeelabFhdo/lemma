@@ -5,6 +5,7 @@ import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.handler
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.handlers.interfaces.CodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.utils.getPropertiesFormNodeAspectsForDeployedServices
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.utils.hasAspect
+import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.utils.putTypedValue
 import de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode
 
 @CodeGenerationHandler
@@ -45,10 +46,12 @@ class IntermediateInfrastructureNodeHandler : CodeGenerationHandlerI<Intermediat
         val properties = mutableMapOf<String, Any>()
 
         this.reference.technology.properties.filter{!it.defaultValue.isNullOrEmpty()}.forEach {
-            properties[it.name] = it.defaultValue
+            println("${it.type}, ${it.name}, ${it.defaultValue}")
+            properties.putTypedValue(it.type,  it.name, it.defaultValue)
         }
         this.defaultValues.forEach {
-            properties[it.technologySpecificProperty.name] = it.value
+            println("${it.technologySpecificProperty.type}, ${it.technologySpecificProperty.name}, ${it.value}")
+            properties.putTypedValue(it.technologySpecificProperty.type, it.technologySpecificProperty.name, it.value)
         }
         return properties
     }
