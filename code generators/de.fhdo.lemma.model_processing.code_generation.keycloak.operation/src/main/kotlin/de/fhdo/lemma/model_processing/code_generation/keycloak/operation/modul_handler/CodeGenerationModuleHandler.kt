@@ -23,7 +23,6 @@ class CodeGenerationModuleHandler : AbstractCodeGenerationModule() {
         val content = HashMap<String, String>()
         val classes = findClassesWithAnnotationAndInterface(packageName, annotationName, interfaceName)
         val node = mutableListOf<String?>()
-        MainContext.State.initialize(targetFolder)
         this.resource.allContents.forEach { element ->
             val elementInstanceType = element.mainInterface
             classes.forEach { (_, handlerClassInfo) ->
@@ -39,9 +38,7 @@ class CodeGenerationModuleHandler : AbstractCodeGenerationModule() {
         }.forEach {
             println(it)
         }
-        MainContext.State.getPropertyFiles().forEach{ (filePath, properties) ->
-            content[filePath] = properties.asFormattedString()
-        }
+
         return withCharset(content, "UTF-8")
     }
 }

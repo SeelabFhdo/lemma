@@ -7,7 +7,7 @@ data class Client(
     val clientId: String,
     val name: String,
     val accessType: AccessType,
-    val clientRoles: ClientRole,
+    val roles: MutableList<Role>,
     val additionalProperties: MutableMap<String, Any> = mutableMapOf<String, Any>()
 ) {
     fun getClientAsJsonString(): Pair<String, String> {

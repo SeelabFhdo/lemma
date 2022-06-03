@@ -3,8 +3,6 @@ package de.fhdo.lemma.model_processing.code_generation.keycloak.operation.utils
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
 import de.fhdo.lemma.model_processing.asFile
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.SortableProperties
-import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.modul_handler.MainContext
-import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.modul_handler.filePath
 import de.fhdo.lemma.model_processing.utils.packageToPath
 import de.fhdo.lemma.operation.InfrastructureNode
 import de.fhdo.lemma.operation.intermediate.IntermediateContainer
@@ -36,37 +34,6 @@ internal fun InfrastructureNode.isCertificateAuthority() =
 
 internal fun IntermediateOperationNode.hasAspect(aspectsSet: Set<String>) = aspects.any { aspectsSet.contains(it.name) }
 
-internal fun loadOrGeneratePropertiesEntries(
-    filename: String, properties: Map<String, String>, fileType: FileType, serviceName: String
-) {
-    val pathSpecifier = fileType.filePath()
-    val filePath = generateFilePath(MainContext.State.getPath(pathSpecifier, serviceName), filename)
-    val sortableProperties = loadPropertiesFile(filePath)
-    properties.filter { it.key in FileType.filter(fileType) }.forEach { property ->
-        when (property.key) {
-            "applicationName" -> {
-                val appName = parseApplicationNames(property.value)[serviceName.lowercase()]
-                properties["caDomain"]?.let {
-                    sortableProperties[springPropertyMapping("subject")] =
-                        "${appName}.$it"
-                }
-                sortableProperties[springPropertyMapping(property.key)] = appName
-            }
-            "keyStoreFileName", "trustStoreFileName" -> {
-                sortableProperties[springPropertyMapping(property.key)] =
-                    property.value.replace("##applicationName##", serviceName.packageToPath()).fixPath()
-            }
-            "caName" -> {
-                properties["caDomain"]?.let {
-                    sortableProperties[springPropertyMapping("subject")] = "${property.value}.$it"
-                }
-                sortableProperties[springPropertyMapping(property.key)] = property.value
-            }
-            else -> sortableProperties[springPropertyMapping(property.key)] = property.value
-        }
-    }
-    MainContext.State.addPropertyFile(filename, sortableProperties, fileType, serviceName)
-}
 
 internal fun IntermediateInfrastructureNode.getPropertiesFormNodeAspectsForDeployedServices(aspectName: String):
         Map<String, Map<String, String>>? {

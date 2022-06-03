@@ -1,4 +1,4 @@
-package de.fhdo.lemma.model_processing.code_generation.keycloak.operation.handlers
+package de.fhdo.lemma.model_processing.code_generation.keycloak.operation.handlers.operationmodel
 
 import de.fhdo.lemma.data.intermediate.IntermediateImport
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.handlers.interfaces.*
@@ -15,6 +15,8 @@ class IntermediateImportHandler : CodeGenerationHandlerI<IntermediateImport> {
     override fun execute(eObject: IntermediateImport): String? {
         if (!eObject.importTypeName.equals("MICROSERVICES"))
             return ""
+
+
         val classes = findClassesWithAnnotationAndInterface(packageName, annotationName, interfaceName)
         val node = mutableListOf<String?>()
         val serviceModelUri = eObject.importUri
