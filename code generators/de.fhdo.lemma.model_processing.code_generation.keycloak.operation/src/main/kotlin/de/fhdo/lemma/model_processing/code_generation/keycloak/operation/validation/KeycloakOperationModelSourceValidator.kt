@@ -27,6 +27,8 @@ class KeycloakOperationModelSourceValidator : AbstractXtextModelValidator() {
         om.imports.convertToAbsoluteFileUrisInPlace(resource)
     }
 
+    //todo prüfen ob ein Microservice mit Rollen einen Aspekt keycloakClient(clientId="de.pelki.ms1") besitzt eventuell auch nicht wenn ich den client aus dem kram erstellen kann
+
 
     /*
     * Checks whether the Certificate Authority has been defined as infrastructure node aspects.

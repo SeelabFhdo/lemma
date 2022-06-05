@@ -4,6 +4,7 @@ import de.fhdo.lemma.data.intermediate.IntermediatePackage
 import de.fhdo.lemma.model_processing.annotations.CodeGenerationModule
 import de.fhdo.lemma.model_processing.builtin_phases.code_generation.AbstractCodeGenerationModule
 import de.fhdo.lemma.model_processing.builtin_phases.code_generation.CharsetAwareFileContent
+import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.MainContext
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.handlers.interfaces.CodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.handlers.interfaces.annotationName
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.handlers.interfaces.findClassesWithAnnotationAndInterface
@@ -11,7 +12,10 @@ import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.handler
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.handlers.interfaces.packageName
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.utils.asFormattedString
 import de.fhdo.lemma.model_processing.utils.mainInterface
+import org.apache.log4j.chainsaw.Main
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.resource.Resource
+import java.io.File
 
 @CodeGenerationModule(name = "keycloak")
 class CodeGenerationModuleHandler : AbstractCodeGenerationModule() {
@@ -21,24 +25,36 @@ class CodeGenerationModuleHandler : AbstractCodeGenerationModule() {
         phaseArguments: Array<String>, moduleArguments: Array<String>
     ): Map<String, CharsetAwareFileContent> {
         val content = HashMap<String, String>()
-        val classes = findClassesWithAnnotationAndInterface(packageName, annotationName, interfaceName)
-        val node = mutableListOf<String?>()
-        this.resource.allContents.forEach { element ->
-            val elementInstanceType = element.mainInterface
-            classes.forEach { (_, handlerClassInfo) ->
-                val clazz = handlerClassInfo.loadClass()
-                val handlerInstance = clazz.getConstructor().newInstance() as CodeGenerationHandlerI<EObject>
-                if (elementInstanceType == handlerInstance.getSourceInstanceType()) {
-                    node.add(handlerInstance.execute(element))
-                }
-            }
-        }
-        node.filter {
-            !it.isNullOrEmpty()
-        }.forEach {
-            println(it)
-        }
 
+        val handlerValues = this.resource.callAllHandlers()
+
+//         todo properties erstellen
+//         todo keycloak config erstellen 1 x komplette und für jeden client
+        println(MainContext.State.getRealmAsJson())
+
+        content[setOf(
+            targetFolder,
+            "keycloak",
+            "configfiles",
+            "realm_${MainContext.State.getRealmName()}.json"
+        ).joinToString(File.separator)] =
+            MainContext.State.getRealmAsJson()
         return withCharset(content, "UTF-8")
     }
+}
+
+fun Resource.callAllHandlers(): List<String?> {
+    val classes = findClassesWithAnnotationAndInterface(packageName, annotationName, interfaceName)
+    val returnValue = mutableListOf<String?>()
+    this.allContents.forEach { element ->
+        val elementInstanceType = element.mainInterface
+        classes.forEach { (_, handlerClassInfo) ->
+            val clazz = handlerClassInfo.loadClass()
+            val handlerInstance = clazz.getConstructor().newInstance() as CodeGenerationHandlerI<EObject>
+            if (elementInstanceType == handlerInstance.getSourceInstanceType()) {
+                returnValue.add(handlerInstance.execute(element))
+            }
+        }
+    }
+    return returnValue.toList()
 }

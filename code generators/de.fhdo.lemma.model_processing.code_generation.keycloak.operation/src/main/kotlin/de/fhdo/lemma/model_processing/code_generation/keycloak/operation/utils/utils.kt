@@ -32,7 +32,7 @@ internal fun InfrastructureNode.isCertificateAuthority() =
     (infrastructureTechnology.infrastructureTechnology.name == "certificateAuthority"
             && infrastructureTechnology.infrastructureTechnology.technology.name == "mTLS")
 
-internal fun IntermediateOperationNode.hasAspect(aspectsSet: Set<String>) = aspects.any { aspectsSet.contains(it.name) }
+
 
 
 internal fun IntermediateInfrastructureNode.getPropertiesFormNodeAspectsForDeployedServices(aspectName: String):

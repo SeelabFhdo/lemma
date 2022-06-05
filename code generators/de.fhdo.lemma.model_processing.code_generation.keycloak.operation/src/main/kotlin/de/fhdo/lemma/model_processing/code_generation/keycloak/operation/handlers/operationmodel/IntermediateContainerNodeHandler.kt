@@ -12,16 +12,16 @@ class IntermediateContainerNodeHandler : CodeGenerationHandlerI<IntermediateCont
     private fun handlesAspects() = setOf("mtls", "mtlsdev")
 
     override fun execute(eObject: IntermediateContainer): String? {
-        if (!eObject.hasAspect(handlesAspects()))
-            return null
-
-        handlesAspects().forEach { aspectName ->
-            val properties = eObject.getPropertiesFormNodeAspectsForDeployedServices(aspectName)!!
-            properties.forEach { serviceProperties ->
-                println("${serviceProperties.key} ${serviceProperties.value}")
-
-            }
-        }
+//        if (!eObject.hasAspect(handlesAspects()))
+//            return null
+//
+//        handlesAspects().forEach { aspectName ->
+//            val properties = eObject.getPropertiesFormNodeAspectsForDeployedServices(aspectName)!!
+//            properties.forEach { serviceProperties ->
+//                println("${serviceProperties.key} ${serviceProperties.value}")
+//
+//            }
+//        }
         return "IntermediateContainerNodeHandler.${eObject.name}"
     }
 }
