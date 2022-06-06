@@ -22,23 +22,18 @@ internal object MainContext {
 
         }
 
-        fun addUser(
-            username: String,
-            firstname: String,
-            lastname: String,
-            email: String,
-            enabled: Boolean,
-            requiredUserActions: UserActions
-        ) {
-            users.add(User(username, firstname, lastname, email, enabled, requiredUserActions))
+        fun addUser(properties: Map<String, Any>) {
+            val username = properties["username"] as String
+            users.add(User(username, properties))
         }
 
         fun getRealmName() = realm.id
 
-        fun addGroup(groupName: String, roles: String) {
+        fun addGroup(properties: Map<String, Any>) {
+            val groupName = properties["name"] as String
             if (!groups.containsKey(groupName))
                 groups[groupName] = Group(groupName)
-            groups[groupName]?.realmRoles?.addAll(roles.split(","))
+            properties["realmRoles"]?.let { groups[groupName]?.addRoles((it as String).split(",")) }
         }
 
         fun createRealm(properties: Map<String, Any>) {
@@ -46,14 +41,14 @@ internal object MainContext {
             this.realm.addRealmProperties(properties)
         }
 
-        fun addClient(properties: Map<String, Any>){
+        fun addClient(properties: Map<String, Any>) {
             val clientId = properties["clientId"] as String
             if (!clients.containsKey(clientId))
                 clients[clientId] = Client(clientId)
             clients[clientId]?.addProperties(properties)
         }
 
-        fun addClient(clientId: String){
+        fun addClient(clientId: String) {
             if (!clients.containsKey(clientId))
                 clients[clientId] = Client(clientId)
             clients[clientId]?.addProperty("clientId", clientId)
@@ -63,6 +58,8 @@ internal object MainContext {
         fun getRealmAsJson(): String {
             realm.roles = roles
             realm.clients.putAll(clients)
+            realm.groups.putAll(groups)
+            realm.users.addAll(users)
             return realm.getRealmAsJsonString()
         }
 
@@ -70,6 +67,7 @@ internal object MainContext {
             clients.clear()
             groups.clear()
             users.clear()
+            roles.resetRoles()
         }
 
         fun addRole(clientName: String, properties: Map<String, Any>) {

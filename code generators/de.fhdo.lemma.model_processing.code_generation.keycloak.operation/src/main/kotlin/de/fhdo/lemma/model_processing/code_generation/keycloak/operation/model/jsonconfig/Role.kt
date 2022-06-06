@@ -39,21 +39,18 @@ class Roles {
     fun getRolesAsJsonNode(): ObjectNode {
         val objectMapper = ObjectMapper()
         val rolesNode = objectMapper.createObjectNode()
-        val clientRolesNode = objectMapper.createObjectNode()
-        val rolesArrayNode = objectMapper.createArrayNode()
+        val rolesArrayNode = rolesNode.putArray("realm")
         realmRoles.forEach {
             rolesArrayNode.add(it.value.getRoleAsJsonNode())
         }
-        rolesNode.putArray("realm").addAll(rolesArrayNode)
 
-        if (clientRoles.isNotEmpty()) {
-            clientRoles.forEach {
-                val arrayNode = clientRolesNode.putArray(it.key)
-                it.value.forEach { role ->
-                    arrayNode.add(role.value.getRoleAsJsonNode())
-                }
-                rolesNode.set<ObjectNode>("client", clientRolesNode)
+        val clientRolesNode = rolesNode.putObject("client")
+        clientRoles.forEach { client ->
+            val arrayNode = clientRolesNode.putArray(client.key)
+            client.value.forEach { role ->
+                arrayNode.add(role.value.getRoleAsJsonNode())
             }
+//            clientRolesNode.rolesNode.set<ObjectNode>("client", clientRolesNode)
         }
         return rolesNode
     }

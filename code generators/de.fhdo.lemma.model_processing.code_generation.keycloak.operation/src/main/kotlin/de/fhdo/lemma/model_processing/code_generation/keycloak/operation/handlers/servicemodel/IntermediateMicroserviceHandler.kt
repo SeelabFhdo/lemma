@@ -18,11 +18,9 @@ class IntermediateMicroserviceHandler : CodeGenerationHandlerI<IntermediateMicro
 
 
     override fun execute(eObject: IntermediateMicroservice): String? {
-
-        println(eObject.javaFileName)
         // Client erstellen Clientrollen liste anlegen aspect keycloakClient
         // Application Properties erstellen und Pfade finden "ressource"
-        val keycloakClientAspect = eObject.getAspect("Keycloak.keycloakClient")?.let {
+        eObject.getAspect("Keycloak.keycloakClient")?.let {
             MainContext.State.addClient(it.getPropertiesValuesOrDefault())
         } ?: run {
             val clientId = eObject.getAspectPropertyValue("Spring.Application", "name")?.also { it.lowercase() }

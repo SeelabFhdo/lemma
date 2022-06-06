@@ -7,6 +7,12 @@ data class Group(
     val name: String,
 ){
     val realmRoles: MutableSet<String> = mutableSetOf()
+
+    fun addRoles(realmRoles: List<String>){
+        this.realmRoles.addAll(realmRoles)
+    }
+
+
     fun getGroupAsJsonNode(): ObjectNode {
         val objectMapper = ObjectMapper()
         val groupNode = objectMapper.createObjectNode()

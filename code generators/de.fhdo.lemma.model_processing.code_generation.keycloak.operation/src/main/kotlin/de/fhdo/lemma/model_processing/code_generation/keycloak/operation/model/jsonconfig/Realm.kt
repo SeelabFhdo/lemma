@@ -9,8 +9,8 @@ import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.utils.c
 
 data class Realm(val id: String) {
     private val properties: MutableMap<String, Any> = mutableMapOf()
-//    val users: MutableSet<User> = mutableSetOf()
-//    val groups: MutableSet<Group> = mutableSetOf()
+    val users: MutableSet<User> = mutableSetOf()
+    val groups: MutableMap<String, Group> = mutableMapOf()
     val clients: MutableMap<String, Client> = mutableMapOf()
     lateinit var roles: Roles
 
@@ -38,10 +38,18 @@ data class Realm(val id: String) {
         properties.forEach {
             realmNode.addAndCastTo(it.key, it.value)
         }
+        val groupsArrayNode = realmNode.putArray("groups")
+        groups.forEach { it ->
+            groupsArrayNode.add(it.value.getGroupAsJsonNode())
+        }
         realmNode.set<ObjectNode>("roles", roles.getRolesAsJsonNode())
         val clientsArrayNode = realmNode.putArray("clients")
         clients.forEach {
             clientsArrayNode.add(it.value.getClientAsJsonNode())
+        }
+        val usersArrayNode = realmNode.putArray("users")
+        users.forEach {
+            usersArrayNode.add(it.getUserAsJsonNode())
         }
         return ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(realmNode)
     }

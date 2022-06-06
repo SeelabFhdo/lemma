@@ -16,47 +16,48 @@ class IntermediateInfrastructureNodeHandler : CodeGenerationHandlerI<Intermediat
 
     override fun execute(eObject: IntermediateInfrastructureNode): String? {
         if (eObject.qualifiedInfrastructureTechnologyName == "Keycloak.keycloakRealm") {
-//            create Realm form aspects
-            eObject.createRealm()
-//            println("Hmmm ${MainContext.State.getRealmAsJson()}")
-
+            MainContext.State.createRealm(eObject.getPropertiesValuesOrDefault())
+            eObject.aspects.forEach { aspect ->
+                val aspectProperties = aspect.getPropertiesValuesOrDefault()
+                when (aspect.name) {
+                    "keycloakPropertiesConfig" -> {
+                        // generate application-keycloak.properites (für jeden Client) aber nocht nicht hier
+                    }
+                    "group" -> {
+                        MainContext.State.addGroup(aspectProperties)
+                    }
+                    "user" -> {
+                        MainContext.State.addUser(aspectProperties)
+                    }
+                    else -> {}
+                }
+            }
         } else {
             if (!eObject.hasAspect(handlesAspects()))
                 return null
             eObject.aspects.filter { handlesAspects().contains(it.name) }.forEach { aspect ->
+                val aspectProperties = aspect.getPropertiesValuesOrDefault()
                 when (aspect.name) {
                     "role" -> {
-                        MainContext.State.addRole(eObject.name, aspect.getPropertiesValuesOrDefault())
+                        MainContext.State.addRole(eObject.name, aspectProperties)
                     }
                     "keycloakClient" -> {
-                        aspect.getPropertiesValuesOrDefault()
+                        MainContext.State.addClient(aspectProperties)
                     }
-                    "keycloakPropertiesConfig" -> {}
                     else -> {}
                 }
-
-
             }
         }
         return "IntermediateInfrastructureNodeHandler.${eObject.name}"
-    }
-
-    private fun IntermediateInfrastructureNode.createRealm() {
-
-        MainContext.State.createRealm(this.getPropertiesValuesOrDefault())
-
-
     }
 
     private fun IntermediateInfrastructureNode.getPropertiesValuesOrDefault(): Map<String, Any> {
         val properties = mutableMapOf<String, Any>()
 
         this.reference.technology.properties.filter { !it.defaultValue.isNullOrEmpty() }.forEach {
-//            println("${it.type}, ${it.name}, ${it.defaultValue}")
             properties.putTypedValue(it.type, it.name, it.defaultValue)
         }
         this.defaultValues.forEach {
-//            println("${it.technologySpecificProperty.type}, ${it.technologySpecificProperty.name}, ${it.value}")
             properties.putTypedValue(it.technologySpecificProperty.type, it.technologySpecificProperty.name, it.value)
         }
         return properties
