@@ -30,7 +30,7 @@ data class User(
     }
 }
 
-
-enum class UserActions {
+// todo RequiredActions einbauen und Testen
+enum class RequiredActions {
     CONFIGURE_OTP, UPDATE_PASSWORD, UPDATE_PROFILE, VERIFY_EMAIL, UPDATE_USER_LOCALE
 }

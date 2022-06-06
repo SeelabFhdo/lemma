@@ -50,7 +50,6 @@ class Roles {
             client.value.forEach { role ->
                 arrayNode.add(role.value.getRoleAsJsonNode())
             }
-//            clientRolesNode.rolesNode.set<ObjectNode>("client", clientRolesNode)
         }
         return rolesNode
     }
