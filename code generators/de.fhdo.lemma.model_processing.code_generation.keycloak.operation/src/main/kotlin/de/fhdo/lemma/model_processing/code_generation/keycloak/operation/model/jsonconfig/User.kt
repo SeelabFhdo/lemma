@@ -12,7 +12,7 @@ data class User(
         val objectMapper = ObjectMapper()
         val userNode = objectMapper.createObjectNode()
 
-        properties.forEach { key, value ->
+        properties.forEach { (key, value) ->
             when (key) {
                 "realmRoles", "groups" -> {
                     val arrayNode = userNode.putArray(key)
@@ -23,7 +23,18 @@ data class User(
                 "clientRoles" -> {
 
                 }
-                else -> {userNode.addAndCastTo(key, value)}
+                "requiredActions" -> {
+                    val arrayNode = userNode.putArray(key)
+                    val requiredActions = (value as String).split(",")
+                    requiredActions.forEach { requiredAction ->
+                        RequiredActions.values().find { it.requiredActions == requiredAction.trim() }?.let {
+                            arrayNode.add(it.name)
+                        }
+                    }
+                }
+                else -> {
+                    userNode.addAndCastTo(key, value)
+                }
             }
         }
         return userNode
@@ -31,6 +42,10 @@ data class User(
 }
 
 // todo RequiredActions einbauen und Testen
-enum class RequiredActions {
-    CONFIGURE_OTP, UPDATE_PASSWORD, UPDATE_PROFILE, VERIFY_EMAIL, UPDATE_USER_LOCALE
+enum class RequiredActions(val requiredActions: String) {
+    CONFIGURE_OTP("Configure_OTP"),
+    UPDATE_PASSWORD("Update_Password"),
+    UPDATE_PROFILE("Update_Profile"),
+    VERIFY_EMAIL("Verify_Email"),
+    UPDATE_USER_LOCALE("Update_User_Locale")
 }

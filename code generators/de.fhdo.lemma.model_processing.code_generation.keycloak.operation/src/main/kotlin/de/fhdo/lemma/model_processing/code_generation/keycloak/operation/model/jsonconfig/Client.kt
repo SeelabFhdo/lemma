@@ -32,11 +32,9 @@ data class Client(
         val objectMapper = ObjectMapper()
         val clientNode = objectMapper.createObjectNode()
         properties.forEach {property ->
-            println("I bims ${property.key}")
             when (property.key) {
                 "accessType" -> {
                     AccessType.values().find { it.accessType == property.value }?.let {
-                        println("I bims ${it.accessType}")
                         AccessType.getProperties(it).forEach { (key, value) ->
                             clientNode.addAndCastTo(key, value)
                         }

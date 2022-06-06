@@ -1,13 +1,14 @@
 package de.fhdo.lemma.model_processing.code_generation.keycloak.operation.handlers.operationmodel
 
-import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.MainContext
+import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.MainContext.State.findServiceByQualifiedName
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.handlers.interfaces.CodeGenerationHandler
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.handlers.interfaces.CodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.utils.getPropertiesValuesOrDefault
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.utils.hasAspect
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.utils.putTypedValue
 import de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode
+
 
 @CodeGenerationHandler
 class IntermediateInfrastructureNodeHandler : CodeGenerationHandlerI<IntermediateInfrastructureNode> {
@@ -27,7 +28,18 @@ class IntermediateInfrastructureNodeHandler : CodeGenerationHandlerI<Intermediat
                         MainContext.State.addGroup(aspectProperties)
                     }
                     "user" -> {
-                        MainContext.State.addUser(aspectProperties)
+                        val aspectPropertiesTemp = aspectProperties.toMutableMap()
+                        aspectPropertiesTemp.remove("clientRoles")
+                        aspectProperties.filter { it.key == "clientRoles" }.forEach { clientRoles ->
+                            (clientRoles.value as String).split(",").forEach { clientRole ->
+                                println("clientRoles: $clientRole")
+                                val serviceRole = clientRole.split("=").let {
+                                    Pair(it[0], it.getOrNull(1) ?: "")}
+                                aspectPropertiesTemp.put(findServiceByQualifiedName(serviceRole.first) to serviceRole.second)
+
+                            }
+                        }
+                        MainContext.State.addUser(aspectPropertiesTemp)
                     }
                     else -> {}
                 }
@@ -65,3 +77,4 @@ class IntermediateInfrastructureNodeHandler : CodeGenerationHandlerI<Intermediat
 
 
 }
+

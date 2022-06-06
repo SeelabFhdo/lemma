@@ -10,9 +10,10 @@ import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.handler
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.handlers.interfaces.findClassesWithAnnotationAndInterface
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.handlers.interfaces.interfaceName
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.handlers.interfaces.packageName
-import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.utils.asFormattedString
+import de.fhdo.lemma.model_processing.utils.loadModelRoot
 import de.fhdo.lemma.model_processing.utils.mainInterface
-import org.apache.log4j.chainsaw.Main
+import de.fhdo.lemma.model_processing.utils.removeFileUri
+import de.fhdo.lemma.operation.intermediate.IntermediateOperationModel
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource
 import java.io.File
@@ -26,11 +27,15 @@ class CodeGenerationModuleHandler : AbstractCodeGenerationModule() {
     ): Map<String, CharsetAwareFileContent> {
         val content = HashMap<String, String>()
 
+        MainContext.State.intermediateOperationModel = loadModelRoot<IntermediateOperationModel>(
+            this.resource.uri.toString().removeFileUri()
+        )
         val handlerValues = this.resource.callAllHandlers()
 
 //         todo properties erstellen
 //         todo keycloak config erstellen 1 x komplette und für jeden client
-        println(MainContext.State.getRealmAsJson())
+
+//        println(MainContext.State.getRealmAsJson())
 
         content[setOf(
             targetFolder,

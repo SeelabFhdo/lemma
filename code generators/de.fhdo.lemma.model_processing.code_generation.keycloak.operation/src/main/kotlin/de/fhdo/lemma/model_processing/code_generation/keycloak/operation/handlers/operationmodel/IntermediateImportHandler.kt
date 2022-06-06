@@ -1,6 +1,7 @@
 package de.fhdo.lemma.model_processing.code_generation.keycloak.operation.handlers.operationmodel
 
 import de.fhdo.lemma.data.intermediate.IntermediateImport
+import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.MainContext
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.handlers.interfaces.*
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.modul_handler.callAllHandlers
 import de.fhdo.lemma.model_processing.utils.loadModelRootRelative
@@ -23,6 +24,7 @@ class IntermediateImportHandler : CodeGenerationHandlerI<IntermediateImport> {
                 serviceModelUri,
                 eObject.eResource().uri.toString().removeFileUri()
             )
+        MainContext.State.intermediateServiceModels.add(serviceModel)
         val handlerValues = serviceModel.eResource().callAllHandlers()
 
         return null
