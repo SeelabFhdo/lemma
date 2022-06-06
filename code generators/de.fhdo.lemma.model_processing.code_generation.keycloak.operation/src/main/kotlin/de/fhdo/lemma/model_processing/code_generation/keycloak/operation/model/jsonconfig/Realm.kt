@@ -11,7 +11,7 @@ data class Realm(val id: String) {
     private val properties: MutableMap<String, Any> = mutableMapOf()
 //    val users: MutableSet<User> = mutableSetOf()
 //    val groups: MutableSet<Group> = mutableSetOf()
-//    val clients: MutableSet<Client> = mutableSetOf()
+    val clients: MutableMap<String, Client> = mutableMapOf()
     lateinit var roles: Roles
 
     fun addRealmProperties(properties: Map<String, Any>) {
@@ -39,6 +39,10 @@ data class Realm(val id: String) {
             realmNode.addAndCastTo(it.key, it.value)
         }
         realmNode.set<ObjectNode>("roles", roles.getRolesAsJsonNode())
+        val clientsArrayNode = realmNode.putArray("clients")
+        clients.forEach {
+            clientsArrayNode.add(it.value.getClientAsJsonNode())
+        }
         return ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(realmNode)
     }
 

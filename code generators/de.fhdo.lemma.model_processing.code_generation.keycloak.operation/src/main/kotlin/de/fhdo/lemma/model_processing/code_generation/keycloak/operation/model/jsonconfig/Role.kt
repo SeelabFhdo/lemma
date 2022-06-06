@@ -5,11 +5,12 @@ import com.fasterxml.jackson.databind.node.ObjectNode
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.utils.addAndCastTo
 
 data class Role(
-    val roleProperties: Map<String, Any>
+    val name: String,
+    val roleProperties: MutableMap<String, Any>
 ) {
     fun getRoleAsJsonNode(): ObjectNode {
         val propertiesNode = ObjectMapper().createObjectNode()
-        roleProperties.forEach {
+        roleProperties.filter { it.key != "httpMethod" }.forEach {
             propertiesNode.addAndCastTo(it.key, it.value)
         }
         return propertiesNode
@@ -17,18 +18,22 @@ data class Role(
 }
 
 class Roles {
-    private val realmRoles: MutableSet<Role> = mutableSetOf()
-    private val clientRoles: MutableMap<String, MutableSet<Role>> = mutableMapOf()
+    private val realmRoles: MutableMap<String, Role> = mutableMapOf()
+    private val clientRoles: MutableMap<String, MutableMap<String, Role>> = mutableMapOf()
 
     fun addRealmRole(role: Role) {
-        realmRoles.add(role)
+        if (!realmRoles.containsKey(role.name))
+            realmRoles[role.name] = role
+        else
+            realmRoles[role.name]?.roleProperties?.putAll(role.roleProperties)
     }
 
     fun addClientRoles(client: String, role: Role) {
+        val name = role.name
         if (clientRoles.containsKey(client))
-            clientRoles[client]!!.add(role)
+            clientRoles[client]!![name] = role
         else
-            clientRoles[client] = mutableSetOf(role)
+            clientRoles[client] = mutableMapOf(name to role)
     }
 
     fun getRolesAsJsonNode(): ObjectNode {
@@ -37,7 +42,7 @@ class Roles {
         val clientRolesNode = objectMapper.createObjectNode()
         val rolesArrayNode = objectMapper.createArrayNode()
         realmRoles.forEach {
-            rolesArrayNode.add(it.getRoleAsJsonNode())
+            rolesArrayNode.add(it.value.getRoleAsJsonNode())
         }
         rolesNode.putArray("realm").addAll(rolesArrayNode)
 
@@ -45,7 +50,7 @@ class Roles {
             clientRoles.forEach {
                 val arrayNode = clientRolesNode.putArray(it.key)
                 it.value.forEach { role ->
-                    arrayNode.add(role.getRoleAsJsonNode())
+                    arrayNode.add(role.value.getRoleAsJsonNode())
                 }
                 rolesNode.set<ObjectNode>("client", clientRolesNode)
             }
@@ -58,22 +63,3 @@ class Roles {
         clientRoles.clear()
     }
 }
-
-
-//data class ClientRole(
-//    override val name: String,
-//    override val clientRole: Boolean = true,
-//    override val containerId: String,
-//) : Role()
-//
-//data class RealmRole(
-//    override val name: String,
-//    override val clientRole: Boolean = false,
-//    override val containerId: String,
-////    val composite: Boolean,
-////    val composites: List<ClientRole>,
-//) : Role()
-
-//data class ClientRoles(
-//    val client: MutableList<Role> = mutableListOf()
-//)

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
 import de.fhdo.lemma.operation.intermediate.IntermediateOperationNode
 import de.fhdo.lemma.service.intermediate.IntermediateInterface
+import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
 import de.fhdo.lemma.service.intermediate.IntermediateOperation
 
 fun MutableMap<String, Any>.putTypedValue(type: String, key: String, value: String) = when (type) {
@@ -17,7 +18,7 @@ fun MutableMap<String, Any>.putTypedValue(type: String, key: String, value: Stri
     else -> this.put(key, value)
 }
 
-fun propertiesKeyMapper(key: String) = when (key) {
+fun applicationPropertiesKeyMapper(key: String) = when (key) {
     "authServerUrl" -> "keycloak.auth-server-url"
     "realm" -> "keycloak.realm"
     "resource" -> "keycloak.resource"
@@ -25,10 +26,16 @@ fun propertiesKeyMapper(key: String) = when (key) {
     "bearerOnly" -> "keycloak.bearer-only"
     "sslRequired" -> "keycloak.ssl-required"
     "principalAttribute" -> "keycloak.principal-attribute"
+    "clientProtocol" -> "protocol"
     else -> key
 }
 
-fun ObjectNode.addAndCastTo(key: String, value: Any) = when (value) {
+fun keycloakPropertiesKeyMapper(key: String) = when (key) {
+    "clientProtocol" -> "protocol"
+    else -> key
+}
+
+fun ObjectNode.addAndCastTo(key: String, value: Any): ObjectNode = when (value) {
     is Int -> this.put(key, value as Int)
     is Long -> this.put(key, value as Long)
     is Double -> this.put(key, value as Double)
@@ -40,6 +47,7 @@ fun ObjectNode.addAndCastTo(key: String, value: Any) = when (value) {
 internal fun IntermediateOperationNode.hasAspect(aspectsSet: Set<String>) = aspects.any { aspectsSet.contains(it.name) }
 internal fun IntermediateInterface.hasAspect(aspectsSet: Set<String>) = aspects.any { aspectsSet.contains(it.name) }
 internal fun IntermediateOperation.hasAspect(aspectsSet: Set<String>) = aspects.any { aspectsSet.contains(it.name) }
+internal fun IntermediateMicroservice.hasAspect(aspectsSet: Set<String>) = aspects.any { aspectsSet.contains(it.name) }
 
 internal fun IntermediateImportedAspect.getPropertiesValuesOrDefault(): Map<String, Any>{
     val properties = mutableMapOf<String, Any>()

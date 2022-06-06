@@ -1,5 +1,7 @@
 package de.fhdo.lemma.model_processing.code_generation.keycloak.operation.handlers.servicemodel
 
+import de.fhdo.lemma.model_processing.code_generation.java_base.classname
+import de.fhdo.lemma.model_processing.code_generation.java_base.getAspectPropertyValue
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasAspect
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.MainContext
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.handlers.interfaces.CodeGenerationHandler
@@ -20,7 +22,10 @@ class IntermediateInterfaceHandler : CodeGenerationHandlerI<IntermediateInterfac
             return null
 
         eObject.aspects.filter { handlesAspects().contains(it.name)}.forEach { aspect ->
-            MainContext.State.addRole(eObject.microservice.name, aspect.getPropertiesValuesOrDefault())
+            val clientId =
+                eObject.microservice.getAspectPropertyValue("Keycloak.keycloakClient", "clientId")
+                    ?: eObject.microservice.classname.lowercase()
+            MainContext.State.addRole(clientId, aspect.getPropertiesValuesOrDefault())
         }
 
 

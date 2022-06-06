@@ -14,7 +14,7 @@ internal object MainContext {
 
         private lateinit var realm: Realm
         private val roles: Roles = Roles()
-        private val realmClients = mutableListOf<Client>()
+        private val clients = mutableMapOf<String, Client>()
         private val groups = mutableMapOf<String, Group>()
         private val users = mutableListOf<User>()
 
@@ -36,37 +36,53 @@ internal object MainContext {
         fun getRealmName() = realm.id
 
         fun addGroup(groupName: String, roles: String) {
-            groups[groupName] = Group(groupName)
+            if (!groups.containsKey(groupName))
+                groups[groupName] = Group(groupName)
+            groups[groupName]?.realmRoles?.addAll(roles.split(","))
         }
-
 
         fun createRealm(properties: Map<String, Any>) {
             this.realm = Realm(properties["realm"] as String)
             this.realm.addRealmProperties(properties)
         }
 
+        fun addClient(properties: Map<String, Any>){
+            val clientId = properties["clientId"] as String
+            if (!clients.containsKey(clientId))
+                clients[clientId] = Client(clientId)
+            clients[clientId]?.addProperties(properties)
+        }
+
+        fun addClient(clientId: String){
+            if (!clients.containsKey(clientId))
+                clients[clientId] = Client(clientId)
+            clients[clientId]?.addProperty("clientId", clientId)
+            clients[clientId]?.addProperty("clientProtocol", "openid-connect")
+        }
+
         fun getRealmAsJson(): String {
             realm.roles = roles
+            realm.clients.putAll(clients)
             return realm.getRealmAsJsonString()
         }
 
         fun reset() {
-            realmClients.clear()
+            clients.clear()
             groups.clear()
             users.clear()
         }
 
         fun addRole(clientName: String, properties: Map<String, Any>) {
-            if (properties.containsKey("clientRole")) {
-                if(properties["clientRole"] as Boolean)
-                    this.roles.addClientRoles(clientName,  Role(properties))
-                else
-                    this.roles.addRealmRole(Role(properties))
+            val roleName = properties["name"] as String
+            properties["clientRole"]?.let {
+                if (it as Boolean) {
+                    return this.roles.addClientRoles(clientName, Role(roleName, properties.toMutableMap()))
+                }
             }
-            else{
-                this.roles.addRealmRole(Role(properties))
-            }
+            this.roles.addRealmRole(Role(roleName, properties.toMutableMap()))
         }
     }
 }
+
+
 

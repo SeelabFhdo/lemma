@@ -12,7 +12,7 @@ import de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode
 @CodeGenerationHandler
 class IntermediateInfrastructureNodeHandler : CodeGenerationHandlerI<IntermediateInfrastructureNode> {
     override fun getSourceInstanceType() = IntermediateInfrastructureNode::class.java
-    private fun handlesAspects() = setOf("role","keycloakClient","keycloakPropertiesConfig")
+    private fun handlesAspects() = setOf("role", "keycloakClient", "keycloakPropertiesConfig")
 
     override fun execute(eObject: IntermediateInfrastructureNode): String? {
         if (eObject.qualifiedInfrastructureTechnologyName == "Keycloak.keycloakRealm") {
@@ -24,12 +24,13 @@ class IntermediateInfrastructureNodeHandler : CodeGenerationHandlerI<Intermediat
             if (!eObject.hasAspect(handlesAspects()))
                 return null
             eObject.aspects.filter { handlesAspects().contains(it.name) }.forEach { aspect ->
-                when(aspect.name){
-                    "role"->{
-                        println(aspect.getPropertiesValuesOrDefault())
+                when (aspect.name) {
+                    "role" -> {
                         MainContext.State.addRole(eObject.name, aspect.getPropertiesValuesOrDefault())
                     }
-                    "keycloakClient" -> {}
+                    "keycloakClient" -> {
+                        aspect.getPropertiesValuesOrDefault()
+                    }
                     "keycloakPropertiesConfig" -> {}
                     else -> {}
                 }
@@ -46,12 +47,13 @@ class IntermediateInfrastructureNodeHandler : CodeGenerationHandlerI<Intermediat
 
 
     }
-    private fun IntermediateInfrastructureNode.getPropertiesValuesOrDefault(): Map<String, Any>{
+
+    private fun IntermediateInfrastructureNode.getPropertiesValuesOrDefault(): Map<String, Any> {
         val properties = mutableMapOf<String, Any>()
 
-        this.reference.technology.properties.filter{!it.defaultValue.isNullOrEmpty()}.forEach {
+        this.reference.technology.properties.filter { !it.defaultValue.isNullOrEmpty() }.forEach {
 //            println("${it.type}, ${it.name}, ${it.defaultValue}")
-            properties.putTypedValue(it.type,  it.name, it.defaultValue)
+            properties.putTypedValue(it.type, it.name, it.defaultValue)
         }
         this.defaultValues.forEach {
 //            println("${it.technologySpecificProperty.type}, ${it.technologySpecificProperty.name}, ${it.value}")
