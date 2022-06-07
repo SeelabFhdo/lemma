@@ -198,7 +198,8 @@ class MicroserviceHandler :
 
         private fun recursiveConfigureStatement(functionList: List<Pair<String, List<String>>>): MethodCallExpr {
             val arguments =
-                if (functionList[0].second.first().isEmpty()) NodeList()
+                if (functionList[0].second.isEmpty() || functionList[0].second.first().isEmpty())
+                    NodeList()
                 else {
                     val list = mutableListOf<Expression>()
                     functionList[0].second.forEach {

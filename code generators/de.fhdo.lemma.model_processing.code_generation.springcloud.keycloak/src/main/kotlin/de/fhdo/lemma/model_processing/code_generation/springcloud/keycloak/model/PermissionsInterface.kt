@@ -18,12 +18,17 @@ fun PermissionsInterface.getPermissions(): List<Pair<String, List<String>>> {
         val operationPaths = this.paths combine operation.paths
         permissions.add(Pair("antMatchers", operationPaths.ifEmpty { operation.paths }))
         val allRoles = operation.roles.toSet().toList()
-        permissions.add(Pair(if (allRoles.size > 1) "hasAnyRole" else "hasRole", allRoles))
+//        permissions.add(Pair(if (allRoles.size > 1) "hasAnyRole" else "hasRole", allRoles))
+        permissions.add(
+            (if (allRoles.size > 1) "hasAnyRole" else if (allRoles.size == 1) "hasRole" else "anonymous") to allRoles
+        )
     }
 
     if (roles.isNotEmpty()) {
         permissions.add(Pair("antMatchers", paths.toSet().toList()))
-        permissions.add(Pair(if (roles.size > 1) "hasAnyRole" else "hasRole", roles))
+        permissions.add(
+            (if (roles.size > 1) "hasAnyRole" else if (roles.size == 1) "hasRole" else "anonymous") to roles
+        )
     }
     return permissions.toList()
 }
