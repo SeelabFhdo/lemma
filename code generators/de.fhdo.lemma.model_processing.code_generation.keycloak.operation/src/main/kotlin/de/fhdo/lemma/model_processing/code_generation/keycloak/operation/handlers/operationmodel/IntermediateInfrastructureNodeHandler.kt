@@ -30,15 +30,21 @@ class IntermediateInfrastructureNodeHandler : CodeGenerationHandlerI<Intermediat
                     "user" -> {
                         val aspectPropertiesTemp = aspectProperties.toMutableMap()
                         aspectPropertiesTemp.remove("clientRoles")
+                        val clientRolesMap = mutableMapOf<String, MutableSet<String>>()
                         aspectProperties.filter { it.key == "clientRoles" }.forEach { clientRoles ->
                             (clientRoles.value as String).split(",").forEach { clientRole ->
                                 println("clientRoles: $clientRole")
                                 val serviceRole = clientRole.split("=").let {
-                                    Pair(it[0], it.getOrNull(1) ?: "")}
-                                aspectPropertiesTemp.put(findServiceByQualifiedName(serviceRole.first) to serviceRole.second)
-
+                                    Pair(it[0], it.getOrNull(1) ?: "")
+                                }
+                                findServiceByQualifiedName(serviceRole.first)?.let {
+                                    if (clientRolesMap[it] !is MutableSet<String>)
+                                        clientRolesMap[it] = mutableSetOf()
+                                    clientRolesMap[it]!!.add(serviceRole.second)
+                                }
                             }
                         }
+                        aspectPropertiesTemp["clientRoles"] = clientRolesMap
                         MainContext.State.addUser(aspectPropertiesTemp)
                     }
                     else -> {}

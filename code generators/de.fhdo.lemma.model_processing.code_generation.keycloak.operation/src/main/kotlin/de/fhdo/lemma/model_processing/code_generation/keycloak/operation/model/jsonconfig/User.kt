@@ -1,5 +1,6 @@
 package de.fhdo.lemma.model_processing.code_generation.keycloak.operation.model.jsonconfig
 
+import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.node.ObjectNode
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.utils.addAndCastTo
@@ -21,7 +22,17 @@ data class User(
                     }
                 }
                 "clientRoles" -> {
-
+                    val node = ObjectMapper().createObjectNode()
+                    if (value is MutableMap<*, *>) {
+                        value.forEach { clientRoles ->
+                            val clientArrayNode = objectMapper.createArrayNode()
+                            (clientRoles.value as Set<*>).forEach {
+                                clientArrayNode.add(it as String)
+                            }
+                            node.set<JsonNode>(clientRoles.key as String, clientArrayNode)
+                        }
+                    }
+                    userNode.set<JsonNode>(key, node)
                 }
                 "requiredActions" -> {
                     val arrayNode = userNode.putArray(key)
