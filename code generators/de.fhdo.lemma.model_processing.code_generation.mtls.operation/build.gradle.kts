@@ -94,7 +94,7 @@ tasks.withType<Jar> {
 
     manifest {
         attributes["Main-Class"] =
-            "de.fhdo.lemma.model_processing.code_generation.mtls_operation.MTLSOperationsGeneratorKt"
+            "de.fhdo.lemma.model_processing.code_generation.mtls.operation.MTLSOperationsGeneratorKt"
         attributes["Multi-Release"] = "true"
         exclude("META-INF/*.DSA", "META-INF/*.RSA", "META-INF/*.SF")
     }

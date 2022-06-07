@@ -95,7 +95,7 @@ tasks.withType<Jar> {
 
     manifest {
         attributes["Main-Class"] =
-            "de.fhdo.lemma.model_processing.code_generation.keycloak.operation.KeycloakOperationsGenerator"
+            "de.fhdo.lemma.model_processing.code_generation.keycloak.operation.KeycloakOperationsGeneratorKt"
         attributes["Multi-Release"] = "true"
         exclude("META-INF/*.DSA", "META-INF/*.RSA", "META-INF/*.SF")
     }
