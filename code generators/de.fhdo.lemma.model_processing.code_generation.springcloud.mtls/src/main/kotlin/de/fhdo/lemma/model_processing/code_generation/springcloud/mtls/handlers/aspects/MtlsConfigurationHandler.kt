@@ -61,7 +61,6 @@ internal class MtlsConfigurationHandler
                 openPropertyFile(FileType.filePath(propertyFile.value.fileType), propertyFile.key)
             propertyFile.value.propertiesSet.filter { it.first in FileType.filter(propertyFile.value.fileType) }
                 .forEach { property ->
-                    println("property.first ${property.first}")
                     when (property.first) {
                         "keyStoreRelativePath", "trustStoreRelativePath", "qualifiedName" -> {}
                         "keyStoreFileName", "trustStoreFileName" -> {
