@@ -14,8 +14,6 @@ import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
 @CodeGenerationHandler
 class IntermediateMicroserviceHandler : CodeGenerationHandlerI<IntermediateMicroservice> {
     override fun getSourceInstanceType() = IntermediateMicroservice::class.java
-    private fun handlesAspects() = setOf("keycloakClient")
-
 
     override fun execute(eObject: IntermediateMicroservice): String? {
         // Client erstellen Clientrollen liste anlegen aspect keycloakClient

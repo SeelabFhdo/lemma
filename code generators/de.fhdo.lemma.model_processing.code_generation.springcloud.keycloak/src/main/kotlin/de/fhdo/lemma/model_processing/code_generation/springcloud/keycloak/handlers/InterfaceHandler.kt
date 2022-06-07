@@ -30,7 +30,7 @@ internal class InterfaceHandler
 
 
         eObject.getAllAspects("Keycloak.role").forEach { aspect ->
-            aspect.getPropertyValue("rolename")?.let { interfaceRoles.add(it) }
+            aspect.getPropertyValue("name")?.let { interfaceRoles.add(it) }
         }
 
         eObject.endpoints.forEach { endpoint ->
@@ -50,7 +50,7 @@ internal class InterfaceHandler
             }
 
             intermediateOperation.getAllAspects("Keycloak.role").forEach { aspect ->
-                aspect.getPropertyValue("rolename")?.let { operationRoles.add(it) }
+                aspect.getPropertyValue("name")?.let { operationRoles.add(it) }
             }
 
             intermediateOperation.parameters.filter { it.hasAspect("Spring.PathVariable") }.forEach { parameter ->

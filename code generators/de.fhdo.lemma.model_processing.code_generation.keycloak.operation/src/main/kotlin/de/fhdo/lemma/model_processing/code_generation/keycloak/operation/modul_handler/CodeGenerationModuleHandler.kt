@@ -5,11 +5,15 @@ import de.fhdo.lemma.model_processing.annotations.CodeGenerationModule
 import de.fhdo.lemma.model_processing.builtin_phases.code_generation.AbstractCodeGenerationModule
 import de.fhdo.lemma.model_processing.builtin_phases.code_generation.CharsetAwareFileContent
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.MainContext
+import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.MainContext.State.getClientApplicationProperties
+import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.MainContext.State.getPath
+import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.PathSpecifier
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.handlers.interfaces.CodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.handlers.interfaces.annotationName
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.handlers.interfaces.findClassesWithAnnotationAndInterface
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.handlers.interfaces.interfaceName
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.handlers.interfaces.packageName
+import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.utils.asFormattedString
 import de.fhdo.lemma.model_processing.utils.loadModelRoot
 import de.fhdo.lemma.model_processing.utils.mainInterface
 import de.fhdo.lemma.model_processing.utils.removeFileUri
@@ -26,7 +30,7 @@ class CodeGenerationModuleHandler : AbstractCodeGenerationModule() {
         phaseArguments: Array<String>, moduleArguments: Array<String>
     ): Map<String, CharsetAwareFileContent> {
         val content = HashMap<String, String>()
-
+        MainContext.State.initialize(targetFolder)
         MainContext.State.intermediateOperationModel = loadModelRoot<IntermediateOperationModel>(
             this.resource.uri.toString().removeFileUri()
         )
@@ -34,8 +38,20 @@ class CodeGenerationModuleHandler : AbstractCodeGenerationModule() {
 
 //         todo properties erstellen
 //         todo keycloak config erstellen 1 x komplette und für jeden client
+        MainContext.State.intermediateServiceModels.forEach { intermediateServiceModel ->
+            intermediateServiceModel.microservices.forEach { intermediateMicroservice ->
+                content[
+                        setOf(
+                            getPath(
+                                PathSpecifier.CURRENT_MICROSERVICE_RESOURCES_PATH,
+                                intermediateMicroservice.qualifiedName
+                            ),
+                            "application-keycloak.properties"
+                        ).joinToString(File.separator)] =
+                    getClientApplicationProperties(intermediateMicroservice.name).asFormattedString()
+            }
+        }
 
-//        println(MainContext.State.getRealmAsJson())
 
         content[setOf(
             targetFolder,

@@ -22,7 +22,12 @@ class IntermediateInfrastructureNodeHandler : CodeGenerationHandlerI<Intermediat
                 val aspectProperties = aspect.getPropertiesValuesOrDefault()
                 when (aspect.name) {
                     "keycloakPropertiesConfig" -> {
-                        // generate application-keycloak.properites (für jeden Client) aber nocht nicht hier
+                        // todo generate application-keycloak.properites (für jeden Client) aber nocht nicht hier
+                        val applicationProperties = mutableMapOf<String, String>()
+                        aspectProperties.forEach { key, value ->
+                            applicationProperties[key] = value.toString()
+                        }
+                        MainContext.State.addApplicationProperties(applicationProperties)
                     }
                     "group" -> {
                         MainContext.State.addGroup(aspectProperties)
@@ -33,7 +38,6 @@ class IntermediateInfrastructureNodeHandler : CodeGenerationHandlerI<Intermediat
                         val clientRolesMap = mutableMapOf<String, MutableSet<String>>()
                         aspectProperties.filter { it.key == "clientRoles" }.forEach { clientRoles ->
                             (clientRoles.value as String).split(",").forEach { clientRole ->
-                                println("clientRoles: $clientRole")
                                 val serviceRole = clientRole.split("=").let {
                                     Pair(it[0], it.getOrNull(1) ?: "")
                                 }

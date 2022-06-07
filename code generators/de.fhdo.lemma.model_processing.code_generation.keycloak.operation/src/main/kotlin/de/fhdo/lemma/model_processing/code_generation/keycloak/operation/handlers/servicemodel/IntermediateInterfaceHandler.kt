@@ -27,26 +27,6 @@ class IntermediateInterfaceHandler : CodeGenerationHandlerI<IntermediateInterfac
                     ?: eObject.microservice.classname.lowercase()
             MainContext.State.addRole(clientId, aspect.getPropertiesValuesOrDefault())
         }
-
-
-
-
-//        println(eObject.qualifiedName)
-//        eObject.endpoints.forEach { endpoint ->
-//            endpoint.addresses.forEach { address ->
-//                println("interface-endpoint: $address")
-//            }
-//        }
-//        eObject.operations.forEach { operation ->
-//            operation.endpoints.forEach { endpoint ->
-//                endpoint.addresses.forEach { address ->
-//                    println("operation-endpoint: $address")
-//                }
-//
-//            }
-//        }
-
-
         return null
     }
 

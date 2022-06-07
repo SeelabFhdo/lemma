@@ -52,7 +52,6 @@ data class User(
     }
 }
 
-// todo RequiredActions einbauen und Testen
 enum class RequiredActions(val requiredActions: String) {
     CONFIGURE_OTP("Configure_OTP"),
     UPDATE_PASSWORD("Update_Password"),
