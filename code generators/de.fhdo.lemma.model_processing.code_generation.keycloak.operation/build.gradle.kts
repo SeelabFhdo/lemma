@@ -13,14 +13,14 @@ repositories {
 }
 
 buildscript {
-    extra.set("classgraphVersion", "4.8.143")
-    extra.set("commonsVersion", "3.12.0")
+    extra.set("classgraphVersion", "4.8.35")
+    extra.set("commonsVersion", "3.5")
     extra.set("groovyVersion", "3.0.3")
     extra.set("javaBaseGeneratorVersion", version)
-    extra.set("javaParserVersion", "3.24.2")
+    extra.set("javaParserVersion", "3.14.10")
     extra.set("lemmaEclipsePluginsVersion", version)
     extra.set("modelProcessingVersion", version)
-    extra.set("xmlBuilderVersion", "1.7.3")
+    extra.set("xmlBuilderVersion", "1.7.2")
     extra.set("picocliVersion", "3.9.3")
     extra.set("jansiVersion", "1.17.1")
     extra.set("log4jVersion", "2.16.0")
@@ -96,17 +96,44 @@ dependencies {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "11"
-    // Java Base Generator uses @JvmDefault annotation
+    // Support @JvmDefault annotation
     kotlinOptions.freeCompilerArgs = listOf("-Xjvm-default=compatibility")
 }
 
-tasks.withType<Jar> {
+val allDependencies = task("allDependencies", type = Jar::class){
+    archiveClassifier.set("all-dependencies")
+
     from(configurations.compileClasspath.get().filter { it.exists() }.map { if (it.isDirectory) it else zipTree(it) })
+    with(tasks["jar"] as CopySpec)
 
     manifest {
         attributes["Main-Class"] =
             "de.fhdo.lemma.model_processing.code_generation.keycloak.operation.KeycloakOperationsGeneratorKt"
-        attributes["Multi-Release"] = "true"
+        attributes("Multi-Release" to "true")
+        // Prevent security exception from JAR verifier
         exclude("META-INF/*.DSA", "META-INF/*.RSA", "META-INF/*.SF")
     }
+}
+
+
+val standalone = task("standalone", type = Jar::class) {
+    archiveClassifier.set("standalone")
+
+    // Build fat JAR
+    from(configurations.compileClasspath.get().filter{ it.exists() }.map { if (it.isDirectory) it else zipTree(it) })
+    with(tasks["jar"] as CopySpec)
+
+    manifest {
+        attributes["Main-Class"] = "de.fhdo.lemma.model_processing.code_generation.keycloak.operation.KeycloakOperationsGeneratorKt"
+        // Prevent "WARNING: sun.reflect.Reflection.getCallerClass is not supported" from log4j
+        attributes("Multi-Release" to "true")
+
+        // Prevent security exception from JAR verifier
+        exclude("META-INF/*.DSA", "META-INF/*.RSA", "META-INF/*.SF")
+    }
+}
+
+artifacts {
+    add("archives", allDependencies)
+    add("archives", standalone)
 }

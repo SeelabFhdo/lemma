@@ -13,10 +13,6 @@ repositories {
 }
 
 buildscript {
-
-
-
-
     extra.set("classgraphVersion", "4.8.35")
     extra.set("commonsVersion", "3.5")
     extra.set("groovyVersion", "3.0.3")

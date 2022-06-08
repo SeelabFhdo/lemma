@@ -99,13 +99,40 @@ tasks.withType<KotlinCompile> {
     kotlinOptions.freeCompilerArgs = listOf("-Xjvm-default=compatibility")
 }
 
-tasks.withType<Jar> {
+val allDependencies = task("allDependencies", type = Jar::class){
+    archiveClassifier.set("all-dependencies")
+
     from(configurations.compileClasspath.get().filter { it.exists() }.map { if (it.isDirectory) it else zipTree(it) })
+    with(tasks["jar"] as CopySpec)
 
     manifest {
-        attributes["Main-Class"] =
-            "de.fhdo.lemma.model_processing.code_generation.mtls.operation.MTLSOperationsGeneratorKt"
-        attributes["Multi-Release"] = "true"
+//        attributes["Main-Class"] =
+//            "de.fhdo.lemma.model_processing.code_generation.mtls.operation.MTLSOperationsGeneratorKt"
+        attributes("Multi-Release" to "true")
+        // Prevent security exception from JAR verifier
         exclude("META-INF/*.DSA", "META-INF/*.RSA", "META-INF/*.SF")
     }
+}
+
+
+val standalone = task("standalone", type = Jar::class) {
+    archiveClassifier.set("standalone")
+
+    // Build fat JAR
+    from(configurations.compileClasspath.get().filter{ it.exists() }.map { if (it.isDirectory) it else zipTree(it) })
+    with(tasks["jar"] as CopySpec)
+
+    manifest {
+        attributes["Main-Class"] = "de.fhdo.lemma.model_processing.code_generation.mtls.operation.MTLSOperationsGeneratorKt"
+        // Prevent "WARNING: sun.reflect.Reflection.getCallerClass is not supported" from log4j
+        attributes("Multi-Release" to "true")
+
+        // Prevent security exception from JAR verifier
+        exclude("META-INF/*.DSA", "META-INF/*.RSA", "META-INF/*.SF")
+    }
+}
+
+artifacts {
+    add("archives", allDependencies)
+    add("archives", standalone)
 }

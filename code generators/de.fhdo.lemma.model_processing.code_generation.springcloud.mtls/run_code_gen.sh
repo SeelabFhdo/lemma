@@ -17,25 +17,25 @@ SPRINGCLOUD_KEYCLOAK_GENLET="/build/libs/de.fhdo.lemma.model_processing.code_gen
 SPRINGCLOUD_KEYCLOAK="$SPRINGCLOUD_KEYCLOAK_PATH$SPRINGCLOUD_KEYCLOAK_GENLET"
 
 MTLS_PATH="$HOME/masterthesis/eclipse-workspace/lemma/code generators/de.fhdo.lemma.model_processing.code_generation.mtls.operation"
-MTLS_GENERATOR="/build/libs/de.fhdo.lemma.model_processing.code_generation.mtls.operations-0.8.5-SNAPSHOT.jar"
+MTLS_GENERATOR="/build/libs/de.fhdo.lemma.model_processing.code_generation.mtls.operations-0.8.5-SNAPSHOT-standalone.jar"
 KEYCLOAK_PATH="$HOME/masterthesis/eclipse-workspace/lemma/code generators/de.fhdo.lemma.model_processing.code_generation.keycloak.operation"
-KEYCLOAK_GENERATOR="/build/libs/de.fhdo.lemma.model_processing.code_generation.keycloak.operations-0.8.5-SNAPSHOT.jar"
+KEYCLOAK_GENERATOR="/build/libs/de.fhdo.lemma.model_processing.code_generation.keycloak.operations-0.8.5-SNAPSHOT-standalone.jar"
 
 
 TARGET_PATH="$HOME/masterthesis/lemmasecuritymodelgencode"
 MODEL_PATH="$HOME/masterthesis/runtime-EclipseApplication/lemmasecuritymodel"
 
-cd "$JAVABASE_PATH" 
+cd "$JAVABASE_PATH"
 ./gradlew clean install
 cd "$SPRINGCLOUD_PATH"
 ./gradlew clean install
-cd "$SPRINGCLOUD_MTLS_PATH" 
+cd "$SPRINGCLOUD_MTLS_PATH"
 ./gradlew clean install
-cd "$SPRINGCLOUD_KEYCLOAK_PATH" 
+cd "$SPRINGCLOUD_KEYCLOAK_PATH"
 ./gradlew clean install
-cd "$MTLS_PATH" 
+cd "$MTLS_PATH"
 ./gradlew clean install
-cd "$KEYCLOAK_PATH" 
+cd "$KEYCLOAK_PATH"
 ./gradlew clean install
 cd -
 
@@ -55,12 +55,11 @@ java -jar "$JAVABASE" \
     --genlet "$SPRINGCLOUD" \
     --genlet "$SPRINGCLOUD_MTLS" \
     --genlet "$SPRINGCLOUD_KEYCLOAK"
-
 echo "--------------------------MTLS Generator Operation Model--------------------------"
 java -jar "$MTLS_PATH$MTLS_GENERATOR" \
     -i "$MODEL_PATH/intermediate/operation models/ca.xmi" \
     -s "$MODEL_PATH/models/ca/ca.operation" \
-    -t "$TARGET_PATH" 
+    -t "$TARGET_PATH"
 
 echo "--------------------------Keycloal Generator Operation Model--------------------------"
 java -jar "$KEYCLOAK_PATH$KEYCLOAK_GENERATOR" \
