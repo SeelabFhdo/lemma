@@ -34,12 +34,7 @@ class CodeGenerationModuleHandler : AbstractCodeGenerationModule() {
                 }
             }
         }
-        node.filter {
-            !it.isNullOrEmpty()
-        }.forEach {
-            println(it)
-        }
-        MainContext.State.getPropertyFiles().forEach{ (filePath, properties) ->
+        MainContext.State.getPropertyFiles().forEach { (filePath, properties) ->
             content[filePath] = properties.asFormattedString()
         }
         return withCharset(content, "UTF-8")
