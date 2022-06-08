@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.node.ObjectNode
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.utils.addAndCastTo
 
+
 data class Role(
     val name: String,
     val roleProperties: MutableMap<String, Any>

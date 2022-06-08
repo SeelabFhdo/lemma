@@ -1,3 +1,5 @@
+
+
 package de.fhdo.lemma.model_processing.code_generation.keycloak.operation.modul_handler
 
 import de.fhdo.lemma.data.intermediate.IntermediatePackage
@@ -34,7 +36,7 @@ class CodeGenerationModuleHandler : AbstractCodeGenerationModule() {
         MainContext.State.intermediateOperationModel = loadModelRoot<IntermediateOperationModel>(
             this.resource.uri.toString().removeFileUri()
         )
-        val handlerValues = this.resource.callAllHandlers()
+        this.resource.callAllHandlers()
 
 //         todo properties erstellen
 //         todo keycloak config erstellen 1 x komplette und für jeden client
@@ -51,7 +53,6 @@ class CodeGenerationModuleHandler : AbstractCodeGenerationModule() {
                     getClientApplicationProperties(intermediateMicroservice.name).asFormattedString()
             }
         }
-
 
         content[setOf(
             targetFolder,
@@ -71,6 +72,7 @@ fun Resource.callAllHandlers(): List<String?> {
         val elementInstanceType = element.mainInterface
         classes.forEach { (_, handlerClassInfo) ->
             val clazz = handlerClassInfo.loadClass()
+            @Suppress("UNCHECKED_CAST")
             val handlerInstance = clazz.getConstructor().newInstance() as CodeGenerationHandlerI<EObject>
             if (elementInstanceType == handlerInstance.getSourceInstanceType()) {
                 returnValue.add(handlerInstance.execute(element))

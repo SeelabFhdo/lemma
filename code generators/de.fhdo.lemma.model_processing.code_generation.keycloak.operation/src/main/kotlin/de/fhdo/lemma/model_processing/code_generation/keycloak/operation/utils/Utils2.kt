@@ -36,11 +36,11 @@ fun keycloakPropertiesKeyMapper(key: String) = when (key) {
 }
 
 fun ObjectNode.addAndCastTo(key: String, value: Any): ObjectNode = when (value) {
-    is Int -> this.put(key, value as Int)
-    is Long -> this.put(key, value as Long)
-    is Double -> this.put(key, value as Double)
-    is String -> this.put(key, value as String)
-    is Boolean -> this.put(key, value as Boolean)
+    is Int -> this.put(key, value)
+    is Long -> this.put(key, value)
+    is Double -> this.put(key, value)
+    is String -> this.put(key, value)
+    is Boolean -> this.put(key, value)
     else -> this.put(key, value.toString())
 }
 

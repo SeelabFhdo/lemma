@@ -28,6 +28,7 @@ class CodeGenerationModuleHandler : AbstractCodeGenerationModule() {
             val elementInstanceType = element.mainInterface
             classes.forEach { (_, handlerClassInfo) ->
                 val clazz = handlerClassInfo.loadClass()
+                @Suppress("UNCHECKED_CAST")
                 val handlerInstance = clazz.getConstructor().newInstance() as CodeGenerationHandlerI<EObject>
                 if (elementInstanceType == handlerInstance.getSourceInstanceType()) {
                     node.add(handlerInstance.execute(element))

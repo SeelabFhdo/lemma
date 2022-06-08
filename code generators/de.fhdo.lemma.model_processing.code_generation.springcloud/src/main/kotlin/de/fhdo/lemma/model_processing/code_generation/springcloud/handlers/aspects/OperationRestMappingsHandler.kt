@@ -36,13 +36,16 @@ internal class OperationRestMappingsHandler : AspectHandlerI {
         "Spring.Put" to "PutMapping",
         "Spring.Post" to "PostMapping",
         "Spring.Delete" to "DeleteMapping",
-        "Spring.Patch" to "PatchMapping"
+        "Spring.Patch" to "PatchMapping",
+
+        "Spring.GetMapping" to "GetMapping",
+        "Spring.PutMapping" to "PutMapping",
+        "Spring.PostMapping" to "PostMapping",
+        "Spring.DeleteMapping" to "DeleteMapping",
+        "Spring.PatchMapping" to "PatchMapping"
     )
 
-    override fun handlesAspects() : Set<String> {
-        println("Spring boot OperationRestMappingsHandler")
-        return aspectToAnnotationMapping.keys
-    }
+    override fun handlesAspects() = aspectToAnnotationMapping.keys
 
     override fun handlesEObjectNodeCombinations() = combinations {
         IntermediateOperation::class.java with MethodDeclaration::class.java

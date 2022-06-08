@@ -18,9 +18,6 @@ internal fun loadPropertiesFile(filePath: String): SortableProperties {
 }
 
 internal fun SortableProperties.asFormattedString(): String {
-    val x = this.stringPropertyNames()
-
-
     var formattedString = ""
     entries.forEach {
         formattedString += "${it.key}=${it.value}\n"

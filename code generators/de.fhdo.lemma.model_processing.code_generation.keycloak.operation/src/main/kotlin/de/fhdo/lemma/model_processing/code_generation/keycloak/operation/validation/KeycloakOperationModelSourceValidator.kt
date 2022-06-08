@@ -143,7 +143,6 @@ class KeycloakOperationModelSourceValidator : AbstractXtextModelValidator() {
 
     @Check
     private fun checkNamingForServicesInContainers(container: Container) {
-        val x = container.aspects
         container.aspects.filter { it.aspect.name in setOf("mtls", "mtlsdev") }
             .forEach { importedOperationAspect ->
                 importedOperationAspect.values.forEachIndexed { index, technologySpecificPropertyValueAssignment ->

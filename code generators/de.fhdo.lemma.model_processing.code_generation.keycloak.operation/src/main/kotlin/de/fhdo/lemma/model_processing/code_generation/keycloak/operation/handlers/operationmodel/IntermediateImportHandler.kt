@@ -25,7 +25,7 @@ class IntermediateImportHandler : CodeGenerationHandlerI<IntermediateImport> {
                 eObject.eResource().uri.toString().removeFileUri()
             )
         MainContext.State.intermediateServiceModels.add(serviceModel)
-        val handlerValues = serviceModel.eResource().callAllHandlers()
+        serviceModel.eResource().callAllHandlers()
 
         return null
     }
