@@ -14,6 +14,7 @@ import de.fhdo.lemma.model_processing.utils.packageToPath
 import de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode
 import de.fhdo.lemma.operation.intermediate.IntermediateOperationModel
 import de.fhdo.lemma.service.intermediate.IntermediateServiceModel
+import org.koin.core.qualifier.named
 import java.io.File
 
 
@@ -30,6 +31,7 @@ internal object MainContext {
         private val clients = mutableMapOf<String, Client>()
         private val groups = mutableMapOf<String, Group>()
         private val users = mutableListOf<User>()
+        private val clientNames = mutableMapOf<String, String>()
 
         fun initialize(targetFolder: String) {
             this.targetFolder = targetFolder.trimEnd(File.separatorChar)
@@ -43,13 +45,14 @@ internal object MainContext {
             this.applicationProperties[key] = value
         }
 
-        fun getClientApplicationProperties(client: String): SortableProperties{
+        fun getClientApplicationProperties(client: String): SortableProperties {
             val sortableProperties = SortableProperties()
             applicationProperties.forEach { (key, value) ->
                 sortableProperties.addProperty(applicationPropertiesKeyMapper(key) to value)
             }
-            sortableProperties.addProperty(applicationPropertiesKeyMapper("resource") to client)
-            if(!sortableProperties.containsKey("realm"))
+
+            sortableProperties.addProperty((applicationPropertiesKeyMapper("resource") to getClientName(client)))
+            if (!sortableProperties.containsKey("realm"))
                 sortableProperties.addProperty(applicationPropertiesKeyMapper("realm") to realm.id)
             return sortableProperties
         }
@@ -98,6 +101,11 @@ internal object MainContext {
             clients[clientId]?.addProperty("clientProtocol", "openid-connect")
         }
 
+        fun addClientName(qualifiedName: String, clientName: String) {
+            clientNames[qualifiedName] = clientName
+        }
+
+
         fun getRealmAsJson(): String {
             realm.roles = roles
             realm.clients.putAll(clients)
@@ -112,6 +120,8 @@ internal object MainContext {
             users.clear()
             roles.resetRoles()
         }
+
+        fun getClientName(qualifiedName: String) = clientNames[qualifiedName] ?: qualifiedName
 
         fun findServiceByQualifiedName(qualifiedName: String): String? {
             intermediateServiceModels.forEach { intermediateServiceModel ->

@@ -18,46 +18,66 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTarget
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addStatements
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.newJavaClassOrInterface
+import de.fhdo.lemma.model_processing.code_generation.java_base.classname
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerResult
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletGeneratedFileContent
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletGeneratedNode
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletPathSpecifier
-import de.fhdo.lemma.model_processing.code_generation.java_base.getAllAspects
 import de.fhdo.lemma.model_processing.code_generation.java_base.getAspectPropertyValue
-import de.fhdo.lemma.model_processing.code_generation.java_base.getPropertyValue
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
-import de.fhdo.lemma.model_processing.code_generation.java_base.hasAspect
+import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.openPropertyFile
 import de.fhdo.lemma.model_processing.code_generation.springcloud.keycloak.Context
-import de.fhdo.lemma.model_processing.code_generation.springcloud.keycloak.model.PermissionsInterface
-import de.fhdo.lemma.model_processing.code_generation.springcloud.keycloak.model.PermissionsOperation
+import de.fhdo.lemma.model_processing.code_generation.springcloud.keycloak.getAspectValueOrDefault
 import de.fhdo.lemma.model_processing.code_generation.springcloud.keycloak.model.getPermissions
 import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
+import de.fhdo.lemma.model_processing.code_generation.springcloud.keycloak.Context.State
+import de.fhdo.lemma.model_processing.code_generation.springcloud.keycloak.FileType
+import de.fhdo.lemma.model_processing.code_generation.springcloud.keycloak.springPropertyMapping
 import java.io.File
 
 @CodeGenerationHandler
-class MicroserviceHandler :
+class IntermediateMicroserviceHandler :
     GenletCodeGenerationHandlerI<IntermediateMicroservice, ClassOrInterfaceDeclaration, Nothing> {
     override fun handlesEObjectsOfInstance() = IntermediateMicroservice::class.java
     override fun generatesNodesOfInstance() = ClassOrInterfaceDeclaration::class.java
-    private fun handlesAspects() = listOf("Keycloak.role", "Spring.PathVariable")
+    private fun handlesAspects() = listOf("Keycloak.keycloakClient", "Keycloak.keycloakPropertiesConfig")
     override fun execute(
-        eObject: IntermediateMicroservice,
-        node: ClassOrInterfaceDeclaration,
-        context: Nothing?
+        eObject: IntermediateMicroservice, node: ClassOrInterfaceDeclaration, context: Nothing?
     ): GenletCodeGenerationHandlerResult<ClassOrInterfaceDeclaration> {
-        Context.State.initialize(eObject)
+        State.initialize(eObject)
+        val properties = eObject.getAspectValueOrDefault("Keycloak.keycloakPropertiesConfig").toMutableSet()
+        val clientId =
+            eObject.getAspectPropertyValue("Keycloak.keycloakClient", "clientId")
+                ?: eObject.classname.lowercase()
+        properties.add("resource" to clientId)
+        State.addPropertiesToFile(
+            "application-keycloak.properties",
+            properties,
+            FileType.APPLICATION_PROPERTIES
+        )
+        return GenletCodeGenerationHandlerResult(node, generateSpringBootPropertyFiles())
+    }
 
-        return GenletCodeGenerationHandlerResult(node)
+    private fun generateSpringBootPropertyFiles(): MutableSet<GenletGeneratedFileContent> {
+        val propertyFiles = mutableSetOf<GenletGeneratedFileContent>()
+        State.getPropertyFiles().forEach { propertyFile ->
+            val propFile =
+                openPropertyFile(FileType.filePath(propertyFile.value.fileType), propertyFile.key)
+            propertyFile.value.propertiesSet.filter { it.first in FileType.filter(propertyFile.value.fileType) }
+                .forEach { property ->
+                    propFile[springPropertyMapping(property.first)] = property.second
+                }
+            propertyFiles.add(GenletGeneratedFileContent(propFile))
+        }
+        return propertyFiles
     }
 
     companion object {
         private const val CONFIG_FOLDER = "configuration"
-        fun handleMicroserviceGenerationFinished()
-                : Pair<Set<GenletGeneratedNode>, Set<GenletGeneratedFileContent>> {
+        fun handleMicroserviceGenerationFinished(): Pair<Set<GenletGeneratedNode>, Set<GenletGeneratedFileContent>> {
             val classNameSecurityConfig = "SecurityConfig"
             val classNameKeycloakConfig = "KeycloakConfig"
-
             val generatedStaticClasses = mutableSetOf<GenletGeneratedFileContent>()
 
             generatedStaticClasses.add(
@@ -74,18 +94,13 @@ class MicroserviceHandler :
                     generateKeycloakConfig(classNameKeycloakConfig)
                 )
             )
-
-
             return mutableSetOf<GenletGeneratedNode>() to generatedStaticClasses
         }
 
         private fun generateSecurityConfig(className: String): ClassOrInterfaceDeclaration {
-            val node =
-                newJavaClassOrInterface(
-                    setOf(Context.State.getPackage()!!, CONFIG_FOLDER).joinToString("."),
-                    className,
-                    isInterface = false
-                ).addExtendedType("KeycloakWebSecurityConfigurerAdapter")
+            val node = newJavaClassOrInterface(
+                setOf(Context.State.getPackage()!!, CONFIG_FOLDER).joinToString("."), className, isInterface = false
+            ).addExtendedType("KeycloakWebSecurityConfigurerAdapter")
             node.removeModifier(Modifier.Keyword.PUBLIC)
             addImports(node)
 
@@ -95,15 +110,15 @@ class MicroserviceHandler :
 
             node.addPublicField("KeycloakClientRequestFactory", "keycloakClientRequestFactory")
             val constructor = node.addConstructor(Modifier.Keyword.PUBLIC)
-            constructor.body
-                .addStatement("this.keycloakClientRequestFactory = keycloakClientRequestFactory;")
+            constructor.body.addStatement("this.keycloakClientRequestFactory = keycloakClientRequestFactory;")
                 .addStatement(
                     "SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);"
                 )
-            constructor.parameters.add(Parameter(
-                ClassOrInterfaceType().setName("KeycloakClientRequestFactory"),
-                "keycloakClientRequestFactory"
-            ))
+            constructor.parameters.add(
+                Parameter(
+                    ClassOrInterfaceType().setName("KeycloakClientRequestFactory"), "keycloakClientRequestFactory"
+                )
+            )
 
             methodKeycloakRestTemplate(node)
             methodConfigureGlobal(node)
@@ -118,8 +133,7 @@ class MicroserviceHandler :
             method.addMarkerAnnotation("Bean")
             method.type = ClassOrInterfaceType().setName("KeycloakRestTemplate")
             method.addSingleMemberAnnotation(
-                "Scope",
-                FieldAccessExpr(NameExpr("ConfigurableBeanFactory"), "SCOPE_PROTOTYPE")
+                "Scope", FieldAccessExpr(NameExpr("ConfigurableBeanFactory"), "SCOPE_PROTOTYPE")
             )
             method.modifiers.add(Modifier().setKeyword(Modifier.Keyword.PUBLIC))
             method.addStatements("return new KeycloakRestTemplate(keycloakClientRequestFactory);")
@@ -131,14 +145,12 @@ class MicroserviceHandler :
             method.modifiers.add(Modifier().setKeyword(Modifier.Keyword.PUBLIC))
             method.parameters.add(
                 Parameter(
-                    ClassOrInterfaceType().setName("AuthenticationManagerBuilder"),
-                    "auth"
+                    ClassOrInterfaceType().setName("AuthenticationManagerBuilder"), "auth"
                 )
             )
             method.addThrownException(ClassOrInterfaceType().setName("Exception"))
             method.addStatements(
-                "KeycloakAuthenticationProvider keycloakAuthenticationProvider " +
-                        "= keycloakAuthenticationProvider();"
+                "KeycloakAuthenticationProvider keycloakAuthenticationProvider " + "= keycloakAuthenticationProvider();"
             )
             method.addStatements(
                 "keycloakAuthenticationProvider.setGrantedAuthoritiesMapper(new SimpleAuthorityMapper());"
@@ -159,8 +171,7 @@ class MicroserviceHandler :
             val method = node.addMethod("configure")
             method.parameters.add(
                 Parameter(
-                    ClassOrInterfaceType().setName("HttpSecurity"),
-                    "http"
+                    ClassOrInterfaceType().setName("HttpSecurity"), "http"
                 )
             )
             method.addMarkerAnnotation("Override")
@@ -197,16 +208,14 @@ class MicroserviceHandler :
         }
 
         private fun recursiveConfigureStatement(functionList: List<Pair<String, List<String>>>): MethodCallExpr {
-            val arguments =
-                if (functionList[0].second.isEmpty() || functionList[0].second.first().isEmpty())
-                    NodeList()
-                else {
-                    val list = mutableListOf<Expression>()
-                    functionList[0].second.forEach {
-                        list.add(StringLiteralExpr(it) as Expression)
-                    }
-                    NodeList(list)
+            val arguments = if (functionList[0].second.isEmpty() || functionList[0].second.first().isEmpty()) NodeList()
+            else {
+                val list = mutableListOf<Expression>()
+                functionList[0].second.forEach {
+                    list.add(StringLiteralExpr(it) as Expression)
                 }
+                NodeList(list)
+            }
 
             if (functionList.size == 2) {
                 return createMethodCallExpr(NameExpr(functionList[1].first), functionList[0].first, arguments)
@@ -219,16 +228,13 @@ class MicroserviceHandler :
         }
 
         private fun createMethodCallExpr(scope: Expression, name: String, arguments: NodeList<Expression>?) =
-            if (arguments.isNullOrEmpty())
-                MethodCallExpr(scope, name)
-            else
-                MethodCallExpr(scope, name, arguments)
+            if (arguments.isNullOrEmpty()) MethodCallExpr(scope, name)
+            else MethodCallExpr(scope, name, arguments)
 
 
         private fun addImports(node: ClassOrInterfaceDeclaration) {
             node.addImport(
-                "org.keycloak.adapters.springsecurity.KeycloakConfiguration",
-                ImportTargetElementType.ANNOTATION
+                "org.keycloak.adapters.springsecurity.KeycloakConfiguration", ImportTargetElementType.ANNOTATION
             )
             node.addImport(
                 "org.keycloak.adapters.springsecurity.KeycloakSecurityComponents",
@@ -290,15 +296,11 @@ class MicroserviceHandler :
 
         private fun generateKeycloakConfig(className: String): ClassOrInterfaceDeclaration {
 
-            val node =
-                newJavaClassOrInterface(
-                    setOf(Context.State.getPackage()!!, CONFIG_FOLDER).joinToString("."),
-                    className,
-                    isInterface = false
-                )
+            val node = newJavaClassOrInterface(
+                setOf(Context.State.getPackage()!!, CONFIG_FOLDER).joinToString("."), className, isInterface = false
+            )
             node.addImport(
-                "org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver",
-                ImportTargetElementType.METHOD
+                "org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver", ImportTargetElementType.METHOD
             )
             node.addImport("org.springframework.context.annotation.Bean", ImportTargetElementType.ANNOTATION)
             node.addImport("org.springframework.context.annotation.Configuration", ImportTargetElementType.ANNOTATION)

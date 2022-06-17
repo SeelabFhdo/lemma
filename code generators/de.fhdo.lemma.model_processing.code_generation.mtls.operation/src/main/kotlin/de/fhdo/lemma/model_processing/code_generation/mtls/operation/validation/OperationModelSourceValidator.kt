@@ -18,7 +18,7 @@ import org.eclipse.xtext.validation.Check
 
 
 @SourceModelValidator
-class MTLSOperationModelSourceValidator : AbstractXtextModelValidator() {
+class OperationModelSourceValidator : AbstractXtextModelValidator() {
     override fun getSupportedFileExtensions() = setOf("operation")
 
     @Before

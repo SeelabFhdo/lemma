@@ -13,7 +13,7 @@ import java.io.File
 
 
 @CodeGenerationHandler
-internal class MtlsTestCAHandler
+internal class IntermediateMicroserviceSelfSignedCAHandler
     : GenletCodeGenerationHandlerI<IntermediateMicroservice, ClassOrInterfaceDeclaration, Nothing> {
     override fun handlesEObjectsOfInstance() = IntermediateMicroservice::class.java
     override fun generatesNodesOfInstance() = ClassOrInterfaceDeclaration::class.java

@@ -91,6 +91,7 @@ enum class FileType {
                     "keyStorePassword", springPropertyMapping("keyStorePassword"),
                     "trustStoreFileName", springPropertyMapping("trustStoreFileName"),
                     "trustStorePassword", springPropertyMapping("trustStorePassword"),
+
                 )
             }
             CLIENT_CERTIFICATE_PROPERTIES -> {

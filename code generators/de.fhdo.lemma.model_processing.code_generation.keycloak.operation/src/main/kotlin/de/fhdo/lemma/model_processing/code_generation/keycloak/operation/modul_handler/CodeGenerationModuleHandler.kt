@@ -57,7 +57,6 @@ class CodeGenerationModuleHandler : AbstractCodeGenerationModule() {
         content[setOf(
             targetFolder,
             "keycloak",
-            "configfiles",
             "realm_${MainContext.State.getRealmName()}.json"
         ).joinToString(File.separator)] =
             MainContext.State.getRealmAsJson()

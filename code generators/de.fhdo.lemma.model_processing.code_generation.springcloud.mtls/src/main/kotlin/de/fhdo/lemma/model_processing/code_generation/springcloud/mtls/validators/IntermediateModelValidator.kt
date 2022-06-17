@@ -1,7 +1,6 @@
 package de.fhdo.lemma.model_processing.code_generation.springcloud.mtls.validators
 
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
-import de.fhdo.lemma.data.intermediate.IntermediateImportedComplexType
 import de.fhdo.lemma.service.intermediate.IntermediatePackage
 import de.fhdo.lemma.model_processing.annotations.IntermediateModelValidator
 import de.fhdo.lemma.model_processing.code_generation.java_base.getPropertyValue
@@ -11,7 +10,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.validation.Check
 
 @IntermediateModelValidator
-internal class MtlsValidator : AbstractXmiDeclarativeValidator() {
+internal class IntermediateModelValidator : AbstractXmiDeclarativeValidator() {
 
     override fun getLanguageNamespace(): String {
         return IntermediatePackage.eNS_URI

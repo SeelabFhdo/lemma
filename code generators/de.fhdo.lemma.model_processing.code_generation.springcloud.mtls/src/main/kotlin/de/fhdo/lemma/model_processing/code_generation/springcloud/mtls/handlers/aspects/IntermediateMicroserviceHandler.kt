@@ -17,7 +17,7 @@ import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
 import java.io.File
 
 @CodeGenerationHandler
-internal class MtlsConfigurationHandler
+internal class IntermediateMicroserviceHandler
     : GenletCodeGenerationHandlerI<IntermediateMicroservice, ClassOrInterfaceDeclaration, Nothing> {
     override fun handlesEObjectsOfInstance() = IntermediateMicroservice::class.java
     override fun generatesNodesOfInstance() = ClassOrInterfaceDeclaration::class.java

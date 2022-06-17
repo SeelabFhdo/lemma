@@ -14,7 +14,7 @@ import de.fhdo.lemma.model_processing.code_generation.springcloud.keycloak.model
 import de.fhdo.lemma.service.intermediate.IntermediateInterface
 
 @CodeGenerationHandler
-internal class InterfaceHandler
+internal class IntermediateInterfaceHandler
     : GenletCodeGenerationHandlerI<IntermediateInterface, ClassOrInterfaceDeclaration, Nothing> {
     override fun handlesEObjectsOfInstance() = IntermediateInterface::class.java
     override fun generatesNodesOfInstance() = ClassOrInterfaceDeclaration::class.java
