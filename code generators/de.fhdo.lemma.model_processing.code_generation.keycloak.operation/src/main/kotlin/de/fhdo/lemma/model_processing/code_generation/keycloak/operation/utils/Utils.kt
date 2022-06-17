@@ -1,14 +1,70 @@
 package de.fhdo.lemma.model_processing.code_generation.keycloak.operation.utils
 
+import com.fasterxml.jackson.databind.node.ObjectNode
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
 import de.fhdo.lemma.model_processing.asFile
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.SortableProperties
-import de.fhdo.lemma.model_processing.utils.packageToPath
 import de.fhdo.lemma.operation.InfrastructureNode
 import de.fhdo.lemma.operation.intermediate.IntermediateContainer
 import de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode
 import de.fhdo.lemma.operation.intermediate.IntermediateOperationNode
+import de.fhdo.lemma.service.intermediate.IntermediateInterface
+import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
+import de.fhdo.lemma.service.intermediate.IntermediateOperation
 import java.io.File
+
+fun MutableMap<String, Any>.putTypedValue(type: String, key: String, value: String) = when (type) {
+    "boolean" -> this.put(key, value.toBoolean())
+    "byte" -> this.put(key, value.toByte())
+    "double" -> this.put(key, value.toDouble())
+    "float" -> this.put(key, value.toFloat())
+    "int" -> this.put(key, value.toInt())
+    "long" -> this.put(key, value.toLong())
+    "short" -> this.put(key, value.toShort())
+    else -> this.put(key, value)
+}
+
+fun applicationPropertiesKeyMapper(key: String) = when (key) {
+    "authServerUrl" -> "keycloak.auth-server-url"
+    "realm" -> "keycloak.realm"
+    "resource" -> "keycloak.resource"
+    "enabled" -> "keycloak.enabled"
+    "bearerOnly" -> "keycloak.bearer-only"
+    "sslRequired" -> "keycloak.ssl-required"
+    "principalAttribute" -> "keycloak.principal-attribute"
+    "clientProtocol" -> "protocol"
+    else -> key
+}
+
+fun keycloakPropertiesKeyMapper(key: String) = when (key) {
+    "clientProtocol" -> "protocol"
+    else -> key
+}
+
+fun ObjectNode.addAndCastTo(key: String, value: Any): ObjectNode = when (value) {
+    is Int -> this.put(key, value)
+    is Long -> this.put(key, value)
+    is Double -> this.put(key, value)
+    is String -> this.put(key, value)
+    is Boolean -> this.put(key, value)
+    else -> this.put(key, value.toString())
+}
+
+internal fun IntermediateOperationNode.hasAspect(aspectsSet: Set<String>) = aspects.any { aspectsSet.contains(it.name) }
+internal fun IntermediateInterface.hasAspect(aspectsSet: Set<String>) = aspects.any { aspectsSet.contains(it.name) }
+internal fun IntermediateOperation.hasAspect(aspectsSet: Set<String>) = aspects.any { aspectsSet.contains(it.name) }
+internal fun IntermediateMicroservice.hasAspect(aspectsSet: Set<String>) = aspects.any { aspectsSet.contains(it.name) }
+
+internal fun IntermediateImportedAspect.getPropertiesValuesOrDefault(): Map<String, Any>{
+    val properties = mutableMapOf<String, Any>()
+    this.properties.forEach { aspectPropterty ->
+        aspectPropterty.defaultValue?.let {properties.putTypedValue(aspectPropterty.type, aspectPropterty.name, it)}
+    }
+    this.propertyValues.forEach {
+        properties.putTypedValue(it.property.type, it.property.name, it.value)
+    }
+    return properties.toMap()
+}
 
 internal fun loadPropertiesFile(filePath: String): SortableProperties {
     val file = filePath.asFile()
@@ -25,9 +81,9 @@ internal fun SortableProperties.asFormattedString(): String {
     return formattedString
 }
 
-internal fun InfrastructureNode.isCertificateAuthority() =
-    (infrastructureTechnology.infrastructureTechnology.name == "certificateAuthority"
-            && infrastructureTechnology.infrastructureTechnology.technology.name == "mTLS")
+internal fun InfrastructureNode.isKeycloakRealm() =
+    (infrastructureTechnology.infrastructureTechnology.name == "keycloakRealm"
+            && infrastructureTechnology.infrastructureTechnology.technology.name == "Keycloak")
 
 
 
@@ -80,26 +136,6 @@ private fun IntermediateImportedAspect.getAspectValueOrDefault(aspectName: Strin
     return if (aspectValue.isNullOrEmpty()) defaultValue else aspectValue
 }
 
-fun springPropertyMapping(property: String) = when (property) {
-    "keyStoreFileName" -> "server.ssl.key-store"
-    "keyStorePassword" -> "server.ssl.key-store-password"
-    "trustStoreFileName" -> "server.ssl.trust-store"
-    "trustStorePassword" -> "server.ssl.trust-store-password"
-    "hostnameVerifierBypass" -> "server.ssl.bypass.hostname-verifier"
-    "validityInDays" -> "server.ssl.key-store.validityInDays"
-    "bitLength" -> "server.ssl.bitLength"
-    "caName" -> "server.ssl.ca-name"
-    "caCertificatePassword" -> "server.ssl.server.ca-password"
-    "caDomain" -> "server.ssl.ca-domain.name"
-    "certificateStandard" -> "server.ssl.certificateStandard"
-    "cipher" -> "server.ssl.cipher"
-    "caKeyFile" -> "server.ssl.ca-key.file"
-    "caCertFile" -> "server.ssl.ca-Cert.file"
-    "subject" -> "server.ssl.subject"
-    "applicationName" -> "server.ssl.key-alias"
-    "clientAuth" -> "server.ssl.client-auth"
-    else -> property
-}
 
 fun isConformApplicationNames(applicationNames: String): Boolean {
 //    ([a-z0-9_.]+[ ]?[=][ ]?[a-z0-9_.]+)((,)([a-z0-9_.]+[ ]?[=][ ]?[a-z0-9_.]+))*
@@ -143,9 +179,3 @@ fun checkJsonKeyValue(jsonKeyValueString: String): Boolean{
     val jsonKeyValueRegex = "[{][\\s]*$keyValue+[\\s]*[,$keyValue]*[\\s]*[}]".toRegex()
     return jsonKeyValueString.matches(jsonKeyValueRegex)
 }
-
-fun generateFilePath(path: String, fileName: String) =
-    listOf(
-        path,
-        fileName
-    ).joinToString(File.separator)

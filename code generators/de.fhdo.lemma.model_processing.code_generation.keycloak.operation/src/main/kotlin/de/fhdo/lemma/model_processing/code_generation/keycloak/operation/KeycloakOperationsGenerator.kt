@@ -8,5 +8,4 @@ class KeycloakOperationsGenerator : AbstractModelProcessor(BASE_PACKAGE)
 
 fun main(args: Array<String>) {
     KeycloakOperationsGenerator().run(args)
-
 }
