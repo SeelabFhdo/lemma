@@ -55,6 +55,7 @@ java -jar "$JAVABASE" \
     --genlet "$SPRINGCLOUD" \
     --genlet "$SPRINGCLOUD_MTLS" \
     --genlet "$SPRINGCLOUD_KEYCLOAK"
+
 echo "--------------------------MTLS Generator Operation Model--------------------------"
 java -jar "$MTLS_PATH$MTLS_GENERATOR" \
     -i "$MODEL_PATH/intermediate/operation models/ca.xmi" \
@@ -65,4 +66,4 @@ echo "--------------------------Keycloal Generator Operation Model--------------
 java -jar "$KEYCLOAK_PATH$KEYCLOAK_GENERATOR" \
     -i "$MODEL_PATH/intermediate/operation models/ca.xmi" \
     -s "$MODEL_PATH/models/ca/ca.operation" \
-    -t "$TARGET_PATH" 
+    -t "$TARGET_PATH"

@@ -123,7 +123,7 @@ val standalone = task("standalone", type = Jar::class) {
     with(tasks["jar"] as CopySpec)
 
     manifest {
-        attributes["Main-Class"] = "de.fhdo.lemma.model_processing.code_generation.mtls.operation.MTLSOperationsGeneratorKt"
+        attributes["Main-Class"] = "de.fhdo.lemma.model_processing.code_generation.mtls.operation.MtlsOperationsGeneratorKt"
         // Prevent "WARNING: sun.reflect.Reflection.getCallerClass is not supported" from log4j
         attributes("Multi-Release" to "true")
 
