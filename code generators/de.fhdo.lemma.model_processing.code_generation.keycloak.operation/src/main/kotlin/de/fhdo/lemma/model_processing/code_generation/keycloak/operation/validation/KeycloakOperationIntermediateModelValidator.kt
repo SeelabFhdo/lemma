@@ -107,8 +107,5 @@ class KeycloakOperationIntermediateModelValidator : AbstractXmiDeclarativeValida
             "keycloakPropertiesConfig" -> {}
             else -> {}
         }
-
-
     }
-
 }
