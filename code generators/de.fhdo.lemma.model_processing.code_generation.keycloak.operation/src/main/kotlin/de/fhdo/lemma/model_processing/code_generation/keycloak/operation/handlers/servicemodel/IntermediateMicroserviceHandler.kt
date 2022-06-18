@@ -30,5 +30,4 @@ class IntermediateMicroserviceHandler : CodeGenerationHandlerI<IntermediateMicro
         }
         return null
     }
-
 }

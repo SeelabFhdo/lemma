@@ -15,7 +15,7 @@ import de.fhdo.lemma.model_processing.phases.validation.ModelValidatorRegistry
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 @ModelProcessingPhase(ID, IntermediateModelQueryPhase::class, false)
-internal class FindModelValidatorsPhase : AbstractModelProcessingPhase() {
+class FindModelValidatorsPhase : AbstractModelProcessingPhase() {
     companion object {
         const val MODEL_VALIDATOR_REGISTRY_PARAMETER = "modelValidatorRegistry"
         const val ID = "find_model_validators"
