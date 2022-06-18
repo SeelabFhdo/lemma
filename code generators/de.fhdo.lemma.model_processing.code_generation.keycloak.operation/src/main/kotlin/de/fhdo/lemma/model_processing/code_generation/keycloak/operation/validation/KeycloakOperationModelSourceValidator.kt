@@ -26,9 +26,6 @@ class KeycloakOperationModelSourceValidator : AbstractXtextModelValidator() {
 
     //todo prüfen ob ein Microservice mit Rollen einen Aspekt keycloakClient(clientId="de.pelki.ms1") besitzt eventuell auch nicht wenn ich den client aus dem kram erstellen kann
     //todo requiredActions prüfen
-    //todo User.clientRoles namen prüfen ob Clientrolle existiert commaseparierte Liste
-    //todo User.groups exist? commaseparierte Liste
-    //todo User.roles exist? commaseparierte Liste
     //todo Group.realmRoles exist?
     //todo keycloakPropertiesConfig, group, user only for keycloakRealm
     //todo role, keycloakClient only for non-keycloakRealm

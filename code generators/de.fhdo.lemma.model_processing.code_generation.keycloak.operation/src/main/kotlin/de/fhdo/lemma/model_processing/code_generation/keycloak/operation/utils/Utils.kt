@@ -12,6 +12,7 @@ import de.fhdo.lemma.service.intermediate.IntermediateInterface
 import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
 import de.fhdo.lemma.service.intermediate.IntermediateOperation
 import java.io.File
+import javax.swing.plaf.basic.BasicPopupMenuSeparatorUI
 
 fun MutableMap<String, Any>.putTypedValue(type: String, key: String, value: String) = when (type) {
     "boolean" -> this.put(key, value.toBoolean())
@@ -55,10 +56,10 @@ internal fun IntermediateInterface.hasAspect(aspectsSet: Set<String>) = aspects.
 internal fun IntermediateOperation.hasAspect(aspectsSet: Set<String>) = aspects.any { aspectsSet.contains(it.name) }
 internal fun IntermediateMicroservice.hasAspect(aspectsSet: Set<String>) = aspects.any { aspectsSet.contains(it.name) }
 
-internal fun IntermediateImportedAspect.getPropertiesValuesOrDefault(): Map<String, Any>{
+internal fun IntermediateImportedAspect.getPropertiesValuesOrDefault(): Map<String, Any> {
     val properties = mutableMapOf<String, Any>()
     this.properties.forEach { aspectPropterty ->
-        aspectPropterty.defaultValue?.let {properties.putTypedValue(aspectPropterty.type, aspectPropterty.name, it)}
+        aspectPropterty.defaultValue?.let { properties.putTypedValue(aspectPropterty.type, aspectPropterty.name, it) }
     }
     this.propertyValues.forEach {
         properties.putTypedValue(it.property.type, it.property.name, it.value)
@@ -84,8 +85,6 @@ internal fun SortableProperties.asFormattedString(): String {
 internal fun InfrastructureNode.isKeycloakRealm() =
     (infrastructureTechnology.infrastructureTechnology.name == "keycloakRealm"
             && infrastructureTechnology.infrastructureTechnology.technology.name == "Keycloak")
-
-
 
 
 internal fun IntermediateInfrastructureNode.getPropertiesFormNodeAspectsForDeployedServices(aspectName: String):
@@ -171,11 +170,17 @@ fun parseApplicationNames(applicationNames: String): Map<String, String> {
     return retval
 }
 
-fun checkJsonKeyValue(jsonKeyValueString: String): Boolean{
-    val quot ="[[\"]|[\']]"
+fun checkJsonKeyValue(jsonKeyValueString: String): Boolean {
+    val quot = "[[\"]|[\']]"
     val key = "$quot{1}[\\w]+$quot{1}"
     val value = "$quot?[\\w]+$quot?"
     val keyValue = "$key\\s*:\\s*$value"
     val jsonKeyValueRegex = "[{][\\s]*$keyValue+[\\s]*[,$keyValue]*[\\s]*[}]".toRegex()
     return jsonKeyValueString.matches(jsonKeyValueRegex)
 }
+
+fun String.splitAndTrim(separator: String) = this.split(separator).map { it.trim() }
+
+
+infix fun List<String>.checkIfAllValid(checkList: List<String>) = map { it in checkList }.all { it }
+infix fun List<String>.getInvalidEntries(checkList: List<String>) = this.filter { it !in checkList }
