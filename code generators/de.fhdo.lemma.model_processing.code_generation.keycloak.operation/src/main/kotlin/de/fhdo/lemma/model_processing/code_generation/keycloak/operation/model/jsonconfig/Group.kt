@@ -7,7 +7,7 @@ data class Group(
     val name: String,
 ){
     val realmRoles: MutableSet<String> = mutableSetOf()
-
+    // todo clientRoles
     fun addRoles(realmRoles: List<String>){
         this.realmRoles.addAll(realmRoles)
     }
