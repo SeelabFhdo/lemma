@@ -41,14 +41,14 @@ class IntermediateMicroserviceHandler :
     GenletCodeGenerationHandlerI<IntermediateMicroservice, ClassOrInterfaceDeclaration, Nothing> {
     override fun handlesEObjectsOfInstance() = IntermediateMicroservice::class.java
     override fun generatesNodesOfInstance() = ClassOrInterfaceDeclaration::class.java
-    private fun handlesAspects() = listOf("Keycloak.keycloakClient", "Keycloak.keycloakPropertiesConfig")
+    private fun handlesAspects() = listOf("Keycloak.KeycloakClient", "Keycloak.KeycloakPropertiesConfig")
     override fun execute(
         eObject: IntermediateMicroservice, node: ClassOrInterfaceDeclaration, context: Nothing?
     ): GenletCodeGenerationHandlerResult<ClassOrInterfaceDeclaration> {
         State.initialize(eObject)
-        val properties = eObject.getAspectValueOrDefault("Keycloak.keycloakPropertiesConfig").toMutableSet()
+        val properties = eObject.getAspectValueOrDefault("Keycloak.KeycloakPropertiesConfig").toMutableSet()
         val clientId =
-            eObject.getAspectPropertyValue("Keycloak.keycloakClient", "clientId")
+            eObject.getAspectPropertyValue("Keycloak.KeycloakClient", "clientId")
                 ?: eObject.classname.lowercase()
         properties.add("resource" to clientId)
         State.addPropertiesToFile(

@@ -46,8 +46,8 @@ class ParseImportedIntermediateServiceModels : AbstractModelProcessingPhase() {
             .forEach { intermediateInfrastructureNode ->
                 intermediateInfrastructureNode.aspects.forEach { intermediateImportedAspect ->
                     when (intermediateImportedAspect.name) {
-                        "role" -> addRolesToModelContext(intermediateImportedAspect)
-                        "group" -> ModelsContext.State.groups.add(
+                        "Role" -> addRolesToModelContext(intermediateImportedAspect)
+                        "Group" -> ModelsContext.State.groups.add(
                             intermediateImportedAspect.getPropertyValue("name") as String
                         )
                         else -> {}
@@ -59,9 +59,9 @@ class ParseImportedIntermediateServiceModels : AbstractModelProcessingPhase() {
     private fun loadAllRolesFromServiceModel(serviceModel: IntermediateServiceModel) {
         serviceModel.microservices.forEach { intermediateServiceModel ->
             intermediateServiceModel.interfaces.forEach { intermediateInterface ->
-                intermediateInterface.aspects.filter { it.name == "role" }.forEach { addRolesToModelContext(it) }
+                intermediateInterface.aspects.filter { it.name == "Role" }.forEach { addRolesToModelContext(it) }
                 intermediateInterface.operations.forEach { intermediateOperation ->
-                    intermediateOperation.aspects.filter { it.name == "role" }.forEach { addRolesToModelContext(it) }
+                    intermediateOperation.aspects.filter { it.name == "Role" }.forEach { addRolesToModelContext(it) }
                 }
             }
         }

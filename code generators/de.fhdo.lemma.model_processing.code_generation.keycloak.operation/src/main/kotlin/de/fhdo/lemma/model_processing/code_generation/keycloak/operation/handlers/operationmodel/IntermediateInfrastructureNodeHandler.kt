@@ -13,15 +13,15 @@ import de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode
 @CodeGenerationHandler
 class IntermediateInfrastructureNodeHandler : CodeGenerationHandlerI<IntermediateInfrastructureNode> {
     override fun getSourceInstanceType() = IntermediateInfrastructureNode::class.java
-    private fun handlesAspects() = setOf("role", "keycloakClient", "keycloakPropertiesConfig")
+    private fun handlesAspects() = setOf("Role", "KeycloakClient", "KeycloakPropertiesConfig")
 
     override fun execute(eObject: IntermediateInfrastructureNode): String? {
-        if (eObject.qualifiedInfrastructureTechnologyName == "Keycloak.keycloakRealm") {
+        if (eObject.qualifiedInfrastructureTechnologyName == "Keycloak.KeycloakRealm") {
             MainContext.State.createRealm(eObject.getPropertiesValuesOrDefault())
             eObject.aspects.forEach { aspect ->
                 val aspectProperties = aspect.getPropertiesValuesOrDefault()
                 when (aspect.name) {
-                    "keycloakPropertiesConfig" -> {
+                    "KeycloakPropertiesConfig" -> {
                         // todo generate application-keycloak.properites (für jeden Client) aber nocht nicht hier
                         val applicationProperties = mutableMapOf<String, String>()
                         aspectProperties.forEach { key, value ->
@@ -29,10 +29,10 @@ class IntermediateInfrastructureNodeHandler : CodeGenerationHandlerI<Intermediat
                         }
                         MainContext.State.addApplicationProperties(applicationProperties)
                     }
-                    "group" -> {
+                    "Group" -> {
                         MainContext.State.addGroup(aspectProperties)
                     }
-                    "user" -> {
+                    "User" -> {
                         val aspectPropertiesTemp = aspectProperties.toMutableMap()
                         aspectPropertiesTemp.remove("clientRoles")
                         val clientRolesMap = mutableMapOf<String, MutableSet<String>>()
@@ -60,10 +60,10 @@ class IntermediateInfrastructureNodeHandler : CodeGenerationHandlerI<Intermediat
             eObject.aspects.filter { handlesAspects().contains(it.name) }.forEach { aspect ->
                 val aspectProperties = aspect.getPropertiesValuesOrDefault()
                 when (aspect.name) {
-                    "role" -> {
+                    "Role" -> {
                         MainContext.State.addRole(eObject.name, aspectProperties)
                     }
-                    "keycloakClient" -> {
+                    "KeycloakClient" -> {
                         MainContext.State.addClient(aspectProperties)
                     }
                     else -> {}

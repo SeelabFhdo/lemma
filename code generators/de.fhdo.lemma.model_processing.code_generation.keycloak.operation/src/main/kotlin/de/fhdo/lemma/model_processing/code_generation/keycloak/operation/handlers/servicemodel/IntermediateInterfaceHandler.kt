@@ -14,7 +14,7 @@ import de.fhdo.lemma.service.intermediate.IntermediateInterface
 @CodeGenerationHandler
 class IntermediateInterfaceHandler : CodeGenerationHandlerI<IntermediateInterface> {
     override fun getSourceInstanceType() = IntermediateInterface::class.java
-    private fun handlesAspects() = setOf("role")
+    private fun handlesAspects() = setOf("Role")
 
 
     override fun execute(eObject: IntermediateInterface): String? {
@@ -23,7 +23,7 @@ class IntermediateInterfaceHandler : CodeGenerationHandlerI<IntermediateInterfac
 
         eObject.aspects.filter { handlesAspects().contains(it.name)}.forEach { aspect ->
             val clientId =
-                eObject.microservice.getAspectPropertyValue("Keycloak.keycloakClient", "clientId")
+                eObject.microservice.getAspectPropertyValue("Keycloak.KeycloakClient", "clientId")
                     ?: eObject.microservice.classname.lowercase()
             MainContext.State.addRole(clientId, aspect.getPropertiesValuesOrDefault())
         }

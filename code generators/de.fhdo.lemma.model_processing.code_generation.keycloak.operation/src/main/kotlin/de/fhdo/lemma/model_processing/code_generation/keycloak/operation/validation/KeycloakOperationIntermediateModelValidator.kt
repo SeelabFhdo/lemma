@@ -24,7 +24,7 @@ class KeycloakOperationIntermediateModelValidator : AbstractXmiDeclarativeValida
         if (!intermediateImportedAspect.qualifiedName.startsWith("keycloak"))
             return
         when (intermediateImportedAspect.name) {
-            "user" -> {
+            "User" -> {
                 intermediateImportedAspect.getPropertyValue("groups")?.splitAndTrim(",")?.let {
                     if (!(it checkIfAllValid ModelsContext.State.groups.toList()))
                         error(
@@ -56,7 +56,7 @@ class KeycloakOperationIntermediateModelValidator : AbstractXmiDeclarativeValida
                         )
                 }
             }
-            "group" -> {
+            "Group" -> {
                 intermediateImportedAspect.getPropertyValue("realmRoles")?.splitAndTrim(",")?.let {
                     if (!(it checkIfAllValid ModelsContext.State.realmRoles.toList()))
                         error(
@@ -67,7 +67,7 @@ class KeycloakOperationIntermediateModelValidator : AbstractXmiDeclarativeValida
                         )
                 }
             }
-            "keycloakClient" -> { // todo diese Prüfung in den SourceModelValidator ins Genelt und hier schieben
+            "KeycloakClient" -> { // todo diese Prüfung in den SourceModelValidator ins Genelt und hier schieben
                 val accessTypes = listOf("public", "confidential", "bearer-only")
                 val properties = intermediateImportedAspect.getPropertiesValuesOrDefault()
                 properties.forEach { (key, value) ->
@@ -101,10 +101,10 @@ class KeycloakOperationIntermediateModelValidator : AbstractXmiDeclarativeValida
                     }
                 }
             }
-            "role" -> {
+            "Role" -> {
                 //todo prüfe gültige HTTP Verben und HTTP Verben berücksichtigen
             }
-            "keycloakPropertiesConfig" -> {}
+            "KeycloakPropertiesConfig" -> {}
             else -> {}
         }
     }

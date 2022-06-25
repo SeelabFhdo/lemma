@@ -29,7 +29,7 @@ internal class IntermediateInterfaceHandler
         val interfaceOperations = mutableListOf<PermissionsOperation>()
 
 
-        eObject.getAllAspects("Keycloak.role").forEach { aspect ->
+        eObject.getAllAspects("Keycloak.Role").forEach { aspect ->
             aspect.getPropertyValue("name")?.let { interfaceRoles.add(it) }
         }
 
@@ -49,7 +49,7 @@ internal class IntermediateInterfaceHandler
                 }
             }
 
-            intermediateOperation.getAllAspects("Keycloak.role").forEach { aspect ->
+            intermediateOperation.getAllAspects("Keycloak.Role").forEach { aspect ->
                 aspect.getPropertyValue("name")?.let { operationRoles.add(it) }
             }
 

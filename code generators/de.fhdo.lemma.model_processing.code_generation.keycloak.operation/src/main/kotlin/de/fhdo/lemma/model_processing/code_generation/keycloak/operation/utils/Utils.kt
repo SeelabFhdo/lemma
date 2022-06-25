@@ -83,7 +83,7 @@ internal fun SortableProperties.asFormattedString(): String {
 }
 
 internal fun InfrastructureNode.isKeycloakRealm() =
-    (infrastructureTechnology.infrastructureTechnology.name == "keycloakRealm"
+    (infrastructureTechnology.infrastructureTechnology.name == "KeycloakRealm"
             && infrastructureTechnology.infrastructureTechnology.technology.name == "Keycloak")
 
 
