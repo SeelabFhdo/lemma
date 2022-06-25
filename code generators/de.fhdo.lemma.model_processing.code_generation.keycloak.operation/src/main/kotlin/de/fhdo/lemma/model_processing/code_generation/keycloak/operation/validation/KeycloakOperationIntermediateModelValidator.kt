@@ -20,9 +20,9 @@ class KeycloakOperationIntermediateModelValidator : AbstractXmiDeclarativeValida
 
     @Check
     private fun checkKeycloakAspects(intermediateImportedAspect: IntermediateImportedAspect) {
-        // todo Florian fragen wie der Import der Technologie geht damit der Name aufgelöst werden kann.
-//        if (intermediateImportedAspect.import.importUri != "keycloak")
-//            return
+        println(intermediateImportedAspect.qualifiedName.startsWith("keycloak"))
+        if (!intermediateImportedAspect.qualifiedName.startsWith("keycloak"))
+            return
         when (intermediateImportedAspect.name) {
             "user" -> {
                 intermediateImportedAspect.getPropertyValue("groups")?.splitAndTrim(",")?.let {

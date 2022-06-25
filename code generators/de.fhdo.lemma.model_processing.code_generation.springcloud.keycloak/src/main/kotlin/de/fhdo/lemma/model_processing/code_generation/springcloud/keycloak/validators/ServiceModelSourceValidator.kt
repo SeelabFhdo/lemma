@@ -1,14 +1,11 @@
-package de.fhdo.lemma.model_processing.code_generation.springcloud.mtls.validators
+package de.fhdo.lemma.model_processing.code_generation.springcloud.keycloak.validators
 
 import de.fhdo.lemma.model_processing.annotations.Before
 import de.fhdo.lemma.model_processing.annotations.SourceModelValidator
 import de.fhdo.lemma.model_processing.languages.convertToAbsoluteFileUrisInPlace
 import de.fhdo.lemma.model_processing.phases.validation.AbstractXtextModelValidator
-import de.fhdo.lemma.service.ImportedServiceAspect
-import de.fhdo.lemma.service.Operation
 import de.fhdo.lemma.service.ServiceModel
 import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.xtext.validation.Check
 
 @SourceModelValidator
 class ServiceModelSourceValidator : AbstractXtextModelValidator() {

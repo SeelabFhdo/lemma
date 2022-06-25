@@ -17,7 +17,7 @@ internal class IntermediateMicroserviceSelfSignedCAHandler
     : GenletCodeGenerationHandlerI<IntermediateMicroservice, ClassOrInterfaceDeclaration, Nothing> {
     override fun handlesEObjectsOfInstance() = IntermediateMicroservice::class.java
     override fun generatesNodesOfInstance() = ClassOrInterfaceDeclaration::class.java
-    private fun handlesAspects() = setOf("mTLS.mtlsdev")
+    private fun handlesAspects() = setOf("mTLS.MtlsDev")
 
     val TEST_CA = mapOf(
         Pair("server.ssl.bitLength", "4096"),

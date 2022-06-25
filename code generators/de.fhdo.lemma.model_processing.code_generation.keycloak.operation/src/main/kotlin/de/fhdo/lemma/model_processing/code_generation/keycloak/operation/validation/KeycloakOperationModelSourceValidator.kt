@@ -143,39 +143,6 @@ class KeycloakOperationModelSourceValidator : AbstractXtextModelValidator() {
 //    }
 
 
-//    @Check
-//    private fun checkNamingForServicesInContainers(container: Container) {
-//        container.aspects.filter { it.aspect.name in setOf("mtls", "mtlsdev") }
-//            .forEach { importedOperationAspect ->
-//                importedOperationAspect.values.forEachIndexed { index, technologySpecificPropertyValueAssignment ->
-//                    if (technologySpecificPropertyValueAssignment.property.name != "applicationName") return@forEachIndexed
-//                    if (!isConformApplicationNames(technologySpecificPropertyValueAssignment.value.valueAsString()))
-//                        error(
-//                            "The applicationName has the wrong format! " +
-//                                    "Example: ([QualifiedName]=[Name])((,)[QualifiedName]=[Name]))*",
-//                            importedOperationAspect,
-//                            OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__VALUES,
-//                            index
-//                        )
-//                    if (parseApplicationNames(technologySpecificPropertyValueAssignment.value.valueAsString()).size
-//                        < container.deployedServices.size
-//                    )
-//                        error(
-//                            "There are more defined names in the aspect applicationName than deployed " +
-//                                    " services!",
-//                            importedOperationAspect, OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__VALUES, index
-//                        )
-//                    if (parseApplicationNames(technologySpecificPropertyValueAssignment.value.valueAsString()).size
-//                        > container.deployedServices.size
-//                    )
-//                        error(
-//                            "There are more deployed services than defined names in the aspect applicationName!",
-//                            importedOperationAspect, OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__VALUES, index
-//                        )
-//                }
-//            }
-//    }
-
 
     private fun isValidJson(jsonString: String) = try {
         ObjectMapper().readTree(jsonString)

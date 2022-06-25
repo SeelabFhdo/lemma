@@ -25,7 +25,7 @@ internal class IntermediateMicroserviceStaticClassHandler
     override fun handlesEObjectsOfInstance() = IntermediateMicroservice::class.java
     override fun generatesNodesOfInstance() = ClassOrInterfaceDeclaration::class.java
 
-    private fun handlesAspects() = setOf("mTLS.mtls", "mTLS.mtlsdev")
+    private fun handlesAspects() = setOf("mTLS.Mtls", "mTLS.MtlsDev")
     private fun configFolder() = "configuration"
 
     override fun execute(

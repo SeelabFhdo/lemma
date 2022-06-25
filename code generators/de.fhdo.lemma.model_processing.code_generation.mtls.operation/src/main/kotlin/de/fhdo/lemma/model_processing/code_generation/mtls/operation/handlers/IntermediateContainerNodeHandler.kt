@@ -11,7 +11,7 @@ import de.fhdo.lemma.operation.intermediate.IntermediateContainer
 @CodeGenerationHandler
 class IntermediateContainerNodeHandler : CodeGenerationHandlerI<IntermediateContainer> {
     override fun getSourceInstanceType() = IntermediateContainer::class.java
-    private fun handlesAspects() = setOf("mtls", "mtlsdev")
+    private fun handlesAspects() = setOf("Mtls", "MtlsDev")
 
     override fun execute(eObject: IntermediateContainer): String? {
         if (!eObject.hasAspect(handlesAspects()))

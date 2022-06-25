@@ -13,7 +13,7 @@ import de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureTechnology
 @CodeGenerationHandler
 class IntermediateInfrastructureNodeHandler : CodeGenerationHandlerI<IntermediateInfrastructureNode> {
     override fun getSourceInstanceType() = IntermediateInfrastructureNode::class.java
-    private fun handlesAspects() = setOf("mtls", "mtlsdev")
+    private fun handlesAspects() = setOf("Mtls", "MtlsDev")
 
     override fun execute(eObject: IntermediateInfrastructureNode): String? {
         if (eObject.qualifiedInfrastructureTechnologyName == "mTLS.certificateAuthority") {

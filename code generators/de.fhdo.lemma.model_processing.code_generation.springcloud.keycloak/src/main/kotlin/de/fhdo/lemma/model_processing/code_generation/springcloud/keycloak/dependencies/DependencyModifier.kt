@@ -43,7 +43,6 @@ internal class DependencyModifier : MavenDependencyModifierI {
                 }
             }
         )
-
         return inputDependencyModel
     }
 }

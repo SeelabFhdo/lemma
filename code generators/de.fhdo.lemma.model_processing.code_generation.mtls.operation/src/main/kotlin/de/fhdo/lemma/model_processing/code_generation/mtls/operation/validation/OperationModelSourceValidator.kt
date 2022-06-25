@@ -134,7 +134,7 @@ class OperationModelSourceValidator : AbstractXtextModelValidator() {
 
     @Check
     private fun checkNamingForServicesInContainers(container: Container) {
-        container.aspects.filter { it.aspect.name in setOf("mtls", "mtlsdev") }
+        container.aspects.filter { it.aspect.name in setOf("Mtls", "MtlsDev") }
             .forEach { importedOperationAspect ->
                 importedOperationAspect.values.forEachIndexed { index, technologySpecificPropertyValueAssignment ->
                     if (technologySpecificPropertyValueAssignment.property.name != "applicationName") return@forEachIndexed
