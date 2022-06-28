@@ -3,6 +3,7 @@ package de.fhdo.lemma.model_processing.code_generation.keycloak.operation.valida
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
 import de.fhdo.lemma.model_processing.annotations.IntermediateModelValidator
 import de.fhdo.lemma.model_processing.code_generation.java_base.getPropertyValue
+import de.fhdo.lemma.model_processing.code_generation.java_base.qualifiedName
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.modul_handler.ModelsContext
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.utils.checkIfAllValid
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.utils.getInvalidEntries
@@ -10,6 +11,7 @@ import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.utils.g
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.utils.splitAndTrim
 import de.fhdo.lemma.model_processing.phases.validation.AbstractXmiDeclarativeValidator
 import de.fhdo.lemma.operation.OperationPackage
+import de.fhdo.lemma.operation.intermediate.IntermediateContainer
 import de.fhdo.lemma.operation.intermediate.IntermediatePackage
 import org.eclipse.xtext.validation.Check
 
@@ -20,18 +22,18 @@ class KeycloakOperationIntermediateModelValidator : AbstractXmiDeclarativeValida
 
     @Check
     private fun checkKeycloakAspects(intermediateImportedAspect: IntermediateImportedAspect) {
-        println(intermediateImportedAspect.qualifiedName.startsWith("keycloak"))
-        if (!intermediateImportedAspect.qualifiedName.startsWith("keycloak"))
-            return
+        // todo florian fragen und dieses mal die Anwort von ihm zeigen lassen
+        println("Hallo: ${intermediateImportedAspect.import.name} ${intermediateImportedAspect.name}")
+//        if (!intermediateImportedAspect.qualifiedName.startsWith("Keycloak"))
+//            return
         when (intermediateImportedAspect.name) {
             "User" -> {
                 intermediateImportedAspect.getPropertyValue("groups")?.splitAndTrim(",")?.let {
                     if (!(it checkIfAllValid ModelsContext.State.groups.toList()))
-                        error(
+                        callError(
                             "The following groups do not exist: " +
                                     "${it getInvalidEntries ModelsContext.State.groups.toList()}",
-                            intermediateImportedAspect,
-                            IntermediatePackage.Literals.INTERMEDIATE_OPERATION_NODE__ASPECTS
+                            intermediateImportedAspect
                         )
                 }
                 intermediateImportedAspect.getPropertyValue("realmRoles")?.splitAndTrim(",")?.let {
@@ -43,27 +45,24 @@ class KeycloakOperationIntermediateModelValidator : AbstractXmiDeclarativeValida
                             IntermediatePackage.Literals.INTERMEDIATE_OPERATION_NODE__ASPECTS
                         )
                 }
-
                 intermediateImportedAspect.getPropertyValue("clientRoles")?.splitAndTrim(",")?.map {
                     it.splitAndTrim("=").component2()
                 }?.let {
                     if (!(it checkIfAllValid ModelsContext.State.clientRoles.toList()))
-                        error(
+                        callError(
                             "The following client roles do not exist: " +
                                     "${it getInvalidEntries ModelsContext.State.clientRoles.toList()}",
-                            intermediateImportedAspect,
-                            IntermediatePackage.Literals.INTERMEDIATE_OPERATION_NODE__ASPECTS
+                            intermediateImportedAspect
                         )
                 }
             }
             "Group" -> {
                 intermediateImportedAspect.getPropertyValue("realmRoles")?.splitAndTrim(",")?.let {
                     if (!(it checkIfAllValid ModelsContext.State.realmRoles.toList()))
-                        error(
+                        callError(
                             "The following realm roles do not exist: " +
                                     "${it getInvalidEntries ModelsContext.State.realmRoles.toList()}",
-                            intermediateImportedAspect,
-                            IntermediatePackage.Literals.INTERMEDIATE_OPERATION_NODE__ASPECTS
+                            intermediateImportedAspect
                         )
                 }
             }
@@ -74,28 +73,25 @@ class KeycloakOperationIntermediateModelValidator : AbstractXmiDeclarativeValida
                     when (key) {
                         "accessType" -> {
                             if (value !in accessTypes)
-                                error(
+                                callError(
                                     "Only one of the following values is allowed as access type: " +
                                             accessTypes.joinToString(", "),
-                                    intermediateImportedAspect,
-                                    IntermediatePackage.Literals.INTERMEDIATE_OPERATION_NODE__ASPECTS
+                                    intermediateImportedAspect
                                 )
                             if (value == "confidential" && intermediateImportedAspect.getPropertyValue("redirectURL")
                                     .isNullOrEmpty()
-                            ) error(
+                            ) callError(
                                 "If the access type is \"confidential\" a redirectURL must be specified!",
                                 intermediateImportedAspect,
-                                IntermediatePackage.Literals.INTERMEDIATE_OPERATION_NODE__ASPECTS
                             )
                         }
                         "clientProtocol" -> {
                             val clientProtocols = listOf("openid-connect", "saml")
                             if (value !in clientProtocols)
-                                error(
+                                callError(
                                     "Only one of the following values is allowed as clientProtocol: " +
                                             clientProtocols.joinToString(", "),
-                                    intermediateImportedAspect,
-                                    IntermediatePackage.Literals.INTERMEDIATE_OPERATION_NODE__ASPECTS
+                                    intermediateImportedAspect
                                 )
                         }
                     }
@@ -107,5 +103,13 @@ class KeycloakOperationIntermediateModelValidator : AbstractXmiDeclarativeValida
             "KeycloakPropertiesConfig" -> {}
             else -> {}
         }
+    }
+
+    private fun callError(message: String, intermediateImportedAspect: IntermediateImportedAspect) {
+        error(
+            message,
+            intermediateImportedAspect,
+            IntermediatePackage.Literals.INTERMEDIATE_OPERATION_NODE__ASPECTS
+        )
     }
 }

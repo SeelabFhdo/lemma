@@ -191,7 +191,7 @@ class IntermediateMicroserviceHandler :
             )
             val methodPermissionList = mutableListOf<Pair<String, List<String>>>()
 
-            Context.State.getInterfaces().forEach {
+            State.getInterfaces().forEach {
                 methodPermissionList.addAll(it.getPermissions())
             }
 
