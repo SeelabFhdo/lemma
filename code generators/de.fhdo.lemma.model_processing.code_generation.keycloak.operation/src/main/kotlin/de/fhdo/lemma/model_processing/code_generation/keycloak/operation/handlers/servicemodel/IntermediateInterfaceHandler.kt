@@ -2,7 +2,6 @@ package de.fhdo.lemma.model_processing.code_generation.keycloak.operation.handle
 
 import de.fhdo.lemma.model_processing.code_generation.java_base.classname
 import de.fhdo.lemma.model_processing.code_generation.java_base.getAspectPropertyValue
-import de.fhdo.lemma.model_processing.code_generation.java_base.hasAspect
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.MainContext
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.handlers.interfaces.CodeGenerationHandler
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.handlers.interfaces.CodeGenerationHandlerI
@@ -16,7 +15,6 @@ class IntermediateInterfaceHandler : CodeGenerationHandlerI<IntermediateInterfac
     override fun getSourceInstanceType() = IntermediateInterface::class.java
     private fun handlesAspects() = setOf("Role")
 
-
     override fun execute(eObject: IntermediateInterface): String? {
         if (!eObject.hasAspect(handlesAspects()))
             return null
@@ -29,5 +27,4 @@ class IntermediateInterfaceHandler : CodeGenerationHandlerI<IntermediateInterfac
         }
         return null
     }
-
 }

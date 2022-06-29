@@ -18,17 +18,11 @@ fun PermissionsInterface.getPermissions(): List<Pair<String, List<String>>> {
         val operationPaths = this.paths combine operation.paths
         permissions.add(Pair("antMatchers", operationPaths.ifEmpty { operation.paths }))
         val allRoles = operation.roles.toSet().toList()
-//        permissions.add(Pair(if (allRoles.size > 1) "hasAnyRole" else "hasRole", allRoles))
-        permissions.add(
-            (if (allRoles.size > 1) "hasAnyRole" else if (allRoles.size == 1) "hasRole" else "anonymous") to allRoles
-        )
+        permissions.add(getRoleMethode(roles.size) to allRoles)
     }
-
     if (roles.isNotEmpty()) {
         permissions.add(Pair("antMatchers", paths.toSet().toList()))
-        permissions.add(
-            (if (roles.size > 1) "hasAnyRole" else if (roles.size == 1) "hasRole" else "anonymous") to roles
-        )
+        permissions.add(getRoleMethode(roles.size) to roles)
     }
     return permissions.toList()
 }
@@ -42,3 +36,6 @@ infix fun List<String>.combine(list: List<String>): List<String> {
     }
     return combinedList.toList()
 }
+
+private fun getRoleMethode(numberOfRolls: Int) =
+    if (numberOfRolls > 1) "hasAnyRole" else if (numberOfRolls == 1) "hasRole" else "anonymous"
