@@ -7,15 +7,16 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletGe
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasAspect
 import de.fhdo.lemma.model_processing.code_generation.java_base.serialization.property_files.openPropertyFile
+import de.fhdo.lemma.model_processing.code_generation.java_base.simpleName
 import de.fhdo.lemma.model_processing.code_generation.springcloud.mtls.FileType
-import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
+import de.fhdo.lemma.service.intermediate.IntermediateServiceModel
 import java.io.File
 
 
 @CodeGenerationHandler
-internal class IntermediateMicroserviceSelfSignedCAHandler
-    : GenletCodeGenerationHandlerI<IntermediateMicroservice, ClassOrInterfaceDeclaration, Nothing> {
-    override fun handlesEObjectsOfInstance() = IntermediateMicroservice::class.java
+internal class IntermediateServiceModelSelfSignedCAHandler
+    : GenletCodeGenerationHandlerI<IntermediateServiceModel, ClassOrInterfaceDeclaration, Nothing> {
+    override fun handlesEObjectsOfInstance() = IntermediateServiceModel::class.java
     override fun generatesNodesOfInstance() = ClassOrInterfaceDeclaration::class.java
     private fun handlesAspects() = setOf("mTLS.MtlsDev")
 
@@ -34,8 +35,10 @@ internal class IntermediateMicroserviceSelfSignedCAHandler
 
 
     override fun execute(
-        eObject: IntermediateMicroservice, node: ClassOrInterfaceDeclaration, context: Nothing?
+        eObject: IntermediateServiceModel, node: ClassOrInterfaceDeclaration, context: Nothing?
     ): GenletCodeGenerationHandlerResult<ClassOrInterfaceDeclaration> {
+        println("IntermediateServiceModelSelfSignedCAHandler ${eObject.simpleName}")
+
         if (!eObject.hasAspect(*handlesAspects().toTypedArray()))
             return GenletCodeGenerationHandlerResult(node)
 
