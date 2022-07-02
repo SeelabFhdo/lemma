@@ -141,7 +141,7 @@ class OperationModelSourceValidator : AbstractXtextModelValidator() {
                     if (!isConformApplicationNames(technologySpecificPropertyValueAssignment.value.valueAsString()))
                         error(
                             "The applicationName has the wrong format! " +
-                                    "Example: ([QualifiedName]=[Name])((,)[QualifiedName]=[Name]))*",
+                                    "Pattern: ([QualifiedName]=[Name])((,)[QualifiedName]=[Name]))*",
                             importedOperationAspect,
                             OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__VALUES,
                             index
