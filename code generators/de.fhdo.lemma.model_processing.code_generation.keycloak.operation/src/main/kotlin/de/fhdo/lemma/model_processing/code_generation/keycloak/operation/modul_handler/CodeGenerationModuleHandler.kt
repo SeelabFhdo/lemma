@@ -4,6 +4,7 @@ import de.fhdo.lemma.data.intermediate.IntermediatePackage
 import de.fhdo.lemma.model_processing.annotations.CodeGenerationModule
 import de.fhdo.lemma.model_processing.builtin_phases.code_generation.AbstractCodeGenerationModule
 import de.fhdo.lemma.model_processing.builtin_phases.code_generation.CharsetAwareFileContent
+import de.fhdo.lemma.model_processing.code_generation.java_base.hasAspect
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.MainContext
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.MainContext.State.getClientApplicationProperties
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.MainContext.State.getPath
@@ -38,17 +39,18 @@ class CodeGenerationModuleHandler : AbstractCodeGenerationModule() {
 //         todo properties erstellen
 //         todo keycloak config erstellen 1 x komplette und für jeden client
         ModelsContext.State.intermediateServiceModels.forEach { (uri, intermediateServiceModel) ->
-            intermediateServiceModel.microservices.forEach { intermediateMicroservice ->
-                content[
-                        setOf(
-                            getPath(
-                                PathSpecifier.CURRENT_MICROSERVICE_RESOURCES_PATH,
-                                intermediateMicroservice.qualifiedName
-                            ),
-                            "application-keycloak.properties"
-                        ).joinToString(File.separator)] =
-                    getClientApplicationProperties(intermediateMicroservice.name).asFormattedString()
-            }
+            intermediateServiceModel.microservices.filter { it.hasAspect("Keycloak.KeycloakClient") }
+                .forEach { intermediateMicroservice ->
+                    content[
+                            setOf(
+                                getPath(
+                                    PathSpecifier.CURRENT_MICROSERVICE_RESOURCES_PATH,
+                                    intermediateMicroservice.qualifiedName
+                                ),
+                                "application-keycloak.properties"
+                            ).joinToString(File.separator)] =
+                        getClientApplicationProperties(intermediateMicroservice.name).asFormattedString()
+                }
         }
 
         content[setOf(

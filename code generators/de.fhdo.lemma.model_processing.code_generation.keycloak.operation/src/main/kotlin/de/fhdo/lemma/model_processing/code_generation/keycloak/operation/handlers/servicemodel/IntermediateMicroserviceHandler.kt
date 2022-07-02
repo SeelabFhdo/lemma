@@ -23,10 +23,11 @@ class IntermediateMicroserviceHandler : CodeGenerationHandlerI<IntermediateMicro
             MainContext.State.addClient(properties)
             MainContext.State.addClientName(eObject.qualifiedName, properties["clientId"] as String)
         } ?: run {
-            val clientId = eObject.getAspectPropertyValue("Spring.Application", "name")?.also { it.lowercase() }
-                ?: eObject.classname.lowercase()
-            MainContext.State.addClient(clientId)
-            MainContext.State.addClientName(eObject.qualifiedName, clientId)
+            //todo enventuell konfigurierbar machen
+//            val clientId = eObject.getAspectPropertyValue("Spring.Application", "name")?.also { it.lowercase() }
+//                ?: eObject.classname.lowercase()
+//            MainContext.State.addClient(clientId)
+//            MainContext.State.addClientName(eObject.qualifiedName, clientId)
         }
         return null
     }

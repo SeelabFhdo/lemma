@@ -22,10 +22,8 @@ class KeycloakOperationIntermediateModelValidator : AbstractXmiDeclarativeValida
 
     @Check
     private fun checkKeycloakAspects(intermediateImportedAspect: IntermediateImportedAspect) {
-
-        println("Hallo: ${intermediateImportedAspect.import.name} ${intermediateImportedAspect.name}")
-//        if (!intermediateImportedAspect.qualifiedName.startsWith("Keycloak"))
-//            return
+        if (!intermediateImportedAspect.qualifiedName.startsWith("Keycloak"))
+            return
         when (intermediateImportedAspect.name) {
             "User" -> {
                 intermediateImportedAspect.getPropertyValue("groups")?.splitAndTrim(",")?.let {

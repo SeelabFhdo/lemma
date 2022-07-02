@@ -507,7 +507,7 @@ rule IntermediateImportedAspect (operationNode : Intermediate!IntermediateOperat
     to
         aspect : Intermediate!IntermediateImportedAspect(
             name <- sourceAspect.aspect.name,
-			qualifiedName <- sourceAspect.aspect.buildQualifiedName('.', true, false),
+            qualifiedName <- sourceAspect.aspect.buildQualifiedName('.', true, false),
             import <- Intermediate!IntermediateImport.allInstances()
                 -> any(p | p.name = sourceAspect.technology.name)
         )
