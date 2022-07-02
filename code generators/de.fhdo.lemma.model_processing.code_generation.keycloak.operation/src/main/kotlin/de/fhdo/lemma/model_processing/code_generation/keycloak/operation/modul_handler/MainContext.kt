@@ -8,13 +8,12 @@ import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.model.j
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.model.jsonconfig.Role
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.model.jsonconfig.Roles
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.model.jsonconfig.User
+import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.modul_handler.ModelsContext
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.utils.addProperty
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.utils.applicationPropertiesKeyMapper
 import de.fhdo.lemma.model_processing.utils.packageToPath
-import de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode
 import de.fhdo.lemma.operation.intermediate.IntermediateOperationModel
 import de.fhdo.lemma.service.intermediate.IntermediateServiceModel
-import org.koin.core.qualifier.named
 import java.io.File
 
 
@@ -22,8 +21,6 @@ internal object MainContext {
 
     object State {
         private lateinit var targetFolder: String
-        var intermediateServiceModels: MutableList<IntermediateServiceModel> = mutableListOf()
-        lateinit var intermediateOperationModel: IntermediateOperationModel
         private val applicationProperties = mutableMapOf<String, String>()
         private lateinit var realm: Realm
         private val clientRole = mutableMapOf<String, String>()
@@ -124,17 +121,19 @@ internal object MainContext {
         fun getClientName(qualifiedName: String) = clientNames[qualifiedName] ?: qualifiedName
 
         fun findServiceByQualifiedName(qualifiedName: String): String? {
-            intermediateServiceModels.forEach { intermediateServiceModel ->
+            ModelsContext.State.intermediateServiceModels.forEach { (uri, intermediateServiceModel) ->
                 intermediateServiceModel.microservices.find { it.name == qualifiedName.trim() }
                     ?.let { intermediateMicroservice ->
                         return intermediateMicroservice.classname
                     }
             }
 
-            intermediateOperationModel.infrastructureNodes.find { it.name == qualifiedName.trim() }
-                ?.let { intermediateInfrastructureNode ->
-                    return intermediateInfrastructureNode.name
-                }
+            ModelsContext.State.intermediateOperationModels.forEach { (uri, intermediateOperationModel) ->
+                intermediateOperationModel.infrastructureNodes.find { it.name == qualifiedName.trim() }
+                    ?.let { intermediateInfrastructureNode ->
+                        return intermediateInfrastructureNode.name
+                    }
+            }
             return null
         }
 

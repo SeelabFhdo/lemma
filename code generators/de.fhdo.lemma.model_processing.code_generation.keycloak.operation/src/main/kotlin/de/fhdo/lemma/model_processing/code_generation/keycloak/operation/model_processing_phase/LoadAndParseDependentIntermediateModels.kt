@@ -1,5 +1,6 @@
 package de.fhdo.lemma.model_processing.code_generation.keycloak.operation.model_processing_phase
 
+import de.fhdo.lemma.data.intermediate.IntermediateImport
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
 import de.fhdo.lemma.model_processing.annotations.ModelProcessingPhase
 import de.fhdo.lemma.model_processing.builtin_phases.find_model_validators.FindModelValidatorsPhase
@@ -12,36 +13,73 @@ import de.fhdo.lemma.model_processing.utils.removeFileUri
 import de.fhdo.lemma.operation.intermediate.IntermediateOperationModel
 import de.fhdo.lemma.service.intermediate.IntermediateServiceModel
 import org.eclipse.emf.ecore.resource.Resource
+import kotlin.system.exitProcess
 
 private const val modelParsingPhaseName = "intermediate_model_parsing"
 private const val modelResourceParameterName = "intermediateModelResource"
 
 @ModelProcessingPhase("parse_imported_intermediate_service_models", FindModelValidatorsPhase::class)
-class ParseImportedIntermediateServiceModels : AbstractModelProcessingPhase() {
+class LoadAndParseDependentIntermediateModels : AbstractModelProcessingPhase() {
     override fun process(args: Array<String>) {
         val parseIntermediateOperationModel = PhaseHeap[modelParsingPhaseName, modelResourceParameterName] as? Resource
         val intermediateOperationModel =
             parseIntermediateOperationModel?.contents?.first() as IntermediateOperationModel
+        val intermediateInfrastructureNode = intermediateOperationModel.infrastructureNodes.find {
+            it.qualifiedInfrastructureTechnologyName == "Keycloak.KeycloakRealm"
+        }
+        if (intermediateInfrastructureNode == null) {
+            println("No KeycloakRealm infrastructure was found in this operation model!")
+            exitProcess(1)
+        }
+        ModelsContext.State.intermediateOperationModels.put(
+            parseIntermediateOperationModel.uri.toString(),
+            intermediateOperationModel
+        )
 
-        intermediateOperationModel.imports.forEach { intermediateImport ->
-            if (!intermediateImport.importTypeName.equals("MICROSERVICES"))
-                return@forEach
-            val serviceModelUri = intermediateImport.importUri
-            val intermediateServiceModel =
-                loadModelRootRelative<IntermediateServiceModel>(
-                    serviceModelUri,
-                    intermediateImport.eResource().uri.toString().removeFileUri()
-                )
-
-            ModelsContext.State.intermediateServiceModels.add(intermediateServiceModel)
-
-            loadAllRolesFromServiceModel(intermediateServiceModel)
-            loadAllRolesAndGroupsFromOperationModel(intermediateOperationModel)
+        intermediateOperationModel.imports.forEach {
+            loadAllModels(it)
         }
 
+        ModelsContext.State.intermediateServiceModels.forEach { key, value ->
+            println(key)
+            loadAllRolesFromServiceModel(value)
+        }
+        ModelsContext.State.intermediateOperationModels.forEach { key, value ->
+            println(key)
+            loadAllRolesAndGroupsFromOperationModel(value)
+        }
     }
 
-    private fun loadAllRolesAndGroupsFromOperationModel(intermediateOperationModel: IntermediateOperationModel){
+    private fun loadAllModels(intermediateImport: IntermediateImport) {
+        when (intermediateImport.importTypeName) {
+            "OPERATION_NODES" -> {
+                val intermediateOperationModel = loadModelRootRelative<IntermediateOperationModel>(
+                    intermediateImport.importUri,
+                    intermediateImport.eResource().uri.toString().removeFileUri()
+                )
+                ModelsContext.State.intermediateOperationModels[intermediateImport.importUri] =
+                    intermediateOperationModel
+                intermediateOperationModel.imports.filter { !ModelsContext.State.alreadyLoaded(it) }.forEach {
+                    loadAllModels(it)
+                }
+            }
+            "MICROSERVICES" -> {
+                val intermediateServiceModel = loadModelRootRelative<IntermediateServiceModel>(
+                    intermediateImport.importUri,
+                    intermediateImport.eResource().uri.toString().removeFileUri()
+                )
+                ModelsContext.State.intermediateServiceModels[intermediateImport.importUri] =
+                    intermediateServiceModel
+                intermediateServiceModel.imports.filter { !ModelsContext.State.alreadyLoaded(it) }.forEach {
+                    loadAllModels(it)
+                }
+            }
+            else -> {}
+        }
+    }
+
+
+    private fun loadAllRolesAndGroupsFromOperationModel(intermediateOperationModel: IntermediateOperationModel) {
         intermediateOperationModel.infrastructureNodes
             .forEach { intermediateInfrastructureNode ->
                 intermediateInfrastructureNode.aspects.forEach { intermediateImportedAspect ->

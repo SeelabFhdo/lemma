@@ -22,7 +22,7 @@ class KeycloakOperationIntermediateModelValidator : AbstractXmiDeclarativeValida
 
     @Check
     private fun checkKeycloakAspects(intermediateImportedAspect: IntermediateImportedAspect) {
-        // todo florian fragen und dieses mal die Anwort von ihm zeigen lassen
+
         println("Hallo: ${intermediateImportedAspect.import.name} ${intermediateImportedAspect.name}")
 //        if (!intermediateImportedAspect.qualifiedName.startsWith("Keycloak"))
 //            return
