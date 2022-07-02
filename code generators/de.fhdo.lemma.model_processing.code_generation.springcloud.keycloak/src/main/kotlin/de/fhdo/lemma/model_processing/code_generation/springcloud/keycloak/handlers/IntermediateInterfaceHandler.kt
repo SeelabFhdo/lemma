@@ -39,7 +39,7 @@ internal class IntermediateInterfaceHandler
             }
         }
 
-        eObject.operations.forEach { intermediateOperation ->
+        eObject.operations.filter { it.endpoints.isNotEmpty() }.forEach { intermediateOperation ->
             val operationRoles = mutableSetOf<String>()
             val operationPaths = mutableSetOf<String>()
             val operationPathVars = mutableSetOf<Pair<String, String>>()
@@ -48,7 +48,6 @@ internal class IntermediateInterfaceHandler
                     operationPaths.add(address)
                 }
             }
-
             intermediateOperation.getAllAspects("Keycloak.Role").forEach { aspect ->
                 aspect.getPropertyValue("name")?.let { operationRoles.add(it) }
             }

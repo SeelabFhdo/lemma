@@ -3,6 +3,7 @@ package de.fhdo.lemma.model_processing.code_generation.keycloak.operation.modul_
 import de.fhdo.lemma.data.intermediate.IntermediateImport
 import de.fhdo.lemma.operation.intermediate.IntermediateOperationModel
 import de.fhdo.lemma.service.intermediate.IntermediateServiceModel
+import org.eclipse.emf.ecore.EObject
 
 internal object ModelsContext {
 
@@ -21,6 +22,13 @@ internal object ModelsContext {
                 else -> false
             }
 
+        fun storeIntermediateModel(model: EObject) {
+            when (model) {
+                is IntermediateOperationModel -> intermediateOperationModels[model.eResource().uri.toString()] = model
+                is IntermediateServiceModel -> intermediateServiceModels[model.eResource().uri.toString()] = model
+                else -> {}
+            }
+        }
     }
 
 

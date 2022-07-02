@@ -1,24 +1,35 @@
 package de.fhdo.lemma.model_processing.code_generation.keycloak.operation.validation
 
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
+import de.fhdo.lemma.model_processing.annotations.Before
 import de.fhdo.lemma.model_processing.annotations.IntermediateModelValidator
 import de.fhdo.lemma.model_processing.code_generation.java_base.getPropertyValue
-import de.fhdo.lemma.model_processing.code_generation.java_base.qualifiedName
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.modul_handler.ModelsContext
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.utils.checkIfAllValid
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.utils.getInvalidEntries
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.utils.getPropertiesValuesOrDefault
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.utils.splitAndTrim
 import de.fhdo.lemma.model_processing.phases.validation.AbstractXmiDeclarativeValidator
-import de.fhdo.lemma.operation.OperationPackage
-import de.fhdo.lemma.operation.intermediate.IntermediateContainer
+import de.fhdo.lemma.operation.intermediate.IntermediateOperationModel
 import de.fhdo.lemma.operation.intermediate.IntermediatePackage
+import de.fhdo.lemma.service.intermediate.IntermediateServiceModel
+import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.validation.Check
 
 @IntermediateModelValidator
 class KeycloakOperationIntermediateModelValidator : AbstractXmiDeclarativeValidator() {
 
     override fun getLanguageNamespace() = IntermediatePackage.eNS_URI
+
+    @Before
+    private fun collectKeycloakAspectsFromImportedModels(resource: Resource){
+        ModelsContext.State.intermediateServiceModels.forEach { (_, intermediateServiceModel) ->
+            loadAllRolesFromServiceModel(intermediateServiceModel)
+        }
+        ModelsContext.State.intermediateOperationModels.forEach { (_, intermediateOperationModel) ->
+            loadAllRolesAndGroupsFromOperationModel(intermediateOperationModel)
+        }
+    }
 
     @Check
     private fun checkKeycloakAspects(intermediateImportedAspect: IntermediateImportedAspect) {
@@ -109,5 +120,41 @@ class KeycloakOperationIntermediateModelValidator : AbstractXmiDeclarativeValida
             intermediateImportedAspect,
             IntermediatePackage.Literals.INTERMEDIATE_OPERATION_NODE__ASPECTS
         )
+    }
+
+
+    private fun loadAllRolesAndGroupsFromOperationModel(intermediateOperationModel: IntermediateOperationModel) {
+        intermediateOperationModel.infrastructureNodes
+            .forEach { intermediateInfrastructureNode ->
+                intermediateInfrastructureNode.aspects.forEach { intermediateImportedAspect ->
+                    when (intermediateImportedAspect.name) {
+                        "Role" -> addRolesToModelContext(intermediateImportedAspect)
+                        "Group" -> ModelsContext.State.groups.add(
+                            intermediateImportedAspect.getPropertyValue("name") as String
+                        )
+                        else -> {}
+                    }
+                }
+            }
+    }
+
+    private fun loadAllRolesFromServiceModel(serviceModel: IntermediateServiceModel) {
+        serviceModel.microservices.forEach { intermediateServiceModel ->
+            intermediateServiceModel.interfaces.forEach { intermediateInterface ->
+                intermediateInterface.aspects.filter { it.name == "Role" }.forEach { addRolesToModelContext(it) }
+                intermediateInterface.operations.forEach { intermediateOperation ->
+                    intermediateOperation.aspects.filter { it.name == "Role" }.forEach { addRolesToModelContext(it) }
+                }
+            }
+        }
+    }
+
+    private fun addRolesToModelContext(intermediateImportedAspect: IntermediateImportedAspect) {
+        intermediateImportedAspect.getPropertyValue("name")?.let {
+            if (intermediateImportedAspect.getPropertyValue("clientRole").toBoolean())
+                ModelsContext.State.clientRoles.add(it)
+            else
+                ModelsContext.State.realmRoles.add(it)
+        }
     }
 }

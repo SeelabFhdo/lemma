@@ -18,7 +18,7 @@ fun PermissionsInterface.getPermissions(): List<Pair<String, List<String>>> {
         val operationPaths = this.paths combine operation.paths
         permissions.add(Pair("antMatchers", operationPaths.ifEmpty { operation.paths }))
         val allRoles = operation.roles.toSet().toList()
-        permissions.add(getRoleMethode(roles.size) to allRoles)
+        permissions.add(getRoleMethode(operation.roles.size) to allRoles)
     }
     if (roles.isNotEmpty()) {
         permissions.add(Pair("antMatchers", paths.toSet().toList()))

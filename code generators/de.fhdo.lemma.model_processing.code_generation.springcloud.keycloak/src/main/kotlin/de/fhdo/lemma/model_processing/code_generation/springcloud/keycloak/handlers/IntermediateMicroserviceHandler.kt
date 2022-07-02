@@ -194,7 +194,6 @@ class IntermediateMicroserviceHandler :
             State.getInterfaces().forEach {
                 methodPermissionList.addAll(it.getPermissions())
             }
-
             val methodEndList = listOf(
                 Pair("anyRequest", listOf("")),
                 Pair("permitAll", listOf("")),

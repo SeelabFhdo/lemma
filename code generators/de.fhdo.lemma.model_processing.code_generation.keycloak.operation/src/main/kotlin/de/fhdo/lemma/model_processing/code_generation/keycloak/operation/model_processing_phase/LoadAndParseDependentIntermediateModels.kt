@@ -31,22 +31,10 @@ class LoadAndParseDependentIntermediateModels : AbstractModelProcessingPhase() {
             println("No KeycloakRealm infrastructure was found in this operation model!")
             exitProcess(1)
         }
-        ModelsContext.State.intermediateOperationModels.put(
-            parseIntermediateOperationModel.uri.toString(),
-            intermediateOperationModel
-        )
 
+        ModelsContext.State.storeIntermediateModel(intermediateOperationModel)
         intermediateOperationModel.imports.forEach {
             loadAllModels(it)
-        }
-
-        ModelsContext.State.intermediateServiceModels.forEach { key, value ->
-            println(key)
-            loadAllRolesFromServiceModel(value)
-        }
-        ModelsContext.State.intermediateOperationModels.forEach { key, value ->
-            println(key)
-            loadAllRolesAndGroupsFromOperationModel(value)
         }
     }
 
@@ -57,8 +45,7 @@ class LoadAndParseDependentIntermediateModels : AbstractModelProcessingPhase() {
                     intermediateImport.importUri,
                     intermediateImport.eResource().uri.toString().removeFileUri()
                 )
-                ModelsContext.State.intermediateOperationModels[intermediateImport.importUri] =
-                    intermediateOperationModel
+                ModelsContext.State.storeIntermediateModel(intermediateOperationModel)
                 intermediateOperationModel.imports.filter { !ModelsContext.State.alreadyLoaded(it) }.forEach {
                     loadAllModels(it)
                 }
@@ -68,49 +55,12 @@ class LoadAndParseDependentIntermediateModels : AbstractModelProcessingPhase() {
                     intermediateImport.importUri,
                     intermediateImport.eResource().uri.toString().removeFileUri()
                 )
-                ModelsContext.State.intermediateServiceModels[intermediateImport.importUri] =
-                    intermediateServiceModel
+                ModelsContext.State.storeIntermediateModel(intermediateServiceModel)
                 intermediateServiceModel.imports.filter { !ModelsContext.State.alreadyLoaded(it) }.forEach {
                     loadAllModels(it)
                 }
             }
             else -> {}
-        }
-    }
-
-
-    private fun loadAllRolesAndGroupsFromOperationModel(intermediateOperationModel: IntermediateOperationModel) {
-        intermediateOperationModel.infrastructureNodes
-            .forEach { intermediateInfrastructureNode ->
-                intermediateInfrastructureNode.aspects.forEach { intermediateImportedAspect ->
-                    when (intermediateImportedAspect.name) {
-                        "Role" -> addRolesToModelContext(intermediateImportedAspect)
-                        "Group" -> ModelsContext.State.groups.add(
-                            intermediateImportedAspect.getPropertyValue("name") as String
-                        )
-                        else -> {}
-                    }
-                }
-            }
-    }
-
-    private fun loadAllRolesFromServiceModel(serviceModel: IntermediateServiceModel) {
-        serviceModel.microservices.forEach { intermediateServiceModel ->
-            intermediateServiceModel.interfaces.forEach { intermediateInterface ->
-                intermediateInterface.aspects.filter { it.name == "Role" }.forEach { addRolesToModelContext(it) }
-                intermediateInterface.operations.forEach { intermediateOperation ->
-                    intermediateOperation.aspects.filter { it.name == "Role" }.forEach { addRolesToModelContext(it) }
-                }
-            }
-        }
-    }
-
-    private fun addRolesToModelContext(intermediateImportedAspect: IntermediateImportedAspect) {
-        intermediateImportedAspect.getPropertyValue("name")?.let {
-            if (intermediateImportedAspect.getPropertyValue("clientRole").toBoolean())
-                ModelsContext.State.clientRoles.add(it)
-            else
-                ModelsContext.State.realmRoles.add(it)
         }
     }
 }
