@@ -1,10 +1,8 @@
 package de.fhdo.lemma.model_processing.code_generation.keycloak.operation.model_processing_phase
 
 import de.fhdo.lemma.data.intermediate.IntermediateImport
-import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
 import de.fhdo.lemma.model_processing.annotations.ModelProcessingPhase
 import de.fhdo.lemma.model_processing.builtin_phases.find_model_validators.FindModelValidatorsPhase
-import de.fhdo.lemma.model_processing.code_generation.java_base.getPropertyValue
 import de.fhdo.lemma.model_processing.code_generation.keycloak.operation.modul_handler.ModelsContext
 import de.fhdo.lemma.model_processing.phases.AbstractModelProcessingPhase
 import de.fhdo.lemma.model_processing.phases.PhaseHeap
