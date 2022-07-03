@@ -24,14 +24,16 @@ class CodeGenerationModuleHandler : AbstractCodeGenerationModule() {
         val classes = findClassesWithAnnotationAndInterface(packageName, annotationName, interfaceName)
         val node = mutableListOf<String?>()
         MainContext.State.initialize(targetFolder)
-        this.resource.allContents.forEach { element ->
-            val elementInstanceType = element.mainInterface
-            classes.forEach { (_, handlerClassInfo) ->
-                val clazz = handlerClassInfo.loadClass()
-                @Suppress("UNCHECKED_CAST")
-                val handlerInstance = clazz.getConstructor().newInstance() as CodeGenerationHandlerI<EObject>
-                if (elementInstanceType == handlerInstance.getSourceInstanceType()) {
-                    node.add(handlerInstance.execute(element))
+        ModelsContext.State.intermediateOperationModels.forEach { (_, resource) ->
+            resource.eAllContents().forEach { element ->
+                val elementInstanceType = element.mainInterface
+                classes.forEach { (_, handlerClassInfo) ->
+                    val clazz = handlerClassInfo.loadClass()
+                    @Suppress("UNCHECKED_CAST")
+                    val handlerInstance = clazz.getConstructor().newInstance() as CodeGenerationHandlerI<EObject>
+                    if (elementInstanceType == handlerInstance.getSourceInstanceType()) {
+                        node.add(handlerInstance.execute(element))
+                    }
                 }
             }
         }

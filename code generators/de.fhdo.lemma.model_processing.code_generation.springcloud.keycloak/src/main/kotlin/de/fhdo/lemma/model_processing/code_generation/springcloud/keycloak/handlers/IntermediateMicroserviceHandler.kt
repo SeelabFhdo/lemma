@@ -182,21 +182,21 @@ class IntermediateMicroserviceHandler :
             nodeList.add(expressionStmt)
 
             val methodBeginList = listOf(
-                Pair("http", listOf("")),
-                Pair("cors", listOf("")),
-                Pair("and", listOf("")),
-                Pair("csrf", listOf("")),
-                Pair("disable", listOf("")),
-                Pair("authorizeRequests", listOf("")),
+                Pair("http", listOf(Pair("", ""))),
+                Pair("cors", listOf(Pair("", ""))),
+                Pair("and", listOf(Pair("", ""))),
+                Pair("csrf", listOf(Pair("", ""))),
+                Pair("disable", listOf(Pair("", ""))),
+                Pair("authorizeRequests", listOf(Pair("", ""))),
             )
-            val methodPermissionList = mutableListOf<Pair<String, List<String>>>()
+            val methodPermissionList = mutableListOf<Pair<String, List<Pair<String, String>>>>()
 
             State.getInterfaces().forEach {
                 methodPermissionList.addAll(it.getPermissions())
             }
             val methodEndList = listOf(
-                Pair("anyRequest", listOf("")),
-                Pair("permitAll", listOf("")),
+                Pair("anyRequest", listOf(Pair("", ""))),
+                Pair("permitAll", listOf(Pair("", ""))),
             )
             nodeList.add(
                 ExpressionStmt(
@@ -206,15 +206,24 @@ class IntermediateMicroserviceHandler :
             method.setBody(BlockStmt(nodeList))
         }
 
-        private fun recursiveConfigureStatement(functionList: List<Pair<String, List<String>>>): MethodCallExpr {
-            val arguments = if (functionList[0].second.isEmpty() || functionList[0].second.first().isEmpty()) NodeList()
-            else {
-                val list = mutableListOf<Expression>()
-                functionList[0].second.forEach {
-                    list.add(StringLiteralExpr(it) as Expression)
+        private fun recursiveConfigureStatement(functionList: List<Pair<String, List<Pair<String, String>>>>): MethodCallExpr {
+            val arguments =
+                if (functionList[0].second.isEmpty() || functionList[0].second.first().first.isEmpty()) NodeList()
+                else {
+                    val list = mutableListOf<Expression>()
+                    functionList[0].second.forEach {
+                        //add HttpMethod.Get etc... to argument list
+                        if (it.second.isNotEmpty() && it.second.startsWith("HttpMethod"))
+                            list.add(
+                                FieldAccessExpr()
+                                    .setName(it.second.split(".")[1])
+                                    .setScope(NameExpr().setName(it.second.split(".")[0]))
+                            )
+                        //add path or roles to argument list
+                        list.add(StringLiteralExpr(it.first) as Expression)
+                    }
+                    NodeList(list)
                 }
-                NodeList(list)
-            }
 
             if (functionList.size == 2) {
                 return createMethodCallExpr(NameExpr(functionList[1].first), functionList[0].first, arguments)
@@ -254,6 +263,10 @@ class IntermediateMicroserviceHandler :
             node.addImport(
                 "org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter",
                 ImportTargetElementType.SUPER
+            )
+            node.addImport(
+                "org.springframework.http.HttpMethod",
+                ImportTargetElementType.ATTRIBUTE_TYPE
             )
             node.addImport("org.springframework.beans.factory.annotation.Autowired", ImportTargetElementType.ANNOTATION)
             node.addImport(

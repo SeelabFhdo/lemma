@@ -28,11 +28,8 @@ internal class IntermediateMicroserviceHandler
         node: ClassOrInterfaceDeclaration,
         context: Nothing?
     ): GenletCodeGenerationHandlerResult<ClassOrInterfaceDeclaration> {
-        println("IntermediateMicroserviceHandler ${eObject.qualifiedName}")
-
         if (!eObject.hasAspect(*handlesAspects().toTypedArray()))
             return GenletCodeGenerationHandlerResult(node)
-
         State.initialize()
 
         eObject.aspects.filter { it.qualifiedName in handlesAspects() }.forEach { aspect ->

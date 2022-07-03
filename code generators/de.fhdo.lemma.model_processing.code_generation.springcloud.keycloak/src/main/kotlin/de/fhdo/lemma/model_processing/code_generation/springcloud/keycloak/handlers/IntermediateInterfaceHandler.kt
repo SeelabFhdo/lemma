@@ -4,14 +4,17 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerI
 import de.fhdo.lemma.model_processing.code_generation.java_base.genlets.GenletCodeGenerationHandlerResult
 import de.fhdo.lemma.model_processing.code_generation.java_base.getAllAspects
+import de.fhdo.lemma.model_processing.code_generation.java_base.getAspect
 import de.fhdo.lemma.model_processing.code_generation.java_base.getAspectPropertyValue
 import de.fhdo.lemma.model_processing.code_generation.java_base.getPropertyValue
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGenerationHandler
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasAspect
 import de.fhdo.lemma.model_processing.code_generation.springcloud.keycloak.Context
+import de.fhdo.lemma.model_processing.code_generation.springcloud.keycloak.model.HttpMethod
 import de.fhdo.lemma.model_processing.code_generation.springcloud.keycloak.model.PermissionsInterface
 import de.fhdo.lemma.model_processing.code_generation.springcloud.keycloak.model.PermissionsOperation
 import de.fhdo.lemma.service.intermediate.IntermediateInterface
+import de.fhdo.lemma.service.intermediate.IntermediateOperation
 
 @CodeGenerationHandler
 internal class IntermediateInterfaceHandler
@@ -41,11 +44,13 @@ internal class IntermediateInterfaceHandler
 
         eObject.operations.filter { it.endpoints.isNotEmpty() }.forEach { intermediateOperation ->
             val operationRoles = mutableSetOf<String>()
-            val operationPaths = mutableSetOf<String>()
+//            val operationPaths = mutableSetOf<String>()
+            val operationPaths = mutableSetOf<Pair<String, String>>()
             val operationPathVars = mutableSetOf<Pair<String, String>>()
             intermediateOperation.endpoints.forEach { endpoint ->
+
                 endpoint.addresses.forEach { address ->
-                    operationPaths.add(address)
+                    operationPaths.add(address to intermediateOperation.getHttpMethod())
                 }
             }
             intermediateOperation.getAllAspects("Keycloak.Role").forEach { aspect ->
@@ -72,5 +77,11 @@ internal class IntermediateInterfaceHandler
         )
         return GenletCodeGenerationHandlerResult(node)
     }
+
+
+    private fun IntermediateOperation.getHttpMethod() =
+        aspects.first { HttpMethod.getQualifiedAspectNames().contains(it.qualifiedName) }.run {
+            HttpMethod.getHttpMethodFromQualifiedAspectName(qualifiedName)
+        }
 }
 

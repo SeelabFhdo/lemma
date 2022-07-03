@@ -42,7 +42,9 @@ internal fun loadOrGeneratePropertiesEntries(
     properties.filter { it.key in FileType.filter(fileType) }.forEach { property ->
         when (property.key) {
             "applicationName" -> {
-                val appName = parseApplicationNames(property.value)[serviceName.lowercase()]
+                if (parseApplicationNames(property.value)[serviceName] == null)
+                    println("mist!!!")
+                val appName = parseApplicationNames(property.value)[serviceName]!!.lowercase()
                 properties["caDomain"]?.let {
                     sortableProperties[springPropertyMapping("subject")] =
                         "${appName}.$it"
@@ -141,7 +143,7 @@ fun isConformApplicationNames(applicationNames: String): Boolean {
 //    "com.myexample.name1=ms1,com.myexample.name2=name2"
 //    "com.myexample.name1 =ms1,com.myexample.name2= name2,com.myexample.name3 = ms3"
 
-    val nameChars = "[a-z0-9_.]+"
+    val nameChars = "[a-zA-Z0-9_.]+"
     val equal = "[ ]?[=][ ]?"
     return applicationNames.matches(
         """(${nameChars}${equal}${nameChars})((,)(${nameChars}${equal}${nameChars}))*""".toRegex()
