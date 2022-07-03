@@ -42,8 +42,6 @@ internal fun loadOrGeneratePropertiesEntries(
     properties.filter { it.key in FileType.filter(fileType) }.forEach { property ->
         when (property.key) {
             "applicationName" -> {
-                if (parseApplicationNames(property.value)[serviceName] == null)
-                    println("mist!!!")
                 val appName = parseApplicationNames(property.value)[serviceName]!!.lowercase()
                 properties["caDomain"]?.let {
                     sortableProperties[springPropertyMapping("subject")] =

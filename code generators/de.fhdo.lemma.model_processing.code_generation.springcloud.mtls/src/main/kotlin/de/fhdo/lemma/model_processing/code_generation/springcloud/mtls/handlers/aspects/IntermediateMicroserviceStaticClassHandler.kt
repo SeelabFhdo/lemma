@@ -62,7 +62,7 @@ internal class IntermediateMicroserviceStaticClassHandler
             .body.addStatement("HttpsURLConnection.setDefaultHostnameVerifier((hostname, session) -> true);")
 
         return GenletGeneratedFileContent(
-            GenletPathSpecifier.CURRENT_MICROSERVICE_GENERATION_TARGET_PATH,
+            GenletPathSpecifier.CURRENT_MICROSERVICE_JAVA_ROOT_PATH,
             "${configFolder()}${File.separator}${node.nameAsString}.java",
             node
         )
@@ -97,7 +97,7 @@ internal class IntermediateMicroserviceStaticClassHandler
         setEnvironmentMethod.setBody(blockStmtSetEnvMethod)
 
         return GenletGeneratedFileContent(
-            GenletPathSpecifier.CURRENT_MICROSERVICE_GENERATION_TARGET_PATH,
+            GenletPathSpecifier.CURRENT_MICROSERVICE_JAVA_ROOT_PATH,
             "${configFolder()}${File.separator}${node.nameAsString}.java",
             node
         )
