@@ -22,14 +22,12 @@ class LoadAndParseDependentIntermediateModels : AbstractModelProcessingPhase() {
         val parseIntermediateOperationModel = PhaseHeap[modelParsingPhaseName, modelResourceParameterName] as? Resource
         val intermediateOperationModel =
             parseIntermediateOperationModel?.contents?.first() as IntermediateOperationModel
-        val intermediateInfrastructureNode = intermediateOperationModel.infrastructureNodes.find {
-            it.qualifiedInfrastructureTechnologyName == "Keycloak.KeycloakRealm"
-        }
-        if (intermediateInfrastructureNode == null) {
+        if (intermediateOperationModel.infrastructureNodes.find {
+                it.qualifiedInfrastructureTechnologyName == "Keycloak.KeycloakRealm"
+            } == null) {
             println("No KeycloakRealm infrastructure was found in this operation model!")
             exitProcess(1)
         }
-
         ModelsContext.State.storeIntermediateModel(intermediateOperationModel)
         intermediateOperationModel.imports.forEach {
             loadAllModels(it)

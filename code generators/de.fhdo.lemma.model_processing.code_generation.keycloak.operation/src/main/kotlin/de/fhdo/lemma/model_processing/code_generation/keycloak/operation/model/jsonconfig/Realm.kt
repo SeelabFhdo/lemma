@@ -53,6 +53,4 @@ data class Realm(val id: String) {
         }
         return ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(realmNode)
     }
-
-
 }
