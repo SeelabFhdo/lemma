@@ -43,7 +43,7 @@ internal class IntermediateMicroserviceHandler
                 setOf(
                     eObject.qualifiedName.packageToPath(),
                     "certs",
-                    "Certificate-${eObject.qualifiedName}-${aspect.name}.var"
+                    "Certificate-${eObject.qualifiedName}-${aspect.name.lowercase()}.var"
                 ).joinToString(File.separator),
                 aspectsSet,
                 FileType.CLIENT_CERTIFICATE_PROPERTIES

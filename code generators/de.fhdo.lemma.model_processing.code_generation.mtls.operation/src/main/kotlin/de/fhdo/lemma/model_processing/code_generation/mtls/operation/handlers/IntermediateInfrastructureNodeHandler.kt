@@ -16,7 +16,7 @@ class IntermediateInfrastructureNodeHandler : CodeGenerationHandlerI<Intermediat
     private fun handlesAspects() = setOf("Mtls", "MtlsDev")
 
     override fun execute(eObject: IntermediateInfrastructureNode): String? {
-        if (eObject.qualifiedInfrastructureTechnologyName == "mTLS.certificateAuthority") {
+       if (eObject.qualifiedInfrastructureTechnologyName == "mTLS.CertificateAuthority") {
             MainContext.State.setCurrentMicroservicePackage("CertificationAuthority")
             loadOrGeneratePropertiesEntries(
                 "CertificationAuthority-mtlsdev.var",
@@ -34,7 +34,7 @@ class IntermediateInfrastructureNodeHandler : CodeGenerationHandlerI<Intermediat
                 eObject.getPropertiesFormNodeAspectsForDeployedServices(aspectName)?.let {
                     it.forEach { it1 ->
                         loadOrGeneratePropertiesEntries(
-                            "Certificate-${it1.key}-${aspectName}.var",
+                            "Certificate-${it1.key}-${aspectName.lowercase()}.var",
                             it1.value,
                             FileType.CLIENT_CERTIFICATE_PROPERTIES,
                             eObject.name

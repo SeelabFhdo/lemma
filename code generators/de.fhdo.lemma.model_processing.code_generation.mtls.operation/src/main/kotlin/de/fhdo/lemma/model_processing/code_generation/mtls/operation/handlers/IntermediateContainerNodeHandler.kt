@@ -27,7 +27,7 @@ class IntermediateContainerNodeHandler : CodeGenerationHandlerI<IntermediateCont
                     serviceProperties.key
                 )
                 loadOrGeneratePropertiesEntries(
-                    "Certificate-${serviceProperties.key}-${aspectName}.var",
+                    "Certificate-${serviceProperties.key}-${aspectName.lowercase()}.var",
                     serviceProperties.value,
                     FileType.CLIENT_CERTIFICATE_PROPERTIES,
                     serviceProperties.key
