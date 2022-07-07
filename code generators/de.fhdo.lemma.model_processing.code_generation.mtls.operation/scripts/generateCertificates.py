@@ -357,7 +357,7 @@ def main(argv: list):
 if __name__ == '__main__':
     # todo remove when development is complete
     # sys.argv = ["name", "~/masterthesis/lemmasecuritymodelgencode", "mtlsdev"]
-    sys.argv = ["name", "/home/dominik/masterthesis/evaluation"]
+    # sys.argv = ["name", "/home/dominik/masterthesis/evaluation"]
     try:
         main(sys.argv)
     except SystemExit as err:

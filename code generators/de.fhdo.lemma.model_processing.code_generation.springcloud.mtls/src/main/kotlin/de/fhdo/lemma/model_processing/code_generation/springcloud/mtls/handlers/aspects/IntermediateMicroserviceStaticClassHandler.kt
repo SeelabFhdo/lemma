@@ -37,7 +37,7 @@ internal class IntermediateMicroserviceStaticClassHandler
             return GenletCodeGenerationHandlerResult(node)
         val fileSet = mutableSetOf(
             generateSpringBypassConfigurationFile(node.getPackageName()),
-            generateSpringMtlsConfigurationFile(node.getPackageName(), "MTLSConfiguration")
+            generateSpringMtlsConfigurationFile(node.getPackageName(), "MtlsConfiguration")
         )
         return GenletCodeGenerationHandlerResult(node, fileSet)
     }
@@ -47,7 +47,7 @@ internal class IntermediateMicroserviceStaticClassHandler
     ): GenletGeneratedFileContent {
 
         val node =
-            newJavaClassOrInterface("${packageName}.${configFolder()}", "mTLSBypassConfiguration", isInterface = false)
+            newJavaClassOrInterface("${packageName}.${configFolder()}", "MtlsBypassConfiguration", isInterface = false)
         node.addImport(
             "org.springframework.boot.autoconfigure.condition.ConditionalOnExpression",
             ImportTargetElementType.ANNOTATION

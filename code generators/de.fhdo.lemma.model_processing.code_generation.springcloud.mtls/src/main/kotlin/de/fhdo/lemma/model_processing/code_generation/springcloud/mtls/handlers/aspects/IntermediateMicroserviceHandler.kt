@@ -35,7 +35,7 @@ internal class IntermediateMicroserviceHandler
         eObject.aspects.filter { it.qualifiedName in handlesAspects() }.forEach { aspect ->
             val aspectsSet = eObject.getAspectValueOrDefault(aspect.qualifiedName)
             State.addPropertiesToFile(
-                "application-${aspect.name}.properties",
+                "application-${aspect.name.lowercase()}.properties",
                 aspectsSet,
                 FileType.APPLICATION_PROPERTIES
             )

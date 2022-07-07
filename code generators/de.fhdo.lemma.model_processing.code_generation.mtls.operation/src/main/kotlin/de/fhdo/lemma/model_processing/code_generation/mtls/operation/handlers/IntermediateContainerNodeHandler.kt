@@ -21,7 +21,7 @@ class IntermediateContainerNodeHandler : CodeGenerationHandlerI<IntermediateCont
             val properties = eObject.getPropertiesFormNodeAspectsForDeployedServices(aspectName)!!
             properties.forEach { serviceProperties ->
                 loadOrGeneratePropertiesEntries(
-                    "application-${aspectName}.properties",
+                    "application-${aspectName.lowercase()}.properties",
                     serviceProperties.value,
                     FileType.APPLICATION_PROPERTIES,
                     serviceProperties.key
