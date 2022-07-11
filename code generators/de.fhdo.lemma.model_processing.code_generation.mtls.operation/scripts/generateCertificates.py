@@ -9,6 +9,7 @@ from shutil import which
 from typing import List
 
 
+
 class ConfigurationException(Exception):
     pass
 
@@ -281,8 +282,10 @@ def create_client_keystore(profile: Profile):
             f"keytool -import -file {ca_cert_file} -alias {ca_name} -noprompt -keystore {client_truststore_file} "
             f"-storepass {trust_store_password}")
 
-
+counter: int = 0
 def run_cli_command(command: str):
+    global counter
+    counter = counter + 1
     if command == "" or command is None:
         throw_configuration_exception("Command can't be empty!")
     proc = run(command, shell=True, capture_output=True)
@@ -351,6 +354,7 @@ def main(argv: list):
     read_config_files(target_path, profile_types)
     check_system_environment_variables()
     generate_cetificates()
+    info(f"Befehlt: {counter}")
     info('Finished')
 
 
