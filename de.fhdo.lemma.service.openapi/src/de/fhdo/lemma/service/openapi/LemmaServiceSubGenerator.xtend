@@ -29,6 +29,8 @@ import org.apache.commons.lang3.StringUtils
 import org.slf4j.LoggerFactory
 import org.apache.commons.lang3.NotImplementedException
 import org.eclipse.xtend.lib.annotations.Accessors
+import java.io.File
+import java.nio.file.Paths
 
 /**
  * This class is responsible for handling the generation of a LEMMA service model from an
@@ -66,21 +68,21 @@ class LemmaServiceSubGenerator {
      * which is handed over by the LemmaGenerator
      */
     Pair<String, Technology> techModel
-    String targetFolder
+    String targetFile
     /** Default name if no tags are encountered in the OpenAPI description */
     val defaultName = "defaultInterface"
 
     String dataModelLoc
 
     new(OpenAPI openAPI, Pair<String, DataModel> dataModel,Pair<String, Technology> techModel,
-        String genPath, String serviceFilename) {
+        String targetFile) {
         super()
         logger.debug("Creating new Service Sub Generator...")
         this.openAPI = openAPI
-        this.targetFolder = genPath + serviceFilename
+        this.targetFile = targetFile
         this.dataModel = dataModel
         this.techModel = techModel
-        this.dataModelLoc = genPath + dataModel.key
+        this.dataModelLoc = Paths.get(new File(targetFile).parent, dataModel.key).toString()
     }
 
     def generate(String servicePrefix) {
@@ -120,9 +122,9 @@ class LemmaServiceSubGenerator {
             }
         ]
         logger.debug("...Services created!")
-        if (OpenApiUtil.writeModel(myServiceModel, targetFolder)) {
+        if (OpenApiUtil.writeModel(myServiceModel, targetFile)) {
             logger.info("Service model generation successful!")
-            logger.info('''Model written to «targetFolder»''')
+            logger.info('''Model written to «targetFile»''')
         } else
             logger.info("Service model generation failed. See debug for more info.")
     }

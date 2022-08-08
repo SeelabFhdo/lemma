@@ -42,6 +42,8 @@ import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
 import io.swagger.v3.oas.models.servers.Server;
 import io.swagger.v3.oas.models.tags.Tag;
+import java.io.File;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -125,7 +127,7 @@ public class LemmaServiceSubGenerator {
    */
   private Pair<String, Technology> techModel;
   
-  private String targetFolder;
+  private String targetFile;
   
   /**
    * Default name if no tags are encountered in the OpenAPI description
@@ -134,16 +136,14 @@ public class LemmaServiceSubGenerator {
   
   private String dataModelLoc;
   
-  public LemmaServiceSubGenerator(final OpenAPI openAPI, final Pair<String, DataModel> dataModel, final Pair<String, Technology> techModel, final String genPath, final String serviceFilename) {
+  public LemmaServiceSubGenerator(final OpenAPI openAPI, final Pair<String, DataModel> dataModel, final Pair<String, Technology> techModel, final String targetFile) {
     super();
     LemmaServiceSubGenerator.logger.debug("Creating new Service Sub Generator...");
     this.openAPI = openAPI;
-    this.targetFolder = (genPath + serviceFilename);
+    this.targetFile = targetFile;
     this.dataModel = dataModel;
     this.techModel = techModel;
-    String _key = dataModel.getKey();
-    String _plus = (genPath + _key);
-    this.dataModelLoc = _plus;
+    this.dataModelLoc = Paths.get(new File(targetFile).getParent(), dataModel.getKey()).toString();
   }
   
   public void generate(final String servicePrefix) {
@@ -215,12 +215,12 @@ public class LemmaServiceSubGenerator {
     };
     this.openAPI.getPaths().forEach(_function_1);
     LemmaServiceSubGenerator.logger.debug("...Services created!");
-    boolean _writeModel = OpenApiUtil.writeModel(this.myServiceModel, this.targetFolder);
+    boolean _writeModel = OpenApiUtil.writeModel(this.myServiceModel, this.targetFile);
     if (_writeModel) {
       LemmaServiceSubGenerator.logger.info("Service model generation successful!");
       StringConcatenation _builder_1 = new StringConcatenation();
       _builder_1.append("Model written to ");
-      _builder_1.append(this.targetFolder);
+      _builder_1.append(this.targetFile);
       LemmaServiceSubGenerator.logger.info(_builder_1.toString());
     } else {
       LemmaServiceSubGenerator.logger.info("Service model generation failed. See debug for more info.");

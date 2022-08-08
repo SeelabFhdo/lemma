@@ -52,13 +52,13 @@ class LemmaDataSubGenerator {
     val static logger = LoggerFactory.getLogger(LemmaDataSubGenerator)
 
     /** Location where the generated file is written */
-    val String targetFolder
+    val String targetFile
 
-    new(OpenAPI openAPI, String genPath, String dataFilename) {
+    new(OpenAPI openAPI, String targetFile) {
         super()
         logger.debug("Creating new Data Sub Generator...")
         this.openAPI = openAPI
-        this.targetFolder = genPath + dataFilename
+        this.targetFile = targetFile
     }
 
     def DataModel generate() {
@@ -82,9 +82,9 @@ class LemmaDataSubGenerator {
         ]
         logger.debug("...data structures created!")
 
-        if (OpenApiUtil.writeModel(myDataModel, targetFolder)) {
+        if (OpenApiUtil.writeModel(myDataModel, targetFile)) {
             logger.info("Data model generation successful!")
-            logger.info('''Model written to «targetFolder»''')
+            logger.info('''Model written to «targetFile»''')
         } else
             throw new Exception("Data model generation failed.")
         return myDataModel

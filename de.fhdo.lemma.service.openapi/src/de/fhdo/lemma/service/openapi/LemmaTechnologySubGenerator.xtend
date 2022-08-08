@@ -37,15 +37,15 @@ class LemmaTechnologySubGenerator {
     /** SLF4j Logger */
     val static logger = LoggerFactory.getLogger(LemmaServiceSubGenerator);
     /** Location where the generated file is written */
-    String targetFolder
+    String targetFile
     /** List of all unique media types. */
     val mediaTypes = <String>newHashSet
 
-    new(OpenAPI api, String genPath, String techFilename) {
+    new(OpenAPI api, String targetFile) {
         super()
         logger.debug("Creating new Technology Sub Generator...")
         this.openApi = api
-        this.targetFolder = genPath + techFilename
+        this.targetFile = targetFile
     }
 
     def Technology generate() {
@@ -57,9 +57,9 @@ class LemmaTechnologySubGenerator {
         createProtocols()
         logger.debug("...Data Structures created!")
 
-        if (OpenApiUtil.writeModel(myTechModel, targetFolder)) {
+        if (OpenApiUtil.writeModel(myTechModel, targetFile)) {
             logger.info("Technology model generation successful!")
-            logger.info('''Model written to «targetFolder»''')
+            logger.info('''Model written to «targetFile»''')
         } else
             throw new Exception("Technology model generation failed :(")
         return myTechModel
