@@ -1,5 +1,6 @@
 package de.fhdo.lemma.service.openapi;
 
+import com.google.common.base.Objects;
 import de.fhdo.lemma.data.DataFactory;
 import de.fhdo.lemma.data.PrimitiveType;
 import de.fhdo.lemma.technology.AspectFeature;
@@ -19,13 +20,11 @@ import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.oas.models.responses.ApiResponses;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import org.eclipse.xtend.lib.annotations.AccessorType;
 import org.eclipse.xtend.lib.annotations.Accessors;
 import org.eclipse.xtend2.lib.StringConcatenation;
-import org.eclipse.xtext.xbase.lib.CollectionExtensions;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
@@ -42,6 +41,35 @@ import org.slf4j.LoggerFactory;
  */
 @SuppressWarnings("all")
 public class LemmaTechnologySubGenerator {
+  public static final String HTTP_DELETE_ASPECT_NAME = "DeleteMapping";
+  
+  public static final String HTTP_GET_ASPECT_NAME = "GetMapping";
+  
+  public static final String HTTP_HEAD_ASPECT_NAME = "HeadMapping";
+  
+  public static final String HTTP_OPTIONS_ASPECT_NAME = "OptionsMapping";
+  
+  public static final String HTTP_PATCH_ASPECT_NAME = "PatchMapping";
+  
+  public static final String HTTP_POST_ASPECT_NAME = "PostMapping";
+  
+  public static final String HTTP_PUT_ASPECT_NAME = "PutMapping";
+  
+  public static final String HTTP_REQUEST_BODY_ASPECT_NAME = "RequestBody";
+  
+  public static final String HTTP_TRACE_ASPECT_NAME = "TraceMapping";
+  
+  public static final String UNSPECIFIED_ASPECT_NAME = "Unspecified";
+  
+  private static final String TECHNOLOGY_MODEL_NAME = "OpenApi";
+  
+  private static final String DEFAULT_DATA_FORMAT = "application/json";
+  
+  /**
+   * SLF4j LOGGER
+   */
+  private static final Logger LOGGER = LoggerFactory.getLogger(LemmaTechnologySubGenerator.class);
+  
   /**
    * Factory to actually create and manipulate a LEMMA Technology
    */
@@ -50,16 +78,16 @@ public class LemmaTechnologySubGenerator {
   /**
    * Factory to actually create and manipulate a LEMMA DataModel
    */
-  private final DataFactory DATA_FACTORY = DataFactory.eINSTANCE;
+  private final DataFactory dataFactory = DataFactory.eINSTANCE;
   
   /**
-   * Predefined instance of the <strong>TechnologyModel</strong>. This instance is populated
-   * with the various technologies from the OpenAPI model, e.g., media types.
+   * Predefined instance of the <strong>TechnologyModel</strong>. This instance is populated with
+   * the various technologies from the OpenAPI model, e.g., media types.
    */
-  private final Technology myTechModel = this.TECHNOLOGY_FACTORY.createTechnology();
+  private final Technology technology = this.TECHNOLOGY_FACTORY.createTechnology();
   
   /**
-   * OpenAPI schema which will be used as source for generation.
+   * OpenAPI schema which will be used as source for generation
    */
   private OpenAPI openApi;
   
@@ -70,70 +98,66 @@ public class LemmaTechnologySubGenerator {
   private final ArrayList<String> transMsgs = CollectionLiterals.<String>newArrayList();
   
   /**
-   * SLF4j Logger
-   */
-  private static final Logger logger = LoggerFactory.getLogger(LemmaServiceSubGenerator.class);
-  
-  /**
    * Location where the generated file is written
    */
   private String targetFile;
   
-  /**
-   * List of all unique media types.
-   */
-  private final HashSet<String> mediaTypes = CollectionLiterals.<String>newHashSet();
-  
   public LemmaTechnologySubGenerator(final OpenAPI api, final String targetFile) {
-    super();
-    LemmaTechnologySubGenerator.logger.debug("Creating new Technology Sub Generator...");
+    LemmaTechnologySubGenerator.LOGGER.debug("Creating new Technology Sub Generator...");
     this.openApi = api;
     this.targetFile = targetFile;
   }
   
   public Technology generate() {
     try {
-      LemmaTechnologySubGenerator.logger.debug("Starting generation...");
-      LemmaTechnologySubGenerator.logger.debug("Initializing model instance...");
-      this.initilize();
-      LemmaTechnologySubGenerator.logger.debug("...Technology Model initialized!");
-      LemmaTechnologySubGenerator.logger.debug("Creating protocols...");
-      this.createProtocols();
-      LemmaTechnologySubGenerator.logger.debug("...Data Structures created!");
-      boolean _writeModel = OpenApiUtil.writeModel(this.myTechModel, this.targetFile);
+      LemmaTechnologySubGenerator.LOGGER.debug("Initializing model instance...");
+      this.initialize();
+      LemmaTechnologySubGenerator.LOGGER.debug("... technology model initialized");
+      LemmaTechnologySubGenerator.LOGGER.debug("Creating protocols...");
+      this.addRestProtocol(this.technology);
+      LemmaTechnologySubGenerator.LOGGER.debug("... protocols created");
+      boolean _writeModel = OpenApiUtil.writeModel(this.technology, this.targetFile);
       if (_writeModel) {
-        LemmaTechnologySubGenerator.logger.info("Technology model generation successful!");
+        LemmaTechnologySubGenerator.LOGGER.info("Technology model generation successful");
         StringConcatenation _builder = new StringConcatenation();
         _builder.append("Model written to ");
         _builder.append(this.targetFile);
-        LemmaTechnologySubGenerator.logger.info(_builder.toString());
+        LemmaTechnologySubGenerator.LOGGER.info(_builder.toString());
       } else {
-        throw new Exception("Technology model generation failed :(");
+        throw new Exception("Generated technology model could not be written to hard disk");
       }
-      return this.myTechModel;
+      return this.technology;
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
   }
   
-  public boolean createProtocols() {
+  private void initialize() {
+    this.technology.setName(OpenApiUtil.removeInvalidCharsFromName(LemmaTechnologySubGenerator.TECHNOLOGY_MODEL_NAME));
+    this.addPrimitiveTypes(this.technology);
+    this.addAspects(this.technology);
+  }
+  
+  private boolean addRestProtocol(final Technology technology) {
     boolean _xblockexpression = false;
     {
       final Protocol rest = this.TECHNOLOGY_FACTORY.createProtocol();
       rest.setName("rest");
+      final HashSet<String> mediaTypes = CollectionLiterals.<String>newHashSet();
       final BiConsumer<String, PathItem> _function = (String path, PathItem pathSchema) -> {
-        this.searchMediaTimes(pathSchema);
+        mediaTypes.addAll(this.searchMediaTypes(pathSchema));
       };
       this.openApi.getPaths().forEach(_function);
       final Consumer<String> _function_1 = (String type) -> {
-        final DataFormat df = this.TECHNOLOGY_FACTORY.createDataFormat();
-        df.setFormatName(type);
-        rest.getDataFormats().add(df);
+        final DataFormat dataFormat = this.TECHNOLOGY_FACTORY.createDataFormat();
+        dataFormat.setFormatName(type);
+        rest.getDataFormats().add(dataFormat);
       };
-      this.mediaTypes.forEach(_function_1);
+      mediaTypes.forEach(_function_1);
       DataFormat _elvis = null;
       final Function1<DataFormat, Boolean> _function_2 = (DataFormat it) -> {
-        return Boolean.valueOf(it.getFormatName().equals("application/json"));
+        String _formatName = it.getFormatName();
+        return Boolean.valueOf(Objects.equal(_formatName, LemmaTechnologySubGenerator.DEFAULT_DATA_FORMAT));
       };
       DataFormat _findFirst = IterableExtensions.<DataFormat>findFirst(rest.getDataFormats(), _function_2);
       if (_findFirst != null) {
@@ -143,128 +167,121 @@ public class LemmaTechnologySubGenerator {
         _elvis = _get;
       }
       rest.setDefaultFormat(_elvis);
-      _xblockexpression = this.myTechModel.getProtocols().add(rest);
+      _xblockexpression = technology.getProtocols().add(rest);
     }
     return _xblockexpression;
   }
   
-  public void searchMediaTimes(final PathItem item) {
-    final ArrayList<Operation> httpVerbList = CollectionLiterals.<Operation>newArrayList();
-    CollectionExtensions.<Operation>addAll(httpVerbList, item.getGet(), item.getDelete(), item.getPut(), 
-      item.getPost(), item.getPatch(), item.getHead(), item.getOptions());
+  private HashSet<String> searchMediaTypes(final PathItem item) {
+    final Iterable<Operation> httpVerbs = IterableExtensions.<Operation>filterNull(CollectionLiterals.<Operation>newArrayList(item.getDelete(), item.getGet(), item.getHead(), item.getOptions(), item.getPatch(), 
+      item.getPost(), item.getPut()));
+    final HashSet<String> mediaTypes = CollectionLiterals.<String>newHashSet();
     final Consumer<Operation> _function = (Operation verb) -> {
-      if ((verb != null)) {
-        ApiResponses _responses = verb.getResponses();
-        if (_responses!=null) {
-          final BiConsumer<String, ApiResponse> _function_1 = (String responseCode, ApiResponse responseSchema) -> {
-            Content _content = null;
-            if (responseSchema!=null) {
-              _content=responseSchema.getContent();
-            }
-            Set<String> _keySet = null;
-            if (_content!=null) {
-              _keySet=_content.keySet();
-            }
-            this.addToMediaTypes(_keySet);
-          };
-          _responses.forEach(_function_1);
-        }
-        RequestBody _requestBody = verb.getRequestBody();
-        Content _content = null;
-        if (_requestBody!=null) {
-          _content=_requestBody.getContent();
-        }
-        Set<String> _keySet = null;
-        if (_content!=null) {
-          _keySet=_content.keySet();
-        }
-        this.addToMediaTypes(_keySet);
+      RequestBody _requestBody = verb.getRequestBody();
+      Content _content = null;
+      if (_requestBody!=null) {
+        _content=_requestBody.getContent();
+      }
+      boolean _tripleNotEquals = (_content != null);
+      if (_tripleNotEquals) {
+        mediaTypes.addAll(verb.getRequestBody().getContent().keySet());
+      }
+      ApiResponses _responses = verb.getResponses();
+      if (_responses!=null) {
+        final BiConsumer<String, ApiResponse> _function_1 = (String responseCode, ApiResponse responseSchema) -> {
+          Content _content_1 = null;
+          if (responseSchema!=null) {
+            _content_1=responseSchema.getContent();
+          }
+          boolean _tripleNotEquals_1 = (_content_1 != null);
+          if (_tripleNotEquals_1) {
+            mediaTypes.addAll(responseSchema.getContent().keySet());
+          }
+        };
+        _responses.forEach(_function_1);
       }
     };
-    httpVerbList.forEach(_function);
-  }
-  
-  public void addToMediaTypes(final Set<String> strings) {
-    if ((strings != null)) {
-      final Consumer<String> _function = (String mediaType) -> {
-        this.mediaTypes.add(mediaType);
-      };
-      strings.forEach(_function);
-    }
-  }
-  
-  public void initilize() {
-    this.myTechModel.setName(OpenApiUtil.removeInvalidCharsFromName("OpenApi"));
-    this.initPrimitives(this.myTechModel);
-    this.initAspects(this.myTechModel);
-  }
-  
-  /**
-   * Creates Default Aspects for HTTP-based communication,
-   * i.e., request methods and response codes.
-   */
-  public void initAspects(final Technology technology) {
-    final ArrayList<ServiceAspect> httpVerbs = CollectionLiterals.<ServiceAspect>newArrayList();
-    httpVerbs.add(this.createServiceAspect("GetMapping"));
-    httpVerbs.add(this.createServiceAspect("PutMapping"));
-    httpVerbs.add(this.createServiceAspect("PostMapping"));
-    httpVerbs.add(this.createServiceAspect("DeleteMapping"));
-    httpVerbs.add(this.createServiceAspect("OptionsMapping"));
-    httpVerbs.add(this.createServiceAspect("HeadMapping"));
-    httpVerbs.add(this.createServiceAspect("PatchMapping"));
-    httpVerbs.add(this.createServiceAspect("TraceMapping"));
-    httpVerbs.add(this.createServiceAspect("Unspecified"));
-    this.myTechModel.getServiceAspects().addAll(httpVerbs);
-    this.myTechModel.getServiceAspects().add(this.createParameterAspect("RequestBody"));
-  }
-  
-  public ServiceAspect createServiceAspect(final String name) {
-    final ServiceAspect ret = this.TECHNOLOGY_FACTORY.createServiceAspect();
-    ret.setName(name);
-    ret.getJoinPoints().add(JoinPointType.OPERATIONS);
-    ret.getFeatures().add(AspectFeature.SINGLE_VALUED);
-    return ret;
-  }
-  
-  public ServiceAspect createParameterAspect(final String name) {
-    final ServiceAspect ret = this.TECHNOLOGY_FACTORY.createServiceAspect();
-    ret.setName(name);
-    ret.getJoinPoints().add(JoinPointType.PARAMETERS);
-    ret.getFeatures().add(AspectFeature.SINGLE_VALUED);
-    return ret;
+    httpVerbs.forEach(_function);
+    return mediaTypes;
   }
   
   /**
    * Creates OpenApi data types corresponding to <italic>OpenApi v3.0.3 - Data Types</italic>.
    * OpenApi data type formats are represented as individual types.
    */
-  public void initPrimitives(final Technology technology) {
-    final ArrayList<TechnologySpecificPrimitiveType> primTypes = CollectionLiterals.<TechnologySpecificPrimitiveType>newArrayList();
-    primTypes.add(this.createPrimitive("Integer", true, this.DATA_FACTORY.createPrimitiveInteger()));
-    primTypes.add(this.createPrimitive("Int32", false, this.DATA_FACTORY.createPrimitiveInteger()));
-    primTypes.add(this.createPrimitive("Int64", true, this.DATA_FACTORY.createPrimitiveLong()));
-    primTypes.add(this.createPrimitive("Number", true, this.DATA_FACTORY.createPrimitiveFloat()));
-    primTypes.add(this.createPrimitive("Float", false, this.DATA_FACTORY.createPrimitiveFloat()));
-    primTypes.add(this.createPrimitive("Double", true, this.DATA_FACTORY.createPrimitiveDouble()));
-    primTypes.add(this.createPrimitive("String", true, this.DATA_FACTORY.createPrimitiveString()));
-    primTypes.add(this.createPrimitive("Byte", true, this.DATA_FACTORY.createPrimitiveByte()));
-    primTypes.add(this.createPrimitive("Binary", false, this.DATA_FACTORY.createPrimitiveString()));
-    primTypes.add(this.createPrimitive("Boolean", true, this.DATA_FACTORY.createPrimitiveBoolean()));
-    primTypes.add(this.createPrimitive("Date", true, this.DATA_FACTORY.createPrimitiveDate()));
-    primTypes.add(this.createPrimitive("DateTime", false, this.DATA_FACTORY.createPrimitiveString()));
-    primTypes.add(this.createPrimitive("Password", false, this.DATA_FACTORY.createPrimitiveString()));
-    primTypes.add(this.createPrimitive("Unspecified", true, this.DATA_FACTORY.createPrimitiveUnspecified()));
-    primTypes.add(this.createPrimitive("Short", true, this.DATA_FACTORY.createPrimitiveShort()));
-    primTypes.add(this.createPrimitive("Char", true, this.DATA_FACTORY.createPrimitiveCharacter()));
-    technology.getPrimitiveTypes().addAll(primTypes);
+  private void addPrimitiveTypes(final Technology technology) {
+    technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("Integer", true, 
+      this.dataFactory.createPrimitiveInteger()));
+    technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("Int32", false, 
+      this.dataFactory.createPrimitiveInteger()));
+    technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("Int64", true, 
+      this.dataFactory.createPrimitiveLong()));
+    technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("Number", true, 
+      this.dataFactory.createPrimitiveFloat()));
+    technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("Float", false, 
+      this.dataFactory.createPrimitiveFloat()));
+    technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("Double", true, 
+      this.dataFactory.createPrimitiveDouble()));
+    technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("String", true, 
+      this.dataFactory.createPrimitiveString()));
+    technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("Byte", true, 
+      this.dataFactory.createPrimitiveByte()));
+    technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("Binary", false, 
+      this.dataFactory.createPrimitiveString()));
+    technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("Boolean", true, 
+      this.dataFactory.createPrimitiveBoolean()));
+    technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("Date", true, 
+      this.dataFactory.createPrimitiveDate()));
+    technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("DateTime", false, 
+      this.dataFactory.createPrimitiveString()));
+    technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("Password", false, 
+      this.dataFactory.createPrimitiveString()));
+    technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("Unspecified", true, 
+      this.dataFactory.createPrimitiveUnspecified()));
+    technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("Short", true, 
+      this.dataFactory.createPrimitiveShort()));
+    technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("Char", true, 
+      this.dataFactory.createPrimitiveCharacter()));
   }
   
-  public TechnologySpecificPrimitiveType createPrimitive(final String name, final boolean default_, final PrimitiveType type) {
-    final TechnologySpecificPrimitiveType ret = this.TECHNOLOGY_FACTORY.createTechnologySpecificPrimitiveType();
-    ret.setName(name);
-    ret.setDefault(default_);
-    ret.getBasicBuiltinPrimitiveTypes().add(type);
-    return ret;
+  private TechnologySpecificPrimitiveType createTechnologySpecificPrimitiveType(final String name, final boolean default_, final PrimitiveType baseType) {
+    final TechnologySpecificPrimitiveType type = this.TECHNOLOGY_FACTORY.createTechnologySpecificPrimitiveType();
+    type.setName(name);
+    type.setDefault(default_);
+    type.getBasicBuiltinPrimitiveTypes().add(baseType);
+    return type;
+  }
+  
+  /**
+   * Create default aspects for HTTP-based communication, i.e., request methods and response codes
+   */
+  private void addAspects(final Technology technology) {
+    technology.getServiceAspects().add(this.createOperationsAspect(LemmaTechnologySubGenerator.HTTP_DELETE_ASPECT_NAME));
+    technology.getServiceAspects().add(this.createOperationsAspect(LemmaTechnologySubGenerator.HTTP_GET_ASPECT_NAME));
+    technology.getServiceAspects().add(this.createOperationsAspect(LemmaTechnologySubGenerator.HTTP_HEAD_ASPECT_NAME));
+    technology.getServiceAspects().add(this.createOperationsAspect(LemmaTechnologySubGenerator.HTTP_OPTIONS_ASPECT_NAME));
+    technology.getServiceAspects().add(this.createOperationsAspect(LemmaTechnologySubGenerator.HTTP_PATCH_ASPECT_NAME));
+    technology.getServiceAspects().add(this.createOperationsAspect(LemmaTechnologySubGenerator.HTTP_POST_ASPECT_NAME));
+    technology.getServiceAspects().add(this.createOperationsAspect(LemmaTechnologySubGenerator.HTTP_PUT_ASPECT_NAME));
+    technology.getServiceAspects().add(this.createParametersAspect(LemmaTechnologySubGenerator.HTTP_REQUEST_BODY_ASPECT_NAME));
+    technology.getServiceAspects().add(this.createOperationsAspect(LemmaTechnologySubGenerator.HTTP_TRACE_ASPECT_NAME));
+    technology.getServiceAspects().add(this.createOperationsAspect(LemmaTechnologySubGenerator.UNSPECIFIED_ASPECT_NAME));
+  }
+  
+  private ServiceAspect createOperationsAspect(final String name) {
+    final ServiceAspect aspect = this.TECHNOLOGY_FACTORY.createServiceAspect();
+    aspect.setName(name);
+    aspect.getJoinPoints().add(JoinPointType.OPERATIONS);
+    aspect.getFeatures().add(AspectFeature.SINGLE_VALUED);
+    return aspect;
+  }
+  
+  private ServiceAspect createParametersAspect(final String name) {
+    final ServiceAspect aspect = this.TECHNOLOGY_FACTORY.createServiceAspect();
+    aspect.setName(name);
+    aspect.getJoinPoints().add(JoinPointType.PARAMETERS);
+    aspect.getFeatures().add(AspectFeature.SINGLE_VALUED);
+    return aspect;
   }
   
   @Pure
