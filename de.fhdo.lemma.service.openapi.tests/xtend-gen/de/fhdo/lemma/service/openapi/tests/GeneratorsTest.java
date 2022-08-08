@@ -8,7 +8,6 @@ import de.fhdo.lemma.technology.Technology;
 import io.swagger.parser.OpenAPIParser;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.parser.core.models.ParseOptions;
-import io.swagger.v3.parser.core.models.SwaggerParseResult;
 import java.io.File;
 import org.eclipse.xtext.xbase.lib.Pair;
 import org.junit.Assert;
@@ -16,85 +15,79 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * This class tests the the generation of LEMMA models from
- * an OpenAPI specification file (v3.0.3).
- * It provides one test for each subgenerator of the openapi-bundle.
- * @see <a href="https://www.openapis.org/">https://www.openapis.org/</a>
+ * This class tests the the generation of LEMMA models from an OpenAPI specification file (v3.0.3).
+ * The class provides one test for each sub-generator of the OpenAPI-bundle.
  * 
  * @author <a href="mailto:jonas.sorgalla@fh-dortmund.de">Jonas Sorgalla</a>
  */
 @SuppressWarnings("all")
 public class GeneratorsTest {
+  private static final File DATA_MODEL_FILE = new File((System.getProperty("user.dir") + 
+    "/test-model-gen/test.data"));
+  
   private static final String LOCAL_SCHEMA_PATH = "test-schemas/openapi.json";
   
-  private LemmaDataSubGenerator dataGenerator;
+  private static final File SERVICE_MODEL_FILE = new File((System.getProperty("user.dir") + 
+    "/test-model-gen/test.service"));
   
-  private LemmaTechnologySubGenerator technologyGenerator;
+  private static final File TECHNOLOGY_MODEL_FILE = new File((System.getProperty("user.dir") + 
+    "/test-model-gen/test.technology"));
   
-  private LemmaServiceSubGenerator serviceGenerator;
-  
-  private OpenAPI openAPI;
+  private OpenAPI parsedSchema;
   
   @Before
-  public void setup() throws Exception {
+  public void setup() {
     final ParseOptions parseOptions = new ParseOptions();
     parseOptions.setResolve(true);
     parseOptions.setFlatten(true);
-    final SwaggerParseResult result = new OpenAPIParser().readLocation(
+    this.parsedSchema = new OpenAPIParser().readLocation(
       new File(GeneratorsTest.LOCAL_SCHEMA_PATH).toURI().toString(), 
-      null, parseOptions);
-    this.openAPI = result.getOpenAPI();
+      null, parseOptions).getOpenAPI();
   }
   
   @Test
-  public void dataTest() throws Exception {
-    String _property = System.getProperty("user.dir");
-    String _plus = (_property + 
-      "/test-model-gen/");
-    LemmaDataSubGenerator _lemmaDataSubGenerator = new LemmaDataSubGenerator(this.openAPI, _plus, "test.data");
-    this.dataGenerator = _lemmaDataSubGenerator;
-    this.dataGenerator.generate();
-    String _property_1 = System.getProperty("user.dir");
-    String _plus_1 = (_property_1 + "/test-model-gen/test.data");
-    Assert.assertTrue(new File(_plus_1).exists());
+  public void dataTest() {
+    this.generateDataModel();
+    this.assertDataModelExists();
+  }
+  
+  private DataModel generateDataModel() {
+    String _path = GeneratorsTest.DATA_MODEL_FILE.getPath();
+    return new LemmaDataSubGenerator(this.parsedSchema, _path).generate();
+  }
+  
+  private void assertDataModelExists() {
+    Assert.assertTrue(GeneratorsTest.DATA_MODEL_FILE.exists());
   }
   
   @Test
-  public void technologyTest() throws Exception {
-    String _property = System.getProperty("user.dir");
-    String _plus = (_property + 
-      "/test-model-gen/");
-    LemmaTechnologySubGenerator _lemmaTechnologySubGenerator = new LemmaTechnologySubGenerator(this.openAPI, _plus, "test.technology");
-    this.technologyGenerator = _lemmaTechnologySubGenerator;
-    this.technologyGenerator.generate();
-    String _property_1 = System.getProperty("user.dir");
-    String _plus_1 = (_property_1 + "/test-model-gen/test.technology");
-    Assert.assertTrue(new File(_plus_1).exists());
+  public void technologyTest() {
+    this.generateTechnologyModel();
+    this.assertTechnologyModelExists();
+  }
+  
+  private Technology generateTechnologyModel() {
+    String _path = GeneratorsTest.TECHNOLOGY_MODEL_FILE.getPath();
+    return new LemmaTechnologySubGenerator(this.parsedSchema, _path).generate();
+  }
+  
+  private void assertTechnologyModelExists() {
+    Assert.assertTrue(GeneratorsTest.TECHNOLOGY_MODEL_FILE.exists());
   }
   
   @Test
-  public void serviceTest() throws Exception {
-    String _property = System.getProperty("user.dir");
-    String _plus = (_property + 
-      "/test-model-gen/");
-    LemmaDataSubGenerator _lemmaDataSubGenerator = new LemmaDataSubGenerator(this.openAPI, _plus, "test.data");
-    this.dataGenerator = _lemmaDataSubGenerator;
-    DataModel _generate = this.dataGenerator.generate();
-    final Pair<String, DataModel> dataModel = Pair.<String, DataModel>of("test.data", _generate);
-    String _property_1 = System.getProperty("user.dir");
-    String _plus_1 = (_property_1 + 
-      "/test-model-gen/");
-    LemmaTechnologySubGenerator _lemmaTechnologySubGenerator = new LemmaTechnologySubGenerator(this.openAPI, _plus_1, "test.technology");
-    this.technologyGenerator = _lemmaTechnologySubGenerator;
-    Technology _generate_1 = this.technologyGenerator.generate();
-    final Pair<String, Technology> techModel = Pair.<String, Technology>of("test.technology", _generate_1);
-    String _property_2 = System.getProperty("user.dir");
-    String _plus_2 = (_property_2 + "/test-model-gen/");
-    LemmaServiceSubGenerator _lemmaServiceSubGenerator = new LemmaServiceSubGenerator(this.openAPI, dataModel, techModel, _plus_2, "test.service");
-    this.serviceGenerator = _lemmaServiceSubGenerator;
-    this.serviceGenerator.generate("test");
-    String _property_3 = System.getProperty("user.dir");
-    String _plus_3 = (_property_3 + "/test-model-gen/test.service");
-    Assert.assertTrue(new File(_plus_3).exists());
+  public void serviceTest() {
+    final DataModel dataModel = this.generateDataModel();
+    final Technology technologyModel = this.generateTechnologyModel();
+    String _name = GeneratorsTest.DATA_MODEL_FILE.getName();
+    Pair<String, DataModel> _mappedTo = Pair.<String, DataModel>of(_name, dataModel);
+    String _name_1 = GeneratorsTest.TECHNOLOGY_MODEL_FILE.getName();
+    Pair<String, Technology> _mappedTo_1 = Pair.<String, Technology>of(_name_1, technologyModel);
+    String _path = GeneratorsTest.SERVICE_MODEL_FILE.getPath();
+    new LemmaServiceSubGenerator(
+      this.parsedSchema, _mappedTo, _mappedTo_1, _path).generate("test");
+    this.assertDataModelExists();
+    this.assertTechnologyModelExists();
+    Assert.assertTrue(GeneratorsTest.SERVICE_MODEL_FILE.exists());
   }
 }
