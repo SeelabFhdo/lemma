@@ -39,8 +39,6 @@ import org.eclipse.xtext.xbase.lib.ListExtensions;
  */
 @SuppressWarnings("all")
 public class ServiceDslExtractor {
-  private static final ArrayList<String> importedTechnologyAliases = CollectionLiterals.<String>newArrayList();
-  
   private static final String ID_PATTERN = "(\\^?)([a-zA-Z_])\\w*";
   
   private static final String QUALIFIED_NAME_PATTERN = new Function0<String>() {
@@ -66,6 +64,8 @@ public class ServiceDslExtractor {
       return _plus;
     }
   }.apply();
+  
+  private ArrayList<String> importedTechnologyAliases = CollectionLiterals.<String>newArrayList();
   
   /**
    * Extract ServiceModel
@@ -135,7 +135,7 @@ public class ServiceDslExtractor {
     final String importTypeKeyword = _switchResult;
     boolean _equals = Objects.equal(importTypeKeyword, "technology");
     if (_equals) {
-      ServiceDslExtractor.importedTechnologyAliases.add(import_.getName());
+      this.importedTechnologyAliases.add(import_.getName());
     }
     StringConcatenation _builder_1 = new StringConcatenation();
     _builder_1.append("import ");

@@ -25,11 +25,12 @@ import de.fhdo.lemma.service.ImportedServiceAspect
  * @author <a href="mailto:jonas.sorgalla@fh-dortmund.de">Jonas Sorgalla</a>
  */
 class ServiceDslExtractor {
-    static val importedTechnologyAliases = <String>newArrayList
     static val ID_PATTERN = "(\\^?)([a-zA-Z_])\\w*"
     static val QUALIFIED_NAME_PATTERN = '''«ID_PATTERN»(\.«ID_PATTERN»)*'''
     static val QUALIFIED_NAME_WITH_AT_LEAST_ONE_LEVEL_PATTERN = '''«ID_PATTERN»\.''' +
         QUALIFIED_NAME_PATTERN
+
+    var importedTechnologyAliases = <String>newArrayList
 
     /**
      * Extract ServiceModel
@@ -59,8 +60,7 @@ class ServiceDslExtractor {
         }
         // If it is a technology add it to the names list for later use in the generation
         if (importTypeKeyword == "technology")
-            de.fhdo.lemma.servicedsl.extractor.ServiceDslExtractor.importedTechnologyAliases
-                .add(^import.name)
+            importedTechnologyAliases.add(^import.name)
 
         return '''import «importTypeKeyword» from "«^import.importURI»" as «^import.name»'''
     }
