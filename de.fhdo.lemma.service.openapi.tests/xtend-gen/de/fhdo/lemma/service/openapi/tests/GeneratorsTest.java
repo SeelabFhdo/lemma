@@ -9,6 +9,7 @@ import io.swagger.parser.OpenAPIParser;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.parser.core.models.ParseOptions;
 import java.io.File;
+import java.nio.file.Paths;
 import org.eclipse.xtext.xbase.lib.Pair;
 import org.junit.Assert;
 import org.junit.Before;
@@ -22,16 +23,15 @@ import org.junit.Test;
  */
 @SuppressWarnings("all")
 public class GeneratorsTest {
-  private static final File DATA_MODEL_FILE = new File((System.getProperty("user.dir") + 
-    "/test-model-gen/test.data"));
+  private static final String TEST_MODEL_BASEPATH = Paths.get(System.getProperty("user.dir"), "test-model-gen").toString();
   
-  private static final String LOCAL_SCHEMA_PATH = "test-schemas/openapi.json";
+  private static final File DATA_MODEL_FILE = Paths.get(GeneratorsTest.TEST_MODEL_BASEPATH, "test.data").toFile();
   
-  private static final File SERVICE_MODEL_FILE = new File((System.getProperty("user.dir") + 
-    "/test-model-gen/test.service"));
+  private static final String LOCAL_SCHEMA_PATH = Paths.get("test-schemas", "openapi.json").toString();
   
-  private static final File TECHNOLOGY_MODEL_FILE = new File((System.getProperty("user.dir") + 
-    "/test-model-gen/test.technology"));
+  private static final File SERVICE_MODEL_FILE = Paths.get(GeneratorsTest.TEST_MODEL_BASEPATH, "test.service").toFile();
+  
+  private static final File TECHNOLOGY_MODEL_FILE = Paths.get(GeneratorsTest.TEST_MODEL_BASEPATH, "test.technology").toFile();
   
   private OpenAPI parsedSchema;
   
