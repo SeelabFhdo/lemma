@@ -11,6 +11,7 @@ import io.swagger.v3.parser.core.models.ParseOptions
 import java.io.File
 import de.fhdo.lemma.service.openapi.LemmaTechnologySubGenerator
 import de.fhdo.lemma.service.openapi.LemmaServiceSubGenerator
+import java.nio.file.Paths
 
 /**
  * This class tests the the generation of LEMMA models from an OpenAPI specification file (v3.0.3).
@@ -19,13 +20,12 @@ import de.fhdo.lemma.service.openapi.LemmaServiceSubGenerator
  * @author <a href="mailto:jonas.sorgalla@fh-dortmund.de">Jonas Sorgalla</a>
  */
 class GeneratorsTest {
-    static val DATA_MODEL_FILE = new File(System.getProperty("user.dir") +
-        "/test-model-gen/test.data")
-    static val LOCAL_SCHEMA_PATH = "test-schemas/openapi.json"
-    static val SERVICE_MODEL_FILE = new File(System.getProperty("user.dir") +
-        "/test-model-gen/test.service")
-    static val TECHNOLOGY_MODEL_FILE = new File(System.getProperty("user.dir") +
-        "/test-model-gen/test.technology")
+    static val TEST_MODEL_BASEPATH = Paths.get(System.getProperty("user.dir"), "test-model-gen")
+        .toString
+    static val DATA_MODEL_FILE = Paths.get(TEST_MODEL_BASEPATH, "test.data").toFile
+    static val LOCAL_SCHEMA_PATH = Paths.get("test-schemas", "openapi.json").toString
+    static val SERVICE_MODEL_FILE = Paths.get(TEST_MODEL_BASEPATH, "test.service").toFile
+    static val TECHNOLOGY_MODEL_FILE = Paths.get(TEST_MODEL_BASEPATH, "test.technology").toFile
 
     OpenAPI parsedSchema
 
