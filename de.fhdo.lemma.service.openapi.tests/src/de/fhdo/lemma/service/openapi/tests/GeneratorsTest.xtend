@@ -26,7 +26,7 @@ class GeneratorsTest {
         .toString
     static val DATA_MODEL_FILE = Paths.get(TEST_MODEL_BASEPATH, "test.data").toFile
     static val LOCAL_SCHEMA_PATH = Paths.get("test-schemas", "openapi.json").toString
-    static val SERVICE_MODEL_FILE = Paths.get(TEST_MODEL_BASEPATH, "test.service").toFile
+    static val SERVICE_MODEL_FILE = Paths.get(TEST_MODEL_BASEPATH, "test.services").toFile
     static val TECHNOLOGY_MODEL_FILE = Paths.get(TEST_MODEL_BASEPATH, "test.technology").toFile
     static OpenAPI parsedSchema
 

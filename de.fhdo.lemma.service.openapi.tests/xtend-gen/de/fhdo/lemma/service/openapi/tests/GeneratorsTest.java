@@ -32,7 +32,7 @@ public class GeneratorsTest {
   
   private static final String LOCAL_SCHEMA_PATH = Paths.get("test-schemas", "openapi.json").toString();
   
-  private static final File SERVICE_MODEL_FILE = Paths.get(GeneratorsTest.TEST_MODEL_BASEPATH, "test.service").toFile();
+  private static final File SERVICE_MODEL_FILE = Paths.get(GeneratorsTest.TEST_MODEL_BASEPATH, "test.services").toFile();
   
   private static final File TECHNOLOGY_MODEL_FILE = Paths.get(GeneratorsTest.TEST_MODEL_BASEPATH, "test.technology").toFile();
   
