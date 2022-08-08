@@ -2,217 +2,209 @@ package de.fhdo.lemma.service.openapi
 
 import de.fhdo.lemma.data.Context
 import de.fhdo.lemma.data.DataFactory
-import de.fhdo.lemma.data.DataField
 import de.fhdo.lemma.data.DataStructure
 import de.fhdo.lemma.data.ListType
 import io.swagger.v3.oas.models.OpenAPI
 import io.swagger.v3.oas.models.media.ArraySchema
 import io.swagger.v3.oas.models.media.Schema
-import org.apache.commons.lang3.StringUtils
 import org.slf4j.LoggerFactory
 import de.fhdo.lemma.data.DataModel
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.fhdo.lemma.data.DataField
+
+// TODO: Add Javadoc comments to methods
 
 /**
- * This class is responsible for handling the generation of a LEMMA data model from an
- * OpenAPI file in the JSON or YAML format.
+ * This class is responsible for handling the generation of a LEMMA data model from an OpenAPI file
+ * in the JSON or YAML format.
  *
  * @author <a href="mailto:jonas.sorgalla@fh-dortmund.de">Jonas Sorgalla</a>
  */
 class LemmaDataSubGenerator {
-    /**
-     * Map of all created DataStructures during a generation. The key contains the full-qualified
+    /* SLF4j LOGGER */
+    static val LOGGER = LoggerFactory.getLogger(LemmaDataSubGenerator)
+
+    /* Separator is used to build the full qualified names during the generation */
+    static val SEP = "."
+
+    /*
+     * Map of all created DataStructures during a generation. The key contains the fully-qualified
      * name while the value contains the actual data structure created.
      */
     val createdDataStructures = <String, DataStructure>newHashMap
-    /**
-     * Map of all created Lists during a generation. The key contains the full-qualified
-     * name while the value contains the actual list structure created.
+
+    /*
+     * Map of all created Lists during a generation. The key contains the fully-qualified name while
+     * the value contains the actual structured list type created.
      */
-    val createdListStructures = <String, ListType>newHashMap
+    val createdStructuredListTypes = <String, ListType>newHashMap
 
-    /** Factory to actually create and manipulate a LEMMA DataModel */
-    val DATA_FACTORY = DataFactory.eINSTANCE
-    /** Predefined instances of the data model, version, and context
-     * which are enriched with the data structures from the OpenAPI source
+    /* Factory to actually create and manipulate a LEMMA DataModel */
+    val dataFactory = DataFactory.eINSTANCE
+
+    /*
+     * Predefined instances of the data model, version, and context which are enriched with the data
+     * structures from the OpenAPI source
      */
-    val myDataModel = DATA_FACTORY.createDataModel
-    val myVersion = DATA_FACTORY.createVersion
-    val myContext = DATA_FACTORY.createContext
+    val targetDataModel = dataFactory.createDataModel
+    val targetVersion = dataFactory.createVersion
+    val targetContext = dataFactory.createContext
 
-    /** Separator is used to build the full qualified names during the generation */
-    val separator = "."
-
-    /** OpenAPI schema which will be used as source for generation */
+    /* OpenAPI schema which will be used as source for generation */
     val OpenAPI openAPI
 
-    /** Log of all encountered exceptions during the data transformation */
-    @Accessors(PUBLIC_GETTER) val transMsgs = <String>newArrayList
-    /** SLF4j Logger */
-    val static logger = LoggerFactory.getLogger(LemmaDataSubGenerator)
+    /* Log of all encountered exceptions during the data transformation */
+    @Accessors(PUBLIC_GETTER)
+    val transMsgs = <String>newArrayList
 
-    /** Location where the generated file is written */
+    /* Location where the generated file is written */
     val String targetFile
 
     new(OpenAPI openAPI, String targetFile) {
-        super()
-        logger.debug("Creating new Data Sub Generator...")
         this.openAPI = openAPI
         this.targetFile = targetFile
     }
 
     def DataModel generate() {
-        logger.debug("Starting generation...")
-        logger.debug("Initializing model instance...")
-        initilize()
-        logger.debug("...data model initialized!")
-        logger.debug("Creating data structures...")
+        LOGGER.debug("Initializing model instance...")
+        initialize()
+        LOGGER.debug("... data model initialized")
 
-        openAPI?.components?.schemas?.forEach[
-            key, value | {
-                try {
-                    getOrCreateDataStructure(myContext, key, value)
-                } catch (Exception e) {
-                    transMsgs.add(
-                        '''Error for DataStructure «key», structure is skipped.
-                        For details access debug log.''')
-                    logger.debug(e.message)
-                }
+        LOGGER.debug("Creating data structures...")
+        openAPI?.components?.schemas?.forEach[key, value |
+            try {
+                getOrCreateDataStructure(targetContext, key, value)
+            } catch (Exception ex) {
+                transMsgs.add('''Error for DataStructure «key». Structure will be skipped. ''' +
+                    "Please refer to the debug log for details.")
+                LOGGER.debug(ex.message)
             }
         ]
-        logger.debug("...data structures created!")
+        LOGGER.debug("...data structures created")
 
-        if (OpenApiUtil.writeModel(myDataModel, targetFile)) {
-            logger.info("Data model generation successful!")
-            logger.info('''Model written to «targetFile»''')
+        if (OpenApiUtil.writeModel(targetDataModel, targetFile)) {
+            LOGGER.debug("Data model generation successful")
+            LOGGER.debug('''Model written to «targetFile»''')
         } else
-            throw new Exception("Data model generation failed.")
-        return myDataModel
+            throw new Exception("Generated data model could not be written to hard disk")
+
+        return targetDataModel
     }
 
-    def initilize() {
-        // Data Model
-        myDataModel.versions.add(myVersion)
-        // Version
-        myVersion.name = OpenApiUtil.removeInvalidCharsFromName(openAPI.info.version)
-        myVersion.contexts.add(myContext)
-        // Context
-        myContext.name = OpenApiUtil.removeInvalidCharsFromName(openAPI.info.title)
-        myContext.version = myVersion
+    private def initialize() {
+        targetDataModel.versions.add(targetVersion)
+
+        targetVersion.name = OpenApiUtil.removeInvalidCharsFromName(openAPI.info.version)
+        targetVersion.contexts.add(targetContext)
+
+        targetContext.name = OpenApiUtil.removeInvalidCharsFromName(openAPI.info.title)
+        targetContext.version = targetVersion
     }
 
-    def DataStructure getOrCreateDataStructure(
-        Context c, String name, Schema schema
-    ) {
-        var foundObject = findDataStructure(c, StringUtils.capitalize(name))
-        if (foundObject === null) {
-            val newDataStructure = DATA_FACTORY.createDataStructure
-            newDataStructure.name = StringUtils.capitalize(name)
-            c.complexTypes.add(newDataStructure)
-            addDataFieldsToDataStructure(newDataStructure, name, schema)
-            createdDataStructures.put(
-                newDataStructure.buildQualifiedName(separator), newDataStructure
-            )
-            logger.debug('''Created new data structure «newDataStructure.name»''')
-            return newDataStructure
-        } else {
-            logger.debug('''Found and reuse existing data structure «foundObject.name»''')
-            return foundObject
+    private def DataStructure getOrCreateDataStructure(Context context, String name,
+        Schema<?> schema) {
+        val structureName = name.toFirstUpper
+        val fullyQualifiedStructureName = '''«context.buildQualifiedName(SEP)»«SEP»''' +
+            structureName
+        val existingStructure = createdDataStructures.get(fullyQualifiedStructureName)
+        if (existingStructure !== null) {
+            LOGGER.debug('''Found and reuse existing data structure «existingStructure.name»''')
+            return existingStructure
         }
+
+        val newStructure = dataFactory.createDataStructure
+        newStructure.name = structureName
+        context.complexTypes.add(newStructure)
+        newStructure.addDataFieldsFromSchema(schema)
+        createdDataStructures.put(fullyQualifiedStructureName, newStructure)
+        LOGGER.debug('''Created new data structure «newStructure.name»''')
+        return newStructure
     }
 
-    def ListType getOrCreateListStructure(Context c, String name, Schema schema) {
-        var foundObject = findListStructure(c, name)
-        if (foundObject === null) {
-            val newListStructure = DATA_FACTORY.createListType
-            newListStructure.name = '''«StringUtils.capitalize(name)»List'''
-            c.complexTypes.add(newListStructure)
-            addDataFieldsToListStructure(newListStructure, name, schema)
-            createdListStructures.put(
-                newListStructure.buildQualifiedName(separator), newListStructure
-            )
-            logger.debug('''Created new list structure «newListStructure.name»''')
-            return newListStructure
-        } else {
-            logger.debug('''Found and reuse existing list structure «foundObject.name»''')
-            return foundObject
-        }
+    private def void addDataFieldsFromSchema(DataStructure structure, Schema<?> structureSchema) {
+        structure.addDataFieldsFromSchema(null, structureSchema)
     }
 
-    def void addDataFieldsToDataStructure(
-        DataStructure ds, String structureName, Schema structureSchema
-    ) {
-        if (structureSchema.properties !== null) {
-            structureSchema.properties.forEach[
-                name, schema|addDataFieldsToDataStructure(ds, name, schema)
+    private def void addDataFieldsFromSchema(DataStructure structure, String fieldName,
+        Schema<?> structureSchema) {
+        if (structureSchema.properties !== null)
+            structureSchema.properties.forEach[name, schema |
+                structure.addDataFieldsFromSchema(name, schema)
             ]
-        } else {
-            val newDataField = generateDataField(structureName, structureSchema)
-            ds.dataFields.add(newDataField)
-        }
+        else
+            structure.dataFields.add(generateDataField(fieldName, structureSchema))
     }
 
-    def addDataFieldsToListStructure(
-        ListType ds, String structureName, Schema structureSchema
-    ) {
-        val newDataField = generateDataField(structureName, structureSchema)
-        ds.dataFields.add(newDataField)
-    }
-
-    def DataField generateDataField(
-        String structureName, Schema structureSchema
-    ) {
-        val newDataField = DATA_FACTORY.createDataField
-        newDataField.name = StringUtils.lowerCase(structureName)
+    private def DataField generateDataField(String name, Schema<?> structureSchema) {
+        val newDataField = dataFactory.createDataField
+        newDataField.name = name
 
         switch (structureSchema.type) {
-            case "integer": {
+            case "array":
+                newDataField.complexType = getOrCreateStructuredListType(targetContext, name,
+                    (structureSchema as ArraySchema).items)
+
+            case "boolean":
+                newDataField.primitiveType = dataFactory.createPrimitiveBoolean
+
+            case "integer":
                 newDataField.primitiveType = OpenApiUtil.deriveIntType(structureSchema.format)
-            }
-            case "number": {
+
+            case "number":
                 newDataField.primitiveType = OpenApiUtil.deriveNumberType(structureSchema.format)
-            }
-            case "string": {
+
+            case "string":
                 newDataField.primitiveType = OpenApiUtil.deriveStringType(structureSchema.format)
-            }
-            case "boolean": {
-                newDataField.primitiveType = DATA_FACTORY.createPrimitiveBoolean
-            }
-            case "array": {
-                val itemSchema = structureSchema as ArraySchema
-                val listStructure = getOrCreateListStructure(
-                    myContext, structureName, itemSchema.items
-                )
-                newDataField.complexType = listStructure
-            }
+
             case null: {
-                // If Attribute is actually a reference...
-                if (structureSchema.get$ref !== null) {
-                    val s = structureSchema.get$ref
-                    val key = s.substring(s.lastIndexOf("/") + 1)
-                    val value = openAPI.components.schemas.get(key)
-                    if (key !== null && value !== null) {
-                        newDataField.complexType = getOrCreateDataStructure(
-                            myContext, key, value
-                        )
-                    }
-                }
+                // Currently, we only support references for this case
+                if (structureSchema.get$ref === null)
+                    throwUnsupportedSchemaType(structureSchema)
+
+                val ref = structureSchema.get$ref
+                val refName = ref.substring(ref.lastIndexOf("/") + 1)
+                val refSchema = openAPI.components.schemas.get(refName)
+                // TODO: What should happen when refName or refSchema is null?
+                if (refName !== null && refSchema !== null)
+                    newDataField.complexType = getOrCreateDataStructure(targetContext, refName,
+                        refSchema)
             }
+
             default:
-                throw new IllegalArgumentException(
-                    "schema type " + structureSchema.type + " not supported"
-                )
+                throwUnsupportedSchemaType(structureSchema)
         }
+
         return newDataField
     }
 
-    def DataStructure findDataStructure(Context context, String name) {
-        val searchName = '''«context.buildQualifiedName(separator)».«name»'''
-        return createdDataStructures.get(searchName)
+    private def throwUnsupportedSchemaType(Schema<?> schema) {
+        throw new IllegalArgumentException('''Schema type «schema.type» not supported''')
     }
 
-    def ListType findListStructure(Context context, String name) {
-        val searchName = '''«context.buildQualifiedName(separator)».«name»'''
-        return createdListStructures.get(searchName)
+    private def getOrCreateStructuredListType(Context context, String name,
+        Schema<?> schema) {
+        val typeName = name.listTypeName
+        val fullyQualifiedTypeName = '''«context.buildQualifiedName(SEP)»«SEP»«typeName»'''
+        val existingType = createdStructuredListTypes.get(fullyQualifiedTypeName)
+        if (existingType !== null) {
+            LOGGER.debug('''Found and reuse existing structured list type «existingType.name»''')
+            return existingType
+        }
+
+        val newType = dataFactory.createListType
+        newType.name = typeName
+        context.complexTypes.add(newType)
+        newType.dataFields.add(generateDataField(name, schema))
+        createdStructuredListTypes.put(fullyQualifiedTypeName, newType)
+        LOGGER.debug('''Created new structured list type «newType.name»''')
+        return newType
+    }
+
+    static def getListTypeName(ArraySchema schema) {
+        schema.type.listTypeName
+    }
+
+    static def getListTypeName(String name) {
+        '''«name.toFirstUpper»List'''.toString
     }
 }
