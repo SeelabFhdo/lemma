@@ -25,7 +25,7 @@ import org.junit.Test;
  */
 @SuppressWarnings("all")
 public class GeneratorsTest {
-  private final String localSchema = new File("test-schemas/openapi.json").toURI().toString();
+  private static final String LOCAL_SCHEMA_PATH = "test-schemas/openapi.json";
   
   private LemmaDataSubGenerator dataGenerator;
   
@@ -40,7 +40,9 @@ public class GeneratorsTest {
     final ParseOptions parseOptions = new ParseOptions();
     parseOptions.setResolve(true);
     parseOptions.setFlatten(true);
-    final SwaggerParseResult result = new OpenAPIParser().readLocation(this.localSchema, null, parseOptions);
+    final SwaggerParseResult result = new OpenAPIParser().readLocation(
+      new File(GeneratorsTest.LOCAL_SCHEMA_PATH).toURI().toString(), 
+      null, parseOptions);
     this.openAPI = result.getOpenAPI();
   }
   

@@ -21,7 +21,8 @@ import de.fhdo.lemma.service.openapi.LemmaServiceSubGenerator
  * @author <a href="mailto:jonas.sorgalla@fh-dortmund.de">Jonas Sorgalla</a>
  */
 class GeneratorsTest {
-    val localSchema = new File("test-schemas/openapi.json").toURI.toString
+    static val LOCAL_SCHEMA_PATH = "test-schemas/openapi.json"
+
     LemmaDataSubGenerator dataGenerator
     LemmaTechnologySubGenerator technologyGenerator
     LemmaServiceSubGenerator serviceGenerator
@@ -33,7 +34,11 @@ class GeneratorsTest {
         val parseOptions = new ParseOptions()
         parseOptions.setResolve(true)
         parseOptions.setFlatten(true)
-        val result = new OpenAPIParser().readLocation(localSchema, null, parseOptions)
+        val result = new OpenAPIParser().readLocation(
+            new File(LOCAL_SCHEMA_PATH).toURI.toString,
+            null,
+            parseOptions
+        )
         openAPI = result.openAPI
     }
 
