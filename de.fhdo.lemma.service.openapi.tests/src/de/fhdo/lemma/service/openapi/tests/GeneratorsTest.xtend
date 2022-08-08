@@ -14,6 +14,7 @@ import java.nio.file.Paths
 import org.junit.BeforeClass
 import org.junit.Before
 import org.apache.commons.io.FileUtils
+import org.junit.AfterClass
 
 /**
  * This class tests the the generation of LEMMA models from an OpenAPI specification file (v3.0.3).
@@ -44,8 +45,17 @@ class GeneratorsTest {
     }
 
     @Before
-    def void removeTestModelBaseFolder() {
+    def void prepareNextTest() {
+        removeTestModelBaseFolder()
+    }
+
+    static def removeTestModelBaseFolder() {
         FileUtils.deleteDirectory(new File(TEST_MODEL_BASEPATH))
+    }
+
+    @AfterClass
+    static def void cleanup() {
+        removeTestModelBaseFolder()
     }
 
     @Test
