@@ -21,13 +21,13 @@ class ValidationTest {
         val parsedSchema = generator.parse(SCHEMA_PATH)
         assertEquals(
                 "Zero errors should be detected while parsing/validating",
-                parsedSchema.get(parsedSchema.length-2),
-                "No errors or warnings encountered!"
+                "No errors or warnings encountered!",
+                parsedSchema.get(parsedSchema.length-2)
             )
         assertNotEquals(
             "Message Object must not be null while parsing",
-            parsedSchema.get(parsedSchema.length-1),
-            "There was an error generating the in-memory model for the given URL"
+            "There was an error generating the in-memory model for the given URL",
+            parsedSchema.get(parsedSchema.length-1)
         )
     }
 }
