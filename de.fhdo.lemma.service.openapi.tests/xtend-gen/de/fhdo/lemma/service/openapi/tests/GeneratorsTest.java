@@ -10,8 +10,11 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.parser.core.models.ParseOptions;
 import java.io.File;
 import java.nio.file.Paths;
+import org.apache.commons.io.FileUtils;
+import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Pair;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -45,10 +48,27 @@ public class GeneratorsTest {
       null, parseOptions).getOpenAPI();
   }
   
+  @Before
+  public void removeTestModelBaseFolder() {
+    try {
+      File _file = new File(GeneratorsTest.TEST_MODEL_BASEPATH);
+      FileUtils.deleteDirectory(_file);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
   @Test
   public void dataTest() {
+    this.assertDataModelDoesNotExist();
     this.generateDataModel();
     this.assertDataModelExists();
+  }
+  
+  private void assertDataModelDoesNotExist() {
+    boolean _exists = GeneratorsTest.DATA_MODEL_FILE.exists();
+    boolean _not = (!_exists);
+    Assert.assertTrue(_not);
   }
   
   private DataModel generateDataModel() {
@@ -62,8 +82,15 @@ public class GeneratorsTest {
   
   @Test
   public void technologyTest() {
+    this.assertTechnologyModelDoesNotExist();
     this.generateTechnologyModel();
     this.assertTechnologyModelExists();
+  }
+  
+  private void assertTechnologyModelDoesNotExist() {
+    boolean _exists = GeneratorsTest.TECHNOLOGY_MODEL_FILE.exists();
+    boolean _not = (!_exists);
+    Assert.assertTrue(_not);
   }
   
   private Technology generateTechnologyModel() {
@@ -77,6 +104,11 @@ public class GeneratorsTest {
   
   @Test
   public void serviceTest() {
+    this.assertDataModelDoesNotExist();
+    this.assertTechnologyModelDoesNotExist();
+    boolean _exists = GeneratorsTest.SERVICE_MODEL_FILE.exists();
+    boolean _not = (!_exists);
+    Assert.assertTrue(_not);
     final DataModel dataModel = this.generateDataModel();
     final Technology technologyModel = this.generateTechnologyModel();
     String _name = GeneratorsTest.DATA_MODEL_FILE.getName();

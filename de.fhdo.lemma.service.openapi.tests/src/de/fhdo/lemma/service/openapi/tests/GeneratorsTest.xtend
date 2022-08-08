@@ -12,6 +12,8 @@ import de.fhdo.lemma.service.openapi.LemmaTechnologySubGenerator
 import de.fhdo.lemma.service.openapi.LemmaServiceSubGenerator
 import java.nio.file.Paths
 import org.junit.BeforeClass
+import org.junit.Before
+import org.apache.commons.io.FileUtils
 
 /**
  * This class tests the the generation of LEMMA models from an OpenAPI specification file (v3.0.3).
@@ -41,10 +43,20 @@ class GeneratorsTest {
             ).openAPI
     }
 
+    @Before
+    def void removeTestModelBaseFolder() {
+        FileUtils.deleteDirectory(new File(TEST_MODEL_BASEPATH))
+    }
+
     @Test
     def void dataTest() {
+        assertDataModelDoesNotExist()
         generateDataModel()
         assertDataModelExists()
+    }
+
+    private def assertDataModelDoesNotExist() {
+        assertTrue(!DATA_MODEL_FILE.exists)
     }
 
     private def generateDataModel() {
@@ -57,8 +69,13 @@ class GeneratorsTest {
 
     @Test
     def void technologyTest() {
+        assertTechnologyModelDoesNotExist()
         generateTechnologyModel()
         assertTechnologyModelExists()
+    }
+
+    private def assertTechnologyModelDoesNotExist() {
+        assertTrue(!TECHNOLOGY_MODEL_FILE.exists)
     }
 
     private def generateTechnologyModel() {
@@ -71,6 +88,10 @@ class GeneratorsTest {
 
     @Test
     def void serviceTest() {
+        assertDataModelDoesNotExist()
+        assertTechnologyModelDoesNotExist()
+        assertTrue(!SERVICE_MODEL_FILE.exists)
+
         val dataModel = generateDataModel()
         val technologyModel = generateTechnologyModel()
         new LemmaServiceSubGenerator(
