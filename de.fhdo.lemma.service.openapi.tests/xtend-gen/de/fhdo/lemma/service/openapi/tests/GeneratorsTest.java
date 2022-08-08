@@ -14,8 +14,6 @@ import org.eclipse.xtext.xbase.lib.Pair;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This class tests the the generation of LEMMA models from
@@ -27,8 +25,6 @@ import org.slf4j.LoggerFactory;
  */
 @SuppressWarnings("all")
 public class GeneratorsTest {
-  private Logger logger;
-  
   private final String localSchema = new File("test-schemas/openapi.json").toURI().toString();
   
   private LemmaDataSubGenerator dataGenerator;
@@ -41,7 +37,6 @@ public class GeneratorsTest {
   
   @Before
   public void setup() throws Exception {
-    this.logger = LoggerFactory.getLogger(ValidationTest.class);
     final ParseOptions parseOptions = new ParseOptions();
     parseOptions.setResolve(true);
     parseOptions.setFlatten(true);
@@ -51,7 +46,6 @@ public class GeneratorsTest {
   
   @Test
   public void dataTest() throws Exception {
-    this.logger.info("Starting generation of LEMMA Data Model...");
     String _property = System.getProperty("user.dir");
     String _plus = (_property + 
       "/test-model-gen/");
@@ -65,7 +59,6 @@ public class GeneratorsTest {
   
   @Test
   public void technologyTest() throws Exception {
-    this.logger.info("Starting generation of LEMMA Technology Model...");
     String _property = System.getProperty("user.dir");
     String _plus = (_property + 
       "/test-model-gen/");
@@ -79,7 +72,6 @@ public class GeneratorsTest {
   
   @Test
   public void serviceTest() throws Exception {
-    this.logger.info("Starting generation of LEMMA Service Model...");
     String _property = System.getProperty("user.dir");
     String _plus = (_property + 
       "/test-model-gen/");
