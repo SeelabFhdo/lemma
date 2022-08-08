@@ -8,6 +8,7 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.parser.core.models.ParseOptions;
 import io.swagger.v3.parser.core.models.SwaggerParseResult;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import org.eclipse.xtend.lib.annotations.AccessorType;
@@ -103,19 +104,22 @@ public class LemmaGenerator {
     boolean _xblockexpression = false;
     {
       this.logger.info("Starting generation of LEMMA Data Model...");
-      final LemmaDataSubGenerator dataGenerator = new LemmaDataSubGenerator(this.openAPI, genPath, dataFilename);
+      final String dataModelPath = Paths.get(genPath, dataFilename).toString();
+      final LemmaDataSubGenerator dataGenerator = new LemmaDataSubGenerator(this.openAPI, dataModelPath);
       DataModel _generate = dataGenerator.generate();
       final Pair<String, DataModel> dataModel = Pair.<String, DataModel>of(dataFilename, _generate);
       this.logger.debug("Adding encountered messages to log.");
       this.transMsgs.addAll(dataGenerator.getTransMsgs());
       this.logger.info("Starting generation of LEMMA Technology Model...");
-      final LemmaTechnologySubGenerator technologyGenerator = new LemmaTechnologySubGenerator(this.openAPI, genPath, techFilename);
+      final String technologyModelPath = Paths.get(genPath, techFilename).toString();
+      final LemmaTechnologySubGenerator technologyGenerator = new LemmaTechnologySubGenerator(this.openAPI, technologyModelPath);
       Technology _generate_1 = technologyGenerator.generate();
       final Pair<String, Technology> techModel = Pair.<String, Technology>of(techFilename, _generate_1);
       this.logger.debug("Adding encountered messages to log.");
       this.transMsgs.addAll(technologyGenerator.getTransMsgs());
       this.logger.info("Starting generation of LEMMA Service Model...");
-      final LemmaServiceSubGenerator serviceGenerator = new LemmaServiceSubGenerator(this.openAPI, dataModel, techModel, genPath, serviceFilename);
+      final String serviceModelPath = Paths.get(genPath, serviceFilename).toString();
+      final LemmaServiceSubGenerator serviceGenerator = new LemmaServiceSubGenerator(this.openAPI, dataModel, techModel, serviceModelPath);
       serviceGenerator.generate(prefixService);
       this.logger.debug("Adding encountered messages to log.");
       _xblockexpression = this.transMsgs.addAll(serviceGenerator.getTransMsgs());
@@ -183,9 +187,10 @@ public class LemmaGenerator {
       _builder_2.newLine();
       {
         for(final String msg : parsingMessages) {
-          _builder_2.append(msg);
+          _builder_2.append("            ");
+          _builder_2.append(msg, "            ");
           _builder_2.newLineIfNotEmpty();
-          _builder_2.append("\t\t\t");
+          _builder_2.append("            ");
         }
       }
       _builder_2.append(" END");
@@ -211,9 +216,10 @@ public class LemmaGenerator {
       _builder_7.newLine();
       {
         for(final String msg_1 : generator.transMsgs) {
-          _builder_7.append(msg_1);
+          _builder_7.append("            ");
+          _builder_7.append(msg_1, "            ");
           _builder_7.newLineIfNotEmpty();
-          _builder_7.append("\t\t\t");
+          _builder_7.append("            ");
         }
       }
       _builder_7.append(" END");

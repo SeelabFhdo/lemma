@@ -10,6 +10,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import java.net.MalformedURLException
 import java.net.URL
 import de.fhdo.lemma.service.openapi.exceptions.ParsingException
+import java.nio.file.Paths
 
 /**
  * This class is the central entry point for the generation of LEMMA models from
@@ -67,20 +68,23 @@ class LemmaGenerator {
         String techFilename,  String prefixService
     ) {
         logger.info("Starting generation of LEMMA Data Model...")
-        val dataGenerator = new LemmaDataSubGenerator(openAPI, genPath, dataFilename)
+        val dataModelPath = Paths.get(genPath, dataFilename).toString
+        val dataGenerator = new LemmaDataSubGenerator(openAPI, dataModelPath)
         val dataModel = dataFilename -> dataGenerator.generate
         logger.debug("Adding encountered messages to log.")
         transMsgs.addAll(dataGenerator.transMsgs)
 
         logger.info("Starting generation of LEMMA Technology Model...")
-        val technologyGenerator = new LemmaTechnologySubGenerator(openAPI, genPath, techFilename)
+        val technologyModelPath = Paths.get(genPath, techFilename).toString
+        val technologyGenerator = new LemmaTechnologySubGenerator(openAPI, technologyModelPath)
         val techModel = techFilename -> technologyGenerator.generate
         logger.debug("Adding encountered messages to log.")
         transMsgs.addAll(technologyGenerator.transMsgs)
 
         logger.info("Starting generation of LEMMA Service Model...")
-        val serviceGenerator =
-            new LemmaServiceSubGenerator(openAPI, dataModel, techModel, genPath, serviceFilename)
+        val serviceModelPath = Paths.get(genPath, serviceFilename).toString
+        val serviceGenerator = new LemmaServiceSubGenerator(openAPI, dataModel, techModel,
+            serviceModelPath)
         serviceGenerator.generate(prefixService)
         logger.debug("Adding encountered messages to log.")
         transMsgs.addAll(serviceGenerator.transMsgs)
@@ -100,48 +104,48 @@ class LemmaGenerator {
      * <li><i>techFilename</i> - Name for the generated LEMMA Technology Model.</li>
      * <li><i>prefixService</i> - Prefix for the package of
      * the service model, (e.g. my.example.package)</li>
-	 * </ul>
+     * </ul>
      */
-	def static void main(String[] args) {
+    def static void main(String[] args) {
         val generator = new LemmaGenerator()
-		generator.logger.info("Starting direct invocation of OpenAPI2LEMMA Generator.")
-		generator.logger.info("Checking parameters...")
-		if(args.length != 6)
-			throw new IllegalArgumentException("Number of parameters insufficient.")
+        generator.logger.info("Starting direct invocation of OpenAPI2LEMMA Generator.")
+        generator.logger.info("Checking parameters...")
+        if(args.length != 6)
+            throw new IllegalArgumentException("Number of parameters insufficient.")
 
-		//throws MalformedURLException if it cannot be parsed into URL
-		val fetchUrl = new URL(args.get(0))
-		val targetLoc = args.get(1)
-		val dataName = args.get(2)
-		val servName = args.get(3)
-		val techName = args.get(4)
-		val servPre = args.get(5)
+        //throws MalformedURLException if it cannot be parsed into URL
+        val fetchUrl = new URL(args.get(0))
+        val targetLoc = args.get(1)
+        val dataName = args.get(2)
+        val servName = args.get(3)
+        val techName = args.get(4)
+        val servPre = args.get(5)
 
         if(targetLoc.trim.isEmpty || dataName.trim.isEmpty ||
             servName.trim.isEmpty || techName.trim.isEmpty ||
             servPre.trim.isEmpty
         )
-			throw new IllegalArgumentException("Empty parameters encountered.")
-		generator.logger.info("Parameter check successful.")
+            throw new IllegalArgumentException("Empty parameters encountered.")
+        generator.logger.info("Parameter check successful.")
 
-		generator.logger.info("Parsing the OpenAPI file...")
+        generator.logger.info("Parsing the OpenAPI file...")
         val parsingMessages = generator.parse(fetchUrl.toString)
         if(!generator.isParsed)
-        	throw new ParsingException('''It was not possible to generate an in-memory '''+
-			'''representation of the file located at «fetchUrl.toString» .''')
-		generator.logger.info('''Encountered messages during parsing (empty if none):
-        	«FOR msg : parsingMessages»
-				«msg»
-			«ENDFOR» END''')
-		generator.logger.info("In-memory representation of OpenAPI model loaded.")
+            throw new ParsingException('''It was not possible to generate an in-memory '''+
+            '''representation of the file located at «fetchUrl.toString» .''')
+        generator.logger.info('''Encountered messages during parsing (empty if none):
+            «FOR msg : parsingMessages»
+                «msg»
+            «ENDFOR» END''')
+        generator.logger.info("In-memory representation of OpenAPI model loaded.")
 
-		generator.logger.info("Starting LEMMA model generation procedure...")
+        generator.logger.info("Starting LEMMA model generation procedure...")
         generator.generateModels('''«targetLoc»/''', '''«dataName».data''',
-			'''«servName».services''','''«techName».technology''', servPre)
-		generator.logger.info("The transformation was a success!")
-		generator.logger.info('''Encountered problems during transformation (empty if none):
-        	«FOR msg : generator.transMsgs»
-				«msg»
-			«ENDFOR» END''')
-	}
+            '''«servName».services''','''«techName».technology''', servPre)
+        generator.logger.info("The transformation was a success!")
+        generator.logger.info('''Encountered problems during transformation (empty if none):
+            «FOR msg : generator.transMsgs»
+                «msg»
+            «ENDFOR» END''')
+    }
 }

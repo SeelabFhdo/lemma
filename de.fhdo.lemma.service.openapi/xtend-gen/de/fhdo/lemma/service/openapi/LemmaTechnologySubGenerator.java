@@ -77,18 +77,18 @@ public class LemmaTechnologySubGenerator {
   /**
    * Location where the generated file is written
    */
-  private String targetFolder;
+  private String targetFile;
   
   /**
    * List of all unique media types.
    */
   private final HashSet<String> mediaTypes = CollectionLiterals.<String>newHashSet();
   
-  public LemmaTechnologySubGenerator(final OpenAPI api, final String genPath, final String techFilename) {
+  public LemmaTechnologySubGenerator(final OpenAPI api, final String targetFile) {
     super();
     LemmaTechnologySubGenerator.logger.debug("Creating new Technology Sub Generator...");
     this.openApi = api;
-    this.targetFolder = (genPath + techFilename);
+    this.targetFile = targetFile;
   }
   
   public Technology generate() {
@@ -100,12 +100,12 @@ public class LemmaTechnologySubGenerator {
       LemmaTechnologySubGenerator.logger.debug("Creating protocols...");
       this.createProtocols();
       LemmaTechnologySubGenerator.logger.debug("...Data Structures created!");
-      boolean _writeModel = OpenApiUtil.writeModel(this.myTechModel, this.targetFolder);
+      boolean _writeModel = OpenApiUtil.writeModel(this.myTechModel, this.targetFile);
       if (_writeModel) {
         LemmaTechnologySubGenerator.logger.info("Technology model generation successful!");
         StringConcatenation _builder = new StringConcatenation();
         _builder.append("Model written to ");
-        _builder.append(this.targetFolder);
+        _builder.append(this.targetFile);
         LemmaTechnologySubGenerator.logger.info(_builder.toString());
       } else {
         throw new Exception("Technology model generation failed :(");

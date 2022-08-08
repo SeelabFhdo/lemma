@@ -85,13 +85,13 @@ public class LemmaDataSubGenerator {
   /**
    * Location where the generated file is written
    */
-  private final String targetFolder;
+  private final String targetFile;
   
-  public LemmaDataSubGenerator(final OpenAPI openAPI, final String genPath, final String dataFilename) {
+  public LemmaDataSubGenerator(final OpenAPI openAPI, final String targetFile) {
     super();
     LemmaDataSubGenerator.logger.debug("Creating new Data Sub Generator...");
     this.openAPI = openAPI;
-    this.targetFolder = (genPath + dataFilename);
+    this.targetFile = targetFile;
   }
   
   public DataModel generate() {
@@ -133,12 +133,12 @@ public class LemmaDataSubGenerator {
         _schemas.forEach(_function);
       }
       LemmaDataSubGenerator.logger.debug("...data structures created!");
-      boolean _writeModel = OpenApiUtil.writeModel(this.myDataModel, this.targetFolder);
+      boolean _writeModel = OpenApiUtil.writeModel(this.myDataModel, this.targetFile);
       if (_writeModel) {
         LemmaDataSubGenerator.logger.info("Data model generation successful!");
         StringConcatenation _builder = new StringConcatenation();
         _builder.append("Model written to ");
-        _builder.append(this.targetFolder);
+        _builder.append(this.targetFile);
         LemmaDataSubGenerator.logger.info(_builder.toString());
       } else {
         throw new Exception("Data model generation failed.");
