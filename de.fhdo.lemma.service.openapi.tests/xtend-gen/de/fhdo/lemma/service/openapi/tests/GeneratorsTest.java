@@ -13,6 +13,7 @@ import java.nio.file.Paths;
 import org.apache.commons.io.FileUtils;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Pair;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -49,13 +50,22 @@ public class GeneratorsTest {
   }
   
   @Before
-  public void removeTestModelBaseFolder() {
+  public void prepareNextTest() {
+    GeneratorsTest.removeTestModelBaseFolder();
+  }
+  
+  public static void removeTestModelBaseFolder() {
     try {
       File _file = new File(GeneratorsTest.TEST_MODEL_BASEPATH);
       FileUtils.deleteDirectory(_file);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
+  }
+  
+  @AfterClass
+  public static void cleanup() {
+    GeneratorsTest.removeTestModelBaseFolder();
   }
   
   @Test
