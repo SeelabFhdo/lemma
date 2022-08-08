@@ -25,29 +25,35 @@ class TechnologyDslExtractor {
     def extractToString(Technology techModel) {
         val types = if (!techModel.primitiveTypes.isNullOrEmpty) {
             // Currently only supports primitiveTypes for generation
-            '''types {
+            '''
+            types {
                 «FOR pt : techModel.primitiveTypes SEPARATOR LINE_SEP»«pt.extractToString»«ENDFOR»
             }
             '''
         }
 
         val protocols = if (!techModel.protocols.isNullOrEmpty) {
-            '''protocols {
+            '''
+            protocols {
                 «FOR pr : techModel.protocols SEPARATOR LINE_SEP»«pr.extractToString»«ENDFOR»
             }
             '''
         }
 
         val aspects = if (!techModel.serviceAspects.isNullOrEmpty) {
-            '''service aspects {
+            '''
+            service aspects {
                 «FOR sa : techModel.serviceAspects SEPARATOR LINE_SEP»«sa.extractToString»«ENDFOR»
             }
             '''
         }
 
-        '''technology «techModel.name» {
+        '''
+        technology «techModel.name» {
             «types»
+            «IF !types.empty»«"\n"»«ENDIF»
             «protocols»
+            «IF !protocols.empty»«"\n"»«ENDIF»
             «aspects»
         }
         '''.toString
