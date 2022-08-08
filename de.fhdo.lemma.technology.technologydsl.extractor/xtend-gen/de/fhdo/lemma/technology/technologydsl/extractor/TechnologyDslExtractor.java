@@ -38,7 +38,7 @@ public class TechnologyDslExtractor {
         StringConcatenation _builder = new StringConcatenation();
         _builder.append("types {");
         _builder.newLine();
-        _builder.append("                ");
+        _builder.append("    ");
         {
           EList<TechnologySpecificPrimitiveType> _primitiveTypes = techModel.getPrimitiveTypes();
           boolean _hasElements = false;
@@ -46,14 +46,13 @@ public class TechnologyDslExtractor {
             if (!_hasElements) {
               _hasElements = true;
             } else {
-              _builder.appendImmediate(TechnologyDslExtractor.LINE_SEP, "                ");
+              _builder.appendImmediate(TechnologyDslExtractor.LINE_SEP, "    ");
             }
             CharSequence _extractToString = this.extractToString(pt);
-            _builder.append(_extractToString, "                ");
+            _builder.append(_extractToString, "    ");
           }
         }
         _builder.newLineIfNotEmpty();
-        _builder.append("            ");
         _builder.append("}");
         _builder.newLine();
         _xifexpression = _builder.toString();
@@ -66,7 +65,7 @@ public class TechnologyDslExtractor {
         StringConcatenation _builder_1 = new StringConcatenation();
         _builder_1.append("protocols {");
         _builder_1.newLine();
-        _builder_1.append("                ");
+        _builder_1.append("    ");
         {
           EList<Protocol> _protocols = techModel.getProtocols();
           boolean _hasElements_1 = false;
@@ -74,14 +73,13 @@ public class TechnologyDslExtractor {
             if (!_hasElements_1) {
               _hasElements_1 = true;
             } else {
-              _builder_1.appendImmediate(TechnologyDslExtractor.LINE_SEP, "                ");
+              _builder_1.appendImmediate(TechnologyDslExtractor.LINE_SEP, "    ");
             }
             CharSequence _extractToString_1 = this.extractToString(pr);
-            _builder_1.append(_extractToString_1, "                ");
+            _builder_1.append(_extractToString_1, "    ");
           }
         }
         _builder_1.newLineIfNotEmpty();
-        _builder_1.append("            ");
         _builder_1.append("}");
         _builder_1.newLine();
         _xifexpression_1 = _builder_1.toString();
@@ -94,7 +92,7 @@ public class TechnologyDslExtractor {
         StringConcatenation _builder_2 = new StringConcatenation();
         _builder_2.append("service aspects {");
         _builder_2.newLine();
-        _builder_2.append("                ");
+        _builder_2.append("    ");
         {
           EList<ServiceAspect> _serviceAspects = techModel.getServiceAspects();
           boolean _hasElements_2 = false;
@@ -102,14 +100,13 @@ public class TechnologyDslExtractor {
             if (!_hasElements_2) {
               _hasElements_2 = true;
             } else {
-              _builder_2.appendImmediate(TechnologyDslExtractor.LINE_SEP, "                ");
+              _builder_2.appendImmediate(TechnologyDslExtractor.LINE_SEP, "    ");
             }
             CharSequence _extractToString_2 = this.extractToString(sa);
-            _builder_2.append(_extractToString_2, "                ");
+            _builder_2.append(_extractToString_2, "    ");
           }
         }
         _builder_2.newLineIfNotEmpty();
-        _builder_2.append("            ");
         _builder_2.append("}");
         _builder_2.newLine();
         _xifexpression_2 = _builder_2.toString();
@@ -121,16 +118,33 @@ public class TechnologyDslExtractor {
       _builder_3.append(_name);
       _builder_3.append(" {");
       _builder_3.newLineIfNotEmpty();
-      _builder_3.append("            ");
-      _builder_3.append(types, "            ");
+      _builder_3.append("    ");
+      _builder_3.append(types, "    ");
       _builder_3.newLineIfNotEmpty();
-      _builder_3.append("            ");
-      _builder_3.append(protocols, "            ");
+      _builder_3.append("    ");
+      {
+        boolean _isEmpty = types.isEmpty();
+        boolean _not_3 = (!_isEmpty);
+        if (_not_3) {
+          _builder_3.append("\n", "    ");
+        }
+      }
       _builder_3.newLineIfNotEmpty();
-      _builder_3.append("            ");
-      _builder_3.append(aspects, "            ");
+      _builder_3.append("    ");
+      _builder_3.append(protocols, "    ");
       _builder_3.newLineIfNotEmpty();
-      _builder_3.append("        ");
+      _builder_3.append("    ");
+      {
+        boolean _isEmpty_1 = protocols.isEmpty();
+        boolean _not_4 = (!_isEmpty_1);
+        if (_not_4) {
+          _builder_3.append("\n", "    ");
+        }
+      }
+      _builder_3.newLineIfNotEmpty();
+      _builder_3.append("    ");
+      _builder_3.append(aspects, "    ");
+      _builder_3.newLineIfNotEmpty();
       _builder_3.append("}");
       _builder_3.newLine();
       _xblockexpression = _builder_3.toString();
