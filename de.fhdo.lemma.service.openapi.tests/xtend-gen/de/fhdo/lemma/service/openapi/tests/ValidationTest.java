@@ -24,13 +24,13 @@ public class ValidationTest {
     int _minus = (_length - 2);
     Assert.assertEquals(
       "Zero errors should be detected while parsing/validating", 
-      parsedSchema.get(_minus), 
-      "No errors or warnings encountered!");
+      "No errors or warnings encountered!", 
+      parsedSchema.get(_minus));
     int _length_1 = ((Object[])Conversions.unwrapArray(parsedSchema, Object.class)).length;
     int _minus_1 = (_length_1 - 1);
     Assert.assertNotEquals(
       "Message Object must not be null while parsing", 
-      parsedSchema.get(_minus_1), 
-      "There was an error generating the in-memory model for the given URL");
+      "There was an error generating the in-memory model for the given URL", 
+      parsedSchema.get(_minus_1));
   }
 }
