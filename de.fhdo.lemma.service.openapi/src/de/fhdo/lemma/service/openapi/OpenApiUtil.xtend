@@ -11,6 +11,7 @@ import de.fhdo.lemma.technology.Technology
 import de.fhdo.lemma.technology.technologydsl.extractor.TechnologyDslExtractor
 import de.fhdo.lemma.data.DataFactory
 import de.fhdo.lemma.data.PrimitiveType
+import java.io.File
 
 /**
  * This class collects _static_ utility methods for the OpenAPI plugin.
@@ -50,9 +51,11 @@ final class OpenApiUtil {
      * are not empty.
      */
     static def boolean writeFile(String filepath, String content) {
-        if (filepath.nullOrEmpty || content.nullOrEmpty) {
+        if (filepath.nullOrEmpty || content.nullOrEmpty)
             return false
-        }
+
+        // Create potentially missing parent folders before trying to write the file
+        new File(filepath).parentFile.mkdirs()
 
         Files.write(Paths.get(filepath), content.bytes)
         return true

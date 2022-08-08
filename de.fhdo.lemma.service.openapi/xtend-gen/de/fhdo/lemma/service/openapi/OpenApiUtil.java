@@ -8,6 +8,7 @@ import de.fhdo.lemma.service.ServiceModel;
 import de.fhdo.lemma.servicedsl.extractor.ServiceDslExtractor;
 import de.fhdo.lemma.technology.Technology;
 import de.fhdo.lemma.technology.technologydsl.extractor.TechnologyDslExtractor;
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import org.eclipse.emf.ecore.EObject;
@@ -77,6 +78,7 @@ public final class OpenApiUtil {
       if ((StringExtensions.isNullOrEmpty(filepath) || StringExtensions.isNullOrEmpty(content))) {
         return false;
       }
+      new File(filepath).getParentFile().mkdirs();
       Files.write(Paths.get(filepath), content.getBytes());
       return true;
     } catch (Throwable _e) {
