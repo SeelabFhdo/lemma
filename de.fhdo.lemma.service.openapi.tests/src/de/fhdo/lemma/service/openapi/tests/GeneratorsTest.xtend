@@ -13,65 +13,76 @@ import de.fhdo.lemma.service.openapi.LemmaTechnologySubGenerator
 import de.fhdo.lemma.service.openapi.LemmaServiceSubGenerator
 
 /**
- * This class tests the the generation of LEMMA models from
- * an OpenAPI specification file (v3.0.3).
- * It provides one test for each subgenerator of the openapi-bundle.
- * @see <a href="https://www.openapis.org/">https://www.openapis.org/</a>
+ * This class tests the the generation of LEMMA models from an OpenAPI specification file (v3.0.3).
+ * The class provides one test for each sub-generator of the OpenAPI-bundle.
  *
  * @author <a href="mailto:jonas.sorgalla@fh-dortmund.de">Jonas Sorgalla</a>
  */
 class GeneratorsTest {
+    static val DATA_MODEL_FILE = new File(System.getProperty("user.dir") +
+        "/test-model-gen/test.data")
     static val LOCAL_SCHEMA_PATH = "test-schemas/openapi.json"
+    static val SERVICE_MODEL_FILE = new File(System.getProperty("user.dir") +
+        "/test-model-gen/test.service")
+    static val TECHNOLOGY_MODEL_FILE = new File(System.getProperty("user.dir") +
+        "/test-model-gen/test.technology")
 
-    LemmaDataSubGenerator dataGenerator
-    LemmaTechnologySubGenerator technologyGenerator
-    LemmaServiceSubGenerator serviceGenerator
-    OpenAPI openAPI
+    OpenAPI parsedSchema
 
     @Before
-    def void setup() throws Exception {
-        // Retrieval of parsed openapi
+    def void setup() {
         val parseOptions = new ParseOptions()
         parseOptions.setResolve(true)
         parseOptions.setFlatten(true)
-        val result = new OpenAPIParser().readLocation(
-            new File(LOCAL_SCHEMA_PATH).toURI.toString,
-            null,
-            parseOptions
-        )
-        openAPI = result.openAPI
+
+        parsedSchema = new OpenAPIParser().readLocation(
+                new File(LOCAL_SCHEMA_PATH).toURI.toString,
+                null,
+                parseOptions
+            ).openAPI
     }
 
     @Test
-    def void dataTest() throws Exception {
-        dataGenerator= new LemmaDataSubGenerator(openAPI, System.getProperty("user.dir")+
-          "/test-model-gen/", "test.data")
-        dataGenerator.generate
-        assertTrue(new File(System.getProperty("user.dir")+"/test-model-gen/test.data").exists)
+    def void dataTest() {
+        generateDataModel()
+        assertDataModelExists()
+    }
+
+    private def generateDataModel() {
+        return new LemmaDataSubGenerator(parsedSchema, DATA_MODEL_FILE.path).generate
+    }
+
+    private def assertDataModelExists() {
+        assertTrue(DATA_MODEL_FILE.exists)
     }
 
     @Test
-    def void technologyTest() throws Exception {
-        technologyGenerator= new LemmaTechnologySubGenerator(openAPI, System.getProperty("user.dir")+
-          "/test-model-gen/", "test.technology")
-        technologyGenerator.generate
-        assertTrue(new File(System.getProperty("user.dir")+"/test-model-gen/test.technology").exists)
+    def void technologyTest() {
+        generateTechnologyModel()
+        assertTechnologyModelExists()
+    }
+
+    private def generateTechnologyModel() {
+        return new LemmaTechnologySubGenerator(parsedSchema, TECHNOLOGY_MODEL_FILE.path).generate
+    }
+
+    private def assertTechnologyModelExists() {
+        assertTrue(TECHNOLOGY_MODEL_FILE.exists)
     }
 
     @Test
-    def void serviceTest() throws Exception {
-        dataGenerator= new LemmaDataSubGenerator(openAPI, System.getProperty("user.dir")+
-          "/test-model-gen/", "test.data")
-        val dataModel = "test.data" -> dataGenerator.generate
+    def void serviceTest() {
+        val dataModel = generateDataModel()
+        val technologyModel = generateTechnologyModel()
+        new LemmaServiceSubGenerator(
+                parsedSchema,
+                DATA_MODEL_FILE.name -> dataModel,
+                TECHNOLOGY_MODEL_FILE.name -> technologyModel,
+                SERVICE_MODEL_FILE.path
+            ).generate("test")
 
-        technologyGenerator= new LemmaTechnologySubGenerator(openAPI, System.getProperty("user.dir")+
-          "/test-model-gen/", "test.technology")
-        val techModel = "test.technology" -> technologyGenerator.generate
-
-        serviceGenerator = new LemmaServiceSubGenerator(openAPI, dataModel, techModel,
-            System.getProperty("user.dir")+"/test-model-gen/", "test.service")
-        serviceGenerator.generate("test")
-
-        assertTrue(new File(System.getProperty("user.dir")+"/test-model-gen/test.service").exists)
+        assertDataModelExists()
+        assertTechnologyModelExists()
+        assertTrue(SERVICE_MODEL_FILE.exists)
     }
 }

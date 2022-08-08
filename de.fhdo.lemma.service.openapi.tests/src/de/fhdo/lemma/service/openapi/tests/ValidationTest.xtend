@@ -1,37 +1,33 @@
 package de.fhdo.lemma.service.openapi.tests
 
 import static org.junit.Assert.assertEquals
-import static org.junit.Assert.assertTrue
 import static org.junit.Assert.assertNotEquals
 
 import org.junit.Test
 import de.fhdo.lemma.service.openapi.LemmaGenerator
 
 /**
- * This class tests the the generation of LEMMA models from
- * an OpenAPI specification file (v3.0.3).
- * @see <a href="https://www.openapis.org/">https://www.openapis.org/</a>
+ * This class tests the the generation of LEMMA models from an OpenAPI specification file (v3.0.3).
  *
+ * @see <a href="https://www.openapis.org/">https://www.openapis.org/</a>
  * @author <a href="mailto:jonas.sorgalla@fh-dortmund.de">Jonas Sorgalla</a>
  */
 class ValidationTest {
-    val schemaLocation = "https://petstore3.swagger.io/api/v3/openapi.json"
+    static val SCHEMA_PATH = "https://petstore3.swagger.io/api/v3/openapi.json"
 
     @Test
-    def void schemaShouldHaveNoErrors() {
+    def void schemaShouldNotHaveErrors() {
         val generator = new LemmaGenerator()
-        val parRes = generator.parse(schemaLocation)
-        assertEquals("Zero errors should be detected while parsing/validating",
-            parRes.get(parRes.length-2), "No errors or warnings encountered!"
+        val parsedSchema = generator.parse(SCHEMA_PATH)
+        assertEquals(
+                "Zero errors should be detected while parsing/validating",
+                parsedSchema.get(parsedSchema.length-2),
+                "No errors or warnings encountered!"
+            )
+        assertNotEquals(
+            "Message Object must not be null while parsing",
+            parsedSchema.get(parsedSchema.length-1),
+            "There was an error generating the in-memory model for the given URL"
         )
-        assertNotEquals("Message Object must not be null while parsing",
-            parRes.get(parRes.length-1), "There was an error generating the" +
-            "in memory model for the given URL :("
-        )
-    }
-
-    @Test
-    def void testShouldBeTrue() {
-        assertTrue(true)
     }
 }
