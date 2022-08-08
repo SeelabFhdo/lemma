@@ -121,16 +121,20 @@ public class ServiceDslExtractor {
           _builder.append("Type ");
           ImportType _importType_1 = import_.getImportType();
           _builder.append(_importType_1);
-          _builder.append(" is not supported.");
-          throw new IllegalArgumentException(_builder.toString());
+          _builder.append(" is not ");
+          String _plus = (_builder.toString() + 
+            "supported");
+          throw new IllegalArgumentException(_plus);
       }
     } else {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("Type ");
       ImportType _importType_1 = import_.getImportType();
       _builder.append(_importType_1);
-      _builder.append(" is not supported.");
-      throw new IllegalArgumentException(_builder.toString());
+      _builder.append(" is not ");
+      String _plus = (_builder.toString() + 
+        "supported");
+      throw new IllegalArgumentException(_plus);
     }
     final String importTypeKeyword = _switchResult;
     boolean _equals = Objects.equal(importTypeKeyword, "technology");
@@ -679,8 +683,10 @@ public class ServiceDslExtractor {
       _builder.append("Type ");
       String _simpleName = type.getClass().getSimpleName();
       _builder.append(_simpleName);
-      _builder.append(" is not supported.");
-      throw new IllegalArgumentException(_builder.toString());
+      _builder.append(" is not ");
+      String _plus = (_builder.toString() + 
+        "supported");
+      throw new IllegalArgumentException(_plus);
     }
     return _switchResult;
   }

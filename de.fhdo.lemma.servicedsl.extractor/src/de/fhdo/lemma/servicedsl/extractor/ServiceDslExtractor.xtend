@@ -55,10 +55,12 @@ class ServiceDslExtractor {
             case DATATYPES: "datatypes"
             case MICROSERVICES: "microservices"
             case TECHNOLOGY: "technology"
-            default: throw new IllegalArgumentException(
-                '''Type «^import.importType» is not supported.''')
+            default:
+                throw new IllegalArgumentException('''Type «^import.importType» is not ''' +
+                    "supported")
         }
-        // If it is a technology add it to the names list for later use in the generation
+
+        // If it is a technology, add it to the names list for later use in the generation
         if (importTypeKeyword == "technology")
             importedTechnologyAliases.add(^import.name)
 
@@ -133,8 +135,6 @@ class ServiceDslExtractor {
      * Extract Endpoint
      */
     private def generate(Endpoint endpoint) {
-        // Formatting is kinda ugly because otherwise xtend's string
-        // templates have additional not intended linebreaks
         '''«FOR ep: endpoint.protocols SEPARATOR '; '»
             «ep.importedProtocol.generate»:«
         ENDFOR
@@ -181,8 +181,6 @@ class ServiceDslExtractor {
      * Extract Parameter
      */
     private def generate(Parameter parameter) {
-        // Formatting is kinda ugly because otherwise xtend's string
-        // templates have additional not intended linebreaks
         '''«FOR a : parameter.aspects SEPARATOR ' '»«a.generate»«ENDFOR
         » «parameter.communicationType.generate» «parameter.exchangePattern.generate» «
         parameter.name» : «parameter.generateType
@@ -260,12 +258,12 @@ class ServiceDslExtractor {
      */
     private def generate(ImportedType importedType) {
         val type = importedType.type
-       return switch(type) {
-               PrimitiveType: '''«importedType.import.name»::«type.typeName»'''
-               ComplexType: '''«importedType.import.name»::«type.buildQualifiedName(".")»'''
-               default: throw new
-                   IllegalArgumentException('''Type «type.class.simpleName» is not supported.''')
+        return switch(type) {
+            PrimitiveType: '''«importedType.import.name»::«type.typeName»'''
+            ComplexType: '''«importedType.import.name»::«type.buildQualifiedName(".")»'''
+            default:
+                throw new IllegalArgumentException('''Type «type.class.simpleName» is not ''' +
+                    "supported")
        }
     }
-
 }
