@@ -73,17 +73,27 @@ public final class OpenApiUtil {
    * Write string contents to the given file path. Returns true if the file path and the contents
    * are not empty.
    */
-  public static boolean writeFile(final String filepath, final String content) {
-    try {
-      if ((StringExtensions.isNullOrEmpty(filepath) || StringExtensions.isNullOrEmpty(content))) {
-        return false;
-      }
-      new File(filepath).getParentFile().mkdirs();
-      Files.write(Paths.get(filepath), content.getBytes());
-      return true;
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
+  private static boolean writeFile(final String filepath, final String content) {
+    if ((StringExtensions.isNullOrEmpty(filepath) || StringExtensions.isNullOrEmpty(content))) {
+      return false;
     }
+    boolean _xtrycatchfinallyexpression = false;
+    try {
+      boolean _xblockexpression = false;
+      {
+        new File(filepath).getParentFile().mkdirs();
+        Files.write(Paths.get(filepath), content.getBytes());
+        _xblockexpression = true;
+      }
+      _xtrycatchfinallyexpression = _xblockexpression;
+    } catch (final Throwable _t) {
+      if (_t instanceof Exception) {
+        _xtrycatchfinallyexpression = false;
+      } else {
+        throw Exceptions.sneakyThrow(_t);
+      }
+    }
+    return _xtrycatchfinallyexpression;
   }
   
   public static PrimitiveType deriveIntType(final String typeDesc) {

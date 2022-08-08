@@ -50,15 +50,18 @@ final class OpenApiUtil {
      * Write string contents to the given file path. Returns true if the file path and the contents
      * are not empty.
      */
-    static def boolean writeFile(String filepath, String content) {
+    private static def boolean writeFile(String filepath, String content) {
         if (filepath.nullOrEmpty || content.nullOrEmpty)
             return false
 
-        // Create potentially missing parent folders before trying to write the file
-        new File(filepath).parentFile.mkdirs()
-
-        Files.write(Paths.get(filepath), content.bytes)
-        return true
+        return try {
+            // Create potentially missing parent folders before trying to write the file
+            new File(filepath).parentFile.mkdirs()
+            Files.write(Paths.get(filepath), content.bytes)
+            true
+        } catch (Exception ex) {
+            false
+        }
     }
 
     def static PrimitiveType deriveIntType(String typeDesc) {
