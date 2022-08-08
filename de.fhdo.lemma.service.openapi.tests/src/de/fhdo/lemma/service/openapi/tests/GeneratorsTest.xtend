@@ -2,7 +2,6 @@ package de.fhdo.lemma.service.openapi.tests
 
 import static org.junit.Assert.assertTrue
 
-import org.junit.Before
 import de.fhdo.lemma.service.openapi.LemmaDataSubGenerator
 import org.junit.Test
 import io.swagger.v3.oas.models.OpenAPI
@@ -12,6 +11,7 @@ import java.io.File
 import de.fhdo.lemma.service.openapi.LemmaTechnologySubGenerator
 import de.fhdo.lemma.service.openapi.LemmaServiceSubGenerator
 import java.nio.file.Paths
+import org.junit.BeforeClass
 
 /**
  * This class tests the the generation of LEMMA models from an OpenAPI specification file (v3.0.3).
@@ -26,11 +26,10 @@ class GeneratorsTest {
     static val LOCAL_SCHEMA_PATH = Paths.get("test-schemas", "openapi.json").toString
     static val SERVICE_MODEL_FILE = Paths.get(TEST_MODEL_BASEPATH, "test.service").toFile
     static val TECHNOLOGY_MODEL_FILE = Paths.get(TEST_MODEL_BASEPATH, "test.technology").toFile
+    static OpenAPI parsedSchema
 
-    OpenAPI parsedSchema
-
-    @Before
-    def void setup() {
+    @BeforeClass
+    static def void setup() {
         val parseOptions = new ParseOptions()
         parseOptions.setResolve(true)
         parseOptions.setFlatten(true)

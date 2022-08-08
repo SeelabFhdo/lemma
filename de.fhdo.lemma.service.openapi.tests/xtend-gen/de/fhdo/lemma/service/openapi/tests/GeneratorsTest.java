@@ -12,7 +12,7 @@ import java.io.File;
 import java.nio.file.Paths;
 import org.eclipse.xtext.xbase.lib.Pair;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -33,14 +33,14 @@ public class GeneratorsTest {
   
   private static final File TECHNOLOGY_MODEL_FILE = Paths.get(GeneratorsTest.TEST_MODEL_BASEPATH, "test.technology").toFile();
   
-  private OpenAPI parsedSchema;
+  private static OpenAPI parsedSchema;
   
-  @Before
-  public void setup() {
+  @BeforeClass
+  public static void setup() {
     final ParseOptions parseOptions = new ParseOptions();
     parseOptions.setResolve(true);
     parseOptions.setFlatten(true);
-    this.parsedSchema = new OpenAPIParser().readLocation(
+    GeneratorsTest.parsedSchema = new OpenAPIParser().readLocation(
       new File(GeneratorsTest.LOCAL_SCHEMA_PATH).toURI().toString(), 
       null, parseOptions).getOpenAPI();
   }
@@ -53,7 +53,7 @@ public class GeneratorsTest {
   
   private DataModel generateDataModel() {
     String _path = GeneratorsTest.DATA_MODEL_FILE.getPath();
-    return new LemmaDataSubGenerator(this.parsedSchema, _path).generate();
+    return new LemmaDataSubGenerator(GeneratorsTest.parsedSchema, _path).generate();
   }
   
   private void assertDataModelExists() {
@@ -68,7 +68,7 @@ public class GeneratorsTest {
   
   private Technology generateTechnologyModel() {
     String _path = GeneratorsTest.TECHNOLOGY_MODEL_FILE.getPath();
-    return new LemmaTechnologySubGenerator(this.parsedSchema, _path).generate();
+    return new LemmaTechnologySubGenerator(GeneratorsTest.parsedSchema, _path).generate();
   }
   
   private void assertTechnologyModelExists() {
@@ -85,7 +85,7 @@ public class GeneratorsTest {
     Pair<String, Technology> _mappedTo_1 = Pair.<String, Technology>of(_name_1, technologyModel);
     String _path = GeneratorsTest.SERVICE_MODEL_FILE.getPath();
     new LemmaServiceSubGenerator(
-      this.parsedSchema, _mappedTo, _mappedTo_1, _path).generate("test");
+      GeneratorsTest.parsedSchema, _mappedTo, _mappedTo_1, _path).generate("test");
     this.assertDataModelExists();
     this.assertTechnologyModelExists();
     Assert.assertTrue(GeneratorsTest.SERVICE_MODEL_FILE.exists());
