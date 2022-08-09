@@ -1,19 +1,12 @@
 package de.fhdo.lemma.service.openapi
 
-import de.fhdo.lemma.data.ComplexType
 import de.fhdo.lemma.data.DataFactory
 import de.fhdo.lemma.data.DataModel
-import de.fhdo.lemma.data.ListType
-import de.fhdo.lemma.service.Import
 import de.fhdo.lemma.service.ImportType
-import de.fhdo.lemma.service.ImportedType
-import de.fhdo.lemma.service.Interface
 import de.fhdo.lemma.service.Microservice
 import de.fhdo.lemma.service.MicroserviceType
 import de.fhdo.lemma.service.ServiceFactory
 import de.fhdo.lemma.service.Visibility
-import de.fhdo.lemma.service.openapi.exceptions.ComplexTypeException
-import de.fhdo.lemma.service.openapi.exceptions.MatchingException
 import de.fhdo.lemma.technology.CommunicationType
 import de.fhdo.lemma.technology.ExchangePattern
 import de.fhdo.lemma.technology.Technology
@@ -24,533 +17,531 @@ import io.swagger.v3.oas.models.media.ArraySchema
 import io.swagger.v3.oas.models.media.Schema
 import io.swagger.v3.oas.models.parameters.Parameter
 import io.swagger.v3.oas.models.responses.ApiResponse
-import java.util.ArrayList
-import org.apache.commons.lang3.StringUtils
 import org.slf4j.LoggerFactory
-import org.apache.commons.lang3.NotImplementedException
 import org.eclipse.xtend.lib.annotations.Accessors
 import java.io.File
 import java.nio.file.Paths
 
+import static de.fhdo.lemma.service.openapi.LemmaTechnologySubGenerator.*
+
+// TODO: Add Javadoc comments to methods
+
 /**
- * This class is responsible for handling the generation of a LEMMA service model from an
- * OpenAPI file in the JSON or YAML format.
- * It depends on previous execution of the LemmaDataSubGenerator.
+ * This class is responsible for handling the generation of a LEMMA service model from an OpenAPI
+ * file in the JSON or YAML format.
  *
  * @author <a href="mailto:jonas.sorgalla@fh-dortmund.de">Jonas Sorgalla</a>
  */
 class LemmaServiceSubGenerator {
-    /** Factory to actually create and manipulate a LEMMA DataModel */
-    val SERVICE_FACTORY = ServiceFactory.eINSTANCE
-    /** Factory to actually create and manipulate a LEMMA DataModel */
-    val DATA_FACTORY = DataFactory.eINSTANCE
-    /** Predefined instance of the <strong>ServiceModel</strong>. This instance is populated
-     * with the various services and interfaces from the OpenAPI model. It is the central artifact
-     * which gets serialized as an <italic>.services</italic> file.
+    /* Default name if no tags are encountered in the OpenAPI description */
+    static val DEFAULT_INTERFACE_NAME = "defaultInterface"
+
+    static val HTTP_METHOD_TO_ASPECT = #{
+        "DELETE" -> HTTP_DELETE_ASPECT_NAME,
+        "GET" -> HTTP_GET_ASPECT_NAME,
+        "HEAD" -> HTTP_HEAD_ASPECT_NAME,
+        "OPTIONS" -> HTTP_OPTIONS_ASPECT_NAME,
+        "PATCH" -> HTTP_PATCH_ASPECT_NAME,
+        "POST" -> HTTP_POST_ASPECT_NAME,
+        "PUT" -> HTTP_PUT_ASPECT_NAME,
+        "TRACE" -> HTTP_TRACE_ASPECT_NAME
+    }
+
+    /* SLF4j LOGGER */
+    static val LOGGER = LoggerFactory.getLogger(LemmaTechnologySubGenerator)
+
+    /* Name of the protocol which is used as default for endpoint generation */
+    static val REST_PROTOCOL = "rest"
+
+    /* Factory to actually create and manipulate a LEMMA DataModel */
+    val dataFactory = DataFactory.eINSTANCE
+
+    /* Factory to actually create and manipulate a LEMMA ServiceModel */
+    val serviceFactory = ServiceFactory.eINSTANCE
+
+    /*
+     * Predefined instance of the <strong>ServiceModel</strong>. This instance is populated with the
+     * various services and interfaces from the OpenAPI model. It is the central artifact which gets
+     * serialized as a ".services" file.
      */
-    val myServiceModel = SERVICE_FACTORY.createServiceModel
+    val serviceModel = serviceFactory.createServiceModel
 
-    /** Name of the protocol which is used as default for endpoint generation */
-    val DEFAULT_PROTOCOL = "rest"
-    /** OpenAPI schema which will be used as source for generation. */
-    OpenAPI openAPI
+    /* OpenAPI schema which will be used as source for generation. */
+    OpenAPI openApi
 
-    /** Log of all encountered exceptions during the data transformation */
-    @Accessors(PUBLIC_GETTER) val transMsgs = <String>newArrayList
+    /* Log of all encountered exceptions during the data transformation */
+    @Accessors(PUBLIC_GETTER)
+    val transMsgs = <String>newArrayList
 
-    /** SLF4j Logger */
-    val static logger = LoggerFactory.getLogger(LemmaServiceSubGenerator);
-    /** Contains the previous generated OpenApi <italic>LEMMA Data Model</italic>
-     * which is handed over by the LemmaGenerator
+    /*
+     * Contains the previous generated OpenApi LEMMA DataModel which is handed over by the
+     * LemmaGenerator
      */
     Pair<String, DataModel> dataModel
-    /** Contains the previous generated OpenApi <italic>LEMMA Tech Model</italic>
-     * which is handed over by the LemmaGenerator
+
+    /*
+     * Contains the previous generated OpenApi LEMMA Technology which is handed over by the
+     * LemmaGenerator
      */
-    Pair<String, Technology> techModel
+    Pair<String, Technology> technology
+
+    /* Location where the generated file is written */
     String targetFile
-    /** Default name if no tags are encountered in the OpenAPI description */
-    val defaultName = "defaultInterface"
 
     String dataModelLoc
 
-    new(OpenAPI openAPI, Pair<String, DataModel> dataModel,Pair<String, Technology> techModel,
+    new(OpenAPI openApi, Pair<String, DataModel> dataModel,Pair<String, Technology> technology,
         String targetFile) {
-        super()
-        logger.debug("Creating new Service Sub Generator...")
-        this.openAPI = openAPI
+        LOGGER.debug("Creating new Service Sub Generator...")
+        this.openApi = openApi
         this.targetFile = targetFile
         this.dataModel = dataModel
-        this.techModel = techModel
-        this.dataModelLoc = Paths.get(new File(targetFile).parent, dataModel.key).toString()
+        this.technology = technology
+        dataModelLoc = Paths.get(new File(targetFile).parent, dataModel.key).toString
     }
 
     def generate(String servicePrefix) {
-        logger.debug("Starting generation...")
-        logger.debug("Adding data model import...")
+        LOGGER.debug("Adding data model import...")
         createDataImport(dataModel.key, dataModel.value)
-        logger.debug("Adding technology import...")
-        createTechnologyImport(techModel.key, techModel.value)
-        logger.debug("Adding microservice...")
-        val myMicroservice = createFunctionalMicroservice(
-            '''«servicePrefix».«OpenApiUtil.removeInvalidCharsFromName(openAPI.info.title)»''')
-        logger.debug("Adding interfaces...")
-        val interfaces = <Interface>newArrayList
-        openAPI.tags?.forEach[tag|
+        LOGGER.debug("... data model import added")
+
+        LOGGER.debug("Adding technology import...")
+        createTechnologyImport(technology.key, technology.value)
+        LOGGER.debug("... technology import added")
+
+        LOGGER.debug("Adding microservice...")
+        val microserviceName = '''«servicePrefix».''' +
+            OpenApiUtil.removeInvalidCharsFromName(openApi.info.title)
+        val microservice = createFunctionalMicroservice(microserviceName)
+        LOGGER.debug("... microservice added")
+
+        LOGGER.debug("Adding interfaces...")
+        if (openApi.tags !== null)
+            openApi.tags.forEach[createInterface(microservice, name)]
+        else
+            createInterface(microservice, DEFAULT_INTERFACE_NAME)
+        LOGGER.debug("... interfaces added")
+
+        LOGGER.debug("Creating interface operations for each path item...")
+        openApi.paths.forEach[key, value |
             try {
-                interfaces?.add(createInterface(myMicroservice, tag.name))
-            } catch (Exception e) {
-                transMsgs.add(
-                    '''Error while creating interface «tag». Interface is skipped.
-                    For details access debug log.''')
-                logger.debug(e.message)
+                createOperations(microservice, key, value)
+            } catch (Exception ex) {
+                transMsgs.add('''Error while creating operation «key». Operation is skipped. ''' +
+                    "Please refer to the debug log for details.")
+                LOGGER.debug(ex.message)
             }
         ]
-        // If no interfaces can be generated from tags create a default Interface
-        if (interfaces.size == 0) {
-            interfaces.add(createInterface(myMicroservice, defaultName))
-        }
-        logger.debug("Creating interface operations for each path item...")
-        openAPI.paths.forEach[key, value|
-            try {
-                createOperations(interfaces, key, value)
-            } catch (Exception e) {
-                transMsgs.add(
-                    '''Error while creating operation «key». Operation is skipped.
-                    For details access debug log.''')
-                logger.debug(e.message)
-            }
-        ]
-        logger.debug("...Services created!")
-        if (OpenApiUtil.writeModel(myServiceModel, targetFile)) {
-            logger.info("Service model generation successful!")
-            logger.info('''Model written to «targetFile»''')
+        LOGGER.debug("... operations created")
+
+        LOGGER.debug("... services created")
+
+        if (OpenApiUtil.writeModel(serviceModel, targetFile)) {
+            LOGGER.info("Service model generation successful")
+            LOGGER.info('''Model written to «targetFile»''')
         } else
-            logger.info("Service model generation failed. See debug for more info.")
+            // TODO: Why not throw an Exception as is the case for the data and technology sub-
+            //       generators, and thus make the generate() APIs consistent?
+            LOGGER.info("generated service model could not be written to hard disk. See debug " +
+                "for more info.")
     }
 
-    def ArrayList<Interface> createOperations(
-        ArrayList<Interface> interfaces,
-        String path,
-        PathItem item
-    ) {
-        item.get?.addOperation(interfaces, "GET", path)
-        item.put?.addOperation(interfaces, "PUT", path)
-        item.post?.addOperation(interfaces, "POST", path)
-        item.delete?.addOperation(interfaces, "DELETE", path)
-        item.options?.addOperation(interfaces, "OPTIONS", path)
-        item.head?.addOperation(interfaces, "HEAD", path)
-        item.patch?.addOperation(interfaces, "PATCH", path)
-        item.trace?.addOperation(interfaces, "TRACE", path)
-        if (item.servers !== null)
-            throw new UnsupportedOperationException("Servers Operation currently not supported")
-        if (item.parameters !== null)
-            throw new UnsupportedOperationException("Parameters Operation currently not supported")
-        return interfaces
-    }
-
-    def addOperation(Operation swop, ArrayList<Interface> interfaces, String type, String path) {
-        val newOp = createLemmaOperation(type, path, swop)
-        val tag = if(!swop.tags.isNullOrEmpty) swop.tags.get(0) else defaultName
-        interfaces.findFirst[it.name == (tag)]?.operations.add(newOp)
-    }
-
-    /** Creates and returns a <strong>Lemma Operation</strong> based on
-     * the <strong>Type</strong>, e.g., GET, PUT, or POST, the <strong>URI path</strong>,
-     * and the <strong>Swagger Operation</strong>.
-     * The import is added to <italic>myServiceModel</italic>
+    /**
+     * Create and return a data model Import based on the given <strong>uri</strong> and
+     * <strong>model</strong>. The import is added to <italic>serviceModel</italic>.
      */
-    def de.fhdo.lemma.service.Operation createLemmaOperation(
-        String type, String path, Operation swop
-    ) {
-        val lemmaOp = SERVICE_FACTORY.createOperation
-        lemmaOp.name = swop.operationId
-        lemmaOp.CreateEndpoints(type, path, swop)
-        lemmaOp.CreateRestAspect(type, swop)
-        lemmaOp.createCommentary(type, path, swop)
-        lemmaOp.createParameters(swop)
-        return lemmaOp
-    }
-
-    /** Iterates through the given Swagger <strong>operation</strong> returns a list of Lemma
-     * Parameters. According to the Swagger Spec 3.0.2 either the <italic>parameters</italic> field
-     * is used as input for generating the Lemma Parameters or, only when the HTTP methods
-     * support a body, the <italic>requestBody</italic> (compare RFC7231).
-     */
-    def void createParameters(de.fhdo.lemma.service.Operation operation, Operation swop) {
-        val lemmaParams = <de.fhdo.lemma.service.Parameter>newArrayList
-
-        // IN Parameters
-        // If the parameter is a PATH Parameter
-        if (swop.parameters !== null) {
-            swop.parameters?.forEach [
-                val lemmaParam = createLemmaInParameter(it as Parameter)
-                lemmaParams.add(lemmaParam)
-            ]
-        }
-        // If the parameter is a Body Parameter
-        if (swop.requestBody !== null) {
-            // Currently only one MediaType is selected from the Body
-            // because the json structure comprises a type multiple times
-            // for different media types
-            val outSchema = swop.requestBody.content?.values.get(0).schema
-            val lemmaParam = createLemmaInParameterFromMediaTypeValue(outSchema)
-            lemmaParams.add(lemmaParam)
-        }
-        // OUT Parameters
-        // Currently only successful http requests are support, i.e. HTTP Code 200
-        if (swop.responses !== null) {
-            swop.responses?.forEach [ key, value |
-                if (key.equals("200")) {
-                    val lemmaParam = createLemmaOutParameter(value as ApiResponse)
-                    lemmaParams.add(lemmaParam)
-                } else {
-                    logger.info('''Unsupported HTTP Code found: «key»''')
-                }
-            ]
-        }
-        operation.parameters.addAll(lemmaParams)
-    }
-
-    /** Creates and returns a <strong>Lemma Parameter</strong> based on
-     * a <strong>Swagger Parameter</strong>. This method uses <italic>dataModels</italic> to
-     * add complex data types.
-     */
-    def de.fhdo.lemma.service.Parameter createLemmaInParameterFromMediaTypeValue(Schema schema) {
-        var newLemmaParam = SERVICE_FACTORY.createParameter
-        newLemmaParam.name = StringUtils.uncapitalize("requestBody")
-        // In case a bodyRequest parameter is encountered it is always required
-        newLemmaParam.optional = false
-        newLemmaParam.exchangePattern = ExchangePattern.IN
-        //setting the requestBody aspect
-        val aspect = SERVICE_FACTORY.createImportedServiceAspect
-        aspect.importedAspect = techModel.value.serviceAspects.iterator.findFirst[
-            it.name.equals("RequestBody")
-        ]
-        newLemmaParam.aspects.add(aspect)
-        // select proper type
-        if (!schema.get$ref.isNullOrEmpty)
-            newLemmaParam.importedType = getImportedComplexDataTypeFromRef(schema.get$ref)
-        else
-            newLemmaParam = newLemmaParam.getPrimitiveOrArrayDataTypeFromSchema(schema)
-        return newLemmaParam
-    }
-
-    def de.fhdo.lemma.service.Parameter createLemmaOutParameter(ApiResponse response) {
-        var newLemmaParam = SERVICE_FACTORY.createParameter
-        newLemmaParam.exchangePattern = ExchangePattern.OUT
-        newLemmaParam.communicationType = CommunicationType.SYNCHRONOUS
-        newLemmaParam.optional = false
-        // OpenAPI does not specify names for responses
-        newLemmaParam.name = StringUtils.uncapitalize("returnValue")
-        // Currently only takes one of all the described mediatypes
-        val responseSchema = response.content.values.get(0)
-        if(responseSchema.schema === null) {
-            //happens when the OpenAPI response only contains examples but no actual schemas
-            newLemmaParam.primitiveType = DATA_FACTORY.createPrimitiveUnspecified
-        } else {
-            if (!responseSchema.schema.get$ref.isNullOrEmpty) {
-                newLemmaParam.importedType = getImportedComplexDataTypeFromRef(
-                    responseSchema.schema.get$ref
-                )
-            } else {
-                // If it is not a reference but a primitive type or an array
-                newLemmaParam = newLemmaParam.getPrimitiveOrArrayDataTypeFromSchema(
-                    responseSchema.schema
-                )
-            }
-        }
-        return newLemmaParam
-    }
-
-    /** Creates and returns a new <strong>PrimitiveType</strong> based on a given OpenAPI schema.
-     */
-    def de.fhdo.lemma.service.Parameter getPrimitiveOrArrayDataTypeFromSchema(
-        de.fhdo.lemma.service.Parameter para,
-        Schema schema) {
-        var returnPara = para
-        switch (schema.type) {
-            case "integer": {
-                returnPara.primitiveType = OpenApiUtil.deriveIntType(schema.format)
-            }
-            case "number": {
-                returnPara.primitiveType = OpenApiUtil.deriveNumberType(schema.format)
-            }
-            case "string": {
-                returnPara.primitiveType = OpenApiUtil.deriveStringType(schema.format)
-            }
-            case "boolean": {
-                returnPara.primitiveType = DATA_FACTORY.createPrimitiveBoolean
-            }
-            case "object": {
-                //recursive call
-                returnPara = getPrimitiveOrArrayDataTypeFromSchema(
-                    para, schema.additionalProperties as Schema
-                )
-            }
-            case "array": {
-                // In this case the actual data model is altered and persisted again,
-                // because the normal DataSubGenerator does not scan for occurrences of array types
-                // in operations
-                val arSchema = schema as ArraySchema
-                // check if List-Type already exists
-                val findings = getImportedComplexDataTypeFromName(
-                    arSchema.items.type.toFirstUpper + "List"
-                )
-                if (findings !== null) {
-                    returnPara.importedType = findings
-                } else {
-                    val arrayList = createListTypeFromArraySchema(arSchema)
-                    returnPara.importedType = getImportedComplexDataTypeFromName(arrayList.name)
-                }
-            }
-            default:
-                throw new MatchingException('''Could not find fitting Type for «schema.type»''')
-        }
-        return returnPara
-    }
-
-    def ListType createListTypeFromArraySchema(ArraySchema arSchema) {
-        // type of array does not exist
-        // need to create a new type
-        val arrayList = DATA_FACTORY.createListType
-        arrayList.name = arSchema.items.type.toFirstUpper + "List"
-        switch (arSchema.items.type) {
-            case "string":
-                arrayList.primitiveType = DATA_FACTORY.createPrimitiveString
-            case "integer":
-                arrayList.primitiveType = DATA_FACTORY.createPrimitiveInteger
-            case "number":
-                arrayList.primitiveType = DATA_FACTORY.createPrimitiveFloat
-            case "boolean":
-                arrayList.primitiveType = DATA_FACTORY.createPrimitiveBoolean
-            case null: {
-                val myField = DATA_FACTORY.createDataField
-                myField.complexType = getComplexDataTypeFromRef(arSchema.items.get$ref)
-                myField.name = myField.complexType.name.toLowerCase
-                arrayList.name = myField.complexType.name.toFirstUpper + "List"
-                arrayList.dataFields.add(myField)
-            }
-            default: {
-                throw new NotImplementedException(
-                    '''Could not handle Array type. «arSchema» is not supported!'''
-                )
-            }
-        }
-        // adding new primitive list to data model
-        // Loading and altering of existing data model
-        val dataModel = this.dataModel.value
-        if(dataModel.containedComplexTypes.filter[it.name.equals(arrayList.name)].isEmpty) {
-            dataModel.versions.get(0)?.contexts.get(0)?.complexTypes.add(arrayList)
-            // persisting the model
-            if (OpenApiUtil.writeModel(dataModel, dataModelLoc)) {
-                logger.info("Data model alteration successful!")
-                logger.info('''Model written to «dataModelLoc»''')
-            } else {
-                throw new Exception("Data model alteration failed :(")
-            }
-        } else {
-            logger.info("Skipped: ComplexType already in Data Model.")
-        }
-        return arrayList
-    }
-
-    def void CreateEndpoints(
-        de.fhdo.lemma.service.Operation leOp, String type, String path, Operation swOp
-    ) {
-        val endpoint = SERVICE_FACTORY.createEndpoint
-        val proto = SERVICE_FACTORY.createImportedProtocolAndDataFormat
-        // always sets "rest" as protocol to the endpoint,
-        // because OpenAPI is a specification to describe RESTful Interfaces
-        proto.importedProtocol = techModel.value.protocols.findFirst[it.name === DEFAULT_PROTOCOL]
-        endpoint.protocols.add(proto)
-        endpoint.addresses.add(path)
-        leOp.endpoints.add(endpoint)
-    }
-
-    def void CreateRestAspect(
-        de.fhdo.lemma.service.Operation leOp,
-        String type,
-        Operation swOp
-    ) {
-        val aspect = SERVICE_FACTORY.createImportedServiceAspect
-        val opAspects = techModel.value.serviceAspects
-        aspect.importedAspect = switch (type) {
-            case "GET": {
-                opAspects.filter[it.name == "GetMapping"].head
-            }
-            case "PUT": {
-                opAspects.filter[it.name == "PutMapping"].head
-            }
-            case "POST": {
-                opAspects.filter[it.name == "PostMapping"].head
-            }
-            case "DELETE": {
-                opAspects.filter[it.name == "DeleteMapping"].head
-            }
-            case "OPTIONS": {
-                opAspects.filter[it.name == "OptionsMapping"].head
-            }
-            case "HEAD": {
-                opAspects.filter[it.name == "HeadMapping"].head
-            }
-            case "PATCH": {
-                opAspects.filter[it.name == "PatchMapping"].head
-            }
-            case "TRACE": {
-                opAspects.filter[it.name == "TraceMapping"].head
-            }
-            default: {
-                opAspects.filter[it.name == "Unspecified"].head
-            }
-        }
-        leOp.aspects.add(aspect)
-    }
-
-    def void createCommentary(
-        de.fhdo.lemma.service.Operation leOp,
-        String type,
-        String path,
-        Operation swOp
-    ) {
-        val comment = SERVICE_FACTORY.createApiOperationComment
-        comment.comment = '''
-            **Type** «type» Operation for path «path»
-            **Summary** «swOp.summary»
-            **Description** «swOp.description»
-        '''
-        comment.operation = leOp
-    }
-
-    /** Creates and returns a <strong>Lemma Parameter</strong> based on
-     * a <strong>Swagger Parameter</strong>. This method uses <italic>dataModels</italic> to
-     * add complex data types.
-     */
-    def de.fhdo.lemma.service.Parameter createLemmaInParameter(Parameter parameter) {
-        val newLemmaParam = SERVICE_FACTORY.createParameter
-        newLemmaParam.name = StringUtils.lowerCase(parameter.name)
-        newLemmaParam.optional = parameter.required ?: false
-        newLemmaParam.exchangePattern = ExchangePattern.IN
-        var Schema schema
-        if (parameter.content !== null) {
-            println(parameter)
-        } else {
-            schema = parameter.schema
-        }
-        if (!parameter.get$ref.isNullOrEmpty)
-            newLemmaParam.importedType = getImportedComplexDataTypeFromRef(parameter.get$ref)
-        else
-            newLemmaParam.getPrimitiveOrArrayDataTypeFromSchema(schema)
-        return newLemmaParam
-    }
-
-    /** Creates and returns a <strong>Data Model Import</strong> based on
-     * the given <strong>uri</strong> and <strong>model</strong>.
-     * The import is added to <italic>myServiceModel</italic>
-     */
-    def Import createDataImport(String uri, DataModel model) {
-        val dataImport = SERVICE_FACTORY.createImport
+    private def createDataImport(String uri, DataModel model) {
+        val dataImport = serviceFactory.createImport
         dataImport.importType = ImportType.DATATYPES
         dataImport.importURI = uri
+        // TODO: Why not Xtend templating?
+        // TODO: What happens if "...name" is null?
         dataImport.name = model.versions.get(0)?.contexts.get(0)?.name.concat("Data")
-        dataImport.serviceModel = myServiceModel
-        logger.debug("Added data model import.")
+        dataImport.serviceModel = serviceModel
+        LOGGER.debug("Data model import added")
         return dataImport
     }
 
-    /** Creates and returns a <strong>Technology Import</strong> based on
-     * the given <strong>uri</strong> and <strong>model</strong>.
-     * The import is added to <italic>myServiceModel</italic>
+    /**
+     * Create and return a technology Import based on the given <strong>uri</strong> and
+     * <strong>model</strong>. The import is added to <italic>serviceModel</italic>.
      */
-    def createTechnologyImport(String uri, Technology technology) {
-        val techImport = SERVICE_FACTORY.createImport
+    private def createTechnologyImport(String uri, Technology technology) {
+        val techImport = serviceFactory.createImport
         techImport.importType = ImportType.TECHNOLOGY
         techImport.importURI = uri
         techImport.name = technology.name
-        techImport.serviceModel = myServiceModel
-        logger.debug("Added technology import.")
+        techImport.serviceModel = serviceModel
+        LOGGER.debug("Technology import added")
         return techImport
     }
 
-    /** Creates and returns a <strong>Microservice</strong> with the given <strong>name</strong>.
-     * The service is added to <italic>myServiceModel</italic>
+    /**
+     * Create and return a <strong>Microservice</strong> with the given <strong>name</strong>. The
+     * service is added to <italic>serviceModel</italic>.
      */
-    def Microservice createFunctionalMicroservice(String name) {
-        logger.info('''NAME DES MICROSERVICE: «name»''')
-        val functionalService = SERVICE_FACTORY.createMicroservice
-        functionalService.serviceModel = myServiceModel
+    private def createFunctionalMicroservice(String name) {
+        LOGGER.info('''Microservice name: «name»''')
+        val functionalService = serviceFactory.createMicroservice
+        functionalService.serviceModel = serviceModel
         functionalService.name = name
         functionalService.visibility = Visibility.PUBLIC
         functionalService.type = MicroserviceType.FUNCTIONAL
-        myServiceModel.microservices.add(functionalService)
-        logger.debug("Added functional microservice.")
+        serviceModel.microservices.add(functionalService)
+        LOGGER.debug("Functional microservice added")
         return functionalService
     }
 
-    /** Creates and returns a new <strong>Interface</strong> with the given <strong>name</strong>.
-     * The service is added to the <italic>microservice</italic>.
+    /**
+     * Create and return a new <strong>Interface</strong> with the given <strong>name</strong>. The
+     * service is added to the given <strong>microservice</strong>.
      */
-    def Interface createInterface(Microservice microservice, String name) {
-        val interface = SERVICE_FACTORY.createInterface
+    private def createInterface(Microservice microservice, String name) {
+        val interface = serviceFactory.createInterface
         interface.name = name
         interface.microservice = microservice
         microservice.interfaces.add(interface)
         return interface
     }
 
-    /** Finds a previously created <strong>ComplexType</strong> from the data model with
-     * from the given <strong>ref</strong> string (c.f. OpenAPI Spec).
-     * If no fitting ComplexType is found throws a ComplexTypeException.
+    private def void createOperations(Microservice microservice, String path, PathItem item) {
+        if (item.servers !== null)
+            throw new UnsupportedOperationException("Servers operation currently not supported")
+        else if (item.parameters !== null)
+            throw new UnsupportedOperationException("Parameters operation currently not supported")
+
+        item.delete?.toLemmaOperation(microservice, "DELETE", path)
+        item.get?.toLemmaOperation(microservice, "GET", path)
+        item.head?.toLemmaOperation(microservice, "HEAD", path)
+        item.options?.toLemmaOperation(microservice, "OPTIONS", path)
+        item.patch?.toLemmaOperation(microservice, "PATCH", path)
+        item.post?.toLemmaOperation(microservice, "POST", path)
+        item.put?.toLemmaOperation(microservice, "PUT", path)
+        item.trace?.toLemmaOperation(microservice, "TRACE", path)
+    }
+
+    private def toLemmaOperation(Operation openApiOperation, Microservice microservice, String type,
+        String path) {
+        val lemmaOperation = createLemmaOperation(type, path, openApiOperation)
+        val tag = if (!openApiOperation.tags.nullOrEmpty)
+                openApiOperation.tags.get(0)
+            else
+                DEFAULT_INTERFACE_NAME
+        microservice.interfaces.findFirst[name == tag]?.operations.add(lemmaOperation)
+    }
+
+    /**
+     * Create and return a LEMMA </trong>Operation</strong> based on the <strong>Type</strong>,
+     * e.g., GET, PUT, or POST, the <strong>URI path</strong>, and the OpenAPI
+     * <strong>Operation</strong>.
      */
-    def ComplexType getComplexDataTypeFromRef(String ref) throws ComplexTypeException {
-        val dataModel = dataModel.value
-        val complexTypes = dataModel.versions.get(0).contexts.get(0).complexTypes
+    private def createLemmaOperation(String type, String path, Operation openApiOperation) {
+        val lemmaOperation = serviceFactory.createOperation
+        lemmaOperation.name = openApiOperation.operationId
+        lemmaOperation.addRestEndpoint(type, path, openApiOperation)
+        lemmaOperation.addRestAspect(type, openApiOperation)
+        lemmaOperation.addComment(type, path, openApiOperation)
+        lemmaOperation.addParameters(openApiOperation)
+        return lemmaOperation
+    }
+
+    private def void addRestEndpoint(de.fhdo.lemma.service.Operation lemmaOperation, String type,
+        String path, Operation openApiOperation) {
+        val endpoint = serviceFactory.createEndpoint
+        val protocol = serviceFactory.createImportedProtocolAndDataFormat
+        // OpenAPI is a REST-focused specification. Thus, always use REST as protocol.
+        protocol.importedProtocol = technology.value.protocols.findFirst[name == REST_PROTOCOL]
+        endpoint.protocols.add(protocol)
+        endpoint.addresses.add(path)
+        lemmaOperation.endpoints.add(endpoint)
+    }
+
+    private def void addRestAspect(de.fhdo.lemma.service.Operation lemmaOperation, String type,
+        Operation openApiOperation) {
+        val aspect = serviceFactory.createImportedServiceAspect
+        aspect.importedAspect = if (HTTP_METHOD_TO_ASPECT.containsKey(type))
+                technology.value.serviceAspects.findFirst[name == HTTP_METHOD_TO_ASPECT.get(type)]
+            else
+                technology.value.serviceAspects.findFirst[name == UNSPECIFIED_ASPECT_NAME]
+        lemmaOperation.aspects.add(aspect)
+    }
+
+    private def void addComment(de.fhdo.lemma.service.Operation lemmaOperation, String type,
+        String path, Operation openApiOperation) {
+        val comment = serviceFactory.createApiOperationComment
+        comment.comment = '''
+            **Type** «type» Operation for path «path»
+            **Summary** «openApiOperation.summary»
+            **Description** «openApiOperation.description»
+        '''
+        comment.operation = lemmaOperation
+    }
+
+    /**
+     * Derive LEMMA Parameters from the given OpenAPI <strong>operation</strong>. According to
+     * OpenAPI 3.0.3 either the <italic>parameters</italic> field is used as input for generating
+     * the LEMMA Parameters or, in case the HTTP method supports a body, the
+     * <italic>requestBody</italic> is used (cf. RFC 7231).
+     */
+    private def void addParameters(de.fhdo.lemma.service.Operation lemmaOperation,
+        Operation openApiOperation) {
+        if (openApiOperation.parameters !== null)
+            lemmaOperation.parameters.addAll(
+                openApiOperation.parameters.map[createLemmaInParameter(it)]
+            )
+
+        if (openApiOperation.requestBody !== null) {
+            // Currently, only one media type is selected from the body because the JSON structure
+            // comprises a type multiple times for different media types
+            // TODO: What happens if requestBody.content is null?
+            val schema = openApiOperation.requestBody.content?.values.get(0).schema
+            lemmaOperation.parameters.add(createLemmaInParameterFromMediaTypeValue(schema))
+        }
+
+        // Currently, only successful HTTP requests (return code 200) are supported as LEMMA OUT
+        // parameters
+        openApiOperation.responses?.forEach[key, value |
+            if (key == "200")
+                lemmaOperation.parameters.add(createLemmaOutParameter(value))
+            else
+                LOGGER.info('''Unsupported HTTP code: «key»''')
+        ]
+    }
+
+    /**
+     * Create and return a LEMMA <strong>Parameter</strong> from an OpenAPI
+     * <strong>Parameter</strong>
+     */
+    private def createLemmaInParameter(Parameter openApiParameter) {
+        val lemmaParameter = serviceFactory.createParameter
+        lemmaParameter.communicationType = CommunicationType.SYNCHRONOUS
+        lemmaParameter.exchangePattern = ExchangePattern.IN
+        lemmaParameter.name = openApiParameter.name.toLowerCase
+        lemmaParameter.optional = !openApiParameter.required
+
+        // TODO: The following statement was refactored from
+        //      var Schema schema
+        //      if (parameter.content !== null) {
+        //          println(parameter)
+        //      } else {
+        //          schema = parameter.schema
+        //      }
+        // In case parameter.content is not null, schema will be null (the following statement
+        // adopts this behavior). Does this behavior make sense at all? If so, why? And what happens
+        // if schema is null?
+        val schema = if (openApiParameter.content === null) openApiParameter.schema else null
+
+        if (!openApiParameter.get$ref.nullOrEmpty)
+            lemmaParameter.importedType = createImportedComplexTypeFromRef(openApiParameter.get$ref)
+        else
+            lemmaParameter.setPrimitiveOrArrayDataTypeFromSchema(schema)
+
+        return lemmaParameter
+    }
+
+    /**
+     * Create and return a new <strong>ImportedType</strong> from a given OpenAPI
+     * <strong>ref</strong> string
+     */
+    private def createImportedComplexTypeFromRef(String ref) {
+        val importedType = serviceFactory.createImportedType
+        importedType.import = serviceModel.imports.get(0)
+
+        return try {
+            importedType.type = findComplexTypeFromRef(ref)
+            if (importedType.type !== null)
+                importedType
+            else
+                null
+        } catch (IllegalArgumentException ex) {
+            LOGGER.error(ex.message)
+            // TODO: We usually don't print to stacktrace. Are there any alternative, more sensible
+            //       failure handling mechanisms?
+            ex.printStackTrace()
+            null
+        }
+    }
+
+    /**
+     * Find a previously created <strong>ComplexType</strong> for the given OpenAPI
+     * <strong>ref</strong> string from the data model. Throw a ComplexTypeException in case no
+     * matching ComplexType was found.
+     */
+    private def findComplexTypeFromRef(String ref) {
+        // TODO: Refactored for the better. Please check if behavior remained consistent with
+        //       previous implementation (https://github.com/SeelabFhdo/lemma/blob/
+        //       e27de7ccd3f8dfd5cd77eede2cb0c7491dcc1756/de.fhdo.lemma.service.openapi/src/de/fhdo/
+        //       lemma/service/openapi/LemmaServiceSubGenerator.xtend#L503).
         val parts = ref.split("/")
-        if (parts.size >= 4)
-        //Always assumes the path is "#/components/schemas/{Name}"
-            if (parts.get(1).equals("components") && parts.get(2).equals("schemas"))
-                return complexTypes.findFirst[it.name.equals(StringUtils.capitalize(parts.get(3)))]
-        throw new ComplexTypeException('''Could not find fitting type for «ref» in Data Model''')
+        if (parts.size < 4 && !ref.startsWith("#/components/schemas/"))
+            throw new IllegalArgumentException('''Could not find matching type for «ref» in ''' +
+                "data model")
+
+        return dataModel.value.versions.get(0).contexts.get(0).complexTypes
+            .findFirst[name == parts.get(3).toFirstUpper]
     }
 
-    /** Creates and returns a new <strong>ImportedType</strong> from a given
-     * OpenAPI <strong>ref</strong> object.
+    /**
+     * Create and return a LEMMA <strong>Parameter</strong> based on an OpenAPI
+     * <strong>Parameter</strong>
      */
-    def ImportedType getImportedComplexDataTypeFromRef(String ref) {
-        val importedType = SERVICE_FACTORY.createImportedType
-        importedType.import = myServiceModel.imports.get(0)
-        try {
-            importedType.type = getComplexDataTypeFromRef(ref)
-        } catch (ComplexTypeException cte) {
-            logger.error(cte.message)
-            cte.printStackTrace()
-            return null
-        }
-        if (importedType.type !== null)
-            return importedType
+    private def createLemmaInParameterFromMediaTypeValue(Schema<?> schema) {
+        val lemmaParameter = serviceFactory.createParameter
+        lemmaParameter.communicationType = CommunicationType.SYNCHRONOUS
+        lemmaParameter.exchangePattern = ExchangePattern.IN
+        lemmaParameter.name = "requestBody"
+        lemmaParameter.optional = false
+
+        // Assign RequestBody aspect
+        val aspect = serviceFactory.createImportedServiceAspect
+        aspect.importedAspect = technology.value.serviceAspects
+            .findFirst[name == HTTP_REQUEST_BODY_ASPECT_NAME]
+        lemmaParameter.aspects.add(aspect)
+
+        // Set type
+        if (!schema.get$ref.nullOrEmpty)
+            lemmaParameter.importedType = createImportedComplexTypeFromRef(schema.get$ref)
         else
-            return null
+            lemmaParameter.setPrimitiveOrArrayDataTypeFromSchema(schema)
+
+        return lemmaParameter
     }
 
-    /** Finds and returns a new <strong>ImportedType</strong> from the imported data model
-     *  based on the <strong>name</strong> of an domain entity.
+    // TODO: This method seems to share functionality with
+    //       LemmaDataSubGenerator.generateDataField(). Please consider merging the overlapping
+    //       parts into a reusable utility method to lower the places that require adaptations in
+    //       case type-specific LEMMA semantics change.
+    /**
+     * Set LEMMA parameter type based on a given OpenAPI schema
      */
-    def ImportedType getImportedComplexDataTypeFromName(String name) {
-        val dataModel = dataModel.value
-        val complexTypes = dataModel.versions.get(0).contexts.get(0).complexTypes
-        //
-        val importedType = SERVICE_FACTORY.createImportedType
-        importedType.import = myServiceModel.imports.get(0)
-        try {
-            importedType.type = complexTypes.findFirst[it.name.equals(name)]
-        } catch (ComplexTypeException cte) {
-            logger.error(cte.message)
-            cte.printStackTrace()
-            return null
+    private def void setPrimitiveOrArrayDataTypeFromSchema(
+        de.fhdo.lemma.service.Parameter parameter,
+        Schema<?> schema
+    ) {
+        switch (schema.type) {
+            case "array": {
+                // In this case the actual data model is altered and persisted again because the
+                // data sub-generator does not scan for occurrences of array types in operations
+                // TODO: Can we empower the sub-generator to support such scanning?
+                val arraySchema = schema as ArraySchema
+                val existingType = createImportedComplexTypeFromDomainConcept(
+                        LemmaDataSubGenerator.getListTypeName(arraySchema)
+                    )
+
+                if (existingType !== null)
+                    parameter.importedType = existingType
+                else {
+                    val arrayList = getOrCreateListTypeFromSchema(arraySchema)
+                    parameter.importedType
+                        = createImportedComplexTypeFromDomainConcept(arrayList.name)
+                }
+            }
+
+            case "boolean":
+                parameter.primitiveType = dataFactory.createPrimitiveBoolean
+
+            case "integer":
+                parameter.primitiveType = OpenApiUtil.deriveIntType(schema.format)
+
+            case "number":
+                parameter.primitiveType = OpenApiUtil.deriveNumberType(schema.format)
+
+            case "object": {
+                parameter.setPrimitiveOrArrayDataTypeFromSchema(
+                    schema.additionalProperties as Schema<?>
+                )
+            }
+
+            case "string":
+                parameter.primitiveType = OpenApiUtil.deriveStringType(schema.format)
+
+            default:
+                throw new IllegalArgumentException("Could not find matching type for " +
+                    schema.type)
         }
-        if (importedType.type !== null)
-            return importedType
+    }
+
+    /**
+     * Create and return an <strong>ImportedType</strong> instance for a domain concept from the
+     * data model
+     */
+    private def createImportedComplexTypeFromDomainConcept(String domainConceptName) {
+        val importedType = serviceFactory.createImportedType
+        importedType.import = serviceModel.imports.get(0)
+        importedType.type = dataModel.value.versions.get(0).contexts.get(0).complexTypes
+            .findFirst[it.name.equals(name)]
+
+        return if (importedType.type !== null)
+            importedType
         else
-            return null
+            null
+    }
+
+    private def getOrCreateListTypeFromSchema(ArraySchema schema) {
+        val listType = dataFactory.createListType
+        listType.name = LemmaDataSubGenerator.getListTypeName(schema)
+
+        switch (schema.items.type) {
+            case "string":
+                listType.primitiveType = dataFactory.createPrimitiveString
+
+            case "integer":
+                listType.primitiveType = dataFactory.createPrimitiveInteger
+
+            case "number":
+                listType.primitiveType = dataFactory.createPrimitiveFloat
+
+            case "boolean":
+                listType.primitiveType = dataFactory.createPrimitiveBoolean
+
+            case null: {
+                val field = dataFactory.createDataField
+                field.complexType = findComplexTypeFromRef(schema.items.get$ref)
+                field.name = field.complexType.name.toLowerCase
+                listType.name = LemmaDataSubGenerator.getListTypeName(field.complexType.name)
+                listType.dataFields.add(field)
+            }
+
+            default:
+                throw new UnsupportedOperationException("Array type " +
+                    '''«schema.type» is not supported''')
+        }
+
+        // Add new list type to data model
+        val complexTypes = dataModel.value.versions.get(0)?.contexts.get(0)?.complexTypes
+        if (!complexTypes.exists[name == listType.name]) {
+            complexTypes.add(listType)
+
+            if (OpenApiUtil.writeModel(dataModel.value, dataModelLoc))
+                LOGGER.info('''Data model «dataModelLoc» was successfully altered''')
+            else
+                throw new Exception('''Data model «dataModelLoc» could not be altered''')
+        } else
+            LOGGER.info('''List type «listType.name» already exists in data model''')
+
+        return listType
+    }
+
+    // TODO: Heavily refactored from https://github.com/SeelabFhdo/lemma/blob/
+    //       e27de7ccd3f8dfd5cd77eede2cb0c7491dcc1756/de.fhdo.lemma.service.openapi/src/de/fhdo/
+    //       lemma/service/openapi/LemmaServiceSubGenerator.xtend#L237. Please check for consistent
+    //       bevahior.
+    private def createLemmaOutParameter(ApiResponse response) {
+        val lemmaParameter = serviceFactory.createParameter
+        lemmaParameter.communicationType = CommunicationType.SYNCHRONOUS
+        lemmaParameter.exchangePattern = ExchangePattern.OUT
+        lemmaParameter.name = "returnValue"
+        lemmaParameter.optional = false
+
+        val schema = response.content.values.get(0)?.schema
+        if (!schema?.get$ref.nullOrEmpty)
+            lemmaParameter.importedType = createImportedComplexTypeFromRef(schema.get$ref)
+        else if (schema !== null)
+            lemmaParameter.setPrimitiveOrArrayDataTypeFromSchema(schema)
+        else
+            // OpenAPI response contains only examples but no actual schemas
+            lemmaParameter.primitiveType = dataFactory.createPrimitiveUnspecified
+
+        return lemmaParameter
     }
 }
