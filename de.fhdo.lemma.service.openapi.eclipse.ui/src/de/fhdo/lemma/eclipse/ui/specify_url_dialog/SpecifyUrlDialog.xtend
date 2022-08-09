@@ -74,7 +74,7 @@ class SpecifyUrlDialog extends TitleAreaDialog {
                     «ENDFOR»''')
                 if(generator.isParsed){
                     generator.generateModels('''«targetLoc»/''', '''«dataName».data''',
-                        '''«servName».services''','''«techName».technology''', servPre)
+                        '''«techName».technology''', '''«servName».services''', servPre)
                         MessageDialog.openInformation(this.shell, "Transformation Report",
                             '''
                             The transformation was a success!

@@ -4,6 +4,7 @@ import de.fhdo.lemma.service.openapi.LemmaGenerator;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -91,7 +92,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     if (_saveInput) {
       try {
         final LemmaGenerator generator = new LemmaGenerator();
-        final List<String> parsingMessages = generator.parse(this.fetchUrl.toString());
+        final ArrayList<String> parsingMessages = generator.parse(this.fetchUrl.toString());
         Shell _shell = this.getShell();
         StringConcatenation _builder = new StringConcatenation();
         {
@@ -111,11 +112,11 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
           _builder_2.append(this.dataName);
           _builder_2.append(".data");
           StringConcatenation _builder_3 = new StringConcatenation();
-          _builder_3.append(this.servName);
-          _builder_3.append(".services");
+          _builder_3.append(this.techName);
+          _builder_3.append(".technology");
           StringConcatenation _builder_4 = new StringConcatenation();
-          _builder_4.append(this.techName);
-          _builder_4.append(".technology");
+          _builder_4.append(this.servName);
+          _builder_4.append(".services");
           generator.generateModels(_builder_1.toString(), _builder_2.toString(), _builder_3.toString(), _builder_4.toString(), this.servPre);
           Shell _shell_1 = this.getShell();
           StringConcatenation _builder_5 = new StringConcatenation();

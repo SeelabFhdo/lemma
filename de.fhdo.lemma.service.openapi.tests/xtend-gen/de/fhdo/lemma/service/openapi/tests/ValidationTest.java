@@ -1,7 +1,7 @@
 package de.fhdo.lemma.service.openapi.tests;
 
 import de.fhdo.lemma.service.openapi.LemmaGenerator;
-import java.util.List;
+import java.util.ArrayList;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.junit.Assert;
 import org.junit.Test;
@@ -19,12 +19,12 @@ public class ValidationTest {
   @Test
   public void schemaShouldNotHaveErrors() {
     final LemmaGenerator generator = new LemmaGenerator();
-    final List<String> parsedSchema = generator.parse(ValidationTest.SCHEMA_PATH);
+    final ArrayList<String> parsedSchema = generator.parse(ValidationTest.SCHEMA_PATH);
     int _length = ((Object[])Conversions.unwrapArray(parsedSchema, Object.class)).length;
     int _minus = (_length - 2);
     Assert.assertEquals(
       "Zero errors should be detected while parsing/validating", 
-      "No errors or warnings encountered!", 
+      "No errors or warnings encountered", 
       parsedSchema.get(_minus));
     int _length_1 = ((Object[])Conversions.unwrapArray(parsedSchema, Object.class)).length;
     int _minus_1 = (_length_1 - 1);
