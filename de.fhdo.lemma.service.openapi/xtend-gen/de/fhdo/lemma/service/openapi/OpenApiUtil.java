@@ -12,6 +12,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
 
@@ -27,15 +28,20 @@ public final class OpenApiUtil {
    */
   private static final DataFactory DATA_FACTORY = DataFactory.eINSTANCE;
   
-  public static String removeInvalidCharsFromName(final String str) {
-    String ret = str;
-    ret = ret.replaceAll("[^a-zA-Z0-9_]", "");
+  public static String removeInvalidCharsFromName(final String s) {
+    final String ret = s.replaceAll("[^a-zA-Z0-9_]", "");
+    String _xifexpression = null;
     boolean _isAlphabetic = Character.isAlphabetic(ret.charAt(0));
     boolean _not = (!_isAlphabetic);
     if (_not) {
-      ret = ("v" + ret);
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("v");
+      _builder.append(ret);
+      _xifexpression = _builder.toString();
+    } else {
+      _xifexpression = ret;
     }
-    return ret;
+    return _xifexpression;
   }
   
   /**
@@ -54,15 +60,15 @@ public final class OpenApiUtil {
       _switchResult = new DataDslExtractor().extractToString(((DataModel)modelRoot));
     }
     if (!_matched) {
-      if (modelRoot instanceof ServiceModel) {
-        _matched=true;
-        _switchResult = new ServiceDslExtractor().extractToString(((ServiceModel)modelRoot));
-      }
-    }
-    if (!_matched) {
       if (modelRoot instanceof Technology) {
         _matched=true;
         _switchResult = new TechnologyDslExtractor().extractToString(((Technology)modelRoot));
+      }
+    }
+    if (!_matched) {
+      if (modelRoot instanceof ServiceModel) {
+        _matched=true;
+        _switchResult = new ServiceDslExtractor().extractToString(((ServiceModel)modelRoot));
       }
     }
     final String content = _switchResult;
@@ -120,11 +126,11 @@ public final class OpenApiUtil {
     PrimitiveType _switchResult = null;
     if (typeDesc != null) {
       switch (typeDesc) {
-        case "float":
-          _switchResult = OpenApiUtil.DATA_FACTORY.createPrimitiveFloat();
-          break;
         case "double":
           _switchResult = OpenApiUtil.DATA_FACTORY.createPrimitiveDouble();
+          break;
+        case "float":
+          _switchResult = OpenApiUtil.DATA_FACTORY.createPrimitiveFloat();
           break;
         default:
           _switchResult = OpenApiUtil.DATA_FACTORY.createPrimitiveDouble();
@@ -140,10 +146,10 @@ public final class OpenApiUtil {
     PrimitiveType _switchResult = null;
     if (typeDesc != null) {
       switch (typeDesc) {
-        case "byte":
+        case "binary":
           _switchResult = OpenApiUtil.DATA_FACTORY.createPrimitiveString();
           break;
-        case "binary":
+        case "byte":
           _switchResult = OpenApiUtil.DATA_FACTORY.createPrimitiveString();
           break;
         case "date":

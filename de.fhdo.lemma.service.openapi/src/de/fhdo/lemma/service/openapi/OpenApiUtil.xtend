@@ -10,8 +10,9 @@ import de.fhdo.lemma.servicedsl.extractor.ServiceDslExtractor
 import de.fhdo.lemma.technology.Technology
 import de.fhdo.lemma.technology.technologydsl.extractor.TechnologyDslExtractor
 import de.fhdo.lemma.data.DataFactory
-import de.fhdo.lemma.data.PrimitiveType
 import java.io.File
+
+// TODO: Add Javadoc comments to methods
 
 /**
  * This class collects _static_ utility methods for the OpenAPI plugin.
@@ -19,14 +20,17 @@ import java.io.File
  * @author <a href="mailto:jonas.sorgalla@fh-dortmund.de">Jonas Sorgalla</a>
  */
 final class OpenApiUtil {
-    /** Factory to actually create and manipulate a LEMMA DataModel */
+    /* Factory to actually create and manipulate a LEMMA DataModel */
     static val DATA_FACTORY = DataFactory.eINSTANCE
-    static def String removeInvalidCharsFromName(String str) {
-        var ret = str;
-        ret = ret.replaceAll("[^a-zA-Z0-9_]", "");
-        if(!Character.isAlphabetic(ret.charAt(0)))
-            ret = "v"+ret;
-         return ret
+
+    static def String removeInvalidCharsFromName(String s) {
+        val ret = s.replaceAll("[^a-zA-Z0-9_]", "")
+
+        // TODO: What happens if s is empty?
+        return if (!Character.isAlphabetic(ret.charAt(0)))
+                '''v«ret»'''
+            else
+                ret
     }
 
     /**
@@ -36,11 +40,11 @@ final class OpenApiUtil {
     static def boolean writeModel(EObject modelRoot, String filepath) {
         if (filepath.nullOrEmpty)
             return false
-        //if modelRoot is a DataModel, serialize it as a string
+
         val content = switch(modelRoot) {
             DataModel: new DataDslExtractor().extractToString(modelRoot)
-            ServiceModel: new ServiceDslExtractor().extractToString(modelRoot)
             Technology: new TechnologyDslExtractor().extractToString(modelRoot)
+            ServiceModel: new ServiceDslExtractor().extractToString(modelRoot)
         }
 
         return filepath.writeFile(content)
@@ -64,31 +68,31 @@ final class OpenApiUtil {
         }
     }
 
-    def static PrimitiveType deriveIntType(String typeDesc) {
-            return switch (typeDesc) {
-                    case "int32": DATA_FACTORY.createPrimitiveInteger
-                    case "int64": DATA_FACTORY.createPrimitiveLong
-                    default: DATA_FACTORY.createPrimitiveInteger
-           }
-        }
-    def static PrimitiveType deriveNumberType(String typeDesc) {
-                return switch (typeDesc) {
-                    case "float": DATA_FACTORY.createPrimitiveFloat
-                    case "double": DATA_FACTORY.createPrimitiveDouble
-                    default: DATA_FACTORY.createPrimitiveDouble
-                }
-        }
-    def static PrimitiveType deriveStringType(String typeDesc) {
-                return switch (typeDesc) {
-                    case "byte": DATA_FACTORY.createPrimitiveString
-                    case "binary": DATA_FACTORY.createPrimitiveString
-                    case "date": DATA_FACTORY.createPrimitiveDate
-                    case "date-time": DATA_FACTORY.createPrimitiveDate
-                    case "password": DATA_FACTORY.createPrimitiveString
-                    default: DATA_FACTORY.createPrimitiveString
-                }
-        }
+    def static deriveIntType(String typeDesc) {
+        return switch (typeDesc) {
+            case "int32": DATA_FACTORY.createPrimitiveInteger
+            case "int64": DATA_FACTORY.createPrimitiveLong
+            default: DATA_FACTORY.createPrimitiveInteger
+       }
+    }
 
+    def static deriveNumberType(String typeDesc) {
+        return switch (typeDesc) {
+            case "double": DATA_FACTORY.createPrimitiveDouble
+            case "float": DATA_FACTORY.createPrimitiveFloat
+            default: DATA_FACTORY.createPrimitiveDouble
+        }
+    }
 
-
+    def static deriveStringType(String typeDesc) {
+        return switch (typeDesc) {
+            case "binary": DATA_FACTORY.createPrimitiveString
+            case "byte": DATA_FACTORY.createPrimitiveString
+            // TODO: Why does this method (derive*String*Type) also handle date types?
+            case "date": DATA_FACTORY.createPrimitiveDate
+            case "date-time": DATA_FACTORY.createPrimitiveDate
+            case "password": DATA_FACTORY.createPrimitiveString
+            default: DATA_FACTORY.createPrimitiveString
+        }
+    }
 }
