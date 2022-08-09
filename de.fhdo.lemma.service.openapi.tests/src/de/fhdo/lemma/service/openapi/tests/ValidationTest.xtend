@@ -21,7 +21,7 @@ class ValidationTest {
         val parsedSchema = generator.parse(SCHEMA_PATH)
         assertEquals(
                 "Zero errors should be detected while parsing/validating",
-                "No errors or warnings encountered!",
+                "No errors or warnings encountered",
                 parsedSchema.get(parsedSchema.length-2)
             )
         assertNotEquals(
