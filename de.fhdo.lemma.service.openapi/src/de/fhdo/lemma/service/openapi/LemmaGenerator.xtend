@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory
 import org.eclipse.xtend.lib.annotations.Accessors
 import java.net.MalformedURLException
 import java.net.URL
-import de.fhdo.lemma.service.openapi.exceptions.ParsingException
 import java.nio.file.Paths
 
 /**
@@ -131,8 +130,8 @@ class LemmaGenerator {
         generator.logger.info("Parsing the OpenAPI file...")
         val parsingMessages = generator.parse(fetchUrl.toString)
         if(!generator.isParsed)
-            throw new ParsingException('''It was not possible to generate an in-memory '''+
-            '''representation of the file located at «fetchUrl.toString» .''')
+            throw new IllegalStateException("Generation of in-memory representation for file " +
+                '''«fetchUrl» was not possible''')
         generator.logger.info('''Encountered messages during parsing (empty if none):
             «FOR msg : parsingMessages»
                 «msg»
