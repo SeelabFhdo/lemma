@@ -44,3 +44,5 @@ examples/model-processing/run11.sh
 examples/model-processing/generated code/
 examples/model-processing-latest/run11.sh
 examples/model-processing-latest/generated code/
+de.fhdo.lemma.service.openapi.tests/lib/*
+de.fhdo.lemma.service.openapi.tests/test-model-gen/*
