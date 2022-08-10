@@ -7,8 +7,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+import org.apache.commons.validator.routines.UrlValidator;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -42,23 +44,43 @@ import org.eclipse.xtext.xbase.lib.Pure;
  */
 @SuppressWarnings("all")
 public class SpecifyUrlDialog extends TitleAreaDialog {
+  /**
+   * Validator for strings to represent valid URLs
+   */
+  private static class UrlInputValidator implements IInputValidator {
+    /**
+     * Perform the validation
+     */
+    @Override
+    public String isValid(final String newUrl) {
+      String _xifexpression = null;
+      boolean _isValid = new UrlValidator().isValid(newUrl);
+      if (_isValid) {
+        _xifexpression = null;
+      } else {
+        _xifexpression = "Invalid URL";
+      }
+      return _xifexpression;
+    }
+  }
+  
   private static final int MIN_DIALOG_WIDTH = 400;
   
   private static final int MIN_DIALOG_HEIGHT = 250;
   
   private Text txtUrl;
   
-  private Text txtTargetLocation;
+  private Text txtTargetFolder;
   
   private Text txtDataModelName;
   
-  private Text txtServiceModelName;
-  
   private Text txtTechnologyModelName;
+  
+  private Text txtServiceModelName;
   
   private Text txtServicePrefix;
   
-  private Button btnBrowseLocation;
+  private Button btnBrowseFolder;
   
   private Button btnUriWebLocation;
   
@@ -67,15 +89,15 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
   @Accessors(AccessorType.PUBLIC_GETTER)
   private URL fetchUrl;
   
-  private String targetLoc;
+  private String targetFolder;
   
-  private String dataName;
+  private String dataModelName;
   
-  private String servName;
+  private String technologyModelName;
   
-  private String servPre;
+  private String serviceModelName;
   
-  private String techName;
+  private String servicePrefix;
   
   public SpecifyUrlDialog(final Shell parentShell) {
     super(parentShell);
@@ -84,80 +106,14 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
   }
   
   /**
-   * OK button was pressed
+   * Create dialog (to be called after constructor and before open())
    */
   @Override
-  public void okPressed() {
-    boolean _saveInput = this.saveInput();
-    if (_saveInput) {
-      try {
-        final LemmaGenerator generator = new LemmaGenerator();
-        final ArrayList<String> parsingMessages = generator.parse(this.fetchUrl.toString());
-        Shell _shell = this.getShell();
-        StringConcatenation _builder = new StringConcatenation();
-        {
-          for(final String msg : parsingMessages) {
-            _builder.newLineIfNotEmpty();
-            _builder.append(msg);
-            _builder.newLineIfNotEmpty();
-          }
-        }
-        MessageDialog.openInformation(_shell, "Parsing Report", _builder.toString());
-        boolean _isParsed = generator.isParsed();
-        if (_isParsed) {
-          StringConcatenation _builder_1 = new StringConcatenation();
-          _builder_1.append(this.targetLoc);
-          _builder_1.append("/");
-          StringConcatenation _builder_2 = new StringConcatenation();
-          _builder_2.append(this.dataName);
-          _builder_2.append(".data");
-          StringConcatenation _builder_3 = new StringConcatenation();
-          _builder_3.append(this.techName);
-          _builder_3.append(".technology");
-          StringConcatenation _builder_4 = new StringConcatenation();
-          _builder_4.append(this.servName);
-          _builder_4.append(".services");
-          generator.generateModels(_builder_1.toString(), _builder_2.toString(), _builder_3.toString(), _builder_4.toString(), this.servPre);
-          Shell _shell_1 = this.getShell();
-          StringConcatenation _builder_5 = new StringConcatenation();
-          _builder_5.append("The transformation was a success!");
-          _builder_5.newLine();
-          _builder_5.append("Encountered problems (empty if none):");
-          _builder_5.newLine();
-          {
-            List<String> _transMsgs = generator.getTransMsgs();
-            for(final String msg_1 : _transMsgs) {
-              _builder_5.append(msg_1);
-              _builder_5.newLineIfNotEmpty();
-            }
-          }
-          MessageDialog.openInformation(_shell_1, "Transformation Report", _builder_5.toString());
-        } else {
-          Shell _shell_2 = this.getShell();
-          StringConcatenation _builder_6 = new StringConcatenation();
-          _builder_6.append("It was not possible to generate an in-memory ");
-          StringConcatenation _builder_7 = new StringConcatenation();
-          _builder_7.append("representation of the file located at ");
-          String _string = this.fetchUrl.toString();
-          _builder_7.append(_string);
-          _builder_7.append(" .");
-          String _plus = (_builder_6.toString() + _builder_7);
-          MessageDialog.openError(_shell_2, "Parsing Error", _plus);
-        }
-      } catch (final Throwable _t) {
-        if (_t instanceof Exception) {
-          final Exception ex = (Exception)_t;
-          Shell _shell_3 = this.getShell();
-          StringConcatenation _builder_8 = new StringConcatenation();
-          _builder_8.append("An error occured during extraction...");
-          ex.printStackTrace();
-          MessageDialog.openError(_shell_3, "Error", _builder_8.toString());
-        } else {
-          throw Exceptions.sneakyThrow(_t);
-        }
-      }
-      super.okPressed();
-    }
+  public void create() {
+    super.create();
+    this.setTitle("Specify OpenAPI Specification URL");
+    this.setMessage(("Specify the URL of the OpenAPI specification from which LEMMA models shall " + 
+      "be extracted."), IMessageProvider.INFORMATION);
   }
   
   /**
@@ -185,14 +141,121 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
   }
   
   /**
-   * Create dialog (to be called after constructor and before open())
+   * OK button was pressed
    */
   @Override
-  public void create() {
-    super.create();
-    this.setTitle("Specify OpenAPI Address");
-    this.setMessage(("Specify the url of the OpenAPI specification from which the " + 
-      "LEMMA models should be extracted."), IMessageProvider.INFORMATION);
+  public void okPressed() {
+    boolean _syncInput = this.syncInput();
+    boolean _not = (!_syncInput);
+    if (_not) {
+      return;
+    }
+    try {
+      final LemmaGenerator generator = new LemmaGenerator();
+      final ArrayList<String> parsingMessages = generator.parse(this.fetchUrl.toString());
+      Shell _shell = this.getShell();
+      StringConcatenation _builder = new StringConcatenation();
+      {
+        for(final String msg : parsingMessages) {
+          _builder.newLineIfNotEmpty();
+          _builder.append(msg);
+          _builder.newLineIfNotEmpty();
+        }
+      }
+      MessageDialog.openInformation(_shell, "Parsing Report", _builder.toString());
+      boolean _isParsed = generator.isParsed();
+      if (_isParsed) {
+        StringConcatenation _builder_1 = new StringConcatenation();
+        _builder_1.append(this.dataModelName);
+        _builder_1.append(".data");
+        StringConcatenation _builder_2 = new StringConcatenation();
+        _builder_2.append(this.technologyModelName);
+        _builder_2.append(".technology");
+        StringConcatenation _builder_3 = new StringConcatenation();
+        _builder_3.append(this.serviceModelName);
+        _builder_3.append(".services");
+        generator.generateModels(
+          this.targetFolder, _builder_1.toString(), _builder_2.toString(), _builder_3.toString(), 
+          this.servicePrefix);
+        boolean _isEmpty = generator.getTransMsgs().isEmpty();
+        if (_isEmpty) {
+          MessageDialog.openInformation(this.getShell(), "Transformation Report", 
+            "Transformation successfully completed");
+        } else {
+          Shell _shell_1 = this.getShell();
+          StringConcatenation _builder_4 = new StringConcatenation();
+          _builder_4.append("There were error during the transformation:");
+          _builder_4.newLine();
+          {
+            List<String> _transMsgs = generator.getTransMsgs();
+            for(final String msg_1 : _transMsgs) {
+              _builder_4.append("- ");
+              _builder_4.append(msg_1);
+              _builder_4.newLineIfNotEmpty();
+            }
+          }
+          MessageDialog.openError(_shell_1, "Transformation Report", _builder_4.toString());
+        }
+      } else {
+        Shell _shell_2 = this.getShell();
+        String _string = this.fetchUrl.toString();
+        String _plus = (("Generation of in-memory " + 
+          "representation not possible for the OpenAPI specification URL ") + _string);
+        MessageDialog.openError(_shell_2, "Parsing Error", _plus);
+      }
+    } catch (final Throwable _t) {
+      if (_t instanceof Exception) {
+        final Exception ex = (Exception)_t;
+        Shell _shell_3 = this.getShell();
+        String _message = ex.getMessage();
+        String _plus_1 = ("Error during extraction: " + _message);
+        MessageDialog.openError(_shell_3, "Error", _plus_1);
+      } else {
+        throw Exceptions.sneakyThrow(_t);
+      }
+    }
+    super.okPressed();
+  }
+  
+  /**
+   * Synchronize user input with class state
+   */
+  private boolean syncInput() {
+    URL _xtrycatchfinallyexpression = null;
+    try {
+      String _text = this.txtUrl.getText();
+      _xtrycatchfinallyexpression = new URL(_text);
+    } catch (final Throwable _t) {
+      if (_t instanceof MalformedURLException) {
+        Shell _shell = this.getShell();
+        StringConcatenation _builder = new StringConcatenation();
+        String _text_1 = this.txtUrl.getText();
+        _builder.append(_text_1);
+        _builder.append(" is not a ");
+        String _plus = (_builder.toString() + 
+          "valid URL");
+        MessageDialog.openError(_shell, "Invalid URL", _plus);
+        return false;
+      } else {
+        throw Exceptions.sneakyThrow(_t);
+      }
+    }
+    this.fetchUrl = _xtrycatchfinallyexpression;
+    this.targetFolder = this.txtTargetFolder.getText().trim();
+    this.dataModelName = this.txtDataModelName.getText().trim();
+    this.technologyModelName = this.txtTechnologyModelName.getText().trim();
+    this.serviceModelName = this.txtServiceModelName.getText().trim();
+    this.servicePrefix = this.txtServicePrefix.getText().trim();
+    final boolean missingValues = ((((this.targetFolder.isEmpty() || 
+      this.dataModelName.isEmpty()) || 
+      this.technologyModelName.isEmpty()) || 
+      this.serviceModelName.isEmpty()) || 
+      this.servicePrefix.isEmpty());
+    if (missingValues) {
+      MessageDialog.openError(this.getShell(), "Missing Field Values", ("Please specify a value " + 
+        "for each field"));
+    }
+    return (!missingValues);
   }
   
   @Override
@@ -206,7 +269,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     layout.verticalSpacing = 10;
     container.setLayout(layout);
     this.createUrl(container);
-    this.createTargetLocation(container);
+    this.createTargetFolder(container);
     this.createDataModelName(container);
     this.createServiceModelName(container);
     this.createServicePrefix(container);
@@ -216,7 +279,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
   
   private void createUrl(final Composite container) {
     final Label lblUrl = new Label(container, SWT.NONE);
-    lblUrl.setText("URL: ");
+    lblUrl.setText("URL:");
     final GridData dataUrl = new GridData();
     dataUrl.grabExcessHorizontalSpace = true;
     dataUrl.horizontalAlignment = GridData.FILL;
@@ -224,7 +287,6 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     dataUrl.widthHint = ((int) (this.getShell().getSize().x * 0.3));
     Text _text = new Text(container, SWT.BORDER);
     this.txtUrl = _text;
-    this.txtUrl.setMessage("e.g. https://petstore3.swagger.io/api/v3/openapi.json");
     this.txtUrl.setEnabled(false);
     this.txtUrl.setLayoutData(dataUrl);
     final GridData uriWebLocationButton = new GridData();
@@ -236,9 +298,12 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     this.btnUriWebLocation.setLayoutData(uriWebLocationButton);
     final Consumer<SelectionEvent> _function = (SelectionEvent e) -> {
       Shell _shell = this.getShell();
-      UrlTextValidator _urlTextValidator = new UrlTextValidator();
-      final InputDialog urlDialog = new InputDialog(_shell, "", "Enter URL", 
-        "Please enter the URL", _urlTextValidator);
+      SpecifyUrlDialog.UrlInputValidator _urlInputValidator = new SpecifyUrlDialog.UrlInputValidator();
+      final InputDialog urlDialog = new InputDialog(_shell, 
+        "", 
+        "Enter OpenAPI specification URL", 
+        ("Please enter a URL to an OpenAPI specification, e.g., " + 
+          "https://petstore3.swagger.io/api/v3/openapi.json"), _urlInputValidator);
       int _open = urlDialog.open();
       boolean _equals = (_open == Window.OK);
       if (_equals) {
@@ -251,90 +316,89 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     uriFileLocationButton.horizontalAlignment = SWT.RIGHT;
     Button _button_1 = new Button(container, SWT.BUTTON1);
     this.btnUriFileLocation = _button_1;
-    this.btnUriFileLocation.setText("Browse Filesystem");
+    this.btnUriFileLocation.setText("Select OpenAPI Specification File");
     this.btnUriFileLocation.setLayoutData(uriWebLocationButton);
     final Consumer<SelectionEvent> _function_1 = (SelectionEvent e) -> {
       Shell _shell = this.getShell();
       final FileDialog fileDialog = new FileDialog(_shell);
-      fileDialog.setText("Select your OpenAPI file");
+      fileDialog.setText("Please select an OpenAPI specification file");
       final String selectedFile = fileDialog.open();
       this.txtUrl.setText(new File(selectedFile).toURI().toString());
     };
     this.btnUriFileLocation.addSelectionListener(SelectionListener.widgetSelectedAdapter(_function_1));
   }
   
-  private void createTargetLocation(final Composite container) {
-    final Label lblTargetLocation = new Label(container, SWT.NULL);
-    lblTargetLocation.setText("Target Location: ");
+  private void createTargetFolder(final Composite container) {
+    final Label lblTargetFolder = new Label(container, SWT.NULL);
+    lblTargetFolder.setText("Target Folder:");
     final GridData dataTargetLocation = new GridData();
     dataTargetLocation.grabExcessHorizontalSpace = true;
     dataTargetLocation.horizontalAlignment = GridData.FILL;
     dataTargetLocation.horizontalSpan = 2;
     Text _text = new Text(container, SWT.BORDER);
-    this.txtTargetLocation = _text;
-    this.txtTargetLocation.setMessage("Select Directory");
-    this.txtTargetLocation.setEnabled(false);
-    this.txtTargetLocation.setLayoutData(dataTargetLocation);
-    final GridData dataTargetLocationButton = new GridData();
-    dataTargetLocationButton.grabExcessHorizontalSpace = true;
-    dataTargetLocationButton.horizontalAlignment = SWT.RIGHT;
+    this.txtTargetFolder = _text;
+    this.txtTargetFolder.setMessage("Select Target Folder");
+    this.txtTargetFolder.setEnabled(false);
+    this.txtTargetFolder.setLayoutData(dataTargetLocation);
+    final GridData dataTargetFolderButton = new GridData();
+    dataTargetFolderButton.grabExcessHorizontalSpace = true;
+    dataTargetFolderButton.horizontalAlignment = SWT.RIGHT;
     Button _button = new Button(container, SWT.BUTTON1);
-    this.btnBrowseLocation = _button;
-    this.btnBrowseLocation.setText("Browse Filesystem");
-    this.btnBrowseLocation.setLayoutData(dataTargetLocationButton);
+    this.btnBrowseFolder = _button;
+    this.btnBrowseFolder.setText("Select Target Folder");
+    this.btnBrowseFolder.setLayoutData(dataTargetFolderButton);
     final Consumer<SelectionEvent> _function = (SelectionEvent e) -> {
       Shell _shell = this.getShell();
       final DirectoryDialog dirDialog = new DirectoryDialog(_shell);
-      dirDialog.setText("Select your target directory");
+      dirDialog.setText("Select target folder.");
       dirDialog.setFilterPath(ResourcesPlugin.getWorkspace().getRoot().getLocation().toString());
-      final String selectedDir = dirDialog.open();
-      this.txtTargetLocation.setText(selectedDir);
+      this.txtTargetFolder.setText(dirDialog.open());
     };
-    this.btnBrowseLocation.addSelectionListener(SelectionListener.widgetSelectedAdapter(_function));
+    this.btnBrowseFolder.addSelectionListener(SelectionListener.widgetSelectedAdapter(_function));
   }
   
   private void createDataModelName(final Composite container) {
     final Label lblDataModelName = new Label(container, SWT.NULL);
-    lblDataModelName.setText("Data Model Name: ");
+    lblDataModelName.setText("Data Model Name:");
     final GridData dataDataModelName = new GridData();
     dataDataModelName.grabExcessHorizontalSpace = true;
     dataDataModelName.horizontalAlignment = GridData.FILL;
     dataDataModelName.horizontalSpan = 3;
     Text _text = new Text(container, SWT.BORDER);
     this.txtDataModelName = _text;
-    this.txtDataModelName.setMessage("MyServiceData");
+    this.txtDataModelName.setMessage("DataModel");
     this.txtDataModelName.setLayoutData(dataDataModelName);
   }
   
   private void createServiceModelName(final Composite container) {
     final Label lblServiceModelName = new Label(container, SWT.NULL);
-    lblServiceModelName.setText("Service Model Name: ");
+    lblServiceModelName.setText("Service Model Name:");
     final GridData dataServiceModelName = new GridData();
     dataServiceModelName.grabExcessHorizontalSpace = true;
     dataServiceModelName.horizontalAlignment = GridData.FILL;
     dataServiceModelName.horizontalSpan = 3;
     Text _text = new Text(container, SWT.BORDER);
     this.txtServiceModelName = _text;
-    this.txtServiceModelName.setMessage("MyServiceService");
+    this.txtServiceModelName.setMessage("ServiceModel");
     this.txtServiceModelName.setLayoutData(dataServiceModelName);
   }
   
   private void createServicePrefix(final Composite container) {
     final Label lblServicePrefix = new Label(container, SWT.NULL);
-    lblServicePrefix.setText("Service Model Prefix: ");
+    lblServicePrefix.setText("Service Model Prefix:");
     final GridData dataServicePrefix = new GridData();
     dataServicePrefix.grabExcessHorizontalSpace = true;
     dataServicePrefix.horizontalAlignment = GridData.FILL;
     dataServicePrefix.horizontalSpan = 3;
     Text _text = new Text(container, SWT.BORDER);
     this.txtServicePrefix = _text;
-    this.txtServicePrefix.setMessage("de.example");
+    this.txtServicePrefix.setMessage("org.example");
     this.txtServicePrefix.setLayoutData(dataServicePrefix);
   }
   
   private void createTechnologyModelName(final Composite container) {
     final Label lblTechnologyModelName = new Label(container, SWT.NULL);
-    lblTechnologyModelName.setText("Technology Model Name: ");
+    lblTechnologyModelName.setText("Technology Model Name:");
     final GridData dataTechnologyModelName = new GridData();
     dataTechnologyModelName.grabExcessHorizontalSpace = true;
     dataTechnologyModelName.horizontalAlignment = GridData.FILL;
@@ -343,47 +407,6 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     this.txtTechnologyModelName = _text;
     this.txtTechnologyModelName.setMessage("OpenAPI");
     this.txtTechnologyModelName.setLayoutData(dataTechnologyModelName);
-  }
-  
-  /**
-   * Stores the textfield values to actual fields.
-   * Is called when a button in the dialog is pressed.
-   */
-  private boolean saveInput() {
-    URL _xtrycatchfinallyexpression = null;
-    try {
-      String _text = this.txtUrl.getText();
-      _xtrycatchfinallyexpression = new URL(_text);
-    } catch (final Throwable _t) {
-      if (_t instanceof MalformedURLException) {
-        Shell _shell = this.getShell();
-        StringConcatenation _builder = new StringConcatenation();
-        String _text_1 = this.txtUrl.getText();
-        _builder.append(_text_1);
-        _builder.append(" is not a valid url!");
-        MessageDialog.openError(_shell, "Invalid URL", _builder.toString());
-        return false;
-      } else {
-        throw Exceptions.sneakyThrow(_t);
-      }
-    }
-    this.fetchUrl = _xtrycatchfinallyexpression;
-    this.targetLoc = this.txtTargetLocation.getText();
-    this.dataName = this.txtDataModelName.getText();
-    this.servName = this.txtServiceModelName.getText();
-    this.techName = this.txtTechnologyModelName.getText();
-    this.servPre = this.txtServicePrefix.getText();
-    if ((((((!this.targetLoc.trim().isEmpty()) && (!this.dataName.trim().isEmpty())) && 
-      (!this.servName.trim().isEmpty())) && (!this.techName.trim().isEmpty())) && 
-      (!this.servPre.trim().isEmpty()))) {
-      return true;
-    } else {
-      Shell _shell = this.getShell();
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append("Please fill all the fields with proper data.");
-      MessageDialog.openError(_shell, "Empty Fields", _builder.toString());
-      return false;
-    }
   }
   
   /**

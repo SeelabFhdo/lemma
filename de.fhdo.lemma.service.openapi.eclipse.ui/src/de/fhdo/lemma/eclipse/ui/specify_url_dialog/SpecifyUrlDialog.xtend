@@ -24,6 +24,10 @@ import org.eclipse.swt.widgets.FileDialog
 import org.eclipse.jface.dialogs.InputDialog
 import org.eclipse.jface.window.Window
 import java.io.File
+import org.eclipse.jface.dialogs.IInputValidator
+import org.apache.commons.validator.routines.UrlValidator
+
+// TODO: Add Javadoc comments to methods
 
 /**
  * The dialog for the transformation of OpenAPI specifications to LEMMA models.
@@ -35,65 +39,39 @@ class SpecifyUrlDialog extends TitleAreaDialog {
     static val MIN_DIALOG_HEIGHT = 250
 
     Text txtUrl
-    Text txtTargetLocation
+    Text txtTargetFolder
     Text txtDataModelName
-    Text txtServiceModelName
     Text txtTechnologyModelName
+    Text txtServiceModelName
     Text txtServicePrefix
 
-    Button btnBrowseLocation
+    Button btnBrowseFolder
     Button btnUriWebLocation
     Button btnUriFileLocation
 
-    @Accessors(PUBLIC_GETTER) URL fetchUrl
+    @Accessors(PUBLIC_GETTER)
+    URL fetchUrl
 
-    String targetLoc
-    String dataName
-    String servName
-    String servPre
-    String techName
+    String targetFolder
+    String dataModelName
+    String technologyModelName
+    String serviceModelName
+    String servicePrefix
 
     new(Shell parentShell) {
         super(parentShell)
-        //hide question mark on bottom left
         dialogHelpAvailable = false
         helpAvailable = false
     }
 
     /**
-     * OK button was pressed
+     * Create dialog (to be called after constructor and before open())
      */
-    override okPressed() {
-        if(saveInput()) {
-             try {
-                val generator = new LemmaGenerator()
-                val parsingMessages = generator.parse(fetchUrl.toString)
-                MessageDialog.openInformation(this.shell, "Parsing Report",
-                    '''«FOR msg : parsingMessages»
-                    «msg»
-                    «ENDFOR»''')
-                if(generator.isParsed){
-                    generator.generateModels('''«targetLoc»/''', '''«dataName».data''',
-                        '''«techName».technology''', '''«servName».services''', servPre)
-                        MessageDialog.openInformation(this.shell, "Transformation Report",
-                            '''
-                            The transformation was a success!
-                            Encountered problems (empty if none):
-                            «FOR msg : generator.transMsgs»
-                            «msg»
-                            «ENDFOR»''')
-                } else {
-                    MessageDialog.openError(this.shell, "Parsing Error",
-                        '''It was not possible to generate an in-memory '''+
-                        '''representation of the file located at «fetchUrl.toString» .''')
-                }
-
-            } catch (Exception ex) {
-                MessageDialog.openError(this.shell, "Error",
-                '''An error occured during extraction...«ex.printStackTrace»''')
-            }
-            super.okPressed()
-        }
+    override create() {
+        super.create
+        setTitle("Specify OpenAPI Specification URL")
+        setMessage("Specify the URL of the OpenAPI specification from which LEMMA models shall " +
+            "be extracted.", IMessageProvider.INFORMATION)
     }
 
     /**
@@ -109,50 +87,126 @@ class SpecifyUrlDialog extends TitleAreaDialog {
      */
     override buttonPressed(int buttonId) {
         switch (buttonId) {
-            case IDialogConstants.OK_ID: okPressed
-            case IDialogConstants.CANCEL_ID: cancelPressed
+            case IDialogConstants.OK_ID: okPressed()
+            case IDialogConstants.CANCEL_ID: cancelPressed()
         }
     }
 
     /**
-     * Create dialog (to be called after constructor and before open())
+     * OK button was pressed
      */
-    override create() {
-        super.create
-        setTitle("Specify OpenAPI Address");
-        setMessage("Specify the url of the OpenAPI specification from which the " +
-        "LEMMA models should be extracted.", IMessageProvider.INFORMATION)
+    override okPressed() {
+        if (!syncInput()) {
+            return
+        }
+
+         try {
+            val generator = new LemmaGenerator()
+            val parsingMessages = generator.parse(fetchUrl.toString)
+            MessageDialog.openInformation(this.shell, "Parsing Report",
+                '''«FOR msg : parsingMessages»
+                «msg»
+                «ENDFOR»''')
+
+            if (generator.isParsed){
+                generator.generateModels(
+                    targetFolder,
+                    '''«dataModelName».data''',
+                    '''«technologyModelName».technology''',
+                    '''«serviceModelName».services''',
+                    servicePrefix
+                )
+
+                if (generator.transMsgs.empty)
+                    MessageDialog.openInformation(shell, "Transformation Report",
+                        "Transformation successfully completed")
+                else
+                    // TODO: The original code talked about "problems" when transMsgs is not empty.
+                    //       Is that correct (I also invoke openError() here for that reason)?
+                    MessageDialog.openError(shell, "Transformation Report",
+                        '''
+                        There were error during the transformation:
+                        «FOR msg : generator.transMsgs»
+                            - «msg»
+                        «ENDFOR»
+                        '''
+                    )
+            } else
+                MessageDialog.openError(shell, "Parsing Error", "Generation of in-memory " +
+                    "representation not possible for the OpenAPI specification URL " +
+                    fetchUrl.toString)
+
+        } catch (Exception ex) {
+            // TODO: I recognized that throughout all OpenAPI plugins the terms "extraction",
+            //       "generation", and "transformation are used interchangeably. Please decide for
+            //       one term and use it consistently.
+            MessageDialog.openError(shell, "Error", "Error during extraction: " +
+                ex.message)
+        }
+
+        super.okPressed()
+    }
+
+    /**
+     * Synchronize user input with class state
+     */
+    private def syncInput() {
+        fetchUrl = try {
+                new URL(txtUrl.getText)
+            } catch (MalformedURLException ex) {
+                MessageDialog.openError(shell, "Invalid URL", '''«txtUrl.getText» is not a ''' +
+                    "valid URL")
+                return false
+            }
+
+        targetFolder = txtTargetFolder.getText.trim
+        dataModelName = txtDataModelName.getText.trim
+        technologyModelName = txtTechnologyModelName.text.trim
+        serviceModelName = txtServiceModelName.getText.trim
+        servicePrefix = txtServicePrefix.text.trim
+
+        val missingValues = targetFolder.empty ||
+            dataModelName.empty ||
+            technologyModelName.empty ||
+            serviceModelName.empty ||
+            servicePrefix.empty
+        if (missingValues)
+            MessageDialog.openError(this.shell, "Missing Field Values", "Please specify a value " +
+                "for each field")
+        return !missingValues
     }
 
     override createDialogArea(Composite parent) {
         val area = super.createDialogArea(parent) as Composite
+
         val container = new Composite(area, SWT.NULL)
         container.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true))
+
         val layout = new GridLayout(4, false)
         layout.verticalSpacing = 10
+
         container.setLayout(layout)
         createUrl(container)
-        createTargetLocation(container)
+        createTargetFolder(container)
         createDataModelName(container)
         createServiceModelName(container)
         createServicePrefix(container)
         createTechnologyModelName(container)
+
         return area
     }
 
     private def createUrl(Composite container) {
         val lblUrl = new Label(container, SWT.NONE)
-        lblUrl.setText("URL: ")
+        lblUrl.setText("URL:")
 
         val dataUrl = new GridData()
         dataUrl.grabExcessHorizontalSpace = true
         dataUrl.horizontalAlignment = GridData.FILL
         dataUrl.horizontalSpan = 1
-        //forced with of window
         dataUrl.widthHint = (shell.size.x * 0.3) as int
 
         txtUrl = new Text(container, SWT.BORDER)
-        txtUrl.message = "e.g. https://petstore3.swagger.io/api/v3/openapi.json"
         txtUrl.enabled = false
         txtUrl.setLayoutData(dataUrl)
 
@@ -164,12 +218,17 @@ class SpecifyUrlDialog extends TitleAreaDialog {
         btnUriWebLocation.text = "Enter URL"
         btnUriWebLocation.setLayoutData(uriWebLocationButton)
         btnUriWebLocation.addSelectionListener(SelectionListener.widgetSelectedAdapter([ e |
-            val urlDialog = new InputDialog(shell, "", "Enter URL",
-                "Please enter the URL", new UrlTextValidator());
-            //dirDialog.filterPath = ResourcesPlugin.getWorkspace().getRoot().getLocation().toString()
-            if (urlDialog.open() == Window.OK) {
+            val urlDialog = new InputDialog(
+                    shell,
+                    "",
+                    "Enter OpenAPI specification URL",
+                    "Please enter a URL to an OpenAPI specification, e.g., " +
+                    "https://petstore3.swagger.io/api/v3/openapi.json",
+                    new UrlInputValidator()
+                )
+
+            if (urlDialog.open() == Window.OK)
                 txtUrl.text = urlDialog.getValue()
-            }
         ]))
 
         val uriFileLocationButton = new GridData()
@@ -177,51 +236,67 @@ class SpecifyUrlDialog extends TitleAreaDialog {
         uriFileLocationButton.horizontalAlignment = SWT.RIGHT
 
         btnUriFileLocation = new Button(container, SWT.BUTTON1)
-        btnUriFileLocation.text = "Browse Filesystem"
+        btnUriFileLocation.text = "Select OpenAPI Specification File"
         btnUriFileLocation.setLayoutData(uriWebLocationButton)
         btnUriFileLocation.addSelectionListener(SelectionListener.widgetSelectedAdapter([ e |
-            // Starting point not specified, i.e., set to default OS selection
-            val fileDialog = new FileDialog(shell);
-            fileDialog.setText("Select your OpenAPI file")
+            val fileDialog = new FileDialog(shell)
+            fileDialog.setText("Please select an OpenAPI specification file")
+            // TODO: What happens if open() returns null?
             val selectedFile = fileDialog.open()
             txtUrl.text = new File(selectedFile).toURI.toString
         ]))
     }
 
-    private def createTargetLocation(Composite container) {
-        val lblTargetLocation = new Label(container, SWT.NULL)
-        lblTargetLocation.setText("Target Location: ")
+    /**
+     * Validator for strings to represent valid URLs
+     */
+    private static class UrlInputValidator implements IInputValidator {
+        /**
+         * Perform the validation
+         */
+        override isValid(String newUrl) {
+            return if (new UrlValidator().isValid(newUrl))
+                null
+            else
+                "Invalid URL"
+        }
+    }
+
+    private def createTargetFolder(Composite container) {
+        val lblTargetFolder = new Label(container, SWT.NULL)
+        lblTargetFolder.setText("Target Folder:")
 
         val dataTargetLocation = new GridData()
         dataTargetLocation.grabExcessHorizontalSpace = true
         dataTargetLocation.horizontalAlignment = GridData.FILL
         dataTargetLocation.horizontalSpan = 2
 
-        txtTargetLocation = new Text(container, SWT.BORDER)
-        txtTargetLocation.message = "Select Directory"
-        txtTargetLocation.enabled = false
-        txtTargetLocation.setLayoutData(dataTargetLocation)
+        txtTargetFolder = new Text(container, SWT.BORDER)
+        // TODO: Target folder for what?
+        txtTargetFolder.message = "Select Target Folder"
+        txtTargetFolder.enabled = false
+        txtTargetFolder.setLayoutData(dataTargetLocation)
 
-        val dataTargetLocationButton = new GridData()
-        dataTargetLocationButton.grabExcessHorizontalSpace = true
-        dataTargetLocationButton.horizontalAlignment = SWT.RIGHT
+        val dataTargetFolderButton = new GridData()
+        dataTargetFolderButton.grabExcessHorizontalSpace = true
+        dataTargetFolderButton.horizontalAlignment = SWT.RIGHT
 
-        btnBrowseLocation = new Button(container, SWT.BUTTON1)
-        btnBrowseLocation.text = "Browse Filesystem"
-        btnBrowseLocation.setLayoutData(dataTargetLocationButton)
-        btnBrowseLocation.addSelectionListener(SelectionListener.widgetSelectedAdapter([ e |
-            // Directory standard selection set default to workspace
-            val dirDialog = new DirectoryDialog(shell);
-            dirDialog.setText("Select your target directory")
+        btnBrowseFolder = new Button(container, SWT.BUTTON1)
+        // TODO: Target folder for what?
+        btnBrowseFolder.text = "Select Target Folder"
+        btnBrowseFolder.setLayoutData(dataTargetFolderButton)
+        btnBrowseFolder.addSelectionListener(SelectionListener.widgetSelectedAdapter([ e |
+            val dirDialog = new DirectoryDialog(shell)
+            // TODO: Target folder for what?
+            dirDialog.setText("Select target folder.")
             dirDialog.filterPath = ResourcesPlugin.getWorkspace().getRoot().getLocation().toString()
-            val selectedDir = dirDialog.open()
-            txtTargetLocation.text = selectedDir
+            txtTargetFolder.text = dirDialog.open()
         ]))
     }
 
     private def createDataModelName(Composite container) {
         val lblDataModelName = new Label(container, SWT.NULL)
-        lblDataModelName.setText("Data Model Name: ")
+        lblDataModelName.setText("Data Model Name:")
 
         val dataDataModelName = new GridData()
         dataDataModelName.grabExcessHorizontalSpace = true
@@ -229,13 +304,13 @@ class SpecifyUrlDialog extends TitleAreaDialog {
         dataDataModelName.horizontalSpan = 3
 
         txtDataModelName = new Text(container, SWT.BORDER)
-        txtDataModelName.message = "MyServiceData"
+        txtDataModelName.message = "DataModel"
         txtDataModelName.setLayoutData(dataDataModelName)
     }
 
     private def createServiceModelName(Composite container) {
         val lblServiceModelName = new Label(container, SWT.NULL)
-        lblServiceModelName.setText("Service Model Name: ")
+        lblServiceModelName.setText("Service Model Name:")
 
         val dataServiceModelName = new GridData()
         dataServiceModelName.grabExcessHorizontalSpace = true
@@ -243,13 +318,13 @@ class SpecifyUrlDialog extends TitleAreaDialog {
         dataServiceModelName.horizontalSpan = 3
 
         txtServiceModelName = new Text(container, SWT.BORDER)
-        txtServiceModelName.message = "MyServiceService"
+        txtServiceModelName.message = "ServiceModel"
         txtServiceModelName.setLayoutData(dataServiceModelName)
     }
 
     private def createServicePrefix(Composite container) {
         val lblServicePrefix = new Label(container, SWT.NULL)
-        lblServicePrefix.setText("Service Model Prefix: ")
+        lblServicePrefix.setText("Service Model Prefix:")
 
         val dataServicePrefix = new GridData()
         dataServicePrefix.grabExcessHorizontalSpace = true
@@ -257,13 +332,13 @@ class SpecifyUrlDialog extends TitleAreaDialog {
         dataServicePrefix.horizontalSpan = 3
 
         txtServicePrefix = new Text(container, SWT.BORDER)
-        txtServicePrefix.message = "de.example"
+        txtServicePrefix.message = "org.example"
         txtServicePrefix.setLayoutData(dataServicePrefix)
     }
 
     private def createTechnologyModelName(Composite container) {
         val lblTechnologyModelName = new Label(container, SWT.NULL)
-        lblTechnologyModelName.setText("Technology Model Name: ")
+        lblTechnologyModelName.setText("Technology Model Name:")
 
         val dataTechnologyModelName = new GridData()
         dataTechnologyModelName.grabExcessHorizontalSpace = true
@@ -273,38 +348,6 @@ class SpecifyUrlDialog extends TitleAreaDialog {
         txtTechnologyModelName = new Text(container, SWT.BORDER)
         txtTechnologyModelName.message = "OpenAPI"
         txtTechnologyModelName.setLayoutData(dataTechnologyModelName)
-    }
-
-    /**
-     * Stores the textfield values to actual fields.
-     * Is called when a button in the dialog is pressed.
-     */
-    private def saveInput() {
-        this.fetchUrl = try {
-            new URL(txtUrl.getText)
-        } catch (MalformedURLException e) {
-            MessageDialog.openError(this.shell, "Invalid URL",
-                '''«txtUrl.getText» is not a valid url!'''
-            )
-            return false
-        }
-            this.targetLoc = txtTargetLocation.getText
-            this.dataName = txtDataModelName.getText
-            this.servName = txtServiceModelName.getText
-            this.techName = txtTechnologyModelName.text
-            this.servPre = txtServicePrefix.text
-        if(!this.targetLoc.trim.isEmpty && !this.dataName.trim.isEmpty &&
-            !this.servName.trim.isEmpty && !this.techName.trim.isEmpty &&
-            !this.servPre.trim.isEmpty
-        ) {
-            return true
-        } else {
-            MessageDialog.openError(this.shell, "Empty Fields",
-                '''Please fill all the fields with proper data.'''
-            )
-            return false
-        }
-
     }
 
     /**
@@ -324,6 +367,4 @@ class SpecifyUrlDialog extends TitleAreaDialog {
             Math.max(convertVerticalDLUsToPixels(MIN_DIALOG_HEIGHT), shellSize.y)
         )
     }
-
-
 }
