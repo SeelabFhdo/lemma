@@ -19,34 +19,26 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
-         <menu
-               label="LEMMA"
-               mnemonic="D"
-               id="de.fhdo.lemma.eclipse.ui.lemmaMenu">
-            <separator
-                  name="extractionSeparator"
-                  visible="true">
-            </separator>
-            <command
-                  commandId="de.fhdo.lemma.eclipse.ui.commands.extractModelsFromOpenApi"
-                  icon="icons/extractModelsFromOpenApi.gif"
-                  id="de.fhdo.lemma.eclipse.ui.lemmaMenu.extractModelsFromOpenApi"
-                  label="Extract LEMMA Models from OpenAPI Specification">
-            </command>
-         </menu>
+        locationURI="menu:de.fhdo.lemma.eclipse.ui.lemmaMenu?after=de.fhdo.lemma.eclipse.ui.lemmaMenu.generateOperationIntermediateModelsForWorkspace">
+        <separator
+              name="openApiExtractionSeparator"
+              visible="true">
+        </separator>
+        <command
+              commandId="de.fhdo.lemma.eclipse.ui.commands.extractModelsFromOpenApi"
+              icon="icons/extractModelsFromOpenApi.gif"
+              id="de.fhdo.lemma.eclipse.ui.lemmaMenu.extractModelsFromOpenApi"
+              label="Extract LEMMA Models from OpenAPI Specification">
+        </command>
       </menuContribution>
       <menuContribution
-            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
-         <toolbar
-               id="de.fhdo.lemma.eclipse.ui.lemmaToolbar">
-            <command
-                  commandId="de.fhdo.lemma.eclipse.ui.commands.extractModelsFromOpenApi"
-                  icon="icons/extractModelsFromOpenApi.gif"
-                  id="de.fhdo.lemma.eclipse.ui.toolbars.extractModelsFromOpenApi"
-                  tooltip="Extract LEMMA Models from OpenAPI Specification">
-            </command>
-         </toolbar>
+            locationURI="toolbar:de.fhdo.lemma.eclipse.ui.lemmaToolbar?after=de.fhdo.lemma.eclipse.ui.toolbars.generateOperationIntermediateModels">
+        <command
+              commandId="de.fhdo.lemma.eclipse.ui.commands.extractModelsFromOpenApi"
+              icon="icons/extractModelsFromOpenApi.gif"
+              id="de.fhdo.lemma.eclipse.ui.toolbars.extractModelsFromOpenApi"
+              tooltip="Extract LEMMA Models from OpenAPI Specification">
+        </command>
       </menuContribution>
    </extension>
 </plugin>
