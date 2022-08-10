@@ -125,9 +125,6 @@
                         name="de.fhdo.lemma.eclipse.ui.commands.parameters.selectedModelsOnly"
                         value="true"/>
             </command>
-         </toolbar>
-         <toolbar
-               id="de.fhdo.lemma.eclipse.ui.lemmaToolbar">
             <command
                   commandId="de.fhdo.lemma.eclipse.ui.commands.generateOperationIntermediateModels"
                   icon="icons/generateIntermediateOperationModels.gif"
