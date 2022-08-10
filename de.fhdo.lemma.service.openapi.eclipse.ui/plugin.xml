@@ -6,7 +6,7 @@
       <command
             categoryId="de.fhdo.lemma.eclipse.ui.category.lemmaCommands"
             id="de.fhdo.lemma.eclipse.ui.commands.extractModelsFromOpenApi"
-            name="Extract LEMMA Models from OpenAPI">
+            name="Extract LEMMA Models from OpenAPI Specification">
       </command>
    </extension>
    <extension
@@ -32,7 +32,7 @@
                   commandId="de.fhdo.lemma.eclipse.ui.commands.extractModelsFromOpenApi"
                   icon="icons/extractModelsFromOpenApi.gif"
                   id="de.fhdo.lemma.eclipse.ui.lemmaMenu.extractModelsFromOpenApi"
-                  label="Extract LEMMA Models from OpenApi Specification">
+                  label="Extract LEMMA Models from OpenAPI Specification">
             </command>
          </menu>
       </menuContribution>
@@ -44,7 +44,7 @@
                   commandId="de.fhdo.lemma.eclipse.ui.commands.extractModelsFromOpenApi"
                   icon="icons/extractModelsFromOpenApi.gif"
                   id="de.fhdo.lemma.eclipse.ui.toolbars.extractModelsFromOpenApi"
-                  tooltip="Extract LEMMA Models from OpenAPI Spec">
+                  tooltip="Extract LEMMA Models from OpenAPI Specification">
             </command>
          </toolbar>
       </menuContribution>
