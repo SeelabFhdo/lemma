@@ -1,6 +1,7 @@
 package de.fhdo.lemma.eclipse.ui.specify_url_dialog;
 
 import de.fhdo.lemma.service.openapi.LemmaGenerator;
+import de.fhdo.lemma.service.openapi.LemmaTechnologySubGenerator;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -64,9 +65,9 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     }
   }
   
-  private static final int MIN_DIALOG_WIDTH = 400;
+  private static final int MIN_DIALOG_WIDTH = 500;
   
-  private static final int MIN_DIALOG_HEIGHT = 250;
+  private static final int MIN_DIALOG_HEIGHT = 150;
   
   private Text txtUrl;
   
@@ -113,7 +114,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     super.create();
     this.setTitle("Specify OpenAPI Specification URL");
     this.setMessage(("Specify the URL of the OpenAPI specification from which LEMMA models shall " + 
-      "be extracted."), IMessageProvider.INFORMATION);
+      "be extracted"), IMessageProvider.INFORMATION);
   }
   
   /**
@@ -262,47 +263,49 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
   public Control createDialogArea(final Composite parent) {
     Control _createDialogArea = super.createDialogArea(parent);
     final Composite area = ((Composite) _createDialogArea);
-    final Composite container = new Composite(area, SWT.NULL);
+    final Composite container = new Composite(area, SWT.NONE);
     GridData _gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
     container.setLayoutData(_gridData);
-    final GridLayout layout = new GridLayout(4, false);
-    layout.verticalSpacing = 10;
-    container.setLayout(layout);
+    GridLayout _gridLayout = new GridLayout(3, false);
+    container.setLayout(_gridLayout);
     this.createUrl(container);
     this.createTargetFolder(container);
     this.createDataModelName(container);
     this.createServiceModelName(container);
     this.createServicePrefix(container);
     this.createTechnologyModelName(container);
-    return area;
+    return container;
   }
   
-  private void createUrl(final Composite container) {
-    final Label lblUrl = new Label(container, SWT.NONE);
-    lblUrl.setText("URL:");
-    final GridData dataUrl = new GridData();
-    dataUrl.grabExcessHorizontalSpace = true;
-    dataUrl.horizontalAlignment = GridData.FILL;
-    dataUrl.horizontalSpan = 1;
-    dataUrl.widthHint = ((int) (this.getShell().getSize().x * 0.3));
-    Text _text = new Text(container, SWT.BORDER);
+  private void createUrl(final Composite parent) {
+    Label _label = new Label(parent, SWT.NULL);
+    _label.setText("URL:");
+    Text _text = new Text(parent, SWT.BORDER);
     this.txtUrl = _text;
+    this.txtUrl.setMessage("Specify URL or Select File");
+    final GridData layoutData = new GridData(SWT.FILL, SWT.FILL, true, false);
+    layoutData.widthHint = ((int) (this.getShell().getSize().x * 0.3));
     this.txtUrl.setEnabled(false);
-    this.txtUrl.setLayoutData(dataUrl);
-    final GridData uriWebLocationButton = new GridData();
-    uriWebLocationButton.grabExcessHorizontalSpace = true;
-    uriWebLocationButton.horizontalAlignment = SWT.RIGHT;
-    Button _button = new Button(container, SWT.BUTTON1);
+    this.txtUrl.setLayoutData(layoutData);
+    final Composite buttonBar = new Composite(parent, SWT.NONE);
+    GridData _gridData = new GridData(SWT.FILL, SWT.FILL, true, false);
+    buttonBar.setLayoutData(_gridData);
+    final GridLayout layout = new GridLayout(2, false);
+    layout.marginHeight = 0;
+    layout.marginWidth = 0;
+    buttonBar.setLayout(layout);
+    Button _button = new Button(buttonBar, SWT.PUSH);
     this.btnUriWebLocation = _button;
-    this.btnUriWebLocation.setText("Enter URL");
-    this.btnUriWebLocation.setLayoutData(uriWebLocationButton);
+    this.btnUriWebLocation.setText("Specify URL");
+    GridData _gridData_1 = new GridData(SWT.FILL, SWT.FILL, true, false);
+    this.btnUriWebLocation.setLayoutData(_gridData_1);
     final Consumer<SelectionEvent> _function = (SelectionEvent e) -> {
       Shell _shell = this.getShell();
       SpecifyUrlDialog.UrlInputValidator _urlInputValidator = new SpecifyUrlDialog.UrlInputValidator();
       final InputDialog urlDialog = new InputDialog(_shell, 
         "", 
-        "Enter OpenAPI specification URL", 
-        ("Please enter a URL to an OpenAPI specification, e.g., " + 
+        "Specify OpenAPI specification URL", 
+        ("Please specify a URL to an OpenAPI specification, e.g., " + 
           "https://petstore3.swagger.io/api/v3/openapi.json"), _urlInputValidator);
       int _open = urlDialog.open();
       boolean _equals = (_open == Window.OK);
@@ -311,13 +314,11 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
       }
     };
     this.btnUriWebLocation.addSelectionListener(SelectionListener.widgetSelectedAdapter(_function));
-    final GridData uriFileLocationButton = new GridData();
-    uriFileLocationButton.grabExcessHorizontalSpace = true;
-    uriFileLocationButton.horizontalAlignment = SWT.RIGHT;
-    Button _button_1 = new Button(container, SWT.BUTTON1);
+    Button _button_1 = new Button(buttonBar, SWT.BUTTON1);
     this.btnUriFileLocation = _button_1;
     this.btnUriFileLocation.setText("Select OpenAPI Specification File");
-    this.btnUriFileLocation.setLayoutData(uriWebLocationButton);
+    GridData _gridData_2 = new GridData(SWT.FILL, SWT.FILL, true, false);
+    this.btnUriFileLocation.setLayoutData(_gridData_2);
     final Consumer<SelectionEvent> _function_1 = (SelectionEvent e) -> {
       Shell _shell = this.getShell();
       final FileDialog fileDialog = new FileDialog(_shell);
@@ -328,25 +329,20 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     this.btnUriFileLocation.addSelectionListener(SelectionListener.widgetSelectedAdapter(_function_1));
   }
   
-  private void createTargetFolder(final Composite container) {
-    final Label lblTargetFolder = new Label(container, SWT.NULL);
-    lblTargetFolder.setText("Target Folder:");
-    final GridData dataTargetLocation = new GridData();
-    dataTargetLocation.grabExcessHorizontalSpace = true;
-    dataTargetLocation.horizontalAlignment = GridData.FILL;
-    dataTargetLocation.horizontalSpan = 2;
-    Text _text = new Text(container, SWT.BORDER);
+  private void createTargetFolder(final Composite parent) {
+    Label _label = new Label(parent, SWT.NULL);
+    _label.setText("Target Folder:");
+    Text _text = new Text(parent, SWT.BORDER);
     this.txtTargetFolder = _text;
     this.txtTargetFolder.setMessage("Select Target Folder");
     this.txtTargetFolder.setEnabled(false);
-    this.txtTargetFolder.setLayoutData(dataTargetLocation);
-    final GridData dataTargetFolderButton = new GridData();
-    dataTargetFolderButton.grabExcessHorizontalSpace = true;
-    dataTargetFolderButton.horizontalAlignment = SWT.RIGHT;
-    Button _button = new Button(container, SWT.BUTTON1);
+    GridData _gridData = new GridData(SWT.FILL, SWT.FILL, true, false);
+    this.txtTargetFolder.setLayoutData(_gridData);
+    Button _button = new Button(parent, SWT.PUSH);
     this.btnBrowseFolder = _button;
     this.btnBrowseFolder.setText("Select Target Folder");
-    this.btnBrowseFolder.setLayoutData(dataTargetFolderButton);
+    GridData _gridData_1 = new GridData(SWT.FILL, SWT.FILL, true, false);
+    this.btnBrowseFolder.setLayoutData(_gridData_1);
     final Consumer<SelectionEvent> _function = (SelectionEvent e) -> {
       Shell _shell = this.getShell();
       final DirectoryDialog dirDialog = new DirectoryDialog(_shell);
@@ -360,53 +356,45 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
   private void createDataModelName(final Composite container) {
     final Label lblDataModelName = new Label(container, SWT.NULL);
     lblDataModelName.setText("Data Model Name:");
-    final GridData dataDataModelName = new GridData();
-    dataDataModelName.grabExcessHorizontalSpace = true;
-    dataDataModelName.horizontalAlignment = GridData.FILL;
-    dataDataModelName.horizontalSpan = 3;
     Text _text = new Text(container, SWT.BORDER);
     this.txtDataModelName = _text;
-    this.txtDataModelName.setMessage("DataModel");
-    this.txtDataModelName.setLayoutData(dataDataModelName);
-  }
-  
-  private void createServiceModelName(final Composite container) {
-    final Label lblServiceModelName = new Label(container, SWT.NULL);
-    lblServiceModelName.setText("Service Model Name:");
-    final GridData dataServiceModelName = new GridData();
-    dataServiceModelName.grabExcessHorizontalSpace = true;
-    dataServiceModelName.horizontalAlignment = GridData.FILL;
-    dataServiceModelName.horizontalSpan = 3;
-    Text _text = new Text(container, SWT.BORDER);
-    this.txtServiceModelName = _text;
-    this.txtServiceModelName.setMessage("ServiceModel");
-    this.txtServiceModelName.setLayoutData(dataServiceModelName);
-  }
-  
-  private void createServicePrefix(final Composite container) {
-    final Label lblServicePrefix = new Label(container, SWT.NULL);
-    lblServicePrefix.setText("Service Model Prefix:");
-    final GridData dataServicePrefix = new GridData();
-    dataServicePrefix.grabExcessHorizontalSpace = true;
-    dataServicePrefix.horizontalAlignment = GridData.FILL;
-    dataServicePrefix.horizontalSpan = 3;
-    Text _text = new Text(container, SWT.BORDER);
-    this.txtServicePrefix = _text;
-    this.txtServicePrefix.setMessage("org.example");
-    this.txtServicePrefix.setLayoutData(dataServicePrefix);
+    this.txtDataModelName.setMessage("Data Model Name");
+    final GridData layoutData = new GridData(SWT.FILL, SWT.FILL, true, false);
+    layoutData.horizontalSpan = 2;
+    this.txtDataModelName.setLayoutData(layoutData);
   }
   
   private void createTechnologyModelName(final Composite container) {
     final Label lblTechnologyModelName = new Label(container, SWT.NULL);
     lblTechnologyModelName.setText("Technology Model Name:");
-    final GridData dataTechnologyModelName = new GridData();
-    dataTechnologyModelName.grabExcessHorizontalSpace = true;
-    dataTechnologyModelName.horizontalAlignment = GridData.FILL;
-    dataTechnologyModelName.horizontalSpan = 3;
     Text _text = new Text(container, SWT.BORDER);
     this.txtTechnologyModelName = _text;
-    this.txtTechnologyModelName.setMessage("OpenAPI");
-    this.txtTechnologyModelName.setLayoutData(dataTechnologyModelName);
+    this.txtTechnologyModelName.setText(LemmaTechnologySubGenerator.TECHNOLOGY_MODEL_NAME);
+    final GridData layoutData = new GridData(SWT.FILL, SWT.FILL, true, false);
+    layoutData.horizontalSpan = 2;
+    this.txtTechnologyModelName.setLayoutData(layoutData);
+  }
+  
+  private void createServiceModelName(final Composite container) {
+    final Label lblServiceModelName = new Label(container, SWT.NULL);
+    lblServiceModelName.setText("Service Model Name:");
+    Text _text = new Text(container, SWT.BORDER);
+    this.txtServiceModelName = _text;
+    this.txtServiceModelName.setMessage("Service Model Name");
+    final GridData layoutData = new GridData(SWT.FILL, SWT.FILL, true, false);
+    layoutData.horizontalSpan = 2;
+    this.txtServiceModelName.setLayoutData(layoutData);
+  }
+  
+  private void createServicePrefix(final Composite container) {
+    final Label lblServicePrefix = new Label(container, SWT.NULL);
+    lblServicePrefix.setText("Service Model Prefix:");
+    Text _text = new Text(container, SWT.BORDER);
+    this.txtServicePrefix = _text;
+    this.txtServicePrefix.setMessage("org.example");
+    final GridData layoutData = new GridData(SWT.FILL, SWT.FILL, true, false);
+    layoutData.horizontalSpan = 2;
+    this.txtServicePrefix.setLayoutData(layoutData);
   }
   
   /**

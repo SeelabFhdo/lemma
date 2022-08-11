@@ -61,7 +61,7 @@ public class LemmaTechnologySubGenerator {
   
   public static final String UNSPECIFIED_ASPECT_NAME = "Unspecified";
   
-  private static final String TECHNOLOGY_MODEL_NAME = "OpenApi";
+  public static final String TECHNOLOGY_MODEL_NAME = "OpenApi";
   
   private static final String DEFAULT_DATA_FORMAT = "application/json";
   
