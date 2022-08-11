@@ -186,9 +186,9 @@ class SpecifyUrlDialog extends TitleAreaDialog {
         createUrl(container)
         createTargetFolder(container)
         createDataModelName(container)
+        createTechnologyModelName(container)
         createServiceModelName(container)
         createServicePrefix(container)
-        createTechnologyModelName(container)
 
         return container
     }
