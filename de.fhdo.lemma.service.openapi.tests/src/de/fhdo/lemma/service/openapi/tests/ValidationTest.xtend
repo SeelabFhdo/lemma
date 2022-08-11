@@ -1,10 +1,9 @@
 package de.fhdo.lemma.service.openapi.tests
 
-import static org.junit.Assert.assertEquals
-import static org.junit.Assert.assertNotEquals
-
 import org.junit.Test
 import de.fhdo.lemma.service.openapi.LemmaGenerator
+
+import static org.junit.Assert.*
 
 /**
  * This class tests the the generation of LEMMA models from an OpenAPI specification file (v3.0.3).
@@ -19,15 +18,16 @@ class ValidationTest {
     def void schemaShouldNotHaveErrors() {
         val generator = new LemmaGenerator()
         val parsedSchema = generator.parse(SCHEMA_PATH)
-        assertEquals(
-                "Zero errors should be detected while parsing/validating",
-                "No errors or warnings encountered",
-                parsedSchema.get(parsedSchema.length-2)
-            )
-        assertNotEquals(
-            "Message Object must not be null while parsing",
-            "There was an error generating the in-memory model for the given URL",
-            parsedSchema.get(parsedSchema.length-1)
+
+        assertTrue(
+            "Schema should not contain errors or warnings",
+            parsedSchema.contains("No errors or warnings encountered")
+        )
+
+        assertFalse(
+            "Generation of in-memory model must be possible from error- and warning-free schema",
+            parsedSchema.contains("There was an error generating the in-memory model for the " +
+                "given URL")
         )
     }
 }
