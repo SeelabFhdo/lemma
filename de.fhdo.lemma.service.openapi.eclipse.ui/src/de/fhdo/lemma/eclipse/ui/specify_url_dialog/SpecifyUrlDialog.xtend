@@ -26,6 +26,7 @@ import org.eclipse.jface.window.Window
 import java.io.File
 import org.eclipse.jface.dialogs.IInputValidator
 import org.apache.commons.validator.routines.UrlValidator
+import de.fhdo.lemma.service.openapi.LemmaTechnologySubGenerator
 
 // TODO: Add Javadoc comments to methods
 
@@ -35,8 +36,8 @@ import org.apache.commons.validator.routines.UrlValidator
  * @author <a href="mailto:jonas.sorgalla@fh-dortmund.de">Jonas Sorgalla</a>
  */
 class SpecifyUrlDialog extends TitleAreaDialog {
-    static val MIN_DIALOG_WIDTH = 400
-    static val MIN_DIALOG_HEIGHT = 250
+    static val MIN_DIALOG_WIDTH = 500
+    static val MIN_DIALOG_HEIGHT = 150
 
     Text txtUrl
     Text txtTargetFolder
@@ -68,10 +69,10 @@ class SpecifyUrlDialog extends TitleAreaDialog {
      * Create dialog (to be called after constructor and before open())
      */
     override create() {
-        super.create
-        setTitle("Specify OpenAPI Specification URL")
+        super.create()
+        title = "Specify OpenAPI Specification URL"
         setMessage("Specify the URL of the OpenAPI specification from which LEMMA models shall " +
-            "be extracted.", IMessageProvider.INFORMATION)
+            "be extracted", IMessageProvider.INFORMATION)
     }
 
     /**
@@ -100,7 +101,7 @@ class SpecifyUrlDialog extends TitleAreaDialog {
             return
         }
 
-         try {
+        try {
             val generator = new LemmaGenerator()
             val parsingMessages = generator.parse(fetchUrl.toString)
             MessageDialog.openInformation(this.shell, "Parsing Report",
@@ -178,14 +179,10 @@ class SpecifyUrlDialog extends TitleAreaDialog {
 
     override createDialogArea(Composite parent) {
         val area = super.createDialogArea(parent) as Composite
+        val container = new Composite(area, SWT.NONE)
+        container.layoutData = new GridData(SWT.FILL, SWT.FILL, true, true)
+        container.layout = new GridLayout(3, false)
 
-        val container = new Composite(area, SWT.NULL)
-        container.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true))
-
-        val layout = new GridLayout(4, false)
-        layout.verticalSpacing = 10
-
-        container.setLayout(layout)
         createUrl(container)
         createTargetFolder(container)
         createDataModelName(container)
@@ -193,36 +190,37 @@ class SpecifyUrlDialog extends TitleAreaDialog {
         createServicePrefix(container)
         createTechnologyModelName(container)
 
-        return area
+        return container
     }
 
-    private def createUrl(Composite container) {
-        val lblUrl = new Label(container, SWT.NONE)
-        lblUrl.setText("URL:")
+    private def createUrl(Composite parent) {
+        // TODO: It seems inconsistent that the label is named "URL:" while the text field also
+        //       allows the selection of a file
+        new Label(parent, SWT.NULL).text = "URL:"
 
-        val dataUrl = new GridData()
-        dataUrl.grabExcessHorizontalSpace = true
-        dataUrl.horizontalAlignment = GridData.FILL
-        dataUrl.horizontalSpan = 1
-        dataUrl.widthHint = (shell.size.x * 0.3) as int
-
-        txtUrl = new Text(container, SWT.BORDER)
+        txtUrl = new Text(parent, SWT.BORDER)
+        txtUrl.message = "Specify URL or Select File"
+        val layoutData = new GridData(SWT.FILL, SWT.FILL, true, false)
+        layoutData.widthHint = (shell.size.x * 0.3) as int
         txtUrl.enabled = false
-        txtUrl.setLayoutData(dataUrl)
+        txtUrl.layoutData = layoutData
 
-        val uriWebLocationButton = new GridData()
-        uriWebLocationButton.grabExcessHorizontalSpace = true
-        uriWebLocationButton.horizontalAlignment = SWT.RIGHT
+        val buttonBar = new Composite(parent, SWT.NONE)
+        buttonBar.layoutData = new GridData(SWT.FILL, SWT.FILL, true, false)
+        val layout = new GridLayout(2, false)
+        layout.marginHeight = 0
+        layout.marginWidth = 0
+        buttonBar.layout = layout
 
-        btnUriWebLocation = new Button(container, SWT.BUTTON1)
-        btnUriWebLocation.text = "Enter URL"
-        btnUriWebLocation.setLayoutData(uriWebLocationButton)
+        btnUriWebLocation = new Button(buttonBar, SWT.PUSH)
+        btnUriWebLocation.text = "Specify URL"
+        btnUriWebLocation.layoutData = new GridData(SWT.FILL, SWT.FILL, true, false)
         btnUriWebLocation.addSelectionListener(SelectionListener.widgetSelectedAdapter([ e |
             val urlDialog = new InputDialog(
                     shell,
                     "",
-                    "Enter OpenAPI specification URL",
-                    "Please enter a URL to an OpenAPI specification, e.g., " +
+                    "Specify OpenAPI specification URL",
+                    "Please specify a URL to an OpenAPI specification, e.g., " +
                     "https://petstore3.swagger.io/api/v3/openapi.json",
                     new UrlInputValidator()
                 )
@@ -231,13 +229,9 @@ class SpecifyUrlDialog extends TitleAreaDialog {
                 txtUrl.text = urlDialog.getValue()
         ]))
 
-        val uriFileLocationButton = new GridData()
-        uriFileLocationButton.grabExcessHorizontalSpace = true
-        uriFileLocationButton.horizontalAlignment = SWT.RIGHT
-
-        btnUriFileLocation = new Button(container, SWT.BUTTON1)
+        btnUriFileLocation = new Button(buttonBar, SWT.BUTTON1)
         btnUriFileLocation.text = "Select OpenAPI Specification File"
-        btnUriFileLocation.setLayoutData(uriWebLocationButton)
+        btnUriFileLocation.layoutData = new GridData(SWT.FILL, SWT.FILL, true, false)
         btnUriFileLocation.addSelectionListener(SelectionListener.widgetSelectedAdapter([ e |
             val fileDialog = new FileDialog(shell)
             fileDialog.setText("Please select an OpenAPI specification file")
@@ -262,29 +256,19 @@ class SpecifyUrlDialog extends TitleAreaDialog {
         }
     }
 
-    private def createTargetFolder(Composite container) {
-        val lblTargetFolder = new Label(container, SWT.NULL)
-        lblTargetFolder.setText("Target Folder:")
+    private def createTargetFolder(Composite parent) {
+        new Label(parent, SWT.NULL).text = "Target Folder:"
 
-        val dataTargetLocation = new GridData()
-        dataTargetLocation.grabExcessHorizontalSpace = true
-        dataTargetLocation.horizontalAlignment = GridData.FILL
-        dataTargetLocation.horizontalSpan = 2
-
-        txtTargetFolder = new Text(container, SWT.BORDER)
+        txtTargetFolder = new Text(parent, SWT.BORDER)
         // TODO: Target folder for what?
         txtTargetFolder.message = "Select Target Folder"
         txtTargetFolder.enabled = false
-        txtTargetFolder.setLayoutData(dataTargetLocation)
+        txtTargetFolder.layoutData = new GridData(SWT.FILL, SWT.FILL, true, false)
 
-        val dataTargetFolderButton = new GridData()
-        dataTargetFolderButton.grabExcessHorizontalSpace = true
-        dataTargetFolderButton.horizontalAlignment = SWT.RIGHT
-
-        btnBrowseFolder = new Button(container, SWT.BUTTON1)
+        btnBrowseFolder = new Button(parent, SWT.PUSH)
         // TODO: Target folder for what?
         btnBrowseFolder.text = "Select Target Folder"
-        btnBrowseFolder.setLayoutData(dataTargetFolderButton)
+        btnBrowseFolder.layoutData = new GridData(SWT.FILL, SWT.FILL, true, false)
         btnBrowseFolder.addSelectionListener(SelectionListener.widgetSelectedAdapter([ e |
             val dirDialog = new DirectoryDialog(shell)
             // TODO: Target folder for what?
@@ -298,56 +282,44 @@ class SpecifyUrlDialog extends TitleAreaDialog {
         val lblDataModelName = new Label(container, SWT.NULL)
         lblDataModelName.setText("Data Model Name:")
 
-        val dataDataModelName = new GridData()
-        dataDataModelName.grabExcessHorizontalSpace = true
-        dataDataModelName.horizontalAlignment = GridData.FILL
-        dataDataModelName.horizontalSpan = 3
-
         txtDataModelName = new Text(container, SWT.BORDER)
-        txtDataModelName.message = "DataModel"
-        txtDataModelName.setLayoutData(dataDataModelName)
-    }
-
-    private def createServiceModelName(Composite container) {
-        val lblServiceModelName = new Label(container, SWT.NULL)
-        lblServiceModelName.setText("Service Model Name:")
-
-        val dataServiceModelName = new GridData()
-        dataServiceModelName.grabExcessHorizontalSpace = true
-        dataServiceModelName.horizontalAlignment = GridData.FILL
-        dataServiceModelName.horizontalSpan = 3
-
-        txtServiceModelName = new Text(container, SWT.BORDER)
-        txtServiceModelName.message = "ServiceModel"
-        txtServiceModelName.setLayoutData(dataServiceModelName)
-    }
-
-    private def createServicePrefix(Composite container) {
-        val lblServicePrefix = new Label(container, SWT.NULL)
-        lblServicePrefix.setText("Service Model Prefix:")
-
-        val dataServicePrefix = new GridData()
-        dataServicePrefix.grabExcessHorizontalSpace = true
-        dataServicePrefix.horizontalAlignment = GridData.FILL
-        dataServicePrefix.horizontalSpan = 3
-
-        txtServicePrefix = new Text(container, SWT.BORDER)
-        txtServicePrefix.message = "org.example"
-        txtServicePrefix.setLayoutData(dataServicePrefix)
+        txtDataModelName.message = "Data Model Name"
+        val layoutData = new GridData(SWT.FILL, SWT.FILL, true, false)
+        layoutData.horizontalSpan = 2
+        txtDataModelName.setLayoutData(layoutData)
     }
 
     private def createTechnologyModelName(Composite container) {
         val lblTechnologyModelName = new Label(container, SWT.NULL)
         lblTechnologyModelName.setText("Technology Model Name:")
 
-        val dataTechnologyModelName = new GridData()
-        dataTechnologyModelName.grabExcessHorizontalSpace = true
-        dataTechnologyModelName.horizontalAlignment = GridData.FILL
-        dataTechnologyModelName.horizontalSpan = 3
-
         txtTechnologyModelName = new Text(container, SWT.BORDER)
-        txtTechnologyModelName.message = "OpenAPI"
-        txtTechnologyModelName.setLayoutData(dataTechnologyModelName)
+        txtTechnologyModelName.text = LemmaTechnologySubGenerator.TECHNOLOGY_MODEL_NAME
+        val layoutData = new GridData(SWT.FILL, SWT.FILL, true, false)
+        layoutData.horizontalSpan = 2
+        txtTechnologyModelName.setLayoutData(layoutData)
+    }
+
+    private def createServiceModelName(Composite container) {
+        val lblServiceModelName = new Label(container, SWT.NULL)
+        lblServiceModelName.setText("Service Model Name:")
+
+        txtServiceModelName = new Text(container, SWT.BORDER)
+        txtServiceModelName.message = "Service Model Name"
+        val layoutData = new GridData(SWT.FILL, SWT.FILL, true, false)
+        layoutData.horizontalSpan = 2
+        txtServiceModelName.setLayoutData(layoutData)
+    }
+
+    private def createServicePrefix(Composite container) {
+        val lblServicePrefix = new Label(container, SWT.NULL)
+        lblServicePrefix.setText("Service Model Prefix:")
+
+        txtServicePrefix = new Text(container, SWT.BORDER)
+        txtServicePrefix.message = "org.example"
+        val layoutData = new GridData(SWT.FILL, SWT.FILL, true, false)
+        layoutData.horizontalSpan = 2
+        txtServicePrefix.setLayoutData(layoutData)
     }
 
     /**

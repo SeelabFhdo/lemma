@@ -31,7 +31,7 @@ class LemmaTechnologySubGenerator {
     public static val HTTP_TRACE_ASPECT_NAME = "TraceMapping"
     public static val UNSPECIFIED_ASPECT_NAME = "Unspecified"
 
-    static val TECHNOLOGY_MODEL_NAME = "OpenApi"
+    public static val TECHNOLOGY_MODEL_NAME = "OpenApi"
 
     static val DEFAULT_DATA_FORMAT = "application/json"
 
