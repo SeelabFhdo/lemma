@@ -271,9 +271,9 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     this.createUrl(container);
     this.createTargetFolder(container);
     this.createDataModelName(container);
+    this.createTechnologyModelName(container);
     this.createServiceModelName(container);
     this.createServicePrefix(container);
-    this.createTechnologyModelName(container);
     return container;
   }
   
