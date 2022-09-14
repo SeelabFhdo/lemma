@@ -30,9 +30,9 @@ import de.fhdo.lemma.technology.mapping.ComplexParameterMapping
 import de.fhdo.lemma.data.ComplexType
 import de.fhdo.lemma.technology.TechnologySpecificDataStructure
 import com.google.common.base.Function
-import de.fhdo.lemma.technology.TechnologySpecificListType
+import de.fhdo.lemma.technology.TechnologySpecificCollectionType
 import de.fhdo.lemma.data.DataStructure
-import de.fhdo.lemma.data.ListType
+import de.fhdo.lemma.data.CollectionType
 import de.fhdo.lemma.technology.mapping.TechnologySpecificFieldMapping
 import de.fhdo.lemma.data.Type
 import de.fhdo.lemma.data.PrimitiveType
@@ -644,10 +644,10 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
             if (originalType.isStructure) {
                 getImportedConcepts = [dataStructures.map[it as Type]]
                 getConceptNameParts = [(it as TechnologySpecificDataStructure).qualifiedNameParts]
-            // Element is of list type
-            } else if (originalType.isStructuredList || originalType.isPrimitiveList) {
-                getImportedConcepts = [listTypes.map[it as Type]]
-                getConceptNameParts = [(it as TechnologySpecificListType).qualifiedNameParts]
+            // Element is of collection type
+            } else if (originalType.isStructuredCollection || originalType.isPrimitiveCollection) {
+                getImportedConcepts = [collectionTypes.map[it as Type]]
+                getConceptNameParts = [(it as TechnologySpecificCollectionType).qualifiedNameParts]
             // Enum types are not changeable via mappings
             } else if (originalType.isEnumeration)
                 return IScope.NULLSCOPE
@@ -705,8 +705,8 @@ class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
                 IScope.NULLSCOPE
             else if (complexType.isStructure)
                 Scopes::scopeFor((complexType as DataStructure).dataFields)
-            else if (complexType.isStructuredList)
-                Scopes::scopeFor((complexType as ListType).dataFields)
+            else if (complexType.isStructuredCollection)
+                Scopes::scopeFor((complexType as CollectionType).dataFields)
             else
                 IScope.NULLSCOPE
     }

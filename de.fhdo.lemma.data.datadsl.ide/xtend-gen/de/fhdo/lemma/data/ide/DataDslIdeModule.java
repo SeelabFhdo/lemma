@@ -3,8 +3,6 @@
  */
 package de.fhdo.lemma.data.ide;
 
-import de.fhdo.lemma.data.ide.AbstractDataDslIdeModule;
-
 /**
  * Use this class to register ide components.
  */

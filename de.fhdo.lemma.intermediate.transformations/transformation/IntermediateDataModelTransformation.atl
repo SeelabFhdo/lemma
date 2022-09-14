@@ -403,8 +403,8 @@ rule IntermediateDataField(sourceField : Data!DataField,
         sourceContainerQualifiedName : String =
             if (not sourceField.dataStructure.oclIsUndefined()) then
                 sourceField.dataStructure.buildQualifiedName('.')
-            else if (not sourceField.listType.oclIsUndefined()) then
-                sourceField.listType.buildQualifiedName('.')
+            else if (not sourceField.collectionType.oclIsUndefined()) then
+                sourceField.collectionType.buildQualifiedName('.')
             else
                 OclUndefined
             endif
@@ -441,9 +441,9 @@ rule IntermediateDataField(sourceField : Data!DataField,
         if (targetContainer.oclIsTypeOf(Intermediate!IntermediateDataStructure)) {
             t.dataStructure <- targetContainer;
             t.dataStructure.dataFields->append(t);
-        } else if (targetContainer.oclIsTypeOf(Intermediate!IntermediateListType)) {
-            t.listType <- targetContainer;
-            t.listType.dataFields->append(t);
+        } else if (targetContainer.oclIsTypeOf(Intermediate!IntermediateCollectionType)) {
+            t.collectionType <- targetContainer;
+            t.collectionType.dataFields->append(t);
         }
 
         if (not sourceField.initializationValue.oclIsUndefined())
@@ -473,18 +473,18 @@ rule IntermediateDataField(sourceField : Data!DataField,
     }
 }
 
---- Transform a source ListType to a target IntermediateListType
-rule IntermediateListType {
+--- Transform a source CollectionType to a target IntermediateCollectionType
+rule IntermediateCollectionType {
     from
-        s : Data!ListType
+        s : Data!CollectionType
     to
-        t : Intermediate!IntermediateListType(
+        t : Intermediate!IntermediateCollectionType(
             name <- s.name,
             qualifiedName <- s.buildQualifiedName('.'),
             origin <- #DATA_MODEL,
-            kind <- #LIST,
-            primitiveList <- s.isPrimitiveList,
-            structuredList <- s.isStructuredList,
+            kind <- #COLLECTION,
+            primitiveCollection <- s.isPrimitiveCollection,
+            structuredCollection <- s.isStructuredCollection,
             dataFields <- Sequence{}
         )
     do {
@@ -634,8 +634,8 @@ rule IntermediateComplexType(sourceType : Data!ComplexType) {
             );
     }
     do {
-        if (sourceType.oclIsTypeOf(Data!ListType)) {
-            t.kind <- #LIST;
+        if (sourceType.oclIsTypeOf(Data!CollectionType)) {
+            t.kind <- #COLLECTION;
         } else if (sourceType.oclIsTypeOf(Data!DataStructure)) {
             t.kind <- #STRUCTURE;
         } else if (sourceType.oclIsTypeOf(Data!Enumeration)) {
@@ -676,8 +676,8 @@ rule IntermediateImportedComplexType(sourceType : Data!ImportedComplexType) {
             );
     }
     do {
-        if (importedType.oclIsTypeOf(Data!ListType)) {
-            t.kind <- #LIST;
+        if (importedType.oclIsTypeOf(Data!CollectionType)) {
+            t.kind <- #COLLECTION;
         } else if (importedType.oclIsTypeOf(Data!DataStructure)) {
             t.kind <- #STRUCTURE;
         } else if (sourceType.oclIsTypeOf(Data!Enumeration)) {

@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EObject
 import static de.fhdo.lemma.data.avro.Util.*
 import de.fhdo.lemma.data.intermediate.IntermediateEnumeration
 import de.fhdo.lemma.data.intermediate.IntermediateDataStructure
-import de.fhdo.lemma.data.intermediate.IntermediateListType
+import de.fhdo.lemma.data.intermediate.IntermediateCollectionType
 import org.eclipse.xtend.lib.annotations.Accessors
 import java.util.List
 import org.eclipse.jface.dialogs.MessageDialog
@@ -187,7 +187,7 @@ class LemmaToAvroDialog extends TitleAreaDialog {
                 return switch(element) {
                     IntermediateEnumeration: "Enumeration"
                     IntermediateDataStructure: "Data structure"
-                    IntermediateListType: "List type"
+                    IntermediateCollectionType: "Collection type"
                     default: ""
                 }
             }

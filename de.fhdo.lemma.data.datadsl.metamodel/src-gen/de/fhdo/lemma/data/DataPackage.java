@@ -1329,22 +1329,22 @@ public interface DataPackage extends EPackage {
     int COMPLEX_TYPE__IS_STRUCTURE = TYPE_FEATURE_COUNT + 5;
 
     /**
-     * The feature id for the '<em><b>Is Primitive List</b></em>' attribute.
+     * The feature id for the '<em><b>Is Primitive Collection</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int COMPLEX_TYPE__IS_PRIMITIVE_LIST = TYPE_FEATURE_COUNT + 6;
+    int COMPLEX_TYPE__IS_PRIMITIVE_COLLECTION = TYPE_FEATURE_COUNT + 6;
 
     /**
-     * The feature id for the '<em><b>Is Structured List</b></em>' attribute.
+     * The feature id for the '<em><b>Is Structured Collection</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int COMPLEX_TYPE__IS_STRUCTURED_LIST = TYPE_FEATURE_COUNT + 7;
+    int COMPLEX_TYPE__IS_STRUCTURED_COLLECTION = TYPE_FEATURE_COUNT + 7;
 
     /**
      * The feature id for the '<em><b>Is Enumeration</b></em>' attribute.
@@ -1565,22 +1565,22 @@ public interface DataPackage extends EPackage {
     int DATA_STRUCTURE__IS_STRUCTURE = COMPLEX_TYPE__IS_STRUCTURE;
 
     /**
-     * The feature id for the '<em><b>Is Primitive List</b></em>' attribute.
+     * The feature id for the '<em><b>Is Primitive Collection</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DATA_STRUCTURE__IS_PRIMITIVE_LIST = COMPLEX_TYPE__IS_PRIMITIVE_LIST;
+    int DATA_STRUCTURE__IS_PRIMITIVE_COLLECTION = COMPLEX_TYPE__IS_PRIMITIVE_COLLECTION;
 
     /**
-     * The feature id for the '<em><b>Is Structured List</b></em>' attribute.
+     * The feature id for the '<em><b>Is Structured Collection</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DATA_STRUCTURE__IS_STRUCTURED_LIST = COMPLEX_TYPE__IS_STRUCTURED_LIST;
+    int DATA_STRUCTURE__IS_STRUCTURED_COLLECTION = COMPLEX_TYPE__IS_STRUCTURED_COLLECTION;
 
     /**
      * The feature id for the '<em><b>Is Enumeration</b></em>' attribute.
@@ -1999,14 +1999,14 @@ public interface DataPackage extends EPackage {
     int DATA_OPERATION_PARAMETER_OPERATION_COUNT = 3;
 
     /**
-     * The meta object id for the '{@link de.fhdo.lemma.data.impl.ListTypeImpl <em>List Type</em>}' class.
+     * The meta object id for the '{@link de.fhdo.lemma.data.impl.CollectionTypeImpl <em>Collection Type</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.fhdo.lemma.data.impl.ListTypeImpl
-     * @see de.fhdo.lemma.data.impl.DataPackageImpl#getListType()
+     * @see de.fhdo.lemma.data.impl.CollectionTypeImpl
+     * @see de.fhdo.lemma.data.impl.DataPackageImpl#getCollectionType()
      * @generated
      */
-    int LIST_TYPE = 22;
+    int COLLECTION_TYPE = 22;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2015,7 +2015,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LIST_TYPE__NAME = COMPLEX_TYPE__NAME;
+    int COLLECTION_TYPE__NAME = COMPLEX_TYPE__NAME;
 
     /**
      * The feature id for the '<em><b>Features</b></em>' attribute list.
@@ -2024,7 +2024,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LIST_TYPE__FEATURES = COMPLEX_TYPE__FEATURES;
+    int COLLECTION_TYPE__FEATURES = COMPLEX_TYPE__FEATURES;
 
     /**
      * The feature id for the '<em><b>Data Model</b></em>' container reference.
@@ -2033,7 +2033,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LIST_TYPE__DATA_MODEL = COMPLEX_TYPE__DATA_MODEL;
+    int COLLECTION_TYPE__DATA_MODEL = COMPLEX_TYPE__DATA_MODEL;
 
     /**
      * The feature id for the '<em><b>Version</b></em>' container reference.
@@ -2042,7 +2042,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LIST_TYPE__VERSION = COMPLEX_TYPE__VERSION;
+    int COLLECTION_TYPE__VERSION = COMPLEX_TYPE__VERSION;
 
     /**
      * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -2051,7 +2051,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LIST_TYPE__CONTEXT = COMPLEX_TYPE__CONTEXT;
+    int COLLECTION_TYPE__CONTEXT = COMPLEX_TYPE__CONTEXT;
 
     /**
      * The feature id for the '<em><b>Is Structure</b></em>' attribute.
@@ -2060,25 +2060,25 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LIST_TYPE__IS_STRUCTURE = COMPLEX_TYPE__IS_STRUCTURE;
+    int COLLECTION_TYPE__IS_STRUCTURE = COMPLEX_TYPE__IS_STRUCTURE;
 
     /**
-     * The feature id for the '<em><b>Is Primitive List</b></em>' attribute.
+     * The feature id for the '<em><b>Is Primitive Collection</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int LIST_TYPE__IS_PRIMITIVE_LIST = COMPLEX_TYPE__IS_PRIMITIVE_LIST;
+    int COLLECTION_TYPE__IS_PRIMITIVE_COLLECTION = COMPLEX_TYPE__IS_PRIMITIVE_COLLECTION;
 
     /**
-     * The feature id for the '<em><b>Is Structured List</b></em>' attribute.
+     * The feature id for the '<em><b>Is Structured Collection</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int LIST_TYPE__IS_STRUCTURED_LIST = COMPLEX_TYPE__IS_STRUCTURED_LIST;
+    int COLLECTION_TYPE__IS_STRUCTURED_COLLECTION = COMPLEX_TYPE__IS_STRUCTURED_COLLECTION;
 
     /**
      * The feature id for the '<em><b>Is Enumeration</b></em>' attribute.
@@ -2087,7 +2087,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LIST_TYPE__IS_ENUMERATION = COMPLEX_TYPE__IS_ENUMERATION;
+    int COLLECTION_TYPE__IS_ENUMERATION = COMPLEX_TYPE__IS_ENUMERATION;
 
     /**
      * The feature id for the '<em><b>Primitive Type</b></em>' containment reference.
@@ -2096,7 +2096,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LIST_TYPE__PRIMITIVE_TYPE = COMPLEX_TYPE_FEATURE_COUNT + 0;
+    int COLLECTION_TYPE__PRIMITIVE_TYPE = COMPLEX_TYPE_FEATURE_COUNT + 0;
 
     /**
      * The feature id for the '<em><b>Data Fields</b></em>' containment reference list.
@@ -2105,16 +2105,16 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LIST_TYPE__DATA_FIELDS = COMPLEX_TYPE_FEATURE_COUNT + 1;
+    int COLLECTION_TYPE__DATA_FIELDS = COMPLEX_TYPE_FEATURE_COUNT + 1;
 
     /**
-     * The number of structural features of the '<em>List Type</em>' class.
+     * The number of structural features of the '<em>Collection Type</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int LIST_TYPE_FEATURE_COUNT = COMPLEX_TYPE_FEATURE_COUNT + 2;
+    int COLLECTION_TYPE_FEATURE_COUNT = COMPLEX_TYPE_FEATURE_COUNT + 2;
 
     /**
      * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
@@ -2123,7 +2123,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LIST_TYPE___GET_QUALIFIED_NAME_PARTS = COMPLEX_TYPE___GET_QUALIFIED_NAME_PARTS;
+    int COLLECTION_TYPE___GET_QUALIFIED_NAME_PARTS = COMPLEX_TYPE___GET_QUALIFIED_NAME_PARTS;
 
     /**
      * The operation id for the '<em>Build Qualified Name</em>' operation.
@@ -2132,7 +2132,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LIST_TYPE___BUILD_QUALIFIED_NAME__STRING = COMPLEX_TYPE___BUILD_QUALIFIED_NAME__STRING;
+    int COLLECTION_TYPE___BUILD_QUALIFIED_NAME__STRING = COMPLEX_TYPE___BUILD_QUALIFIED_NAME__STRING;
 
     /**
      * The operation id for the '<em>Get Closest Namespace</em>' operation.
@@ -2141,7 +2141,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LIST_TYPE___GET_CLOSEST_NAMESPACE = COMPLEX_TYPE___GET_CLOSEST_NAMESPACE;
+    int COLLECTION_TYPE___GET_CLOSEST_NAMESPACE = COMPLEX_TYPE___GET_CLOSEST_NAMESPACE;
 
     /**
      * The operation id for the '<em>Compare Field Counts</em>' operation.
@@ -2150,7 +2150,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LIST_TYPE___COMPARE_FIELD_COUNTS__ELIST_ELIST = COMPLEX_TYPE___COMPARE_FIELD_COUNTS__ELIST_ELIST;
+    int COLLECTION_TYPE___COMPARE_FIELD_COUNTS__ELIST_ELIST = COMPLEX_TYPE___COMPARE_FIELD_COUNTS__ELIST_ELIST;
 
     /**
      * The operation id for the '<em>Get All Domain Features</em>' operation.
@@ -2159,7 +2159,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LIST_TYPE___GET_ALL_DOMAIN_FEATURES = COMPLEX_TYPE___GET_ALL_DOMAIN_FEATURES;
+    int COLLECTION_TYPE___GET_ALL_DOMAIN_FEATURES = COMPLEX_TYPE___GET_ALL_DOMAIN_FEATURES;
 
     /**
      * The operation id for the '<em>Has Feature</em>' operation.
@@ -2168,7 +2168,7 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LIST_TYPE___HAS_FEATURE__COMPLEXTYPEFEATURE = COMPLEX_TYPE___HAS_FEATURE__COMPLEXTYPEFEATURE;
+    int COLLECTION_TYPE___HAS_FEATURE__COMPLEXTYPEFEATURE = COMPLEX_TYPE___HAS_FEATURE__COMPLEXTYPEFEATURE;
 
     /**
      * The operation id for the '<em>Compare Field Counts</em>' operation.
@@ -2177,16 +2177,16 @@ public interface DataPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LIST_TYPE___COMPARE_FIELD_COUNTS__LISTTYPE = COMPLEX_TYPE_OPERATION_COUNT + 0;
+    int COLLECTION_TYPE___COMPARE_FIELD_COUNTS__COLLECTIONTYPE = COMPLEX_TYPE_OPERATION_COUNT + 0;
 
     /**
-     * The number of operations of the '<em>List Type</em>' class.
+     * The number of operations of the '<em>Collection Type</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int LIST_TYPE_OPERATION_COUNT = COMPLEX_TYPE_OPERATION_COUNT + 1;
+    int COLLECTION_TYPE_OPERATION_COUNT = COMPLEX_TYPE_OPERATION_COUNT + 1;
 
     /**
      * The meta object id for the '{@link de.fhdo.lemma.data.impl.DataFieldImpl <em>Field</em>}' class.
@@ -2280,13 +2280,13 @@ public interface DataPackage extends EPackage {
     int DATA_FIELD__DATA_STRUCTURE = 8;
 
     /**
-     * The feature id for the '<em><b>List Type</b></em>' container reference.
+     * The feature id for the '<em><b>Collection Type</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DATA_FIELD__LIST_TYPE = 9;
+    int DATA_FIELD__COLLECTION_TYPE = 9;
 
     /**
      * The number of structural features of the '<em>Field</em>' class.
@@ -2416,22 +2416,22 @@ public interface DataPackage extends EPackage {
     int ENUMERATION__IS_STRUCTURE = COMPLEX_TYPE__IS_STRUCTURE;
 
     /**
-     * The feature id for the '<em><b>Is Primitive List</b></em>' attribute.
+     * The feature id for the '<em><b>Is Primitive Collection</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ENUMERATION__IS_PRIMITIVE_LIST = COMPLEX_TYPE__IS_PRIMITIVE_LIST;
+    int ENUMERATION__IS_PRIMITIVE_COLLECTION = COMPLEX_TYPE__IS_PRIMITIVE_COLLECTION;
 
     /**
-     * The feature id for the '<em><b>Is Structured List</b></em>' attribute.
+     * The feature id for the '<em><b>Is Structured Collection</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ENUMERATION__IS_STRUCTURED_LIST = COMPLEX_TYPE__IS_STRUCTURED_LIST;
+    int ENUMERATION__IS_STRUCTURED_COLLECTION = COMPLEX_TYPE__IS_STRUCTURED_COLLECTION;
 
     /**
      * The feature id for the '<em><b>Is Enumeration</b></em>' attribute.
@@ -3380,26 +3380,26 @@ public interface DataPackage extends EPackage {
     EAttribute getComplexType_IsStructure();
 
     /**
-     * Returns the meta object for the attribute '{@link de.fhdo.lemma.data.ComplexType#isIsPrimitiveList <em>Is Primitive List</em>}'.
+     * Returns the meta object for the attribute '{@link de.fhdo.lemma.data.ComplexType#isIsPrimitiveCollection <em>Is Primitive Collection</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Is Primitive List</em>'.
-     * @see de.fhdo.lemma.data.ComplexType#isIsPrimitiveList()
+     * @return the meta object for the attribute '<em>Is Primitive Collection</em>'.
+     * @see de.fhdo.lemma.data.ComplexType#isIsPrimitiveCollection()
      * @see #getComplexType()
      * @generated
      */
-    EAttribute getComplexType_IsPrimitiveList();
+    EAttribute getComplexType_IsPrimitiveCollection();
 
     /**
-     * Returns the meta object for the attribute '{@link de.fhdo.lemma.data.ComplexType#isIsStructuredList <em>Is Structured List</em>}'.
+     * Returns the meta object for the attribute '{@link de.fhdo.lemma.data.ComplexType#isIsStructuredCollection <em>Is Structured Collection</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Is Structured List</em>'.
-     * @see de.fhdo.lemma.data.ComplexType#isIsStructuredList()
+     * @return the meta object for the attribute '<em>Is Structured Collection</em>'.
+     * @see de.fhdo.lemma.data.ComplexType#isIsStructuredCollection()
      * @see #getComplexType()
      * @generated
      */
-    EAttribute getComplexType_IsStructuredList();
+    EAttribute getComplexType_IsStructuredCollection();
 
     /**
      * Returns the meta object for the attribute '{@link de.fhdo.lemma.data.ComplexType#isIsEnumeration <em>Is Enumeration</em>}'.
@@ -3897,46 +3897,46 @@ public interface DataPackage extends EPackage {
     EOperation getDataOperationParameter__GetEffectiveType();
 
     /**
-     * Returns the meta object for class '{@link de.fhdo.lemma.data.ListType <em>List Type</em>}'.
+     * Returns the meta object for class '{@link de.fhdo.lemma.data.CollectionType <em>Collection Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>List Type</em>'.
-     * @see de.fhdo.lemma.data.ListType
+     * @return the meta object for class '<em>Collection Type</em>'.
+     * @see de.fhdo.lemma.data.CollectionType
      * @generated
      */
-    EClass getListType();
+    EClass getCollectionType();
 
     /**
-     * Returns the meta object for the containment reference '{@link de.fhdo.lemma.data.ListType#getPrimitiveType <em>Primitive Type</em>}'.
+     * Returns the meta object for the containment reference '{@link de.fhdo.lemma.data.CollectionType#getPrimitiveType <em>Primitive Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the containment reference '<em>Primitive Type</em>'.
-     * @see de.fhdo.lemma.data.ListType#getPrimitiveType()
-     * @see #getListType()
+     * @see de.fhdo.lemma.data.CollectionType#getPrimitiveType()
+     * @see #getCollectionType()
      * @generated
      */
-    EReference getListType_PrimitiveType();
+    EReference getCollectionType_PrimitiveType();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.fhdo.lemma.data.ListType#getDataFields <em>Data Fields</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.fhdo.lemma.data.CollectionType#getDataFields <em>Data Fields</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the containment reference list '<em>Data Fields</em>'.
-     * @see de.fhdo.lemma.data.ListType#getDataFields()
-     * @see #getListType()
+     * @see de.fhdo.lemma.data.CollectionType#getDataFields()
+     * @see #getCollectionType()
      * @generated
      */
-    EReference getListType_DataFields();
+    EReference getCollectionType_DataFields();
 
     /**
-     * Returns the meta object for the '{@link de.fhdo.lemma.data.ListType#compareFieldCounts(de.fhdo.lemma.data.ListType) <em>Compare Field Counts</em>}' operation.
+     * Returns the meta object for the '{@link de.fhdo.lemma.data.CollectionType#compareFieldCounts(de.fhdo.lemma.data.CollectionType) <em>Compare Field Counts</em>}' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the '<em>Compare Field Counts</em>' operation.
-     * @see de.fhdo.lemma.data.ListType#compareFieldCounts(de.fhdo.lemma.data.ListType)
+     * @see de.fhdo.lemma.data.CollectionType#compareFieldCounts(de.fhdo.lemma.data.CollectionType)
      * @generated
      */
-    EOperation getListType__CompareFieldCounts__ListType();
+    EOperation getCollectionType__CompareFieldCounts__CollectionType();
 
     /**
      * Returns the meta object for class '{@link de.fhdo.lemma.data.DataField <em>Field</em>}'.
@@ -4048,15 +4048,15 @@ public interface DataPackage extends EPackage {
     EReference getDataField_DataStructure();
 
     /**
-     * Returns the meta object for the container reference '{@link de.fhdo.lemma.data.DataField#getListType <em>List Type</em>}'.
+     * Returns the meta object for the container reference '{@link de.fhdo.lemma.data.DataField#getCollectionType <em>Collection Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the container reference '<em>List Type</em>'.
-     * @see de.fhdo.lemma.data.DataField#getListType()
+     * @return the meta object for the container reference '<em>Collection Type</em>'.
+     * @see de.fhdo.lemma.data.DataField#getCollectionType()
      * @see #getDataField()
      * @generated
      */
-    EReference getDataField_ListType();
+    EReference getDataField_CollectionType();
 
     /**
      * Returns the meta object for the '{@link de.fhdo.lemma.data.DataField#getEffectiveType() <em>Get Effective Type</em>}' operation.
@@ -4916,20 +4916,20 @@ public interface DataPackage extends EPackage {
         EAttribute COMPLEX_TYPE__IS_STRUCTURE = eINSTANCE.getComplexType_IsStructure();
 
         /**
-         * The meta object literal for the '<em><b>Is Primitive List</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Is Primitive Collection</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute COMPLEX_TYPE__IS_PRIMITIVE_LIST = eINSTANCE.getComplexType_IsPrimitiveList();
+        EAttribute COMPLEX_TYPE__IS_PRIMITIVE_COLLECTION = eINSTANCE.getComplexType_IsPrimitiveCollection();
 
         /**
-         * The meta object literal for the '<em><b>Is Structured List</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Is Structured Collection</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute COMPLEX_TYPE__IS_STRUCTURED_LIST = eINSTANCE.getComplexType_IsStructuredList();
+        EAttribute COMPLEX_TYPE__IS_STRUCTURED_COLLECTION = eINSTANCE.getComplexType_IsStructuredCollection();
 
         /**
          * The meta object literal for the '<em><b>Is Enumeration</b></em>' attribute feature.
@@ -5316,14 +5316,14 @@ public interface DataPackage extends EPackage {
         EOperation DATA_OPERATION_PARAMETER___GET_EFFECTIVE_TYPE = eINSTANCE.getDataOperationParameter__GetEffectiveType();
 
         /**
-         * The meta object literal for the '{@link de.fhdo.lemma.data.impl.ListTypeImpl <em>List Type</em>}' class.
+         * The meta object literal for the '{@link de.fhdo.lemma.data.impl.CollectionTypeImpl <em>Collection Type</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.fhdo.lemma.data.impl.ListTypeImpl
-         * @see de.fhdo.lemma.data.impl.DataPackageImpl#getListType()
+         * @see de.fhdo.lemma.data.impl.CollectionTypeImpl
+         * @see de.fhdo.lemma.data.impl.DataPackageImpl#getCollectionType()
          * @generated
          */
-        EClass LIST_TYPE = eINSTANCE.getListType();
+        EClass COLLECTION_TYPE = eINSTANCE.getCollectionType();
 
         /**
          * The meta object literal for the '<em><b>Primitive Type</b></em>' containment reference feature.
@@ -5331,7 +5331,7 @@ public interface DataPackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference LIST_TYPE__PRIMITIVE_TYPE = eINSTANCE.getListType_PrimitiveType();
+        EReference COLLECTION_TYPE__PRIMITIVE_TYPE = eINSTANCE.getCollectionType_PrimitiveType();
 
         /**
          * The meta object literal for the '<em><b>Data Fields</b></em>' containment reference list feature.
@@ -5339,7 +5339,7 @@ public interface DataPackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference LIST_TYPE__DATA_FIELDS = eINSTANCE.getListType_DataFields();
+        EReference COLLECTION_TYPE__DATA_FIELDS = eINSTANCE.getCollectionType_DataFields();
 
         /**
          * The meta object literal for the '<em><b>Compare Field Counts</b></em>' operation.
@@ -5347,7 +5347,7 @@ public interface DataPackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EOperation LIST_TYPE___COMPARE_FIELD_COUNTS__LISTTYPE = eINSTANCE.getListType__CompareFieldCounts__ListType();
+        EOperation COLLECTION_TYPE___COMPARE_FIELD_COUNTS__COLLECTIONTYPE = eINSTANCE.getCollectionType__CompareFieldCounts__CollectionType();
 
         /**
          * The meta object literal for the '{@link de.fhdo.lemma.data.impl.DataFieldImpl <em>Field</em>}' class.
@@ -5432,12 +5432,12 @@ public interface DataPackage extends EPackage {
         EReference DATA_FIELD__DATA_STRUCTURE = eINSTANCE.getDataField_DataStructure();
 
         /**
-         * The meta object literal for the '<em><b>List Type</b></em>' container reference feature.
+         * The meta object literal for the '<em><b>Collection Type</b></em>' container reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference DATA_FIELD__LIST_TYPE = eINSTANCE.getDataField_ListType();
+        EReference DATA_FIELD__COLLECTION_TYPE = eINSTANCE.getDataField_CollectionType();
 
         /**
          * The meta object literal for the '<em><b>Get Effective Type</b></em>' operation.

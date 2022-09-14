@@ -2,8 +2,8 @@
  */
 package de.fhdo.lemma.data.intermediate.impl;
 
+import de.fhdo.lemma.data.intermediate.IntermediateCollectionType;
 import de.fhdo.lemma.data.intermediate.IntermediateDataField;
-import de.fhdo.lemma.data.intermediate.IntermediateListType;
 import de.fhdo.lemma.data.intermediate.IntermediatePackage;
 import de.fhdo.lemma.data.intermediate.IntermediatePrimitiveType;
 
@@ -24,60 +24,60 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>List Type</b></em>'.
+ * An implementation of the model object '<em><b>Collection Type</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateListTypeImpl#isPrimitiveList <em>Primitive List</em>}</li>
- *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateListTypeImpl#isStructuredList <em>Structured List</em>}</li>
- *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateListTypeImpl#getPrimitiveType <em>Primitive Type</em>}</li>
- *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateListTypeImpl#getDataFields <em>Data Fields</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateCollectionTypeImpl#isPrimitiveCollection <em>Primitive Collection</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateCollectionTypeImpl#isStructuredCollection <em>Structured Collection</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateCollectionTypeImpl#getPrimitiveType <em>Primitive Type</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.intermediate.impl.IntermediateCollectionTypeImpl#getDataFields <em>Data Fields</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class IntermediateListTypeImpl extends IntermediateComplexTypeImpl implements IntermediateListType {
+public class IntermediateCollectionTypeImpl extends IntermediateComplexTypeImpl implements IntermediateCollectionType {
     /**
-     * The default value of the '{@link #isPrimitiveList() <em>Primitive List</em>}' attribute.
+     * The default value of the '{@link #isPrimitiveCollection() <em>Primitive Collection</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isPrimitiveList()
+     * @see #isPrimitiveCollection()
      * @generated
      * @ordered
      */
-    protected static final boolean PRIMITIVE_LIST_EDEFAULT = false;
+    protected static final boolean PRIMITIVE_COLLECTION_EDEFAULT = false;
 
     /**
-     * The cached value of the '{@link #isPrimitiveList() <em>Primitive List</em>}' attribute.
+     * The cached value of the '{@link #isPrimitiveCollection() <em>Primitive Collection</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isPrimitiveList()
+     * @see #isPrimitiveCollection()
      * @generated
      * @ordered
      */
-    protected boolean primitiveList = PRIMITIVE_LIST_EDEFAULT;
+    protected boolean primitiveCollection = PRIMITIVE_COLLECTION_EDEFAULT;
 
     /**
-     * The default value of the '{@link #isStructuredList() <em>Structured List</em>}' attribute.
+     * The default value of the '{@link #isStructuredCollection() <em>Structured Collection</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isStructuredList()
+     * @see #isStructuredCollection()
      * @generated
      * @ordered
      */
-    protected static final boolean STRUCTURED_LIST_EDEFAULT = false;
+    protected static final boolean STRUCTURED_COLLECTION_EDEFAULT = false;
 
     /**
-     * The cached value of the '{@link #isStructuredList() <em>Structured List</em>}' attribute.
+     * The cached value of the '{@link #isStructuredCollection() <em>Structured Collection</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isStructuredList()
+     * @see #isStructuredCollection()
      * @generated
      * @ordered
      */
-    protected boolean structuredList = STRUCTURED_LIST_EDEFAULT;
+    protected boolean structuredCollection = STRUCTURED_COLLECTION_EDEFAULT;
 
     /**
      * The cached value of the '{@link #getPrimitiveType() <em>Primitive Type</em>}' containment reference.
@@ -104,7 +104,7 @@ public class IntermediateListTypeImpl extends IntermediateComplexTypeImpl implem
      * <!-- end-user-doc -->
      * @generated
      */
-    protected IntermediateListTypeImpl() {
+    protected IntermediateCollectionTypeImpl() {
         super();
     }
 
@@ -115,7 +115,7 @@ public class IntermediateListTypeImpl extends IntermediateComplexTypeImpl implem
      */
     @Override
     protected EClass eStaticClass() {
-        return IntermediatePackage.Literals.INTERMEDIATE_LIST_TYPE;
+        return IntermediatePackage.Literals.INTERMEDIATE_COLLECTION_TYPE;
     }
 
     /**
@@ -123,9 +123,8 @@ public class IntermediateListTypeImpl extends IntermediateComplexTypeImpl implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
-    public boolean isPrimitiveList() {
-        return primitiveList;
+    public boolean isPrimitiveCollection() {
+        return primitiveCollection;
     }
 
     /**
@@ -133,12 +132,11 @@ public class IntermediateListTypeImpl extends IntermediateComplexTypeImpl implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
-    public void setPrimitiveList(boolean newPrimitiveList) {
-        boolean oldPrimitiveList = primitiveList;
-        primitiveList = newPrimitiveList;
+    public void setPrimitiveCollection(boolean newPrimitiveCollection) {
+        boolean oldPrimitiveCollection = primitiveCollection;
+        primitiveCollection = newPrimitiveCollection;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_LIST_TYPE__PRIMITIVE_LIST, oldPrimitiveList, primitiveList));
+            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_COLLECTION_TYPE__PRIMITIVE_COLLECTION, oldPrimitiveCollection, primitiveCollection));
     }
 
     /**
@@ -146,9 +144,8 @@ public class IntermediateListTypeImpl extends IntermediateComplexTypeImpl implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
-    public boolean isStructuredList() {
-        return structuredList;
+    public boolean isStructuredCollection() {
+        return structuredCollection;
     }
 
     /**
@@ -156,12 +153,11 @@ public class IntermediateListTypeImpl extends IntermediateComplexTypeImpl implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
-    public void setStructuredList(boolean newStructuredList) {
-        boolean oldStructuredList = structuredList;
-        structuredList = newStructuredList;
+    public void setStructuredCollection(boolean newStructuredCollection) {
+        boolean oldStructuredCollection = structuredCollection;
+        structuredCollection = newStructuredCollection;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_LIST_TYPE__STRUCTURED_LIST, oldStructuredList, structuredList));
+            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_COLLECTION_TYPE__STRUCTURED_COLLECTION, oldStructuredCollection, structuredCollection));
     }
 
     /**
@@ -169,7 +165,6 @@ public class IntermediateListTypeImpl extends IntermediateComplexTypeImpl implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediatePrimitiveType getPrimitiveType() {
         return primitiveType;
     }
@@ -183,7 +178,7 @@ public class IntermediateListTypeImpl extends IntermediateComplexTypeImpl implem
         IntermediatePrimitiveType oldPrimitiveType = primitiveType;
         primitiveType = newPrimitiveType;
         if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_LIST_TYPE__PRIMITIVE_TYPE, oldPrimitiveType, newPrimitiveType);
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_COLLECTION_TYPE__PRIMITIVE_TYPE, oldPrimitiveType, newPrimitiveType);
             if (msgs == null) msgs = notification; else msgs.add(notification);
         }
         return msgs;
@@ -194,19 +189,18 @@ public class IntermediateListTypeImpl extends IntermediateComplexTypeImpl implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setPrimitiveType(IntermediatePrimitiveType newPrimitiveType) {
         if (newPrimitiveType != primitiveType) {
             NotificationChain msgs = null;
             if (primitiveType != null)
-                msgs = ((InternalEObject)primitiveType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - IntermediatePackage.INTERMEDIATE_LIST_TYPE__PRIMITIVE_TYPE, null, msgs);
+                msgs = ((InternalEObject)primitiveType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - IntermediatePackage.INTERMEDIATE_COLLECTION_TYPE__PRIMITIVE_TYPE, null, msgs);
             if (newPrimitiveType != null)
-                msgs = ((InternalEObject)newPrimitiveType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - IntermediatePackage.INTERMEDIATE_LIST_TYPE__PRIMITIVE_TYPE, null, msgs);
+                msgs = ((InternalEObject)newPrimitiveType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - IntermediatePackage.INTERMEDIATE_COLLECTION_TYPE__PRIMITIVE_TYPE, null, msgs);
             msgs = basicSetPrimitiveType(newPrimitiveType, msgs);
             if (msgs != null) msgs.dispatch();
         }
         else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_LIST_TYPE__PRIMITIVE_TYPE, newPrimitiveType, newPrimitiveType));
+            eNotify(new ENotificationImpl(this, Notification.SET, IntermediatePackage.INTERMEDIATE_COLLECTION_TYPE__PRIMITIVE_TYPE, newPrimitiveType, newPrimitiveType));
     }
 
     /**
@@ -214,10 +208,9 @@ public class IntermediateListTypeImpl extends IntermediateComplexTypeImpl implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<IntermediateDataField> getDataFields() {
         if (dataFields == null) {
-            dataFields = new EObjectContainmentWithInverseEList<IntermediateDataField>(IntermediateDataField.class, this, IntermediatePackage.INTERMEDIATE_LIST_TYPE__DATA_FIELDS, IntermediatePackage.INTERMEDIATE_DATA_FIELD__LIST_TYPE);
+            dataFields = new EObjectContainmentWithInverseEList<IntermediateDataField>(IntermediateDataField.class, this, IntermediatePackage.INTERMEDIATE_COLLECTION_TYPE__DATA_FIELDS, IntermediatePackage.INTERMEDIATE_DATA_FIELD__COLLECTION_TYPE);
         }
         return dataFields;
     }
@@ -231,7 +224,7 @@ public class IntermediateListTypeImpl extends IntermediateComplexTypeImpl implem
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case IntermediatePackage.INTERMEDIATE_LIST_TYPE__DATA_FIELDS:
+            case IntermediatePackage.INTERMEDIATE_COLLECTION_TYPE__DATA_FIELDS:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getDataFields()).basicAdd(otherEnd, msgs);
         }
         return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -245,9 +238,9 @@ public class IntermediateListTypeImpl extends IntermediateComplexTypeImpl implem
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case IntermediatePackage.INTERMEDIATE_LIST_TYPE__PRIMITIVE_TYPE:
+            case IntermediatePackage.INTERMEDIATE_COLLECTION_TYPE__PRIMITIVE_TYPE:
                 return basicSetPrimitiveType(null, msgs);
-            case IntermediatePackage.INTERMEDIATE_LIST_TYPE__DATA_FIELDS:
+            case IntermediatePackage.INTERMEDIATE_COLLECTION_TYPE__DATA_FIELDS:
                 return ((InternalEList<?>)getDataFields()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -261,13 +254,13 @@ public class IntermediateListTypeImpl extends IntermediateComplexTypeImpl implem
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case IntermediatePackage.INTERMEDIATE_LIST_TYPE__PRIMITIVE_LIST:
-                return isPrimitiveList();
-            case IntermediatePackage.INTERMEDIATE_LIST_TYPE__STRUCTURED_LIST:
-                return isStructuredList();
-            case IntermediatePackage.INTERMEDIATE_LIST_TYPE__PRIMITIVE_TYPE:
+            case IntermediatePackage.INTERMEDIATE_COLLECTION_TYPE__PRIMITIVE_COLLECTION:
+                return isPrimitiveCollection();
+            case IntermediatePackage.INTERMEDIATE_COLLECTION_TYPE__STRUCTURED_COLLECTION:
+                return isStructuredCollection();
+            case IntermediatePackage.INTERMEDIATE_COLLECTION_TYPE__PRIMITIVE_TYPE:
                 return getPrimitiveType();
-            case IntermediatePackage.INTERMEDIATE_LIST_TYPE__DATA_FIELDS:
+            case IntermediatePackage.INTERMEDIATE_COLLECTION_TYPE__DATA_FIELDS:
                 return getDataFields();
         }
         return super.eGet(featureID, resolve, coreType);
@@ -282,16 +275,16 @@ public class IntermediateListTypeImpl extends IntermediateComplexTypeImpl implem
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case IntermediatePackage.INTERMEDIATE_LIST_TYPE__PRIMITIVE_LIST:
-                setPrimitiveList((Boolean)newValue);
+            case IntermediatePackage.INTERMEDIATE_COLLECTION_TYPE__PRIMITIVE_COLLECTION:
+                setPrimitiveCollection((Boolean)newValue);
                 return;
-            case IntermediatePackage.INTERMEDIATE_LIST_TYPE__STRUCTURED_LIST:
-                setStructuredList((Boolean)newValue);
+            case IntermediatePackage.INTERMEDIATE_COLLECTION_TYPE__STRUCTURED_COLLECTION:
+                setStructuredCollection((Boolean)newValue);
                 return;
-            case IntermediatePackage.INTERMEDIATE_LIST_TYPE__PRIMITIVE_TYPE:
+            case IntermediatePackage.INTERMEDIATE_COLLECTION_TYPE__PRIMITIVE_TYPE:
                 setPrimitiveType((IntermediatePrimitiveType)newValue);
                 return;
-            case IntermediatePackage.INTERMEDIATE_LIST_TYPE__DATA_FIELDS:
+            case IntermediatePackage.INTERMEDIATE_COLLECTION_TYPE__DATA_FIELDS:
                 getDataFields().clear();
                 getDataFields().addAll((Collection<? extends IntermediateDataField>)newValue);
                 return;
@@ -307,16 +300,16 @@ public class IntermediateListTypeImpl extends IntermediateComplexTypeImpl implem
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case IntermediatePackage.INTERMEDIATE_LIST_TYPE__PRIMITIVE_LIST:
-                setPrimitiveList(PRIMITIVE_LIST_EDEFAULT);
+            case IntermediatePackage.INTERMEDIATE_COLLECTION_TYPE__PRIMITIVE_COLLECTION:
+                setPrimitiveCollection(PRIMITIVE_COLLECTION_EDEFAULT);
                 return;
-            case IntermediatePackage.INTERMEDIATE_LIST_TYPE__STRUCTURED_LIST:
-                setStructuredList(STRUCTURED_LIST_EDEFAULT);
+            case IntermediatePackage.INTERMEDIATE_COLLECTION_TYPE__STRUCTURED_COLLECTION:
+                setStructuredCollection(STRUCTURED_COLLECTION_EDEFAULT);
                 return;
-            case IntermediatePackage.INTERMEDIATE_LIST_TYPE__PRIMITIVE_TYPE:
+            case IntermediatePackage.INTERMEDIATE_COLLECTION_TYPE__PRIMITIVE_TYPE:
                 setPrimitiveType((IntermediatePrimitiveType)null);
                 return;
-            case IntermediatePackage.INTERMEDIATE_LIST_TYPE__DATA_FIELDS:
+            case IntermediatePackage.INTERMEDIATE_COLLECTION_TYPE__DATA_FIELDS:
                 getDataFields().clear();
                 return;
         }
@@ -331,13 +324,13 @@ public class IntermediateListTypeImpl extends IntermediateComplexTypeImpl implem
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case IntermediatePackage.INTERMEDIATE_LIST_TYPE__PRIMITIVE_LIST:
-                return primitiveList != PRIMITIVE_LIST_EDEFAULT;
-            case IntermediatePackage.INTERMEDIATE_LIST_TYPE__STRUCTURED_LIST:
-                return structuredList != STRUCTURED_LIST_EDEFAULT;
-            case IntermediatePackage.INTERMEDIATE_LIST_TYPE__PRIMITIVE_TYPE:
+            case IntermediatePackage.INTERMEDIATE_COLLECTION_TYPE__PRIMITIVE_COLLECTION:
+                return primitiveCollection != PRIMITIVE_COLLECTION_EDEFAULT;
+            case IntermediatePackage.INTERMEDIATE_COLLECTION_TYPE__STRUCTURED_COLLECTION:
+                return structuredCollection != STRUCTURED_COLLECTION_EDEFAULT;
+            case IntermediatePackage.INTERMEDIATE_COLLECTION_TYPE__PRIMITIVE_TYPE:
                 return primitiveType != null;
-            case IntermediatePackage.INTERMEDIATE_LIST_TYPE__DATA_FIELDS:
+            case IntermediatePackage.INTERMEDIATE_COLLECTION_TYPE__DATA_FIELDS:
                 return dataFields != null && !dataFields.isEmpty();
         }
         return super.eIsSet(featureID);
@@ -353,12 +346,12 @@ public class IntermediateListTypeImpl extends IntermediateComplexTypeImpl implem
         if (eIsProxy()) return super.toString();
 
         StringBuilder result = new StringBuilder(super.toString());
-        result.append(" (primitiveList: ");
-        result.append(primitiveList);
-        result.append(", structuredList: ");
-        result.append(structuredList);
+        result.append(" (primitiveCollection: ");
+        result.append(primitiveCollection);
+        result.append(", structuredCollection: ");
+        result.append(structuredCollection);
         result.append(')');
         return result.toString();
     }
 
-} //IntermediateListTypeImpl
+} //IntermediateCollectionTypeImpl

@@ -2,7 +2,7 @@ package de.fhdo.lemma.model_processing.code_generation.java_base.serialization
 
 import de.fhdo.lemma.data.ComplexType
 import de.fhdo.lemma.data.DataStructure
-import de.fhdo.lemma.data.ListType
+import de.fhdo.lemma.data.CollectionType
 import de.fhdo.lemma.model_processing.asFile
 import de.fhdo.lemma.model_processing.code_generation.java_base.loadOriginalEObject
 import de.fhdo.lemma.model_processing.utils.countLines
@@ -89,8 +89,8 @@ internal fun serializeLineCountInfo(lineCountInfoList: List<LineCountInfo>) : St
     )
 
     /* Add line count information */
-    var fileExtensionSums = mutableMapOf<String, Pair<Int, Int>>()
-    var summarizedEObjects = mutableSetOf<String>()
+    val fileExtensionSums = mutableMapOf<String, Pair<Int, Int>>()
+    val summarizedEObjects = mutableSetOf<String>()
     for (lineCountInfo in lineCountInfoList) {
         val additionalInfo = lineCountInfo.additionalInfo
         val additionalInfoCsv = additionalInfoFieldNames.joinToString(";") { additionalInfo[it] ?: "n/a" }
@@ -178,7 +178,7 @@ private fun EObject.deriveAdditionalLineCountInfo(originalModelFilePath: String)
 
 /**
  * Derive additional line count information for [ComplexType] instances, e.g., the field counts of [DataStructure] and
- * [ListType] instances.
+ * [CollectionType] instances.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
@@ -190,7 +190,7 @@ private fun ComplexType.deriveAdditionalLineCountInfo(originalModelFilePath: Str
             resultMap[COMPLEX_TYPE_FIELD_COUNT_INFO_FIELD] = dataFields.size.toString()
             resultMap[DATA_STRUCTURE_OPERATION_COUNT_INFO_FIELD] = operations.size.toString()
         }
-        is ListType -> resultMap[COMPLEX_TYPE_FIELD_COUNT_INFO_FIELD] = dataFields.size.toString()
+        is CollectionType -> resultMap[COMPLEX_TYPE_FIELD_COUNT_INFO_FIELD] = dataFields.size.toString()
     }
 
     return resultMap
@@ -213,7 +213,7 @@ internal const val ORIGINAL_EOBJECT_PATH_INFO_FIELD = "originalEObjectPath"
 
 /**
  * Constant for the additional line count information "field count" of a [ComplexType] instance, e.g., a [DataStructure]
- * or [ListType].
+ * or [CollectionType].
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */

@@ -131,7 +131,6 @@ public class IntermediateImportImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getName() {
         return name;
     }
@@ -141,7 +140,6 @@ public class IntermediateImportImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -154,7 +152,6 @@ public class IntermediateImportImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getImportUri() {
         return importUri;
     }
@@ -164,7 +161,6 @@ public class IntermediateImportImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setImportUri(String newImportUri) {
         String oldImportUri = importUri;
         importUri = newImportUri;
@@ -177,7 +173,6 @@ public class IntermediateImportImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getImportTypeName() {
         return importTypeName;
     }
@@ -187,7 +182,6 @@ public class IntermediateImportImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setImportTypeName(String newImportTypeName) {
         String oldImportTypeName = importTypeName;
         importTypeName = newImportTypeName;
@@ -200,7 +194,6 @@ public class IntermediateImportImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateDataModel getDataModel() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_IMPORT__DATA_MODEL) return null;
         return (IntermediateDataModel)eContainer();
@@ -231,7 +224,6 @@ public class IntermediateImportImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setDataModel(IntermediateDataModel newDataModel) {
         if (newDataModel != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_IMPORT__DATA_MODEL && newDataModel != null)) {
             if (EcoreUtil.isAncestor(this, newDataModel))
@@ -253,7 +245,6 @@ public class IntermediateImportImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getImportTypeNameForDatatypes() {
         return ImportType.DATATYPES.getLiteral();
     }

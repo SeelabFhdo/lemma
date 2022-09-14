@@ -97,9 +97,8 @@ class NodeSeriesBuilder {
          * For building the series of nodes we use the DistinctPairSeriesBuilder. It will determine
          * all possible combinations of the nodes. However, we need to ensure that only those nodes
          * are about to be combined, that have the same type. This reduces the runtime of the type
-         * checker because a pair of nodes that does not have the same kind of complex type
-         * (DataStructure, ListType of a primitive, ListType with individually named and typed data
-         * fields) will be marked as being incompatible either.
+         * checker because a pair of nodes that does not have the same kind of complex type will be
+         * marked as being incompatible either.
          */
 
         // Nodes that represent DataStructures. In that case mandatory pairs can be passed to the
@@ -113,15 +112,15 @@ class NodeSeriesBuilder {
                 mandatoryStructurePairs)
         )
 
-        // Nodes that represent ListTypes of a primitive
+        // Nodes that represent CollectionTypes of a primitive type
         distinctPairSeries.addAll(
-            buildPairSeriesForType(basicNodes, nodesToCheck, [type.isPrimitiveList], null)
+            buildPairSeriesForType(basicNodes, nodesToCheck, [type.isPrimitiveCollection], null)
         )
 
-        // Nodes that represent ListTypes with individually named and typed data fields (so-called
-        // "structured lists")
+        // Nodes that represent CollectionTypes with individually named and typed data fields
+        // (so-called "structured collections")
         distinctPairSeries.addAll(
-            buildPairSeriesForType(basicNodes, nodesToCheck, [type.isStructuredList], null)
+            buildPairSeriesForType(basicNodes, nodesToCheck, [type.isStructuredCollection], null)
         )
 
         /*

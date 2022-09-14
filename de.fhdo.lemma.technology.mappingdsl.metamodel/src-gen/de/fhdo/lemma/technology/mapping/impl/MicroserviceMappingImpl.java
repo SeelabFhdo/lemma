@@ -360,7 +360,7 @@ public class MicroserviceMappingImpl extends MinimalEObjectImpl.Container implem
                     final String importURI = it.getTechnology().getImportURI();
                     final Technology technologyModel = LemmaUtils.<Technology>getImportedModelRoot(resource, importURI, Technology.class);
                     _xblockexpression = (((!technologyModel.getPrimitiveTypes().isEmpty()) || 
-                        (!technologyModel.getListTypes().isEmpty())) || 
+                        (!technologyModel.getCollectionTypes().isEmpty())) || 
                         (!technologyModel.getDataStructures().isEmpty()));
                 }
                 return Boolean.valueOf(_xblockexpression);

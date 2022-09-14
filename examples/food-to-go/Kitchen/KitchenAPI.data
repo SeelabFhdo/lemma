@@ -24,7 +24,7 @@ context Commands {
       long restaurantId
     }
 
-    list TicketDetails{TicketLineItem lineItems}
+    collection TicketDetails{TicketLineItem lineItems}
 
     structure TicketLineItem {
         int quantity,
@@ -32,7 +32,7 @@ context Commands {
           string name
     }
 
-    list TicketLineItemList {TicketLineItem item}
+    collection TicketLineItemList {TicketLineItem item}
 
     structure BeginCancelTicketCommand {
         long restaurantId,
@@ -45,7 +45,7 @@ context Commands {
       long orderId
     }
 
-    list RevisedOrderLineItemList{RevisedOrderLineItem revisedOrderLineItems}
+    collection RevisedOrderLineItemList{RevisedOrderLineItem revisedOrderLineItems}
 
     structure RevisedOrderLineItem {
         int quantity,

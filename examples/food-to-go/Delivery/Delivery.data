@@ -23,7 +23,7 @@ context Delivery {
       function Action makeDropoff(long deliveryId, Common::Common.Address deliveryAddress, date deliveryTime)<sideEffectFree>
     }
 
-    list ActionList {Action action}
+    collection ActionList {Action action}
 
     structure Plan<valueObject> {
         hide immutable ActionList actions,

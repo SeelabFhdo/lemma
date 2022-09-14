@@ -2,6 +2,7 @@
  */
 package de.fhdo.lemma.data.impl;
 
+import de.fhdo.lemma.data.CollectionType;
 import de.fhdo.lemma.data.ComplexType;
 import de.fhdo.lemma.data.ComplexTypeFeature;
 import de.fhdo.lemma.data.ComplexTypeImport;
@@ -18,7 +19,6 @@ import de.fhdo.lemma.data.DataStructure;
 import de.fhdo.lemma.data.Enumeration;
 import de.fhdo.lemma.data.EnumerationField;
 import de.fhdo.lemma.data.ImportedComplexType;
-import de.fhdo.lemma.data.ListType;
 import de.fhdo.lemma.data.PrimitiveBoolean;
 import de.fhdo.lemma.data.PrimitiveByte;
 import de.fhdo.lemma.data.PrimitiveCharacter;
@@ -216,7 +216,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass listTypeEClass = null;
+    private EClass collectionTypeEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -800,7 +800,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getComplexType_IsPrimitiveList() {
+    public EAttribute getComplexType_IsPrimitiveCollection() {
         return (EAttribute)complexTypeEClass.getEStructuralFeatures().get(6);
     }
 
@@ -809,7 +809,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getComplexType_IsStructuredList() {
+    public EAttribute getComplexType_IsStructuredCollection() {
         return (EAttribute)complexTypeEClass.getEStructuralFeatures().get(7);
     }
 
@@ -1241,8 +1241,8 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getListType() {
-        return listTypeEClass;
+    public EClass getCollectionType() {
+        return collectionTypeEClass;
     }
 
     /**
@@ -1250,8 +1250,8 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getListType_PrimitiveType() {
-        return (EReference)listTypeEClass.getEStructuralFeatures().get(0);
+    public EReference getCollectionType_PrimitiveType() {
+        return (EReference)collectionTypeEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -1259,8 +1259,8 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getListType_DataFields() {
-        return (EReference)listTypeEClass.getEStructuralFeatures().get(1);
+    public EReference getCollectionType_DataFields() {
+        return (EReference)collectionTypeEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -1268,8 +1268,8 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EOperation getListType__CompareFieldCounts__ListType() {
-        return listTypeEClass.getEOperations().get(0);
+    public EOperation getCollectionType__CompareFieldCounts__CollectionType() {
+        return collectionTypeEClass.getEOperations().get(0);
     }
 
     /**
@@ -1367,7 +1367,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getDataField_ListType() {
+    public EReference getDataField_CollectionType() {
         return (EReference)dataFieldEClass.getEStructuralFeatures().get(9);
     }
 
@@ -1817,8 +1817,8 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         createEReference(complexTypeEClass, COMPLEX_TYPE__VERSION);
         createEReference(complexTypeEClass, COMPLEX_TYPE__CONTEXT);
         createEAttribute(complexTypeEClass, COMPLEX_TYPE__IS_STRUCTURE);
-        createEAttribute(complexTypeEClass, COMPLEX_TYPE__IS_PRIMITIVE_LIST);
-        createEAttribute(complexTypeEClass, COMPLEX_TYPE__IS_STRUCTURED_LIST);
+        createEAttribute(complexTypeEClass, COMPLEX_TYPE__IS_PRIMITIVE_COLLECTION);
+        createEAttribute(complexTypeEClass, COMPLEX_TYPE__IS_STRUCTURED_COLLECTION);
         createEAttribute(complexTypeEClass, COMPLEX_TYPE__IS_ENUMERATION);
         createEOperation(complexTypeEClass, COMPLEX_TYPE___GET_QUALIFIED_NAME_PARTS);
         createEOperation(complexTypeEClass, COMPLEX_TYPE___BUILD_QUALIFIED_NAME__STRING);
@@ -1871,10 +1871,10 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         createEOperation(dataOperationParameterEClass, DATA_OPERATION_PARAMETER___BUILD_QUALIFIED_NAME__STRING);
         createEOperation(dataOperationParameterEClass, DATA_OPERATION_PARAMETER___GET_EFFECTIVE_TYPE);
 
-        listTypeEClass = createEClass(LIST_TYPE);
-        createEReference(listTypeEClass, LIST_TYPE__PRIMITIVE_TYPE);
-        createEReference(listTypeEClass, LIST_TYPE__DATA_FIELDS);
-        createEOperation(listTypeEClass, LIST_TYPE___COMPARE_FIELD_COUNTS__LISTTYPE);
+        collectionTypeEClass = createEClass(COLLECTION_TYPE);
+        createEReference(collectionTypeEClass, COLLECTION_TYPE__PRIMITIVE_TYPE);
+        createEReference(collectionTypeEClass, COLLECTION_TYPE__DATA_FIELDS);
+        createEOperation(collectionTypeEClass, COLLECTION_TYPE___COMPARE_FIELD_COUNTS__COLLECTIONTYPE);
 
         dataFieldEClass = createEClass(DATA_FIELD);
         createEAttribute(dataFieldEClass, DATA_FIELD__NAME);
@@ -1886,7 +1886,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         createEReference(dataFieldEClass, DATA_FIELD__INITIALIZATION_VALUE);
         createEAttribute(dataFieldEClass, DATA_FIELD__FEATURES);
         createEReference(dataFieldEClass, DATA_FIELD__DATA_STRUCTURE);
-        createEReference(dataFieldEClass, DATA_FIELD__LIST_TYPE);
+        createEReference(dataFieldEClass, DATA_FIELD__COLLECTION_TYPE);
         createEOperation(dataFieldEClass, DATA_FIELD___GET_EFFECTIVE_TYPE);
         createEOperation(dataFieldEClass, DATA_FIELD___GET_QUALIFIED_NAME_PARTS);
         createEOperation(dataFieldEClass, DATA_FIELD___BUILD_QUALIFIED_NAME__STRING);
@@ -1980,7 +1980,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         primitiveUnspecifiedEClass.getESuperTypes().add(this.getPrimitiveType());
         complexTypeEClass.getESuperTypes().add(this.getType());
         dataStructureEClass.getESuperTypes().add(this.getComplexType());
-        listTypeEClass.getESuperTypes().add(this.getComplexType());
+        collectionTypeEClass.getESuperTypes().add(this.getComplexType());
         enumerationEClass.getESuperTypes().add(this.getComplexType());
 
         // Initialize classes, features, and operations; add parameters
@@ -2066,8 +2066,8 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         initEReference(getComplexType_Version(), this.getVersion(), this.getVersion_ComplexTypes(), "version", null, 0, 1, ComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getComplexType_Context(), this.getContext(), this.getContext_ComplexTypes(), "context", null, 0, 1, ComplexType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getComplexType_IsStructure(), theEcorePackage.getEBoolean(), "isStructure", null, 0, 1, ComplexType.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-        initEAttribute(getComplexType_IsPrimitiveList(), theEcorePackage.getEBoolean(), "isPrimitiveList", null, 0, 1, ComplexType.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-        initEAttribute(getComplexType_IsStructuredList(), theEcorePackage.getEBoolean(), "isStructuredList", null, 0, 1, ComplexType.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+        initEAttribute(getComplexType_IsPrimitiveCollection(), theEcorePackage.getEBoolean(), "isPrimitiveCollection", null, 0, 1, ComplexType.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+        initEAttribute(getComplexType_IsStructuredCollection(), theEcorePackage.getEBoolean(), "isStructuredCollection", null, 0, 1, ComplexType.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
         initEAttribute(getComplexType_IsEnumeration(), theEcorePackage.getEBoolean(), "isEnumeration", null, 0, 1, ComplexType.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
         initEOperation(getComplexType__GetQualifiedNameParts(), theEcorePackage.getEString(), "getQualifiedNameParts", 0, -1, !IS_UNIQUE, IS_ORDERED);
@@ -2147,12 +2147,12 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 
         initEOperation(getDataOperationParameter__GetEffectiveType(), this.getType(), "getEffectiveType", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
-        initEClass(listTypeEClass, ListType.class, "ListType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getListType_PrimitiveType(), this.getPrimitiveType(), null, "primitiveType", null, 0, 1, ListType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getListType_DataFields(), this.getDataField(), this.getDataField_ListType(), "dataFields", null, 0, -1, ListType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEClass(collectionTypeEClass, CollectionType.class, "CollectionType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getCollectionType_PrimitiveType(), this.getPrimitiveType(), null, "primitiveType", null, 0, 1, CollectionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getCollectionType_DataFields(), this.getDataField(), this.getDataField_CollectionType(), "dataFields", null, 0, -1, CollectionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        op = initEOperation(getListType__CompareFieldCounts__ListType(), theEcorePackage.getEInt(), "compareFieldCounts", 0, 1, !IS_UNIQUE, IS_ORDERED);
-        addEParameter(op, this.getListType(), "listToCompare", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        op = initEOperation(getCollectionType__CompareFieldCounts__CollectionType(), theEcorePackage.getEInt(), "compareFieldCounts", 0, 1, !IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, this.getCollectionType(), "otherCollection", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
         initEClass(dataFieldEClass, DataField.class, "DataField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getDataField_Name(), theEcorePackage.getEString(), "name", null, 0, 1, DataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2164,7 +2164,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
         initEReference(getDataField_InitializationValue(), this.getPrimitiveValue(), null, "initializationValue", null, 0, 1, DataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getDataField_Features(), this.getDataFieldFeature(), "features", null, 0, -1, DataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getDataField_DataStructure(), this.getDataStructure(), this.getDataStructure_DataFields(), "dataStructure", null, 0, 1, DataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getDataField_ListType(), this.getListType(), this.getListType_DataFields(), "listType", null, 0, 1, DataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getDataField_CollectionType(), this.getCollectionType(), this.getCollectionType_DataFields(), "collectionType", null, 0, 1, DataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEOperation(getDataField__GetEffectiveType(), this.getType(), "getEffectiveType", 0, 1, !IS_UNIQUE, IS_ORDERED);
 

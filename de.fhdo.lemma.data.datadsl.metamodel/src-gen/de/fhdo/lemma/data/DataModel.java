@@ -14,7 +14,7 @@ import org.eclipse.emf.ecore.EObject;
  * <!-- begin-model-doc -->
  * *
  * This metamodel represents the Data Modeling Viewpoint, which is mainly used for defining custom
- * structure and list types.
+ * structure, collection, and enumeration types.
  *  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  * <!-- end-model-doc -->
  *
@@ -41,9 +41,9 @@ public interface DataModel extends EObject {
      * <!-- begin-model-doc -->
      * *
      * Implicit Constraints:
-     *     (C1) Only one (or none) of the lists versions, contexts or complexTypes may be filled
-     *          with elements. That is, a DataModel may define custom types in versions (and
-     *          contexts), contexts, or without versions and contexts.
+     *     (C1) Only one (or none) of the versions, contexts, or complexTypes may be filled with
+     *          elements. That is, a DataModel may define custom types in versions (and contexts),
+     *          contexts, or without versions and contexts.
      *          Ensured by: DSL grammar.
      * <!-- end-model-doc -->
      * @return the value of the '<em>Tmodel Uri</em>' attribute.

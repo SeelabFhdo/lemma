@@ -39,5 +39,5 @@ class DataDslFormatter extends AbstractFormatter2 {
         }
     }
 
-    // TODO: implement for Context, DataStructure, ListType, DataField
+    // TODO: implement for Context, DataStructure, CollectionType, DataField
 }

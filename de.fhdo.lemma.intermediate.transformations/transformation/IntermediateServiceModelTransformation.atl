@@ -571,7 +571,7 @@ helper def : hasTechnologySpecificType(p : Service!Parameter) : Boolean =
         let type : Service!Type = p.importedType.type
         in
         type.oclIsTypeOf(Service!TechnologySpecificPrimitiveType)
-            or type.oclIsTypeOf(Service!TechnologySpecificListType)
+            or type.oclIsTypeOf(Service!TechnologySpecificCollectionType)
             or type.oclIsTypeOf(Service!TechnologySpecificDataStructure)
     endif
 ;
@@ -639,15 +639,15 @@ helper def : getTypeKind(type : Service!Type) : Intermediate!IntermediateTypeKin
     if (type.oclIsKindOf(Service!TechnologySpecificPrimitiveType)
         or type.oclIsKindOf(Service!PrimitiveType)) then
         #PRIMITIVE
-    else if (type.oclIsKindOf(Service!TechnologySpecificListType)) then
-        #LIST
+    else if (type.oclIsKindOf(Service!TechnologySpecificCollectionType)) then
+        #COLLECTION
     else if (type.oclIsKindOf(Service!TechnologySpecificDataStructure)) then
         #STRUCTURE
     else if (type.oclIsKindOf(Service!ComplexType)) then
         if (type.isStructure) then
             #STRUCTURE
-        else if (type.isPrimitiveList or type.isStructuredList) then
-            #LIST
+        else if (type.isPrimitiveCollection or type.isStructuredCollection) then
+            #COLLECTION
         else if (type.isEnumeration) then
             #ENUMERATION
         else

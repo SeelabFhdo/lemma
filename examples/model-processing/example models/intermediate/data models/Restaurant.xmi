@@ -20,27 +20,27 @@
     </complexTypes>
     <complexTypes xsi:type="intermediate:IntermediateDataStructure" name="RestaurantMenu" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="Restaurant.RestaurantMenu">
       <featureNames>VALUE_OBJECT</featureNames>
-      <dataFields name="menuItems" qualifiedName="Restaurant.RestaurantMenu.menuItems">
-        <type xsi:type="intermediate:IntermediateComplexType" name="MenuItems" origin="DATA_MODEL" kind="LIST" qualifiedName="Restaurant.MenuItems"/>
-        <originalType xsi:type="intermediate:IntermediateComplexType" name="MenuItems" origin="DATA_MODEL" kind="LIST" qualifiedName="Restaurant.MenuItems"/>
+      <dataFields name="menuItems" qualifiedName="Restaurant.RestaurantMenu.menuItems" immutable="true">
+        <type xsi:type="intermediate:IntermediateComplexType" name="MenuItems" origin="DATA_MODEL" kind="COLLECTION" qualifiedName="Restaurant.MenuItems"/>
+        <originalType xsi:type="intermediate:IntermediateComplexType" name="MenuItems" origin="DATA_MODEL" kind="COLLECTION" qualifiedName="Restaurant.MenuItems"/>
       </dataFields>
     </complexTypes>
     <complexTypes xsi:type="intermediate:IntermediateDataStructure" name="MenuItem" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="Restaurant.MenuItem">
       <featureNames>VALUE_OBJECT</featureNames>
-      <dataFields name="id" qualifiedName="Restaurant.MenuItem.id">
+      <dataFields name="id" qualifiedName="Restaurant.MenuItem.id" immutable="true">
         <type xsi:type="intermediate:IntermediatePrimitiveType" name="string" origin="BUILTIN" kind="PRIMITIVE"/>
         <originalType xsi:type="intermediate:IntermediatePrimitiveType" name="string" origin="BUILTIN" kind="PRIMITIVE"/>
       </dataFields>
-      <dataFields name="name" qualifiedName="Restaurant.MenuItem.name">
+      <dataFields name="name" qualifiedName="Restaurant.MenuItem.name" immutable="true">
         <type xsi:type="intermediate:IntermediatePrimitiveType" name="string" origin="BUILTIN" kind="PRIMITIVE"/>
         <originalType xsi:type="intermediate:IntermediatePrimitiveType" name="string" origin="BUILTIN" kind="PRIMITIVE"/>
       </dataFields>
-      <dataFields name="price" qualifiedName="Restaurant.MenuItem.price">
+      <dataFields name="price" qualifiedName="Restaurant.MenuItem.price" immutable="true">
         <type xsi:type="intermediate:IntermediateImportedComplexType" name="Money" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="SharedDomainConcepts.Money" import="//@imports.0"/>
         <originalType xsi:type="intermediate:IntermediateImportedComplexType" name="Money" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="SharedDomainConcepts.Money" import="//@imports.0"/>
       </dataFields>
     </complexTypes>
-    <complexTypes xsi:type="intermediate:IntermediateListType" name="MenuItems" origin="DATA_MODEL" kind="LIST" qualifiedName="Restaurant.MenuItems" structuredList="true">
+    <complexTypes xsi:type="intermediate:IntermediateCollectionType" name="MenuItems" origin="DATA_MODEL" kind="COLLECTION" qualifiedName="Restaurant.MenuItems" structuredCollection="true">
       <dataFields name="i" qualifiedName="Restaurant.MenuItems.i">
         <type xsi:type="intermediate:IntermediateComplexType" name="MenuItem" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="Restaurant.MenuItem"/>
         <originalType xsi:type="intermediate:IntermediateComplexType" name="MenuItem" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="Restaurant.MenuItem"/>
@@ -50,26 +50,26 @@
   <contexts name="API" qualifiedName="API">
     <complexTypes xsi:type="intermediate:IntermediateDataStructure" name="RestaurantInformation" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="API.RestaurantInformation">
       <featureNames>VALUE_OBJECT</featureNames>
-      <dataFields name="restaurantName" qualifiedName="API.RestaurantInformation.restaurantName">
+      <dataFields name="restaurantName" qualifiedName="API.RestaurantInformation.restaurantName" immutable="true">
         <type xsi:type="intermediate:IntermediatePrimitiveType" name="string" origin="BUILTIN" kind="PRIMITIVE"/>
         <originalType xsi:type="intermediate:IntermediatePrimitiveType" name="string" origin="BUILTIN" kind="PRIMITIVE"/>
       </dataFields>
-      <dataFields name="restaurantMenu" qualifiedName="API.RestaurantInformation.restaurantMenu">
-        <type xsi:type="intermediate:IntermediateComplexType" name="MenuItems" origin="DATA_MODEL" kind="LIST" qualifiedName="API.MenuItems"/>
-        <originalType xsi:type="intermediate:IntermediateComplexType" name="MenuItems" origin="DATA_MODEL" kind="LIST" qualifiedName="API.MenuItems"/>
+      <dataFields name="restaurantMenu" qualifiedName="API.RestaurantInformation.restaurantMenu" immutable="true">
+        <type xsi:type="intermediate:IntermediateComplexType" name="MenuItems" origin="DATA_MODEL" kind="COLLECTION" qualifiedName="API.MenuItems"/>
+        <originalType xsi:type="intermediate:IntermediateComplexType" name="MenuItems" origin="DATA_MODEL" kind="COLLECTION" qualifiedName="API.MenuItems"/>
       </dataFields>
     </complexTypes>
     <complexTypes xsi:type="intermediate:IntermediateDataStructure" name="MenuItem" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="API.MenuItem">
-      <dataFields name="name" qualifiedName="API.MenuItem.name">
+      <dataFields name="name" qualifiedName="API.MenuItem.name" immutable="true">
         <type xsi:type="intermediate:IntermediatePrimitiveType" name="string" origin="BUILTIN" kind="PRIMITIVE"/>
         <originalType xsi:type="intermediate:IntermediatePrimitiveType" name="string" origin="BUILTIN" kind="PRIMITIVE"/>
       </dataFields>
-      <dataFields name="price" qualifiedName="API.MenuItem.price">
+      <dataFields name="price" qualifiedName="API.MenuItem.price" immutable="true">
         <type xsi:type="intermediate:IntermediateImportedComplexType" name="Money" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="SharedDomainConcepts.Money" import="//@imports.0"/>
         <originalType xsi:type="intermediate:IntermediateImportedComplexType" name="Money" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="SharedDomainConcepts.Money" import="//@imports.0"/>
       </dataFields>
     </complexTypes>
-    <complexTypes xsi:type="intermediate:IntermediateListType" name="MenuItems" origin="DATA_MODEL" kind="LIST" qualifiedName="API.MenuItems" structuredList="true">
+    <complexTypes xsi:type="intermediate:IntermediateCollectionType" name="MenuItems" origin="DATA_MODEL" kind="COLLECTION" qualifiedName="API.MenuItems" structuredCollection="true">
       <dataFields name="i" qualifiedName="API.MenuItems.i">
         <type xsi:type="intermediate:IntermediateComplexType" name="MenuItem" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="API.MenuItem"/>
         <originalType xsi:type="intermediate:IntermediateComplexType" name="MenuItem" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="API.MenuItem"/>

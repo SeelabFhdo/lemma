@@ -5,7 +5,7 @@ import java.util.List
 import de.fhdo.lemma.data.DataStructure
 import de.fhdo.lemma.data.PrimitiveType
 import de.fhdo.lemma.data.DataField
-import de.fhdo.lemma.data.ListType
+import de.fhdo.lemma.data.CollectionType
 import de.fhdo.lemma.typechecking.TypeCheckerI
 import de.fhdo.lemma.typechecking.complex_types.data_structures.NodeSeries
 import de.fhdo.lemma.typechecking.complex_types.data_structures.TypeGraph
@@ -14,7 +14,7 @@ import de.fhdo.lemma.typechecking.complex_types.data_structures.DataFieldCompara
 import de.fhdo.lemma.typechecking.complex_types.data_structures.DataFieldComparator.ORDERING
 import de.fhdo.lemma.typechecking.TypecheckingUtils
 import de.fhdo.lemma.technology.TechnologySpecificDataStructure
-import de.fhdo.lemma.technology.TechnologySpecificListType
+import de.fhdo.lemma.technology.TechnologySpecificCollectionType
 import de.fhdo.lemma.data.Enumeration
 import com.google.common.base.Function
 import de.fhdo.lemma.data.PrimitiveValue
@@ -27,8 +27,7 @@ import de.fhdo.lemma.data.PrimitiveValue
  *   (2) Iterate over the nodes (in the form of node pairs) of the graphs until the compatibility of
  *       the pair of the passed complex types got decided.
  *   (3) The actual decision if the currently iterated node pair is compatible is based on the
- *       pair's nodes' types (structure, list with primitive type, structured list with named and
- *       typed fields), which all have different compatibility requirements.
+ *       pair's nodes' types, which all have different compatibility requirements.
  *   (4) Add new series of node pairs to check, resulting from the currently iterated one.
  *   (5) Get the next pair to check from the accompanying iterator, if the root node pair's
  *       compatibility did not get decided along the way. Goto (iii)
@@ -104,11 +103,13 @@ class ComplexTypeChecker implements TypeCheckerI<ComplexType> {
         /* Perform type-specific compatibility checking */
         val typesEqual = typesEqual(basicType, typeToCheck)
         val structureCheck = basicType.isStructure && typeToCheck.isStructure
-        val primitiveListCheck = basicType.isPrimitiveList && typeToCheck.isPrimitiveList
-        val structuredListCheck = basicType.isStructuredList && typeToCheck.isStructuredList
+        val primitiveCollectionCheck = basicType.isPrimitiveCollection &&
+            typeToCheck.isPrimitiveCollection
+        val structuredCollectionCheck = basicType.isStructuredCollection &&
+            typeToCheck.isStructuredCollection
         val enumerationCheck = basicType.isIsEnumeration && typeToCheck.isIsEnumeration
-        val nodeTypeKindsEqual = structureCheck || primitiveListCheck || structuredListCheck ||
-            enumerationCheck
+        val nodeTypeKindsEqual = structureCheck || primitiveCollectionCheck ||
+            structuredCollectionCheck || enumerationCheck
 
         // The current pair is immediately compatible if its nodes encapsulate the same types
         if (typesEqual)
@@ -123,14 +124,17 @@ class ComplexTypeChecker implements TypeCheckerI<ComplexType> {
             !structuresCompatible(basicType as DataStructure, typeToCheck as DataStructure))
             iterator.markCurrentPairIncompatible()
 
-        // The node pair is incompatible if its nodes encapsulate incompatible primitive lists
-        else if (primitiveListCheck &&
-            !primitiveListsCompatible(basicType as ListType, typeToCheck as ListType))
+        // The node pair is incompatible if its nodes encapsulate incompatible primitive collections
+        else if (primitiveCollectionCheck &&
+            !primitiveCollectionsCompatible(basicType as CollectionType,
+                typeToCheck as CollectionType))
             iterator.markCurrentPairIncompatible()
 
-        // The node pair is incompatible if its nodes encapsulate incompatible structured lists
-        else if (structuredListCheck &&
-            !structuredListsCompatible(basicType as ListType, typeToCheck as ListType))
+        // The node pair is incompatible if its nodes encapsulate incompatible structured
+        // collections
+        else if (structuredCollectionCheck &&
+            !structuredCollectionsCompatible(basicType as CollectionType,
+                typeToCheck as CollectionType))
             iterator.markCurrentPairIncompatible()
 
         // The node pair is incompatible if its nodes encapsulate incompatible enumerations
@@ -151,9 +155,9 @@ class ComplexTypeChecker implements TypeCheckerI<ComplexType> {
          * Perform technology-specific checks. The basic type is equal to the type to check if (i)
          * the latter is technology-specific and (ii) if the basic type has the same underlying type
          * kind as the type to check, i.e., is a structure type when the type to check is a
-         * technology-specific structure type or is a list type when the type to check is a
-         * technology-specific list type. That is, because technology-specific complex types do not
-         * include data fields or primitive types (for primitive lists).
+         * technology-specific structure type or is a collection type when the type to check is a
+         * technology-specific collection type. That is, because technology-specific complex types
+         * do not include data fields or primitive types (for primitive collections).
          */
         if (!TypecheckingUtils.isTechnologySpecific(typeToCheck))
             return false
@@ -163,8 +167,9 @@ class ComplexTypeChecker implements TypeCheckerI<ComplexType> {
         if (basicStructure && typeToCheck instanceof TechnologySpecificDataStructure)
             return true
 
-        val basicList = basicType.isPrimitiveList || basicType instanceof TechnologySpecificListType
-        if (basicList && typeToCheck instanceof TechnologySpecificListType)
+        val basicCollection = basicType.isPrimitiveCollection ||
+            basicType instanceof TechnologySpecificCollectionType
+        if (basicCollection && typeToCheck instanceof TechnologySpecificCollectionType)
             return true
     }
 
@@ -206,29 +211,31 @@ class ComplexTypeChecker implements TypeCheckerI<ComplexType> {
     }
 
     /**
-     * Check if two primitively typed lists are compatible
+     * Check if two primitively typed collections are compatible
      */
-    private def primitiveListsCompatible(ListType basicList, ListType listToCheck) {
-        /* The lists are compatible if the primitive types are compatible */
-        val basicPrimitiveType = basicList.primitiveType
-        val primitiveTypeToCheck = listToCheck.primitiveType
+    private def primitiveCollectionsCompatible(CollectionType basicCollection,
+        CollectionType collectionToCheck) {
+        /* The collections are compatible if the primitive types are compatible */
+        val basicPrimitiveType = basicCollection.primitiveType
+        val primitiveTypeToCheck = collectionToCheck.primitiveType
         return basicPrimitiveType.isCompatibleWith(primitiveTypeToCheck)
     }
 
     /**
-     * Check if two structured lists are compatible
+     * Check if two structured collections are compatible
      */
-    private def structuredListsCompatible(ListType basicList, ListType listToCheck) {
-        /* Is basic list smaller than list to check? */
-        val basicListIsSmaller = basicList.compareFieldCounts(listToCheck) == -1
-        if (basicListIsSmaller)
+    private def structuredCollectionsCompatible(CollectionType basicCollection,
+        CollectionType collectionToCheck) {
+        /* Is basic collection smaller than collection to check? */
+        val basicCollectionIsSmaller = basicCollection.compareFieldCounts(collectionToCheck) == -1
+        if (basicCollectionIsSmaller)
             return false
 
-        /* Check primitive type compatibility of the lists' fields */
-        val basicPrimitiveFields = basicList.dataFields
+        /* Check primitive type compatibility of the collections' fields */
+        val basicPrimitiveFields = basicCollection.dataFields
             .filter[effectiveType instanceof PrimitiveType].toList
 
-        val primitiveFieldsToCheck = listToCheck.dataFields
+        val primitiveFieldsToCheck = collectionToCheck.dataFields
             .filter[effectiveType instanceof PrimitiveType].toList
 
         if (!primitiveFieldsCompatible(basicPrimitiveFields, primitiveFieldsToCheck))

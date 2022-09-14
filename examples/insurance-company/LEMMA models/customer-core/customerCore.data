@@ -6,7 +6,7 @@ context customerCore {
         immutable string city<neverEmpty>
     }
 
-    list Addresses { Address a }
+    collection Addresses { Address a }
 
     structure CustomerId<valueObject> {
         immutable string id,
@@ -30,7 +30,7 @@ context customerCore {
         procedure updateCustomerProfile(CustomerProfileEntity updatedCustomerProfile)
     }
 
-    list CustomerAggregateRoots { CustomerAggregateRoot r }
+    collection CustomerAggregateRoots { CustomerAggregateRoot r }
 
     structure CustomerFactory<factory> {
         hide immutable CustomerRepository customerRepository,
@@ -92,7 +92,7 @@ context customerCore {
         immutable Addresses moveHistory
     }
 
-    list CustomerResponseDtos { CustomerResponseDto d }
+    collection CustomerResponseDtos { CustomerResponseDto d }
 
     structure CustomersResponseDto<valueObject> {
         immutable CustomerResponseDtos customers
@@ -106,9 +106,9 @@ context customerCore {
         immutable CustomerResponseDtos customers
     }
 
-    list PostalCodesAndCities { string postalCode, string city }
-    list Cities { string city }
-    list FieldNames { string }
+    collection PostalCodesAndCities { string postalCode, string city }
+    collection Cities { string city }
+    collection FieldNames { string }
 
     structure CityLookupService<domainService> {
         hide function PostalCodesAndCities loadLookupMap(),

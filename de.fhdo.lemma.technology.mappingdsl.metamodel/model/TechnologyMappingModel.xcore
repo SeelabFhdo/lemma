@@ -100,7 +100,7 @@ class ComplexTypeMapping {
             val importURI = technology.importURI
             val technologyModel = LemmaUtils.getImportedModelRoot(resource, importURI, Technology)
             !technologyModel.primitiveTypes.empty ||
-            !technologyModel.listTypes.empty ||
+            !technologyModel.collectionTypes.empty ||
             !technologyModel.dataStructures.empty
         ].toEList
     }
@@ -201,7 +201,7 @@ class MicroserviceMapping {
             val importURI = technology.importURI
             val technologyModel = LemmaUtils.getImportedModelRoot(resource, importURI, Technology)
             !technologyModel.primitiveTypes.empty ||
-            !technologyModel.listTypes.empty ||
+            !technologyModel.collectionTypes.empty ||
             !technologyModel.dataStructures.empty
         ].toEList
     }

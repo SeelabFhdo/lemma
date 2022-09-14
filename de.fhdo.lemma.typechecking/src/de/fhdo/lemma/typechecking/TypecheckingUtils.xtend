@@ -6,7 +6,7 @@ import de.fhdo.lemma.data.ComplexType
 import de.fhdo.lemma.data.PrimitiveType
 import org.eclipse.xtext.naming.QualifiedName
 import de.fhdo.lemma.technology.TechnologySpecificDataStructure
-import de.fhdo.lemma.technology.TechnologySpecificListType
+import de.fhdo.lemma.technology.TechnologySpecificCollectionType
 import de.fhdo.lemma.technology.Technology
 
 /**
@@ -67,7 +67,7 @@ class TypecheckingUtils {
 
         return type instanceof TechnologySpecificPrimitiveType ||
             type instanceof TechnologySpecificDataStructure ||
-            type instanceof TechnologySpecificListType
+            type instanceof TechnologySpecificCollectionType
     }
 
     /**
@@ -80,7 +80,7 @@ class TypecheckingUtils {
         switch (type) {
             TechnologySpecificPrimitiveType: type.technology
             TechnologySpecificDataStructure: type.technology
-            TechnologySpecificListType: type.technology
+            TechnologySpecificCollectionType: type.technology
         }
     }
 

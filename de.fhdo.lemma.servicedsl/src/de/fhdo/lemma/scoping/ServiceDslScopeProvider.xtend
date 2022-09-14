@@ -954,8 +954,8 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
             EObjectDescription.create(typeName, it)
         ])
 
-        // Technology-specific list types
-        scopeElements.addAll(technology.listTypes.map[
+        // Technology-specific collection types
+        scopeElements.addAll(technology.collectionTypes.map[
             val typeName = QualifiedName.create(it.qualifiedNameParts)
             EObjectDescription.create(typeName, it)
         ])

@@ -4,6 +4,7 @@ package de.fhdo.lemma.data.intermediate.impl;
 
 import de.fhdo.lemma.data.intermediate.IntermediateAspectProperty;
 import de.fhdo.lemma.data.intermediate.IntermediateAspectPropertyValue;
+import de.fhdo.lemma.data.intermediate.IntermediateCollectionType;
 import de.fhdo.lemma.data.intermediate.IntermediateComplexType;
 import de.fhdo.lemma.data.intermediate.IntermediateContext;
 import de.fhdo.lemma.data.intermediate.IntermediateDataField;
@@ -19,7 +20,6 @@ import de.fhdo.lemma.data.intermediate.IntermediateImport;
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect;
 import de.fhdo.lemma.data.intermediate.IntermediateImportedComplexType;
 import de.fhdo.lemma.data.intermediate.IntermediateImportedTechnologySpecificType;
-import de.fhdo.lemma.data.intermediate.IntermediateListType;
 import de.fhdo.lemma.data.intermediate.IntermediatePackage;
 import de.fhdo.lemma.data.intermediate.IntermediatePrimitiveType;
 import de.fhdo.lemma.data.intermediate.IntermediateType;
@@ -143,7 +143,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass intermediateListTypeEClass = null;
+    private EClass intermediateCollectionTypeEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -925,8 +925,8 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getIntermediateListType() {
-        return intermediateListTypeEClass;
+    public EClass getIntermediateCollectionType() {
+        return intermediateCollectionTypeEClass;
     }
 
     /**
@@ -934,8 +934,8 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getIntermediateListType_PrimitiveList() {
-        return (EAttribute)intermediateListTypeEClass.getEStructuralFeatures().get(0);
+    public EAttribute getIntermediateCollectionType_PrimitiveCollection() {
+        return (EAttribute)intermediateCollectionTypeEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -943,8 +943,8 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getIntermediateListType_StructuredList() {
-        return (EAttribute)intermediateListTypeEClass.getEStructuralFeatures().get(1);
+    public EAttribute getIntermediateCollectionType_StructuredCollection() {
+        return (EAttribute)intermediateCollectionTypeEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -952,8 +952,8 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getIntermediateListType_PrimitiveType() {
-        return (EReference)intermediateListTypeEClass.getEStructuralFeatures().get(2);
+    public EReference getIntermediateCollectionType_PrimitiveType() {
+        return (EReference)intermediateCollectionTypeEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -961,8 +961,8 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getIntermediateListType_DataFields() {
-        return (EReference)intermediateListTypeEClass.getEStructuralFeatures().get(3);
+    public EReference getIntermediateCollectionType_DataFields() {
+        return (EReference)intermediateCollectionTypeEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -1087,7 +1087,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getIntermediateDataField_ListType() {
+    public EReference getIntermediateDataField_CollectionType() {
         return (EReference)intermediateDataFieldEClass.getEStructuralFeatures().get(12);
     }
 
@@ -1528,11 +1528,11 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
         createEReference(intermediateDataOperationParameterEClass, INTERMEDIATE_DATA_OPERATION_PARAMETER__ASPECTS);
         createEReference(intermediateDataOperationParameterEClass, INTERMEDIATE_DATA_OPERATION_PARAMETER__OPERATION);
 
-        intermediateListTypeEClass = createEClass(INTERMEDIATE_LIST_TYPE);
-        createEAttribute(intermediateListTypeEClass, INTERMEDIATE_LIST_TYPE__PRIMITIVE_LIST);
-        createEAttribute(intermediateListTypeEClass, INTERMEDIATE_LIST_TYPE__STRUCTURED_LIST);
-        createEReference(intermediateListTypeEClass, INTERMEDIATE_LIST_TYPE__PRIMITIVE_TYPE);
-        createEReference(intermediateListTypeEClass, INTERMEDIATE_LIST_TYPE__DATA_FIELDS);
+        intermediateCollectionTypeEClass = createEClass(INTERMEDIATE_COLLECTION_TYPE);
+        createEAttribute(intermediateCollectionTypeEClass, INTERMEDIATE_COLLECTION_TYPE__PRIMITIVE_COLLECTION);
+        createEAttribute(intermediateCollectionTypeEClass, INTERMEDIATE_COLLECTION_TYPE__STRUCTURED_COLLECTION);
+        createEReference(intermediateCollectionTypeEClass, INTERMEDIATE_COLLECTION_TYPE__PRIMITIVE_TYPE);
+        createEReference(intermediateCollectionTypeEClass, INTERMEDIATE_COLLECTION_TYPE__DATA_FIELDS);
 
         intermediateDataFieldEClass = createEClass(INTERMEDIATE_DATA_FIELD);
         createEAttribute(intermediateDataFieldEClass, INTERMEDIATE_DATA_FIELD__NAME);
@@ -1547,7 +1547,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
         createEReference(intermediateDataFieldEClass, INTERMEDIATE_DATA_FIELD__ORIGINAL_TYPE);
         createEReference(intermediateDataFieldEClass, INTERMEDIATE_DATA_FIELD__ASPECTS);
         createEReference(intermediateDataFieldEClass, INTERMEDIATE_DATA_FIELD__DATA_STRUCTURE);
-        createEReference(intermediateDataFieldEClass, INTERMEDIATE_DATA_FIELD__LIST_TYPE);
+        createEReference(intermediateDataFieldEClass, INTERMEDIATE_DATA_FIELD__COLLECTION_TYPE);
         createEOperation(intermediateDataFieldEClass, INTERMEDIATE_DATA_FIELD___GET_EFFECTIVE_COMPLEX_TYPE);
 
         intermediateEnumerationEClass = createEClass(INTERMEDIATE_ENUMERATION);
@@ -1631,7 +1631,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
         intermediateImportedComplexTypeEClass.getESuperTypes().add(this.getIntermediateComplexType());
         intermediateImportedTechnologySpecificTypeEClass.getESuperTypes().add(this.getIntermediateType());
         intermediateDataStructureEClass.getESuperTypes().add(this.getIntermediateComplexType());
-        intermediateListTypeEClass.getESuperTypes().add(this.getIntermediateComplexType());
+        intermediateCollectionTypeEClass.getESuperTypes().add(this.getIntermediateComplexType());
         intermediateEnumerationEClass.getESuperTypes().add(this.getIntermediateComplexType());
 
         // Initialize classes, features, and operations; add parameters
@@ -1720,11 +1720,11 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
         initEReference(getIntermediateDataOperationParameter_Aspects(), this.getIntermediateImportedAspect(), this.getIntermediateImportedAspect_Parameter(), "aspects", null, 0, -1, IntermediateDataOperationParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getIntermediateDataOperationParameter_Operation(), this.getIntermediateDataOperation(), this.getIntermediateDataOperation_Parameters(), "operation", null, 0, 1, IntermediateDataOperationParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(intermediateListTypeEClass, IntermediateListType.class, "IntermediateListType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getIntermediateListType_PrimitiveList(), theEcorePackage.getEBoolean(), "primitiveList", null, 0, 1, IntermediateListType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getIntermediateListType_StructuredList(), theEcorePackage.getEBoolean(), "structuredList", null, 0, 1, IntermediateListType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getIntermediateListType_PrimitiveType(), this.getIntermediatePrimitiveType(), null, "primitiveType", null, 0, 1, IntermediateListType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getIntermediateListType_DataFields(), this.getIntermediateDataField(), this.getIntermediateDataField_ListType(), "dataFields", null, 0, -1, IntermediateListType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEClass(intermediateCollectionTypeEClass, IntermediateCollectionType.class, "IntermediateCollectionType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getIntermediateCollectionType_PrimitiveCollection(), theEcorePackage.getEBoolean(), "primitiveCollection", null, 0, 1, IntermediateCollectionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getIntermediateCollectionType_StructuredCollection(), theEcorePackage.getEBoolean(), "structuredCollection", null, 0, 1, IntermediateCollectionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getIntermediateCollectionType_PrimitiveType(), this.getIntermediatePrimitiveType(), null, "primitiveType", null, 0, 1, IntermediateCollectionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getIntermediateCollectionType_DataFields(), this.getIntermediateDataField(), this.getIntermediateDataField_CollectionType(), "dataFields", null, 0, -1, IntermediateCollectionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(intermediateDataFieldEClass, IntermediateDataField.class, "IntermediateDataField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getIntermediateDataField_Name(), theEcorePackage.getEString(), "name", null, 0, 1, IntermediateDataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1739,7 +1739,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
         initEReference(getIntermediateDataField_OriginalType(), this.getIntermediateType(), null, "originalType", null, 0, 1, IntermediateDataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getIntermediateDataField_Aspects(), this.getIntermediateImportedAspect(), this.getIntermediateImportedAspect_DataField(), "aspects", null, 0, -1, IntermediateDataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getIntermediateDataField_DataStructure(), this.getIntermediateDataStructure(), this.getIntermediateDataStructure_DataFields(), "dataStructure", null, 0, 1, IntermediateDataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getIntermediateDataField_ListType(), this.getIntermediateListType(), this.getIntermediateListType_DataFields(), "listType", null, 0, 1, IntermediateDataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getIntermediateDataField_CollectionType(), this.getIntermediateCollectionType(), this.getIntermediateCollectionType_DataFields(), "collectionType", null, 0, 1, IntermediateDataField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEOperation(getIntermediateDataField__GetEffectiveComplexType(), this.getIntermediateComplexType(), "getEffectiveComplexType", 0, 1, !IS_UNIQUE, IS_ORDERED);
 
@@ -1784,8 +1784,8 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
         // Initialize enums and add enum literals
         initEEnum(intermediateTypeKindEEnum, IntermediateTypeKind.class, "IntermediateTypeKind");
         addEEnumLiteral(intermediateTypeKindEEnum, IntermediateTypeKind.DUMMY_FOR_XMI_SERIALIZER_BUG);
+        addEEnumLiteral(intermediateTypeKindEEnum, IntermediateTypeKind.COLLECTION);
         addEEnumLiteral(intermediateTypeKindEEnum, IntermediateTypeKind.ENUMERATION);
-        addEEnumLiteral(intermediateTypeKindEEnum, IntermediateTypeKind.LIST);
         addEEnumLiteral(intermediateTypeKindEEnum, IntermediateTypeKind.PRIMITIVE);
         addEEnumLiteral(intermediateTypeKindEEnum, IntermediateTypeKind.STRUCTURE);
 

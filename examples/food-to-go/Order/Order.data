@@ -36,7 +36,7 @@ context Order {
         function Common::Common.Money orderTotal<sideEffectFree>
     }
 
-    list OrderLineItemsType { OrderLineItem i }
+    collection OrderLineItemsType { OrderLineItem i }
 
     structure DeliveryInformation<valueObject> {
         immutable date deliveryTime,
@@ -69,5 +69,5 @@ context Order {
         immutable int quantity
     }
 
-    list MenuItemIdAndQuantityList { MenuItemIdAndQuantity itemQuantity }
+    collection MenuItemIdAndQuantityList { MenuItemIdAndQuantity itemQuantity }
 }

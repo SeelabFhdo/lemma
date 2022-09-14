@@ -42,7 +42,7 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
     @Check
     def checkModelNotEmpty(Technology technology) {
         val modelEmpty = technology.primitiveTypes.empty &&
-            technology.listTypes.empty &&
+            technology.collectionTypes.empty &&
             technology.dataStructures.empty &&
             technology.protocols.empty &&
             technology.serviceAspects.empty &&
@@ -214,13 +214,13 @@ class TechnologyDslValidator extends AbstractTechnologyDslValidator {
     def checkPrimitiveDefaults(Technology technology) {
         /*
          * Perform the check only if the "types" section is present. However, the presence needs to
-         * be checked by relying on the existence of other types, i.e., lists and/or data
+         * be checked by relying on the existence of other types, i.e., collections and/or data
          * structures. That is, because the "types" section in the metamodel is not represented by
          * one coherent concept, but each part of the "types" section is directly encapsulated by
          * the root concept Technology. Hence, checking for the existence of the "types" section "as
          * a whole" is not possible.
          */
-        val typeSectionIsPresent = !technology.listTypes.empty ||
+        val typeSectionIsPresent = !technology.collectionTypes.empty ||
             !technology.dataStructures.empty ||
             !technology.primitiveTypes.empty
 

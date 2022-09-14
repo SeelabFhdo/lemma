@@ -21,7 +21,7 @@ import java.util.Map
 import org.eclipse.xtext.xbase.lib.Pair
 import de.fhdo.lemma.utils.LemmaUtils
 import de.fhdo.lemma.technology.TechnologySpecificDataStructure
-import de.fhdo.lemma.technology.TechnologySpecificListType
+import de.fhdo.lemma.technology.TechnologySpecificCollectionType
 
 /**
  * This metamodel represents the Service Modeling Viewpoint, which is used for defining services.
@@ -163,7 +163,7 @@ class MappedComplexType {
             val importURI = technology.importURI
             val technologyModel = LemmaUtils.getImportedModelRoot(resource, importURI, Technology)
             !technologyModel.primitiveTypes.empty ||
-            !technologyModel.listTypes.empty ||
+            !technologyModel.collectionTypes.empty ||
             !technologyModel.dataStructures.empty
         ].toEList
     }
@@ -451,7 +451,7 @@ class Microservice {
             val importURI = technology.importURI
             val technologyModel = LemmaUtils.getImportedModelRoot(resource, importURI, Technology)
             !technologyModel.primitiveTypes.empty ||
-            !technologyModel.listTypes.empty ||
+            !technologyModel.collectionTypes.empty ||
             !technologyModel.dataStructures.empty
         ].toEList
     }
@@ -1290,7 +1290,7 @@ class Parameter {
             return false
 
         return effectiveType instanceof TechnologySpecificDataStructure ||
-            effectiveType instanceof TechnologySpecificListType ||
+            effectiveType instanceof TechnologySpecificCollectionType ||
             effectiveType instanceof TechnologySpecificPrimitiveType
     }
 

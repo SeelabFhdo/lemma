@@ -4,13 +4,13 @@ package de.fhdo.lemma.data.impl;
 
 import com.google.common.base.Objects;
 
+import de.fhdo.lemma.data.CollectionType;
 import de.fhdo.lemma.data.ComplexType;
 import de.fhdo.lemma.data.DataField;
 import de.fhdo.lemma.data.DataFieldFeature;
 import de.fhdo.lemma.data.DataPackage;
 import de.fhdo.lemma.data.DataStructure;
 import de.fhdo.lemma.data.ImportedComplexType;
-import de.fhdo.lemma.data.ListType;
 import de.fhdo.lemma.data.PrimitiveType;
 import de.fhdo.lemma.data.PrimitiveValue;
 import de.fhdo.lemma.data.Type;
@@ -58,7 +58,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  *   <li>{@link de.fhdo.lemma.data.impl.DataFieldImpl#getInitializationValue <em>Initialization Value</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.impl.DataFieldImpl#getFeatures <em>Features</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.impl.DataFieldImpl#getDataStructure <em>Data Structure</em>}</li>
- *   <li>{@link de.fhdo.lemma.data.impl.DataFieldImpl#getListType <em>List Type</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.impl.DataFieldImpl#getCollectionType <em>Collection Type</em>}</li>
  * </ul>
  *
  * @generated
@@ -491,9 +491,9 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
      * <!-- end-user-doc -->
      * @generated
      */
-    public ListType getListType() {
-        if (eContainerFeatureID() != DataPackage.DATA_FIELD__LIST_TYPE) return null;
-        return (ListType)eContainer();
+    public CollectionType getCollectionType() {
+        if (eContainerFeatureID() != DataPackage.DATA_FIELD__COLLECTION_TYPE) return null;
+        return (CollectionType)eContainer();
     }
 
     /**
@@ -501,9 +501,9 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
      * <!-- end-user-doc -->
      * @generated
      */
-    public ListType basicGetListType() {
-        if (eContainerFeatureID() != DataPackage.DATA_FIELD__LIST_TYPE) return null;
-        return (ListType)eInternalContainer();
+    public CollectionType basicGetCollectionType() {
+        if (eContainerFeatureID() != DataPackage.DATA_FIELD__COLLECTION_TYPE) return null;
+        return (CollectionType)eInternalContainer();
     }
 
     /**
@@ -511,8 +511,8 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
      * <!-- end-user-doc -->
      * @generated
      */
-    public NotificationChain basicSetListType(ListType newListType, NotificationChain msgs) {
-        msgs = eBasicSetContainer((InternalEObject)newListType, DataPackage.DATA_FIELD__LIST_TYPE, msgs);
+    public NotificationChain basicSetCollectionType(CollectionType newCollectionType, NotificationChain msgs) {
+        msgs = eBasicSetContainer((InternalEObject)newCollectionType, DataPackage.DATA_FIELD__COLLECTION_TYPE, msgs);
         return msgs;
     }
 
@@ -521,20 +521,20 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setListType(ListType newListType) {
-        if (newListType != eInternalContainer() || (eContainerFeatureID() != DataPackage.DATA_FIELD__LIST_TYPE && newListType != null)) {
-            if (EcoreUtil.isAncestor(this, newListType))
+    public void setCollectionType(CollectionType newCollectionType) {
+        if (newCollectionType != eInternalContainer() || (eContainerFeatureID() != DataPackage.DATA_FIELD__COLLECTION_TYPE && newCollectionType != null)) {
+            if (EcoreUtil.isAncestor(this, newCollectionType))
                 throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
             NotificationChain msgs = null;
             if (eInternalContainer() != null)
                 msgs = eBasicRemoveFromContainer(msgs);
-            if (newListType != null)
-                msgs = ((InternalEObject)newListType).eInverseAdd(this, DataPackage.LIST_TYPE__DATA_FIELDS, ListType.class, msgs);
-            msgs = basicSetListType(newListType, msgs);
+            if (newCollectionType != null)
+                msgs = ((InternalEObject)newCollectionType).eInverseAdd(this, DataPackage.COLLECTION_TYPE__DATA_FIELDS, CollectionType.class, msgs);
+            msgs = basicSetCollectionType(newCollectionType, msgs);
             if (msgs != null) msgs.dispatch();
         }
         else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.DATA_FIELD__LIST_TYPE, newListType, newListType));
+            eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.DATA_FIELD__COLLECTION_TYPE, newCollectionType, newCollectionType));
     }
 
     /**
@@ -591,10 +591,10 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
                 nameParts.addAll(this.getDataStructure().getQualifiedNameParts());
             }
             else {
-                ListType _listType = this.getListType();
-                boolean _tripleNotEquals_1 = (_listType != null);
+                CollectionType _collectionType = this.getCollectionType();
+                boolean _tripleNotEquals_1 = (_collectionType != null);
                 if (_tripleNotEquals_1) {
-                    nameParts.addAll(this.getListType().getQualifiedNameParts());
+                    nameParts.addAll(this.getCollectionType().getQualifiedNameParts());
                 }
             }
             nameParts.add(this.getName());
@@ -687,10 +687,10 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);
                 return basicSetDataStructure((DataStructure)otherEnd, msgs);
-            case DataPackage.DATA_FIELD__LIST_TYPE:
+            case DataPackage.DATA_FIELD__COLLECTION_TYPE:
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);
-                return basicSetListType((ListType)otherEnd, msgs);
+                return basicSetCollectionType((CollectionType)otherEnd, msgs);
         }
         return super.eInverseAdd(otherEnd, featureID, msgs);
     }
@@ -711,8 +711,8 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
                 return basicSetInitializationValue(null, msgs);
             case DataPackage.DATA_FIELD__DATA_STRUCTURE:
                 return basicSetDataStructure(null, msgs);
-            case DataPackage.DATA_FIELD__LIST_TYPE:
-                return basicSetListType(null, msgs);
+            case DataPackage.DATA_FIELD__COLLECTION_TYPE:
+                return basicSetCollectionType(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -727,8 +727,8 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
         switch (eContainerFeatureID()) {
             case DataPackage.DATA_FIELD__DATA_STRUCTURE:
                 return eInternalContainer().eInverseRemove(this, DataPackage.DATA_STRUCTURE__DATA_FIELDS, DataStructure.class, msgs);
-            case DataPackage.DATA_FIELD__LIST_TYPE:
-                return eInternalContainer().eInverseRemove(this, DataPackage.LIST_TYPE__DATA_FIELDS, ListType.class, msgs);
+            case DataPackage.DATA_FIELD__COLLECTION_TYPE:
+                return eInternalContainer().eInverseRemove(this, DataPackage.COLLECTION_TYPE__DATA_FIELDS, CollectionType.class, msgs);
         }
         return super.eBasicRemoveFromContainerFeature(msgs);
     }
@@ -761,9 +761,9 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
             case DataPackage.DATA_FIELD__DATA_STRUCTURE:
                 if (resolve) return getDataStructure();
                 return basicGetDataStructure();
-            case DataPackage.DATA_FIELD__LIST_TYPE:
-                if (resolve) return getListType();
-                return basicGetListType();
+            case DataPackage.DATA_FIELD__COLLECTION_TYPE:
+                if (resolve) return getCollectionType();
+                return basicGetCollectionType();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -805,8 +805,8 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
             case DataPackage.DATA_FIELD__DATA_STRUCTURE:
                 setDataStructure((DataStructure)newValue);
                 return;
-            case DataPackage.DATA_FIELD__LIST_TYPE:
-                setListType((ListType)newValue);
+            case DataPackage.DATA_FIELD__COLLECTION_TYPE:
+                setCollectionType((CollectionType)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -847,8 +847,8 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
             case DataPackage.DATA_FIELD__DATA_STRUCTURE:
                 setDataStructure((DataStructure)null);
                 return;
-            case DataPackage.DATA_FIELD__LIST_TYPE:
-                setListType((ListType)null);
+            case DataPackage.DATA_FIELD__COLLECTION_TYPE:
+                setCollectionType((CollectionType)null);
                 return;
         }
         super.eUnset(featureID);
@@ -880,8 +880,8 @@ public class DataFieldImpl extends MinimalEObjectImpl.Container implements DataF
                 return features != null && !features.isEmpty();
             case DataPackage.DATA_FIELD__DATA_STRUCTURE:
                 return basicGetDataStructure() != null;
-            case DataPackage.DATA_FIELD__LIST_TYPE:
-                return basicGetListType() != null;
+            case DataPackage.DATA_FIELD__COLLECTION_TYPE:
+                return basicGetCollectionType() != null;
         }
         return super.eIsSet(featureID);
     }

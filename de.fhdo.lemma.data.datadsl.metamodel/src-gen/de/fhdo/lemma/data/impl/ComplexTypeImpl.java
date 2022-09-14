@@ -2,6 +2,7 @@
  */
 package de.fhdo.lemma.data.impl;
 
+import de.fhdo.lemma.data.CollectionType;
 import de.fhdo.lemma.data.ComplexType;
 import de.fhdo.lemma.data.ComplexTypeFeature;
 import de.fhdo.lemma.data.Context;
@@ -10,7 +11,6 @@ import de.fhdo.lemma.data.DataModel;
 import de.fhdo.lemma.data.DataPackage;
 import de.fhdo.lemma.data.DataStructure;
 import de.fhdo.lemma.data.Enumeration;
-import de.fhdo.lemma.data.ListType;
 import de.fhdo.lemma.data.PrimitiveType;
 import de.fhdo.lemma.data.Type;
 import de.fhdo.lemma.data.Version;
@@ -55,8 +55,8 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  *   <li>{@link de.fhdo.lemma.data.impl.ComplexTypeImpl#getVersion <em>Version</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.impl.ComplexTypeImpl#getContext <em>Context</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.impl.ComplexTypeImpl#isIsStructure <em>Is Structure</em>}</li>
- *   <li>{@link de.fhdo.lemma.data.impl.ComplexTypeImpl#isIsPrimitiveList <em>Is Primitive List</em>}</li>
- *   <li>{@link de.fhdo.lemma.data.impl.ComplexTypeImpl#isIsStructuredList <em>Is Structured List</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.impl.ComplexTypeImpl#isIsPrimitiveCollection <em>Is Primitive Collection</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.impl.ComplexTypeImpl#isIsStructuredCollection <em>Is Structured Collection</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.impl.ComplexTypeImpl#isIsEnumeration <em>Is Enumeration</em>}</li>
  * </ul>
  *
@@ -104,24 +104,24 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
     protected static final boolean IS_STRUCTURE_EDEFAULT = false;
 
     /**
-     * The default value of the '{@link #isIsPrimitiveList() <em>Is Primitive List</em>}' attribute.
+     * The default value of the '{@link #isIsPrimitiveCollection() <em>Is Primitive Collection</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isIsPrimitiveList()
+     * @see #isIsPrimitiveCollection()
      * @generated
      * @ordered
      */
-    protected static final boolean IS_PRIMITIVE_LIST_EDEFAULT = false;
+    protected static final boolean IS_PRIMITIVE_COLLECTION_EDEFAULT = false;
 
     /**
-     * The default value of the '{@link #isIsStructuredList() <em>Is Structured List</em>}' attribute.
+     * The default value of the '{@link #isIsStructuredCollection() <em>Is Structured Collection</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isIsStructuredList()
+     * @see #isIsStructuredCollection()
      * @generated
      * @ordered
      */
-    protected static final boolean IS_STRUCTURED_LIST_EDEFAULT = false;
+    protected static final boolean IS_STRUCTURED_COLLECTION_EDEFAULT = false;
 
     /**
      * The default value of the '{@link #isIsEnumeration() <em>Is Enumeration</em>}' attribute.
@@ -352,11 +352,11 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * <!-- end-user-doc -->
      * @generated
      */
-    public boolean isIsPrimitiveList() {
-        if ((!(this instanceof ListType))) {
+    public boolean isIsPrimitiveCollection() {
+        if ((!(this instanceof CollectionType))) {
             return false;
         }
-        PrimitiveType _primitiveType = ((ListType) this).getPrimitiveType();
+        PrimitiveType _primitiveType = ((CollectionType) this).getPrimitiveType();
         return (_primitiveType != null);
     }
 
@@ -365,12 +365,12 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
      * <!-- end-user-doc -->
      * @generated
      */
-    public boolean isIsStructuredList() {
-        if ((!(this instanceof ListType))) {
+    public boolean isIsStructuredCollection() {
+        if ((!(this instanceof CollectionType))) {
             return false;
         }
-        return ((((ListType) this).getDataFields() != null) && 
-            (!((ListType) this).getDataFields().isEmpty()));
+        return ((((CollectionType) this).getDataFields() != null) && 
+            (!((CollectionType) this).getDataFields().isEmpty()));
     }
 
     /**
@@ -496,10 +496,10 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
         final Function1<DataField, Boolean> _function_2 = new Function1<DataField, Boolean>() {
             public Boolean apply(final DataField it) {
                 Type _effectiveType = it.getEffectiveType();
-                return Boolean.valueOf((_effectiveType instanceof ListType));
+                return Boolean.valueOf((_effectiveType instanceof CollectionType));
             }
         };
-        final int fieldsListCounts = ((Object[])org.eclipse.xtext.xbase.lib.Conversions.unwrapArray(IterableExtensions.<DataField>filter(fields, _function_2), Object.class)).length;
+        final int fieldsCollectionCounts = ((Object[])org.eclipse.xtext.xbase.lib.Conversions.unwrapArray(IterableExtensions.<DataField>filter(fields, _function_2), Object.class)).length;
         final Function1<DataField, Boolean> _function_3 = new Function1<DataField, Boolean>() {
             public Boolean apply(final DataField it) {
                 Type _effectiveType = it.getEffectiveType();
@@ -517,19 +517,19 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
         final Function1<DataField, Boolean> _function_5 = new Function1<DataField, Boolean>() {
             public Boolean apply(final DataField it) {
                 Type _effectiveType = it.getEffectiveType();
-                return Boolean.valueOf((_effectiveType instanceof ListType));
+                return Boolean.valueOf((_effectiveType instanceof CollectionType));
             }
         };
-        final int listCountsToCompare = ((Object[])org.eclipse.xtext.xbase.lib.Conversions.unwrapArray(IterableExtensions.<DataField>filter(fieldsToCompare, _function_5), Object.class)).length;
+        final int collectionCountsToCompare = ((Object[])org.eclipse.xtext.xbase.lib.Conversions.unwrapArray(IterableExtensions.<DataField>filter(fieldsToCompare, _function_5), Object.class)).length;
         if ((((fieldsPrimitiveCounts == primitiveCountsToCompare) && 
             (fieldsStructureCounts == structureCountsToCompare)) && 
-            (fieldsListCounts == listCountsToCompare))) {
+            (fieldsCollectionCounts == collectionCountsToCompare))) {
             return 0;
         }
         else {
             if ((((fieldsPrimitiveCounts >= primitiveCountsToCompare) && 
                 (fieldsStructureCounts >= structureCountsToCompare)) && 
-                (fieldsListCounts >= listCountsToCompare))) {
+                (fieldsCollectionCounts >= collectionCountsToCompare))) {
                 return 1;
             }
         }
@@ -637,10 +637,10 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
                 return basicGetContext();
             case DataPackage.COMPLEX_TYPE__IS_STRUCTURE:
                 return isIsStructure();
-            case DataPackage.COMPLEX_TYPE__IS_PRIMITIVE_LIST:
-                return isIsPrimitiveList();
-            case DataPackage.COMPLEX_TYPE__IS_STRUCTURED_LIST:
-                return isIsStructuredList();
+            case DataPackage.COMPLEX_TYPE__IS_PRIMITIVE_COLLECTION:
+                return isIsPrimitiveCollection();
+            case DataPackage.COMPLEX_TYPE__IS_STRUCTURED_COLLECTION:
+                return isIsStructuredCollection();
             case DataPackage.COMPLEX_TYPE__IS_ENUMERATION:
                 return isIsEnumeration();
         }
@@ -723,10 +723,10 @@ public abstract class ComplexTypeImpl extends TypeImpl implements ComplexType {
                 return basicGetContext() != null;
             case DataPackage.COMPLEX_TYPE__IS_STRUCTURE:
                 return isIsStructure() != IS_STRUCTURE_EDEFAULT;
-            case DataPackage.COMPLEX_TYPE__IS_PRIMITIVE_LIST:
-                return isIsPrimitiveList() != IS_PRIMITIVE_LIST_EDEFAULT;
-            case DataPackage.COMPLEX_TYPE__IS_STRUCTURED_LIST:
-                return isIsStructuredList() != IS_STRUCTURED_LIST_EDEFAULT;
+            case DataPackage.COMPLEX_TYPE__IS_PRIMITIVE_COLLECTION:
+                return isIsPrimitiveCollection() != IS_PRIMITIVE_COLLECTION_EDEFAULT;
+            case DataPackage.COMPLEX_TYPE__IS_STRUCTURED_COLLECTION:
+                return isIsStructuredCollection() != IS_STRUCTURED_COLLECTION_EDEFAULT;
             case DataPackage.COMPLEX_TYPE__IS_ENUMERATION:
                 return isIsEnumeration() != IS_ENUMERATION_EDEFAULT;
         }

@@ -65,12 +65,12 @@ final class Util {
      */
     static val RESERVED_KEYWORDS = #[
         "as",
+        "collection",
         "context",
         "datatypes",
         "enum",
         "from",
         "import",
-        "list",
         "structure",
         "version"
     ]

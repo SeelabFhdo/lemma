@@ -130,13 +130,13 @@ public interface IntermediateFactory extends EFactory {
     IntermediateDataOperationParameter createIntermediateDataOperationParameter();
 
     /**
-     * Returns a new object of class '<em>List Type</em>'.
+     * Returns a new object of class '<em>Collection Type</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>List Type</em>'.
+     * @return a new object of class '<em>Collection Type</em>'.
      * @generated
      */
-    IntermediateListType createIntermediateListType();
+    IntermediateCollectionType createIntermediateCollectionType();
 
     /**
      * Returns a new object of class '<em>Data Field</em>'.

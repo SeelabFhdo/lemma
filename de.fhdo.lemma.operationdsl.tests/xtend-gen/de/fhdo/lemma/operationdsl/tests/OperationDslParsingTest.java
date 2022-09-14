@@ -5,7 +5,6 @@ package de.fhdo.lemma.operationdsl.tests;
 
 import com.google.inject.Inject;
 import de.fhdo.lemma.operation.OperationModel;
-import de.fhdo.lemma.operationdsl.tests.OperationDslInjectorProvider;
 import org.eclipse.xtext.testing.InjectWith;
 import org.eclipse.xtext.testing.XtextRunner;
 import org.eclipse.xtext.testing.util.ParseHelper;

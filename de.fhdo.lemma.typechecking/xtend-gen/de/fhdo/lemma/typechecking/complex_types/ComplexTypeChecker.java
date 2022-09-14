@@ -2,20 +2,19 @@ package de.fhdo.lemma.typechecking.complex_types;
 
 import com.google.common.base.Function;
 import com.google.common.base.Objects;
+import de.fhdo.lemma.data.CollectionType;
 import de.fhdo.lemma.data.ComplexType;
 import de.fhdo.lemma.data.DataField;
 import de.fhdo.lemma.data.DataStructure;
 import de.fhdo.lemma.data.Enumeration;
 import de.fhdo.lemma.data.EnumerationField;
-import de.fhdo.lemma.data.ListType;
 import de.fhdo.lemma.data.PrimitiveType;
 import de.fhdo.lemma.data.PrimitiveValue;
 import de.fhdo.lemma.data.Type;
+import de.fhdo.lemma.technology.TechnologySpecificCollectionType;
 import de.fhdo.lemma.technology.TechnologySpecificDataStructure;
-import de.fhdo.lemma.technology.TechnologySpecificListType;
 import de.fhdo.lemma.typechecking.TypeCheckerI;
 import de.fhdo.lemma.typechecking.TypecheckingUtils;
-import de.fhdo.lemma.typechecking.complex_types.ComplexTypeCheckingIterator;
 import de.fhdo.lemma.typechecking.complex_types.data_structures.DataFieldComparator;
 import de.fhdo.lemma.typechecking.complex_types.data_structures.NodePair;
 import de.fhdo.lemma.typechecking.complex_types.data_structures.NodeSeries;
@@ -37,8 +36,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
  *   (2) Iterate over the nodes (in the form of node pairs) of the graphs until the compatibility of
  *       the pair of the passed complex types got decided.
  *   (3) The actual decision if the currently iterated node pair is compatible is based on the
- *       pair's nodes' types (structure, list with primitive type, structured list with named and
- *       typed fields), which all have different compatibility requirements.
+ *       pair's nodes' types, which all have different compatibility requirements.
  *   (4) Add new series of node pairs to check, resulting from the currently iterated one.
  *   (5) Get the next pair to check from the accompanying iterator, if the root node pair's
  *       compatibility did not get decided along the way. Goto (iii)
@@ -106,10 +104,12 @@ public class ComplexTypeChecker implements TypeCheckerI<ComplexType> {
     final ComplexType typeToCheck = nodeToCheck.getType();
     final boolean typesEqual = this.typesEqual(basicType, typeToCheck);
     final boolean structureCheck = (basicType.isIsStructure() && typeToCheck.isIsStructure());
-    final boolean primitiveListCheck = (basicType.isIsPrimitiveList() && typeToCheck.isIsPrimitiveList());
-    final boolean structuredListCheck = (basicType.isIsStructuredList() && typeToCheck.isIsStructuredList());
+    final boolean primitiveCollectionCheck = (basicType.isIsPrimitiveCollection() && 
+      typeToCheck.isIsPrimitiveCollection());
+    final boolean structuredCollectionCheck = (basicType.isIsStructuredCollection() && 
+      typeToCheck.isIsStructuredCollection());
     final boolean enumerationCheck = (basicType.isIsEnumeration() && typeToCheck.isIsEnumeration());
-    final boolean nodeTypeKindsEqual = (((structureCheck || primitiveListCheck) || structuredListCheck) || enumerationCheck);
+    final boolean nodeTypeKindsEqual = (((structureCheck || primitiveCollectionCheck) || structuredCollectionCheck) || enumerationCheck);
     if (typesEqual) {
       iterator.markCurrentPairCompatible(true);
     } else {
@@ -120,12 +120,14 @@ public class ComplexTypeChecker implements TypeCheckerI<ComplexType> {
           (!this.structuresCompatible(((DataStructure) basicType), ((DataStructure) typeToCheck))))) {
           iterator.markCurrentPairIncompatible();
         } else {
-          if ((primitiveListCheck && 
-            (!this.primitiveListsCompatible(((ListType) basicType), ((ListType) typeToCheck))))) {
+          if ((primitiveCollectionCheck && 
+            (!this.primitiveCollectionsCompatible(((CollectionType) basicType), 
+              ((CollectionType) typeToCheck))))) {
             iterator.markCurrentPairIncompatible();
           } else {
-            if ((structuredListCheck && 
-              (!this.structuredListsCompatible(((ListType) basicType), ((ListType) typeToCheck))))) {
+            if ((structuredCollectionCheck && 
+              (!this.structuredCollectionsCompatible(((CollectionType) basicType), 
+                ((CollectionType) typeToCheck))))) {
               iterator.markCurrentPairIncompatible();
             } else {
               if ((enumerationCheck && 
@@ -157,8 +159,9 @@ public class ComplexTypeChecker implements TypeCheckerI<ComplexType> {
     if ((basicStructure && (typeToCheck instanceof TechnologySpecificDataStructure))) {
       return true;
     }
-    final boolean basicList = (basicType.isIsPrimitiveList() || (basicType instanceof TechnologySpecificListType));
-    if ((basicList && (typeToCheck instanceof TechnologySpecificListType))) {
+    final boolean basicCollection = (basicType.isIsPrimitiveCollection() || 
+      (basicType instanceof TechnologySpecificCollectionType));
+    if ((basicCollection && (typeToCheck instanceof TechnologySpecificCollectionType))) {
       return true;
     }
     return false;
@@ -196,33 +199,33 @@ public class ComplexTypeChecker implements TypeCheckerI<ComplexType> {
   }
   
   /**
-   * Check if two primitively typed lists are compatible
+   * Check if two primitively typed collections are compatible
    */
-  private boolean primitiveListsCompatible(final ListType basicList, final ListType listToCheck) {
-    final PrimitiveType basicPrimitiveType = basicList.getPrimitiveType();
-    final PrimitiveType primitiveTypeToCheck = listToCheck.getPrimitiveType();
+  private boolean primitiveCollectionsCompatible(final CollectionType basicCollection, final CollectionType collectionToCheck) {
+    final PrimitiveType basicPrimitiveType = basicCollection.getPrimitiveType();
+    final PrimitiveType primitiveTypeToCheck = collectionToCheck.getPrimitiveType();
     return basicPrimitiveType.isCompatibleWith(primitiveTypeToCheck);
   }
   
   /**
-   * Check if two structured lists are compatible
+   * Check if two structured collections are compatible
    */
-  private boolean structuredListsCompatible(final ListType basicList, final ListType listToCheck) {
-    int _compareFieldCounts = basicList.compareFieldCounts(listToCheck);
-    final boolean basicListIsSmaller = (_compareFieldCounts == (-1));
-    if (basicListIsSmaller) {
+  private boolean structuredCollectionsCompatible(final CollectionType basicCollection, final CollectionType collectionToCheck) {
+    int _compareFieldCounts = basicCollection.compareFieldCounts(collectionToCheck);
+    final boolean basicCollectionIsSmaller = (_compareFieldCounts == (-1));
+    if (basicCollectionIsSmaller) {
       return false;
     }
     final Function1<DataField, Boolean> _function = (DataField it) -> {
       Type _effectiveType = it.getEffectiveType();
       return Boolean.valueOf((_effectiveType instanceof PrimitiveType));
     };
-    final List<DataField> basicPrimitiveFields = IterableExtensions.<DataField>toList(IterableExtensions.<DataField>filter(basicList.getDataFields(), _function));
+    final List<DataField> basicPrimitiveFields = IterableExtensions.<DataField>toList(IterableExtensions.<DataField>filter(basicCollection.getDataFields(), _function));
     final Function1<DataField, Boolean> _function_1 = (DataField it) -> {
       Type _effectiveType = it.getEffectiveType();
       return Boolean.valueOf((_effectiveType instanceof PrimitiveType));
     };
-    final List<DataField> primitiveFieldsToCheck = IterableExtensions.<DataField>toList(IterableExtensions.<DataField>filter(listToCheck.getDataFields(), _function_1));
+    final List<DataField> primitiveFieldsToCheck = IterableExtensions.<DataField>toList(IterableExtensions.<DataField>filter(collectionToCheck.getDataFields(), _function_1));
     boolean _primitiveFieldsCompatible = this.primitiveFieldsCompatible(basicPrimitiveFields, primitiveFieldsToCheck);
     boolean _not = (!_primitiveFieldsCompatible);
     if (_not) {

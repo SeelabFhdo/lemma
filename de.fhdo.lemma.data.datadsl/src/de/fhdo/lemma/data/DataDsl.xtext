@@ -29,7 +29,7 @@ Context returns Context:
 ;
 
 ComplexType returns ComplexType:
-    DataStructure | ListType | Enumeration
+    DataStructure | CollectionType | Enumeration
 ;
 
 enum ComplexTypeFeature returns ComplexTypeFeature:
@@ -57,18 +57,14 @@ DataStructure returns DataStructure:
     '}'
 ;
 
-ListType returns ListType:
-    (
-        ('collection' | 'list') name=ID '{'
-            dataFields+=DataField (',' dataFields+=DataField)*
-        '}'
-    )
+CollectionType returns CollectionType:
+    'collection' name=ID '{'
+        dataFields+=DataField (',' dataFields+=DataField)*
+    '}'
     |
-    (
-        ('collection' | 'list') name=ID '{'
-            primitiveType=PrimitiveType
-        '}'
-    )
+    'collection' name=ID '{'
+        primitiveType=PrimitiveType
+    '}'
 ;
 
 enum DataFieldFeature returns DataFieldFeature:

@@ -3,6 +3,7 @@ package de.fhdo.lemma.data.avro;
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 import de.fhdo.lemma.data.PrimitiveTypeConstants;
+import de.fhdo.lemma.data.intermediate.IntermediateCollectionType;
 import de.fhdo.lemma.data.intermediate.IntermediateComplexType;
 import de.fhdo.lemma.data.intermediate.IntermediateContext;
 import de.fhdo.lemma.data.intermediate.IntermediateDataField;
@@ -11,7 +12,6 @@ import de.fhdo.lemma.data.intermediate.IntermediateDataStructure;
 import de.fhdo.lemma.data.intermediate.IntermediateEnumeration;
 import de.fhdo.lemma.data.intermediate.IntermediateEnumerationField;
 import de.fhdo.lemma.data.intermediate.IntermediateImportedComplexType;
-import de.fhdo.lemma.data.intermediate.IntermediateListType;
 import de.fhdo.lemma.data.intermediate.IntermediateType;
 import de.fhdo.lemma.data.intermediate.IntermediateTypeKind;
 import de.fhdo.lemma.data.intermediate.IntermediateTypeOrigin;
@@ -101,9 +101,9 @@ public class AvroGenerator {
       _switchResult = this.generateSchemasFrom(((IntermediateDataStructure)complexType));
     }
     if (!_matched) {
-      if (complexType instanceof IntermediateListType) {
+      if (complexType instanceof IntermediateCollectionType) {
         _matched=true;
-        _switchResult = this.generateSchemasFrom(((IntermediateListType)complexType));
+        _switchResult = this.generateSchemasFrom(((IntermediateCollectionType)complexType));
       }
     }
     if (!_matched) {
@@ -385,7 +385,7 @@ public class AvroGenerator {
           break;
         case ENUMERATION:
         case STRUCTURE:
-        case LIST:
+        case COLLECTION:
           _switchResult = this.<IntermediateComplexType>resolveSchema(dataField.getType());
           break;
         default:
@@ -444,9 +444,9 @@ public class AvroGenerator {
           };
           _switchResult = _function_1;
           break;
-        case LIST:
+        case COLLECTION:
           final BiFunction<String, RT, Pair<Schema, List<Schema>>> _function_2 = (String modelUri, RT complexType) -> {
-            return this.toArray(((IntermediateListType) complexType), modelUri);
+            return this.toArray(((IntermediateCollectionType) complexType), modelUri);
           };
           _switchResult = _function_2;
           break;
@@ -782,31 +782,31 @@ public class AvroGenerator {
   }
   
   /**
-   * Generate schemas from IntermediateListType. The return value is a pair consisting of the
-   * schema specifically derived from the passed list type and all other schemas that were
-   * derived during schema generation in the context of the passed list type.
+   * Generate schemas from IntermediateCollectionType. The return value is a pair consisting of
+   * the schema specifically derived from the passed collection type and all other schemas that
+   * were derived during schema generation in the context of the passed collection type.
    */
-  public Pair<Schema, List<Schema>> generateSchemasFrom(final IntermediateListType listType) {
-    final Schema array = this.toArray(listType, null).getKey();
+  public Pair<Schema, List<Schema>> generateSchemasFrom(final IntermediateCollectionType collectionType) {
+    final Schema array = this.toArray(collectionType, null).getKey();
     List<Schema> _allCreatedSchemas = this.allCreatedSchemas();
     return Pair.<Schema, List<Schema>>of(array, _allCreatedSchemas);
   }
   
   /**
-   * Internal helper to generate schemas from an IntermediateListType, which represents an Avro
-   * Array type. By contrast to the public generateSchemasFrom(IntermediateListType) method for
-   * external callers, this internal helper is model-URI-aware.
+   * Internal helper to generate schemas from an IntermediateCollectionType, which represents an
+   * Avro Array type. By contrast to the public generateSchemasFrom(IntermediateCollectionType)
+   * method for external callers, this internal helper is model-URI-aware.
    */
-  private Pair<Schema, List<Schema>> toArray(final IntermediateListType listType, final String modelUri) {
+  private Pair<Schema, List<Schema>> toArray(final IntermediateCollectionType collectionType, final String modelUri) {
     Schema _xifexpression = null;
-    boolean _isPrimitiveList = listType.isPrimitiveList();
-    if (_isPrimitiveList) {
-      _xifexpression = Shared.toPrimitiveAvroType(listType.getPrimitiveType().getName());
+    boolean _isPrimitiveCollection = collectionType.isPrimitiveCollection();
+    if (_isPrimitiveCollection) {
+      _xifexpression = Shared.toPrimitiveAvroType(collectionType.getPrimitiveType().getName());
     } else {
-      _xifexpression = this.toRecord(listType.getDataFields(), modelUri, listType.getQualifiedName());
+      _xifexpression = this.toRecord(collectionType.getDataFields(), modelUri, collectionType.getQualifiedName());
     }
     final Schema elementType = _xifexpression;
-    final Schema array = AvroSchemaFactory.createArray(listType.getQualifiedName(), elementType);
+    final Schema array = AvroSchemaFactory.createArray(collectionType.getQualifiedName(), elementType);
     this.finishedComplexTypeSchemaCreation(array, modelUri);
     List<Schema> _createdSchemasForModel = this.createdSchemasForModel(modelUri);
     return Pair.<Schema, List<Schema>>of(array, _createdSchemasForModel);

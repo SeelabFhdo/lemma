@@ -41,8 +41,8 @@ public class TechnologyDslGrammarAccess extends AbstractElementFinder.AbstractGr
 		private final Alternatives cAlternatives_4_2 = (Alternatives)cGroup_4.eContents().get(2);
 		private final Assignment cPrimitiveTypesAssignment_4_2_0 = (Assignment)cAlternatives_4_2.eContents().get(0);
 		private final RuleCall cPrimitiveTypesTechnologySpecificPrimitiveTypeParserRuleCall_4_2_0_0 = (RuleCall)cPrimitiveTypesAssignment_4_2_0.eContents().get(0);
-		private final Assignment cListTypesAssignment_4_2_1 = (Assignment)cAlternatives_4_2.eContents().get(1);
-		private final RuleCall cListTypesTechnologySpecificListTypeParserRuleCall_4_2_1_0 = (RuleCall)cListTypesAssignment_4_2_1.eContents().get(0);
+		private final Assignment cCollectionTypesAssignment_4_2_1 = (Assignment)cAlternatives_4_2.eContents().get(1);
+		private final RuleCall cCollectionTypesTechnologySpecificCollectionTypeParserRuleCall_4_2_1_0 = (RuleCall)cCollectionTypesAssignment_4_2_1.eContents().get(0);
 		private final Assignment cDataStructuresAssignment_4_2_2 = (Assignment)cAlternatives_4_2.eContents().get(2);
 		private final RuleCall cDataStructuresTechnologySpecificDataStructureParserRuleCall_4_2_2_0 = (RuleCall)cDataStructuresAssignment_4_2_2.eContents().get(0);
 		private final Group cGroup_4_3 = (Group)cGroup_4.eContents().get(3);
@@ -94,7 +94,7 @@ public class TechnologyDslGrammarAccess extends AbstractElementFinder.AbstractGr
 		//    'technology' name=ID '{'
 		//        ('types' '{'
 		//            (primitiveTypes+=TechnologySpecificPrimitiveType |
-		//                listTypes+=TechnologySpecificListType |
+		//                collectionTypes+=TechnologySpecificCollectionType |
 		//                dataStructures+=TechnologySpecificDataStructure
 		//            )+
 		//            ('compatibility' 'matrix' '{'
@@ -124,7 +124,7 @@ public class TechnologyDslGrammarAccess extends AbstractElementFinder.AbstractGr
 		//'technology' name=ID '{'
 		//    ('types' '{'
 		//        (primitiveTypes+=TechnologySpecificPrimitiveType |
-		//            listTypes+=TechnologySpecificListType |
+		//            collectionTypes+=TechnologySpecificCollectionType |
 		//            dataStructures+=TechnologySpecificDataStructure
 		//        )+
 		//        ('compatibility' 'matrix' '{'
@@ -169,7 +169,7 @@ public class TechnologyDslGrammarAccess extends AbstractElementFinder.AbstractGr
 		
 		//('types' '{'
 		//    (primitiveTypes+=TechnologySpecificPrimitiveType |
-		//        listTypes+=TechnologySpecificListType |
+		//        collectionTypes+=TechnologySpecificCollectionType |
 		//        dataStructures+=TechnologySpecificDataStructure
 		//    )+
 		//    ('compatibility' 'matrix' '{'
@@ -185,7 +185,7 @@ public class TechnologyDslGrammarAccess extends AbstractElementFinder.AbstractGr
 		public Keyword getLeftCurlyBracketKeyword_4_1() { return cLeftCurlyBracketKeyword_4_1; }
 		
 		//(primitiveTypes+=TechnologySpecificPrimitiveType |
-		//    listTypes+=TechnologySpecificListType |
+		//    collectionTypes+=TechnologySpecificCollectionType |
 		//    dataStructures+=TechnologySpecificDataStructure
 		//)+
 		public Alternatives getAlternatives_4_2() { return cAlternatives_4_2; }
@@ -196,11 +196,11 @@ public class TechnologyDslGrammarAccess extends AbstractElementFinder.AbstractGr
 		//TechnologySpecificPrimitiveType
 		public RuleCall getPrimitiveTypesTechnologySpecificPrimitiveTypeParserRuleCall_4_2_0_0() { return cPrimitiveTypesTechnologySpecificPrimitiveTypeParserRuleCall_4_2_0_0; }
 		
-		//listTypes+=TechnologySpecificListType
-		public Assignment getListTypesAssignment_4_2_1() { return cListTypesAssignment_4_2_1; }
+		//collectionTypes+=TechnologySpecificCollectionType
+		public Assignment getCollectionTypesAssignment_4_2_1() { return cCollectionTypesAssignment_4_2_1; }
 		
-		//TechnologySpecificListType
-		public RuleCall getListTypesTechnologySpecificListTypeParserRuleCall_4_2_1_0() { return cListTypesTechnologySpecificListTypeParserRuleCall_4_2_1_0; }
+		//TechnologySpecificCollectionType
+		public RuleCall getCollectionTypesTechnologySpecificCollectionTypeParserRuleCall_4_2_1_0() { return cCollectionTypesTechnologySpecificCollectionTypeParserRuleCall_4_2_1_0; }
 		
 		//dataStructures+=TechnologySpecificDataStructure
 		public Assignment getDataStructuresAssignment_4_2_2() { return cDataStructuresAssignment_4_2_2; }
@@ -603,33 +603,25 @@ public class TechnologyDslGrammarAccess extends AbstractElementFinder.AbstractGr
 		//';'
 		public Keyword getSemicolonKeyword_4() { return cSemicolonKeyword_4; }
 	}
-	public class TechnologySpecificListTypeElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.technology.TechnologyDsl.TechnologySpecificListType");
+	public class TechnologySpecificCollectionTypeElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.technology.TechnologyDsl.TechnologySpecificCollectionType");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
-		private final Keyword cCollectionKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
-		private final Keyword cListKeyword_0_1 = (Keyword)cAlternatives_0.eContents().get(1);
+		private final Keyword cCollectionKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Keyword cTypeKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cNameIDTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
 		private final Keyword cSemicolonKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
-		//TechnologySpecificListType returns TechnologySpecificListType:
-		//    ('collection' | 'list') 'type' name=ID ';'
+		//TechnologySpecificCollectionType returns TechnologySpecificCollectionType:
+		//    'collection' 'type' name=ID ';'
 		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//('collection' | 'list') 'type' name=ID ';'
+		//'collection' 'type' name=ID ';'
 		public Group getGroup() { return cGroup; }
 		
-		//('collection' | 'list')
-		public Alternatives getAlternatives_0() { return cAlternatives_0; }
-		
 		//'collection'
-		public Keyword getCollectionKeyword_0_0() { return cCollectionKeyword_0_0; }
-		
-		//'list'
-		public Keyword getListKeyword_0_1() { return cListKeyword_0_1; }
+		public Keyword getCollectionKeyword_0() { return cCollectionKeyword_0; }
 		
 		//'type'
 		public Keyword getTypeKeyword_1() { return cTypeKeyword_1; }
@@ -1998,7 +1990,7 @@ public class TechnologyDslGrammarAccess extends AbstractElementFinder.AbstractGr
 	private final CommunicationTypeElements eCommunicationType;
 	private final DataFormatElements pDataFormat;
 	private final TechnologySpecificPrimitiveTypeElements pTechnologySpecificPrimitiveType;
-	private final TechnologySpecificListTypeElements pTechnologySpecificListType;
+	private final TechnologySpecificCollectionTypeElements pTechnologySpecificCollectionType;
 	private final TechnologySpecificDataStructureElements pTechnologySpecificDataStructure;
 	private final PossiblyImportedTechnologySpecificTypeElements pPossiblyImportedTechnologySpecificType;
 	private final CompatibilityDirectionElements eCompatibilityDirection;
@@ -2038,7 +2030,7 @@ public class TechnologyDslGrammarAccess extends AbstractElementFinder.AbstractGr
 		this.eCommunicationType = new CommunicationTypeElements();
 		this.pDataFormat = new DataFormatElements();
 		this.pTechnologySpecificPrimitiveType = new TechnologySpecificPrimitiveTypeElements();
-		this.pTechnologySpecificListType = new TechnologySpecificListTypeElements();
+		this.pTechnologySpecificCollectionType = new TechnologySpecificCollectionTypeElements();
 		this.pTechnologySpecificDataStructure = new TechnologySpecificDataStructureElements();
 		this.pPossiblyImportedTechnologySpecificType = new PossiblyImportedTechnologySpecificTypeElements();
 		this.eCompatibilityDirection = new CompatibilityDirectionElements();
@@ -2095,7 +2087,7 @@ public class TechnologyDslGrammarAccess extends AbstractElementFinder.AbstractGr
 	//    'technology' name=ID '{'
 	//        ('types' '{'
 	//            (primitiveTypes+=TechnologySpecificPrimitiveType |
-	//                listTypes+=TechnologySpecificListType |
+	//                collectionTypes+=TechnologySpecificCollectionType |
 	//                dataStructures+=TechnologySpecificDataStructure
 	//            )+
 	//            ('compatibility' 'matrix' '{'
@@ -2202,15 +2194,15 @@ public class TechnologyDslGrammarAccess extends AbstractElementFinder.AbstractGr
 		return getTechnologySpecificPrimitiveTypeAccess().getRule();
 	}
 	
-	//TechnologySpecificListType returns TechnologySpecificListType:
-	//    ('collection' | 'list') 'type' name=ID ';'
+	//TechnologySpecificCollectionType returns TechnologySpecificCollectionType:
+	//    'collection' 'type' name=ID ';'
 	//;
-	public TechnologySpecificListTypeElements getTechnologySpecificListTypeAccess() {
-		return pTechnologySpecificListType;
+	public TechnologySpecificCollectionTypeElements getTechnologySpecificCollectionTypeAccess() {
+		return pTechnologySpecificCollectionType;
 	}
 	
-	public ParserRule getTechnologySpecificListTypeRule() {
-		return getTechnologySpecificListTypeAccess().getRule();
+	public ParserRule getTechnologySpecificCollectionTypeRule() {
+		return getTechnologySpecificCollectionTypeAccess().getRule();
 	}
 	
 	//TechnologySpecificDataStructure returns TechnologySpecificDataStructure:
@@ -2525,7 +2517,7 @@ public class TechnologyDslGrammarAccess extends AbstractElementFinder.AbstractGr
 	}
 	
 	//ComplexType returns ComplexType:
-	//    DataStructure | ListType | Enumeration
+	//    DataStructure | CollectionType | Enumeration
 	//;
 	public DataDslGrammarAccess.ComplexTypeElements getComplexTypeAccess() {
 		return gaDataDsl.getComplexTypeAccess();
@@ -2574,25 +2566,21 @@ public class TechnologyDslGrammarAccess extends AbstractElementFinder.AbstractGr
 		return getDataStructureAccess().getRule();
 	}
 	
-	//ListType returns ListType:
-	//    (
-	//        ('collection' | 'list') name=ID '{'
-	//            dataFields+=DataField (',' dataFields+=DataField)*
-	//        '}'
-	//    )
+	//CollectionType returns CollectionType:
+	//    'collection' name=ID '{'
+	//        dataFields+=DataField (',' dataFields+=DataField)*
+	//    '}'
 	//    |
-	//    (
-	//        ('collection' | 'list') name=ID '{'
-	//            primitiveType=PrimitiveType
-	//        '}'
-	//    )
+	//    'collection' name=ID '{'
+	//        primitiveType=PrimitiveType
+	//    '}'
 	//;
-	public DataDslGrammarAccess.ListTypeElements getListTypeAccess() {
-		return gaDataDsl.getListTypeAccess();
+	public DataDslGrammarAccess.CollectionTypeElements getCollectionTypeAccess() {
+		return gaDataDsl.getCollectionTypeAccess();
 	}
 	
-	public ParserRule getListTypeRule() {
-		return getListTypeAccess().getRule();
+	public ParserRule getCollectionTypeRule() {
+		return getCollectionTypeAccess().getRule();
 	}
 	
 	//enum DataFieldFeature returns DataFieldFeature:

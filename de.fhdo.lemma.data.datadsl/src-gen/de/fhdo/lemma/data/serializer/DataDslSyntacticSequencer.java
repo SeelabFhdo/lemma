@@ -11,7 +11,6 @@ import org.eclipse.xtext.IGrammarAccess;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.AbstractElementAlias;
-import org.eclipse.xtext.serializer.analysis.GrammarAlias.AlternativeAlias;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.GroupAlias;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.TokenAlias;
 import org.eclipse.xtext.serializer.analysis.ISyntacticSequencerPDAProvider.ISynNavigable;
@@ -23,15 +22,11 @@ public class DataDslSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected DataDslGrammarAccess grammarAccess;
 	protected AbstractElementAlias match_DataOperation___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_3__q;
-	protected AbstractElementAlias match_ListType_CollectionKeyword_0_0_0_or_ListKeyword_0_0_1;
-	protected AbstractElementAlias match_ListType_CollectionKeyword_1_0_0_or_ListKeyword_1_0_1;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (DataDslGrammarAccess) access;
 		match_DataOperation___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_3__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getDataOperationAccess().getLeftParenthesisKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getDataOperationAccess().getRightParenthesisKeyword_3_3()));
-		match_ListType_CollectionKeyword_0_0_0_or_ListKeyword_0_0_1 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getListTypeAccess().getCollectionKeyword_0_0_0()), new TokenAlias(false, false, grammarAccess.getListTypeAccess().getListKeyword_0_0_1()));
-		match_ListType_CollectionKeyword_1_0_0_or_ListKeyword_1_0_1 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getListTypeAccess().getCollectionKeyword_1_0_0()), new TokenAlias(false, false, grammarAccess.getListTypeAccess().getListKeyword_1_0_1()));
 	}
 	
 	@Override
@@ -48,10 +43,6 @@ public class DataDslSyntacticSequencer extends AbstractSyntacticSequencer {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
 			if (match_DataOperation___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_3__q.equals(syntax))
 				emit_DataOperation___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_3__q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_ListType_CollectionKeyword_0_0_0_or_ListKeyword_0_0_1.equals(syntax))
-				emit_ListType_CollectionKeyword_0_0_0_or_ListKeyword_0_0_1(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_ListType_CollectionKeyword_1_0_0_or_ListKeyword_1_0_1.equals(syntax))
-				emit_ListType_CollectionKeyword_1_0_0_or_ListKeyword_1_0_1(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
@@ -65,28 +56,6 @@ public class DataDslSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     name=ID (ambiguity) (rule end)
 	 */
 	protected void emit_DataOperation___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_3__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Ambiguous syntax:
-	 *     'collection' | 'list'
-	 *
-	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) name=ID
-	 */
-	protected void emit_ListType_CollectionKeyword_0_0_0_or_ListKeyword_0_0_1(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Ambiguous syntax:
-	 *     'collection' | 'list'
-	 *
-	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) name=ID
-	 */
-	protected void emit_ListType_CollectionKeyword_1_0_0_or_ListKeyword_1_0_1(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

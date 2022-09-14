@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="ASCII"?>
-<intermediate:IntermediateServiceModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:intermediate="http://www.fhdo.de/lemma/service/intermediate" xmlns:intermediate_1="http://www.fhdo.de/lemma/data/intermediate" sourceModelUri="file:///home/florian/Dokumente/Forschung/Dissertation/eclipse-workspace/examples/model-processing/example models/microservices/Order.services">
-  <imports name="OrderDomain" importUri="file:///home/florian/Dokumente/Forschung/Dissertation/eclipse-workspace/examples/model-processing/example models/intermediate/data models/Order.xmi" importTypeName="DATATYPES"/>
-  <imports name="Common" importUri="file:///home/florian/Dokumente/Forschung/Dissertation/eclipse-workspace/examples/model-processing/example models/intermediate/data models/Common.xmi" importTypeName="DATATYPES"/>
-  <imports name="Java" importUri="file:///home/florian/Dokumente/Forschung/Dissertation/eclipse-workspace/examples/model-processing/example models/technology/JavaSpring.technology" importTypeName="TECHNOLOGY"/>
-  <imports name="Eureka" importUri="file:///home/florian/Dokumente/Forschung/Dissertation/eclipse-workspace/examples/model-processing/example models/technology/Eureka.technology" importTypeName="TECHNOLOGY"/>
-  <imports name="Kafka" importUri="file:///home/florian/Dokumente/Forschung/Dissertation/eclipse-workspace/examples/model-processing/example models/technology/Kafka.technology" importTypeName="TECHNOLOGY"/>
-  <imports name="Protocols" importUri="file:///home/florian/Dokumente/Forschung/Dissertation/eclipse-workspace/examples/model-processing/example models/technology/Protocols.technology" importTypeName="TECHNOLOGY"/>
-  <microservices sourceModelUri="file:///home/florian/Dokumente/Forschung/Dissertation/eclipse-workspace/examples/model-processing/example models/microservices/Order.services" name="org.example.OrderService" qualifiedName="org.example.OrderService" type="FUNCTIONAL" visibility="PUBLIC" effectivelyImplemented="true">
+<intermediate:IntermediateServiceModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:intermediate="http://www.fhdo.de/lemma/service/intermediate" xmlns:intermediate_1="http://www.fhdo.de/lemma/data/intermediate" sourceModelUri="file://../../microservices/Order.services">
+  <imports name="OrderDomain" importUri="file://../data models/Order.xmi" importTypeName="DATATYPES"/>
+  <imports name="Common" importUri="file://../data models/Common.xmi" importTypeName="DATATYPES"/>
+  <imports name="Java" importUri="file://../../technology/JavaSpring.technology" importTypeName="TECHNOLOGY"/>
+  <imports name="Eureka" importUri="file://../../technology/Eureka.technology" importTypeName="TECHNOLOGY"/>
+  <imports name="Kafka" importUri="file://../../technology/Kafka.technology" importTypeName="TECHNOLOGY"/>
+  <imports name="Protocols" importUri="file://../../technology/Protocols.technology" importTypeName="TECHNOLOGY"/>
+  <microservices sourceModelUri="file://../../microservices/Order.services" name="org.example.OrderService" qualifiedName="org.example.OrderService" type="FUNCTIONAL" visibility="PUBLIC" effectivelyImplemented="true">
     <technologies name="Java" import="//@imports.2"/>
     <technologies name="Eureka" import="//@imports.3"/>
     <technologies name="Kafka" import="//@imports.4"/>

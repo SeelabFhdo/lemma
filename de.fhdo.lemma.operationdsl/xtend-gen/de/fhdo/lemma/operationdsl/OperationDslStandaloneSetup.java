@@ -3,8 +3,6 @@
  */
 package de.fhdo.lemma.operationdsl;
 
-import de.fhdo.lemma.operationdsl.OperationDslStandaloneSetupGenerated;
-
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.
  */

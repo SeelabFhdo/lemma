@@ -76,8 +76,8 @@ class IntermediateContext {
 enum IntermediateTypeKind {
     // Dummy constant due to XMI serializer bug (see comments in Import concept)
     DUMMY_FOR_XMI_SERIALIZER_BUG,
+    COLLECTION,
     ENUMERATION,
-    LIST,
     PRIMITIVE,
     STRUCTURE
 }
@@ -95,11 +95,11 @@ enum IntermediateTypeOrigin {
 
 /**
  * Intermediate concept for any possible type in the context of the languages, i.e., it may be of
- * one of the kinds primitive, list, or data structure, and one of the origins built-in, data model,
- * technology. Note that currently only the following combinations are possible:
+ * one of the kinds primitive, collection, or data structure, and one of the origins built-in,
+ * data model, technology. Note that currently only the following combinations are possible:
  *      kind                origins
  *      primitive           built-in, technology
- *      list                data model, technology
+ *      collection          data model, technology
  *      data structure      data model, technology
  * However, code generators should not depend on these combinations.
  */
@@ -204,14 +204,14 @@ class IntermediateDataOperationParameter {
 }
 
 /**
- * List type
+ * Collection type
  */
-class IntermediateListType extends IntermediateComplexType {
-    boolean primitiveList
-    boolean structuredList
+class IntermediateCollectionType extends IntermediateComplexType {
+    boolean primitiveCollection
+    boolean structuredCollection
 
     contains IntermediatePrimitiveType[0..1] primitiveType
-    contains IntermediateDataField[] dataFields opposite listType
+    contains IntermediateDataField[] dataFields opposite collectionType
 }
 
 /**
@@ -235,7 +235,7 @@ class IntermediateDataField {
     contains IntermediateImportedAspect[] aspects opposite dataField
 
     container IntermediateDataStructure dataStructure opposite dataFields
-    container IntermediateListType listType opposite dataFields
+    container IntermediateCollectionType collectionType opposite dataFields
 
     /**
      * Get the effective containing complex type of this data field
@@ -243,8 +243,8 @@ class IntermediateDataField {
     op IntermediateComplexType getEffectiveComplexType() {
         return if (dataStructure !== null)
                 dataStructure
-            else if (listType !== null)
-                listType
+            else if (collectionType !== null)
+                collectionType
             else
                 null
     }

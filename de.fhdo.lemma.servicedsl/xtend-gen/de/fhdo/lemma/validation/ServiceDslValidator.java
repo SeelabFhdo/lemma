@@ -546,7 +546,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
     final Technology technologyModel = LemmaUtils.<Technology>getImportedModelRoot(importImport.eResource(), 
       importImport.getImportURI(), Technology.class);
     final boolean technologyDefinesTypes = (((!technologyModel.getPrimitiveTypes().isEmpty()) || 
-      (!technologyModel.getListTypes().isEmpty())) || (!technologyModel.getDataStructures().isEmpty()));
+      (!technologyModel.getCollectionTypes().isEmpty())) || (!technologyModel.getDataStructures().isEmpty()));
     if ((!technologyDefinesTypes)) {
       this.error(("Technology does not specify types and cannot be marked as default type " + 
         "definition technology"), 

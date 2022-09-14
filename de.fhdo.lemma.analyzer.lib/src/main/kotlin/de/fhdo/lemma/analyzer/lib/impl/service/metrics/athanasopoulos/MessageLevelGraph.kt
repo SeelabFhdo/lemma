@@ -5,7 +5,7 @@ package de.fhdo.lemma.analyzer.lib.impl.service.metrics.athanasopoulos
 import de.fhdo.lemma.analyzer.lib.impl.Cache
 import de.fhdo.lemma.data.intermediate.IntermediateComplexType
 import de.fhdo.lemma.data.intermediate.IntermediateDataStructure
-import de.fhdo.lemma.data.intermediate.IntermediateListType
+import de.fhdo.lemma.data.intermediate.IntermediateCollectionType
 import de.fhdo.lemma.data.intermediate.IntermediateType
 import de.fhdo.lemma.service.intermediate.IntermediateOperation
 import de.fhdo.lemma.technology.CommunicationType
@@ -24,9 +24,9 @@ import de.fhdo.lemma.technology.ExchangePattern
  * [MessageLevelGraph] will always be a vertex with a fixed name. The parameters of the operation with the given
  * [CommunicationType] and [ExchangePattern]s will constitute the immediate children of the root. Their children again
  * will then indicate the structure of the parameters. Currently, we only consider LEMMA [IntermediateDataStructure]s
- * and [IntermediateListType]s to exhibit a structure. All other types, i.e., enumerations and primitive types, will
- * become leaves of the [MessageLevelGraph], i.e., vertices without children. Furthermore, we always consider original,
- * i.e., non-mapped, parameter types, because we can safely determine their structure if any.
+ * and [IntermediateCollectionType]s to exhibit a structure. All other types, i.e., enumerations and primitive types,
+ * will become leaves of the [MessageLevelGraph], i.e., vertices without children. Furthermore, we always consider
+ * original, i.e., non-mapped, parameter types, because we can safely determine their structure if any.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
@@ -77,7 +77,7 @@ class MessageLevelGraph(operation: IntermediateOperation, val communicationType:
                     addTypeVertex(it.originalType, LevelGraphVertex(resolvedType))
             }
 
-            is IntermediateListType -> {
+            is IntermediateCollectionType -> {
                 // Currently, we only consider original (non-mapped) complex types
                 resolvedType.dataFields.forEach { addTypeVertex(it.originalType, LevelGraphVertex(resolvedType))  }
             }

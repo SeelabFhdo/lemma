@@ -7,7 +7,7 @@ import de.fhdo.lemma.data.DateUtils
 import de.fhdo.lemma.data.PrimitiveTypeConstants
 import de.fhdo.lemma.data.intermediate.IntermediateComplexType
 import de.fhdo.lemma.data.intermediate.IntermediateImportedTechnologySpecificType
-import de.fhdo.lemma.data.intermediate.IntermediateListType
+import de.fhdo.lemma.data.intermediate.IntermediateCollectionType
 import de.fhdo.lemma.data.intermediate.IntermediatePrimitiveType
 import de.fhdo.lemma.data.intermediate.IntermediateType
 import de.fhdo.lemma.data.intermediate.IntermediateTypeKind
@@ -523,25 +523,26 @@ fun NodeWithType<*, *>.getTypeExpectedFromGenlet()
     = if (isTypeExpectedFromGenlet()) (this as Node).getData(TypeExpectedFromGenletDataKey) else null
 
 /**
- * Get the basic type of this [IntermediateType]. For all type kinds and origins except lists defined in a data model
- * the basic type is this [IntermediateType] itself. For list types defined in a data model, the basic type is either
- * a primitive type (primitive lists) or the type of the single data field (structured lists). Note that the method
- * returns null in case this [IntermediateType] is a structured list with more than one data field.
+ * Get the basic type of this [IntermediateType]. For all type kinds and origins except collections defined in a data
+ * model, the basic type is this [IntermediateType] itself. For collection types defined in a data model, the basic type
+ * is either a primitive type (primitive collections) or the type of the single data field (structured collections).
+ * Note that the method returns null in case this [IntermediateType] is a structured collection with more than one data
+ * field.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 internal fun IntermediateType.getBasicType()
-    = if (kind == IntermediateTypeKind.LIST && origin == IntermediateTypeOrigin.DATA_MODEL) {
-            val resolvedType = (this as IntermediateComplexType).resolve() as IntermediateListType
+    = if (kind == IntermediateTypeKind.COLLECTION && origin == IntermediateTypeOrigin.DATA_MODEL) {
+            val resolvedType = (this as IntermediateComplexType).resolve() as IntermediateCollectionType
             when {
-                resolvedType.isPrimitiveList -> resolvedType.primitiveType
+                resolvedType.isPrimitiveCollection -> resolvedType.primitiveType
                 resolvedType.dataFields.size == 1 -> resolvedType.dataFields[0].type
-                // FIXME Currently, we cannot deal with structured lists that have more than one data field. This is
-                // contrary, however, to what we do in ListTypeHandler, where we meld multiple fields of a structured
-                // list to a single nested item of the generated Collection subclass, which represents the list type. In
-                // the future, to be consistent in behavior, this method should also cope with structured lists with
-                // more than one data field, e.g., by pointing to the (yet) public nested items in generated Collection
-                // subclasses.
+                // FIXME Currently, we cannot deal with structured collections that have more than one data field. This
+                // is contrary, however, to what we do in CollectionTypeHandler, where we meld multiple fields of a
+                // structured collection to a single nested item of the generated Collection subclass, which represents
+                // the collection type. In the future, to be consistent in behavior, this method should also cope with
+                // structured collection with more than one data field, e.g., by pointing to the (yet) public nested
+                // items in generated Collection subclasses.
                 else -> null
             }
         } else

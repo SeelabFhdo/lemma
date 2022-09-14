@@ -1,5 +1,6 @@
 package de.fhdo.lemma.data.datadsl.extractor;
 
+import de.fhdo.lemma.data.CollectionType;
 import de.fhdo.lemma.data.ComplexType;
 import de.fhdo.lemma.data.ComplexTypeImport;
 import de.fhdo.lemma.data.Context;
@@ -9,11 +10,9 @@ import de.fhdo.lemma.data.DataStructure;
 import de.fhdo.lemma.data.Enumeration;
 import de.fhdo.lemma.data.EnumerationField;
 import de.fhdo.lemma.data.ImportedComplexType;
-import de.fhdo.lemma.data.ListType;
 import de.fhdo.lemma.data.PrimitiveType;
 import de.fhdo.lemma.data.Type;
 import de.fhdo.lemma.data.Version;
-import de.fhdo.lemma.data.datadsl.extractor.Util;
 import java.util.List;
 import java.util.function.Function;
 import org.eclipse.emf.common.util.EList;
@@ -121,9 +120,9 @@ public class DataDslExtractor {
       }
     }
     if (!_matched) {
-      if (complexType instanceof ListType) {
+      if (complexType instanceof CollectionType) {
         _matched=true;
-        _switchResult = this.extractToString(((ListType)complexType));
+        _switchResult = this.extractToString(((CollectionType)complexType));
       }
     }
     return _switchResult;
@@ -334,37 +333,37 @@ public class DataDslExtractor {
   }
   
   /**
-   * Extract ListType
+   * Extract CollectionType
    */
-  public String extractToString(final ListType listType) {
+  public String extractToString(final CollectionType collectionType) {
     String _xblockexpression = null;
     {
       StringConcatenation _builder = new StringConcatenation();
-      _builder.append("list ");
-      String _lemmaName = Util.lemmaName(listType.getName());
+      _builder.append("collection ");
+      String _lemmaName = Util.lemmaName(CollectionType.class.getName());
       _builder.append(_lemmaName);
       final String preamble = _builder.toString();
       String _xifexpression = null;
-      boolean _isIsPrimitiveList = listType.isIsPrimitiveList();
-      if (_isIsPrimitiveList) {
+      boolean _isIsPrimitiveCollection = collectionType.isIsPrimitiveCollection();
+      if (_isIsPrimitiveCollection) {
         StringConcatenation _builder_1 = new StringConcatenation();
         _builder_1.append(preamble);
         _builder_1.append(" { ");
-        String _extractTypeReferenceToString = this.extractTypeReferenceToString(listType.getPrimitiveType());
+        String _extractTypeReferenceToString = this.extractTypeReferenceToString(collectionType.getPrimitiveType());
         _builder_1.append(_extractTypeReferenceToString);
         _builder_1.append(" }");
         _xifexpression = _builder_1.toString();
       } else {
         String _xifexpression_1 = null;
-        boolean _isIsStructuredList = listType.isIsStructuredList();
-        if (_isIsStructuredList) {
+        boolean _isIsStructuredCollection = collectionType.isIsStructuredCollection();
+        if (_isIsStructuredCollection) {
           String _xblockexpression_1 = null;
           {
             final Function1<DataField, String> _function = (DataField it) -> {
               String _xblockexpression_2 = null;
               {
                 final String fieldTypeReference = this.extractTypeReferenceToString(it.getEffectiveType(), 
-                  Util.qualifiedName(listType));
+                  Util.qualifiedName(collectionType));
                 StringConcatenation _builder_2 = new StringConcatenation();
                 _builder_2.append(fieldTypeReference);
                 _builder_2.append(" ");
@@ -374,7 +373,7 @@ public class DataDslExtractor {
               }
               return _xblockexpression_2;
             };
-            final String fieldDefinitions = IterableExtensions.join(ListExtensions.<DataField, String>map(listType.getDataFields(), _function), ", ");
+            final String fieldDefinitions = IterableExtensions.join(ListExtensions.<DataField, String>map(collectionType.getDataFields(), _function), ", ");
             StringConcatenation _builder_2 = new StringConcatenation();
             _builder_2.append(preamble);
             _builder_2.append(" { ");

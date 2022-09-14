@@ -6,6 +6,7 @@ package de.fhdo.lemma.data.validation;
 import com.google.common.base.Function;
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
+import de.fhdo.lemma.data.CollectionType;
 import de.fhdo.lemma.data.ComplexType;
 import de.fhdo.lemma.data.ComplexTypeFeature;
 import de.fhdo.lemma.data.ComplexTypeImport;
@@ -20,7 +21,6 @@ import de.fhdo.lemma.data.DataPackage;
 import de.fhdo.lemma.data.DataStructure;
 import de.fhdo.lemma.data.Enumeration;
 import de.fhdo.lemma.data.ImportedComplexType;
-import de.fhdo.lemma.data.ListType;
 import de.fhdo.lemma.data.PrimitiveType;
 import de.fhdo.lemma.data.PrimitiveTypeConstants;
 import de.fhdo.lemma.data.PrimitiveValue;
@@ -937,9 +937,9 @@ public class DataDslValidator extends AbstractDataDslValidator {
         _xifexpression_1 = _xblockexpression;
       } else {
         boolean _xifexpression_2 = false;
-        if (((type1 instanceof ListType) && (type2 instanceof ListType))) {
-          String _buildQualifiedName = ((ListType) type1).buildQualifiedName(".");
-          String _buildQualifiedName_1 = ((ListType) type2).buildQualifiedName(".");
+        if (((type1 instanceof CollectionType) && (type2 instanceof CollectionType))) {
+          String _buildQualifiedName = ((CollectionType) type1).buildQualifiedName(".");
+          String _buildQualifiedName_1 = ((CollectionType) type2).buildQualifiedName(".");
           _xifexpression_2 = Objects.equal(_buildQualifiedName, _buildQualifiedName_1);
         } else {
           boolean _xifexpression_3 = false;
@@ -1171,10 +1171,10 @@ public class DataDslValidator extends AbstractDataDslValidator {
   }
   
   /**
-   * Check fields of list types
+   * Check fields of collection types
    */
   @Check
-  public void checkListFields(final ListType type) {
+  public void checkCollectionFields(final CollectionType type) {
     boolean _isEmpty = type.getDataFields().isEmpty();
     if (_isEmpty) {
       return;

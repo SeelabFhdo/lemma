@@ -96,7 +96,6 @@ public class IntermediateDataOperationReturnTypeImpl extends MinimalEObjectImpl.
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateType getType() {
         return type;
     }
@@ -121,7 +120,6 @@ public class IntermediateDataOperationReturnTypeImpl extends MinimalEObjectImpl.
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setType(IntermediateType newType) {
         if (newType != type) {
             NotificationChain msgs = null;
@@ -141,7 +139,6 @@ public class IntermediateDataOperationReturnTypeImpl extends MinimalEObjectImpl.
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateType getOriginalType() {
         return originalType;
     }
@@ -166,7 +163,6 @@ public class IntermediateDataOperationReturnTypeImpl extends MinimalEObjectImpl.
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setOriginalType(IntermediateType newOriginalType) {
         if (newOriginalType != originalType) {
             NotificationChain msgs = null;
@@ -186,7 +182,6 @@ public class IntermediateDataOperationReturnTypeImpl extends MinimalEObjectImpl.
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<IntermediateImportedAspect> getAspects() {
         if (aspects == null) {
             aspects = new EObjectContainmentWithInverseEList<IntermediateImportedAspect>(IntermediateImportedAspect.class, this, IntermediatePackage.INTERMEDIATE_DATA_OPERATION_RETURN_TYPE__ASPECTS, IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__RETURN_TYPE);
@@ -199,7 +194,6 @@ public class IntermediateDataOperationReturnTypeImpl extends MinimalEObjectImpl.
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateDataOperation getOperation() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_DATA_OPERATION_RETURN_TYPE__OPERATION) return null;
         return (IntermediateDataOperation)eContainer();
@@ -230,7 +224,6 @@ public class IntermediateDataOperationReturnTypeImpl extends MinimalEObjectImpl.
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setOperation(IntermediateDataOperation newOperation) {
         if (newOperation != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_DATA_OPERATION_RETURN_TYPE__OPERATION && newOperation != null)) {
             if (EcoreUtil.isAncestor(this, newOperation))

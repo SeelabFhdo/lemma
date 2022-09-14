@@ -13,7 +13,7 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <!-- begin-model-doc -->
  * *
- * Represents a typed and named field in a data structure or structured list
+ * Represents a typed and named field
  * <!-- end-model-doc -->
  *
  * <p>
@@ -29,7 +29,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.fhdo.lemma.data.DataField#getInitializationValue <em>Initialization Value</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.DataField#getFeatures <em>Features</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.DataField#getDataStructure <em>Data Structure</em>}</li>
- *   <li>{@link de.fhdo.lemma.data.DataField#getListType <em>List Type</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.DataField#getCollectionType <em>Collection Type</em>}</li>
  * </ul>
  *
  * @see de.fhdo.lemma.data.DataPackage#getDataField()
@@ -259,28 +259,28 @@ public interface DataField extends EObject {
     void setDataStructure(DataStructure value);
 
     /**
-     * Returns the value of the '<em><b>List Type</b></em>' container reference.
-     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.ListType#getDataFields <em>Data Fields</em>}'.
+     * Returns the value of the '<em><b>Collection Type</b></em>' container reference.
+     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.CollectionType#getDataFields <em>Data Fields</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the value of the '<em>List Type</em>' container reference.
-     * @see #setListType(ListType)
-     * @see de.fhdo.lemma.data.DataPackage#getDataField_ListType()
-     * @see de.fhdo.lemma.data.ListType#getDataFields
+     * @return the value of the '<em>Collection Type</em>' container reference.
+     * @see #setCollectionType(CollectionType)
+     * @see de.fhdo.lemma.data.DataPackage#getDataField_CollectionType()
+     * @see de.fhdo.lemma.data.CollectionType#getDataFields
      * @model opposite="dataFields" transient="false"
      * @generated
      */
-    ListType getListType();
+    CollectionType getCollectionType();
 
     /**
-     * Sets the value of the '{@link de.fhdo.lemma.data.DataField#getListType <em>List Type</em>}' container reference.
+     * Sets the value of the '{@link de.fhdo.lemma.data.DataField#getCollectionType <em>Collection Type</em>}' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>List Type</em>' container reference.
-     * @see #getListType()
+     * @param value the new value of the '<em>Collection Type</em>' container reference.
+     * @see #getCollectionType()
      * @generated
      */
-    void setListType(ListType value);
+    void setCollectionType(CollectionType value);
 
     /**
      * <!-- begin-user-doc -->

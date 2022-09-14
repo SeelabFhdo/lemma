@@ -66,7 +66,7 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
   @Check
   public void checkModelNotEmpty(final Technology technology) {
     final boolean modelEmpty = (((((((technology.getPrimitiveTypes().isEmpty() && 
-      technology.getListTypes().isEmpty()) && 
+      technology.getCollectionTypes().isEmpty()) && 
       technology.getDataStructures().isEmpty()) && 
       technology.getProtocols().isEmpty()) && 
       technology.getServiceAspects().isEmpty()) && 
@@ -262,7 +262,7 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
    */
   @Check
   public void checkPrimitiveDefaults(final Technology technology) {
-    final boolean typeSectionIsPresent = (((!technology.getListTypes().isEmpty()) || 
+    final boolean typeSectionIsPresent = (((!technology.getCollectionTypes().isEmpty()) || 
       (!technology.getDataStructures().isEmpty())) || 
       (!technology.getPrimitiveTypes().isEmpty()));
     if ((!typeSectionIsPresent)) {

@@ -15,7 +15,7 @@ import de.fhdo.lemma.data.PrimitiveType
 import de.fhdo.lemma.data.ComplexType
 import de.fhdo.lemma.data.Enumeration
 import de.fhdo.lemma.data.EnumerationField
-import de.fhdo.lemma.data.ListType
+import de.fhdo.lemma.data.CollectionType
 import de.fhdo.lemma.technology.mapping.MappingFactory
 import de.fhdo.lemma.service.Import
 import de.fhdo.lemma.service.ServiceFactory
@@ -599,7 +599,7 @@ class LemmaGenerator {
                 "unnamed schema")
 
         return switch(schema.type) {
-            case Schema.Type.ARRAY: toListType(schema, namespace)
+            case Schema.Type.ARRAY: toCollectionType(schema, namespace)
             case Schema.Type.MAP,
             case Schema.Type.UNION:
                 toDataStructure(schema, namespace)
@@ -610,48 +610,48 @@ class LemmaGenerator {
 
     /**
      * Generate LEMMA EObjects from Avro Array schema in the given namespace. Returns a pair
-     * consisting of the EObject (LEMMA ListType) specifically derived from the passed schema and
-     * all other EObjects that were derived during EObject generation in the context of the passed
-     * schema.
+     * consisting of the EObject (LEMMA CollectionType) specifically derived from the passed schema
+     * and all other EObjects that were derived during EObject generation in the context of the
+     * passed schema.
      */
-    def Pair<EObject, Map<Class<? extends EObject>, List<EObject>>> toListType(Schema schema,
+    def Pair<EObject, Map<Class<? extends EObject>, List<EObject>>> toCollectionType(Schema schema,
         String namespace) {
         schema.ensureType(Schema.Type.ARRAY)
-        val listType = createListType(schema.lemmaNameElseSchemaName, namespace,
+        val collectionType = createCollectionType(schema.lemmaNameElseSchemaName, namespace,
             lemmaName(schema) !== null)
-        startedEObjectCreation(DataModel, listType)
+        startedEObjectCreation(DataModel, collectionType)
 
         val typeSchema = schema.elementType
         if (isPrimitiveAvroType(typeSchema))
-            listType.primitiveType = toPrimitiveLemmaType(schema.elementType)
+            collectionType.primitiveType = toPrimitiveLemmaType(schema.elementType)
         else if (typeSchema.type == Schema.Type.RECORD)
-            listType.dataFields.addAll(
-                typeSchema.fields.map[toDataField(name, it.schema, null, listType)]
+            collectionType.dataFields.addAll(
+                typeSchema.fields.map[toDataField(name, it.schema, null, collectionType)]
             )
         else
-            listType.dataFields.add(
+            collectionType.dataFields.add(
                 toDataField(typeSchema.lemmaNameElseSchemaName.toFirstLower, typeSchema, null,
-                    listType)
+                    collectionType)
             )
 
-        finishedEObjectCreation(DataModel, listType)
-        return listType -> allCreatedEObjects()
+        finishedEObjectCreation(DataModel, collectionType)
+        return collectionType -> allCreatedEObjects()
     }
 
     /**
-     * Create LEMMA ListType with the given name and in the LEMMA namespace corresponding to the
-     * given Avro namespace. A unique name for the ListType may be generated, e.g., when the source
-     * Avro schema was an unnamed nested schema inside another schema.
+     * Create LEMMA CollectionType with the given name and in the LEMMA namespace corresponding to
+     * the given Avro namespace. A unique name for the CollectionType may be generated, e.g., when
+     * the source Avro schema was an unnamed nested schema inside another schema.
      */
-    private def ListType createListType(String name, String avroNamespace,
+    private def CollectionType createCollectionType(String name, String avroNamespace,
         boolean generateUniqueName) {
-        val listType = DATA_FACTORY.createListType
-        listType.name = name
-        listType.version = getOrCreateVersion(avroNamespace)
-        listType.context = getOrCreateContext(avroNamespace)
+        val collectionType = DATA_FACTORY.createCollectionType
+        collectionType.name = name
+        collectionType.version = getOrCreateVersion(avroNamespace)
+        collectionType.context = getOrCreateContext(avroNamespace)
         if (generateUniqueName)
-            listType.name = qualifiedName(listType).toUniqueName(DataModel)
-        return listType
+            collectionType.name = qualifiedName(collectionType).toUniqueName(DataModel)
+        return collectionType
     }
 
     /**

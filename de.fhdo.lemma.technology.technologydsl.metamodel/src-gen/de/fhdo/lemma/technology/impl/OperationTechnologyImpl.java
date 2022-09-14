@@ -39,242 +39,238 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * @generated
  */
 public abstract class OperationTechnologyImpl extends MinimalEObjectImpl.Container implements OperationTechnology {
-	/**
-	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String NAME_EDEFAULT = null;
+    /**
+     * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getName()
+     * @generated
+     * @ordered
+     */
+    protected static final String NAME_EDEFAULT = null;
 
-	/**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected String name = NAME_EDEFAULT;
+    /**
+     * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getName()
+     * @generated
+     * @ordered
+     */
+    protected String name = NAME_EDEFAULT;
 
-	/**
-	 * The cached value of the '{@link #getOperationEnvironments() <em>Operation Environments</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getOperationEnvironments()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<OperationEnvironment> operationEnvironments;
+    /**
+     * The cached value of the '{@link #getOperationEnvironments() <em>Operation Environments</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getOperationEnvironments()
+     * @generated
+     * @ordered
+     */
+    protected EList<OperationEnvironment> operationEnvironments;
 
-	/**
-	 * The cached value of the '{@link #getServiceProperties() <em>Service Properties</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getServiceProperties()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<TechnologySpecificProperty> serviceProperties;
+    /**
+     * The cached value of the '{@link #getServiceProperties() <em>Service Properties</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getServiceProperties()
+     * @generated
+     * @ordered
+     */
+    protected EList<TechnologySpecificProperty> serviceProperties;
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected OperationTechnologyImpl() {
-		super();
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected OperationTechnologyImpl() {
+        super();
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	protected EClass eStaticClass() {
-		return TechnologyPackage.Literals.OPERATION_TECHNOLOGY;
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return TechnologyPackage.Literals.OPERATION_TECHNOLOGY;
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String getName() {
-		return name;
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getName() {
+        return name;
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setName(String newName) {
-		String oldName = name;
-		name = newName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TechnologyPackage.OPERATION_TECHNOLOGY__NAME, oldName, name));
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setName(String newName) {
+        String oldName = name;
+        name = newName;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, TechnologyPackage.OPERATION_TECHNOLOGY__NAME, oldName, name));
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EList<OperationEnvironment> getOperationEnvironments() {
-		if (operationEnvironments == null) {
-			operationEnvironments = new EObjectContainmentWithInverseEList<OperationEnvironment>(OperationEnvironment.class, this, TechnologyPackage.OPERATION_TECHNOLOGY__OPERATION_ENVIRONMENTS, TechnologyPackage.OPERATION_ENVIRONMENT__OPERATION_TECHNOLOGY);
-		}
-		return operationEnvironments;
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<OperationEnvironment> getOperationEnvironments() {
+        if (operationEnvironments == null) {
+            operationEnvironments = new EObjectContainmentWithInverseEList<OperationEnvironment>(OperationEnvironment.class, this, TechnologyPackage.OPERATION_TECHNOLOGY__OPERATION_ENVIRONMENTS, TechnologyPackage.OPERATION_ENVIRONMENT__OPERATION_TECHNOLOGY);
+        }
+        return operationEnvironments;
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EList<TechnologySpecificProperty> getServiceProperties() {
-		if (serviceProperties == null) {
-			serviceProperties = new EObjectContainmentWithInverseEList<TechnologySpecificProperty>(TechnologySpecificProperty.class, this, TechnologyPackage.OPERATION_TECHNOLOGY__SERVICE_PROPERTIES, TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__OPERATION_TECHNOLOGY);
-		}
-		return serviceProperties;
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<TechnologySpecificProperty> getServiceProperties() {
+        if (serviceProperties == null) {
+            serviceProperties = new EObjectContainmentWithInverseEList<TechnologySpecificProperty>(TechnologySpecificProperty.class, this, TechnologyPackage.OPERATION_TECHNOLOGY__SERVICE_PROPERTIES, TechnologyPackage.TECHNOLOGY_SPECIFIC_PROPERTY__OPERATION_TECHNOLOGY);
+        }
+        return serviceProperties;
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case TechnologyPackage.OPERATION_TECHNOLOGY__OPERATION_ENVIRONMENTS:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOperationEnvironments()).basicAdd(otherEnd, msgs);
-			case TechnologyPackage.OPERATION_TECHNOLOGY__SERVICE_PROPERTIES:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getServiceProperties()).basicAdd(otherEnd, msgs);
-		}
-		return super.eInverseAdd(otherEnd, featureID, msgs);
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case TechnologyPackage.OPERATION_TECHNOLOGY__OPERATION_ENVIRONMENTS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getOperationEnvironments()).basicAdd(otherEnd, msgs);
+            case TechnologyPackage.OPERATION_TECHNOLOGY__SERVICE_PROPERTIES:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getServiceProperties()).basicAdd(otherEnd, msgs);
+        }
+        return super.eInverseAdd(otherEnd, featureID, msgs);
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case TechnologyPackage.OPERATION_TECHNOLOGY__OPERATION_ENVIRONMENTS:
-				return ((InternalEList<?>)getOperationEnvironments()).basicRemove(otherEnd, msgs);
-			case TechnologyPackage.OPERATION_TECHNOLOGY__SERVICE_PROPERTIES:
-				return ((InternalEList<?>)getServiceProperties()).basicRemove(otherEnd, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case TechnologyPackage.OPERATION_TECHNOLOGY__OPERATION_ENVIRONMENTS:
+                return ((InternalEList<?>)getOperationEnvironments()).basicRemove(otherEnd, msgs);
+            case TechnologyPackage.OPERATION_TECHNOLOGY__SERVICE_PROPERTIES:
+                return ((InternalEList<?>)getServiceProperties()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case TechnologyPackage.OPERATION_TECHNOLOGY__NAME:
-				return getName();
-			case TechnologyPackage.OPERATION_TECHNOLOGY__OPERATION_ENVIRONMENTS:
-				return getOperationEnvironments();
-			case TechnologyPackage.OPERATION_TECHNOLOGY__SERVICE_PROPERTIES:
-				return getServiceProperties();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
+        switch (featureID) {
+            case TechnologyPackage.OPERATION_TECHNOLOGY__NAME:
+                return getName();
+            case TechnologyPackage.OPERATION_TECHNOLOGY__OPERATION_ENVIRONMENTS:
+                return getOperationEnvironments();
+            case TechnologyPackage.OPERATION_TECHNOLOGY__SERVICE_PROPERTIES:
+                return getServiceProperties();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case TechnologyPackage.OPERATION_TECHNOLOGY__NAME:
-				setName((String)newValue);
-				return;
-			case TechnologyPackage.OPERATION_TECHNOLOGY__OPERATION_ENVIRONMENTS:
-				getOperationEnvironments().clear();
-				getOperationEnvironments().addAll((Collection<? extends OperationEnvironment>)newValue);
-				return;
-			case TechnologyPackage.OPERATION_TECHNOLOGY__SERVICE_PROPERTIES:
-				getServiceProperties().clear();
-				getServiceProperties().addAll((Collection<? extends TechnologySpecificProperty>)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public void eSet(int featureID, Object newValue) {
+        switch (featureID) {
+            case TechnologyPackage.OPERATION_TECHNOLOGY__NAME:
+                setName((String)newValue);
+                return;
+            case TechnologyPackage.OPERATION_TECHNOLOGY__OPERATION_ENVIRONMENTS:
+                getOperationEnvironments().clear();
+                getOperationEnvironments().addAll((Collection<? extends OperationEnvironment>)newValue);
+                return;
+            case TechnologyPackage.OPERATION_TECHNOLOGY__SERVICE_PROPERTIES:
+                getServiceProperties().clear();
+                getServiceProperties().addAll((Collection<? extends TechnologySpecificProperty>)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void eUnset(int featureID) {
-		switch (featureID) {
-			case TechnologyPackage.OPERATION_TECHNOLOGY__NAME:
-				setName(NAME_EDEFAULT);
-				return;
-			case TechnologyPackage.OPERATION_TECHNOLOGY__OPERATION_ENVIRONMENTS:
-				getOperationEnvironments().clear();
-				return;
-			case TechnologyPackage.OPERATION_TECHNOLOGY__SERVICE_PROPERTIES:
-				getServiceProperties().clear();
-				return;
-		}
-		super.eUnset(featureID);
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void eUnset(int featureID) {
+        switch (featureID) {
+            case TechnologyPackage.OPERATION_TECHNOLOGY__NAME:
+                setName(NAME_EDEFAULT);
+                return;
+            case TechnologyPackage.OPERATION_TECHNOLOGY__OPERATION_ENVIRONMENTS:
+                getOperationEnvironments().clear();
+                return;
+            case TechnologyPackage.OPERATION_TECHNOLOGY__SERVICE_PROPERTIES:
+                getServiceProperties().clear();
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case TechnologyPackage.OPERATION_TECHNOLOGY__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case TechnologyPackage.OPERATION_TECHNOLOGY__OPERATION_ENVIRONMENTS:
-				return operationEnvironments != null && !operationEnvironments.isEmpty();
-			case TechnologyPackage.OPERATION_TECHNOLOGY__SERVICE_PROPERTIES:
-				return serviceProperties != null && !serviceProperties.isEmpty();
-		}
-		return super.eIsSet(featureID);
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public boolean eIsSet(int featureID) {
+        switch (featureID) {
+            case TechnologyPackage.OPERATION_TECHNOLOGY__NAME:
+                return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+            case TechnologyPackage.OPERATION_TECHNOLOGY__OPERATION_ENVIRONMENTS:
+                return operationEnvironments != null && !operationEnvironments.isEmpty();
+            case TechnologyPackage.OPERATION_TECHNOLOGY__SERVICE_PROPERTIES:
+                return serviceProperties != null && !serviceProperties.isEmpty();
+        }
+        return super.eIsSet(featureID);
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		if (eIsProxy()) return super.toString();
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
 
-		StringBuilder result = new StringBuilder(super.toString());
-		result.append(" (name: ");
-		result.append(name);
-		result.append(')');
-		return result.toString();
-	}
+        StringBuilder result = new StringBuilder(super.toString());
+        result.append(" (name: ");
+        result.append(name);
+        result.append(')');
+        return result.toString();
+    }
 
 } //OperationTechnologyImpl

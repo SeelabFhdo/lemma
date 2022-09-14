@@ -7,11 +7,11 @@ import com.google.common.base.Function;
 import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
+import de.fhdo.lemma.data.CollectionType;
 import de.fhdo.lemma.data.ComplexType;
 import de.fhdo.lemma.data.DataModel;
 import de.fhdo.lemma.data.DataStructure;
 import de.fhdo.lemma.data.Enumeration;
-import de.fhdo.lemma.data.ListType;
 import de.fhdo.lemma.data.PrimitiveType;
 import de.fhdo.lemma.data.Type;
 import de.fhdo.lemma.service.Import;
@@ -33,8 +33,8 @@ import de.fhdo.lemma.technology.Protocol;
 import de.fhdo.lemma.technology.ServiceAspect;
 import de.fhdo.lemma.technology.Technology;
 import de.fhdo.lemma.technology.TechnologyPackage;
+import de.fhdo.lemma.technology.TechnologySpecificCollectionType;
 import de.fhdo.lemma.technology.TechnologySpecificDataStructure;
-import de.fhdo.lemma.technology.TechnologySpecificListType;
 import de.fhdo.lemma.technology.TechnologySpecificPrimitiveType;
 import de.fhdo.lemma.technology.TechnologySpecificPropertyValueAssignment;
 import de.fhdo.lemma.technology.mapping.ComplexParameterMapping;
@@ -868,16 +868,16 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
           };
           getConceptNameParts = _function_3;
         } else {
-          if ((((ComplexType)originalType).isIsStructuredList() || ((ComplexType)originalType).isIsPrimitiveList())) {
+          if ((((ComplexType)originalType).isIsStructuredCollection() || ((ComplexType)originalType).isIsPrimitiveCollection())) {
             final Function<Technology, List<Type>> _function_4 = (Technology it) -> {
-              final Function1<TechnologySpecificListType, Type> _function_5 = (TechnologySpecificListType it_1) -> {
+              final Function1<TechnologySpecificCollectionType, Type> _function_5 = (TechnologySpecificCollectionType it_1) -> {
                 return ((Type) it_1);
               };
-              return ListExtensions.<TechnologySpecificListType, Type>map(it.getListTypes(), _function_5);
+              return ListExtensions.<TechnologySpecificCollectionType, Type>map(it.getCollectionTypes(), _function_5);
             };
             getImportedConcepts = _function_4;
             final Function<Type, List<String>> _function_5 = (Type it) -> {
-              return ((TechnologySpecificListType) it).getQualifiedNameParts();
+              return ((TechnologySpecificCollectionType) it).getQualifiedNameParts();
             };
             getConceptNameParts = _function_5;
           } else {
@@ -996,9 +996,9 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
         _xifexpression_4 = Scopes.scopeFor(((DataStructure) complexType).getDataFields());
       } else {
         IScope _xifexpression_5 = null;
-        boolean _isIsStructuredList = complexType.isIsStructuredList();
-        if (_isIsStructuredList) {
-          _xifexpression_5 = Scopes.scopeFor(((ListType) complexType).getDataFields());
+        boolean _isIsStructuredCollection = complexType.isIsStructuredCollection();
+        if (_isIsStructuredCollection) {
+          _xifexpression_5 = Scopes.scopeFor(((CollectionType) complexType).getDataFields());
         } else {
           _xifexpression_5 = IScope.NULLSCOPE;
         }

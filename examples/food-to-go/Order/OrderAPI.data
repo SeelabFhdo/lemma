@@ -12,7 +12,7 @@ context Web {
         int quantity
     }
 
-    list LineItems { LineItem i }
+    collection LineItems { LineItem i }
 
     structure CreateOrderResponse<valueObject> {
         immutable long orderId
@@ -49,7 +49,7 @@ context Events {
         long consumerId
     }
 
-    list OrderLineItemList {OrderLineItem lineItem}
+    collection OrderLineItemList {OrderLineItem lineItem}
 
     structure OrderLineItem{
         int quantity,

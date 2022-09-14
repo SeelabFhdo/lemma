@@ -189,11 +189,11 @@ Anything:
         'technology' | 'types' | 'compatibility' | 'matrix' | 'protocols' | 'service' | 'aspects' |
         'deployment' | 'technologies' | 'infrastructure' | 'operation' | 'import' | 'from' | 'as' |
         'data' | 'formats' | 'default' | 'with' | 'format' | 'in' | 'out' | 'inout' | 'sync' |
-        'async' | 'primitive' | 'type' | 'based' | 'on' | 'collection' | 'list' | 'structure'|
-        '->' | '<-' | '<->' | 'environments' | 'properties' | 'mandatory' | 'singleval' |
-        'microservices' | 'interfaces' | 'operations' | 'parameters' | 'fields' |
-        'exchange_pattern' | 'communication_type' | 'protocol' | 'data_format' | 'aspect' | 'for' |
-        'containers' | 'selector'
+        'async' | 'primitive' | 'type' | 'based' | 'on' | 'collection' | 'structure'| '->' | '<-' |
+        '<->' | 'environments' | 'properties' | 'mandatory' | 'singleval' | 'microservices' |
+        'interfaces' | 'operations' | 'parameters' | 'fields' | 'exchange_pattern' |
+        'communication_type' | 'protocol' | 'data_format' | 'aspect' | 'for' | 'containers' |
+        'selector'
 
         // All keywords of the Data DSL (from which the Service DSL inherits). If we don't specify
         // them here, they will be recognized as regular grammar tokens in the Anything string.

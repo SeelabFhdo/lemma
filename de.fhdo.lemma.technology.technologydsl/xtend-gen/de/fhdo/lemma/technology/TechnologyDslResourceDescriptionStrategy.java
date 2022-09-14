@@ -1,6 +1,5 @@
 package de.fhdo.lemma.technology;
 
-import de.fhdo.lemma.technology.OperationAspect;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.resource.EObjectDescription;
 import org.eclipse.xtext.resource.IEObjectDescription;

@@ -3,7 +3,7 @@ package de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.
 import com.github.javaparser.ast.Modifier
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import de.fhdo.lemma.data.intermediate.IntermediateDataField
-import de.fhdo.lemma.data.intermediate.IntermediateListType
+import de.fhdo.lemma.data.intermediate.IntermediateCollectionType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addAllAttributesConstructor
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
@@ -20,16 +20,16 @@ import de.fhdo.lemma.model_processing.phases.PhaseException
 import de.fhdo.lemma.model_processing.code_generation.java_base.modules.domain.DomainContext.State as DomainState
 
 /**
- * Code generation handler for IntermediateListType instances.
+ * Code generation handler for IntermediateCollectionType instances.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
  */
 @CodeGenerationHandler
-internal class ListTypeHandler
-    : VisitingCodeGenerationHandlerI<IntermediateListType, ClassOrInterfaceDeclaration, Nothing> {
-    override fun handlesEObjectsOfInstance() = IntermediateListType::class.java
+internal class CollectionTypeHandler
+    : VisitingCodeGenerationHandlerI<IntermediateCollectionType, ClassOrInterfaceDeclaration, Nothing> {
+    override fun handlesEObjectsOfInstance() = IntermediateCollectionType::class.java
     override fun generatesNodesOfInstance() = ClassOrInterfaceDeclaration::class.java
-    override fun getAspects(eObject: IntermediateListType) = eObject.aspects!!
+    override fun getAspects(eObject: IntermediateCollectionType) = eObject.aspects!!
 
     companion object {
         private const val DEFAULT_JAVA_COLLECTION_ASPECT = "java.List"
@@ -46,20 +46,24 @@ internal class ListTypeHandler
     /**
      * Execution logic of the handler
      */
-    override fun execute(eObject: IntermediateListType, context: Nothing?)
+    override fun execute(eObject: IntermediateCollectionType, context: Nothing?)
         : Pair<ClassOrInterfaceDeclaration, String?>? {
-        /* Each IntermediateListType becomes a Java class that inherits from a class of the Java Collection Framework */
+        /*
+         * Each IntermediateCollectionType becomes a Java class that inherits from a class of the Java Collection
+         * Framework
+         */
         val currentDomainPackage: String by DomainState
         val packageName = "$currentDomainPackage.${eObject.eObjectPackageName}"
         val generatedClass = newJavaClassOrInterface(packageName, eObject.classname)
 
-        /* Determine the Collection type from which the list type's class inherits */
+        /* Determine the Collection type from which the collection type's class inherits */
         val collectionType = eObject.determineJavaCollectionType()
 
-        // The type arguments of the Collection type depend on whether this list type is a structured list or not. For
-        // structured lists, we add nested item classes to the generated Java class. For non-structured, i.e.,
-        // primitively typed lists, the type argument is the object wrapper class of the primitive type
-        val typeArguments = if (eObject.isStructuredList)
+        // The type arguments of the Collection type depend on whether this collection type is a structured collection
+        // or not. For structured collections, we add nested item classes to the generated Java class. For
+        // non-structured, i.e., primitively typed, collections, the type argument is the object wrapper class of the
+        // primitive type.
+        val typeArguments = if (eObject.isStructuredCollection)
                 generatedClass.addNestedItemClasses(eObject, collectionType.typeArgumentCount)
             else
                 listOf(eObject.primitiveType.getObjectWrapperMapping().mappedTypeName)
@@ -69,42 +73,43 @@ internal class ListTypeHandler
     }
 
     /**
-     * Helper to determine the Java Collection type from this [IntermediateListType]
+     * Helper to determine the Java Collection type from this [IntermediateCollectionType]
      */
-    private fun IntermediateListType.determineJavaCollectionType() : JavaCollectionTypeDescription {
+    private fun IntermediateCollectionType.determineJavaCollectionType() : JavaCollectionTypeDescription {
         // The Java Collection type can be prescribed by modelers leveraging aspects. If no supported aspect was
-        // specified, the default one, i.e., for the List Collection type is used
+        // specified, the default one, i.e., for the List Collection type is used.
         val collectionAspect = aspects.find { it.qualifiedName in SUPPORTED_JAVA_COLLECTION_TYPES }?.qualifiedName
             ?: DEFAULT_JAVA_COLLECTION_ASPECT
         val collectionTypeDescription = SUPPORTED_JAVA_COLLECTION_TYPES[collectionAspect]!!
 
         // Some Collection types only make sense, when they are parameterized with other types, e.g., Map. In LEMMA, we
-        // force the modeler to use structured list types for such Collection types. For instance, a list type like
+        // force the modeler to use structured collection types for such Collection types. For instance, a collection
+        // type like
         //      @java::_aspects.Map
-        //      list type MyMap { int key, string value }
+        //      collection MyMap { int key, string value }
         // becomes a Java class that inherits from HashMap<Integer, String>. Without both data fields, the Map
         // inheritance would not make sense.
         val expectedTypeArgumentCount = collectionTypeDescription.typeArgumentCount
         if (expectedTypeArgumentCount != -1 && dataFields.size != expectedTypeArgumentCount)
-            throw PhaseException("Cannot determine Java collection type for list type $name: The number of data " +
-                "fields (${dataFields.size}) does not match the number of data fields expected by the collection " +
-                "type $collectionAspect (${expectedTypeArgumentCount})")
+            throw PhaseException("Cannot determine Java Collection type for collection $name: The number of data " +
+                "fields (${dataFields.size}) does not match the number of data fields expected by the Java " +
+                "Collection type $collectionAspect (${expectedTypeArgumentCount})")
 
         return collectionTypeDescription
     }
 
     /**
-     * Helper to add nested item classes to this [ClassOrInterfaceDeclaration] based on the given [list] type and
+     * Helper to add nested item classes to this [ClassOrInterfaceDeclaration] based on the given [collection] type and
      * [typeArgumentCount]
      */
-    private fun ClassOrInterfaceDeclaration.addNestedItemClasses(list: IntermediateListType, typeArgumentCount: Int)
-        : List<String> {
+    private fun ClassOrInterfaceDeclaration.addNestedItemClasses(collection: IntermediateCollectionType,
+        typeArgumentCount: Int) : List<String> {
         val qualifiedItemClassesNames = mutableListOf<String>()
 
-        // If there is more than one type argument and the type argument count matches the data field count of the list,
-        // we add a nested item class for each data field
-        if (typeArgumentCount > 1 && typeArgumentCount == list.dataFields.size)
-            list.dataFields.forEach {
+        // If there is more than one type argument and the type argument count matches the data field count of the
+        // collection, we add a nested item class for each data field
+        if (typeArgumentCount > 1 && typeArgumentCount == collection.dataFields.size)
+            collection.dataFields.forEach {
                 val itemClassName = addNestedItemClass(it.name, it)
                 qualifiedItemClassesNames.add("$nameAsString.$itemClassName")
             }
@@ -113,7 +118,7 @@ internal class ListTypeHandler
         // should not be the case given the check in determineJavaCollectionType()), we add a single item class for
         // all data fields
         else {
-            val itemClassName = addNestedItemClass(nameAsString, *list.dataFields.toTypedArray())
+            val itemClassName = addNestedItemClass(nameAsString, *collection.dataFields.toTypedArray())
             qualifiedItemClassesNames.add("$nameAsString.$itemClassName")
         }
 

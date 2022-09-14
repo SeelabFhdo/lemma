@@ -193,13 +193,13 @@ public interface DataFactory extends EFactory {
     DataOperationParameter createDataOperationParameter();
 
     /**
-     * Returns a new object of class '<em>List Type</em>'.
+     * Returns a new object of class '<em>Collection Type</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>List Type</em>'.
+     * @return a new object of class '<em>Collection Type</em>'.
      * @generated
      */
-    ListType createListType();
+    CollectionType createCollectionType();
 
     /**
      * Returns a new object of class '<em>Field</em>'.

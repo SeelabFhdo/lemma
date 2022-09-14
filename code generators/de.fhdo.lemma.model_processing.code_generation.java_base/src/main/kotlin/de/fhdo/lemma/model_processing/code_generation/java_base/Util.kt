@@ -5,7 +5,7 @@ import de.fhdo.lemma.data.ComplexType
 import de.fhdo.lemma.data.DataModel
 import de.fhdo.lemma.data.DataStructure
 import de.fhdo.lemma.data.Enumeration
-import de.fhdo.lemma.data.ListType
+import de.fhdo.lemma.data.CollectionType
 import de.fhdo.lemma.data.intermediate.IntermediateComplexType
 import de.fhdo.lemma.data.intermediate.IntermediateDataField
 import de.fhdo.lemma.data.intermediate.IntermediateDataModel
@@ -102,7 +102,7 @@ val EObject.javaFileName
 val EObject.qualifiedName : String
     get() = when(this) {
         is DataStructure -> buildQualifiedName(".")
-        is ListType -> buildQualifiedName(".")
+        is CollectionType -> buildQualifiedName(".")
         is Enumeration -> buildQualifiedName(".")
         is Microservice -> buildQualifiedName(".")
         is Interface -> buildQualifiedName(".")

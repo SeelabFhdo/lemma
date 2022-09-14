@@ -39,7 +39,7 @@ public interface Version extends EObject {
      * <!-- begin-model-doc -->
      * *
      * Implicit Constraints:
-     *     (C1) Either one (or none) of the lists complexTypes or contexts may have elements.
+     *     (C1) Either one (or none) of the complexTypes or contexts may have elements.
      *          Ensured by: DSL grammar.
      *     (C2) Name must be unique.
      *          Ensured by: DSL validator.

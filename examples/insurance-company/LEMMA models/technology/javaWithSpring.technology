@@ -24,12 +24,12 @@ technology javaWithSpring {
         structure type Optional;
         structure type ResponseEntity;
 
-        list type Array;
-        list type Collection;
-        list type GrantedAuthorities;
-        list type Multimap;
-        list type ResponseEntities;
-        list type Set;
+        collection type Array;
+        collection type Collection;
+        collection type GrantedAuthorities;
+        collection type Multimap;
+        collection type ResponseEntities;
+        collection type Set;
 
         compatibility matrix {
             Float -> BigDecimal;

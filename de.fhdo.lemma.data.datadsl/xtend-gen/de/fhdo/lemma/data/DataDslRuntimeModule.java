@@ -3,8 +3,6 @@
  */
 package de.fhdo.lemma.data;
 
-import de.fhdo.lemma.data.AbstractDataDslRuntimeModule;
-import de.fhdo.lemma.data.DataDslResourceDescriptionStrategy;
 import de.fhdo.lemma.data.scoping.DataDslScopeProvider;
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
 import org.eclipse.xtext.scoping.IScopeProvider;

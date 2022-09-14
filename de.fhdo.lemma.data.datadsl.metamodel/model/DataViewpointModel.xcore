@@ -6,16 +6,16 @@ import java.util.Map
 
 /**
  * This metamodel represents the Data Modeling Viewpoint, which is mainly used for defining custom
- * structure and list types.
+ * structure, collection, and enumeration types.
  *
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class DataModel {
     /**
      * Implicit Constraints:
-     *     (C1) Only one (or none) of the lists versions, contexts or complexTypes may be filled
-     *          with elements. That is, a DataModel may define custom types in versions (and
-     *          contexts), contexts, or without versions and contexts.
+     *     (C1) Only one (or none) of the versions, contexts, or complexTypes may be filled with
+     *          elements. That is, a DataModel may define custom types in versions (and contexts),
+     *          contexts, or without versions and contexts.
      *          Ensured by: DSL grammar.
      */
 
@@ -31,7 +31,7 @@ class DataModel {
     //contains AssignTest[] assignTests
 
     /**
-     * Get all ComplexTypes (lists and structures) contained by a model instance
+     * Get all ComplexTypes contained in a model instance
      */
     op ComplexType[] getContainedComplexTypes() {
         val containedComplexTypes = newArrayList
@@ -80,7 +80,7 @@ class ComplexTypeImport {
 class Version {
     /**
      * Implicit Constraints:
-     *     (C1) Either one (or none) of the lists complexTypes or contexts may have elements.
+     *     (C1) Either one (or none) of the complexTypes or contexts may have elements.
      *          Ensured by: DSL grammar.
      *     (C2) Name must be unique.
      *          Ensured by: DSL validator.
@@ -172,7 +172,7 @@ class Context {
 }
 
 /*
- * Abstract super class for all types (primitives, structures and lists)
+ * Abstract super class for all types
  */
 abstract class Type {}
 
@@ -385,7 +385,7 @@ class PrimitiveString extends PrimitiveType {}
 class PrimitiveUnspecified extends PrimitiveType {}
 
 /**
- * Super-concept of complex types, i.e., lists and structures
+ * Super-concept of complex types
  */
 abstract class ComplexType extends Type {
     /**
@@ -409,26 +409,26 @@ abstract class ComplexType extends Type {
     }
 
     /**
-     * Flag indicating that the ComplexType instance is a ListType that holds a PrimitiveType and
-     * hence does not consist of several named and typed DataFields
+     * Flag indicating that the ComplexType instance is a CollectionType that holds a PrimitiveType
+     * and hence does not consist of several named and typed DataFields
      */
-    derived boolean isPrimitiveList get {
-        if (!(this instanceof ListType))
+    derived boolean isPrimitiveCollection get {
+        if (!(this instanceof CollectionType))
             return false
 
-        return (this as ListType).primitiveType !== null
+        return (this as CollectionType).primitiveType !== null
     }
 
     /**
-     * Flag indicating that the ComplexType instance is a ListType that consists of several named
-     * and typed DataFields instead of a single "anonymous" PrimitiveType field
+     * Flag indicating that the ComplexType instance is a CollectionType that consists of several
+     * named and typed DataFields instead of a single "anonymous" PrimitiveType field
      */
-    derived boolean isStructuredList get {
-        if (!(this instanceof ListType))
+    derived boolean isStructuredCollection get {
+        if (!(this instanceof CollectionType))
             return false
 
-        return (this as ListType).dataFields !== null &&
-            !(this as ListType).dataFields.empty
+        return (this as CollectionType).dataFields !== null &&
+            !(this as CollectionType).dataFields.empty
     }
 
     /**
@@ -489,11 +489,11 @@ abstract class ComplexType extends Type {
      * Helper operation for ComplexType-subclasses to compare the counts of two DataField lists. The
      * return value follows the semantics of Java's Comparator.compare() method. The comparison is
      * based on the numbers of concrete types of the DataFields, i.e., primitive types are compared
-     * with primitive types, structures with structures, and lists with lists. The field count of
-     * the first argument is greater, i.e., the operation returns 1, in case the type-specific field
-     * counts are not equal and at least one type-specific field count is greater than its
-     * counterpart in the second argument, e.g., there are more list-typed fields in the first than
-     * in the second argument.
+     * with primitive types, structures with structures, and collections with collections. The field
+     * count of the first argument is greater, i.e., the operation returns 1, in case the
+     * type-specific field counts are not equal and at least one type-specific field count is
+     * greater than its counterpart in the second argument, e.g., there are more collection-typed
+     * fields in the first than in the second argument.
      */
     op int compareFieldCounts(DataField[] fields, DataField[] fieldsToCompare) {
         // Both arguments' field counts are equal by convention, in case both arguments are null
@@ -509,7 +509,8 @@ abstract class ComplexType extends Type {
         /* Build type-specific lists of data fields for both arguments */
         val fieldsPrimitiveCounts = fields.filter[it.effectiveType instanceof PrimitiveType].length
         val fieldsStructureCounts = fields.filter[it.effectiveType instanceof DataStructure].length
-        val fieldsListCounts = fields.filter[it.effectiveType instanceof ListType].length
+        val fieldsCollectionCounts = fields.filter[it.effectiveType instanceof CollectionType]
+            .length
 
         val primitiveCountsToCompare = fieldsToCompare.filter[
             it.effectiveType instanceof PrimitiveType
@@ -517,18 +518,18 @@ abstract class ComplexType extends Type {
         val structureCountsToCompare = fieldsToCompare.filter[
             it.effectiveType instanceof DataStructure
         ].length
-        val listCountsToCompare = fieldsToCompare.filter[
-            it.effectiveType instanceof ListType
+        val collectionCountsToCompare = fieldsToCompare.filter[
+            it.effectiveType instanceof CollectionType
         ].length
 
         /* Do the actual comparison */
         if (fieldsPrimitiveCounts === primitiveCountsToCompare &&
             fieldsStructureCounts === structureCountsToCompare &&
-            fieldsListCounts === listCountsToCompare)
+            fieldsCollectionCounts === collectionCountsToCompare)
             return 0
         else if (fieldsPrimitiveCounts >= primitiveCountsToCompare &&
             fieldsStructureCounts >= structureCountsToCompare &&
-            fieldsListCounts >= listCountsToCompare)
+            fieldsCollectionCounts >= collectionCountsToCompare)
             return 1
 
         return -1
@@ -951,52 +952,54 @@ class DataOperationParameter {
 }
 
 /**
- * Representation of a list with either a primitive type or several data fields
+ * Representation of a collection with either a primitive type or several data fields
  */
-class ListType extends ComplexType {
+class CollectionType extends ComplexType {
     /**
      * Implicit Constraints:
-     *     (C1) List has either primitive type assigned or data fields.
+     *     (C1) Collection has either primitive type assigned or data fields.
      *          Ensured by: DSL grammar.
      */
 
     contains PrimitiveType[0..1] primitiveType
-    contains DataField[] dataFields opposite listType
+    contains DataField[] dataFields opposite collectionType
 
     /**
-     * Convenience method to compare field counts of two lists
+     * Convenience method to compare field counts of two collections
      */
-    op int compareFieldCounts(ListType listToCompare) {
-        if (listToCompare === null)
+    op int compareFieldCounts(CollectionType otherCollection) {
+        if (otherCollection === null)
             return 1
 
         /**
-         * If the list to compare is a primitive list, and this is either a primitive list, too, or
-         * has only one data field, then the field counts equal to one field. Otherwise (list with
-         * data fields that has more than one field) this list's field count is greater.
+         * If the collection to compare is a primitive collection and this is either a primitive
+         * collection or has only one data field, then the field counts equal to one field.
+         * Otherwise (collection with data fields that has more than one field) this collection's
+         * field count is greater.
          */
-        if (listToCompare.isPrimitiveList)
-            if (isPrimitiveList || dataFields.size == 1)
+        if (otherCollection.isPrimitiveCollection)
+            if (isPrimitiveCollection || dataFields.size == 1)
                 return 0
             else
                 return 1
 
         /**
-         * If this list is a primitive list, and the one to compare is either a primitive list, too,
-         * or has only one data field, then the field counts equal to one field. Otherwise (this is
-         * a list with data fields that has more than one field) this list's field count is smaller.
+         * If this collection is a primitive collection and the one to compare is either a primitive
+         * collection or has only one data field, then the field counts equal to one field. Otherwise
+         * (this is a collection with data fields that has more than one field) this collection's
+         * field count is smaller.
          */
-        if (isPrimitiveList)
-            if (listToCompare.isPrimitiveList || listToCompare.dataFields.size == 1)
+        if (isPrimitiveCollection)
+            if (otherCollection.isPrimitiveCollection || otherCollection.dataFields.size == 1)
                 return 0
             else
                 return -1
 
         /**
-         * If this and the list to compare are both lists with data fields, use the super in
-         * ComplexType to perform the actual comparison based on DataField lists
+         * If this and the collection to compare are both collections with data fields, use the
+         * inherited method of ComplexType to perform the actual comparison based on DataField lists
          */
-        return super.compareFieldCounts(dataFields, listToCompare.dataFields)
+        return super.compareFieldCounts(dataFields, otherCollection.dataFields)
     }
 }
 
@@ -1010,7 +1013,7 @@ enum DataFieldFeature {
 }
 
 /**
- * Represents a typed and named field in a data structure or structured list
+ * Represents a typed and named field
  */
 class DataField {
     /**
@@ -1051,7 +1054,7 @@ class DataField {
     DataFieldFeature[] features
 
     container DataStructure dataStructure opposite dataFields
-    container ListType listType opposite dataFields
+    container CollectionType collectionType opposite dataFields
 
     /**
      * Get the effective type (complex type, possibly imported, or primitive type) of the field
@@ -1078,8 +1081,8 @@ class DataField {
 
         if (dataStructure !== null)
             nameParts.addAll(dataStructure.qualifiedNameParts)
-        else if (listType !== null)
-            nameParts.addAll(listType.qualifiedNameParts)
+        else if (collectionType !== null)
+            nameParts.addAll(collectionType.qualifiedNameParts)
 
         nameParts.add(name)
         nameParts.asEList

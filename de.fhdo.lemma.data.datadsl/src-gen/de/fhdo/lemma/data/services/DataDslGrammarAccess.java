@@ -224,22 +224,22 @@ public class DataDslGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.data.DataDsl.ComplexType");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cDataStructureParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cListTypeParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cCollectionTypeParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cEnumerationParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
 		//ComplexType returns ComplexType:
-		//    DataStructure | ListType | Enumeration
+		//    DataStructure | CollectionType | Enumeration
 		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//DataStructure | ListType | Enumeration
+		//DataStructure | CollectionType | Enumeration
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//DataStructure
 		public RuleCall getDataStructureParserRuleCall_0() { return cDataStructureParserRuleCall_0; }
 		
-		//ListType
-		public RuleCall getListTypeParserRuleCall_1() { return cListTypeParserRuleCall_1; }
+		//CollectionType
+		public RuleCall getCollectionTypeParserRuleCall_1() { return cCollectionTypeParserRuleCall_1; }
 		
 		//Enumeration
 		public RuleCall getEnumerationParserRuleCall_2() { return cEnumerationParserRuleCall_2; }
@@ -401,13 +401,11 @@ public class DataDslGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_6() { return cRightCurlyBracketKeyword_6; }
 	}
-	public class ListTypeElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.data.DataDsl.ListType");
+	public class CollectionTypeElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.fhdo.lemma.data.DataDsl.CollectionType");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
-		private final Alternatives cAlternatives_0_0 = (Alternatives)cGroup_0.eContents().get(0);
-		private final Keyword cCollectionKeyword_0_0_0 = (Keyword)cAlternatives_0_0.eContents().get(0);
-		private final Keyword cListKeyword_0_0_1 = (Keyword)cAlternatives_0_0.eContents().get(1);
+		private final Keyword cCollectionKeyword_0_0 = (Keyword)cGroup_0.eContents().get(0);
 		private final Assignment cNameAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
 		private final RuleCall cNameIDTerminalRuleCall_0_1_0 = (RuleCall)cNameAssignment_0_1.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_0_2 = (Keyword)cGroup_0.eContents().get(2);
@@ -419,9 +417,7 @@ public class DataDslGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		private final RuleCall cDataFieldsDataFieldParserRuleCall_0_4_1_0 = (RuleCall)cDataFieldsAssignment_0_4_1.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_0_5 = (Keyword)cGroup_0.eContents().get(5);
 		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
-		private final Alternatives cAlternatives_1_0 = (Alternatives)cGroup_1.eContents().get(0);
-		private final Keyword cCollectionKeyword_1_0_0 = (Keyword)cAlternatives_1_0.eContents().get(0);
-		private final Keyword cListKeyword_1_0_1 = (Keyword)cAlternatives_1_0.eContents().get(1);
+		private final Keyword cCollectionKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
 		private final Assignment cNameAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
 		private final RuleCall cNameIDTerminalRuleCall_1_1_0 = (RuleCall)cNameAssignment_1_1.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
@@ -429,49 +425,33 @@ public class DataDslGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		private final RuleCall cPrimitiveTypePrimitiveTypeParserRuleCall_1_3_0 = (RuleCall)cPrimitiveTypeAssignment_1_3.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_1_4 = (Keyword)cGroup_1.eContents().get(4);
 		
-		//ListType returns ListType:
-		//    (
-		//        ('collection' | 'list') name=ID '{'
-		//            dataFields+=DataField (',' dataFields+=DataField)*
-		//        '}'
-		//    )
+		//CollectionType returns CollectionType:
+		//    'collection' name=ID '{'
+		//        dataFields+=DataField (',' dataFields+=DataField)*
+		//    '}'
 		//    |
-		//    (
-		//        ('collection' | 'list') name=ID '{'
-		//            primitiveType=PrimitiveType
-		//        '}'
-		//    )
+		//    'collection' name=ID '{'
+		//        primitiveType=PrimitiveType
+		//    '}'
 		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//(
-		//    ('collection' | 'list') name=ID '{'
-		//        dataFields+=DataField (',' dataFields+=DataField)*
-		//    '}'
-		//)
+		//'collection' name=ID '{'
+		//    dataFields+=DataField (',' dataFields+=DataField)*
+		//'}'
 		//|
-		//(
-		//    ('collection' | 'list') name=ID '{'
-		//        primitiveType=PrimitiveType
-		//    '}'
-		//)
+		//'collection' name=ID '{'
+		//    primitiveType=PrimitiveType
+		//'}'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//(
-		//    ('collection' | 'list') name=ID '{'
-		//        dataFields+=DataField (',' dataFields+=DataField)*
-		//    '}'
-		//)
+		//'collection' name=ID '{'
+		//    dataFields+=DataField (',' dataFields+=DataField)*
+		//'}'
 		public Group getGroup_0() { return cGroup_0; }
 		
-		//('collection' | 'list')
-		public Alternatives getAlternatives_0_0() { return cAlternatives_0_0; }
-		
 		//'collection'
-		public Keyword getCollectionKeyword_0_0_0() { return cCollectionKeyword_0_0_0; }
-		
-		//'list'
-		public Keyword getListKeyword_0_0_1() { return cListKeyword_0_0_1; }
+		public Keyword getCollectionKeyword_0_0() { return cCollectionKeyword_0_0; }
 		
 		//name=ID
 		public Assignment getNameAssignment_0_1() { return cNameAssignment_0_1; }
@@ -503,21 +483,13 @@ public class DataDslGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_0_5() { return cRightCurlyBracketKeyword_0_5; }
 		
-		//(
-		//    ('collection' | 'list') name=ID '{'
-		//        primitiveType=PrimitiveType
-		//    '}'
-		//)
+		//'collection' name=ID '{'
+		//    primitiveType=PrimitiveType
+		//'}'
 		public Group getGroup_1() { return cGroup_1; }
 		
-		//('collection' | 'list')
-		public Alternatives getAlternatives_1_0() { return cAlternatives_1_0; }
-		
 		//'collection'
-		public Keyword getCollectionKeyword_1_0_0() { return cCollectionKeyword_1_0_0; }
-		
-		//'list'
-		public Keyword getListKeyword_1_0_1() { return cListKeyword_1_0_1; }
+		public Keyword getCollectionKeyword_1_0() { return cCollectionKeyword_1_0; }
 		
 		//name=ID
 		public Assignment getNameAssignment_1_1() { return cNameAssignment_1_1; }
@@ -1563,7 +1535,7 @@ public class DataDslGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	private final ComplexTypeElements pComplexType;
 	private final ComplexTypeFeatureElements eComplexTypeFeature;
 	private final DataStructureElements pDataStructure;
-	private final ListTypeElements pListType;
+	private final CollectionTypeElements pCollectionType;
 	private final DataFieldFeatureElements eDataFieldFeature;
 	private final DataFieldElements pDataField;
 	private final EnumerationElements pEnumeration;
@@ -1594,7 +1566,7 @@ public class DataDslGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		this.pComplexType = new ComplexTypeElements();
 		this.eComplexTypeFeature = new ComplexTypeFeatureElements();
 		this.pDataStructure = new DataStructureElements();
-		this.pListType = new ListTypeElements();
+		this.pCollectionType = new CollectionTypeElements();
 		this.eDataFieldFeature = new DataFieldFeatureElements();
 		this.pDataField = new DataFieldElements();
 		this.pEnumeration = new EnumerationElements();
@@ -1687,7 +1659,7 @@ public class DataDslGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	}
 	
 	//ComplexType returns ComplexType:
-	//    DataStructure | ListType | Enumeration
+	//    DataStructure | CollectionType | Enumeration
 	//;
 	public ComplexTypeElements getComplexTypeAccess() {
 		return pComplexType;
@@ -1736,25 +1708,21 @@ public class DataDslGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		return getDataStructureAccess().getRule();
 	}
 	
-	//ListType returns ListType:
-	//    (
-	//        ('collection' | 'list') name=ID '{'
-	//            dataFields+=DataField (',' dataFields+=DataField)*
-	//        '}'
-	//    )
+	//CollectionType returns CollectionType:
+	//    'collection' name=ID '{'
+	//        dataFields+=DataField (',' dataFields+=DataField)*
+	//    '}'
 	//    |
-	//    (
-	//        ('collection' | 'list') name=ID '{'
-	//            primitiveType=PrimitiveType
-	//        '}'
-	//    )
+	//    'collection' name=ID '{'
+	//        primitiveType=PrimitiveType
+	//    '}'
 	//;
-	public ListTypeElements getListTypeAccess() {
-		return pListType;
+	public CollectionTypeElements getCollectionTypeAccess() {
+		return pCollectionType;
 	}
 	
-	public ParserRule getListTypeRule() {
-		return getListTypeAccess().getRule();
+	public ParserRule getCollectionTypeRule() {
+		return getCollectionTypeAccess().getRule();
 	}
 	
 	//enum DataFieldFeature returns DataFieldFeature:

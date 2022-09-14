@@ -4,8 +4,8 @@ import de.fhdo.lemma.data.ComplexType;
 import de.fhdo.lemma.data.PrimitiveType;
 import de.fhdo.lemma.data.Type;
 import de.fhdo.lemma.technology.Technology;
+import de.fhdo.lemma.technology.TechnologySpecificCollectionType;
 import de.fhdo.lemma.technology.TechnologySpecificDataStructure;
-import de.fhdo.lemma.technology.TechnologySpecificListType;
 import de.fhdo.lemma.technology.TechnologySpecificPrimitiveType;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -91,7 +91,7 @@ public class TypecheckingUtils {
     }
     return (((type instanceof TechnologySpecificPrimitiveType) || 
       (type instanceof TechnologySpecificDataStructure)) || 
-      (type instanceof TechnologySpecificListType));
+      (type instanceof TechnologySpecificCollectionType));
   }
   
   /**
@@ -116,9 +116,9 @@ public class TypecheckingUtils {
         }
       }
       if (!_matched) {
-        if (type instanceof TechnologySpecificListType) {
+        if (type instanceof TechnologySpecificCollectionType) {
           _matched=true;
-          _switchResult = ((TechnologySpecificListType)type).getTechnology();
+          _switchResult = ((TechnologySpecificCollectionType)type).getTechnology();
         }
       }
       _xblockexpression = _switchResult;

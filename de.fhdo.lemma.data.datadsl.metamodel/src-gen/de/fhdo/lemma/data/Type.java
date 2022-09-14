@@ -10,7 +10,7 @@ import org.eclipse.emf.ecore.EObject;
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
- * Abstract super class for all types (primitives, structures and lists)
+ * Abstract super class for all types
  * <!-- end-model-doc -->
  *
  *

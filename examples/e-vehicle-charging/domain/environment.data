@@ -25,13 +25,13 @@ version v01 {
      * gathering
      */
     context EnvironmentData {
-        // List of Sensor data information
-        list SensorDataList {
+        // Collection (list) of Sensor data information
+        collection SensorDataList {
              EnvironmentalSensors.RawSensorData data
         }
 
-        // List containing sensor information
-        list SensorInformationList {
+        // Collection (list) containing sensor information
+        collection SensorInformationList {
             EnvironmentalSensors.Sensor sensor,
             SensorDataList dataValues
         }
@@ -43,8 +43,8 @@ version v01 {
             SensorDataList sensorDataList
         }
 
-        // List of quarters
-        list QuarterList {
+        // Collection (list) of quarters
+        collection QuarterList {
             Quarter quarter
         }
 

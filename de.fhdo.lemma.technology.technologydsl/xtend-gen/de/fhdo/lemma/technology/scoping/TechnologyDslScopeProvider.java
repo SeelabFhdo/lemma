@@ -253,7 +253,7 @@ public class TechnologyDslScopeProvider extends AbstractTechnologyDslScopeProvid
     final Function<Technology, List<Type>> _function = (Technology it) -> {
       final List<Type> types = CollectionLiterals.<Type>newArrayList();
       types.addAll(it.getPrimitiveTypes());
-      types.addAll(it.getListTypes());
+      types.addAll(it.getCollectionTypes());
       types.addAll(it.getDataStructures());
       return types;
     };

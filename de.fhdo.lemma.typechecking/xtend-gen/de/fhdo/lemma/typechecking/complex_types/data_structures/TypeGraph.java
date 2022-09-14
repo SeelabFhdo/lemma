@@ -1,13 +1,12 @@
 package de.fhdo.lemma.typechecking.complex_types.data_structures;
 
 import com.google.common.base.Objects;
+import de.fhdo.lemma.data.CollectionType;
 import de.fhdo.lemma.data.ComplexType;
 import de.fhdo.lemma.data.DataField;
 import de.fhdo.lemma.data.DataStructure;
-import de.fhdo.lemma.data.ListType;
 import de.fhdo.lemma.data.PrimitiveType;
 import de.fhdo.lemma.data.Type;
-import de.fhdo.lemma.typechecking.complex_types.data_structures.TypeGraphNode;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -97,10 +96,10 @@ public class TypeGraph {
         if (_isIsStructure) {
           currentTypeFields = ((DataStructure) currentType).getEffectiveFields();
         } else {
-          boolean _isIsStructuredList = currentType.isIsStructuredList();
-          if (_isIsStructuredList) {
-            final ListType currentListType = ((ListType) currentType);
-            currentTypeFields = currentListType.getDataFields();
+          boolean _isIsStructuredCollection = currentType.isIsStructuredCollection();
+          if (_isIsStructuredCollection) {
+            final CollectionType currentCollectionType = ((CollectionType) currentType);
+            currentTypeFields = currentCollectionType.getDataFields();
           }
         }
         if ((currentTypeFields != null)) {

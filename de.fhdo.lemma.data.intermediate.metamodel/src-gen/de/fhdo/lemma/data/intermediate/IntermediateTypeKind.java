@@ -33,6 +33,16 @@ public enum IntermediateTypeKind implements Enumerator {
     DUMMY_FOR_XMI_SERIALIZER_BUG(0, "DUMMY_FOR_XMI_SERIALIZER_BUG", "DUMMY_FOR_XMI_SERIALIZER_BUG"),
 
     /**
+     * The '<em><b>COLLECTION</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #COLLECTION_VALUE
+     * @generated
+     * @ordered
+     */
+    COLLECTION(0, "COLLECTION", "COLLECTION"),
+
+    /**
      * The '<em><b>ENUMERATION</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -41,16 +51,6 @@ public enum IntermediateTypeKind implements Enumerator {
      * @ordered
      */
     ENUMERATION(0, "ENUMERATION", "ENUMERATION"),
-
-    /**
-     * The '<em><b>LIST</b></em>' literal object.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #LIST_VALUE
-     * @generated
-     * @ordered
-     */
-    LIST(0, "LIST", "LIST"),
 
     /**
      * The '<em><b>PRIMITIVE</b></em>' literal object.
@@ -84,6 +84,17 @@ public enum IntermediateTypeKind implements Enumerator {
     public static final int DUMMY_FOR_XMI_SERIALIZER_BUG_VALUE = 0;
 
     /**
+     * The '<em><b>COLLECTION</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #COLLECTION
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int COLLECTION_VALUE = 0;
+
+    /**
      * The '<em><b>ENUMERATION</b></em>' literal value.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -93,17 +104,6 @@ public enum IntermediateTypeKind implements Enumerator {
      * @ordered
      */
     public static final int ENUMERATION_VALUE = 0;
-
-    /**
-     * The '<em><b>LIST</b></em>' literal value.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #LIST
-     * @model
-     * @generated
-     * @ordered
-     */
-    public static final int LIST_VALUE = 0;
 
     /**
      * The '<em><b>PRIMITIVE</b></em>' literal value.
@@ -136,8 +136,8 @@ public enum IntermediateTypeKind implements Enumerator {
     private static final IntermediateTypeKind[] VALUES_ARRAY =
         new IntermediateTypeKind[] {
             DUMMY_FOR_XMI_SERIALIZER_BUG,
+            COLLECTION,
             ENUMERATION,
-            LIST,
             PRIMITIVE,
             STRUCTURE,
         };
@@ -239,7 +239,6 @@ public enum IntermediateTypeKind implements Enumerator {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public int getValue() {
       return value;
     }
@@ -249,7 +248,6 @@ public enum IntermediateTypeKind implements Enumerator {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getName() {
       return name;
     }
@@ -259,7 +257,6 @@ public enum IntermediateTypeKind implements Enumerator {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getLiteral() {
       return literal;
     }

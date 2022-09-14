@@ -16,7 +16,7 @@ import de.fhdo.lemma.data.intermediate.IntermediateDataModel
 import de.fhdo.lemma.data.intermediate.IntermediateEnumeration
 import java.util.function.BiFunction
 import de.fhdo.lemma.data.intermediate.IntermediateType
-import de.fhdo.lemma.data.intermediate.IntermediateListType
+import de.fhdo.lemma.data.intermediate.IntermediateCollectionType
 import java.util.Map
 import org.apache.avro.Protocol
 import static de.fhdo.lemma.data.avro.Shared.*
@@ -75,7 +75,7 @@ class AvroGenerator {
     def Pair<Schema, List<Schema>> generateSchemasFrom(IntermediateComplexType complexType) {
         return switch(complexType) {
             IntermediateDataStructure: complexType.generateSchemasFrom
-            IntermediateListType: complexType.generateSchemasFrom
+            IntermediateCollectionType: complexType.generateSchemasFrom
             IntermediateEnumeration: complexType.generateSchemasFrom
             default: throw new IllegalArgumentException("Schemas' generation for " +
                 '''«complexType.class.simpleName» complex types is not supported''')
@@ -293,7 +293,7 @@ class AvroGenerator {
             case IntermediateTypeKind.PRIMITIVE: toPrimitiveAvroType(dataField.originalType.name)
             case IntermediateTypeKind.ENUMERATION,
             case IntermediateTypeKind.STRUCTURE,
-            case IntermediateTypeKind.LIST:
+            case IntermediateTypeKind.COLLECTION:
                 dataField.type.resolveSchema
             default: throw new IllegalArgumentException("Mapping of LEMMA type " +
                 '''«dataField.type.name» with kind «dataField.type.kind» and origin ''' +
@@ -314,8 +314,8 @@ class AvroGenerator {
                     toRecord(complexType as IntermediateDataStructure, modelUri)]
                 case IntermediateTypeKind.ENUMERATION: [String modelUri, RT complexType |
                     toEnum(complexType as IntermediateEnumeration, modelUri)]
-                case IntermediateTypeKind.LIST: [String modelUri, RT complexType |
-                    toArray(complexType as IntermediateListType, modelUri)]
+                case IntermediateTypeKind.COLLECTION: [String modelUri, RT complexType |
+                    toArray(complexType as IntermediateCollectionType, modelUri)]
                 default: throw new IllegalArgumentException("Schema resolution of intermediate " +
                     '''complex type «typeReference.name» with kind «typeReference.kind» and ''' +
                     '''origin «typeReference.origin» is not supported''')
@@ -534,27 +534,28 @@ class AvroGenerator {
     }
 
     /**
-     * Generate schemas from IntermediateListType. The return value is a pair consisting of the
-     * schema specifically derived from the passed list type and all other schemas that were
-     * derived during schema generation in the context of the passed list type.
+     * Generate schemas from IntermediateCollectionType. The return value is a pair consisting of
+     * the schema specifically derived from the passed collection type and all other schemas that
+     * were derived during schema generation in the context of the passed collection type.
      */
-    def Pair<Schema, List<Schema>> generateSchemasFrom(IntermediateListType listType) {
-        val array = toArray(listType, null).key
+    def Pair<Schema, List<Schema>> generateSchemasFrom(IntermediateCollectionType collectionType) {
+        val array = toArray(collectionType, null).key
         return array -> allCreatedSchemas()
     }
 
     /**
-     * Internal helper to generate schemas from an IntermediateListType, which represents an Avro
-     * Array type. By contrast to the public generateSchemasFrom(IntermediateListType) method for
-     * external callers, this internal helper is model-URI-aware.
+     * Internal helper to generate schemas from an IntermediateCollectionType, which represents an
+     * Avro Array type. By contrast to the public generateSchemasFrom(IntermediateCollectionType)
+     * method for external callers, this internal helper is model-URI-aware.
      */
-    private def Pair<Schema, List<Schema>> toArray(IntermediateListType listType, String modelUri) {
-        val elementType = if (listType.primitiveList)
-                toPrimitiveAvroType(listType.primitiveType.name)
+    private def Pair<Schema, List<Schema>> toArray(IntermediateCollectionType collectionType,
+        String modelUri) {
+        val elementType = if (collectionType.primitiveCollection)
+                toPrimitiveAvroType(collectionType.primitiveType.name)
             else
-                toRecord(listType.dataFields, modelUri, listType.qualifiedName)
+                toRecord(collectionType.dataFields, modelUri, collectionType.qualifiedName)
 
-        val array = AvroSchemaFactory.createArray(listType.qualifiedName, elementType)
+        val array = AvroSchemaFactory.createArray(collectionType.qualifiedName, elementType)
         finishedComplexTypeSchemaCreation(array, modelUri)
         return array -> createdSchemasForModel(modelUri)
     }

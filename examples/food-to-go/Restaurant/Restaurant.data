@@ -13,7 +13,7 @@ context Domain {
         immutable MenuItems menuItems
     }
 
-    list MenuItems { MenuItem i }
+    collection MenuItems { MenuItem i }
 
     structure MenuItem<valueObject> {
         immutable string id,

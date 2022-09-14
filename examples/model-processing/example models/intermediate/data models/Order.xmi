@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ASCII"?>
-<intermediate:IntermediateDataModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:intermediate="http://www.fhdo.de/lemma/data/intermediate" sourceModelUri="file:///home/florian/Dokumente/Forschung/Dissertation/eclipse-workspace/examples/model-processing/example models/domain/Order.data">
-  <imports name="Common" importUri="file:///home/florian/Dokumente/Forschung/Dissertation/eclipse-workspace/examples/model-processing/example models/intermediate/data models/Common.xmi" importTypeName="DATATYPES"/>
+<intermediate:IntermediateDataModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:intermediate="http://www.fhdo.de/lemma/data/intermediate" sourceModelUri="file://../../domain/Order.data">
+  <imports name="Common" importUri="file://Common.xmi" importTypeName="DATATYPES"/>
   <contexts name="Order" qualifiedName="Order">
     <complexTypes xsi:type="intermediate:IntermediateDataStructure" name="Order" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="Order.Order">
       <featureNames>AGGREGATE</featureNames>
@@ -63,6 +63,7 @@
     <complexTypes xsi:type="intermediate:IntermediateDataStructure" name="OrderLineItem" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="Order.OrderLineItem">
       <featureNames>VALUE_OBJECT</featureNames>
       <operations name="deltaForChangedQuantity" qualifiedName="Order.OrderLineItem.deltaForChangedQuantity">
+        <featureNames>SIDE_EFFECT_FREE</featureNames>
         <returnType>
           <type xsi:type="intermediate:IntermediateImportedComplexType" name="Money" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="SharedDomainConcepts.Money" import="//@imports.0"/>
           <originalType xsi:type="intermediate:IntermediateImportedComplexType" name="Money" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="SharedDomainConcepts.Money" import="//@imports.0"/>
@@ -73,24 +74,25 @@
         </parameters>
       </operations>
       <operations name="getTotal" qualifiedName="Order.OrderLineItem.getTotal">
+        <featureNames>SIDE_EFFECT_FREE</featureNames>
         <returnType>
           <type xsi:type="intermediate:IntermediateImportedComplexType" name="Money" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="SharedDomainConcepts.Money" import="//@imports.0"/>
           <originalType xsi:type="intermediate:IntermediateImportedComplexType" name="Money" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="SharedDomainConcepts.Money" import="//@imports.0"/>
         </returnType>
       </operations>
-      <dataFields name="quantity" qualifiedName="Order.OrderLineItem.quantity">
+      <dataFields name="quantity" qualifiedName="Order.OrderLineItem.quantity" immutable="true">
         <type xsi:type="intermediate:IntermediatePrimitiveType" name="int" origin="BUILTIN" kind="PRIMITIVE" size="32"/>
         <originalType xsi:type="intermediate:IntermediatePrimitiveType" name="int" origin="BUILTIN" kind="PRIMITIVE" size="32"/>
       </dataFields>
-      <dataFields name="menuItemId" qualifiedName="Order.OrderLineItem.menuItemId">
+      <dataFields name="menuItemId" qualifiedName="Order.OrderLineItem.menuItemId" immutable="true">
         <type xsi:type="intermediate:IntermediatePrimitiveType" name="string" origin="BUILTIN" kind="PRIMITIVE"/>
         <originalType xsi:type="intermediate:IntermediatePrimitiveType" name="string" origin="BUILTIN" kind="PRIMITIVE"/>
       </dataFields>
-      <dataFields name="name" qualifiedName="Order.OrderLineItem.name">
+      <dataFields name="name" qualifiedName="Order.OrderLineItem.name" immutable="true">
         <type xsi:type="intermediate:IntermediatePrimitiveType" name="string" origin="BUILTIN" kind="PRIMITIVE"/>
         <originalType xsi:type="intermediate:IntermediatePrimitiveType" name="string" origin="BUILTIN" kind="PRIMITIVE"/>
       </dataFields>
-      <dataFields name="price" qualifiedName="Order.OrderLineItem.price">
+      <dataFields name="price" qualifiedName="Order.OrderLineItem.price" immutable="true">
         <type xsi:type="intermediate:IntermediateImportedComplexType" name="Money" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="SharedDomainConcepts.Money" import="//@imports.0"/>
         <originalType xsi:type="intermediate:IntermediateImportedComplexType" name="Money" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="SharedDomainConcepts.Money" import="//@imports.0"/>
       </dataFields>
@@ -98,6 +100,7 @@
     <complexTypes xsi:type="intermediate:IntermediateDataStructure" name="OrderLineItems" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="Order.OrderLineItems">
       <featureNames>VALUE_OBJECT</featureNames>
       <operations name="findOrderLineItem" qualifiedName="Order.OrderLineItems.findOrderLineItem">
+        <featureNames>SIDE_EFFECT_FREE</featureNames>
         <returnType>
           <type xsi:type="intermediate:IntermediateComplexType" name="OrderLineItem" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="Order.OrderLineItem"/>
           <originalType xsi:type="intermediate:IntermediateComplexType" name="OrderLineItem" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="Order.OrderLineItem"/>
@@ -108,23 +111,24 @@
         </parameters>
       </operations>
       <operations name="orderTotal" qualifiedName="Order.OrderLineItems.orderTotal">
+        <featureNames>SIDE_EFFECT_FREE</featureNames>
         <returnType>
           <type xsi:type="intermediate:IntermediateImportedComplexType" name="Money" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="SharedDomainConcepts.Money" import="//@imports.0"/>
           <originalType xsi:type="intermediate:IntermediateImportedComplexType" name="Money" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="SharedDomainConcepts.Money" import="//@imports.0"/>
         </returnType>
       </operations>
-      <dataFields name="lineItems" qualifiedName="Order.OrderLineItems.lineItems">
-        <type xsi:type="intermediate:IntermediateComplexType" name="OrderLineItemsType" origin="DATA_MODEL" kind="LIST" qualifiedName="Order.OrderLineItemsType"/>
-        <originalType xsi:type="intermediate:IntermediateComplexType" name="OrderLineItemsType" origin="DATA_MODEL" kind="LIST" qualifiedName="Order.OrderLineItemsType"/>
+      <dataFields name="lineItems" qualifiedName="Order.OrderLineItems.lineItems" immutable="true">
+        <type xsi:type="intermediate:IntermediateComplexType" name="OrderLineItemsType" origin="DATA_MODEL" kind="COLLECTION" qualifiedName="Order.OrderLineItemsType"/>
+        <originalType xsi:type="intermediate:IntermediateComplexType" name="OrderLineItemsType" origin="DATA_MODEL" kind="COLLECTION" qualifiedName="Order.OrderLineItemsType"/>
       </dataFields>
     </complexTypes>
     <complexTypes xsi:type="intermediate:IntermediateDataStructure" name="DeliveryInformation" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="Order.DeliveryInformation">
       <featureNames>VALUE_OBJECT</featureNames>
-      <dataFields name="deliveryTime" qualifiedName="Order.DeliveryInformation.deliveryTime">
+      <dataFields name="deliveryTime" qualifiedName="Order.DeliveryInformation.deliveryTime" immutable="true">
         <type xsi:type="intermediate:IntermediatePrimitiveType" name="date" origin="BUILTIN" kind="PRIMITIVE"/>
         <originalType xsi:type="intermediate:IntermediatePrimitiveType" name="date" origin="BUILTIN" kind="PRIMITIVE"/>
       </dataFields>
-      <dataFields name="deliveryAddress" qualifiedName="Order.DeliveryInformation.deliveryAddress">
+      <dataFields name="deliveryAddress" qualifiedName="Order.DeliveryInformation.deliveryAddress" immutable="true">
         <type xsi:type="intermediate:IntermediateComplexType" name="Address" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="Order.Address"/>
         <originalType xsi:type="intermediate:IntermediateComplexType" name="Address" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="Order.Address"/>
       </dataFields>
@@ -168,8 +172,8 @@
           <originalType xsi:type="intermediate:IntermediatePrimitiveType" name="long" origin="BUILTIN" kind="PRIMITIVE" size="64"/>
         </parameters>
         <parameters name="lineItems" qualifiedName="Order.OrderService.createOrder.lineItems">
-          <type xsi:type="intermediate:IntermediateComplexType" name="MenuItemIdAndQuantityList" origin="DATA_MODEL" kind="LIST" qualifiedName="Order.MenuItemIdAndQuantityList"/>
-          <originalType xsi:type="intermediate:IntermediateComplexType" name="MenuItemIdAndQuantityList" origin="DATA_MODEL" kind="LIST" qualifiedName="Order.MenuItemIdAndQuantityList"/>
+          <type xsi:type="intermediate:IntermediateComplexType" name="MenuItemIdAndQuantityList" origin="DATA_MODEL" kind="COLLECTION" qualifiedName="Order.MenuItemIdAndQuantityList"/>
+          <originalType xsi:type="intermediate:IntermediateComplexType" name="MenuItemIdAndQuantityList" origin="DATA_MODEL" kind="COLLECTION" qualifiedName="Order.MenuItemIdAndQuantityList"/>
         </parameters>
       </operations>
       <operations name="updateOrder" qualifiedName="Order.OrderService.updateOrder">
@@ -219,13 +223,13 @@
         <originalType xsi:type="intermediate:IntermediatePrimitiveType" name="int" origin="BUILTIN" kind="PRIMITIVE" size="32"/>
       </dataFields>
     </complexTypes>
-    <complexTypes xsi:type="intermediate:IntermediateListType" name="OrderLineItemsType" origin="DATA_MODEL" kind="LIST" qualifiedName="Order.OrderLineItemsType" structuredList="true">
+    <complexTypes xsi:type="intermediate:IntermediateCollectionType" name="OrderLineItemsType" origin="DATA_MODEL" kind="COLLECTION" qualifiedName="Order.OrderLineItemsType" structuredCollection="true">
       <dataFields name="i" qualifiedName="Order.OrderLineItemsType.i">
         <type xsi:type="intermediate:IntermediateComplexType" name="OrderLineItem" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="Order.OrderLineItem"/>
         <originalType xsi:type="intermediate:IntermediateComplexType" name="OrderLineItem" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="Order.OrderLineItem"/>
       </dataFields>
     </complexTypes>
-    <complexTypes xsi:type="intermediate:IntermediateListType" name="MenuItemIdAndQuantityList" origin="DATA_MODEL" kind="LIST" qualifiedName="Order.MenuItemIdAndQuantityList" structuredList="true">
+    <complexTypes xsi:type="intermediate:IntermediateCollectionType" name="MenuItemIdAndQuantityList" origin="DATA_MODEL" kind="COLLECTION" qualifiedName="Order.MenuItemIdAndQuantityList" structuredCollection="true">
       <dataFields name="itemQuantity" qualifiedName="Order.MenuItemIdAndQuantityList.itemQuantity">
         <type xsi:type="intermediate:IntermediateComplexType" name="MenuItemIdAndQuantity" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="Order.MenuItemIdAndQuantity"/>
         <originalType xsi:type="intermediate:IntermediateComplexType" name="MenuItemIdAndQuantity" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="Order.MenuItemIdAndQuantity"/>
@@ -241,67 +245,67 @@
   <contexts name="API" qualifiedName="API">
     <complexTypes xsi:type="intermediate:IntermediateDataStructure" name="CreateOrderRequest" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="API.CreateOrderRequest">
       <featureNames>VALUE_OBJECT</featureNames>
-      <dataFields name="consumerId" qualifiedName="API.CreateOrderRequest.consumerId">
+      <dataFields name="consumerId" qualifiedName="API.CreateOrderRequest.consumerId" immutable="true">
         <type xsi:type="intermediate:IntermediatePrimitiveType" name="long" origin="BUILTIN" kind="PRIMITIVE" size="64"/>
         <originalType xsi:type="intermediate:IntermediatePrimitiveType" name="long" origin="BUILTIN" kind="PRIMITIVE" size="64"/>
       </dataFields>
-      <dataFields name="restaurantId" qualifiedName="API.CreateOrderRequest.restaurantId">
+      <dataFields name="restaurantId" qualifiedName="API.CreateOrderRequest.restaurantId" immutable="true">
         <type xsi:type="intermediate:IntermediatePrimitiveType" name="long" origin="BUILTIN" kind="PRIMITIVE" size="64"/>
         <originalType xsi:type="intermediate:IntermediatePrimitiveType" name="long" origin="BUILTIN" kind="PRIMITIVE" size="64"/>
       </dataFields>
-      <dataFields name="lineItems" qualifiedName="API.CreateOrderRequest.lineItems">
-        <type xsi:type="intermediate:IntermediateComplexType" name="LineItems" origin="DATA_MODEL" kind="LIST" qualifiedName="API.LineItems"/>
-        <originalType xsi:type="intermediate:IntermediateComplexType" name="LineItems" origin="DATA_MODEL" kind="LIST" qualifiedName="API.LineItems"/>
+      <dataFields name="lineItems" qualifiedName="API.CreateOrderRequest.lineItems" immutable="true">
+        <type xsi:type="intermediate:IntermediateComplexType" name="LineItems" origin="DATA_MODEL" kind="COLLECTION" qualifiedName="API.LineItems"/>
+        <originalType xsi:type="intermediate:IntermediateComplexType" name="LineItems" origin="DATA_MODEL" kind="COLLECTION" qualifiedName="API.LineItems"/>
       </dataFields>
     </complexTypes>
     <complexTypes xsi:type="intermediate:IntermediateDataStructure" name="LineItem" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="API.LineItem">
-      <dataFields name="menuItemId" qualifiedName="API.LineItem.menuItemId">
+      <dataFields name="menuItemId" qualifiedName="API.LineItem.menuItemId" immutable="true">
         <type xsi:type="intermediate:IntermediatePrimitiveType" name="string" origin="BUILTIN" kind="PRIMITIVE"/>
         <originalType xsi:type="intermediate:IntermediatePrimitiveType" name="string" origin="BUILTIN" kind="PRIMITIVE"/>
       </dataFields>
-      <dataFields name="quantity" qualifiedName="API.LineItem.quantity">
+      <dataFields name="quantity" qualifiedName="API.LineItem.quantity" immutable="true">
         <type xsi:type="intermediate:IntermediatePrimitiveType" name="int" origin="BUILTIN" kind="PRIMITIVE" size="32"/>
         <originalType xsi:type="intermediate:IntermediatePrimitiveType" name="int" origin="BUILTIN" kind="PRIMITIVE" size="32"/>
       </dataFields>
     </complexTypes>
     <complexTypes xsi:type="intermediate:IntermediateDataStructure" name="CreateOrderResponse" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="API.CreateOrderResponse">
       <featureNames>VALUE_OBJECT</featureNames>
-      <dataFields name="orderId" qualifiedName="API.CreateOrderResponse.orderId">
+      <dataFields name="orderId" qualifiedName="API.CreateOrderResponse.orderId" immutable="true">
         <type xsi:type="intermediate:IntermediatePrimitiveType" name="long" origin="BUILTIN" kind="PRIMITIVE" size="64"/>
         <originalType xsi:type="intermediate:IntermediatePrimitiveType" name="long" origin="BUILTIN" kind="PRIMITIVE" size="64"/>
       </dataFields>
     </complexTypes>
     <complexTypes xsi:type="intermediate:IntermediateDataStructure" name="GetOrderResponse" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="API.GetOrderResponse">
       <featureNames>VALUE_OBJECT</featureNames>
-      <dataFields name="orderId" qualifiedName="API.GetOrderResponse.orderId">
+      <dataFields name="orderId" qualifiedName="API.GetOrderResponse.orderId" immutable="true">
         <type xsi:type="intermediate:IntermediatePrimitiveType" name="long" origin="BUILTIN" kind="PRIMITIVE" size="64"/>
         <originalType xsi:type="intermediate:IntermediatePrimitiveType" name="long" origin="BUILTIN" kind="PRIMITIVE" size="64"/>
       </dataFields>
-      <dataFields name="state" qualifiedName="API.GetOrderResponse.state">
+      <dataFields name="state" qualifiedName="API.GetOrderResponse.state" immutable="true">
         <type xsi:type="intermediate:IntermediatePrimitiveType" name="string" origin="BUILTIN" kind="PRIMITIVE"/>
         <originalType xsi:type="intermediate:IntermediatePrimitiveType" name="string" origin="BUILTIN" kind="PRIMITIVE"/>
       </dataFields>
-      <dataFields name="orderTotal" qualifiedName="API.GetOrderResponse.orderTotal">
+      <dataFields name="orderTotal" qualifiedName="API.GetOrderResponse.orderTotal" immutable="true">
         <type xsi:type="intermediate:IntermediateImportedComplexType" name="Money" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="SharedDomainConcepts.Money" import="//@imports.0"/>
         <originalType xsi:type="intermediate:IntermediateImportedComplexType" name="Money" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="SharedDomainConcepts.Money" import="//@imports.0"/>
       </dataFields>
     </complexTypes>
     <complexTypes xsi:type="intermediate:IntermediateDataStructure" name="CancelOrderResponse" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="API.CancelOrderResponse">
       <featureNames>VALUE_OBJECT</featureNames>
-      <dataFields name="orderId" qualifiedName="API.CancelOrderResponse.orderId">
+      <dataFields name="orderId" qualifiedName="API.CancelOrderResponse.orderId" immutable="true">
         <type xsi:type="intermediate:IntermediatePrimitiveType" name="long" origin="BUILTIN" kind="PRIMITIVE" size="64"/>
         <originalType xsi:type="intermediate:IntermediatePrimitiveType" name="long" origin="BUILTIN" kind="PRIMITIVE" size="64"/>
       </dataFields>
-      <dataFields name="state" qualifiedName="API.CancelOrderResponse.state">
+      <dataFields name="state" qualifiedName="API.CancelOrderResponse.state" immutable="true">
         <type xsi:type="intermediate:IntermediatePrimitiveType" name="string" origin="BUILTIN" kind="PRIMITIVE"/>
         <originalType xsi:type="intermediate:IntermediatePrimitiveType" name="string" origin="BUILTIN" kind="PRIMITIVE"/>
       </dataFields>
-      <dataFields name="orderTotal" qualifiedName="API.CancelOrderResponse.orderTotal">
+      <dataFields name="orderTotal" qualifiedName="API.CancelOrderResponse.orderTotal" immutable="true">
         <type xsi:type="intermediate:IntermediateImportedComplexType" name="Money" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="SharedDomainConcepts.Money" import="//@imports.0"/>
         <originalType xsi:type="intermediate:IntermediateImportedComplexType" name="Money" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="SharedDomainConcepts.Money" import="//@imports.0"/>
       </dataFields>
     </complexTypes>
-    <complexTypes xsi:type="intermediate:IntermediateListType" name="LineItems" origin="DATA_MODEL" kind="LIST" qualifiedName="API.LineItems" structuredList="true">
+    <complexTypes xsi:type="intermediate:IntermediateCollectionType" name="LineItems" origin="DATA_MODEL" kind="COLLECTION" qualifiedName="API.LineItems" structuredCollection="true">
       <dataFields name="i" qualifiedName="API.LineItems.i">
         <type xsi:type="intermediate:IntermediateComplexType" name="LineItem" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="API.LineItem"/>
         <originalType xsi:type="intermediate:IntermediateComplexType" name="LineItem" origin="DATA_MODEL" kind="STRUCTURE" qualifiedName="API.LineItem"/>

@@ -1,8 +1,5 @@
 package de.fhdo.lemma.data;
 
-import de.fhdo.lemma.data.ComplexType;
-import de.fhdo.lemma.data.ComplexTypeImport;
-import de.fhdo.lemma.data.PrimitiveType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.impl.DefaultResourceDescriptionStrategy;

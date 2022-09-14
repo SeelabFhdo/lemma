@@ -1,12 +1,11 @@
 package de.fhdo.lemma.typechecking.complex_types.data_structures;
 
+import de.fhdo.lemma.data.CollectionType;
 import de.fhdo.lemma.data.ComplexType;
 import de.fhdo.lemma.data.DataField;
 import de.fhdo.lemma.data.DataStructure;
-import de.fhdo.lemma.data.ListType;
 import de.fhdo.lemma.data.PrimitiveType;
 import de.fhdo.lemma.data.Type;
-import de.fhdo.lemma.typechecking.complex_types.data_structures.DataFieldComparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.Consumer;
@@ -93,12 +92,12 @@ public class TypeGraphNode {
    */
   public HashMap<String, PrimitiveType> getPrimitiveTypeFields(final DataFieldComparator.ORDERING ordering) {
     final HashMap<String, PrimitiveType> primitiveTypeFieldInfo = CollectionLiterals.<String, PrimitiveType>newHashMap();
-    if ((((!this.type.isIsPrimitiveList()) && (!this.type.isIsStructure())) && (!this.type.isIsStructuredList()))) {
+    if ((((!this.type.isIsPrimitiveCollection()) && (!this.type.isIsStructure())) && (!this.type.isIsStructuredCollection()))) {
       return primitiveTypeFieldInfo;
     }
-    boolean _isIsPrimitiveList = this.type.isIsPrimitiveList();
-    if (_isIsPrimitiveList) {
-      primitiveTypeFieldInfo.put("", ((ListType) this.type).getPrimitiveType());
+    boolean _isIsPrimitiveCollection = this.type.isIsPrimitiveCollection();
+    if (_isIsPrimitiveCollection) {
+      primitiveTypeFieldInfo.put("", ((CollectionType) this.type).getPrimitiveType());
       return primitiveTypeFieldInfo;
     }
     EList<DataField> dataFields = null;
@@ -106,9 +105,9 @@ public class TypeGraphNode {
     if (_isIsStructure) {
       dataFields = ((DataStructure) this.type).getEffectiveFields();
     } else {
-      boolean _isIsStructuredList = this.type.isIsStructuredList();
-      if (_isIsStructuredList) {
-        dataFields = ((ListType) this.type).getDataFields();
+      boolean _isIsStructuredCollection = this.type.isIsStructuredCollection();
+      if (_isIsStructuredCollection) {
+        dataFields = ((CollectionType) this.type).getDataFields();
       }
     }
     final Function1<DataField, Boolean> _function = (DataField it) -> {

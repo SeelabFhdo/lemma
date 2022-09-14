@@ -22,7 +22,7 @@ import de.fhdo.lemma.data.DataOperation
 import de.fhdo.lemma.data.DataOperationFeature
 import de.fhdo.lemma.data.PrimitiveType
 import de.fhdo.lemma.data.Type
-import de.fhdo.lemma.data.ListType
+import de.fhdo.lemma.data.CollectionType
 import de.fhdo.lemma.data.Enumeration
 import de.fhdo.lemma.data.PrimitiveTypeConstants
 import de.fhdo.lemma.data.ComplexType
@@ -774,9 +774,9 @@ class DataDslValidator extends AbstractDataDslValidator {
             val dataStructure2 = (type2 as DataStructure)
             dataStructure1.buildQualifiedName(".") == dataStructure2.buildQualifiedName(".") ||
             dataStructure1.isExtensionOf(dataStructure2)
-        } else if (type1 instanceof ListType && type2 instanceof ListType)
-            (type1 as ListType).buildQualifiedName(".") ==
-                (type2 as ListType).buildQualifiedName(".")
+        } else if (type1 instanceof CollectionType && type2 instanceof CollectionType)
+            (type1 as CollectionType).buildQualifiedName(".") ==
+                (type2 as CollectionType).buildQualifiedName(".")
         else if (type1 instanceof Enumeration && type2 instanceof Enumeration)
             (type1 as Enumeration).name == (type2 as Enumeration).name
         else
@@ -967,10 +967,10 @@ class DataDslValidator extends AbstractDataDslValidator {
     }
 
     /**
-     * Check fields of list types
+     * Check fields of collection types
      */
     @Check
-    def checkListFields(ListType type) {
+    def checkCollectionFields(CollectionType type) {
         if (type.dataFields.empty)
             return
 

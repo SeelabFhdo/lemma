@@ -11,7 +11,7 @@ import org.eclipse.emf.common.util.EList;
  *
  * <!-- begin-model-doc -->
  * *
- * Super-concept of complex types, i.e., lists and structures
+ * Super-concept of complex types
  * <!-- end-model-doc -->
  *
  * <p>
@@ -24,8 +24,8 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link de.fhdo.lemma.data.ComplexType#getVersion <em>Version</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.ComplexType#getContext <em>Context</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.ComplexType#isIsStructure <em>Is Structure</em>}</li>
- *   <li>{@link de.fhdo.lemma.data.ComplexType#isIsPrimitiveList <em>Is Primitive List</em>}</li>
- *   <li>{@link de.fhdo.lemma.data.ComplexType#isIsStructuredList <em>Is Structured List</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.ComplexType#isIsPrimitiveCollection <em>Is Primitive Collection</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.ComplexType#isIsStructuredCollection <em>Is Structured Collection</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.ComplexType#isIsEnumeration <em>Is Enumeration</em>}</li>
  * </ul>
  *
@@ -164,36 +164,36 @@ public interface ComplexType extends Type {
     boolean isIsStructure();
 
     /**
-     * Returns the value of the '<em><b>Is Primitive List</b></em>' attribute.
+     * Returns the value of the '<em><b>Is Primitive Collection</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * *
-     * Flag indicating that the ComplexType instance is a ListType that holds a PrimitiveType and
-     * hence does not consist of several named and typed DataFields
+     * Flag indicating that the ComplexType instance is a CollectionType that holds a PrimitiveType
+     * and hence does not consist of several named and typed DataFields
      * <!-- end-model-doc -->
-     * @return the value of the '<em>Is Primitive List</em>' attribute.
-     * @see de.fhdo.lemma.data.DataPackage#getComplexType_IsPrimitiveList()
+     * @return the value of the '<em>Is Primitive Collection</em>' attribute.
+     * @see de.fhdo.lemma.data.DataPackage#getComplexType_IsPrimitiveCollection()
      * @model unique="false" transient="true" changeable="false" volatile="true" derived="true"
      * @generated
      */
-    boolean isIsPrimitiveList();
+    boolean isIsPrimitiveCollection();
 
     /**
-     * Returns the value of the '<em><b>Is Structured List</b></em>' attribute.
+     * Returns the value of the '<em><b>Is Structured Collection</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * *
-     * Flag indicating that the ComplexType instance is a ListType that consists of several named
-     * and typed DataFields instead of a single "anonymous" PrimitiveType field
+     * Flag indicating that the ComplexType instance is a CollectionType that consists of several
+     * named and typed DataFields instead of a single "anonymous" PrimitiveType field
      * <!-- end-model-doc -->
-     * @return the value of the '<em>Is Structured List</em>' attribute.
-     * @see de.fhdo.lemma.data.DataPackage#getComplexType_IsStructuredList()
+     * @return the value of the '<em>Is Structured Collection</em>' attribute.
+     * @see de.fhdo.lemma.data.DataPackage#getComplexType_IsStructuredCollection()
      * @model unique="false" transient="true" changeable="false" volatile="true" derived="true"
      * @generated
      */
-    boolean isIsStructuredList();
+    boolean isIsStructuredCollection();
 
     /**
      * Returns the value of the '<em><b>Is Enumeration</b></em>' attribute.
@@ -254,11 +254,11 @@ public interface ComplexType extends Type {
      * Helper operation for ComplexType-subclasses to compare the counts of two DataField lists. The
      * return value follows the semantics of Java's Comparator.compare() method. The comparison is
      * based on the numbers of concrete types of the DataFields, i.e., primitive types are compared
-     * with primitive types, structures with structures, and lists with lists. The field count of
-     * the first argument is greater, i.e., the operation returns 1, in case the type-specific field
-     * counts are not equal and at least one type-specific field count is greater than its
-     * counterpart in the second argument, e.g., there are more list-typed fields in the first than
-     * in the second argument.
+     * with primitive types, structures with structures, and collections with collections. The field
+     * count of the first argument is greater, i.e., the operation returns 1, in case the
+     * type-specific field counts are not equal and at least one type-specific field count is
+     * greater than its counterpart in the second argument, e.g., there are more collection-typed
+     * fields in the first than in the second argument.
      * <!-- end-model-doc -->
      * @model unique="false" fieldsUnique="false" fieldsMany="true" fieldsToCompareUnique="false" fieldsToCompareMany="true"
      * @generated

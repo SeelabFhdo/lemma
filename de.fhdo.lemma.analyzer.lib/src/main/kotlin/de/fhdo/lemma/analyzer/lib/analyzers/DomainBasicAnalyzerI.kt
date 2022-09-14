@@ -30,9 +30,9 @@ interface DomainBasicAnalyzerI : AnalyzerI {
     fun countEnumerationsPerBoundedContext() : Map<String, Int>
 
     /**
-     * Count the number of list types per bounded context
+     * Count the number of collection types per bounded context
      */
-    fun countListTypesPerBoundedContext() : Map<String, Int>
+    fun countCollectionTypesPerBoundedContext() : Map<String, Int>
 
     /**
      * Count the number of data structures per bounded context
@@ -60,12 +60,12 @@ interface DomainBasicAnalyzerI : AnalyzerI {
     fun countFeaturesPerBoundedContext(complexTypes: List<IntermediateComplexType>) : Map<String, Map<String, Int>>
 
     /**
-     * Count features per complex type kind, i.e., "ENUMERATION", "LIST", and "STRUCTURE"
+     * Count features per complex type kind, i.e., "COLLECTION", "ENUMERATION", and "STRUCTURE"
      */
     fun countFeaturesPerComplexTypeKind() : Map<String, Map<String, Int>>
 
     /**
-     * Count features per complex type kind, i.e., "ENUMERATION", "LIST", and "STRUCTURE", for the given list of
+     * Count features per complex type kind, i.e., "COLLECTION", "ENUMERATION", and "STRUCTURE", for the given list of
      * [complexTypes]
      */
     fun countFeaturesPerComplexTypeKind(complexTypes: List<IntermediateComplexType>) : Map<String, Map<String, Int>>

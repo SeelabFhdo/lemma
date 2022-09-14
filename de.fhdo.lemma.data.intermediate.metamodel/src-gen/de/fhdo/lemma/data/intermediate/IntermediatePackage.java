@@ -1315,14 +1315,14 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_DATA_OPERATION_PARAMETER_OPERATION_COUNT = 0;
 
     /**
-     * The meta object id for the '{@link de.fhdo.lemma.data.intermediate.impl.IntermediateListTypeImpl <em>List Type</em>}' class.
+     * The meta object id for the '{@link de.fhdo.lemma.data.intermediate.impl.IntermediateCollectionTypeImpl <em>Collection Type</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.fhdo.lemma.data.intermediate.impl.IntermediateListTypeImpl
-     * @see de.fhdo.lemma.data.intermediate.impl.IntermediatePackageImpl#getIntermediateListType()
+     * @see de.fhdo.lemma.data.intermediate.impl.IntermediateCollectionTypeImpl
+     * @see de.fhdo.lemma.data.intermediate.impl.IntermediatePackageImpl#getIntermediateCollectionType()
      * @generated
      */
-    int INTERMEDIATE_LIST_TYPE = 13;
+    int INTERMEDIATE_COLLECTION_TYPE = 13;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1331,7 +1331,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_LIST_TYPE__NAME = INTERMEDIATE_COMPLEX_TYPE__NAME;
+    int INTERMEDIATE_COLLECTION_TYPE__NAME = INTERMEDIATE_COMPLEX_TYPE__NAME;
 
     /**
      * The feature id for the '<em><b>Origin</b></em>' attribute.
@@ -1340,7 +1340,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_LIST_TYPE__ORIGIN = INTERMEDIATE_COMPLEX_TYPE__ORIGIN;
+    int INTERMEDIATE_COLLECTION_TYPE__ORIGIN = INTERMEDIATE_COMPLEX_TYPE__ORIGIN;
 
     /**
      * The feature id for the '<em><b>Kind</b></em>' attribute.
@@ -1349,7 +1349,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_LIST_TYPE__KIND = INTERMEDIATE_COMPLEX_TYPE__KIND;
+    int INTERMEDIATE_COLLECTION_TYPE__KIND = INTERMEDIATE_COMPLEX_TYPE__KIND;
 
     /**
      * The feature id for the '<em><b>Return Type</b></em>' container reference.
@@ -1358,7 +1358,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_LIST_TYPE__RETURN_TYPE = INTERMEDIATE_COMPLEX_TYPE__RETURN_TYPE;
+    int INTERMEDIATE_COLLECTION_TYPE__RETURN_TYPE = INTERMEDIATE_COMPLEX_TYPE__RETURN_TYPE;
 
     /**
      * The feature id for the '<em><b>Parameter</b></em>' container reference.
@@ -1367,7 +1367,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_LIST_TYPE__PARAMETER = INTERMEDIATE_COMPLEX_TYPE__PARAMETER;
+    int INTERMEDIATE_COLLECTION_TYPE__PARAMETER = INTERMEDIATE_COMPLEX_TYPE__PARAMETER;
 
     /**
      * The feature id for the '<em><b>Data Field</b></em>' container reference.
@@ -1376,7 +1376,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_LIST_TYPE__DATA_FIELD = INTERMEDIATE_COMPLEX_TYPE__DATA_FIELD;
+    int INTERMEDIATE_COLLECTION_TYPE__DATA_FIELD = INTERMEDIATE_COMPLEX_TYPE__DATA_FIELD;
 
     /**
      * The feature id for the '<em><b>Qualified Name</b></em>' attribute.
@@ -1385,7 +1385,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_LIST_TYPE__QUALIFIED_NAME = INTERMEDIATE_COMPLEX_TYPE__QUALIFIED_NAME;
+    int INTERMEDIATE_COLLECTION_TYPE__QUALIFIED_NAME = INTERMEDIATE_COMPLEX_TYPE__QUALIFIED_NAME;
 
     /**
      * The feature id for the '<em><b>Aspects</b></em>' containment reference list.
@@ -1394,7 +1394,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_LIST_TYPE__ASPECTS = INTERMEDIATE_COMPLEX_TYPE__ASPECTS;
+    int INTERMEDIATE_COLLECTION_TYPE__ASPECTS = INTERMEDIATE_COMPLEX_TYPE__ASPECTS;
 
     /**
      * The feature id for the '<em><b>Data Model</b></em>' container reference.
@@ -1403,7 +1403,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_LIST_TYPE__DATA_MODEL = INTERMEDIATE_COMPLEX_TYPE__DATA_MODEL;
+    int INTERMEDIATE_COLLECTION_TYPE__DATA_MODEL = INTERMEDIATE_COMPLEX_TYPE__DATA_MODEL;
 
     /**
      * The feature id for the '<em><b>Version</b></em>' container reference.
@@ -1412,7 +1412,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_LIST_TYPE__VERSION = INTERMEDIATE_COMPLEX_TYPE__VERSION;
+    int INTERMEDIATE_COLLECTION_TYPE__VERSION = INTERMEDIATE_COMPLEX_TYPE__VERSION;
 
     /**
      * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -1421,25 +1421,25 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_LIST_TYPE__CONTEXT = INTERMEDIATE_COMPLEX_TYPE__CONTEXT;
+    int INTERMEDIATE_COLLECTION_TYPE__CONTEXT = INTERMEDIATE_COMPLEX_TYPE__CONTEXT;
 
     /**
-     * The feature id for the '<em><b>Primitive List</b></em>' attribute.
+     * The feature id for the '<em><b>Primitive Collection</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_LIST_TYPE__PRIMITIVE_LIST = INTERMEDIATE_COMPLEX_TYPE_FEATURE_COUNT + 0;
+    int INTERMEDIATE_COLLECTION_TYPE__PRIMITIVE_COLLECTION = INTERMEDIATE_COMPLEX_TYPE_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Structured List</b></em>' attribute.
+     * The feature id for the '<em><b>Structured Collection</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_LIST_TYPE__STRUCTURED_LIST = INTERMEDIATE_COMPLEX_TYPE_FEATURE_COUNT + 1;
+    int INTERMEDIATE_COLLECTION_TYPE__STRUCTURED_COLLECTION = INTERMEDIATE_COMPLEX_TYPE_FEATURE_COUNT + 1;
 
     /**
      * The feature id for the '<em><b>Primitive Type</b></em>' containment reference.
@@ -1448,7 +1448,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_LIST_TYPE__PRIMITIVE_TYPE = INTERMEDIATE_COMPLEX_TYPE_FEATURE_COUNT + 2;
+    int INTERMEDIATE_COLLECTION_TYPE__PRIMITIVE_TYPE = INTERMEDIATE_COMPLEX_TYPE_FEATURE_COUNT + 2;
 
     /**
      * The feature id for the '<em><b>Data Fields</b></em>' containment reference list.
@@ -1457,25 +1457,25 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_LIST_TYPE__DATA_FIELDS = INTERMEDIATE_COMPLEX_TYPE_FEATURE_COUNT + 3;
+    int INTERMEDIATE_COLLECTION_TYPE__DATA_FIELDS = INTERMEDIATE_COMPLEX_TYPE_FEATURE_COUNT + 3;
 
     /**
-     * The number of structural features of the '<em>List Type</em>' class.
+     * The number of structural features of the '<em>Collection Type</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_LIST_TYPE_FEATURE_COUNT = INTERMEDIATE_COMPLEX_TYPE_FEATURE_COUNT + 4;
+    int INTERMEDIATE_COLLECTION_TYPE_FEATURE_COUNT = INTERMEDIATE_COMPLEX_TYPE_FEATURE_COUNT + 4;
 
     /**
-     * The number of operations of the '<em>List Type</em>' class.
+     * The number of operations of the '<em>Collection Type</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_LIST_TYPE_OPERATION_COUNT = INTERMEDIATE_COMPLEX_TYPE_OPERATION_COUNT + 0;
+    int INTERMEDIATE_COLLECTION_TYPE_OPERATION_COUNT = INTERMEDIATE_COMPLEX_TYPE_OPERATION_COUNT + 0;
 
     /**
      * The meta object id for the '{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataFieldImpl <em>Data Field</em>}' class.
@@ -1596,13 +1596,13 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_DATA_FIELD__DATA_STRUCTURE = 11;
 
     /**
-     * The feature id for the '<em><b>List Type</b></em>' container reference.
+     * The feature id for the '<em><b>Collection Type</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_DATA_FIELD__LIST_TYPE = 12;
+    int INTERMEDIATE_DATA_FIELD__COLLECTION_TYPE = 12;
 
     /**
      * The number of structural features of the '<em>Data Field</em>' class.
@@ -2924,58 +2924,58 @@ public interface IntermediatePackage extends EPackage {
     EReference getIntermediateDataOperationParameter_Operation();
 
     /**
-     * Returns the meta object for class '{@link de.fhdo.lemma.data.intermediate.IntermediateListType <em>List Type</em>}'.
+     * Returns the meta object for class '{@link de.fhdo.lemma.data.intermediate.IntermediateCollectionType <em>Collection Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>List Type</em>'.
-     * @see de.fhdo.lemma.data.intermediate.IntermediateListType
+     * @return the meta object for class '<em>Collection Type</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateCollectionType
      * @generated
      */
-    EClass getIntermediateListType();
+    EClass getIntermediateCollectionType();
 
     /**
-     * Returns the meta object for the attribute '{@link de.fhdo.lemma.data.intermediate.IntermediateListType#isPrimitiveList <em>Primitive List</em>}'.
+     * Returns the meta object for the attribute '{@link de.fhdo.lemma.data.intermediate.IntermediateCollectionType#isPrimitiveCollection <em>Primitive Collection</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Primitive List</em>'.
-     * @see de.fhdo.lemma.data.intermediate.IntermediateListType#isPrimitiveList()
-     * @see #getIntermediateListType()
+     * @return the meta object for the attribute '<em>Primitive Collection</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateCollectionType#isPrimitiveCollection()
+     * @see #getIntermediateCollectionType()
      * @generated
      */
-    EAttribute getIntermediateListType_PrimitiveList();
+    EAttribute getIntermediateCollectionType_PrimitiveCollection();
 
     /**
-     * Returns the meta object for the attribute '{@link de.fhdo.lemma.data.intermediate.IntermediateListType#isStructuredList <em>Structured List</em>}'.
+     * Returns the meta object for the attribute '{@link de.fhdo.lemma.data.intermediate.IntermediateCollectionType#isStructuredCollection <em>Structured Collection</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Structured List</em>'.
-     * @see de.fhdo.lemma.data.intermediate.IntermediateListType#isStructuredList()
-     * @see #getIntermediateListType()
+     * @return the meta object for the attribute '<em>Structured Collection</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateCollectionType#isStructuredCollection()
+     * @see #getIntermediateCollectionType()
      * @generated
      */
-    EAttribute getIntermediateListType_StructuredList();
+    EAttribute getIntermediateCollectionType_StructuredCollection();
 
     /**
-     * Returns the meta object for the containment reference '{@link de.fhdo.lemma.data.intermediate.IntermediateListType#getPrimitiveType <em>Primitive Type</em>}'.
+     * Returns the meta object for the containment reference '{@link de.fhdo.lemma.data.intermediate.IntermediateCollectionType#getPrimitiveType <em>Primitive Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the containment reference '<em>Primitive Type</em>'.
-     * @see de.fhdo.lemma.data.intermediate.IntermediateListType#getPrimitiveType()
-     * @see #getIntermediateListType()
+     * @see de.fhdo.lemma.data.intermediate.IntermediateCollectionType#getPrimitiveType()
+     * @see #getIntermediateCollectionType()
      * @generated
      */
-    EReference getIntermediateListType_PrimitiveType();
+    EReference getIntermediateCollectionType_PrimitiveType();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.fhdo.lemma.data.intermediate.IntermediateListType#getDataFields <em>Data Fields</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.fhdo.lemma.data.intermediate.IntermediateCollectionType#getDataFields <em>Data Fields</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the containment reference list '<em>Data Fields</em>'.
-     * @see de.fhdo.lemma.data.intermediate.IntermediateListType#getDataFields()
-     * @see #getIntermediateListType()
+     * @see de.fhdo.lemma.data.intermediate.IntermediateCollectionType#getDataFields()
+     * @see #getIntermediateCollectionType()
      * @generated
      */
-    EReference getIntermediateListType_DataFields();
+    EReference getIntermediateCollectionType_DataFields();
 
     /**
      * Returns the meta object for class '{@link de.fhdo.lemma.data.intermediate.IntermediateDataField <em>Data Field</em>}'.
@@ -3120,15 +3120,15 @@ public interface IntermediatePackage extends EPackage {
     EReference getIntermediateDataField_DataStructure();
 
     /**
-     * Returns the meta object for the container reference '{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#getListType <em>List Type</em>}'.
+     * Returns the meta object for the container reference '{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#getCollectionType <em>Collection Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the container reference '<em>List Type</em>'.
-     * @see de.fhdo.lemma.data.intermediate.IntermediateDataField#getListType()
+     * @return the meta object for the container reference '<em>Collection Type</em>'.
+     * @see de.fhdo.lemma.data.intermediate.IntermediateDataField#getCollectionType()
      * @see #getIntermediateDataField()
      * @generated
      */
-    EReference getIntermediateDataField_ListType();
+    EReference getIntermediateDataField_CollectionType();
 
     /**
      * Returns the meta object for the '{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#getEffectiveComplexType() <em>Get Effective Complex Type</em>}' operation.
@@ -4143,30 +4143,30 @@ public interface IntermediatePackage extends EPackage {
         EReference INTERMEDIATE_DATA_OPERATION_PARAMETER__OPERATION = eINSTANCE.getIntermediateDataOperationParameter_Operation();
 
         /**
-         * The meta object literal for the '{@link de.fhdo.lemma.data.intermediate.impl.IntermediateListTypeImpl <em>List Type</em>}' class.
+         * The meta object literal for the '{@link de.fhdo.lemma.data.intermediate.impl.IntermediateCollectionTypeImpl <em>Collection Type</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.fhdo.lemma.data.intermediate.impl.IntermediateListTypeImpl
-         * @see de.fhdo.lemma.data.intermediate.impl.IntermediatePackageImpl#getIntermediateListType()
+         * @see de.fhdo.lemma.data.intermediate.impl.IntermediateCollectionTypeImpl
+         * @see de.fhdo.lemma.data.intermediate.impl.IntermediatePackageImpl#getIntermediateCollectionType()
          * @generated
          */
-        EClass INTERMEDIATE_LIST_TYPE = eINSTANCE.getIntermediateListType();
+        EClass INTERMEDIATE_COLLECTION_TYPE = eINSTANCE.getIntermediateCollectionType();
 
         /**
-         * The meta object literal for the '<em><b>Primitive List</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Primitive Collection</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute INTERMEDIATE_LIST_TYPE__PRIMITIVE_LIST = eINSTANCE.getIntermediateListType_PrimitiveList();
+        EAttribute INTERMEDIATE_COLLECTION_TYPE__PRIMITIVE_COLLECTION = eINSTANCE.getIntermediateCollectionType_PrimitiveCollection();
 
         /**
-         * The meta object literal for the '<em><b>Structured List</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Structured Collection</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute INTERMEDIATE_LIST_TYPE__STRUCTURED_LIST = eINSTANCE.getIntermediateListType_StructuredList();
+        EAttribute INTERMEDIATE_COLLECTION_TYPE__STRUCTURED_COLLECTION = eINSTANCE.getIntermediateCollectionType_StructuredCollection();
 
         /**
          * The meta object literal for the '<em><b>Primitive Type</b></em>' containment reference feature.
@@ -4174,7 +4174,7 @@ public interface IntermediatePackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference INTERMEDIATE_LIST_TYPE__PRIMITIVE_TYPE = eINSTANCE.getIntermediateListType_PrimitiveType();
+        EReference INTERMEDIATE_COLLECTION_TYPE__PRIMITIVE_TYPE = eINSTANCE.getIntermediateCollectionType_PrimitiveType();
 
         /**
          * The meta object literal for the '<em><b>Data Fields</b></em>' containment reference list feature.
@@ -4182,7 +4182,7 @@ public interface IntermediatePackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference INTERMEDIATE_LIST_TYPE__DATA_FIELDS = eINSTANCE.getIntermediateListType_DataFields();
+        EReference INTERMEDIATE_COLLECTION_TYPE__DATA_FIELDS = eINSTANCE.getIntermediateCollectionType_DataFields();
 
         /**
          * The meta object literal for the '{@link de.fhdo.lemma.data.intermediate.impl.IntermediateDataFieldImpl <em>Data Field</em>}' class.
@@ -4291,12 +4291,12 @@ public interface IntermediatePackage extends EPackage {
         EReference INTERMEDIATE_DATA_FIELD__DATA_STRUCTURE = eINSTANCE.getIntermediateDataField_DataStructure();
 
         /**
-         * The meta object literal for the '<em><b>List Type</b></em>' container reference feature.
+         * The meta object literal for the '<em><b>Collection Type</b></em>' container reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference INTERMEDIATE_DATA_FIELD__LIST_TYPE = eINSTANCE.getIntermediateDataField_ListType();
+        EReference INTERMEDIATE_DATA_FIELD__COLLECTION_TYPE = eINSTANCE.getIntermediateDataField_CollectionType();
 
         /**
          * The meta object literal for the '<em><b>Get Effective Complex Type</b></em>' operation.

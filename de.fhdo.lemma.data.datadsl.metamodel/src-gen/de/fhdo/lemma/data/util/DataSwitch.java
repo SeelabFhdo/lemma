@@ -224,11 +224,11 @@ public class DataSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case DataPackage.LIST_TYPE: {
-                ListType listType = (ListType)theEObject;
-                T result = caseListType(listType);
-                if (result == null) result = caseComplexType(listType);
-                if (result == null) result = caseType(listType);
+            case DataPackage.COLLECTION_TYPE: {
+                CollectionType collectionType = (CollectionType)theEObject;
+                T result = caseCollectionType(collectionType);
+                if (result == null) result = caseComplexType(collectionType);
+                if (result == null) result = caseType(collectionType);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -593,17 +593,17 @@ public class DataSwitch<T> extends Switch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>List Type</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Collection Type</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>List Type</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Collection Type</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseListType(ListType object) {
+    public T caseCollectionType(CollectionType object) {
         return null;
     }
 

@@ -3,8 +3,6 @@
  */
 package de.fhdo.lemma.operationdsl;
 
-import de.fhdo.lemma.operationdsl.AbstractOperationDslRuntimeModule;
-import de.fhdo.lemma.operationdsl.OperationDslResourceDescriptionStrategy;
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
 
 /**

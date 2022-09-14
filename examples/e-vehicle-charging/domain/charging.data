@@ -30,8 +30,8 @@ version v01 {
             date endTime
         }
 
-        // List of time frames
-        list TimeFrames {
+        // Collection (list) of time frames
+        collection TimeFrames {
             TimeFrame timeFrame
         }
     }

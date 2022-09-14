@@ -100,7 +100,7 @@ context policyManagement {
         immutable RequestStatus status
     }
 
-    list RequestStatusChanges { RequestStatusChange c }
+    collection RequestStatusChanges { RequestStatusChange c }
 
     structure AddressDto<valueObject> {
         immutable string streetAddress,
@@ -117,13 +117,13 @@ context policyManagement {
         immutable string policyId
     }
 
-    list AddressDtos { AddressDto d }
+    collection AddressDtos { AddressDto d }
 
     structure CustomerId<valueObject> {
         immutable string id
     }
 
-    list CustomerIds { CustomerId i }
+    collection CustomerIds { CustomerId i }
 
     structure CustomerDto<valueObject> {
         immutable string customerId,
@@ -167,7 +167,7 @@ context policyManagement {
         immutable string description
     }
 
-    list InsuringAgreementItems { InsuringAgreementItem i }
+    collection InsuringAgreementItems { InsuringAgreementItem i }
 
     structure MoneyAmount<valueObject> {
         immutable double amount,
@@ -187,7 +187,7 @@ context policyManagement {
         InsuringAgreementEntity insuringAgreement
     }
 
-    list PolicyAggregateRoots { PolicyAggregateRoot p }
+    collection PolicyAggregateRoots { PolicyAggregateRoot p }
 
     structure PolicyId<valueObject> {
         immutable string id,
@@ -218,7 +218,7 @@ context policyManagement {
         function CustomerDtos getCustomersById(CustomerIds customerId)
     }
 
-    list CustomerDtos { CustomerDto d }
+    collection CustomerDtos { CustomerDto d }
 
     structure CustomerSelfServiceMessageProducer<infrastructureService> {
         hide string quoteResponseQueue,
@@ -238,7 +238,7 @@ context policyManagement {
         function InsuranceQuoteRequestAggregateRoots findAllByOrderByDateDesc
     }
 
-    list InsuranceQuoteRequestAggregateRoots { InsuranceQuoteRequestAggregateRoot a }
+    collection InsuranceQuoteRequestAggregateRoots { InsuranceQuoteRequestAggregateRoot a }
 
     structure CreatePolicyRequestDto<valueObject> {
         immutable string customerId,
@@ -265,7 +265,7 @@ context policyManagement {
         function InsuringAgreementItem toDomainObject<sideEffectFree>
     }
 
-    list InsuringAgreementItemDtos { InsuringAgreementItemDto d }
+    collection InsuringAgreementItemDtos { InsuringAgreementItemDto d }
 
     structure MoneyAmountDto<valueObject> {
         immutable double amount<neverEmpty>,
@@ -288,7 +288,7 @@ context policyManagement {
         function PolicyDto fromDomainObject(PolicyAggregateRoot policy)<sideEffectFree>
     }
 
-    list Strings { string }
+    collection Strings { string }
 
     structure CustomerInfoDto<valueObject> {
         immutable string customerId,
@@ -330,7 +330,7 @@ context policyManagement {
         )<sideEffectFree>
     }
 
-    list InsuranceQuoteRequestDtos { InsuranceQuoteRequestDto d }
+    collection InsuranceQuoteRequestDtos { InsuranceQuoteRequestDto d }
 
     structure InsuranceQuoteResponseDto<valueObject> {
         immutable string status<neverEmpty>,
@@ -346,9 +346,9 @@ context policyManagement {
         	fromDomainObject(RequestStatusChange requestStatusChange)<sideEffectFree>
     }
 
-    list RequestStatusChangeDtos { RequestStatusChangeDto r }
+    collection RequestStatusChangeDtos { RequestStatusChangeDto r }
 
-    list PolicyDtos { PolicyDto d }
+    collection PolicyDtos { PolicyDto d }
 
     structure PolicyPeriodDto<valueObject> {
         immutable date startDate<neverEmpty>,

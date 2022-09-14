@@ -138,7 +138,6 @@ public class IntermediateDataOperationParameterImpl extends MinimalEObjectImpl.C
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getName() {
         return name;
     }
@@ -148,7 +147,6 @@ public class IntermediateDataOperationParameterImpl extends MinimalEObjectImpl.C
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -161,7 +159,6 @@ public class IntermediateDataOperationParameterImpl extends MinimalEObjectImpl.C
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getQualifiedName() {
         return qualifiedName;
     }
@@ -171,7 +168,6 @@ public class IntermediateDataOperationParameterImpl extends MinimalEObjectImpl.C
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setQualifiedName(String newQualifiedName) {
         String oldQualifiedName = qualifiedName;
         qualifiedName = newQualifiedName;
@@ -184,7 +180,6 @@ public class IntermediateDataOperationParameterImpl extends MinimalEObjectImpl.C
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateType getType() {
         return type;
     }
@@ -209,7 +204,6 @@ public class IntermediateDataOperationParameterImpl extends MinimalEObjectImpl.C
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setType(IntermediateType newType) {
         if (newType != type) {
             NotificationChain msgs = null;
@@ -229,7 +223,6 @@ public class IntermediateDataOperationParameterImpl extends MinimalEObjectImpl.C
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateType getOriginalType() {
         return originalType;
     }
@@ -254,7 +247,6 @@ public class IntermediateDataOperationParameterImpl extends MinimalEObjectImpl.C
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setOriginalType(IntermediateType newOriginalType) {
         if (newOriginalType != originalType) {
             NotificationChain msgs = null;
@@ -274,7 +266,6 @@ public class IntermediateDataOperationParameterImpl extends MinimalEObjectImpl.C
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<IntermediateImportedAspect> getAspects() {
         if (aspects == null) {
             aspects = new EObjectContainmentWithInverseEList<IntermediateImportedAspect>(IntermediateImportedAspect.class, this, IntermediatePackage.INTERMEDIATE_DATA_OPERATION_PARAMETER__ASPECTS, IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__PARAMETER);
@@ -287,7 +278,6 @@ public class IntermediateDataOperationParameterImpl extends MinimalEObjectImpl.C
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateDataOperation getOperation() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_DATA_OPERATION_PARAMETER__OPERATION) return null;
         return (IntermediateDataOperation)eContainer();
@@ -318,7 +308,6 @@ public class IntermediateDataOperationParameterImpl extends MinimalEObjectImpl.C
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setOperation(IntermediateDataOperation newOperation) {
         if (newOperation != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_DATA_OPERATION_PARAMETER__OPERATION && newOperation != null)) {
             if (EcoreUtil.isAncestor(this, newOperation))

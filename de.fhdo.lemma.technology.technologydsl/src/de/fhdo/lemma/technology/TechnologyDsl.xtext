@@ -12,7 +12,7 @@ Technology returns Technology:
     'technology' name=ID '{'
         ('types' '{'
             (primitiveTypes+=TechnologySpecificPrimitiveType |
-                listTypes+=TechnologySpecificListType |
+                collectionTypes+=TechnologySpecificCollectionType |
                 dataStructures+=TechnologySpecificDataStructure
             )+
 
@@ -76,8 +76,8 @@ TechnologySpecificPrimitiveType returns TechnologySpecificPrimitiveType:
     )? ';'
 ;
 
-TechnologySpecificListType returns TechnologySpecificListType:
-    ('collection' | 'list') 'type' name=ID ';'
+TechnologySpecificCollectionType returns TechnologySpecificCollectionType:
+    'collection' 'type' name=ID ';'
 ;
 
 TechnologySpecificDataStructure returns TechnologySpecificDataStructure:

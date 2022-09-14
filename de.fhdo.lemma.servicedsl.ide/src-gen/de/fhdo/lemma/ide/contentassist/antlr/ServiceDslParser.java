@@ -37,7 +37,6 @@ public class ServiceDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getPropertyValueAssignmentAccess().getAlternatives(), "rule__PropertyValueAssignment__Alternatives");
 			builder.put(grammarAccess.getAnythingAccess().getAlternatives(), "rule__Anything__Alternatives");
 			builder.put(grammarAccess.getTechnologyAccess().getAlternatives_4_2(), "rule__Technology__Alternatives_4_2");
-			builder.put(grammarAccess.getTechnologySpecificListTypeAccess().getAlternatives_0(), "rule__TechnologySpecificListType__Alternatives_0");
 			builder.put(grammarAccess.getServiceAspectPointcutAccess().getAlternatives(), "rule__ServiceAspectPointcut__Alternatives");
 			builder.put(grammarAccess.getServiceAspectAccess().getAlternatives_6(), "rule__ServiceAspect__Alternatives_6");
 			builder.put(grammarAccess.getOperationAspectAccess().getAlternatives_6(), "rule__OperationAspect__Alternatives_6");
@@ -46,9 +45,7 @@ public class ServiceDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getComplexTypeAccess().getAlternatives(), "rule__ComplexType__Alternatives");
 			builder.put(grammarAccess.getDataStructureAccess().getAlternatives_5_0(), "rule__DataStructure__Alternatives_5_0");
 			builder.put(grammarAccess.getDataStructureAccess().getAlternatives_5_1_1(), "rule__DataStructure__Alternatives_5_1_1");
-			builder.put(grammarAccess.getListTypeAccess().getAlternatives(), "rule__ListType__Alternatives");
-			builder.put(grammarAccess.getListTypeAccess().getAlternatives_0_0(), "rule__ListType__Alternatives_0_0");
-			builder.put(grammarAccess.getListTypeAccess().getAlternatives_1_0(), "rule__ListType__Alternatives_1_0");
+			builder.put(grammarAccess.getCollectionTypeAccess().getAlternatives(), "rule__CollectionType__Alternatives");
 			builder.put(grammarAccess.getDataFieldAccess().getAlternatives_2(), "rule__DataField__Alternatives_2");
 			builder.put(grammarAccess.getDataOperationAccess().getAlternatives_1(), "rule__DataOperation__Alternatives_1");
 			builder.put(grammarAccess.getDataOperationAccess().getAlternatives_1_1_1(), "rule__DataOperation__Alternatives_1_1_1");
@@ -120,7 +117,7 @@ public class ServiceDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getPropertyValueAssignmentAccess().getGroup_0(), "rule__PropertyValueAssignment__Group_0__0");
 			builder.put(grammarAccess.getPropertyValueAssignmentAccess().getGroup_1(), "rule__PropertyValueAssignment__Group_1__0");
 			builder.put(grammarAccess.getQualifiedNameWithAtLeastOneLevelAccess().getGroup(), "rule__QualifiedNameWithAtLeastOneLevel__Group__0");
-			builder.put(grammarAccess.getAnythingAccess().getGroup_67(), "rule__Anything__Group_67__0");
+			builder.put(grammarAccess.getAnythingAccess().getGroup_66(), "rule__Anything__Group_66__0");
 			builder.put(grammarAccess.getTechnologyAccess().getGroup(), "rule__Technology__Group__0");
 			builder.put(grammarAccess.getTechnologyAccess().getGroup_4(), "rule__Technology__Group_4__0");
 			builder.put(grammarAccess.getTechnologyAccess().getGroup_4_3(), "rule__Technology__Group_4_3__0");
@@ -136,7 +133,7 @@ public class ServiceDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getTechnologySpecificPrimitiveTypeAccess().getGroup(), "rule__TechnologySpecificPrimitiveType__Group__0");
 			builder.put(grammarAccess.getTechnologySpecificPrimitiveTypeAccess().getGroup_3(), "rule__TechnologySpecificPrimitiveType__Group_3__0");
 			builder.put(grammarAccess.getTechnologySpecificPrimitiveTypeAccess().getGroup_3_3(), "rule__TechnologySpecificPrimitiveType__Group_3_3__0");
-			builder.put(grammarAccess.getTechnologySpecificListTypeAccess().getGroup(), "rule__TechnologySpecificListType__Group__0");
+			builder.put(grammarAccess.getTechnologySpecificCollectionTypeAccess().getGroup(), "rule__TechnologySpecificCollectionType__Group__0");
 			builder.put(grammarAccess.getTechnologySpecificDataStructureAccess().getGroup(), "rule__TechnologySpecificDataStructure__Group__0");
 			builder.put(grammarAccess.getPossiblyImportedTechnologySpecificTypeAccess().getGroup(), "rule__PossiblyImportedTechnologySpecificType__Group__0");
 			builder.put(grammarAccess.getPossiblyImportedTechnologySpecificTypeAccess().getGroup_0(), "rule__PossiblyImportedTechnologySpecificType__Group_0__0");
@@ -182,9 +179,9 @@ public class ServiceDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getDataStructureAccess().getGroup_3(), "rule__DataStructure__Group_3__0");
 			builder.put(grammarAccess.getDataStructureAccess().getGroup_5(), "rule__DataStructure__Group_5__0");
 			builder.put(grammarAccess.getDataStructureAccess().getGroup_5_1(), "rule__DataStructure__Group_5_1__0");
-			builder.put(grammarAccess.getListTypeAccess().getGroup_0(), "rule__ListType__Group_0__0");
-			builder.put(grammarAccess.getListTypeAccess().getGroup_0_4(), "rule__ListType__Group_0_4__0");
-			builder.put(grammarAccess.getListTypeAccess().getGroup_1(), "rule__ListType__Group_1__0");
+			builder.put(grammarAccess.getCollectionTypeAccess().getGroup_0(), "rule__CollectionType__Group_0__0");
+			builder.put(grammarAccess.getCollectionTypeAccess().getGroup_0_4(), "rule__CollectionType__Group_0_4__0");
+			builder.put(grammarAccess.getCollectionTypeAccess().getGroup_1(), "rule__CollectionType__Group_1__0");
 			builder.put(grammarAccess.getDataFieldAccess().getGroup(), "rule__DataField__Group__0");
 			builder.put(grammarAccess.getDataFieldAccess().getGroup_4(), "rule__DataField__Group_4__0");
 			builder.put(grammarAccess.getDataFieldAccess().getGroup_5(), "rule__DataField__Group_5__0");
@@ -311,7 +308,7 @@ public class ServiceDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getTechnologyAccess().getImportsAssignment_0(), "rule__Technology__ImportsAssignment_0");
 			builder.put(grammarAccess.getTechnologyAccess().getNameAssignment_2(), "rule__Technology__NameAssignment_2");
 			builder.put(grammarAccess.getTechnologyAccess().getPrimitiveTypesAssignment_4_2_0(), "rule__Technology__PrimitiveTypesAssignment_4_2_0");
-			builder.put(grammarAccess.getTechnologyAccess().getListTypesAssignment_4_2_1(), "rule__Technology__ListTypesAssignment_4_2_1");
+			builder.put(grammarAccess.getTechnologyAccess().getCollectionTypesAssignment_4_2_1(), "rule__Technology__CollectionTypesAssignment_4_2_1");
 			builder.put(grammarAccess.getTechnologyAccess().getDataStructuresAssignment_4_2_2(), "rule__Technology__DataStructuresAssignment_4_2_2");
 			builder.put(grammarAccess.getTechnologyAccess().getCompatibilityEntriesAssignment_4_3_3(), "rule__Technology__CompatibilityEntriesAssignment_4_3_3");
 			builder.put(grammarAccess.getTechnologyAccess().getProtocolsAssignment_5_2(), "rule__Technology__ProtocolsAssignment_5_2");
@@ -332,7 +329,7 @@ public class ServiceDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getTechnologySpecificPrimitiveTypeAccess().getBasicBuiltinPrimitiveTypesAssignment_3_2(), "rule__TechnologySpecificPrimitiveType__BasicBuiltinPrimitiveTypesAssignment_3_2");
 			builder.put(grammarAccess.getTechnologySpecificPrimitiveTypeAccess().getBasicBuiltinPrimitiveTypesAssignment_3_3_1(), "rule__TechnologySpecificPrimitiveType__BasicBuiltinPrimitiveTypesAssignment_3_3_1");
 			builder.put(grammarAccess.getTechnologySpecificPrimitiveTypeAccess().getDefaultAssignment_3_4(), "rule__TechnologySpecificPrimitiveType__DefaultAssignment_3_4");
-			builder.put(grammarAccess.getTechnologySpecificListTypeAccess().getNameAssignment_2(), "rule__TechnologySpecificListType__NameAssignment_2");
+			builder.put(grammarAccess.getTechnologySpecificCollectionTypeAccess().getNameAssignment_2(), "rule__TechnologySpecificCollectionType__NameAssignment_2");
 			builder.put(grammarAccess.getTechnologySpecificDataStructureAccess().getNameAssignment_2(), "rule__TechnologySpecificDataStructure__NameAssignment_2");
 			builder.put(grammarAccess.getPossiblyImportedTechnologySpecificTypeAccess().getImportAssignment_0_0(), "rule__PossiblyImportedTechnologySpecificType__ImportAssignment_0_0");
 			builder.put(grammarAccess.getPossiblyImportedTechnologySpecificTypeAccess().getTypeAssignment_1(), "rule__PossiblyImportedTechnologySpecificType__TypeAssignment_1");
@@ -402,11 +399,11 @@ public class ServiceDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getDataStructureAccess().getOperationsAssignment_5_0_1(), "rule__DataStructure__OperationsAssignment_5_0_1");
 			builder.put(grammarAccess.getDataStructureAccess().getDataFieldsAssignment_5_1_1_0(), "rule__DataStructure__DataFieldsAssignment_5_1_1_0");
 			builder.put(grammarAccess.getDataStructureAccess().getOperationsAssignment_5_1_1_1(), "rule__DataStructure__OperationsAssignment_5_1_1_1");
-			builder.put(grammarAccess.getListTypeAccess().getNameAssignment_0_1(), "rule__ListType__NameAssignment_0_1");
-			builder.put(grammarAccess.getListTypeAccess().getDataFieldsAssignment_0_3(), "rule__ListType__DataFieldsAssignment_0_3");
-			builder.put(grammarAccess.getListTypeAccess().getDataFieldsAssignment_0_4_1(), "rule__ListType__DataFieldsAssignment_0_4_1");
-			builder.put(grammarAccess.getListTypeAccess().getNameAssignment_1_1(), "rule__ListType__NameAssignment_1_1");
-			builder.put(grammarAccess.getListTypeAccess().getPrimitiveTypeAssignment_1_3(), "rule__ListType__PrimitiveTypeAssignment_1_3");
+			builder.put(grammarAccess.getCollectionTypeAccess().getNameAssignment_0_1(), "rule__CollectionType__NameAssignment_0_1");
+			builder.put(grammarAccess.getCollectionTypeAccess().getDataFieldsAssignment_0_3(), "rule__CollectionType__DataFieldsAssignment_0_3");
+			builder.put(grammarAccess.getCollectionTypeAccess().getDataFieldsAssignment_0_4_1(), "rule__CollectionType__DataFieldsAssignment_0_4_1");
+			builder.put(grammarAccess.getCollectionTypeAccess().getNameAssignment_1_1(), "rule__CollectionType__NameAssignment_1_1");
+			builder.put(grammarAccess.getCollectionTypeAccess().getPrimitiveTypeAssignment_1_3(), "rule__CollectionType__PrimitiveTypeAssignment_1_3");
 			builder.put(grammarAccess.getDataFieldAccess().getHiddenAssignment_0(), "rule__DataField__HiddenAssignment_0");
 			builder.put(grammarAccess.getDataFieldAccess().getImmutableAssignment_1(), "rule__DataField__ImmutableAssignment_1");
 			builder.put(grammarAccess.getDataFieldAccess().getPrimitiveTypeAssignment_2_0(), "rule__DataField__PrimitiveTypeAssignment_2_0");

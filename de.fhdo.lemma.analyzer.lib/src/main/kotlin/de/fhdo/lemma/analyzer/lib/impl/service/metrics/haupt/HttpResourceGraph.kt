@@ -8,7 +8,7 @@ import de.fhdo.lemma.analyzer.lib.impl.service.metrics.engel.DependencyGraph
 import de.fhdo.lemma.analyzer.lib.operationsWithProtocolAndExclusiveVisibility
 import de.fhdo.lemma.data.intermediate.IntermediateComplexType
 import de.fhdo.lemma.data.intermediate.IntermediateDataStructure
-import de.fhdo.lemma.data.intermediate.IntermediateListType
+import de.fhdo.lemma.data.intermediate.IntermediateCollectionType
 import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
 import de.fhdo.lemma.service.intermediate.IntermediateParameter
 import de.fhdo.lemma.technology.CommunicationType
@@ -144,7 +144,7 @@ class HttpResourceGraph(
     private fun IntermediateComplexType.resolveResourceTypes(includeValueObjects: Boolean = true)
         = when(val resolvedType = Cache.getResolvedType(this)) {
             is IntermediateDataStructure -> resolvedType.resolveResourceTypes(includeValueObjects)
-            is IntermediateListType -> resolvedType.resolveResourceTypes()
+            is IntermediateCollectionType -> resolvedType.resolveResourceTypes()
             else -> emptyList()
         }
 
@@ -187,10 +187,10 @@ class HttpResourceGraph(
     private fun IntermediateDataStructure.isResource() = featureNames.any { it == "AGGREGATE" || it == "ENTITY" }
 
     /**
-     * Helper to resolve all nested resource [IntermediateComplexType]s of this [IntermediateListType]. Nested resources
-     * can only occur in structured list types.
+     * Helper to resolve all nested resource [IntermediateComplexType]s of this [IntermediateCollectionType]. Nested
+     * resources can only occur in structured collection types.
      */
-    private fun IntermediateListType.resolveResourceTypes() : List<IntermediateComplexType>
+    private fun IntermediateCollectionType.resolveResourceTypes() : List<IntermediateComplexType>
         = dataFields.filterIsInstance<IntermediateComplexType>().map { it.resolveResourceTypes() }.flatten()
 
     /**
@@ -232,12 +232,12 @@ class HttpResourceGraph(
     /**
      * Helper to find all nested resource [IntermediateComplexType]s of this [IntermediateComplexType] resource. A
      * nested resource either originates from the non-hidden data fields of [IntermediateDataStructure]s or from data
-     * fields in structured [IntermediateListType]s.
+     * fields in structured [IntermediateCollectionType]s.
      */
     private fun IntermediateComplexType.getNestedResources() : List<IntermediateComplexType> {
         val nestedFieldsWithComplexTypes = when (this) {
             is IntermediateDataStructure -> dataFields.filter { !it.isHidden && it.type is IntermediateComplexType }
-            is IntermediateListType -> dataFields.filter { it.type is IntermediateComplexType }
+            is IntermediateCollectionType -> dataFields.filter { it.type is IntermediateComplexType }
             else -> return emptyList()
         }
 

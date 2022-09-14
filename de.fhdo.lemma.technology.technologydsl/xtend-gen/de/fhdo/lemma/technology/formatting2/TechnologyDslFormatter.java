@@ -9,8 +9,8 @@ import de.fhdo.lemma.data.PrimitiveType;
 import de.fhdo.lemma.data.Version;
 import de.fhdo.lemma.data.formatting2.DataDslFormatter;
 import de.fhdo.lemma.technology.Technology;
+import de.fhdo.lemma.technology.TechnologySpecificCollectionType;
 import de.fhdo.lemma.technology.TechnologySpecificDataStructure;
-import de.fhdo.lemma.technology.TechnologySpecificListType;
 import de.fhdo.lemma.technology.TechnologySpecificPrimitiveType;
 import de.fhdo.lemma.technology.services.TechnologyDslGrammarAccess;
 import java.util.Arrays;
@@ -31,9 +31,9 @@ public class TechnologyDslFormatter extends DataDslFormatter {
     for (final TechnologySpecificPrimitiveType technologySpecificPrimitiveType : _primitiveTypes) {
       document.<TechnologySpecificPrimitiveType>format(technologySpecificPrimitiveType);
     }
-    EList<TechnologySpecificListType> _listTypes = technology.getListTypes();
-    for (final TechnologySpecificListType technologySpecificListType : _listTypes) {
-      document.<TechnologySpecificListType>format(technologySpecificListType);
+    EList<TechnologySpecificCollectionType> _collectionTypes = technology.getCollectionTypes();
+    for (final TechnologySpecificCollectionType technologySpecificCollectionType : _collectionTypes) {
+      document.<TechnologySpecificCollectionType>format(technologySpecificCollectionType);
     }
     EList<TechnologySpecificDataStructure> _dataStructures = technology.getDataStructures();
     for (final TechnologySpecificDataStructure technologySpecificDataStructureType : _dataStructures) {

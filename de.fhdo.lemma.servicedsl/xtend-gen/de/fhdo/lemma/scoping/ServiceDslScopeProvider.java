@@ -34,8 +34,8 @@ import de.fhdo.lemma.technology.Protocol;
 import de.fhdo.lemma.technology.ServiceAspect;
 import de.fhdo.lemma.technology.Technology;
 import de.fhdo.lemma.technology.TechnologyPackage;
+import de.fhdo.lemma.technology.TechnologySpecificCollectionType;
 import de.fhdo.lemma.technology.TechnologySpecificDataStructure;
-import de.fhdo.lemma.technology.TechnologySpecificListType;
 import de.fhdo.lemma.technology.TechnologySpecificPrimitiveType;
 import de.fhdo.lemma.technology.TechnologySpecificProperty;
 import de.fhdo.lemma.technology.TechnologySpecificPropertyValueAssignment;
@@ -1035,7 +1035,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     };
     scopeElements.addAll(
       ListExtensions.<TechnologySpecificPrimitiveType, IEObjectDescription>map(technology.getPrimitiveTypes(), _function));
-    final Function1<TechnologySpecificListType, IEObjectDescription> _function_1 = (TechnologySpecificListType it) -> {
+    final Function1<TechnologySpecificCollectionType, IEObjectDescription> _function_1 = (TechnologySpecificCollectionType it) -> {
       IEObjectDescription _xblockexpression = null;
       {
         final QualifiedName typeName = QualifiedName.create(it.getQualifiedNameParts());
@@ -1044,7 +1044,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
       return _xblockexpression;
     };
     scopeElements.addAll(
-      ListExtensions.<TechnologySpecificListType, IEObjectDescription>map(technology.getListTypes(), _function_1));
+      ListExtensions.<TechnologySpecificCollectionType, IEObjectDescription>map(technology.getCollectionTypes(), _function_1));
     final Function1<TechnologySpecificDataStructure, IEObjectDescription> _function_2 = (TechnologySpecificDataStructure it) -> {
       IEObjectDescription _xblockexpression = null;
       {

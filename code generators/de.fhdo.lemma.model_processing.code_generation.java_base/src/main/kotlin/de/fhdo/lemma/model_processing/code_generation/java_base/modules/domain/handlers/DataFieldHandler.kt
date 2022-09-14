@@ -96,13 +96,13 @@ internal class DataFieldHandler :
         : Pair<TypeMappingDescription?, IntermediateType> {
         /*
          * Handle multi-value aspects, such as Array or Collection. When the intermediate field exhibits one of those
-         * aspects, it's basic type for the multi-value specification will be determined. In all cases except an
-         * intermediate list type, this basic type corresponds to the intermediate field's type. For intermediate list
-         * types, however, the basic type is either the primitive type of the list or the type of a single data field in
-         * a structured list. Ultimately, this results in type mappings such as "String[]" (i.e., the aspect is "Array"
-         * and the basic type is String, which could be the type of a primitive list) or "Collection<Address>" (i.e.,
-         * the aspect is "Collection" and the basic type is Address, which could be the type of the single data field of
-         * a structured list).
+         * aspects, its basic type for the multi-value specification will be determined. In all cases except for an
+         * intermediate collection type, this basic type corresponds to the intermediate field's type. For intermediate
+         * collection types, however, the basic type is either the primitive type of the collection or the type of a
+         * single data field in a structured collection. Ultimately, this results in type mappings such as "String[]"
+         * (i.e., the aspect is "Array" and the basic type is String, which could be the type of a primitive collection)
+         * or "Collection<Address>" (i.e., the aspect is "Collection" and the basic type is Address, which could be the
+         * type of the single data field of a structured collection).
          */
         var mappedForMultiValueAspect = false
         val intermediateType = if (field.hasAspect("java.Array") || field.hasAspect("java.Collection")) {

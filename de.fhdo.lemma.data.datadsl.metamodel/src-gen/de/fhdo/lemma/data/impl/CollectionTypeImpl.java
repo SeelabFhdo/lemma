@@ -2,9 +2,9 @@
  */
 package de.fhdo.lemma.data.impl;
 
+import de.fhdo.lemma.data.CollectionType;
 import de.fhdo.lemma.data.DataField;
 import de.fhdo.lemma.data.DataPackage;
-import de.fhdo.lemma.data.ListType;
 import de.fhdo.lemma.data.PrimitiveType;
 
 import java.lang.reflect.InvocationTargetException;
@@ -26,19 +26,19 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>List Type</b></em>'.
+ * An implementation of the model object '<em><b>Collection Type</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.fhdo.lemma.data.impl.ListTypeImpl#getPrimitiveType <em>Primitive Type</em>}</li>
- *   <li>{@link de.fhdo.lemma.data.impl.ListTypeImpl#getDataFields <em>Data Fields</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.impl.CollectionTypeImpl#getPrimitiveType <em>Primitive Type</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.impl.CollectionTypeImpl#getDataFields <em>Data Fields</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class ListTypeImpl extends ComplexTypeImpl implements ListType {
+public class CollectionTypeImpl extends ComplexTypeImpl implements CollectionType {
     /**
      * The cached value of the '{@link #getPrimitiveType() <em>Primitive Type</em>}' containment reference.
      * <!-- begin-user-doc -->
@@ -64,7 +64,7 @@ public class ListTypeImpl extends ComplexTypeImpl implements ListType {
      * <!-- end-user-doc -->
      * @generated
      */
-    protected ListTypeImpl() {
+    protected CollectionTypeImpl() {
         super();
     }
 
@@ -75,7 +75,7 @@ public class ListTypeImpl extends ComplexTypeImpl implements ListType {
      */
     @Override
     protected EClass eStaticClass() {
-        return DataPackage.Literals.LIST_TYPE;
+        return DataPackage.Literals.COLLECTION_TYPE;
     }
 
     /**
@@ -96,7 +96,7 @@ public class ListTypeImpl extends ComplexTypeImpl implements ListType {
         PrimitiveType oldPrimitiveType = primitiveType;
         primitiveType = newPrimitiveType;
         if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, DataPackage.LIST_TYPE__PRIMITIVE_TYPE, oldPrimitiveType, newPrimitiveType);
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, DataPackage.COLLECTION_TYPE__PRIMITIVE_TYPE, oldPrimitiveType, newPrimitiveType);
             if (msgs == null) msgs = notification; else msgs.add(notification);
         }
         return msgs;
@@ -111,14 +111,14 @@ public class ListTypeImpl extends ComplexTypeImpl implements ListType {
         if (newPrimitiveType != primitiveType) {
             NotificationChain msgs = null;
             if (primitiveType != null)
-                msgs = ((InternalEObject)primitiveType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - DataPackage.LIST_TYPE__PRIMITIVE_TYPE, null, msgs);
+                msgs = ((InternalEObject)primitiveType).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - DataPackage.COLLECTION_TYPE__PRIMITIVE_TYPE, null, msgs);
             if (newPrimitiveType != null)
-                msgs = ((InternalEObject)newPrimitiveType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - DataPackage.LIST_TYPE__PRIMITIVE_TYPE, null, msgs);
+                msgs = ((InternalEObject)newPrimitiveType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - DataPackage.COLLECTION_TYPE__PRIMITIVE_TYPE, null, msgs);
             msgs = basicSetPrimitiveType(newPrimitiveType, msgs);
             if (msgs != null) msgs.dispatch();
         }
         else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.LIST_TYPE__PRIMITIVE_TYPE, newPrimitiveType, newPrimitiveType));
+            eNotify(new ENotificationImpl(this, Notification.SET, DataPackage.COLLECTION_TYPE__PRIMITIVE_TYPE, newPrimitiveType, newPrimitiveType));
     }
 
     /**
@@ -128,7 +128,7 @@ public class ListTypeImpl extends ComplexTypeImpl implements ListType {
      */
     public EList<DataField> getDataFields() {
         if (dataFields == null) {
-            dataFields = new EObjectContainmentWithInverseEList<DataField>(DataField.class, this, DataPackage.LIST_TYPE__DATA_FIELDS, DataPackage.DATA_FIELD__LIST_TYPE);
+            dataFields = new EObjectContainmentWithInverseEList<DataField>(DataField.class, this, DataPackage.COLLECTION_TYPE__DATA_FIELDS, DataPackage.DATA_FIELD__COLLECTION_TYPE);
         }
         return dataFields;
     }
@@ -138,29 +138,29 @@ public class ListTypeImpl extends ComplexTypeImpl implements ListType {
      * <!-- end-user-doc -->
      * @generated
      */
-    public int compareFieldCounts(final ListType listToCompare) {
-        if ((listToCompare == null)) {
+    public int compareFieldCounts(final CollectionType otherCollection) {
+        if ((otherCollection == null)) {
             return 1;
         }
-        boolean _isIsPrimitiveList = listToCompare.isIsPrimitiveList();
-        if (_isIsPrimitiveList) {
-            if ((this.isIsPrimitiveList() || (this.getDataFields().size() == 1))) {
+        boolean _isIsPrimitiveCollection = otherCollection.isIsPrimitiveCollection();
+        if (_isIsPrimitiveCollection) {
+            if ((this.isIsPrimitiveCollection() || (this.getDataFields().size() == 1))) {
                 return 0;
             }
             else {
                 return 1;
             }
         }
-        boolean _isIsPrimitiveList_1 = this.isIsPrimitiveList();
-        if (_isIsPrimitiveList_1) {
-            if ((listToCompare.isIsPrimitiveList() || (listToCompare.getDataFields().size() == 1))) {
+        boolean _isIsPrimitiveCollection_1 = this.isIsPrimitiveCollection();
+        if (_isIsPrimitiveCollection_1) {
+            if ((otherCollection.isIsPrimitiveCollection() || (otherCollection.getDataFields().size() == 1))) {
                 return 0;
             }
             else {
                 return (-1);
             }
         }
-        return super.compareFieldCounts(this.getDataFields(), listToCompare.getDataFields());
+        return super.compareFieldCounts(this.getDataFields(), otherCollection.getDataFields());
     }
 
     /**
@@ -172,7 +172,7 @@ public class ListTypeImpl extends ComplexTypeImpl implements ListType {
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case DataPackage.LIST_TYPE__DATA_FIELDS:
+            case DataPackage.COLLECTION_TYPE__DATA_FIELDS:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getDataFields()).basicAdd(otherEnd, msgs);
         }
         return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -186,9 +186,9 @@ public class ListTypeImpl extends ComplexTypeImpl implements ListType {
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case DataPackage.LIST_TYPE__PRIMITIVE_TYPE:
+            case DataPackage.COLLECTION_TYPE__PRIMITIVE_TYPE:
                 return basicSetPrimitiveType(null, msgs);
-            case DataPackage.LIST_TYPE__DATA_FIELDS:
+            case DataPackage.COLLECTION_TYPE__DATA_FIELDS:
                 return ((InternalEList<?>)getDataFields()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -202,9 +202,9 @@ public class ListTypeImpl extends ComplexTypeImpl implements ListType {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case DataPackage.LIST_TYPE__PRIMITIVE_TYPE:
+            case DataPackage.COLLECTION_TYPE__PRIMITIVE_TYPE:
                 return getPrimitiveType();
-            case DataPackage.LIST_TYPE__DATA_FIELDS:
+            case DataPackage.COLLECTION_TYPE__DATA_FIELDS:
                 return getDataFields();
         }
         return super.eGet(featureID, resolve, coreType);
@@ -219,10 +219,10 @@ public class ListTypeImpl extends ComplexTypeImpl implements ListType {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case DataPackage.LIST_TYPE__PRIMITIVE_TYPE:
+            case DataPackage.COLLECTION_TYPE__PRIMITIVE_TYPE:
                 setPrimitiveType((PrimitiveType)newValue);
                 return;
-            case DataPackage.LIST_TYPE__DATA_FIELDS:
+            case DataPackage.COLLECTION_TYPE__DATA_FIELDS:
                 getDataFields().clear();
                 getDataFields().addAll((Collection<? extends DataField>)newValue);
                 return;
@@ -238,10 +238,10 @@ public class ListTypeImpl extends ComplexTypeImpl implements ListType {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case DataPackage.LIST_TYPE__PRIMITIVE_TYPE:
+            case DataPackage.COLLECTION_TYPE__PRIMITIVE_TYPE:
                 setPrimitiveType((PrimitiveType)null);
                 return;
-            case DataPackage.LIST_TYPE__DATA_FIELDS:
+            case DataPackage.COLLECTION_TYPE__DATA_FIELDS:
                 getDataFields().clear();
                 return;
         }
@@ -256,9 +256,9 @@ public class ListTypeImpl extends ComplexTypeImpl implements ListType {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case DataPackage.LIST_TYPE__PRIMITIVE_TYPE:
+            case DataPackage.COLLECTION_TYPE__PRIMITIVE_TYPE:
                 return primitiveType != null;
-            case DataPackage.LIST_TYPE__DATA_FIELDS:
+            case DataPackage.COLLECTION_TYPE__DATA_FIELDS:
                 return dataFields != null && !dataFields.isEmpty();
         }
         return super.eIsSet(featureID);
@@ -272,10 +272,10 @@ public class ListTypeImpl extends ComplexTypeImpl implements ListType {
     @Override
     public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
         switch (operationID) {
-            case DataPackage.LIST_TYPE___COMPARE_FIELD_COUNTS__LISTTYPE:
-                return compareFieldCounts((ListType)arguments.get(0));
+            case DataPackage.COLLECTION_TYPE___COMPARE_FIELD_COUNTS__COLLECTIONTYPE:
+                return compareFieldCounts((CollectionType)arguments.get(0));
         }
         return super.eInvoke(operationID, arguments);
     }
 
-} //ListTypeImpl
+} //CollectionTypeImpl

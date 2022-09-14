@@ -155,18 +155,18 @@ ruleTechnology returns [EObject current=null]
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getTechnologyAccess().getListTypesTechnologySpecificListTypeParserRuleCall_4_2_1_0());
+							newCompositeNode(grammarAccess.getTechnologyAccess().getCollectionTypesTechnologySpecificCollectionTypeParserRuleCall_4_2_1_0());
 						}
-						lv_listTypes_7_0=ruleTechnologySpecificListType
+						lv_collectionTypes_7_0=ruleTechnologySpecificCollectionType
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getTechnologyRule());
 							}
 							add(
 								$current,
-								"listTypes",
-								lv_listTypes_7_0,
-								"de.fhdo.lemma.technology.TechnologyDsl.TechnologySpecificListType");
+								"collectionTypes",
+								lv_collectionTypes_7_0,
+								"de.fhdo.lemma.technology.TechnologyDsl.TechnologySpecificCollectionType");
 							afterParserOrEnumRuleCall();
 						}
 					)
@@ -794,15 +794,15 @@ ruleTechnologySpecificPrimitiveType returns [EObject current=null]
 	)
 ;
 
-// Entry rule entryRuleTechnologySpecificListType
-entryRuleTechnologySpecificListType returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getTechnologySpecificListTypeRule()); }
-	iv_ruleTechnologySpecificListType=ruleTechnologySpecificListType
-	{ $current=$iv_ruleTechnologySpecificListType.current; }
+// Entry rule entryRuleTechnologySpecificCollectionType
+entryRuleTechnologySpecificCollectionType returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getTechnologySpecificCollectionTypeRule()); }
+	iv_ruleTechnologySpecificCollectionType=ruleTechnologySpecificCollectionType
+	{ $current=$iv_ruleTechnologySpecificCollectionType.current; }
 	EOF;
 
-// Rule TechnologySpecificListType
-ruleTechnologySpecificListType returns [EObject current=null]
+// Rule TechnologySpecificCollectionType
+ruleTechnologySpecificCollectionType returns [EObject current=null]
 @init {
 	enterRule();
 }
@@ -810,42 +810,35 @@ ruleTechnologySpecificListType returns [EObject current=null]
 	leaveRule();
 }:
 	(
-		(
-			otherlv_0='collection'
-			{
-				newLeafNode(otherlv_0, grammarAccess.getTechnologySpecificListTypeAccess().getCollectionKeyword_0_0());
-			}
-			    |
-			otherlv_1='list'
-			{
-				newLeafNode(otherlv_1, grammarAccess.getTechnologySpecificListTypeAccess().getListKeyword_0_1());
-			}
-		)
-		otherlv_2='type'
+		otherlv_0='collection'
 		{
-			newLeafNode(otherlv_2, grammarAccess.getTechnologySpecificListTypeAccess().getTypeKeyword_1());
+			newLeafNode(otherlv_0, grammarAccess.getTechnologySpecificCollectionTypeAccess().getCollectionKeyword_0());
+		}
+		otherlv_1='type'
+		{
+			newLeafNode(otherlv_1, grammarAccess.getTechnologySpecificCollectionTypeAccess().getTypeKeyword_1());
 		}
 		(
 			(
-				lv_name_3_0=RULE_ID
+				lv_name_2_0=RULE_ID
 				{
-					newLeafNode(lv_name_3_0, grammarAccess.getTechnologySpecificListTypeAccess().getNameIDTerminalRuleCall_2_0());
+					newLeafNode(lv_name_2_0, grammarAccess.getTechnologySpecificCollectionTypeAccess().getNameIDTerminalRuleCall_2_0());
 				}
 				{
 					if ($current==null) {
-						$current = createModelElement(grammarAccess.getTechnologySpecificListTypeRule());
+						$current = createModelElement(grammarAccess.getTechnologySpecificCollectionTypeRule());
 					}
 					setWithLastConsumed(
 						$current,
 						"name",
-						lv_name_3_0,
+						lv_name_2_0,
 						"org.eclipse.xtext.common.Terminals.ID");
 				}
 			)
 		)
-		otherlv_4=';'
+		otherlv_3=';'
 		{
-			newLeafNode(otherlv_4, grammarAccess.getTechnologySpecificListTypeAccess().getSemicolonKeyword_3());
+			newLeafNode(otherlv_3, grammarAccess.getTechnologySpecificCollectionTypeAccess().getSemicolonKeyword_3());
 		}
 	)
 ;
@@ -2557,11 +2550,11 @@ ruleComplexType returns [EObject current=null]
 		}
 		    |
 		{
-			newCompositeNode(grammarAccess.getComplexTypeAccess().getListTypeParserRuleCall_1());
+			newCompositeNode(grammarAccess.getComplexTypeAccess().getCollectionTypeParserRuleCall_1());
 		}
-		this_ListType_1=ruleListType
+		this_CollectionType_1=ruleCollectionType
 		{
-			$current = $this_ListType_1.current;
+			$current = $this_CollectionType_1.current;
 			afterParserOrEnumRuleCall();
 		}
 		    |
@@ -2791,15 +2784,15 @@ ruleDataStructure returns [EObject current=null]
 	)
 ;
 
-// Entry rule entryRuleListType
-entryRuleListType returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getListTypeRule()); }
-	iv_ruleListType=ruleListType
-	{ $current=$iv_ruleListType.current; }
+// Entry rule entryRuleCollectionType
+entryRuleCollectionType returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getCollectionTypeRule()); }
+	iv_ruleCollectionType=ruleCollectionType
+	{ $current=$iv_ruleCollectionType.current; }
 	EOF;
 
-// Rule ListType
-ruleListType returns [EObject current=null]
+// Rule CollectionType
+ruleCollectionType returns [EObject current=null]
 @init {
 	enterRule();
 }
@@ -2808,145 +2801,131 @@ ruleListType returns [EObject current=null]
 }:
 	(
 		(
-			(
-				otherlv_0='collection'
-				{
-					newLeafNode(otherlv_0, grammarAccess.getListTypeAccess().getCollectionKeyword_0_0_0());
-				}
-				    |
-				otherlv_1='list'
-				{
-					newLeafNode(otherlv_1, grammarAccess.getListTypeAccess().getListKeyword_0_0_1());
-				}
-			)
+			otherlv_0='collection'
+			{
+				newLeafNode(otherlv_0, grammarAccess.getCollectionTypeAccess().getCollectionKeyword_0_0());
+			}
 			(
 				(
-					lv_name_2_0=RULE_ID
+					lv_name_1_0=RULE_ID
 					{
-						newLeafNode(lv_name_2_0, grammarAccess.getListTypeAccess().getNameIDTerminalRuleCall_0_1_0());
+						newLeafNode(lv_name_1_0, grammarAccess.getCollectionTypeAccess().getNameIDTerminalRuleCall_0_1_0());
 					}
 					{
 						if ($current==null) {
-							$current = createModelElement(grammarAccess.getListTypeRule());
+							$current = createModelElement(grammarAccess.getCollectionTypeRule());
 						}
 						setWithLastConsumed(
 							$current,
 							"name",
-							lv_name_2_0,
+							lv_name_1_0,
 							"org.eclipse.xtext.common.Terminals.ID");
 					}
 				)
 			)
-			otherlv_3='{'
+			otherlv_2='{'
 			{
-				newLeafNode(otherlv_3, grammarAccess.getListTypeAccess().getLeftCurlyBracketKeyword_0_2());
+				newLeafNode(otherlv_2, grammarAccess.getCollectionTypeAccess().getLeftCurlyBracketKeyword_0_2());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getListTypeAccess().getDataFieldsDataFieldParserRuleCall_0_3_0());
+						newCompositeNode(grammarAccess.getCollectionTypeAccess().getDataFieldsDataFieldParserRuleCall_0_3_0());
 					}
-					lv_dataFields_4_0=ruleDataField
+					lv_dataFields_3_0=ruleDataField
 					{
 						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getListTypeRule());
+							$current = createModelElementForParent(grammarAccess.getCollectionTypeRule());
 						}
 						add(
 							$current,
 							"dataFields",
-							lv_dataFields_4_0,
+							lv_dataFields_3_0,
 							"de.fhdo.lemma.data.DataDsl.DataField");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)
 			(
-				otherlv_5=','
+				otherlv_4=','
 				{
-					newLeafNode(otherlv_5, grammarAccess.getListTypeAccess().getCommaKeyword_0_4_0());
+					newLeafNode(otherlv_4, grammarAccess.getCollectionTypeAccess().getCommaKeyword_0_4_0());
 				}
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getListTypeAccess().getDataFieldsDataFieldParserRuleCall_0_4_1_0());
+							newCompositeNode(grammarAccess.getCollectionTypeAccess().getDataFieldsDataFieldParserRuleCall_0_4_1_0());
 						}
-						lv_dataFields_6_0=ruleDataField
+						lv_dataFields_5_0=ruleDataField
 						{
 							if ($current==null) {
-								$current = createModelElementForParent(grammarAccess.getListTypeRule());
+								$current = createModelElementForParent(grammarAccess.getCollectionTypeRule());
 							}
 							add(
 								$current,
 								"dataFields",
-								lv_dataFields_6_0,
+								lv_dataFields_5_0,
 								"de.fhdo.lemma.data.DataDsl.DataField");
 							afterParserOrEnumRuleCall();
 						}
 					)
 				)
 			)*
-			otherlv_7='}'
+			otherlv_6='}'
 			{
-				newLeafNode(otherlv_7, grammarAccess.getListTypeAccess().getRightCurlyBracketKeyword_0_5());
+				newLeafNode(otherlv_6, grammarAccess.getCollectionTypeAccess().getRightCurlyBracketKeyword_0_5());
 			}
 		)
 		    |
 		(
-			(
-				otherlv_8='collection'
-				{
-					newLeafNode(otherlv_8, grammarAccess.getListTypeAccess().getCollectionKeyword_1_0_0());
-				}
-				    |
-				otherlv_9='list'
-				{
-					newLeafNode(otherlv_9, grammarAccess.getListTypeAccess().getListKeyword_1_0_1());
-				}
-			)
+			otherlv_7='collection'
+			{
+				newLeafNode(otherlv_7, grammarAccess.getCollectionTypeAccess().getCollectionKeyword_1_0());
+			}
 			(
 				(
-					lv_name_10_0=RULE_ID
+					lv_name_8_0=RULE_ID
 					{
-						newLeafNode(lv_name_10_0, grammarAccess.getListTypeAccess().getNameIDTerminalRuleCall_1_1_0());
+						newLeafNode(lv_name_8_0, grammarAccess.getCollectionTypeAccess().getNameIDTerminalRuleCall_1_1_0());
 					}
 					{
 						if ($current==null) {
-							$current = createModelElement(grammarAccess.getListTypeRule());
+							$current = createModelElement(grammarAccess.getCollectionTypeRule());
 						}
 						setWithLastConsumed(
 							$current,
 							"name",
-							lv_name_10_0,
+							lv_name_8_0,
 							"org.eclipse.xtext.common.Terminals.ID");
 					}
 				)
 			)
-			otherlv_11='{'
+			otherlv_9='{'
 			{
-				newLeafNode(otherlv_11, grammarAccess.getListTypeAccess().getLeftCurlyBracketKeyword_1_2());
+				newLeafNode(otherlv_9, grammarAccess.getCollectionTypeAccess().getLeftCurlyBracketKeyword_1_2());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getListTypeAccess().getPrimitiveTypePrimitiveTypeParserRuleCall_1_3_0());
+						newCompositeNode(grammarAccess.getCollectionTypeAccess().getPrimitiveTypePrimitiveTypeParserRuleCall_1_3_0());
 					}
-					lv_primitiveType_12_0=rulePrimitiveType
+					lv_primitiveType_10_0=rulePrimitiveType
 					{
 						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getListTypeRule());
+							$current = createModelElementForParent(grammarAccess.getCollectionTypeRule());
 						}
 						set(
 							$current,
 							"primitiveType",
-							lv_primitiveType_12_0,
+							lv_primitiveType_10_0,
 							"de.fhdo.lemma.data.DataDsl.PrimitiveType");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)
-			otherlv_13='}'
+			otherlv_11='}'
 			{
-				newLeafNode(otherlv_13, grammarAccess.getListTypeAccess().getRightCurlyBracketKeyword_1_4());
+				newLeafNode(otherlv_11, grammarAccess.getCollectionTypeAccess().getRightCurlyBracketKeyword_1_4());
 			}
 		)
 	)

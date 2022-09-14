@@ -156,8 +156,8 @@ public class DataAdapterFactory extends AdapterFactoryImpl {
                 return createDataOperationParameterAdapter();
             }
             @Override
-            public Adapter caseListType(ListType object) {
-                return createListTypeAdapter();
+            public Adapter caseCollectionType(CollectionType object) {
+                return createCollectionTypeAdapter();
             }
             @Override
             public Adapter caseDataField(DataField object) {
@@ -504,16 +504,16 @@ public class DataAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.fhdo.lemma.data.ListType <em>List Type</em>}'.
+     * Creates a new adapter for an object of class '{@link de.fhdo.lemma.data.CollectionType <em>Collection Type</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.fhdo.lemma.data.ListType
+     * @see de.fhdo.lemma.data.CollectionType
      * @generated
      */
-    public Adapter createListTypeAdapter() {
+    public Adapter createCollectionTypeAdapter() {
         return null;
     }
 

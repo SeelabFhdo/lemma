@@ -176,8 +176,8 @@ helper def : getTechnologySpecificTypeKind(type: Service!Type)
     if (type.oclIsKindOf(Service!TechnologySpecificPrimitiveType) or
         type.oclIsKindOf(Service!PrimitiveType)) then
         #PRIMITIVE
-    else if (type.oclIsKindOf(Service!TechnologySpecificListType)) then
-        #LIST
+    else if (type.oclIsKindOf(Service!TechnologySpecificCollectionType)) then
+        #COLLECTION
     else if (type.oclIsKindOf(Service!TechnologySpecificDataStructure)) then
         #STRUCTURE
     else

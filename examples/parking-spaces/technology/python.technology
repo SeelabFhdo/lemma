@@ -10,9 +10,9 @@ technology python {
         primitive type Any based on unspecified default;
         primitive type Complex;
 
-        list type List;
-        list type Tuple;
-        list type Set;
+        collection type List;
+        collection type Tuple;
+        collection type Set;
     }
 
     deployment technologies {

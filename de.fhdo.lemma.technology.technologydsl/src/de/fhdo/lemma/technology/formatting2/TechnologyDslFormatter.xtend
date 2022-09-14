@@ -8,7 +8,7 @@ import de.fhdo.lemma.data.PrimitiveType
 import de.fhdo.lemma.data.formatting2.DataDslFormatter
 import de.fhdo.lemma.technology.Technology
 import de.fhdo.lemma.technology.TechnologySpecificDataStructure
-import de.fhdo.lemma.technology.TechnologySpecificListType
+import de.fhdo.lemma.technology.TechnologySpecificCollectionType
 import de.fhdo.lemma.technology.TechnologySpecificPrimitiveType
 import de.fhdo.lemma.technology.services.TechnologyDslGrammarAccess
 import org.eclipse.xtext.formatting2.IFormattableDocument
@@ -22,8 +22,8 @@ class TechnologyDslFormatter extends DataDslFormatter {
         for (TechnologySpecificPrimitiveType technologySpecificPrimitiveType : technology.getPrimitiveTypes()) {
             technologySpecificPrimitiveType.format;
         }
-        for (TechnologySpecificListType technologySpecificListType : technology.getListTypes()) {
-            technologySpecificListType.format;
+        for (TechnologySpecificCollectionType technologySpecificCollectionType : technology.getCollectionTypes()) {
+            technologySpecificCollectionType.format;
         }
         for (TechnologySpecificDataStructure technologySpecificDataStructureType : technology.getDataStructures()) {
             technologySpecificDataStructureType.format;

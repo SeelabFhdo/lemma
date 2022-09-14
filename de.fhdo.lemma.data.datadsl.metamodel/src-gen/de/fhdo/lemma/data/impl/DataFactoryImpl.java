@@ -78,7 +78,7 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
             case DataPackage.DATA_STRUCTURE: return createDataStructure();
             case DataPackage.DATA_OPERATION: return createDataOperation();
             case DataPackage.DATA_OPERATION_PARAMETER: return createDataOperationParameter();
-            case DataPackage.LIST_TYPE: return createListType();
+            case DataPackage.COLLECTION_TYPE: return createCollectionType();
             case DataPackage.DATA_FIELD: return createDataField();
             case DataPackage.ENUMERATION: return createEnumeration();
             case DataPackage.ENUMERATION_FIELD: return createEnumerationField();
@@ -329,9 +329,9 @@ public class DataFactoryImpl extends EFactoryImpl implements DataFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public ListType createListType() {
-        ListTypeImpl listType = new ListTypeImpl();
-        return listType;
+    public CollectionType createCollectionType() {
+        CollectionTypeImpl collectionType = new CollectionTypeImpl();
+        return collectionType;
     }
 
     /**

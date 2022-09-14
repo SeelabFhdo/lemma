@@ -10,7 +10,7 @@ import de.fhdo.lemma.data.intermediate.IntermediateComplexType
 import de.fhdo.lemma.data.intermediate.IntermediateDataModel
 import de.fhdo.lemma.data.intermediate.IntermediateDataStructure
 import de.fhdo.lemma.data.intermediate.IntermediateEnumeration
-import de.fhdo.lemma.data.intermediate.IntermediateListType
+import de.fhdo.lemma.data.intermediate.IntermediateCollectionType
 
 /**
  * Implementation of basic analyses on domain models.
@@ -43,7 +43,8 @@ internal class DomainBasicAnalyzer
         return countPerBoundedContext
     }
 
-    override fun countListTypesPerBoundedContext()  = countComplexTypePerBoundedContext<IntermediateListType>()
+    override fun countCollectionTypesPerBoundedContext()
+        = countComplexTypePerBoundedContext<IntermediateCollectionType>()
 
     override fun countDataStructuresPerBoundedContext() = countComplexTypePerBoundedContext<IntermediateDataStructure>()
 

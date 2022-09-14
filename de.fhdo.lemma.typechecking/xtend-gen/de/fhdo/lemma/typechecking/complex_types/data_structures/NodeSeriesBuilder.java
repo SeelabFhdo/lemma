@@ -3,9 +3,6 @@ package de.fhdo.lemma.typechecking.complex_types.data_structures;
 import com.google.common.base.Predicate;
 import de.fhdo.lemma.data.ComplexType;
 import de.fhdo.lemma.data.DataStructure;
-import de.fhdo.lemma.typechecking.complex_types.data_structures.NodePair;
-import de.fhdo.lemma.typechecking.complex_types.data_structures.NodeSeries;
-import de.fhdo.lemma.typechecking.complex_types.data_structures.TypeGraphNode;
 import de.fhdo.lemma.utils.DistinctPairSeriesBuilder;
 import de.fhdo.lemma.utils.Pair;
 import de.fhdo.lemma.utils.Pairs;
@@ -81,12 +78,12 @@ public class NodeSeriesBuilder {
     distinctPairSeries.addAll(
       NodeSeriesBuilder.buildPairSeriesForType(basicNodes, nodesToCheck, _function, mandatoryStructurePairs));
     final Predicate<TypeGraphNode> _function_1 = (TypeGraphNode it) -> {
-      return it.getType().isIsPrimitiveList();
+      return it.getType().isIsPrimitiveCollection();
     };
     distinctPairSeries.addAll(
       NodeSeriesBuilder.buildPairSeriesForType(basicNodes, nodesToCheck, _function_1, null));
     final Predicate<TypeGraphNode> _function_2 = (TypeGraphNode it) -> {
-      return it.getType().isIsStructuredList();
+      return it.getType().isIsStructuredCollection();
     };
     distinctPairSeries.addAll(
       NodeSeriesBuilder.buildPairSeriesForType(basicNodes, nodesToCheck, _function_2, null));

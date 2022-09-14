@@ -19,8 +19,8 @@ import de.fhdo.lemma.service.ServicePackage;
 
 import de.fhdo.lemma.technology.CommunicationType;
 import de.fhdo.lemma.technology.ExchangePattern;
+import de.fhdo.lemma.technology.TechnologySpecificCollectionType;
 import de.fhdo.lemma.technology.TechnologySpecificDataStructure;
-import de.fhdo.lemma.technology.TechnologySpecificListType;
 import de.fhdo.lemma.technology.TechnologySpecificPrimitiveType;
 
 import java.lang.reflect.InvocationTargetException;
@@ -782,7 +782,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
             return false;
         }
         return (((effectiveType instanceof TechnologySpecificDataStructure) || 
-            (effectiveType instanceof TechnologySpecificListType)) || 
+            (effectiveType instanceof TechnologySpecificCollectionType)) || 
             (effectiveType instanceof TechnologySpecificPrimitiveType));
     }
 

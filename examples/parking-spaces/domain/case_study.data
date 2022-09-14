@@ -9,7 +9,7 @@ context ParkingSpace {
         Location location
     }
 
-    list ParkingSpaces { ParkingSpace parkingSpace }
+    collection ParkingSpaces { ParkingSpace parkingSpace }
 
     // Location concept
     structure Location {
@@ -28,7 +28,7 @@ context ParkingSpace {
         date timestamp
     }
 
-    list VehicleCounts { VehicleCount vehicleCount }
+    collection VehicleCounts { VehicleCount vehicleCount }
 
     // Export data concept
     structure ParkingSpaceExportData {
@@ -36,7 +36,7 @@ context ParkingSpace {
         VehicleCounts spaceAllocations
     }
 
-    list ExportData { ParkingSpaceExportData parkingSpaceExportData }
+    collection ExportData { ParkingSpaceExportData parkingSpaceExportData }
 }
 
 /*
@@ -59,9 +59,9 @@ context SensorSystem {
         DetectionResults results
     }
 
-    list SensorSystems { SensorSystem system }
+    collection SensorSystems { SensorSystem system }
 
-    list DetectionResults { DetectionResult result }
+    collection DetectionResults { DetectionResult result }
 
     // Concept to express results of vehicle detections
     structure DetectionResult {
@@ -76,7 +76,7 @@ context SensorSystem {
         Vectors vector
     }
 
-    list Vectors { Vector vector }
+    collection Vectors { Vector vector }
 
     // Vector concept for detection of raw data
     structure Vector {
@@ -92,5 +92,5 @@ context SensorSystem {
         int ^identifier
     }
 
-    list Delineators { Delineator delineator }
+    collection Delineators { Delineator delineator }
 }

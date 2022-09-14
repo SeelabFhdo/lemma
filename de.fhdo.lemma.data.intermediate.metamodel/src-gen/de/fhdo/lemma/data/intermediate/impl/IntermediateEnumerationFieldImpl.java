@@ -136,7 +136,6 @@ public class IntermediateEnumerationFieldImpl extends MinimalEObjectImpl.Contain
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getName() {
         return name;
     }
@@ -146,7 +145,6 @@ public class IntermediateEnumerationFieldImpl extends MinimalEObjectImpl.Contain
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -159,7 +157,6 @@ public class IntermediateEnumerationFieldImpl extends MinimalEObjectImpl.Contain
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getQualifiedName() {
         return qualifiedName;
     }
@@ -169,7 +166,6 @@ public class IntermediateEnumerationFieldImpl extends MinimalEObjectImpl.Contain
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setQualifiedName(String newQualifiedName) {
         String oldQualifiedName = qualifiedName;
         qualifiedName = newQualifiedName;
@@ -182,7 +178,6 @@ public class IntermediateEnumerationFieldImpl extends MinimalEObjectImpl.Contain
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getInitializationValue() {
         return initializationValue;
     }
@@ -192,7 +187,6 @@ public class IntermediateEnumerationFieldImpl extends MinimalEObjectImpl.Contain
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setInitializationValue(String newInitializationValue) {
         String oldInitializationValue = initializationValue;
         initializationValue = newInitializationValue;
@@ -205,7 +199,6 @@ public class IntermediateEnumerationFieldImpl extends MinimalEObjectImpl.Contain
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<IntermediatePrimitiveType> getInitializationValueCompatibleTypes() {
         if (initializationValueCompatibleTypes == null) {
             initializationValueCompatibleTypes = new EObjectContainmentWithInverseEList<IntermediatePrimitiveType>(IntermediatePrimitiveType.class, this, IntermediatePackage.INTERMEDIATE_ENUMERATION_FIELD__INITIALIZATION_VALUE_COMPATIBLE_TYPES, IntermediatePackage.INTERMEDIATE_PRIMITIVE_TYPE__INITIALIZED_ENUMERATION_FIELD);
@@ -218,7 +211,6 @@ public class IntermediateEnumerationFieldImpl extends MinimalEObjectImpl.Contain
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateEnumeration getEnumeration() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_ENUMERATION_FIELD__ENUMERATION) return null;
         return (IntermediateEnumeration)eContainer();
@@ -249,7 +241,6 @@ public class IntermediateEnumerationFieldImpl extends MinimalEObjectImpl.Contain
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setEnumeration(IntermediateEnumeration newEnumeration) {
         if (newEnumeration != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_ENUMERATION_FIELD__ENUMERATION && newEnumeration != null)) {
             if (EcoreUtil.isAncestor(this, newEnumeration))

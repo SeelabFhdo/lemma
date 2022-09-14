@@ -2216,11 +2216,11 @@ public class OperationDslGrammarAccess extends AbstractElementFinder.AbstractGra
 	//        'technology' | 'types' | 'compatibility' | 'matrix' | 'protocols' | 'service' | 'aspects' |
 	//        'deployment' | 'technologies' | 'infrastructure' | 'operation' | 'import' | 'from' | 'as' |
 	//        'data' | 'formats' | 'default' | 'with' | 'format' | 'in' | 'out' | 'inout' | 'sync' |
-	//        'async' | 'primitive' | 'type' | 'based' | 'on' | 'collection' | 'list' | 'structure'|
-	//        '->' | '<-' | '<->' | 'environments' | 'properties' | 'mandatory' | 'singleval' |
-	//        'microservices' | 'interfaces' | 'operations' | 'parameters' | 'fields' |
-	//        'exchange_pattern' | 'communication_type' | 'protocol' | 'data_format' | 'aspect' | 'for' |
-	//        'containers' | 'selector'
+	//        'async' | 'primitive' | 'type' | 'based' | 'on' | 'collection' | 'structure'| '->' | '<-' |
+	//        '<->' | 'environments' | 'properties' | 'mandatory' | 'singleval' | 'microservices' |
+	//        'interfaces' | 'operations' | 'parameters' | 'fields' | 'exchange_pattern' |
+	//        'communication_type' | 'protocol' | 'data_format' | 'aspect' | 'for' | 'containers' |
+	//        'selector'
 	//        // All keywords of the Data DSL (from which the Service DSL inherits). If we don't specify
 	//        // them here, they will be recognized as regular grammar tokens in the Anything string.
 	//        'datatypes' |  'version' | 'context' | 'aggregate'  | 'applicationService' | 'domainEvent' |
@@ -2253,7 +2253,7 @@ public class OperationDslGrammarAccess extends AbstractElementFinder.AbstractGra
 	//    'technology' name=ID '{'
 	//        ('types' '{'
 	//            (primitiveTypes+=TechnologySpecificPrimitiveType |
-	//                listTypes+=TechnologySpecificListType |
+	//                collectionTypes+=TechnologySpecificCollectionType |
 	//                dataStructures+=TechnologySpecificDataStructure
 	//            )+
 	//            ('compatibility' 'matrix' '{'
@@ -2360,15 +2360,15 @@ public class OperationDslGrammarAccess extends AbstractElementFinder.AbstractGra
 		return getTechnologySpecificPrimitiveTypeAccess().getRule();
 	}
 	
-	//TechnologySpecificListType returns TechnologySpecificListType:
-	//    ('collection' | 'list') 'type' name=ID ';'
+	//TechnologySpecificCollectionType returns TechnologySpecificCollectionType:
+	//    'collection' 'type' name=ID ';'
 	//;
-	public TechnologyDslGrammarAccess.TechnologySpecificListTypeElements getTechnologySpecificListTypeAccess() {
-		return gaTechnologyDsl.getTechnologySpecificListTypeAccess();
+	public TechnologyDslGrammarAccess.TechnologySpecificCollectionTypeElements getTechnologySpecificCollectionTypeAccess() {
+		return gaTechnologyDsl.getTechnologySpecificCollectionTypeAccess();
 	}
 	
-	public ParserRule getTechnologySpecificListTypeRule() {
-		return getTechnologySpecificListTypeAccess().getRule();
+	public ParserRule getTechnologySpecificCollectionTypeRule() {
+		return getTechnologySpecificCollectionTypeAccess().getRule();
 	}
 	
 	//TechnologySpecificDataStructure returns TechnologySpecificDataStructure:
@@ -2683,7 +2683,7 @@ public class OperationDslGrammarAccess extends AbstractElementFinder.AbstractGra
 	}
 	
 	//ComplexType returns ComplexType:
-	//    DataStructure | ListType | Enumeration
+	//    DataStructure | CollectionType | Enumeration
 	//;
 	public DataDslGrammarAccess.ComplexTypeElements getComplexTypeAccess() {
 		return gaDataDsl.getComplexTypeAccess();
@@ -2732,25 +2732,21 @@ public class OperationDslGrammarAccess extends AbstractElementFinder.AbstractGra
 		return getDataStructureAccess().getRule();
 	}
 	
-	//ListType returns ListType:
-	//    (
-	//        ('collection' | 'list') name=ID '{'
-	//            dataFields+=DataField (',' dataFields+=DataField)*
-	//        '}'
-	//    )
+	//CollectionType returns CollectionType:
+	//    'collection' name=ID '{'
+	//        dataFields+=DataField (',' dataFields+=DataField)*
+	//    '}'
 	//    |
-	//    (
-	//        ('collection' | 'list') name=ID '{'
-	//            primitiveType=PrimitiveType
-	//        '}'
-	//    )
+	//    'collection' name=ID '{'
+	//        primitiveType=PrimitiveType
+	//    '}'
 	//;
-	public DataDslGrammarAccess.ListTypeElements getListTypeAccess() {
-		return gaDataDsl.getListTypeAccess();
+	public DataDslGrammarAccess.CollectionTypeElements getCollectionTypeAccess() {
+		return gaDataDsl.getCollectionTypeAccess();
 	}
 	
-	public ParserRule getListTypeRule() {
-		return getListTypeAccess().getRule();
+	public ParserRule getCollectionTypeRule() {
+		return getCollectionTypeAccess().getRule();
 	}
 	
 	//enum DataFieldFeature returns DataFieldFeature:

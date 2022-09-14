@@ -106,7 +106,6 @@ public class IntermediateVersionImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getName() {
         return name;
     }
@@ -116,7 +115,6 @@ public class IntermediateVersionImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -129,7 +127,6 @@ public class IntermediateVersionImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<IntermediateComplexType> getComplexTypes() {
         if (complexTypes == null) {
             complexTypes = new EObjectContainmentWithInverseEList<IntermediateComplexType>(IntermediateComplexType.class, this, IntermediatePackage.INTERMEDIATE_VERSION__COMPLEX_TYPES, IntermediatePackage.INTERMEDIATE_COMPLEX_TYPE__VERSION);
@@ -142,7 +139,6 @@ public class IntermediateVersionImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<IntermediateContext> getContexts() {
         if (contexts == null) {
             contexts = new EObjectContainmentWithInverseEList<IntermediateContext>(IntermediateContext.class, this, IntermediatePackage.INTERMEDIATE_VERSION__CONTEXTS, IntermediatePackage.INTERMEDIATE_CONTEXT__VERSION);
@@ -155,7 +151,6 @@ public class IntermediateVersionImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateDataModel getDataModel() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_VERSION__DATA_MODEL) return null;
         return (IntermediateDataModel)eContainer();
@@ -186,7 +181,6 @@ public class IntermediateVersionImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setDataModel(IntermediateDataModel newDataModel) {
         if (newDataModel != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_VERSION__DATA_MODEL && newDataModel != null)) {
             if (EcoreUtil.isAncestor(this, newDataModel))

@@ -407,7 +407,7 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
         val technologyModel = LemmaUtils.getImportedModelRoot(importImport.eResource,
             importImport.importURI, Technology)
         val technologyDefinesTypes = !technologyModel.primitiveTypes.empty ||
-            !technologyModel.listTypes.empty || !technologyModel.dataStructures.empty
+            !technologyModel.collectionTypes.empty || !technologyModel.dataStructures.empty
         if (!technologyDefinesTypes)
             error("Technology does not specify types and cannot be marked as default type " +
                 "definition technology",

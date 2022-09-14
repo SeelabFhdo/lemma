@@ -75,8 +75,8 @@ internal class IntermediateDomainModelAnalysis : AbstractAnalysisModule<Intermed
         val boundedContextCount = analyzer.countBoundedContexts()
         val enumerationsPerBoundedContext = analyzer.countEnumerationsPerBoundedContext()
         val totalEnumerationCount = enumerationsPerBoundedContext.values.sum()
-        val listTypesPerBoundedContext = analyzer.countListTypesPerBoundedContext()
-        val totalListTypeCount = listTypesPerBoundedContext.values.sum()
+        val collectionTypesPerBoundedContext = analyzer.countCollectionTypesPerBoundedContext()
+        val totalCollectionTypeCount = collectionTypesPerBoundedContext.values.sum()
         val structuresPerBoundedContext = analyzer.countDataStructuresPerBoundedContext()
         val totalStructureCount = structuresPerBoundedContext.values.sum()
 
@@ -97,12 +97,12 @@ internal class IntermediateDomainModelAnalysis : AbstractAnalysisModule<Intermed
         ValueStore["totalEnumerationCount"] = totalEnumerationCount
 
         blankLine()
-        items(listTypesPerBoundedContext, heading = "# List Types per Bounded Context")
-        listTypesPerBoundedContext.putToValueStore("listTypesCountInContext")
-        itemItem(totalListTypeCount, "Total List Type Count")
-        ValueStore["totalListTypeCount"] = totalListTypeCount
+        items(collectionTypesPerBoundedContext, heading = "# Collection Types per Bounded Context")
+        collectionTypesPerBoundedContext.putToValueStore("collectionTypesCountInContext")
+        itemItem(totalCollectionTypeCount, "Total Collection Type Count")
+        ValueStore["totalCollectionTypeCount"] = totalCollectionTypeCount
 
-        ValueStore["totalDomainConceptCount"] = totalStructureCount + totalEnumerationCount + totalListTypeCount
+        ValueStore["totalDomainConceptCount"] = totalStructureCount + totalEnumerationCount + totalCollectionTypeCount
     }
 
     /**

@@ -12,11 +12,11 @@ import org.eclipse.emf.ecore.EObject;
  * <!-- begin-model-doc -->
  * *
  * Intermediate concept for any possible type in the context of the languages, i.e., it may be of
- * one of the kinds primitive, list, or data structure, and one of the origins built-in, data model,
- * technology. Note that currently only the following combinations are possible:
+ * one of the kinds primitive, collection, or data structure, and one of the origins built-in,
+ * data model, technology. Note that currently only the following combinations are possible:
  *      kind                origins
  *      primitive           built-in, technology
- *      list                data model, technology
+ *      collection          data model, technology
  *      data structure      data model, technology
  * However, code generators should not depend on these combinations.
  * <!-- end-model-doc -->

@@ -12,7 +12,7 @@ technology lakesideMutual {
         primitive type Short based on short default;
         primitive type String based on string default;
 
-        list type Page;
+        collection type Page;
     }
 
     service aspects {

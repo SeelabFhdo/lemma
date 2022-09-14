@@ -1,28 +1,28 @@
 context SharedDomainConcepts {
-	structure Money<valueObject> {
-		immutable double amount,
-		function Money add(Money delta),
-		function boolean isGreaterThanOrEqual(Money other),
-		function string asString,
-		function Money multiply(int x)
-	}
+    structure Money<valueObject> {
+        immutable double amount,
+        function Money add(Money delta)<sideEffectFree>,
+        function boolean isGreaterThanOrEqual(Money other)<sideEffectFree>,
+        function string asString<sideEffectFree>,
+        function Money multiply(int x)<sideEffectFree>
+    }
 }
 
 context DomainEvents {
-	structure RestaurantCreated<domainEvent, valueObject> {
-		string name,
-		RestaurantMenu menu
-	}
+    structure RestaurantCreated<domainEvent, valueObject> {
+        immutable string name,
+        immutable RestaurantMenu menu
+    }
 
-	structure RestaurantMenu<valueObject> {
-		MenuItems menuItems
-	}
+    structure RestaurantMenu<valueObject> {
+        immutable MenuItems menuItems
+    }
 
-	structure MenuItem<valueObject> {
-		string id,
-		string name,
-		SharedDomainConcepts.Money price
-	}
+    structure MenuItem<valueObject> {
+        immutable string id,
+        immutable string name,
+        immutable SharedDomainConcepts.Money price
+    }
 
-	list MenuItems { MenuItem i }
+    collection MenuItems { MenuItem i }
 }

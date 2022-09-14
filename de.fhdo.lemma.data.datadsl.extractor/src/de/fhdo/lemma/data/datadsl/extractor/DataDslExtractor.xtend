@@ -15,7 +15,7 @@ import static de.fhdo.lemma.data.datadsl.extractor.Util.*
 import de.fhdo.lemma.data.Context
 import de.fhdo.lemma.data.Enumeration
 import de.fhdo.lemma.data.EnumerationField
-import de.fhdo.lemma.data.ListType
+import de.fhdo.lemma.data.CollectionType
 import de.fhdo.lemma.data.Version
 
 /**
@@ -74,7 +74,7 @@ class DataDslExtractor {
         return switch(complexType) {
             DataStructure: complexType.extractToString
             Enumeration: complexType.extractToString
-            ListType: complexType.extractToString
+            CollectionType: complexType.extractToString
         }
     }
 
@@ -177,20 +177,20 @@ class DataDslExtractor {
     }
 
     /**
-     * Extract ListType
+     * Extract CollectionType
      */
-    def String extractToString(ListType listType) {
-        val preamble = '''list «lemmaName(listType.name)»'''
+    def String extractToString(CollectionType collectionType) {
+        val preamble = '''collection «lemmaName(CollectionType.name)»'''
 
-        // Extract primitive list
-        if (listType.isPrimitiveList)
-            '''«preamble» { «listType.primitiveType.extractTypeReferenceToString» }'''
+        // Extract primitive collection
+        if (collectionType.isPrimitiveCollection)
+            '''«preamble» { «collectionType.primitiveType.extractTypeReferenceToString» }'''
 
-        // Extract structured list
-        else if (listType.isStructuredList) {
-            val fieldDefinitions = listType.dataFields.map[
+        // Extract structured collection
+        else if (collectionType.isStructuredCollection) {
+            val fieldDefinitions = collectionType.dataFields.map[
                 val fieldTypeReference = effectiveType.extractTypeReferenceToString(
-                    qualifiedName(listType)
+                    qualifiedName(collectionType)
                 )
                 '''«fieldTypeReference» «lemmaName(name)»'''
             ].join(", ")
@@ -198,7 +198,7 @@ class DataDslExtractor {
             '''«preamble» { «fieldDefinitions» }'''
         }
 
-        // Empty list
+        // Empty collection
         else
             '''«preamble» {}'''
     }

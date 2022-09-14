@@ -3,8 +3,6 @@
  */
 package de.fhdo.lemma.operationdsl.ide;
 
-import de.fhdo.lemma.operationdsl.ide.AbstractOperationDslIdeModule;
-
 /**
  * Use this class to register ide components.
  */

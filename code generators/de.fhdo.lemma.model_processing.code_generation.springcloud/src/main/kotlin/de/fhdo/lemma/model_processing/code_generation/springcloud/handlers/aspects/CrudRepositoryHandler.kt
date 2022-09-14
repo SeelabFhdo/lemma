@@ -8,7 +8,7 @@ import de.fhdo.lemma.data.intermediate.IntermediateComplexType
 import de.fhdo.lemma.data.intermediate.IntermediateDataOperation
 import de.fhdo.lemma.data.intermediate.IntermediateDataStructure
 import de.fhdo.lemma.data.intermediate.IntermediateImportedAspect
-import de.fhdo.lemma.data.intermediate.IntermediateListType
+import de.fhdo.lemma.data.intermediate.IntermediateCollectionType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
 import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.AspectHandler
@@ -88,15 +88,15 @@ internal class CrudRepositoryHandler : AspectHandlerI {
     /**
      * Helper to get the data structure being managed by this repository. The data structure is identified from the
      * first data field in the repository with an [IntermediateDataStructure] type or the first data field, whose type
-     * is a structure list with only one field having an [IntermediateDataStructure] type.
+     * is a structured collection with only one field having an [IntermediateDataStructure] type.
      */
     private fun IntermediateDataStructure.getManagedStructure() : IntermediateDataStructure? {
         val managedField = dataFields.find { it.type is IntermediateComplexType } ?: return null
         val resolvedType = (managedField.type as IntermediateComplexType).resolve()
         return if (resolvedType is IntermediateDataStructure)
             resolvedType
-        else if (resolvedType is IntermediateListType &&
-            resolvedType.isStructuredList &&
+        else if (resolvedType is IntermediateCollectionType &&
+            resolvedType.isStructuredCollection &&
             resolvedType.dataFields.size == 1) {
             val managedType = resolvedType.dataFields[0].type as IntermediateComplexType
             managedType.resolve() as IntermediateDataStructure

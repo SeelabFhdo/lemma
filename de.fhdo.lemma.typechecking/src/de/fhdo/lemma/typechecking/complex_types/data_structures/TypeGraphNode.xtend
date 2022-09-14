@@ -4,7 +4,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import de.fhdo.lemma.data.ComplexType
 import java.util.List
 import de.fhdo.lemma.data.PrimitiveType
-import de.fhdo.lemma.data.ListType
+import de.fhdo.lemma.data.CollectionType
 import org.eclipse.emf.common.util.EList
 import de.fhdo.lemma.data.DataStructure
 import de.fhdo.lemma.data.DataField
@@ -75,29 +75,29 @@ class TypeGraphNode {
     def getPrimitiveTypeFields(ORDERING ordering) {
         val primitiveTypeFieldInfo = <String, PrimitiveType> newHashMap
 
-        if (!type.isPrimitiveList && !type.isStructure && !type.isStructuredList)
+        if (!type.isPrimitiveCollection && !type.isStructure && !type.isStructuredCollection)
             return primitiveTypeFieldInfo
 
         /*
-         * Type is a primitively typed list. This means, that the list exhibits one "field" that has
-         * no name and whose type is the primitive list type.
+         * Type is a primitively typed collection. This means, that the collection exhibits one
+         * "field" that has no name and whose type is the primitive collection type.
          */
-        if (type.isPrimitiveList) {
-            primitiveTypeFieldInfo.put("", (type as ListType).primitiveType)
+        if (type.isPrimitiveCollection) {
+            primitiveTypeFieldInfo.put("", (type as CollectionType).primitiveType)
             return primitiveTypeFieldInfo
         }
 
         /*
-         * Type is data structure (and hence may have data fields) or structured list, i.e., a list
-         * consisting of named and typed fields.
+         * Type is data structure (and hence may have data fields) or structured collection, i.e., a
+         * collection consisting of named and typed fields.
          */
         var EList<DataField> dataFields = null
         if (type.isStructure)
             // For structures resolve inheritance hierarchy and use the resulting "effective" data
             // fields
             dataFields = (type as DataStructure).effectiveFields
-        else if (type.isStructuredList)
-            dataFields = (type as ListType).dataFields
+        else if (type.isStructuredCollection)
+            dataFields = (type as CollectionType).dataFields
 
         val primitiveDataFields = dataFields
             .filter[it.effectiveType instanceof PrimitiveType]

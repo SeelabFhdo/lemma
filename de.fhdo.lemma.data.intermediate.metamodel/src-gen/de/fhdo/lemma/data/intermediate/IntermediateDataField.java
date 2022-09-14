@@ -32,7 +32,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#getOriginalType <em>Original Type</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#getAspects <em>Aspects</em>}</li>
  *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#getDataStructure <em>Data Structure</em>}</li>
- *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#getListType <em>List Type</em>}</li>
+ *   <li>{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#getCollectionType <em>Collection Type</em>}</li>
  * </ul>
  *
  * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateDataField()
@@ -283,28 +283,28 @@ public interface IntermediateDataField extends EObject {
     void setDataStructure(IntermediateDataStructure value);
 
     /**
-     * Returns the value of the '<em><b>List Type</b></em>' container reference.
-     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateListType#getDataFields <em>Data Fields</em>}'.
+     * Returns the value of the '<em><b>Collection Type</b></em>' container reference.
+     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateCollectionType#getDataFields <em>Data Fields</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the value of the '<em>List Type</em>' container reference.
-     * @see #setListType(IntermediateListType)
-     * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateDataField_ListType()
-     * @see de.fhdo.lemma.data.intermediate.IntermediateListType#getDataFields
+     * @return the value of the '<em>Collection Type</em>' container reference.
+     * @see #setCollectionType(IntermediateCollectionType)
+     * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateDataField_CollectionType()
+     * @see de.fhdo.lemma.data.intermediate.IntermediateCollectionType#getDataFields
      * @model opposite="dataFields" transient="false"
      * @generated
      */
-    IntermediateListType getListType();
+    IntermediateCollectionType getCollectionType();
 
     /**
-     * Sets the value of the '{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#getListType <em>List Type</em>}' container reference.
+     * Sets the value of the '{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#getCollectionType <em>Collection Type</em>}' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>List Type</em>' container reference.
-     * @see #getListType()
+     * @param value the new value of the '<em>Collection Type</em>' container reference.
+     * @see #getCollectionType()
      * @generated
      */
-    void setListType(IntermediateListType value);
+    void setCollectionType(IntermediateCollectionType value);
 
     /**
      * <!-- begin-user-doc -->

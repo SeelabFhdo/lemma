@@ -189,7 +189,7 @@ class TechnologyDslScopeProvider extends AbstractTechnologyDslScopeProvider {
             importUri,
             [val List<Type> types = <Type> newArrayList
              types.addAll(primitiveTypes)
-             types.addAll(listTypes)
+             types.addAll(collectionTypes)
              types.addAll(dataStructures)
              return types
             ],

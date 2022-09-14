@@ -6,6 +6,7 @@ package de.fhdo.lemma.data.scoping;
 import com.google.common.base.Function;
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
+import de.fhdo.lemma.data.CollectionType;
 import de.fhdo.lemma.data.ComplexType;
 import de.fhdo.lemma.data.ComplexTypeImport;
 import de.fhdo.lemma.data.Context;
@@ -15,9 +16,7 @@ import de.fhdo.lemma.data.DataOperation;
 import de.fhdo.lemma.data.DataPackage;
 import de.fhdo.lemma.data.DataStructure;
 import de.fhdo.lemma.data.ImportedComplexType;
-import de.fhdo.lemma.data.ListType;
 import de.fhdo.lemma.data.Version;
-import de.fhdo.lemma.data.scoping.AbstractDataDslScopeProvider;
 import de.fhdo.lemma.utils.LemmaUtils;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,9 +63,9 @@ public class DataDslScopeProvider extends AbstractDataDslScopeProvider {
       }
     }
     if (!_matched) {
-      if (context instanceof ListType) {
+      if (context instanceof CollectionType) {
         _matched=true;
-        _switchResult = this.getScope(((ListType)context), reference);
+        _switchResult = this.getScope(((CollectionType)context), reference);
       }
     }
     if (!_matched) {
@@ -228,17 +227,17 @@ public class DataDslScopeProvider extends AbstractDataDslScopeProvider {
   /**
    * Build scope for the given reference in the context of a data structure
    */
-  private IScope getScope(final ListType listType, final EReference reference) {
+  private IScope getScope(final CollectionType collectionType, final EReference reference) {
     boolean _matched = false;
     if (Objects.equal(reference, DataPackage.Literals.IMPORTED_COMPLEX_TYPE__IMPORT)) {
       _matched=true;
-      final DataModel dataModel = EcoreUtil2.<DataModel>getContainerOfType(listType, DataModel.class);
+      final DataModel dataModel = EcoreUtil2.<DataModel>getContainerOfType(collectionType, DataModel.class);
       return Scopes.scopeFor(dataModel.getComplexTypeImports());
     }
     if (!_matched) {
       if (Objects.equal(reference, DataPackage.Literals.DATA_FIELD__COMPLEX_TYPE)) {
         _matched=true;
-        return this.getScopeForPossiblyImportedComplexTypes(listType, null);
+        return this.getScopeForPossiblyImportedComplexTypes(collectionType, null);
       }
     }
     return null;

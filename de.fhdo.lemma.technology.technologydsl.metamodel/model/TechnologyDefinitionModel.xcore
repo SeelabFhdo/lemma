@@ -37,7 +37,7 @@ class Technology {
 
     contains TechnologyImport[] imports opposite technology
     contains TechnologySpecificPrimitiveType[] primitiveTypes opposite technology
-    contains TechnologySpecificListType[] listTypes opposite technology
+    contains TechnologySpecificCollectionType[] collectionTypes opposite technology
     contains TechnologySpecificDataStructure[] dataStructures opposite technology
     contains CompatibilityMatrixEntry[] compatibilityEntries opposite technology
     contains Protocol[] protocols opposite technology
@@ -195,16 +195,16 @@ class TechnologySpecificPrimitiveType extends PrimitiveType {
 }
 
 /**
- * A list type that is specific to a certain technology, e.g., Queue for Java
+ * A collection type that is specific to a certain technology, e.g., Queue for Java
  */
-class TechnologySpecificListType extends ComplexType {
+class TechnologySpecificCollectionType extends ComplexType {
     /**
      * Implicit Constraints:
      *     (C1) Name must be unique.
      *          Ensured by: DSL validator.
      */
 
-    container Technology technology opposite listTypes
+    container Technology technology opposite collectionTypes
 
     /**
      * Get parts of the type for creating a qualified name

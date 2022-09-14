@@ -29,7 +29,7 @@ context Web {
         ActionInfoList courierActions
     }
 
-    list ActionInfoList {
+    collection ActionInfoList {
         ActionInfo infos
     }
 }

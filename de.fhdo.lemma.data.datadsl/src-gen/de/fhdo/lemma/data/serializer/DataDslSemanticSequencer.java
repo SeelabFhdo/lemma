@@ -4,6 +4,7 @@
 package de.fhdo.lemma.data.serializer;
 
 import com.google.inject.Inject;
+import de.fhdo.lemma.data.CollectionType;
 import de.fhdo.lemma.data.ComplexTypeImport;
 import de.fhdo.lemma.data.Context;
 import de.fhdo.lemma.data.DataField;
@@ -15,7 +16,6 @@ import de.fhdo.lemma.data.DataStructure;
 import de.fhdo.lemma.data.Enumeration;
 import de.fhdo.lemma.data.EnumerationField;
 import de.fhdo.lemma.data.ImportedComplexType;
-import de.fhdo.lemma.data.ListType;
 import de.fhdo.lemma.data.PrimitiveBoolean;
 import de.fhdo.lemma.data.PrimitiveByte;
 import de.fhdo.lemma.data.PrimitiveCharacter;
@@ -55,6 +55,9 @@ public class DataDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 		Set<Parameter> parameters = context.getEnabledBooleanParameters();
 		if (epackage == DataPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
+			case DataPackage.COLLECTION_TYPE:
+				sequence_CollectionType(context, (CollectionType) semanticObject); 
+				return; 
 			case DataPackage.COMPLEX_TYPE_IMPORT:
 				sequence_ComplexTypeImport(context, (ComplexTypeImport) semanticObject); 
 				return; 
@@ -84,9 +87,6 @@ public class DataDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 				return; 
 			case DataPackage.IMPORTED_COMPLEX_TYPE:
 				sequence_ImportedComplexType(context, (ImportedComplexType) semanticObject); 
-				return; 
-			case DataPackage.LIST_TYPE:
-				sequence_ListType(context, (ListType) semanticObject); 
 				return; 
 			case DataPackage.PRIMITIVE_BOOLEAN:
 				sequence_PrimitiveType(context, (PrimitiveBoolean) semanticObject); 
@@ -131,6 +131,19 @@ public class DataDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 		if (errorAcceptor != null)
 			errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
 	}
+	
+	/**
+	 * Contexts:
+	 *     ComplexType returns CollectionType
+	 *     CollectionType returns CollectionType
+	 *
+	 * Constraint:
+	 *     ((name=ID dataFields+=DataField dataFields+=DataField*) | (name=ID primitiveType=PrimitiveType))
+	 */
+	protected void sequence_CollectionType(ISerializationContext context, CollectionType semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
 	
 	/**
 	 * Contexts:
@@ -242,7 +255,7 @@ public class DataDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *         name=ID 
 	 *         (features+=ComplexTypeFeature features+=ComplexTypeFeature*)? 
 	 *         super=[DataStructure|QualifiedName]? 
-	 *         ((dataFields+=DataField | operations+=DataOperation) operations+=DataOperation? (dataFields+=DataField? operations+=DataOperation?)*)?
+	 *         ((dataFields+=DataField | operations+=DataOperation) dataFields+=DataField? (operations+=DataOperation? dataFields+=DataField?)*)?
 	 *     )
 	 */
 	protected void sequence_DataStructure(ISerializationContext context, DataStructure semanticObject) {
@@ -293,19 +306,6 @@ public class DataDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 		feeder.accept(grammarAccess.getImportedComplexTypeAccess().getImportComplexTypeImportIDTerminalRuleCall_0_0_1(), semanticObject.eGet(DataPackage.Literals.IMPORTED_COMPLEX_TYPE__IMPORT, false));
 		feeder.accept(grammarAccess.getImportedComplexTypeAccess().getImportedTypeTypeQualifiedNameParserRuleCall_2_0_1(), semanticObject.eGet(DataPackage.Literals.IMPORTED_COMPLEX_TYPE__IMPORTED_TYPE, false));
 		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     ComplexType returns ListType
-	 *     ListType returns ListType
-	 *
-	 * Constraint:
-	 *     ((name=ID dataFields+=DataField dataFields+=DataField*) | (name=ID primitiveType=PrimitiveType))
-	 */
-	protected void sequence_ListType(ISerializationContext context, ListType semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	

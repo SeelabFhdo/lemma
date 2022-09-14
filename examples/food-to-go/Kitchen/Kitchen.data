@@ -22,7 +22,7 @@ context Domain {
       string name,
       Common::Common.Money price
   }
-  list RestaurantMenu {MenuItem items}
+  collection RestaurantMenu {MenuItem items}
 
  structure Restaurant<aggregate, entity> {
       string id<identifier>,

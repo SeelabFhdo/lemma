@@ -3,7 +3,7 @@ package de.fhdo.lemma.model_processing.code_generation.lakeside_mutual.handlers
 import com.github.javaparser.ast.body.MethodDeclaration
 import de.fhdo.lemma.data.intermediate.IntermediateComplexType
 import de.fhdo.lemma.data.intermediate.IntermediateDataOperation
-import de.fhdo.lemma.data.intermediate.IntermediateListType
+import de.fhdo.lemma.data.intermediate.IntermediateCollectionType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.ImportTargetElementType
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addDependencies
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.addImport
@@ -36,9 +36,10 @@ internal class IntermediateDataOperationHandler
             else
                 eObject.returnType.originalType
 
-        val fieldTypeName = if (originalReturnType is IntermediateListType) {
+        val fieldTypeName = if (originalReturnType is IntermediateCollectionType) {
             when {
-                originalReturnType.isPrimitiveList -> originalReturnType.primitiveType.getTypeMapping()!!.mappedTypeName
+                originalReturnType.isPrimitiveCollection ->
+                    originalReturnType.primitiveType.getTypeMapping()!!.mappedTypeName
 
                 originalReturnType.dataFields.size == 1 -> {
                     val type = originalReturnType.dataFields[0].type

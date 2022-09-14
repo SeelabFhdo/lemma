@@ -17,7 +17,7 @@ import org.eclipse.xtext.scoping.Scopes
 import de.fhdo.lemma.utils.LemmaUtils
 import de.fhdo.lemma.data.DataOperation
 import de.fhdo.lemma.data.DataField
-import de.fhdo.lemma.data.ListType
+import de.fhdo.lemma.data.CollectionType
 import de.fhdo.lemma.data.ComplexType
 
 /**
@@ -40,8 +40,8 @@ class DataDslScopeProvider extends AbstractDataDslScopeProvider {
             /* Data structures */
             DataStructure: context.getScope(reference)
 
-            /* List types */
-            ListType: context.getScope(reference)
+            /* Collection types */
+            CollectionType: context.getScope(reference)
 
             /* Data fields */
             DataField: context.getScope(reference)
@@ -174,15 +174,15 @@ class DataDslScopeProvider extends AbstractDataDslScopeProvider {
     /**
      * Build scope for the given reference in the context of a data structure
      */
-    private def getScope(ListType listType, EReference reference) {
+    private def getScope(CollectionType collectionType, EReference reference) {
         switch (reference) {
             case DataPackage::Literals.IMPORTED_COMPLEX_TYPE__IMPORT: {
-                val dataModel = EcoreUtil2.getContainerOfType(listType, DataModel)
+                val dataModel = EcoreUtil2.getContainerOfType(collectionType, DataModel)
                 return Scopes::scopeFor(dataModel.complexTypeImports)
             }
 
             case DataPackage::Literals.DATA_FIELD__COMPLEX_TYPE:
-                return listType.getScopeForPossiblyImportedComplexTypes(null)
+                return collectionType.getScopeForPossiblyImportedComplexTypes(null)
         }
     }
 

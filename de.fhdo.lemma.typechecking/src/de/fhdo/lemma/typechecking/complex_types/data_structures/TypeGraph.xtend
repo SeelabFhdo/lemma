@@ -7,7 +7,7 @@ import java.util.Set
 import org.eclipse.emf.common.util.EList
 import de.fhdo.lemma.data.DataField
 import de.fhdo.lemma.data.DataStructure
-import de.fhdo.lemma.data.ListType
+import de.fhdo.lemma.data.CollectionType
 import org.eclipse.xtext.naming.QualifiedName
 import java.util.Iterator
 import java.util.NoSuchElementException
@@ -59,9 +59,9 @@ class TypeGraph {
 
             if (currentType.isStructure)
                 currentTypeFields = (currentType as DataStructure).effectiveFields
-            else if (currentType.isStructuredList) {
-                val currentListType = currentType as ListType
-                currentTypeFields = currentListType.dataFields
+            else if (currentType.isStructuredCollection) {
+                val currentCollectionType = currentType as CollectionType
+                currentTypeFields = currentCollectionType.dataFields
             }
 
             if (currentTypeFields !== null)

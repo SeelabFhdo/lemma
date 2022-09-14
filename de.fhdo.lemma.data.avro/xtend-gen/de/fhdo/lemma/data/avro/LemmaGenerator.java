@@ -1,6 +1,7 @@
 package de.fhdo.lemma.data.avro;
 
 import com.google.common.base.Objects;
+import de.fhdo.lemma.data.CollectionType;
 import de.fhdo.lemma.data.ComplexType;
 import de.fhdo.lemma.data.Context;
 import de.fhdo.lemma.data.DataFactory;
@@ -9,7 +10,6 @@ import de.fhdo.lemma.data.DataModel;
 import de.fhdo.lemma.data.DataStructure;
 import de.fhdo.lemma.data.Enumeration;
 import de.fhdo.lemma.data.EnumerationField;
-import de.fhdo.lemma.data.ListType;
 import de.fhdo.lemma.data.PrimitiveInteger;
 import de.fhdo.lemma.data.PrimitiveType;
 import de.fhdo.lemma.data.PrimitiveValue;
@@ -762,7 +762,7 @@ public class LemmaGenerator {
     if (_type_1 != null) {
       switch (_type_1) {
         case ARRAY:
-          _switchResult = this.toListType(schema, namespace);
+          _switchResult = this.toCollectionType(schema, namespace);
           break;
         case MAP:
         case UNION:
@@ -791,54 +791,54 @@ public class LemmaGenerator {
   
   /**
    * Generate LEMMA EObjects from Avro Array schema in the given namespace. Returns a pair
-   * consisting of the EObject (LEMMA ListType) specifically derived from the passed schema and
-   * all other EObjects that were derived during EObject generation in the context of the passed
-   * schema.
+   * consisting of the EObject (LEMMA CollectionType) specifically derived from the passed schema
+   * and all other EObjects that were derived during EObject generation in the context of the
+   * passed schema.
    */
-  public Pair<EObject, Map<Class<? extends EObject>, List<EObject>>> toListType(final Schema schema, final String namespace) {
+  public Pair<EObject, Map<Class<? extends EObject>, List<EObject>>> toCollectionType(final Schema schema, final String namespace) {
     this.ensureType(schema, Schema.Type.ARRAY);
     String _lemmaNameElseSchemaName = this.lemmaNameElseSchemaName(schema);
     String _lemmaName = Shared.lemmaName(schema);
     boolean _tripleNotEquals = (_lemmaName != null);
-    final ListType listType = this.createListType(_lemmaNameElseSchemaName, namespace, _tripleNotEquals);
-    this.startedEObjectCreation(DataModel.class, listType);
+    final CollectionType collectionType = this.createCollectionType(_lemmaNameElseSchemaName, namespace, _tripleNotEquals);
+    this.startedEObjectCreation(DataModel.class, collectionType);
     final Schema typeSchema = schema.getElementType();
     boolean _isPrimitiveAvroType = Shared.isPrimitiveAvroType(typeSchema);
     if (_isPrimitiveAvroType) {
-      listType.setPrimitiveType(Shared.toPrimitiveLemmaType(schema.getElementType()));
+      collectionType.setPrimitiveType(Shared.toPrimitiveLemmaType(schema.getElementType()));
     } else {
       Schema.Type _type = typeSchema.getType();
       boolean _equals = Objects.equal(_type, Schema.Type.RECORD);
       if (_equals) {
         final Function1<Schema.Field, DataField> _function = (Schema.Field it) -> {
-          return this.toDataField(it.name(), it.schema(), null, listType);
+          return this.toDataField(it.name(), it.schema(), null, collectionType);
         };
-        listType.getDataFields().addAll(
+        collectionType.getDataFields().addAll(
           ListExtensions.<Schema.Field, DataField>map(typeSchema.getFields(), _function));
       } else {
-        listType.getDataFields().add(
-          this.toDataField(StringExtensions.toFirstLower(this.lemmaNameElseSchemaName(typeSchema)), typeSchema, null, listType));
+        collectionType.getDataFields().add(
+          this.toDataField(StringExtensions.toFirstLower(this.lemmaNameElseSchemaName(typeSchema)), typeSchema, null, collectionType));
       }
     }
-    this.finishedEObjectCreation(DataModel.class, listType);
+    this.finishedEObjectCreation(DataModel.class, collectionType);
     Map<Class<? extends EObject>, List<EObject>> _allCreatedEObjects = this.allCreatedEObjects();
-    return Pair.<EObject, Map<Class<? extends EObject>, List<EObject>>>of(listType, _allCreatedEObjects);
+    return Pair.<EObject, Map<Class<? extends EObject>, List<EObject>>>of(collectionType, _allCreatedEObjects);
   }
   
   /**
-   * Create LEMMA ListType with the given name and in the LEMMA namespace corresponding to the
-   * given Avro namespace. A unique name for the ListType may be generated, e.g., when the source
-   * Avro schema was an unnamed nested schema inside another schema.
+   * Create LEMMA CollectionType with the given name and in the LEMMA namespace corresponding to
+   * the given Avro namespace. A unique name for the CollectionType may be generated, e.g., when
+   * the source Avro schema was an unnamed nested schema inside another schema.
    */
-  private ListType createListType(final String name, final String avroNamespace, final boolean generateUniqueName) {
-    final ListType listType = LemmaGenerator.DATA_FACTORY.createListType();
-    listType.setName(name);
-    listType.setVersion(this.getOrCreateVersion(avroNamespace));
-    listType.setContext(this.getOrCreateContext(avroNamespace));
+  private CollectionType createCollectionType(final String name, final String avroNamespace, final boolean generateUniqueName) {
+    final CollectionType collectionType = LemmaGenerator.DATA_FACTORY.createCollectionType();
+    collectionType.setName(name);
+    collectionType.setVersion(this.getOrCreateVersion(avroNamespace));
+    collectionType.setContext(this.getOrCreateContext(avroNamespace));
     if (generateUniqueName) {
-      listType.setName(this.toUniqueName(Util.qualifiedName(listType), DataModel.class));
+      collectionType.setName(this.toUniqueName(Util.qualifiedName(collectionType), DataModel.class));
     }
-    return listType;
+    return collectionType;
   }
   
   /**

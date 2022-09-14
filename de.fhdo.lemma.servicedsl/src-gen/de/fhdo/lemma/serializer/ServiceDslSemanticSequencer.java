@@ -4,6 +4,7 @@
 package de.fhdo.lemma.serializer;
 
 import com.google.inject.Inject;
+import de.fhdo.lemma.data.CollectionType;
 import de.fhdo.lemma.data.ComplexTypeImport;
 import de.fhdo.lemma.data.Context;
 import de.fhdo.lemma.data.DataField;
@@ -15,7 +16,6 @@ import de.fhdo.lemma.data.DataStructure;
 import de.fhdo.lemma.data.Enumeration;
 import de.fhdo.lemma.data.EnumerationField;
 import de.fhdo.lemma.data.ImportedComplexType;
-import de.fhdo.lemma.data.ListType;
 import de.fhdo.lemma.data.PrimitiveBoolean;
 import de.fhdo.lemma.data.PrimitiveByte;
 import de.fhdo.lemma.data.PrimitiveCharacter;
@@ -64,8 +64,8 @@ import de.fhdo.lemma.technology.ServiceAspectPointcutSelector;
 import de.fhdo.lemma.technology.Technology;
 import de.fhdo.lemma.technology.TechnologyImport;
 import de.fhdo.lemma.technology.TechnologyPackage;
+import de.fhdo.lemma.technology.TechnologySpecificCollectionType;
 import de.fhdo.lemma.technology.TechnologySpecificDataStructure;
-import de.fhdo.lemma.technology.TechnologySpecificListType;
 import de.fhdo.lemma.technology.TechnologySpecificPrimitiveType;
 import de.fhdo.lemma.technology.TechnologySpecificProperty;
 import de.fhdo.lemma.technology.TechnologySpecificPropertyValueAssignment;
@@ -94,6 +94,9 @@ public class ServiceDslSemanticSequencer extends TechnologyDslSemanticSequencer 
 		Set<Parameter> parameters = context.getEnabledBooleanParameters();
 		if (epackage == DataPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
+			case DataPackage.COLLECTION_TYPE:
+				sequence_CollectionType(context, (CollectionType) semanticObject); 
+				return; 
 			case DataPackage.COMPLEX_TYPE_IMPORT:
 				sequence_ComplexTypeImport(context, (ComplexTypeImport) semanticObject); 
 				return; 
@@ -123,9 +126,6 @@ public class ServiceDslSemanticSequencer extends TechnologyDslSemanticSequencer 
 				return; 
 			case DataPackage.IMPORTED_COMPLEX_TYPE:
 				sequence_ImportedComplexType(context, (ImportedComplexType) semanticObject); 
-				return; 
-			case DataPackage.LIST_TYPE:
-				sequence_ListType(context, (ListType) semanticObject); 
 				return; 
 			case DataPackage.PRIMITIVE_BOOLEAN:
 				sequence_PrimitiveType(context, (PrimitiveBoolean) semanticObject); 
@@ -271,11 +271,11 @@ public class ServiceDslSemanticSequencer extends TechnologyDslSemanticSequencer 
 			case TechnologyPackage.TECHNOLOGY_IMPORT:
 				sequence_TechnologyImport(context, (TechnologyImport) semanticObject); 
 				return; 
+			case TechnologyPackage.TECHNOLOGY_SPECIFIC_COLLECTION_TYPE:
+				sequence_TechnologySpecificCollectionType(context, (TechnologySpecificCollectionType) semanticObject); 
+				return; 
 			case TechnologyPackage.TECHNOLOGY_SPECIFIC_DATA_STRUCTURE:
 				sequence_TechnologySpecificDataStructure(context, (TechnologySpecificDataStructure) semanticObject); 
-				return; 
-			case TechnologyPackage.TECHNOLOGY_SPECIFIC_LIST_TYPE:
-				sequence_TechnologySpecificListType(context, (TechnologySpecificListType) semanticObject); 
 				return; 
 			case TechnologyPackage.TECHNOLOGY_SPECIFIC_PRIMITIVE_TYPE:
 				sequence_TechnologySpecificPrimitiveType(context, (TechnologySpecificPrimitiveType) semanticObject); 

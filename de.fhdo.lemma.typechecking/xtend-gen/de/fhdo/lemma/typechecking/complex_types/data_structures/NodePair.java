@@ -1,7 +1,5 @@
 package de.fhdo.lemma.typechecking.complex_types.data_structures;
 
-import de.fhdo.lemma.typechecking.complex_types.data_structures.NodeSeries;
-import de.fhdo.lemma.typechecking.complex_types.data_structures.TypeGraphNode;
 import java.util.ArrayList;
 import org.eclipse.xtend.lib.annotations.AccessorType;
 import org.eclipse.xtend.lib.annotations.Accessors;

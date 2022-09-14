@@ -120,7 +120,7 @@ public final class Util {
   /**
    * List of reserved keywords of the Data DSL
    */
-  private static final List<String> RESERVED_KEYWORDS = Collections.<String>unmodifiableList(CollectionLiterals.<String>newArrayList("as", "context", "datatypes", "enum", "from", "import", "list", "structure", "version"));
+  private static final List<String> RESERVED_KEYWORDS = Collections.<String>unmodifiableList(CollectionLiterals.<String>newArrayList("as", "collection", "context", "datatypes", "enum", "from", "import", "structure", "version"));
   
   /**
    * Escape Data DSL keyword

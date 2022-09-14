@@ -78,7 +78,6 @@ public class IntermediateEnumerationImpl extends IntermediateComplexTypeImpl imp
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<String> getFeatureNames() {
         if (featureNames == null) {
             featureNames = new EDataTypeEList<String>(String.class, this, IntermediatePackage.INTERMEDIATE_ENUMERATION__FEATURE_NAMES);
@@ -91,7 +90,6 @@ public class IntermediateEnumerationImpl extends IntermediateComplexTypeImpl imp
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<IntermediateEnumerationField> getFields() {
         if (fields == null) {
             fields = new EObjectContainmentWithInverseEList<IntermediateEnumerationField>(IntermediateEnumerationField.class, this, IntermediatePackage.INTERMEDIATE_ENUMERATION__FIELDS, IntermediatePackage.INTERMEDIATE_ENUMERATION_FIELD__ENUMERATION);

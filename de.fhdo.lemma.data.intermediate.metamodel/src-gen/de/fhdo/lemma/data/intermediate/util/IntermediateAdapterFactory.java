@@ -120,8 +120,8 @@ public class IntermediateAdapterFactory extends AdapterFactoryImpl {
                 return createIntermediateDataOperationParameterAdapter();
             }
             @Override
-            public Adapter caseIntermediateListType(IntermediateListType object) {
-                return createIntermediateListTypeAdapter();
+            public Adapter caseIntermediateCollectionType(IntermediateCollectionType object) {
+                return createIntermediateCollectionTypeAdapter();
             }
             @Override
             public Adapter caseIntermediateDataField(IntermediateDataField object) {
@@ -350,16 +350,16 @@ public class IntermediateAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.fhdo.lemma.data.intermediate.IntermediateListType <em>List Type</em>}'.
+     * Creates a new adapter for an object of class '{@link de.fhdo.lemma.data.intermediate.IntermediateCollectionType <em>Collection Type</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.fhdo.lemma.data.intermediate.IntermediateListType
+     * @see de.fhdo.lemma.data.intermediate.IntermediateCollectionType
      * @generated
      */
-    public Adapter createIntermediateListTypeAdapter() {
+    public Adapter createIntermediateCollectionTypeAdapter() {
         return null;
     }
 

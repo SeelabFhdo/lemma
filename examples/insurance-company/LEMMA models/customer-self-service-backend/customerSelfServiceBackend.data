@@ -19,7 +19,7 @@ context customerSelfService {
         function Address toDomainObject<sideEffectFree>
     }
 
-    list AddressDtos { AddressDto d }
+    collection AddressDtos { AddressDto d }
 
     structure CustomerIdDto<valueObject> {
         immutable string id
@@ -34,7 +34,7 @@ context customerSelfService {
         immutable CustomerDtos customers
     }
 
-    list CustomerDtos { CustomerDto c }
+    collection CustomerDtos { CustomerDto c }
 
     structure CustomerProfileDto<valueObject> {
         immutable string firstname,
@@ -90,14 +90,14 @@ context customerSelfService {
         string password
     }
 
-    list Authorities { string authority }
+    collection Authorities { string authority }
 
     structure UserDetailsServiceImpl<domainService> {
         hide UserLoginRepository userRepository,
         function UserDetails loadUserByUsername(string email)
     }
 
-    list UserDetails { string username }
+    collection UserDetails { string username }
 
     structure AuthenticationRequestDto<valueObject> {
         immutable string email,
@@ -129,7 +129,7 @@ context customerSelfService {
         immutable Cities cities
     }
 
-    list Cities { string }
+    collection Cities { string }
 
     structure CustomerDecisionEvent<valueObject, domainEvent> {
         immutable date ^date,
@@ -228,7 +228,7 @@ context customerSelfService {
         immutable RequestStatus status
     }
 
-    list RequestStatusChanges { RequestStatusChange c }
+    collection RequestStatusChanges { RequestStatusChange c }
 
     structure CustomerCoreRemoteProxy<infrastructureService> {
         hide string customerCoreBaseURL,
@@ -252,7 +252,7 @@ context customerSelfService {
         function InsuranceQuoteRequestAggregateRoots findAllByOrderByDateDesc
     }
 
-    list InsuranceQuoteRequestAggregateRoots { InsuranceQuoteRequestAggregateRoot r }
+    collection InsuranceQuoteRequestAggregateRoots { InsuranceQuoteRequestAggregateRoot r }
 
     structure PolicyManagementMessageProducer<infrastructureService> {
         hide string insuranceQuoteRequestEventQueue,
@@ -308,7 +308,7 @@ context customerSelfService {
         )<sideEffectFree>
     }
 
-    list InsuranceQuoteRequestDtos { InsuranceQuoteRequestDto r }
+    collection InsuranceQuoteRequestDtos { InsuranceQuoteRequestDto r }
 
     structure InsuranceQuoteResponseDto<valueObject> {
         immutable string status<neverEmpty>,
@@ -331,5 +331,5 @@ context customerSelfService {
         	fromDomainObject(RequestStatusChange requestStatusChange)<sideEffectFree>
     }
 
-    list RequestStatusChangeDtos { RequestStatusChangeDto c }
+    collection RequestStatusChangeDtos { RequestStatusChangeDto c }
 }

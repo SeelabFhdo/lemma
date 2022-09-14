@@ -193,7 +193,6 @@ public class IntermediateDataOperationImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getName() {
         return name;
     }
@@ -203,7 +202,6 @@ public class IntermediateDataOperationImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -216,7 +214,6 @@ public class IntermediateDataOperationImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public String getQualifiedName() {
         return qualifiedName;
     }
@@ -226,7 +223,6 @@ public class IntermediateDataOperationImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setQualifiedName(String newQualifiedName) {
         String oldQualifiedName = qualifiedName;
         qualifiedName = newQualifiedName;
@@ -239,7 +235,6 @@ public class IntermediateDataOperationImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public boolean isHidden() {
         return hidden;
     }
@@ -249,7 +244,6 @@ public class IntermediateDataOperationImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setHidden(boolean newHidden) {
         boolean oldHidden = hidden;
         hidden = newHidden;
@@ -262,7 +256,6 @@ public class IntermediateDataOperationImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public boolean isInherited() {
         return inherited;
     }
@@ -272,7 +265,6 @@ public class IntermediateDataOperationImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setInherited(boolean newInherited) {
         boolean oldInherited = inherited;
         inherited = newInherited;
@@ -285,7 +277,6 @@ public class IntermediateDataOperationImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<String> getFeatureNames() {
         if (featureNames == null) {
             featureNames = new EDataTypeEList<String>(String.class, this, IntermediatePackage.INTERMEDIATE_DATA_OPERATION__FEATURE_NAMES);
@@ -298,7 +289,6 @@ public class IntermediateDataOperationImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateDataOperationReturnType getReturnType() {
         return returnType;
     }
@@ -323,7 +313,6 @@ public class IntermediateDataOperationImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setReturnType(IntermediateDataOperationReturnType newReturnType) {
         if (newReturnType != returnType) {
             NotificationChain msgs = null;
@@ -343,7 +332,6 @@ public class IntermediateDataOperationImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<IntermediateDataOperationParameter> getParameters() {
         if (parameters == null) {
             parameters = new EObjectContainmentWithInverseEList<IntermediateDataOperationParameter>(IntermediateDataOperationParameter.class, this, IntermediatePackage.INTERMEDIATE_DATA_OPERATION__PARAMETERS, IntermediatePackage.INTERMEDIATE_DATA_OPERATION_PARAMETER__OPERATION);
@@ -356,7 +344,6 @@ public class IntermediateDataOperationImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public EList<IntermediateImportedAspect> getAspects() {
         if (aspects == null) {
             aspects = new EObjectContainmentWithInverseEList<IntermediateImportedAspect>(IntermediateImportedAspect.class, this, IntermediatePackage.INTERMEDIATE_DATA_OPERATION__ASPECTS, IntermediatePackage.INTERMEDIATE_IMPORTED_ASPECT__OPERATION);
@@ -369,7 +356,6 @@ public class IntermediateDataOperationImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IntermediateDataStructure getDataStructure() {
         if (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_DATA_OPERATION__DATA_STRUCTURE) return null;
         return (IntermediateDataStructure)eContainer();
@@ -400,7 +386,6 @@ public class IntermediateDataOperationImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public void setDataStructure(IntermediateDataStructure newDataStructure) {
         if (newDataStructure != eInternalContainer() || (eContainerFeatureID() != IntermediatePackage.INTERMEDIATE_DATA_OPERATION__DATA_STRUCTURE && newDataStructure != null)) {
             if (EcoreUtil.isAncestor(this, newDataStructure))

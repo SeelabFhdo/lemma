@@ -71,7 +71,7 @@ public class IntermediateFactoryImpl extends EFactoryImpl implements Intermediat
             case IntermediatePackage.INTERMEDIATE_DATA_OPERATION: return createIntermediateDataOperation();
             case IntermediatePackage.INTERMEDIATE_DATA_OPERATION_RETURN_TYPE: return createIntermediateDataOperationReturnType();
             case IntermediatePackage.INTERMEDIATE_DATA_OPERATION_PARAMETER: return createIntermediateDataOperationParameter();
-            case IntermediatePackage.INTERMEDIATE_LIST_TYPE: return createIntermediateListType();
+            case IntermediatePackage.INTERMEDIATE_COLLECTION_TYPE: return createIntermediateCollectionType();
             case IntermediatePackage.INTERMEDIATE_DATA_FIELD: return createIntermediateDataField();
             case IntermediatePackage.INTERMEDIATE_ENUMERATION: return createIntermediateEnumeration();
             case IntermediatePackage.INTERMEDIATE_ENUMERATION_FIELD: return createIntermediateEnumerationField();
@@ -246,9 +246,9 @@ public class IntermediateFactoryImpl extends EFactoryImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
-    public IntermediateListType createIntermediateListType() {
-        IntermediateListTypeImpl intermediateListType = new IntermediateListTypeImpl();
-        return intermediateListType;
+    public IntermediateCollectionType createIntermediateCollectionType() {
+        IntermediateCollectionTypeImpl intermediateCollectionType = new IntermediateCollectionTypeImpl();
+        return intermediateCollectionType;
     }
 
     /**
