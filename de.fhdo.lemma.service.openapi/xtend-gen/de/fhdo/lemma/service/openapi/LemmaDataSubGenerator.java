@@ -1,12 +1,12 @@
 package de.fhdo.lemma.service.openapi;
 
 import com.google.common.base.Objects;
+import de.fhdo.lemma.data.CollectionType;
 import de.fhdo.lemma.data.Context;
 import de.fhdo.lemma.data.DataFactory;
 import de.fhdo.lemma.data.DataField;
 import de.fhdo.lemma.data.DataModel;
 import de.fhdo.lemma.data.DataStructure;
-import de.fhdo.lemma.data.ListType;
 import de.fhdo.lemma.data.Version;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -51,10 +51,10 @@ public class LemmaDataSubGenerator {
   private final HashMap<String, DataStructure> createdDataStructures = CollectionLiterals.<String, DataStructure>newHashMap();
   
   /**
-   * Map of all created Lists during a generation. The key contains the fully-qualified name while
-   * the value contains the actual structured list type created.
+   * Map of all collection types created during a generation. The key contains the fully-qualified
+   * name while the value contains the actual structured collection type created.
    */
-  private final HashMap<String, ListType> createdStructuredListTypes = CollectionLiterals.<String, ListType>newHashMap();
+  private final HashMap<String, CollectionType> createdStructuredCollectionTypes = CollectionLiterals.<String, CollectionType>newHashMap();
   
   /**
    * Factory to actually create and manipulate a LEMMA DataModel
@@ -206,7 +206,7 @@ public class LemmaDataSubGenerator {
     boolean _matched = false;
     if (Objects.equal(_type, "array")) {
       _matched=true;
-      newDataField.setComplexType(this.getOrCreateStructuredListType(this.targetContext, name, 
+      newDataField.setComplexType(this.getOrCreateStructuredCollectionType(this.targetContext, name, 
         ((ArraySchema) structureSchema).getItems()));
     }
     if (!_matched) {
@@ -266,45 +266,43 @@ public class LemmaDataSubGenerator {
     throw new IllegalArgumentException(_builder.toString());
   }
   
-  private ListType getOrCreateStructuredListType(final Context context, final String name, final Schema<?> schema) {
-    final String typeName = LemmaDataSubGenerator.getListTypeName(name);
+  private CollectionType getOrCreateStructuredCollectionType(final Context context, final String name, final Schema<?> schema) {
+    final String typeName = LemmaDataSubGenerator.getCollectionTypeName(name);
     StringConcatenation _builder = new StringConcatenation();
     String _buildQualifiedName = context.buildQualifiedName(LemmaDataSubGenerator.SEP);
     _builder.append(_buildQualifiedName);
     _builder.append(LemmaDataSubGenerator.SEP);
     _builder.append(typeName);
     final String fullyQualifiedTypeName = _builder.toString();
-    final ListType existingType = this.createdStructuredListTypes.get(fullyQualifiedTypeName);
+    final CollectionType existingType = this.createdStructuredCollectionTypes.get(fullyQualifiedTypeName);
     if ((existingType != null)) {
-      StringConcatenation _builder_1 = new StringConcatenation();
-      _builder_1.append("Found and reuse existing structured list type ");
       String _name = existingType.getName();
-      _builder_1.append(_name);
-      LemmaDataSubGenerator.LOGGER.debug(_builder_1.toString());
+      String _plus = ("Found and reuse existing structured collection type " + _name);
+      LemmaDataSubGenerator.LOGGER.debug(_plus);
       return existingType;
     }
-    final ListType newType = this.dataFactory.createListType();
+    final CollectionType newType = this.dataFactory.createCollectionType();
     newType.setName(typeName);
     context.getComplexTypes().add(newType);
     newType.getDataFields().add(this.generateDataField(name, schema));
-    this.createdStructuredListTypes.put(fullyQualifiedTypeName, newType);
-    StringConcatenation _builder_2 = new StringConcatenation();
-    _builder_2.append("Created new structured list type ");
+    this.createdStructuredCollectionTypes.put(fullyQualifiedTypeName, newType);
+    StringConcatenation _builder_1 = new StringConcatenation();
+    _builder_1.append("Created new structured collection type ");
     String _name_1 = newType.getName();
-    _builder_2.append(_name_1);
-    LemmaDataSubGenerator.LOGGER.debug(_builder_2.toString());
+    _builder_1.append(_name_1);
+    LemmaDataSubGenerator.LOGGER.debug(_builder_1.toString());
     return newType;
   }
   
-  public static String getListTypeName(final ArraySchema schema) {
-    return LemmaDataSubGenerator.getListTypeName(schema.getType());
+  public static String getCollectionTypeName(final ArraySchema schema) {
+    return LemmaDataSubGenerator.getCollectionTypeName(schema.getType());
   }
   
-  public static String getListTypeName(final String name) {
+  public static String getCollectionTypeName(final String name) {
     StringConcatenation _builder = new StringConcatenation();
     String _firstUpper = StringExtensions.toFirstUpper(name);
     _builder.append(_firstUpper);
-    _builder.append("List");
+    _builder.append("Collection");
     return _builder.toString();
   }
   
