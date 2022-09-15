@@ -425,15 +425,15 @@ class LemmaServiceSubGenerator {
                 // TODO: Can we empower the sub-generator to support such scanning?
                 val arraySchema = schema as ArraySchema
                 val existingType = createImportedComplexTypeFromDomainConcept(
-                        LemmaDataSubGenerator.getListTypeName(arraySchema)
+                        LemmaDataSubGenerator.getCollectionTypeName(arraySchema)
                     )
 
                 if (existingType !== null)
                     parameter.importedType = existingType
                 else {
-                    val arrayList = getOrCreateListTypeFromSchema(arraySchema)
+                    val collectionType = getOrCreateCollectionTypeFromSchema(arraySchema)
                     parameter.importedType
-                        = createImportedComplexTypeFromDomainConcept(arrayList.name)
+                        = createImportedComplexTypeFromDomainConcept(collectionType.name)
                 }
             }
 
@@ -477,29 +477,30 @@ class LemmaServiceSubGenerator {
             null
     }
 
-    private def getOrCreateListTypeFromSchema(ArraySchema schema) {
-        val listType = dataFactory.createListType
-        listType.name = LemmaDataSubGenerator.getListTypeName(schema)
+    private def getOrCreateCollectionTypeFromSchema(ArraySchema schema) {
+        val collectionType = dataFactory.createCollectionType
+        collectionType.name = LemmaDataSubGenerator.getCollectionTypeName(schema)
 
         switch (schema.items.type) {
             case "string":
-                listType.primitiveType = dataFactory.createPrimitiveString
+                collectionType.primitiveType = dataFactory.createPrimitiveString
 
             case "integer":
-                listType.primitiveType = dataFactory.createPrimitiveInteger
+                collectionType.primitiveType = dataFactory.createPrimitiveInteger
 
             case "number":
-                listType.primitiveType = dataFactory.createPrimitiveFloat
+                collectionType.primitiveType = dataFactory.createPrimitiveFloat
 
             case "boolean":
-                listType.primitiveType = dataFactory.createPrimitiveBoolean
+                collectionType.primitiveType = dataFactory.createPrimitiveBoolean
 
             case null: {
                 val field = dataFactory.createDataField
                 field.complexType = findComplexTypeFromRef(schema.items.get$ref)
                 field.name = field.complexType.name.toLowerCase
-                listType.name = LemmaDataSubGenerator.getListTypeName(field.complexType.name)
-                listType.dataFields.add(field)
+                collectionType.name = LemmaDataSubGenerator
+                    .getCollectionTypeName(field.complexType.name)
+                collectionType.dataFields.add(field)
             }
 
             default:
@@ -507,19 +508,19 @@ class LemmaServiceSubGenerator {
                     '''«schema.type» is not supported''')
         }
 
-        // Add new list type to data model
+        // Add new collection type to data model
         val complexTypes = dataModel.value.versions.get(0)?.contexts.get(0)?.complexTypes
-        if (!complexTypes.exists[name == listType.name]) {
-            complexTypes.add(listType)
+        if (!complexTypes.exists[name == collectionType.name]) {
+            complexTypes.add(collectionType)
 
             if (OpenApiUtil.writeModel(dataModel.value, dataModelLoc))
                 LOGGER.info('''Data model «dataModelLoc» was successfully altered''')
             else
                 throw new Exception('''Data model «dataModelLoc» could not be altered''')
         } else
-            LOGGER.info('''List type «listType.name» already exists in data model''')
+            LOGGER.info('''Collection type «collectionType.name» already exists in data model''')
 
-        return listType
+        return collectionType
     }
 
     // TODO: Heavily refactored from https://github.com/SeelabFhdo/lemma/blob/

@@ -1,13 +1,12 @@
 package de.fhdo.lemma.service.openapi;
 
 import com.google.common.base.Objects;
+import de.fhdo.lemma.data.CollectionType;
 import de.fhdo.lemma.data.ComplexType;
 import de.fhdo.lemma.data.Context;
 import de.fhdo.lemma.data.DataFactory;
 import de.fhdo.lemma.data.DataField;
 import de.fhdo.lemma.data.DataModel;
-import de.fhdo.lemma.data.ListType;
-import de.fhdo.lemma.data.Type;
 import de.fhdo.lemma.data.Version;
 import de.fhdo.lemma.service.ApiOperationComment;
 import de.fhdo.lemma.service.Endpoint;
@@ -509,7 +508,7 @@ public class LemmaServiceSubGenerator {
       {
         importedType.setType(this.findComplexTypeFromRef(ref));
         ImportedType _xifexpression = null;
-        Type _type = importedType.getType();
+        Object _type = importedType.getType();
         boolean _tripleNotEquals = (_type != null);
         if (_tripleNotEquals) {
           _xifexpression = importedType;
@@ -597,12 +596,12 @@ public class LemmaServiceSubGenerator {
         case "array":
           final ArraySchema arraySchema = ((ArraySchema) schema);
           final ImportedType existingType = this.createImportedComplexTypeFromDomainConcept(
-            LemmaDataSubGenerator.getListTypeName(arraySchema));
+            LemmaDataSubGenerator.getCollectionTypeName(arraySchema));
           if ((existingType != null)) {
             parameter.setImportedType(existingType);
           } else {
-            final ListType arrayList = this.getOrCreateListTypeFromSchema(arraySchema);
-            parameter.setImportedType(this.createImportedComplexTypeFromDomainConcept(arrayList.getName()));
+            final CollectionType collectionType = this.getOrCreateCollectionTypeFromSchema(arraySchema);
+            parameter.setImportedType(this.createImportedComplexTypeFromDomainConcept(collectionType.getName()));
           }
           break;
         case "boolean":
@@ -646,7 +645,7 @@ public class LemmaServiceSubGenerator {
     };
     importedType.setType(IterableExtensions.<ComplexType>findFirst(this.dataModel.getValue().getVersions().get(0).getContexts().get(0).getComplexTypes(), _function));
     ImportedType _xifexpression = null;
-    Type _type = importedType.getType();
+    Object _type = importedType.getType();
     boolean _tripleNotEquals = (_type != null);
     if (_tripleNotEquals) {
       _xifexpression = importedType;
@@ -656,32 +655,32 @@ public class LemmaServiceSubGenerator {
     return _xifexpression;
   }
   
-  private ListType getOrCreateListTypeFromSchema(final ArraySchema schema) {
+  private CollectionType getOrCreateCollectionTypeFromSchema(final ArraySchema schema) {
     try {
-      final ListType listType = this.dataFactory.createListType();
-      listType.setName(LemmaDataSubGenerator.getListTypeName(schema));
+      final CollectionType collectionType = this.dataFactory.createCollectionType();
+      collectionType.setName(LemmaDataSubGenerator.getCollectionTypeName(schema));
       String _type = schema.getItems().getType();
       boolean _matched = false;
       if (Objects.equal(_type, "string")) {
         _matched=true;
-        listType.setPrimitiveType(this.dataFactory.createPrimitiveString());
+        collectionType.setPrimitiveType(this.dataFactory.createPrimitiveString());
       }
       if (!_matched) {
         if (Objects.equal(_type, "integer")) {
           _matched=true;
-          listType.setPrimitiveType(this.dataFactory.createPrimitiveInteger());
+          collectionType.setPrimitiveType(this.dataFactory.createPrimitiveInteger());
         }
       }
       if (!_matched) {
         if (Objects.equal(_type, "number")) {
           _matched=true;
-          listType.setPrimitiveType(this.dataFactory.createPrimitiveFloat());
+          collectionType.setPrimitiveType(this.dataFactory.createPrimitiveFloat());
         }
       }
       if (!_matched) {
         if (Objects.equal(_type, "boolean")) {
           _matched=true;
-          listType.setPrimitiveType(this.dataFactory.createPrimitiveBoolean());
+          collectionType.setPrimitiveType(this.dataFactory.createPrimitiveBoolean());
         }
       }
       if (!_matched) {
@@ -690,8 +689,8 @@ public class LemmaServiceSubGenerator {
           final DataField field = this.dataFactory.createDataField();
           field.setComplexType(this.findComplexTypeFromRef(schema.getItems().get$ref()));
           field.setName(field.getComplexType().getName().toLowerCase());
-          listType.setName(LemmaDataSubGenerator.getListTypeName(field.getComplexType().getName()));
-          listType.getDataFields().add(field);
+          collectionType.setName(LemmaDataSubGenerator.getCollectionTypeName(field.getComplexType().getName()));
+          collectionType.getDataFields().add(field);
         }
       }
       if (!_matched) {
@@ -715,13 +714,13 @@ public class LemmaServiceSubGenerator {
       final EList<ComplexType> complexTypes = _complexTypes;
       final Function1<ComplexType, Boolean> _function = (ComplexType it) -> {
         String _name = it.getName();
-        String _name_1 = listType.getName();
+        String _name_1 = collectionType.getName();
         return Boolean.valueOf(Objects.equal(_name, _name_1));
       };
       boolean _exists = IterableExtensions.<ComplexType>exists(complexTypes, _function);
       boolean _not = (!_exists);
       if (_not) {
-        complexTypes.add(listType);
+        complexTypes.add(collectionType);
         boolean _writeModel = OpenApiUtil.writeModel(this.dataModel.getValue(), this.dataModelLoc);
         if (_writeModel) {
           StringConcatenation _builder_1 = new StringConcatenation();
@@ -738,13 +737,13 @@ public class LemmaServiceSubGenerator {
         }
       } else {
         StringConcatenation _builder_3 = new StringConcatenation();
-        _builder_3.append("List type ");
-        String _name = listType.getName();
+        _builder_3.append("Collection type ");
+        String _name = collectionType.getName();
         _builder_3.append(_name);
         _builder_3.append(" already exists in data model");
         LemmaServiceSubGenerator.LOGGER.info(_builder_3.toString());
       }
-      return listType;
+      return collectionType;
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }

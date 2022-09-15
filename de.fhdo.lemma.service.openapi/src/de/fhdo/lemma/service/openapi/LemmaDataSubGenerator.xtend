@@ -1,9 +1,9 @@
 package de.fhdo.lemma.service.openapi
 
+import de.fhdo.lemma.data.CollectionType
 import de.fhdo.lemma.data.Context
 import de.fhdo.lemma.data.DataFactory
 import de.fhdo.lemma.data.DataStructure
-import de.fhdo.lemma.data.ListType
 import io.swagger.v3.oas.models.OpenAPI
 import io.swagger.v3.oas.models.media.ArraySchema
 import io.swagger.v3.oas.models.media.Schema
@@ -34,10 +34,10 @@ class LemmaDataSubGenerator {
     val createdDataStructures = <String, DataStructure>newHashMap
 
     /*
-     * Map of all created Lists during a generation. The key contains the fully-qualified name while
-     * the value contains the actual structured list type created.
+     * Map of all collection types created during a generation. The key contains the fully-qualified
+     * name while the value contains the actual structured collection type created.
      */
-    val createdStructuredListTypes = <String, ListType>newHashMap
+    val createdStructuredCollectionTypes = <String, CollectionType>newHashMap
 
     /* Factory to actually create and manipulate a LEMMA DataModel */
     val dataFactory = DataFactory.eINSTANCE
@@ -141,7 +141,7 @@ class LemmaDataSubGenerator {
 
         switch (structureSchema.type) {
             case "array":
-                newDataField.complexType = getOrCreateStructuredListType(targetContext, name,
+                newDataField.complexType = getOrCreateStructuredCollectionType(targetContext, name,
                     (structureSchema as ArraySchema).items)
 
             case "boolean":
@@ -181,30 +181,31 @@ class LemmaDataSubGenerator {
         throw new IllegalArgumentException('''Schema type «schema.type» not supported''')
     }
 
-    private def getOrCreateStructuredListType(Context context, String name,
+    private def getOrCreateStructuredCollectionType(Context context, String name,
         Schema<?> schema) {
-        val typeName = name.listTypeName
+        val typeName = name.collectionTypeName
         val fullyQualifiedTypeName = '''«context.buildQualifiedName(SEP)»«SEP»«typeName»'''
-        val existingType = createdStructuredListTypes.get(fullyQualifiedTypeName)
+        val existingType = createdStructuredCollectionTypes.get(fullyQualifiedTypeName)
         if (existingType !== null) {
-            LOGGER.debug('''Found and reuse existing structured list type «existingType.name»''')
+            LOGGER.debug("Found and reuse existing structured collection type " +
+                existingType.name)
             return existingType
         }
 
-        val newType = dataFactory.createListType
+        val newType = dataFactory.createCollectionType
         newType.name = typeName
         context.complexTypes.add(newType)
         newType.dataFields.add(generateDataField(name, schema))
-        createdStructuredListTypes.put(fullyQualifiedTypeName, newType)
-        LOGGER.debug('''Created new structured list type «newType.name»''')
+        createdStructuredCollectionTypes.put(fullyQualifiedTypeName, newType)
+        LOGGER.debug('''Created new structured collection type «newType.name»''')
         return newType
     }
 
-    static def getListTypeName(ArraySchema schema) {
-        schema.type.listTypeName
+    static def getCollectionTypeName(ArraySchema schema) {
+        schema.type.collectionTypeName
     }
 
-    static def getListTypeName(String name) {
-        '''«name.toFirstUpper»List'''.toString
+    static def getCollectionTypeName(String name) {
+        '''«name.toFirstUpper»Collection'''.toString
     }
 }
