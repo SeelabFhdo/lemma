@@ -1,12 +1,10 @@
 package de.fhdo.lemma.data.avro.ui.to_avro;
 
 import de.fhdo.lemma.data.avro.Util;
-import de.fhdo.lemma.data.avro.ui.to_avro.ElementTreeContentProvider;
-import de.fhdo.lemma.data.avro.ui.to_avro.ElementTreeLabelProvider;
+import de.fhdo.lemma.data.intermediate.IntermediateCollectionType;
 import de.fhdo.lemma.data.intermediate.IntermediateDataModel;
 import de.fhdo.lemma.data.intermediate.IntermediateDataStructure;
 import de.fhdo.lemma.data.intermediate.IntermediateEnumeration;
-import de.fhdo.lemma.data.intermediate.IntermediateListType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -246,9 +244,9 @@ public class LemmaToAvroDialog extends TitleAreaDialog {
           }
         }
         if (!_matched) {
-          if (element instanceof IntermediateListType) {
+          if (element instanceof IntermediateCollectionType) {
             _matched=true;
-            _switchResult = "List type";
+            _switchResult = "Collection type";
           }
         }
         if (!_matched) {
