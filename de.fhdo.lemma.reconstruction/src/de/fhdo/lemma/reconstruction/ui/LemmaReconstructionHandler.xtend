@@ -20,6 +20,20 @@ import de.fhdo.lemma.reconstruction.domain.LemmaDomainGenerator
 import de.fhdo.lemma.reconstruction.service.LemmaServiceGenerator
 import de.fhdo.lemma.service.ServiceModel
 import de.fhdo.lemma.servicedsl.extractor.ServiceDslExtractor
+import org.eclipse.emf.ecore.EPackage
+import de.fhdo.lemma.data.DataPackage
+import de.fhdo.lemma.data.DataDslStandaloneSetup
+import org.eclipse.xtext.resource.XtextResourceSet
+import org.eclipse.emf.common.util.URI
+import java.io.FileInputStream
+import org.eclipse.xtext.resource.XtextResource
+import org.eclipse.xtext.util.CancelIndicator
+import org.eclipse.xtext.validation.CheckMode
+import de.fhdo.lemma.reconstruction.util.Util
+import java.nio.file.Path
+import java.nio.charset.Charset
+import de.fhdo.lemma.service.ServicePackage
+import de.fhdo.lemma.ServiceDslStandaloneSetup
 
 class LemmaReconstructionHandler extends AbstractHandler {
     /**
@@ -51,9 +65,6 @@ class LemmaReconstructionHandler extends AbstractHandler {
         generateModels
         writeModelsToFolder
         showReconstructionInformationMessage
-
-
-
 
         resetDialogHandler
         return null
@@ -131,8 +142,24 @@ class LemmaReconstructionHandler extends AbstractHandler {
 
         Files.createDirectories(Paths.get('''«reconstructionPath»«File.separator»domain'''))
         Files.write(Paths.get(filePath), dataModel.bytes)
+        validateDataModel(filePath)
     }
-
+   
+   	private def validateDataModel(String path) {
+   		EPackage.Registry.INSTANCE.put(DataPackage.eNS_URI, DataPackage.eINSTANCE)
+   		val setup = new DataDslStandaloneSetup
+   		val injector = setup.createInjectorAndDoEMFRegistration
+   		val resourceSet = injector.getInstance(XtextResourceSet)
+   		val resource = resourceSet.createResource(URI.createURI(path)) as XtextResource
+   		resource.load(new FileInputStream(path), resourceSet.getLoadOptions())
+   		val validator = resource.getResourceServiceProvider().getResourceValidator()
+   		val issues = validator.validate(resource, CheckMode.ALL, CancelIndicator.NullImpl)
+   		
+   		if (!issues.nullOrEmpty) {
+   			val maskedModel = Util.maskModel(path, issues)
+   			Files.write(Path.of(path), maskedModel, Charset.defaultCharset)
+   		}
+   	}
 
     private def writeServiceModel(ServiceModel model) {
         val serviceModel = new ServiceDslExtractor().extractToString(model)
@@ -141,6 +168,23 @@ class LemmaReconstructionHandler extends AbstractHandler {
             = '''«reconstructionPath»«File.separator»service«File.separator»«fileName».services'''
         Files.createDirectories(Paths.get('''«reconstructionPath»«File.separator»service'''))
         Files.write(Paths.get(filePath), serviceModel.bytes)
+        validateServiceModel(filePath)
+    }
+    
+    private def validateServiceModel(String path) {
+    	EPackage.Registry.INSTANCE.put(ServicePackage.eNS_URI, DataPackage.eINSTANCE)
+    	val setup = new ServiceDslStandaloneSetup
+    	val injector = setup.createInjectorAndDoEMFRegistration
+   		val resourceSet = injector.getInstance(XtextResourceSet)
+   		val resource = resourceSet.createResource(URI.createURI(path)) as XtextResource
+   		resource.load(new FileInputStream(path), resourceSet.getLoadOptions())
+   		val validator = resource.getResourceServiceProvider().getResourceValidator()
+   		val issues = validator.validate(resource, CheckMode.ALL, CancelIndicator.NullImpl)
+   		
+   		if (!issues.nullOrEmpty) {
+   			val maskedModel = Util.maskModel(path, issues)
+   			Files.write(Path.of(path), maskedModel, Charset.defaultCharset)
+   		}
     }
 
     private def showReconstructionInformationMessage() {

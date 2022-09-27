@@ -6,9 +6,20 @@ import de.fhdo.lemma.data.ComplexTypeFeature
 import de.fhdo.lemma.data.DataFieldFeature
 import de.fhdo.lemma.reconstruction.domain.DataStructure
 import de.fhdo.lemma.reconstruction.domain.Field
-import de.fhdo.lemma.reconstruction.util.Util
 import de.fhdo.lemma.data.Enumeration
 import de.fhdo.lemma.data.PrimitiveUnspecified
+import de.fhdo.lemma.data.DataDslStandaloneSetup
+import org.eclipse.xtext.resource.XtextResourceSet
+import org.eclipse.xtext.resource.XtextResource
+import org.eclipse.emf.ecore.EPackage
+import de.fhdo.lemma.data.DataPackage
+import org.eclipse.emf.common.util.URI
+import java.io.ByteArrayInputStream
+import java.io.ObjectInputStream
+import java.io.ByteArrayOutputStream
+import java.io.ObjectOutputStream
+import org.eclipse.xtext.validation.CheckMode
+import org.eclipse.xtext.util.CancelIndicator
 
 class LemmaDomainGenerator {
     static val DATA_FACTORY = DataFactory.eINSTANCE
@@ -24,7 +35,9 @@ class LemmaDomainGenerator {
 
         // Assign reconstructed data structures, lists and enumerations to the context
         reconstructedContext.dataStructures.forEach[
-            context.complexTypes.add(createDataStructureFrom(it))
+        	if (context.complexTypes.findFirst[complexTyp | complexTyp.name.toLowerCase == it.name.toLowerCase] === null) {
+        		context.complexTypes.add(createDataStructureFrom(it))	
+        	}
         ]
 
         reconstructedContext.enums.forEach[
@@ -50,7 +63,8 @@ class LemmaDomainGenerator {
 
             context.complexTypes.add(assignEnumFieldsToStructure(enum, reconstructedEnum))
          ]
-
+		
+		
         val dataModel = DATA_FACTORY.createDataModel
         dataModel.contexts.add(context)
         return dataModel
@@ -89,12 +103,15 @@ class LemmaDomainGenerator {
     }
 
     private def assignDataFieldsToStructure(de.fhdo.lemma.data.DataStructure lemmaStructure, DataStructure dataStructure) {
+        if (lemmaStructure.dataFields.size > 0) {
+        	return lemmaStructure
+        }
         dataStructure.fields.forEach[
             val field = generateDataFildFrom(it)
             lemmaStructure.dataFields.add(field)
         ]
 
-        lemmaStructure
+        return lemmaStructure
 
     }
 
@@ -130,6 +147,7 @@ class LemmaDomainGenerator {
             case "long": DATA_FACTORY.createPrimitiveLong
             case "short": DATA_FACTORY.createPrimitiveShort
             case "string": DATA_FACTORY.createPrimitiveString
+            case "bigdecimal": DATA_FACTORY.createPrimitiveFloat
             default: DATA_FACTORY.createPrimitiveUnspecified
 
         }
@@ -157,6 +175,14 @@ class LemmaDomainGenerator {
     }
 
     private def getListTypeFromCollection(Field field) {
+    	val complex = context.complexTypes.findFirst[complexTyp | 
+    		complexTyp.name.toLowerCase == field.name.toLowerCase
+    	]
+    	if (complex !== null) {
+    		return complex
+    	}
+  
+    	
         val list = DATA_FACTORY.createListType
         val data = field.metaData.findFirst[ it.name == "CollectionType" ]
 
@@ -169,7 +195,7 @@ class LemmaDomainGenerator {
             list.primitiveType = lemmaType
         } else {
             val dataField = DATA_FACTORY.createDataField
-            val complexType = context.complexTypes.findFirst[it.name == reconstrcutionType]
+            val complexType = context.complexTypes.findFirst[it.name.toLowerCase == reconstrcutionType.toLowerCase]
             if (complexType !== null) {
                 dataField.complexType = complexType
                 dataField.name = field.name
@@ -179,6 +205,8 @@ class LemmaDomainGenerator {
                 list.primitiveType = DATA_FACTORY.createPrimitiveUnspecified
             }
         }
+        
+        
         context.complexTypes.add(list)
         return list
 

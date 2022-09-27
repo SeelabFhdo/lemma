@@ -31,7 +31,16 @@ public class LemmaDomainGenerator {
   public DataModel generateDataModel(final de.fhdo.lemma.reconstruction.domain.Context reconstructedContext) {
     LemmaDomainGenerator.context = this.generateContextFrom(reconstructedContext);
     final Consumer<DataStructure> _function = (DataStructure it) -> {
-      LemmaDomainGenerator.context.getComplexTypes().add(this.createDataStructureFrom(it));
+      final Function1<ComplexType, Boolean> _function_1 = (ComplexType complexTyp) -> {
+        String _lowerCase = complexTyp.getName().toLowerCase();
+        String _lowerCase_1 = it.getName().toLowerCase();
+        return Boolean.valueOf(Objects.equal(_lowerCase, _lowerCase_1));
+      };
+      ComplexType _findFirst = IterableExtensions.<ComplexType>findFirst(LemmaDomainGenerator.context.getComplexTypes(), _function_1);
+      boolean _tripleEquals = (_findFirst == null);
+      if (_tripleEquals) {
+        LemmaDomainGenerator.context.getComplexTypes().add(this.createDataStructureFrom(it));
+      }
     };
     reconstructedContext.getDataStructures().forEach(_function);
     final Consumer<EnumType> _function_1 = (EnumType it) -> {
@@ -114,16 +123,17 @@ public class LemmaDomainGenerator {
   }
   
   private de.fhdo.lemma.data.DataStructure assignDataFieldsToStructure(final de.fhdo.lemma.data.DataStructure lemmaStructure, final DataStructure dataStructure) {
-    de.fhdo.lemma.data.DataStructure _xblockexpression = null;
-    {
-      final Consumer<Field> _function = (Field it) -> {
-        final DataField field = this.generateDataFildFrom(it);
-        lemmaStructure.getDataFields().add(field);
-      };
-      dataStructure.getFields().forEach(_function);
-      _xblockexpression = lemmaStructure;
+    int _size = lemmaStructure.getDataFields().size();
+    boolean _greaterThan = (_size > 0);
+    if (_greaterThan) {
+      return lemmaStructure;
     }
-    return _xblockexpression;
+    final Consumer<Field> _function = (Field it) -> {
+      final DataField field = this.generateDataFildFrom(it);
+      lemmaStructure.getDataFields().add(field);
+    };
+    dataStructure.getFields().forEach(_function);
+    return lemmaStructure;
   }
   
   private Enumeration assignEnumFieldsToStructure(final Enumeration enumeration, final EnumType reconstrcutedEnumeration) {
@@ -187,6 +197,9 @@ public class LemmaDomainGenerator {
         case "string":
           _switchResult = LemmaDomainGenerator.DATA_FACTORY.createPrimitiveString();
           break;
+        case "bigdecimal":
+          _switchResult = LemmaDomainGenerator.DATA_FACTORY.createPrimitiveFloat();
+          break;
         default:
           _switchResult = LemmaDomainGenerator.DATA_FACTORY.createPrimitiveUnspecified();
           break;
@@ -241,18 +254,27 @@ public class LemmaDomainGenerator {
     return type;
   }
   
-  private ListType getListTypeFromCollection(final Field field) {
+  private ComplexType getListTypeFromCollection(final Field field) {
+    final Function1<ComplexType, Boolean> _function = (ComplexType complexTyp) -> {
+      String _lowerCase = complexTyp.getName().toLowerCase();
+      String _lowerCase_1 = field.getName().toLowerCase();
+      return Boolean.valueOf(Objects.equal(_lowerCase, _lowerCase_1));
+    };
+    final ComplexType complex = IterableExtensions.<ComplexType>findFirst(LemmaDomainGenerator.context.getComplexTypes(), _function);
+    if ((complex != null)) {
+      return complex;
+    }
     final ListType list = LemmaDomainGenerator.DATA_FACTORY.createListType();
-    final Function1<MetaData, Boolean> _function = (MetaData it) -> {
+    final Function1<MetaData, Boolean> _function_1 = (MetaData it) -> {
       String _name = it.getName();
       return Boolean.valueOf(Objects.equal(_name, "CollectionType"));
     };
-    final MetaData data = IterableExtensions.<MetaData>findFirst(field.getMetaData(), _function);
-    final Function1<Map.Entry<String, String>, Boolean> _function_1 = (Map.Entry<String, String> it) -> {
+    final MetaData data = IterableExtensions.<MetaData>findFirst(field.getMetaData(), _function_1);
+    final Function1<Map.Entry<String, String>, Boolean> _function_2 = (Map.Entry<String, String> it) -> {
       String _key = it.getKey();
       return Boolean.valueOf(Objects.equal(_key, "Type"));
     };
-    final Map.Entry<String, String> collectionInfo = IterableExtensions.<Map.Entry<String, String>>findFirst(data.getValues().entrySet(), _function_1);
+    final Map.Entry<String, String> collectionInfo = IterableExtensions.<Map.Entry<String, String>>findFirst(data.getValues().entrySet(), _function_2);
     final String reconstrcutionType = collectionInfo.getValue();
     list.setName(StringExtensions.toFirstUpper(field.getName()));
     final de.fhdo.lemma.data.PrimitiveType lemmaType = this.getPrimitiveFrom(reconstrcutionType);
@@ -260,11 +282,12 @@ public class LemmaDomainGenerator {
       list.setPrimitiveType(lemmaType);
     } else {
       final DataField dataField = LemmaDomainGenerator.DATA_FACTORY.createDataField();
-      final Function1<ComplexType, Boolean> _function_2 = (ComplexType it) -> {
-        String _name = it.getName();
-        return Boolean.valueOf(Objects.equal(_name, reconstrcutionType));
+      final Function1<ComplexType, Boolean> _function_3 = (ComplexType it) -> {
+        String _lowerCase = it.getName().toLowerCase();
+        String _lowerCase_1 = reconstrcutionType.toLowerCase();
+        return Boolean.valueOf(Objects.equal(_lowerCase, _lowerCase_1));
       };
-      final ComplexType complexType = IterableExtensions.<ComplexType>findFirst(LemmaDomainGenerator.context.getComplexTypes(), _function_2);
+      final ComplexType complexType = IterableExtensions.<ComplexType>findFirst(LemmaDomainGenerator.context.getComplexTypes(), _function_3);
       if ((complexType != null)) {
         dataField.setComplexType(complexType);
         dataField.setName(field.getName());

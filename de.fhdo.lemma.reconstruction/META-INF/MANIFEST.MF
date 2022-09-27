@@ -27,7 +27,9 @@ Require-Bundle: com.google.guava,
  org.eclipse.ui;bundle-version="3.119.0",
  de.fhdo.lemma.eclipse.ui.utils,
  org.eclipse.core.runtime;bundle-version="3.20.100",
- de.fhdo.lemma.servicedsl.extractor;bundle-version="0.8.5"
+ de.fhdo.lemma.servicedsl.extractor;bundle-version="0.8.5",
+ de.fhdo.lemma.data.datadsl;bundle-version="0.8.5",
+ de.fhdo.lemma.servicedsl;bundle-version="0.8.5"
 Bundle-ClassPath: .,
  lib/avro-1.10.0.jar,
  lib/jackson-databind-2.11.0.jar,

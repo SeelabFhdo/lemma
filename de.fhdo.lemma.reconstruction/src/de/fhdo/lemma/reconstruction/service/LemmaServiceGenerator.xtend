@@ -96,6 +96,9 @@ class LemmaServiceGenerator {
     private def generateParameterFrom(Parameter reconstructedParameter) {
         val parameter = SERVICE_FACTORY.createParameter
         parameter.name = reconstructedParameter.name.toFirstLower
+        if (parameter.name == "list") {
+        	parameter.name = "dataList"
+        }
         parameter.exchangePattern
             = deriveExchangePattern(reconstructedParameter.exchangePattern.toString())
         parameter.communicationType
@@ -173,7 +176,7 @@ class LemmaServiceGenerator {
 
     private def handleCollectionType(ComplexType type) {
         val collection = DATA_FACTORY.createListType
-        collection.name = type.name
+        collection.name = "data" + type.name.toFirstUpper
         return collection
     }
 

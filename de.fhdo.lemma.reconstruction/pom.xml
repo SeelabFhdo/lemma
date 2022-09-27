@@ -30,6 +30,11 @@
             <version>${data-extractor-version}</version>
         </dependency>
         <dependency>
+            <groupId>de.fhdo.lemma.data.datadsl</groupId>
+            <artifactId>de.fhdo.lemma.data.datadsl</artifactId>
+            <version>0.8.5-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>de.fhdo.lemma.eclipse.ui</groupId>
             <artifactId>de.fhdo.lemma.eclipse.ui.utils</artifactId>
             <version>${lemma-ui-utils-version}</version>

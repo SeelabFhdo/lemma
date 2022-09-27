@@ -142,6 +142,11 @@ public class LemmaServiceGenerator {
   private de.fhdo.lemma.service.Parameter generateParameterFrom(final Parameter reconstructedParameter) {
     final de.fhdo.lemma.service.Parameter parameter = LemmaServiceGenerator.SERVICE_FACTORY.createParameter();
     parameter.setName(StringExtensions.toFirstLower(reconstructedParameter.getName()));
+    String _name = parameter.getName();
+    boolean _equals = Objects.equal(_name, "list");
+    if (_equals) {
+      parameter.setName("dataList");
+    }
     parameter.setExchangePattern(this.deriveExchangePattern(reconstructedParameter.getExchangePattern().toString()));
     parameter.setCommunicationType(this.deriveCommunicationType(reconstructedParameter.getCommunicationType().toString()));
     PrimitiveType _primitiveType = reconstructedParameter.getPrimitiveType();
@@ -262,7 +267,9 @@ public class LemmaServiceGenerator {
   
   private ListType handleCollectionType(final ComplexType type) {
     final ListType collection = LemmaServiceGenerator.DATA_FACTORY.createListType();
-    collection.setName(type.getName());
+    String _firstUpper = StringExtensions.toFirstUpper(type.getName());
+    String _plus = ("data" + _firstUpper);
+    collection.setName(_plus);
     return collection;
   }
   

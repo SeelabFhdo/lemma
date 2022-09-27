@@ -2,9 +2,14 @@ package de.fhdo.lemma.reconstruction.util;
 
 import de.fhdo.lemma.data.DataFactory;
 import de.fhdo.lemma.data.PrimitiveType;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.List;
 import java.util.function.Consumer;
+import org.eclipse.xtext.validation.Issue;
 import org.eclipse.xtext.xbase.lib.Conversions;
+import org.eclipse.xtext.xbase.lib.Exceptions;
+import org.eclipse.xtext.xbase.lib.IteratorExtensions;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
@@ -72,5 +77,40 @@ public class Util {
     int _minus = (_size - 2);
     final String contextName = StringExtensions.toFirstUpper(nameParts[_minus]);
     return contextName;
+  }
+  
+  public static List<String> maskModel(final String path, final List<Issue> issues) {
+    try {
+      final String idMessage = "(mismatched input \'){1}(.)+(expecting RULE_ID)";
+      FileReader _fileReader = new FileReader(path);
+      final BufferedReader reader = new BufferedReader(_fileReader);
+      final List<String> lines = IteratorExtensions.<String>toList(reader.lines().iterator());
+      final Consumer<Issue> _function = (Issue issue) -> {
+        boolean _matches = issue.getMessage().matches(idMessage);
+        if (_matches) {
+          Integer _lineNumber = issue.getLineNumber();
+          final int lineNumber = ((_lineNumber).intValue() - 1);
+          Integer _column = issue.getColumn();
+          final int position = ((_column).intValue() - 1);
+          final String line = lines.get(lineNumber);
+          String _substring = line.substring(0, position);
+          String _plus = (_substring + "^");
+          String _substring_1 = line.substring(position);
+          final String maskedLine = (_plus + _substring_1);
+          lines.set(lineNumber, maskedLine);
+        }
+      };
+      issues.forEach(_function);
+      return lines;
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  public static String maskLemmaKeywords(final String line, final char markChar, final int position) {
+    String _substring = line.substring(0, position);
+    String _plus = (_substring + Character.valueOf(markChar));
+    String _substring_1 = line.substring(position);
+    return (_plus + _substring_1);
   }
 }

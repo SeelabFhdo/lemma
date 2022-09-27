@@ -104,6 +104,8 @@ fun isPrimitiveTypeOrWrapper(type: String): Boolean {
         "string" -> true
         "date" -> true
         "void" -> true
+        "bigdecimal" -> true
+        "BigDecimal" -> true
         else -> false
     }
 }
