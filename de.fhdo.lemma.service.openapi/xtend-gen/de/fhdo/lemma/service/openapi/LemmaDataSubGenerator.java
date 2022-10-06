@@ -1,7 +1,5 @@
 package de.fhdo.lemma.service.openapi;
 
-import com.google.common.base.Objects;
-import de.fhdo.lemma.data.CollectionType;
 import de.fhdo.lemma.data.Context;
 import de.fhdo.lemma.data.DataFactory;
 import de.fhdo.lemma.data.DataField;
@@ -54,7 +52,7 @@ public class LemmaDataSubGenerator {
    * Map of all collection types created during a generation. The key contains the fully-qualified
    * name while the value contains the actual structured collection type created.
    */
-  private final HashMap<String, CollectionType> createdStructuredCollectionTypes = CollectionLiterals.<String, CollectionType>newHashMap();
+  private final /* HashMap<String, CollectionType> */Object createdStructuredCollectionTypes /* Skipped initializer because of errors */;
   
   /**
    * Factory to actually create and manipulate a LEMMA DataModel
@@ -92,6 +90,10 @@ public class LemmaDataSubGenerator {
     this.targetFile = targetFile;
   }
   
+  /**
+   * Entrypoint method which starts the actual generation of a LEMMA data model.
+   * @Returns {@link de.fhdo.lemma.data.DataModel DataModel}
+   */
   public DataModel generate() {
     try {
       LemmaDataSubGenerator.LOGGER.debug("Initializing model instance...");
@@ -145,6 +147,10 @@ public class LemmaDataSubGenerator {
     }
   }
   
+  /**
+   * Sets meta information for the data model in generation based on information
+   * given by the OpenAPI specification.
+   */
   private void initialize() {
     this.targetDataModel.getVersions().add(this.targetVersion);
     this.targetVersion.setName(OpenApiUtil.removeInvalidCharsFromName(this.openAPI.getInfo().getVersion()));
@@ -153,6 +159,19 @@ public class LemmaDataSubGenerator {
     this.targetContext.setVersion(this.targetVersion);
   }
   
+  /**
+   * Returns a {@link de.fhdo.lemma.data.DataStructure DataStructure} based on
+   * encountered <emph>Component Objects</emph> in the OpenAPI specification.
+   * For each encountered component object during parsing the OpenAPI document,
+   * a HashMap is scanned whether a fitting DataStructure already exists
+   * or a new instance of DataStructure is created and stored.
+   * This prevents duplicates.
+   * This needs to be done because the parsed OpenAPI structure
+   * may define components multiple times.
+   * The population of DataStructures happens in a recursive way.
+   * 
+   * @returns {@link de.fhdo.lemma.data.DataStructure DataStructure}
+   */
   private DataStructure getOrCreateDataStructure(final Context context, final String name, final Schema<?> schema) {
     final String structureName = StringExtensions.toFirstUpper(name);
     StringConcatenation _builder = new StringConcatenation();
@@ -182,10 +201,20 @@ public class LemmaDataSubGenerator {
     return newStructure;
   }
   
+  /**
+   * Adds DataFields to a given DataStructure based on information from a given
+   * OpenAPI schema.
+   */
   private void addDataFieldsFromSchema(final DataStructure structure, final Schema<?> structureSchema) {
     this.addDataFieldsFromSchema(structure, null, structureSchema);
   }
   
+  /**
+   * Distinguishes whether a DataField is a elemental data type or a OpenAPI inline-defined
+   * structure, e.g., comprising multiple elemental data types or references.
+   * Encountered complex structures get recursively traced down
+   * for their inherent elemental data types.
+   */
   private void addDataFieldsFromSchema(final DataStructure structure, final String fieldName, final Schema<?> structureSchema) {
     Map<String, Schema> _properties = structureSchema.getProperties();
     boolean _tripleNotEquals = (_properties != null);
@@ -199,105 +228,70 @@ public class LemmaDataSubGenerator {
     }
   }
   
+  /**
+   * Creates a new {@link de.fhdo.lemma.data.DataField DataField} for an OpenAPI
+   * data type encoded in a structure.
+   * Those can be elemental types such as <code>boolean</code> or <code>integer</code>,
+   * but also references, in which case proper DataStructures are fetched or created
+   * (c.f. {@link #getOrCreateDataStructure getOrCreateDataStructure(...)}).
+   * In case of an array, a proper ListType is fetched or created (c.f.
+   * {@link #getOrCreateStructuredListType getOrCreateStructuredListType(...)})
+   * 
+   * @returns {@link de.fhdo.lemma.data.DataField DataField}
+   * @throws {@link IllegalArgumentException IllegalArgumentException} if OpenAPI schema type
+   * cannot be translated into a fitting LEMMA type.
+   */
   private DataField generateDataField(final String name, final Schema<?> structureSchema) {
-    final DataField newDataField = this.dataFactory.createDataField();
-    newDataField.setName(name);
-    String _type = structureSchema.getType();
-    boolean _matched = false;
-    if (Objects.equal(_type, "array")) {
-      _matched=true;
-      newDataField.setComplexType(this.getOrCreateStructuredCollectionType(this.targetContext, name, 
-        ((ArraySchema) structureSchema).getItems()));
-    }
-    if (!_matched) {
-      if (Objects.equal(_type, "boolean")) {
-        _matched=true;
-        newDataField.setPrimitiveType(this.dataFactory.createPrimitiveBoolean());
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(_type, "integer")) {
-        _matched=true;
-        newDataField.setPrimitiveType(OpenApiUtil.deriveIntType(structureSchema.getFormat()));
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(_type, "number")) {
-        _matched=true;
-        newDataField.setPrimitiveType(OpenApiUtil.deriveNumberType(structureSchema.getFormat()));
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(_type, "string")) {
-        _matched=true;
-        newDataField.setPrimitiveType(OpenApiUtil.deriveStringType(structureSchema.getFormat()));
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(_type, null)) {
-        _matched=true;
-        String _$ref = structureSchema.get$ref();
-        boolean _tripleEquals = (_$ref == null);
-        if (_tripleEquals) {
-          this.throwUnsupportedSchemaType(structureSchema);
-        }
-        final String ref = structureSchema.get$ref();
-        int _lastIndexOf = ref.lastIndexOf("/");
-        int _plus = (_lastIndexOf + 1);
-        final String refName = ref.substring(_plus);
-        final Schema refSchema = this.openAPI.getComponents().getSchemas().get(refName);
-        if (((refName != null) && (refSchema != null))) {
-          newDataField.setComplexType(this.getOrCreateDataStructure(this.targetContext, refName, refSchema));
-        }
-      }
-    }
-    if (!_matched) {
-      this.throwUnsupportedSchemaType(structureSchema);
-    }
-    return newDataField;
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method getOrCreateStructuredCollectionType(Context, String, Schema<?>) from the type LemmaDataSubGenerator refers to the missing type CollectionType");
   }
   
+  /**
+   * @throws {@link IllegalArgumentException IllegalArgumentException} if OpenAPI schema type
+   * cannot be translated into a fitting LEMMA type.
+   * C.f. {@link #generateDataField generateDataField(...)})
+   */
   private void throwUnsupportedSchemaType(final Schema<?> schema) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("Schema type ");
     String _type = schema.getType();
     _builder.append(_type);
-    _builder.append(" not supported");
+    _builder.append(" is not supported.");
     throw new IllegalArgumentException(_builder.toString());
   }
   
+  /**
+   * This method is used to enable one-to-many relationships during the transformation.
+   * LEMMA uses ListType structures to represent such relationships,
+   * therefore, corresponding ListType structures are fetched (if they already exist)
+   * or newly created. The name of such structures is always the original
+   * OpenAPI component name + 'List' as suffix.
+   * 
+   * @returns {@link ListType ListType}
+   */
   private CollectionType getOrCreateStructuredCollectionType(final Context context, final String name, final Schema<?> schema) {
-    final String typeName = LemmaDataSubGenerator.getCollectionTypeName(name);
-    StringConcatenation _builder = new StringConcatenation();
-    String _buildQualifiedName = context.buildQualifiedName(LemmaDataSubGenerator.SEP);
-    _builder.append(_buildQualifiedName);
-    _builder.append(LemmaDataSubGenerator.SEP);
-    _builder.append(typeName);
-    final String fullyQualifiedTypeName = _builder.toString();
-    final CollectionType existingType = this.createdStructuredCollectionTypes.get(fullyQualifiedTypeName);
-    if ((existingType != null)) {
-      String _name = existingType.getName();
-      String _plus = ("Found and reuse existing structured collection type " + _name);
-      LemmaDataSubGenerator.LOGGER.debug(_plus);
-      return existingType;
-    }
-    final CollectionType newType = this.dataFactory.createCollectionType();
-    newType.setName(typeName);
-    context.getComplexTypes().add(newType);
-    newType.getDataFields().add(this.generateDataField(name, schema));
-    this.createdStructuredCollectionTypes.put(fullyQualifiedTypeName, newType);
-    StringConcatenation _builder_1 = new StringConcatenation();
-    _builder_1.append("Created new structured collection type ");
-    String _name_1 = newType.getName();
-    _builder_1.append(_name_1);
-    LemmaDataSubGenerator.LOGGER.debug(_builder_1.toString());
-    return newType;
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method or field createCollectionType is undefined for the type DataFactory"
+      + "\nThe field LemmaDataSubGenerator.createdStructuredCollectionTypes refers to the missing type CollectionType"
+      + "\nThe field LemmaDataSubGenerator.createdStructuredCollectionTypes refers to the missing type CollectionType"
+      + "\n!== cannot be resolved"
+      + "\nname cannot be resolved"
+      + "\nname cannot be resolved"
+      + "\ndataFields cannot be resolved"
+      + "\nadd cannot be resolved"
+      + "\nname cannot be resolved");
   }
   
+  /**
+   * Static helper method to fetch the name of an OpenAPI array schema.
+   */
   public static String getCollectionTypeName(final ArraySchema schema) {
     return LemmaDataSubGenerator.getCollectionTypeName(schema.getType());
   }
   
+  /**
+   * Static helper method to append the 'List' suffix to a given name.
+   */
   public static String getCollectionTypeName(final String name) {
     StringConcatenation _builder = new StringConcatenation();
     String _firstUpper = StringExtensions.toFirstUpper(name);

@@ -12,6 +12,7 @@
         <dependencySet>
             <includes>
                 <include>io.swagger.parser.v3:swagger-parser</include>
+                <include>info.picocli:picocli</include>
                 <!-- THIS IS ONLY INCLUDED FOR DEVELOPMENT PURPOSE -->
                 <include>ch.qos.logback:logback-classic</include>
             </includes>

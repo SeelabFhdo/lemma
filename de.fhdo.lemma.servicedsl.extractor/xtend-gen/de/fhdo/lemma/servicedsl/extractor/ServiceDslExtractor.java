@@ -566,23 +566,8 @@ public class ServiceDslExtractor {
    * Extract Parameter
    */
   private String generateType(final Parameter parameter) {
-    String _xifexpression = null;
-    PrimitiveType _primitiveType = parameter.getPrimitiveType();
-    boolean _tripleNotEquals = (_primitiveType != null);
-    if (_tripleNotEquals) {
-      _xifexpression = this.generate(parameter.getPrimitiveType());
-    } else {
-      String _xifexpression_1 = null;
-      ImportedType _importedType = parameter.getImportedType();
-      boolean _tripleNotEquals_1 = (_importedType != null);
-      if (_tripleNotEquals_1) {
-        _xifexpression_1 = this.generate(parameter.getImportedType());
-      } else {
-        _xifexpression_1 = null;
-      }
-      _xifexpression = _xifexpression_1;
-    }
-    return _xifexpression;
+    throw new Error("Unresolved compilation problems:"
+      + "\nType mismatch: cannot convert from PrimitiveType to Import");
   }
   
   /**

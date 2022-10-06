@@ -81,7 +81,7 @@ public class LemmaTechnologySubGenerator {
   private final DataFactory dataFactory = DataFactory.eINSTANCE;
   
   /**
-   * Predefined instance of the <strong>TechnologyModel</strong>. This instance is populated with
+   * Predefined instance of the TechnologyModel. This instance is populated with
    * the various technologies from the OpenAPI model, e.g., media types.
    */
   private final Technology technology = this.TECHNOLOGY_FACTORY.createTechnology();
@@ -154,6 +154,12 @@ public class LemmaTechnologySubGenerator {
         rest.getDataFormats().add(dataFormat);
       };
       mediaTypes.forEach(_function_1);
+      boolean _isEmpty = rest.getDataFormats().isEmpty();
+      if (_isEmpty) {
+        final DataFormat emptyFormat = this.TECHNOLOGY_FACTORY.createDataFormat();
+        emptyFormat.setFormatName("NO_FORMAT_ENCOUNTERED_DURING_PARSING");
+        rest.getDataFormats().add(emptyFormat);
+      }
       DataFormat _elvis = null;
       final Function1<DataFormat, Boolean> _function_2 = (DataFormat it) -> {
         String _formatName = it.getFormatName();
@@ -253,7 +259,8 @@ public class LemmaTechnologySubGenerator {
   }
   
   /**
-   * Create default aspects for HTTP-based communication, i.e., request methods and response codes
+   * Create default aspects for HTTP-based communication,
+   * i.e., request methods and response codes
    */
   private void addAspects(final Technology technology) {
     technology.getServiceAspects().add(this.createOperationsAspect(LemmaTechnologySubGenerator.HTTP_DELETE_ASPECT_NAME));
@@ -268,6 +275,10 @@ public class LemmaTechnologySubGenerator {
     technology.getServiceAspects().add(this.createOperationsAspect(LemmaTechnologySubGenerator.UNSPECIFIED_ASPECT_NAME));
   }
   
+  /**
+   * Creates a LEMMA <code>ServiceAspect</code>
+   * for <code>JointPointType.OPERATIONS</code> with the given name.
+   */
   private ServiceAspect createOperationsAspect(final String name) {
     final ServiceAspect aspect = this.TECHNOLOGY_FACTORY.createServiceAspect();
     aspect.setName(name);
@@ -276,6 +287,10 @@ public class LemmaTechnologySubGenerator {
     return aspect;
   }
   
+  /**
+   * Creates a LEMMA <code>ServiceAspect</code>
+   * for <code>JointPointType.PARAMETERS</code> with the given name.
+   */
   private ServiceAspect createParametersAspect(final String name) {
     final ServiceAspect aspect = this.TECHNOLOGY_FACTORY.createServiceAspect();
     aspect.setName(name);

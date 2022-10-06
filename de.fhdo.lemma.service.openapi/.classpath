@@ -52,5 +52,6 @@
 	<classpathentry kind="lib" path="lib/swagger-parser-v3-2.0.29.jar"/>
 	<classpathentry kind="lib" path="lib/uri-template-0.10.jar"/>
 	<classpathentry kind="lib" path="lib/validation-api-1.1.0.Final.jar"/>
+	<classpathentry kind="lib" path="lib/picocli-3.9.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

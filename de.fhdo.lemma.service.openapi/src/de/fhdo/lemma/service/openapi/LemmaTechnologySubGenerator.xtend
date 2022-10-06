@@ -45,7 +45,7 @@ class LemmaTechnologySubGenerator {
     val dataFactory = DataFactory.eINSTANCE
 
     /*
-     * Predefined instance of the <strong>TechnologyModel</strong>. This instance is populated with
+     * Predefined instance of the TechnologyModel. This instance is populated with
      * the various technologies from the OpenAPI model, e.g., media types.
      */
     val technology = TECHNOLOGY_FACTORY.createTechnology
@@ -105,12 +105,19 @@ class LemmaTechnologySubGenerator {
             rest.dataFormats.add(dataFormat)
         ]
 
+		// If no format can be derived during processing, a placeholder is created.
+		if(rest.dataFormats.isEmpty) {
+			val emptyFormat = TECHNOLOGY_FACTORY.createDataFormat
+			emptyFormat.formatName = "NO_FORMAT_ENCOUNTERED_DURING_PARSING"
+			rest.dataFormats.add(emptyFormat)
+		}
+
         // Set default format if the given OpenAPI file comprises it. Otherwise, the first
         // encountered media type is set as default.
-        // TODO: What should happen if rest.dataFormats is empty?
         rest.defaultFormat = rest.dataFormats.findFirst[formatName == DEFAULT_DATA_FORMAT]
             ?: rest.dataFormats.get(0)
 
+		//adding 'rest' to the technology model protocols
         technology.protocols.add(rest)
     }
 
@@ -167,9 +174,6 @@ class LemmaTechnologySubGenerator {
             dataFactory.createPrimitiveString))
         technology.primitiveTypes.add(createTechnologySpecificPrimitiveType("Unspecified", true,
             dataFactory.createPrimitiveUnspecified))
-        // TODO: Why not mapping Short and Char to something supported by OpenAPI?
-        // Because LEMMA needs default values, short and char are added. However, OpenAPI v3.0.3
-        // does not specifically describe these.
         technology.primitiveTypes.add(createTechnologySpecificPrimitiveType("Short", true,
             dataFactory.createPrimitiveShort))
         technology.primitiveTypes.add(createTechnologySpecificPrimitiveType("Char", true,
@@ -186,7 +190,8 @@ class LemmaTechnologySubGenerator {
     }
 
     /**
-     * Create default aspects for HTTP-based communication, i.e., request methods and response codes
+     * Create default aspects for HTTP-based communication,
+     * i.e., request methods and response codes
      */
     private def void addAspects(Technology technology) {
         technology.serviceAspects.add(HTTP_DELETE_ASPECT_NAME.createOperationsAspect)
@@ -201,6 +206,10 @@ class LemmaTechnologySubGenerator {
         technology.serviceAspects.add(UNSPECIFIED_ASPECT_NAME.createOperationsAspect)
     }
 
+    /**
+     * Creates a LEMMA <code>ServiceAspect</code> 
+     * for <code>JointPointType.OPERATIONS</code> with the given name.
+     */
     private def createOperationsAspect(String name) {
         val aspect = TECHNOLOGY_FACTORY.createServiceAspect
         aspect.name = name
@@ -209,6 +218,11 @@ class LemmaTechnologySubGenerator {
         return aspect
     }
 
+
+    /**
+     * Creates a LEMMA <code>ServiceAspect</code> 
+     * for <code>JointPointType.PARAMETERS</code> with the given name.
+     */
     private def createParametersAspect(String name) {
         val aspect = TECHNOLOGY_FACTORY.createServiceAspect
         aspect.name = name
