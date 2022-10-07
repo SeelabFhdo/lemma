@@ -226,6 +226,8 @@ final class LaunchConfigurationDelegate implements ILaunchConfigurationDelegate 
                     if (!validatedModels.contains(it))
                         modelsToValidate.add(it)
                 ]
+
+                validatedModels.add(modelPath)
             }
         }
 

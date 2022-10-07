@@ -332,6 +332,7 @@ public final class LaunchConfigurationDelegate implements ILaunchConfigurationDe
             };
             importedModelPaths.forEach(_function);
           }
+          validatedModels.add(modelPath);
         }
       }
     }
