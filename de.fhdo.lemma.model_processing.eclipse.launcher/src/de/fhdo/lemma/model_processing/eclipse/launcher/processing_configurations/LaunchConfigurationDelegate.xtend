@@ -203,7 +203,7 @@ final class LaunchConfigurationDelegate implements ILaunchConfigurationDelegate 
                     // This will throw an IndexOutOfBoundsException if the model is empty which is
                     // fine because none of LEMMA's model kinds may be empty
                     val modelRoot = xtextResource.contents.get(0)
-                    makeImportPathsAbsoluteFromBasefilePath(modelRoot, rootModelFilepath)
+                    makeImportPathsAbsoluteFromBasefilePath(modelRoot, modelPath)
 
                     val errorMessages = LemmaUiUtils.validateXtextResource(xtextResource)
                         .toErrorMessages

@@ -284,7 +284,7 @@ public final class LaunchConfigurationDelegate implements ILaunchConfigurationDe
           try {
             xtextResource = LemmaUiUtils.loadXtextResource(modelPath);
             final EObject modelRoot = xtextResource.getContents().get(0);
-            Utils.makeImportPathsAbsoluteFromBasefilePath(modelRoot, rootModelFilepath);
+            Utils.makeImportPathsAbsoluteFromBasefilePath(modelRoot, modelPath);
             final List<String> errorMessages = this.toErrorMessages(LemmaUiUtils.validateXtextResource(xtextResource));
             boolean _isEmpty = errorMessages.isEmpty();
             boolean _not_1 = (!_isEmpty);
