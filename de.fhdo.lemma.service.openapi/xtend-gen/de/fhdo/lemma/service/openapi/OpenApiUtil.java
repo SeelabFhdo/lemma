@@ -30,18 +30,21 @@ public final class OpenApiUtil {
   
   public static String removeInvalidCharsFromName(final String s) {
     final String ret = s.replaceAll("[^a-zA-Z0-9_]", "");
-    String _xifexpression = null;
-    boolean _isAlphabetic = Character.isAlphabetic(ret.charAt(0));
-    boolean _not = (!_isAlphabetic);
-    if (_not) {
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append("v");
-      _builder.append(ret);
-      _xifexpression = _builder.toString();
+    boolean _isNullOrEmpty = StringExtensions.isNullOrEmpty(s);
+    if (_isNullOrEmpty) {
+      return "";
     } else {
-      _xifexpression = ret;
+      boolean _isAlphabetic = Character.isAlphabetic(ret.charAt(0));
+      boolean _not = (!_isAlphabetic);
+      if (_not) {
+        StringConcatenation _builder = new StringConcatenation();
+        _builder.append("v");
+        _builder.append(ret);
+        return _builder.toString();
+      } else {
+        return ret;
+      }
     }
-    return _xifexpression;
   }
   
   /**
@@ -76,7 +79,7 @@ public final class OpenApiUtil {
   }
   
   /**
-   * Write string contents to the given file path. Returns true if the file path and the contents
+   * Writes string contents to the given file path. Returns true if the file path and the contents
    * are not empty.
    */
   private static boolean writeFile(final String filepath, final String content) {
@@ -102,6 +105,11 @@ public final class OpenApiUtil {
     return _xtrycatchfinallyexpression;
   }
   
+  /**
+   * Returns the corresponding LEMMA PrimitiveType based on the OpenAPI integer type and its
+   * respective formats.
+   * <a href="https://swagger.io/specification/#data-types">OpenAPI Data Types</a>
+   */
   public static PrimitiveType deriveIntType(final String typeDesc) {
     PrimitiveType _switchResult = null;
     if (typeDesc != null) {
@@ -122,6 +130,11 @@ public final class OpenApiUtil {
     return _switchResult;
   }
   
+  /**
+   * Returns the corresponding LEMMA PrimitiveType based on the OpenAPI number type and its
+   * respective formats.
+   * <a href="https://swagger.io/specification/#data-types">OpenAPI Data Types</a>
+   */
   public static PrimitiveType deriveNumberType(final String typeDesc) {
     PrimitiveType _switchResult = null;
     if (typeDesc != null) {
@@ -142,6 +155,12 @@ public final class OpenApiUtil {
     return _switchResult;
   }
   
+  /**
+   * Returns the corresponding LEMMA PrimitiveType based on the OpenAPI string type and its
+   * respective formats. This also includes date and date-time as they are not
+   * self contained data types in OpenAPI but only formats of the string type.
+   * <a href="https://swagger.io/specification/#data-types">OpenAPI Data Types</a>
+   */
   public static PrimitiveType deriveStringType(final String typeDesc) {
     PrimitiveType _switchResult = null;
     if (typeDesc != null) {

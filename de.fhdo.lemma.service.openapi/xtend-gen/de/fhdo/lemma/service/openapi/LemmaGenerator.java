@@ -36,7 +36,7 @@ import picocli.CommandLine;
  * 
  * @author <a href="mailto:jonas.sorgalla@fh-dortmund.de">Jonas Sorgalla</a>
  */
-@CommandLine.Command(name = "transform", description = "Transforms a OpenAPI document into LEMMA Data, Service, and Technology models.\n\tRequires the following options:\n\t -url: URL pointing to the OpenAPI specification (file:/ or https://).\n     -tf: Path to the folder where the generated LEMMA models will be saved (e.g. C:\\myfolder\\test).\n     -d: Name for the generated LEMMA data model.\n     -s: Name for the generated LEMMA service model.\n     -t: Name for the generated LEMMA technology model.\n     \'-sp: Prefix for the package of the service model (e.g. \'my.example.package\').")
+@CommandLine.Command(name = "transform", description = "Transforms a OpenAPI document into LEMMA Data, Service, and Technology models.\n\tRequires the following parameters:\n\t -url: URL pointing to the OpenAPI specification (file:/ or https://).\n     -tf: Path to the folder where the generated LEMMA models will be saved (e.g. C:\\myfolder\\test).\n     -d: Name for the generated LEMMA data model.\n     -s: Name for the generated LEMMA service model.\n     -t: Name for the generated LEMMA technology model.\n     -sp: Prefix for the package of the service model (e.g. \'my.example.package\').")
 @SuppressWarnings("all")
 public class LemmaGenerator implements Runnable {
   /**
@@ -159,16 +159,17 @@ public class LemmaGenerator implements Runnable {
   }
   
   /**
-   * Entrypoint for standalone execution. It takes the following mandatory parameters in the given
-   * order to call the OpenAPI2LEMMA generator.
+   * Entrypoint for standalone execution. It takes the following mandatory parameters
+   * to call the OpenAPI2LEMMA generator. CLI is built with the PicoCLI framework.
+   * The commands are as follows:
    * <ul>
-   * <li><i>openapiPath</i>: URL pointing to the OpenAPI specification (file:/ or https://).</li>
-   * <li><i>genPath</i>: Path to the folder where the generated LEMMA models will be saved (e.g.,
+   * <li><i>-url</i>: URL pointing to the OpenAPI specification (file:/ or https://).</li>
+   * <li><i>-tf</i>: Path to the folder where the generated LEMMA models will be saved (e.g.,
    * C:\myfolder\test).</li>
-   * <li><i>dataFilename</i>: Name for the generated LEMMA data model.</li>
-   * <li><i>serviceFilename</i>: Name for the generated LEMMA service model.</li>
-   * <li><i>techFilename</i>: Name for the generated LEMMA technology model.</li>
-   * <li><i>prefixService</i>: Prefix for the package of the service model (e.g.,
+   * <li><i>-d</i>: Name for the generated LEMMA data model.</li>
+   * <li><i>-s</i>: Name for the generated LEMMA service model.</li>
+   * <li><i>-t</i>: Name for the generated LEMMA technology model.</li>
+   * <li><i>-sp</i>: Prefix for the package of the service model (e.g.,
    * "my.example.package")</li>
    * </ul>
    */
@@ -185,6 +186,9 @@ public class LemmaGenerator implements Runnable {
     System.exit(1);
   }
   
+  /**
+   * Standalone execution of OpenAPI2LEMMA. Is started through CLI based on Picocli.
+   */
   @Override
   public void run() {
     try {

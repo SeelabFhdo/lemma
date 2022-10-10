@@ -3,14 +3,14 @@ package de.fhdo.lemma.service.openapi
 import de.fhdo.lemma.data.CollectionType
 import de.fhdo.lemma.data.Context
 import de.fhdo.lemma.data.DataFactory
+import de.fhdo.lemma.data.DataField
+import de.fhdo.lemma.data.DataModel
 import de.fhdo.lemma.data.DataStructure
 import io.swagger.v3.oas.models.OpenAPI
 import io.swagger.v3.oas.models.media.ArraySchema
 import io.swagger.v3.oas.models.media.Schema
-import org.slf4j.LoggerFactory
-import de.fhdo.lemma.data.DataModel
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.fhdo.lemma.data.DataField
+import org.slf4j.LoggerFactory
 
 /**
  * This class is responsible for handling the generation of a LEMMA data model from an OpenAPI file
@@ -65,7 +65,7 @@ class LemmaDataSubGenerator {
 
     /**
      * Entrypoint method which starts the actual generation of a LEMMA data model.
-     * @Returns {@link de.fhdo.lemma.data.DataModel DataModel}
+     * @Returns {@link DataModel DataModel}
      */
     def DataModel generate() {
         LOGGER.debug("Initializing model instance...")
@@ -108,7 +108,7 @@ class LemmaDataSubGenerator {
     }
 
     /**
-     * Returns a {@link de.fhdo.lemma.data.DataStructure DataStructure} based on
+     * Returns a {@link DataStructure DataStructure} based on
      * encountered <emph>Component Objects</emph> in the OpenAPI specification.
      * For each encountered component object during parsing the OpenAPI document,
      * a HashMap is scanned whether a fitting DataStructure already exists
@@ -118,7 +118,7 @@ class LemmaDataSubGenerator {
      * may define components multiple times.
      * The population of DataStructures happens in a recursive way.
      *
-     * @returns {@link de.fhdo.lemma.data.DataStructure DataStructure}
+     * @returns {@link DataStructure DataStructure}
      */
     private def DataStructure getOrCreateDataStructure(Context context, String name,
         Schema<?> schema) {
@@ -165,7 +165,7 @@ class LemmaDataSubGenerator {
     }
 
     /**
-     * Creates a new {@link de.fhdo.lemma.data.DataField DataField} for an OpenAPI
+     * Creates a new {@link DataField DataField} for an OpenAPI
      * data type encoded in a structure.
      * Those can be elemental types such as <code>boolean</code> or <code>integer</code>,
      * but also references, in which case proper DataStructures are fetched or created
@@ -173,7 +173,7 @@ class LemmaDataSubGenerator {
      * In case of an array, a proper ListType is fetched or created (c.f.
      * {@link #getOrCreateStructuredListType getOrCreateStructuredListType(...)})
      *
-     * @returns {@link de.fhdo.lemma.data.DataField DataField}
+     * @returns {@link DataField DataField}
      * @throws {@link IllegalArgumentException IllegalArgumentException} if OpenAPI schema type
      * cannot be translated into a fitting LEMMA type.
      */

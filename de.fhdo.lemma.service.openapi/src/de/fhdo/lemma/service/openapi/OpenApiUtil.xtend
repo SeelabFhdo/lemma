@@ -11,8 +11,7 @@ import de.fhdo.lemma.technology.Technology
 import de.fhdo.lemma.technology.technologydsl.extractor.TechnologyDslExtractor
 import de.fhdo.lemma.data.DataFactory
 import java.io.File
-
-// TODO: Add Javadoc comments to methods
+import de.fhdo.lemma.data.PrimitiveType
 
 /**
  * This class collects _static_ utility methods for the OpenAPI plugin.
@@ -26,11 +25,12 @@ final class OpenApiUtil {
     static def String removeInvalidCharsFromName(String s) {
         val ret = s.replaceAll("[^a-zA-Z0-9_]", "")
 
-        // TODO: What happens if s is empty?
-        return if (!Character.isAlphabetic(ret.charAt(0)))
-                '''v«ret»'''
+		if(s.isNullOrEmpty)
+			return ""
+        else if (!Character.isAlphabetic(ret.charAt(0)))
+                return '''v«ret»'''
             else
-                ret
+                return ret
     }
 
     /**
@@ -51,7 +51,7 @@ final class OpenApiUtil {
     }
 
      /**
-     * Write string contents to the given file path. Returns true if the file path and the contents
+     * Writes string contents to the given file path. Returns true if the file path and the contents
      * are not empty.
      */
     private static def boolean writeFile(String filepath, String content) {
@@ -68,7 +68,12 @@ final class OpenApiUtil {
         }
     }
 
-    def static deriveIntType(String typeDesc) {
+     /**
+     * Returns the corresponding LEMMA PrimitiveType based on the OpenAPI integer type and its
+     * respective formats.
+     * <a href="https://swagger.io/specification/#data-types">OpenAPI Data Types</a>
+     */
+    def static PrimitiveType deriveIntType(String typeDesc) {
         return switch (typeDesc) {
             case "int32": DATA_FACTORY.createPrimitiveInteger
             case "int64": DATA_FACTORY.createPrimitiveLong
@@ -76,7 +81,12 @@ final class OpenApiUtil {
        }
     }
 
-    def static deriveNumberType(String typeDesc) {
+     /**
+     * Returns the corresponding LEMMA PrimitiveType based on the OpenAPI number type and its
+     * respective formats.
+     * <a href="https://swagger.io/specification/#data-types">OpenAPI Data Types</a>
+     */
+    def static PrimitiveType deriveNumberType(String typeDesc) {
         return switch (typeDesc) {
             case "double": DATA_FACTORY.createPrimitiveDouble
             case "float": DATA_FACTORY.createPrimitiveFloat
@@ -84,15 +94,21 @@ final class OpenApiUtil {
         }
     }
 
-    def static deriveStringType(String typeDesc) {
+     /**
+     * Returns the corresponding LEMMA PrimitiveType based on the OpenAPI string type and its
+     * respective formats. This also includes date and date-time as they are not
+     * self contained data types in OpenAPI but only formats of the string type.
+     * <a href="https://swagger.io/specification/#data-types">OpenAPI Data Types</a>
+     */
+    def static PrimitiveType deriveStringType(String typeDesc) {
         return switch (typeDesc) {
             case "binary": DATA_FACTORY.createPrimitiveString
             case "byte": DATA_FACTORY.createPrimitiveString
-            // TODO: Why does this method (derive*String*Type) also handle date types?
             case "date": DATA_FACTORY.createPrimitiveDate
             case "date-time": DATA_FACTORY.createPrimitiveDate
             case "password": DATA_FACTORY.createPrimitiveString
             default: DATA_FACTORY.createPrimitiveString
         }
     }
+
 }

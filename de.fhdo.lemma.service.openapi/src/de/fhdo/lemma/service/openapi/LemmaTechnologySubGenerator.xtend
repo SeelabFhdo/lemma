@@ -10,8 +10,7 @@ import de.fhdo.lemma.technology.AspectFeature
 import de.fhdo.lemma.data.PrimitiveType
 import io.swagger.v3.oas.models.PathItem
 import org.eclipse.xtend.lib.annotations.Accessors
-
-// TODO: Add Javadoc comments to methods
+import java.util.HashSet
 
 /**
  * This class is responsible for handling the generation of a LEMMA technology model for the OpenAPI
@@ -60,12 +59,22 @@ class LemmaTechnologySubGenerator {
     /* Location where the generated file is written */
     String targetFile
 
+
+	/**
+	 * Constructor for the TechnologySubGenerator. Sets up the generator by linking the
+	 * given target location and the openapi model to process.
+	 */
     new(OpenAPI api, String targetFile) {
         LOGGER.debug("Creating new Technology Sub Generator...")
         this.openApi = api
         this.targetFile = targetFile
     }
 
+    /**
+     * Entrypoint which starts the actual generation of a LEMMA technology model.
+     * Writes the generated TechnologyModel to the hard drive as well as
+     * returns the populated <strong>Technology</strong>.
+     */
     def Technology generate() {
         LOGGER.debug("Initializing model instance...")
         initialize()
@@ -84,13 +93,26 @@ class LemmaTechnologySubGenerator {
         return technology
     }
 
+    /**
+     * Initially names the technology model as well as adds LEMMA primitive types and
+     * technology aspects, including data formats, based off the
+     * OpenAPI model (<strong>openApi</strong> class attribute).
+     *
+     * <i>Currently the generation of ResponseCodes and Operation Types are not supported.</i>
+     */
     private def initialize() {
         technology.name = OpenApiUtil.removeInvalidCharsFromName(TECHNOLOGY_MODEL_NAME)
         technology.addPrimitiveTypes
         technology.addAspects
-        // TODO ResponseCodes, Operation Types, Formats
     }
 
+    /**
+     * Adds "rest" as a protocol to the technology model for OpenAPI.
+     * Formats are added based on media types included in the given openapi specification.
+     *
+     * Default format is set if the given OpenAPI file comprises one.
+     * Otherwise, the first encountered media type is set as default.
+     */
     private def addRestProtocol(Technology technology) {
         // Create "rest" as the default OpenAPI protocol
         val rest = TECHNOLOGY_FACTORY.createProtocol
@@ -121,7 +143,13 @@ class LemmaTechnologySubGenerator {
         technology.protocols.add(rest)
     }
 
-    private def searchMediaTypes(PathItem item) {
+    /**
+     * Processes the requests and responses from the
+     * given OpenAPI <strong>PathItem</strong> for media types.
+     * Encountered media types are stored in a HashSet.
+     * HashSet is returned.
+     */
+    private def HashSet<String> searchMediaTypes(PathItem item) {
         val httpVerbs = newArrayList(item.delete, item.get, item.head, item.options, item.patch,
             item.post, item.put).filterNull
 
@@ -180,6 +208,9 @@ class LemmaTechnologySubGenerator {
             dataFactory.createPrimitiveCharacter))
     }
 
+    /**
+     * Helper method to create and return a LEMMA <strong>TechnologySpecificPrimitiveType</strong>.
+     */
     private def createTechnologySpecificPrimitiveType(String name, boolean ^default,
         PrimitiveType baseType) {
         val type = TECHNOLOGY_FACTORY.createTechnologySpecificPrimitiveType
@@ -207,7 +238,7 @@ class LemmaTechnologySubGenerator {
     }
 
     /**
-     * Creates a LEMMA <code>ServiceAspect</code> 
+     * Creates a LEMMA <code>ServiceAspect</code>
      * for <code>JointPointType.OPERATIONS</code> with the given name.
      */
     private def createOperationsAspect(String name) {
@@ -220,7 +251,7 @@ class LemmaTechnologySubGenerator {
 
 
     /**
-     * Creates a LEMMA <code>ServiceAspect</code> 
+     * Creates a LEMMA <code>ServiceAspect</code>
      * for <code>JointPointType.PARAMETERS</code> with the given name.
      */
     private def createParametersAspect(String name) {

@@ -31,13 +31,13 @@ import picocli.CommandLine
  @Command(
   name = "transform",
   description = "Transforms a OpenAPI document into LEMMA Data, Service, and Technology models.
-	Requires the following options:
+	Requires the following parameters:
 	 -url: URL pointing to the OpenAPI specification (file:/ or https://).
      -tf: Path to the folder where the generated LEMMA models will be saved (e.g. C:\\myfolder\\test).
      -d: Name for the generated LEMMA data model.
      -s: Name for the generated LEMMA service model.
      -t: Name for the generated LEMMA technology model.
-     '-sp: Prefix for the package of the service model (e.g. 'my.example.package')."
+     -sp: Prefix for the package of the service model (e.g. 'my.example.package')."
 )
 class LemmaGenerator implements Runnable {
     /* SLF4j LOGGER */
@@ -139,16 +139,17 @@ class LemmaGenerator implements Runnable {
     }
 
     /**
-     * Entrypoint for standalone execution. It takes the following mandatory parameters in the given
-     * order to call the OpenAPI2LEMMA generator.
+     * Entrypoint for standalone execution. It takes the following mandatory parameters
+     * to call the OpenAPI2LEMMA generator. CLI is built with the PicoCLI framework.
+     * The commands are as follows:
      * <ul>
-     * <li><i>openapiPath</i>: URL pointing to the OpenAPI specification (file:/ or https://).</li>
-     * <li><i>genPath</i>: Path to the folder where the generated LEMMA models will be saved (e.g.,
+     * <li><i>-url</i>: URL pointing to the OpenAPI specification (file:/ or https://).</li>
+     * <li><i>-tf</i>: Path to the folder where the generated LEMMA models will be saved (e.g.,
      * C:\myfolder\test).</li>
-     * <li><i>dataFilename</i>: Name for the generated LEMMA data model.</li>
-     * <li><i>serviceFilename</i>: Name for the generated LEMMA service model.</li>
-     * <li><i>techFilename</i>: Name for the generated LEMMA technology model.</li>
-     * <li><i>prefixService</i>: Prefix for the package of the service model (e.g.,
+     * <li><i>-d</i>: Name for the generated LEMMA data model.</li>
+     * <li><i>-s</i>: Name for the generated LEMMA service model.</li>
+     * <li><i>-t</i>: Name for the generated LEMMA technology model.</li>
+     * <li><i>-sp</i>: Prefix for the package of the service model (e.g.,
      * "my.example.package")</li>
      * </ul>
      */
@@ -164,7 +165,9 @@ class LemmaGenerator implements Runnable {
         System.exit(1)
     }
 
-	//TODO CONTINIUE HERE, PROCESS PICOCLI VARIABLES. RUN TEST SEEE IF IMPLEMENATION STILL WORKS...
+    /**
+     * Standalone execution of OpenAPI2LEMMA. Is started through CLI based on Picocli.
+     */
 	override run() {
 		LOGGER.info("Starting standalone execution of OpenAPI2LEMMA Generator")
         val fetchUrl = new URL(this.fetchUrl)

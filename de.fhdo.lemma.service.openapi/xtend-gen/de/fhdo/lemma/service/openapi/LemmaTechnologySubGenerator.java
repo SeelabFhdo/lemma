@@ -102,12 +102,21 @@ public class LemmaTechnologySubGenerator {
    */
   private String targetFile;
   
+  /**
+   * Constructor for the TechnologySubGenerator. Sets up the generator by linking the
+   * given target location and the openapi model to process.
+   */
   public LemmaTechnologySubGenerator(final OpenAPI api, final String targetFile) {
     LemmaTechnologySubGenerator.LOGGER.debug("Creating new Technology Sub Generator...");
     this.openApi = api;
     this.targetFile = targetFile;
   }
   
+  /**
+   * Entrypoint which starts the actual generation of a LEMMA technology model.
+   * Writes the generated TechnologyModel to the hard drive as well as
+   * returns the populated <strong>Technology</strong>.
+   */
   public Technology generate() {
     try {
       LemmaTechnologySubGenerator.LOGGER.debug("Initializing model instance...");
@@ -132,12 +141,26 @@ public class LemmaTechnologySubGenerator {
     }
   }
   
+  /**
+   * Initially names the technology model as well as adds LEMMA primitive types and
+   * technology aspects, including data formats, based off the
+   * OpenAPI model (<strong>openApi</strong> class attribute).
+   * 
+   * <i>Currently the generation of ResponseCodes and Operation Types are not supported.</i>
+   */
   private void initialize() {
     this.technology.setName(OpenApiUtil.removeInvalidCharsFromName(LemmaTechnologySubGenerator.TECHNOLOGY_MODEL_NAME));
     this.addPrimitiveTypes(this.technology);
     this.addAspects(this.technology);
   }
   
+  /**
+   * Adds "rest" as a protocol to the technology model for OpenAPI.
+   * Formats are added based on media types included in the given openapi specification.
+   * 
+   * Default format is set if the given OpenAPI file comprises one.
+   * Otherwise, the first encountered media type is set as default.
+   */
   private boolean addRestProtocol(final Technology technology) {
     boolean _xblockexpression = false;
     {
@@ -178,6 +201,12 @@ public class LemmaTechnologySubGenerator {
     return _xblockexpression;
   }
   
+  /**
+   * Processes the requests and responses from the
+   * given OpenAPI <strong>PathItem</strong> for media types.
+   * Encountered media types are stored in a HashSet.
+   * HashSet is returned.
+   */
   private HashSet<String> searchMediaTypes(final PathItem item) {
     final Iterable<Operation> httpVerbs = IterableExtensions.<Operation>filterNull(CollectionLiterals.<Operation>newArrayList(item.getDelete(), item.getGet(), item.getHead(), item.getOptions(), item.getPatch(), 
       item.getPost(), item.getPut()));
@@ -250,6 +279,9 @@ public class LemmaTechnologySubGenerator {
       this.dataFactory.createPrimitiveCharacter()));
   }
   
+  /**
+   * Helper method to create and return a LEMMA <strong>TechnologySpecificPrimitiveType</strong>.
+   */
   private TechnologySpecificPrimitiveType createTechnologySpecificPrimitiveType(final String name, final boolean default_, final PrimitiveType baseType) {
     final TechnologySpecificPrimitiveType type = this.TECHNOLOGY_FACTORY.createTechnologySpecificPrimitiveType();
     type.setName(name);
