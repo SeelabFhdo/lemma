@@ -233,15 +233,15 @@ class SpecifyUrlDialog extends TitleAreaDialog {
         ]))
 
         btnUriFileLocation = new Button(buttonBar, SWT.BUTTON1)
-        btnUriFileLocation.text = "Select OpenAPI Specification File"
+        btnUriFileLocation.text = "Select OpenAPI File"
         btnUriFileLocation.layoutData = new GridData(SWT.FILL, SWT.FILL, true, false)
         btnUriFileLocation.addSelectionListener(SelectionListener.widgetSelectedAdapter([ e |
             val fileDialog = new FileDialog(shell)
-            fileDialog.setText("Please select an OpenAPI specification file")
+            fileDialog.setText("Please select an OpenAPI specification file (json or yaml)")
             val selectedFile = fileDialog.open()
             if(selectedFile === null) {
             MessageDialog.openError(this.shell, "No File Selected", "Please select an"+
-				"OpenAPI specification file.")
+				"OpenAPI specification file (json or yaml).")
             } else {
             	txtUrl.text = new File(selectedFile).toURI.toString
             }
@@ -275,7 +275,7 @@ class SpecifyUrlDialog extends TitleAreaDialog {
         txtTargetFolder.layoutData = new GridData(SWT.FILL, SWT.FILL, true, false)
 
         btnBrowseFolder = new Button(parent, SWT.PUSH)
-        btnBrowseFolder.text = "Select target folder to write models to."
+        btnBrowseFolder.text = "Select Target Folder"
         btnBrowseFolder.layoutData = new GridData(SWT.FILL, SWT.FILL, true, false)
         btnBrowseFolder.addSelectionListener(SelectionListener.widgetSelectedAdapter([ e |
             val dirDialog = new DirectoryDialog(shell)

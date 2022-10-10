@@ -328,17 +328,17 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     this.btnUriWebLocation.addSelectionListener(SelectionListener.widgetSelectedAdapter(_function));
     Button _button_1 = new Button(buttonBar, SWT.BUTTON1);
     this.btnUriFileLocation = _button_1;
-    this.btnUriFileLocation.setText("Select OpenAPI Specification File");
+    this.btnUriFileLocation.setText("Select OpenAPI File");
     GridData _gridData_2 = new GridData(SWT.FILL, SWT.FILL, true, false);
     this.btnUriFileLocation.setLayoutData(_gridData_2);
     final Consumer<SelectionEvent> _function_1 = (SelectionEvent e) -> {
       Shell _shell = this.getShell();
       final FileDialog fileDialog = new FileDialog(_shell);
-      fileDialog.setText("Please select an OpenAPI specification file");
+      fileDialog.setText("Please select an OpenAPI specification file (json or yaml)");
       final String selectedFile = fileDialog.open();
       if ((selectedFile == null)) {
         MessageDialog.openError(this.getShell(), "No File Selected", ("Please select an" + 
-          "OpenAPI specification file."));
+          "OpenAPI specification file (json or yaml)."));
       } else {
         this.txtUrl.setText(new File(selectedFile).toURI().toString());
       }
@@ -360,7 +360,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     this.txtTargetFolder.setLayoutData(_gridData);
     Button _button = new Button(parent, SWT.PUSH);
     this.btnBrowseFolder = _button;
-    this.btnBrowseFolder.setText("Select target folder to write models to.");
+    this.btnBrowseFolder.setText("Select Target Folder");
     GridData _gridData_1 = new GridData(SWT.FILL, SWT.FILL, true, false);
     this.btnBrowseFolder.setLayoutData(_gridData_1);
     final Consumer<SelectionEvent> _function = (SelectionEvent e) -> {
