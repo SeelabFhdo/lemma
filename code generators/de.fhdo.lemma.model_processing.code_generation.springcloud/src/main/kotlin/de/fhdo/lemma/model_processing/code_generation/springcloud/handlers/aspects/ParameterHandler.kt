@@ -104,5 +104,9 @@ internal class ParameterHandler : AspectHandlerI {
         val defaultValue = requestParamAspect.getPropertyValue("defaultValue")
         if (defaultValue != null)
             addPair("defaultValue", "\"$defaultValue\"")
+
+        val name = requestParamAspect.getPropertyValue("name")
+        if (name != null)
+            addPair("name", "\"$name\"")
     }
 }
