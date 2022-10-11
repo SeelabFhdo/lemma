@@ -1,6 +1,6 @@
 package de.fhdo.lemma.reconstruction.framework.modules.service
 
-import de.fhdo.lemma.model_processing.asFile
+import de.fhdo.lemma.reconstruction.framework.modules.AbstractReconstructionHandler
 import de.fhdo.lemma.reconstruction.framework.modules.AbstractReconstructionModule
 import de.fhdo.lemma.reconstruction.framework.modules.domain.ReconstructionDomainHandler
 import de.fhdo.lemma.reconstruction.framework.modules.domain.datastructure.DataStructure
@@ -8,7 +8,6 @@ import de.fhdo.lemma.reconstruction.framework.modules.service.`interface`.Interf
 import de.fhdo.lemma.reconstruction.framework.modules.service.microservice.Microservice
 import de.fhdo.lemma.reconstruction.framework.modules.service.operation.Operation
 import de.fhdo.lemma.reconstruction.framework.plugins.AbstractParseTree
-import de.fhdo.lemma.reconstruction.framework.plugins.ParsingResultType
 import de.fhdo.lemma.reconstruction.framework.repository.MicroserviceRepository
 
 /**
@@ -17,50 +16,30 @@ import de.fhdo.lemma.reconstruction.framework.repository.MicroserviceRepository
  *
  * @author [Philip Wizenty](mailto:philip.wizenty@fh-dortmund.de)
  */
-internal object ReconstructionServiceHandler {
-    private val serviceReconstructionModules = mutableListOf<AbstractReconstructionModule>()
+internal object ReconstructionServiceHandler : AbstractReconstructionHandler() {
     private val reconstructedMicroservices = mutableListOf<Microservice>()
     private val reconstructedInterfaces = mutableListOf<Interface>()
     private val reconstructedOperations = mutableListOf<Operation>()
-    private val reconstructionFilesAndParseTree = mutableMapOf<String, AbstractParseTree>()
+
 
     /**
      * Initialize the state of the main reconstruction module
      */
-    init {
-
+    override fun init() {
+        println("Init: ${ReconstructionServiceHandler.javaClass.name}")
     }
-
-    internal fun createParseTrees(files: List<String>) {
-        files.forEach { file ->
-            serviceReconstructionModules.forEach { module ->
-                createParseTree(file, module)
-            }
-        }
-    }
-
-    private fun createParseTree(path: String, module: AbstractReconstructionModule) {
-        if (reconstructionFilesAndParseTree.containsKey(path))
-            return
-
-        if (module.getSupportFileExtensions().contains(path.asFile().extension)) {
-            val (result, tree) = module.getParseTree(path)
-            when (result) {
-                ParsingResultType.FULLY_PARSED -> {
-                    reconstructionFilesAndParseTree[path] = tree
-                }
-                else -> null
-            }
-        }
-    }
-
     /**
-     * Execute the microservice reconstruction stage
+     * Execute the reconstruction for a microservice based on a parsing tree, provided by the technology specific plugin.
      */
-    internal fun executeServiceReconstructionStage() {
-        serviceReconstructionModules.forEach { module ->
-            reconstructionFilesAndParseTree.forEach { path, tree ->
-                reconstructMicroserviceFromPassTree(tree, module)
+    override fun reconstructFromPassTree(tree: AbstractParseTree, module: AbstractReconstructionModule) {
+        val reconstruction = module.execute(tree)
+
+        reconstruction.forEach {
+            when (it) {
+                is Microservice -> reconstructedMicroservices.add(it)
+                is Interface -> reconstructedInterfaces.add(it)
+                is Operation -> reconstructedOperations.add(it)
+                is DataStructure -> ReconstructionDomainHandler.addDataStructureDependency(it)
             }
         }
     }
@@ -72,25 +51,6 @@ internal object ReconstructionServiceHandler {
 
     internal fun stop() {
         println()
-    }
-
-
-    /**
-    * Execute the reconstruction for a microservice based on a parsing tree, provided by the technology specific plugin.
-    */
-    private fun reconstructMicroserviceFromPassTree(tree: AbstractParseTree, module: AbstractReconstructionModule) {
-        println("Before reconstruction execution.")
-        val reconstruction = module.execute(tree)
-
-        reconstruction.forEach {
-            println("${it.javaClass}")
-            when (it) {
-                is Microservice -> reconstructedMicroservices.add(it)
-                is Interface -> reconstructedInterfaces.add(it)
-                is Operation -> reconstructedOperations.add(it)
-                is DataStructure -> ReconstructionDomainHandler.addDataStructureDependency(it)
-            }
-        }
     }
 
     internal fun writeReconstructedMicroservicesToDatabase() {
@@ -123,10 +83,11 @@ internal object ReconstructionServiceHandler {
     }
 
     internal fun addServiceReconstructionModule(module: AbstractReconstructionModule) {
-        serviceReconstructionModules.add(module)
+        reconstructionModules.add(module)
     }
 
     internal fun getParseTrees(): Map<String, AbstractParseTree> = reconstructionFilesAndParseTree
+
 }
 
 fun getServiceReconstructionFilesAndParseTrees(): Map<String, AbstractParseTree> {

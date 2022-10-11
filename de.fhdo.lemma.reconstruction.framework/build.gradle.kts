@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.5.21"
+    kotlin("jvm") version "1.7.10"
     `maven-publish`
 }
 
@@ -119,7 +119,7 @@ val standalone = task("standalone", type = Jar::class) {
     with(tasks["jar"] as CopySpec)
 
     manifest {
-        attributes("Main-Class" to "de.fhdo.reconstruction.framework.SoftwareArchitectureReconstructionKt")
+        attributes("Main-Class" to "de.fhdo.lemma.reconstruction.framework.SoftwareArchitectureReconstructionKt")
 
         // Prevent security exception from JAR verifier
         exclude("META-INF/*.DSA", "META-INF/*.RSA", "META-INF/*.SF")

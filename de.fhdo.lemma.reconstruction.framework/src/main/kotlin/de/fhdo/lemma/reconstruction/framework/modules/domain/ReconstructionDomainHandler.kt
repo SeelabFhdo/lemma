@@ -2,71 +2,40 @@ package de.fhdo.lemma.reconstruction.framework.modules.domain
 
 import de.fhdo.lemma.model_processing.asFile
 import de.fhdo.lemma.reconstruction.framework.modules.AbstractReconstructionElement
+import de.fhdo.lemma.reconstruction.framework.modules.AbstractReconstructionHandler
 import de.fhdo.lemma.reconstruction.framework.modules.AbstractReconstructionModule
 import de.fhdo.lemma.reconstruction.framework.modules.domain.context.Context
 import de.fhdo.lemma.reconstruction.framework.modules.domain.context.ReconstructionContextFactory
 import de.fhdo.lemma.reconstruction.framework.modules.domain.datastructure.DataStructure
 import de.fhdo.lemma.reconstruction.framework.modules.domain.datastructure.EnumType
+import de.fhdo.lemma.reconstruction.framework.modules.service.ReconstructionServiceHandler
 import de.fhdo.lemma.reconstruction.framework.plugins.AbstractParseTree
 import de.fhdo.lemma.reconstruction.framework.plugins.ParsingResultType
 import de.fhdo.lemma.reconstruction.framework.repository.ContextRepository
 
-internal object ReconstructionDomainHandler {
+internal object ReconstructionDomainHandler : AbstractReconstructionHandler() {
     private const val symbols = "[A-Za-z0-9\\!\\\"\\#\\$\\%\\&\\'\\(\\)\\*\\+\\,\\-\\.\\/\\:\\;\\<\\>\\=\\?\\@\\[\\]\\{\\}\\\\\\^\\_\\`\\~]+$"
-    private val domainReconstructionModules = mutableListOf<AbstractReconstructionModule>()
     private val reconstructedContexts = mutableListOf<Context>()
     private val reconstructedDataStructures = mutableListOf<DataStructure>()
     private val reconstructedEnums = mutableListOf<EnumType>()
-    internal val reconstructionFilesAndParseTree = mutableMapOf<String, AbstractParseTree>()
+
     /**
      * Initialize the state of the main reconstruction module
      */
-    init {
-
-    }
-
-    internal fun createParseTrees(files: List<String>) {
-        files.forEach { file ->
-            domainReconstructionModules.forEach { module ->
-                createParseTree(file, module)
-            }
-        }
-    }
-
-    private fun createParseTree(path: String, module: AbstractReconstructionModule) {
-        if (reconstructionFilesAndParseTree.containsKey(path))
-            return
-
-        if (module.getSupportFileExtensions().contains(path.asFile().extension)) {
-            val (result, tree) = module.getParseTree(path)
-            when (result) {
-                ParsingResultType.FULLY_PARSED -> {
-                    reconstructionFilesAndParseTree[path] = tree
-                }
-                else -> null
-            }
-        }
-    }
-
-    internal fun executeDomainReconstructionStage() {
-        domainReconstructionModules.forEach { module ->
-            reconstructionFilesAndParseTree.forEach { path, tree ->
-                reconstructDomainDataFromPassTree(tree, module)
-            }
-        }
-        println()
+    override fun init() {
+        println("Init: ${ReconstructionDomainHandler.javaClass.name}")
     }
 
     /**
      * Execute the reconstruction for a microservice based on a parsing tree, provided by the technology specific plugin.
      */
-    private fun reconstructDomainDataFromPassTree(tree: AbstractParseTree, module: AbstractReconstructionModule) {
+    override fun reconstructFromPassTree(tree: AbstractParseTree, module: AbstractReconstructionModule) {
         val reconstruction = module.execute(tree)
         reconstruction.forEach {
             when (it) {
-                is Context -> addContext(it)
-                is DataStructure -> addDataStructure(it)
-                is EnumType -> addEnumType(it)
+                is Context -> reconstructedContexts.add(it)
+                is DataStructure -> reconstructedDataStructures.add(it)
+                is EnumType -> reconstructedEnums.add(it)
             }
         }
     }
@@ -118,7 +87,7 @@ internal object ReconstructionDomainHandler {
     }
 
     internal fun addDomainReconstructionModule(module: AbstractReconstructionModule) {
-        domainReconstructionModules.add(module)
+        reconstructionModules.add(module)
     }
 
     internal fun stop() {

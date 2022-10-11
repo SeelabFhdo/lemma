@@ -72,12 +72,12 @@ internal object ReconstructionMainHandler {
         // Start domain reconstruction stage
         ReconstructionDomainHandler
         ReconstructionDomainHandler.createParseTrees(files)
-        ReconstructionDomainHandler.executeDomainReconstructionStage()
+        ReconstructionDomainHandler.executeReconstructionStage()
 
         // Start service reconstruction stage
         ReconstructionServiceHandler
         ReconstructionServiceHandler.createParseTrees(files)
-        ReconstructionServiceHandler.executeServiceReconstructionStage()
+        ReconstructionServiceHandler.executeReconstructionStage()
 
         // Finish reconstruction stages in the order domain, service and operation
         ReconstructionDomainHandler.finishDomainReconstructionStage()
