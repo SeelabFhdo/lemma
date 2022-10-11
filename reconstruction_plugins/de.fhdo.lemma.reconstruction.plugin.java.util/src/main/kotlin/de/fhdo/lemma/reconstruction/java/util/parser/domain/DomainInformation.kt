@@ -6,22 +6,21 @@ import com.github.javaparser.ast.body.EnumDeclaration
 import com.github.javaparser.ast.body.VariableDeclarator
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.attributes
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getPackageName
+import de.fhdo.lemma.reconstruction.framework.modules.AbstractReconstructionElement
+import de.fhdo.lemma.reconstruction.framework.modules.common.createMetaData
+import de.fhdo.lemma.reconstruction.framework.modules.domain.datastructure.ClassType
+import de.fhdo.lemma.reconstruction.framework.modules.domain.datastructure.ComplexType
+import de.fhdo.lemma.reconstruction.framework.modules.domain.datastructure.EnumType
+import de.fhdo.lemma.reconstruction.framework.modules.domain.datastructure.Field
+import de.fhdo.lemma.reconstruction.framework.modules.domain.datastructure.PrimitiveType
+import de.fhdo.lemma.reconstruction.framework.modules.domain.datastructure.ReconstructionDataStructureFactory
+import de.fhdo.lemma.reconstruction.framework.modules.domain.datastructure.ReconstructionFieldFactory
+import de.fhdo.lemma.reconstruction.framework.modules.domain.getDomainReconstructionFilesAndParseTrees
 import de.fhdo.lemma.reconstruction.java.util.parser.JavaParseTree
 import de.fhdo.lemma.reconstruction.java.util.parser.getJavaParseTree
 import de.fhdo.lemma.reconstruction.java.util.parser.util.getComplexName
 import de.fhdo.lemma.reconstruction.java.util.parser.util.resolveContextFromName
-import de.fhdo.reconstruction.framework.modules.AbstractReconstructionElement
-import de.fhdo.reconstruction.framework.modules.common.createMetaData
-import de.fhdo.reconstruction.framework.modules.domain.datastructure.ClassType
-import de.fhdo.reconstruction.framework.modules.domain.datastructure.ComplexType
-import de.fhdo.reconstruction.framework.modules.domain.datastructure.DataStructure
-import de.fhdo.reconstruction.framework.modules.domain.datastructure.EnumType
-import de.fhdo.reconstruction.framework.modules.domain.datastructure.Field
-import de.fhdo.reconstruction.framework.modules.domain.datastructure.PrimitiveType
-import de.fhdo.reconstruction.framework.modules.domain.datastructure.ReconstructionDataStructureFactory
-import de.fhdo.reconstruction.framework.modules.domain.datastructure.ReconstructionFieldFactory
-import de.fhdo.reconstruction.framework.modules.domain.getDomainReconstructionFilesAndParseTrees
-import java.io.FileNotFoundException
+
 
 data class FieldWithDependencies(
     val field: Field,
@@ -173,7 +172,7 @@ private fun createDataStructureFromParseTree(parseTree: JavaParseTree): List<Abs
     return dataStructures
 }
 
-fun getEnumerationDependency(unit: CompilationUnit): EnumType{
+fun getEnumerationDependency(unit: CompilationUnit): EnumType {
     val contextName = resolveContextFromName(unit.storage.get().path.toString())
     val enumField = getEnumFromCompilationUnit(unit)
     val values = mutableListOf<String>()

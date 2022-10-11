@@ -2,8 +2,8 @@ package de.fhdo.lemma.reconstruction.java.util.parser
 
 import com.github.javaparser.JavaParser
 import com.github.javaparser.ast.CompilationUnit
-import de.fhdo.reconstruction.framework.plugins.AbstractParseTree
-import de.fhdo.reconstruction.framework.plugins.ParsingResultType
+import de.fhdo.lemma.reconstruction.framework.plugins.AbstractParseTree
+import de.fhdo.lemma.reconstruction.framework.plugins.ParsingResultType
 import java.io.File
 
 

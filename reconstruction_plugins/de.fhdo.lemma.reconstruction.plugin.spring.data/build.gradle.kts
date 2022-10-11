@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.5.21"
+    kotlin("jvm") version "1.7.10"
 }
 
 group = "de.fhdo.lemma.reconstruction.plugin.spring.data"

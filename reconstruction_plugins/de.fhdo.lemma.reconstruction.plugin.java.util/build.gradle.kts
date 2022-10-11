@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.5.21"
+    kotlin("jvm") version "1.7.10"
     `maven-publish`
 }
 
@@ -24,6 +24,7 @@ buildscript {
     extra.set("softwareReconstructionVersion", version)
     extra.set("javaParserVersion", "3.23.0")
     extra.set("modelProcessingVersion", version)
+    extra.set("bla", version)
     extra.set("lemmaEclipsePluginsVersion", version)
 }
 

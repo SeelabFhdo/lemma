@@ -5,26 +5,17 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import com.github.javaparser.ast.body.VariableDeclarator
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.attributes
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.hasAnnotation
+import de.fhdo.lemma.reconstruction.framework.modules.AbstractReconstructionElement
+import de.fhdo.lemma.reconstruction.framework.modules.common.createMetaData
+import de.fhdo.lemma.reconstruction.framework.modules.domain.datastructure.DataStructure
+import de.fhdo.lemma.reconstruction.framework.modules.domain.datastructure.Field
+import de.fhdo.lemma.reconstruction.framework.modules.domain.datastructure.ReconstructionDataStructureFactory
+import de.fhdo.lemma.reconstruction.framework.modules.domain.datastructure.ReconstructionFieldFactory
 import de.fhdo.lemma.reconstruction.java.util.parser.JavaParseTree
-import de.fhdo.lemma.reconstruction.java.util.parser.domain.FieldWithDependencies
-import de.fhdo.lemma.reconstruction.java.util.parser.domain.addDataStructureDependency
-import de.fhdo.lemma.reconstruction.java.util.parser.domain.getCompilationUnitForDependency
-import de.fhdo.lemma.reconstruction.java.util.parser.domain.getEnumerationDependency
 import de.fhdo.lemma.reconstruction.java.util.parser.domain.handleComplexType
-import de.fhdo.lemma.reconstruction.java.util.parser.domain.isClass
-import de.fhdo.lemma.reconstruction.java.util.parser.domain.isEnum
 import de.fhdo.lemma.reconstruction.java.util.parser.domain.isPrimitiveTypeOrWrapper
 import de.fhdo.lemma.reconstruction.java.util.parser.util.getComplexName
 import de.fhdo.lemma.reconstruction.java.util.parser.util.handlePrimitiveTypeAttribute
-import de.fhdo.reconstruction.framework.modules.AbstractReconstructionElement
-import de.fhdo.reconstruction.framework.modules.common.createMetaData
-import de.fhdo.reconstruction.framework.modules.domain.datastructure.ClassType
-import de.fhdo.reconstruction.framework.modules.domain.datastructure.ComplexType
-import de.fhdo.reconstruction.framework.modules.domain.datastructure.DataStructure
-import de.fhdo.reconstruction.framework.modules.domain.datastructure.Field
-import de.fhdo.reconstruction.framework.modules.domain.datastructure.ReconstructionDataStructureFactory
-import de.fhdo.reconstruction.framework.modules.domain.datastructure.ReconstructionFieldFactory
-
 /**
  * Object for storing the reconstructed data structures. The handling of the reconstructed information is realized via
  * the singleton pattern to enable the management of complex types as dependencies.

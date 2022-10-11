@@ -4,10 +4,10 @@ import com.github.javaparser.ast.CompilationUnit
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getPackageName
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.hasAnnotation
+import de.fhdo.lemma.reconstruction.framework.modules.AbstractReconstructionElement
+import de.fhdo.lemma.reconstruction.framework.modules.service.microservice.Microservice
+import de.fhdo.lemma.reconstruction.framework.modules.service.microservice.ReconstructionMicroserviceFactory
 import de.fhdo.lemma.reconstruction.java.util.parser.JavaParseTree
-import de.fhdo.reconstruction.framework.modules.AbstractReconstructionElement
-import de.fhdo.reconstruction.framework.modules.service.microservice.Microservice
-import de.fhdo.reconstruction.framework.modules.service.microservice.ReconstructionMicroserviceFactory
 
 
 internal fun findMicroservices(parseTree: JavaParseTree): List<AbstractReconstructionElement> {

@@ -7,10 +7,10 @@ import com.github.javaparser.ast.body.VariableDeclarator
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.findParentNode
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getPackageName
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.hasAnnotation
+import de.fhdo.lemma.reconstruction.framework.modules.domain.datastructure.PrimitiveType
+import de.fhdo.lemma.reconstruction.framework.modules.domain.getDomainReconstructionFilesAndParseTrees
+import de.fhdo.lemma.reconstruction.framework.plugins.AbstractParseTree
 import de.fhdo.lemma.reconstruction.java.util.parser.JavaParseTree
-import de.fhdo.reconstruction.framework.modules.domain.datastructure.PrimitiveType
-import de.fhdo.reconstruction.framework.modules.domain.getDomainReconstructionFilesAndParseTrees
-import de.fhdo.reconstruction.framework.plugins.AbstractParseTree
 import java.io.File
 
 fun String.extractContextTerm() : String {

@@ -1,7 +1,7 @@
 package de.fhdo.lemma.reconstruction.plugin.spring.data
 
 import de.fhdo.lemma.reconstruction.plugin.spring.data.domain.DomainReconstruction
-import de.fhdo.reconstruction.framework.plugins.AbstractPlugin
+import de.fhdo.lemma.reconstruction.framework.plugins.AbstractPlugin
 
 /**
  * Main class of the reconstruction java plugin.

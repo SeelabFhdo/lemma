@@ -9,6 +9,17 @@ import com.github.javaparser.ast.type.Type
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.getPackageName
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.hasAnnotation
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.methodsExcludingPropertyAccessors
+import de.fhdo.lemma.reconstruction.framework.modules.AbstractReconstructionElement
+import de.fhdo.lemma.reconstruction.framework.modules.common.createMetaData
+import de.fhdo.lemma.reconstruction.framework.modules.domain.datastructure.ClassType
+import de.fhdo.lemma.reconstruction.framework.modules.domain.datastructure.ComplexType
+import de.fhdo.lemma.reconstruction.framework.modules.domain.datastructure.ReconstructionDataStructureFactory
+import de.fhdo.lemma.reconstruction.framework.modules.domain.datastructure.ReconstructionFieldFactory
+import de.fhdo.lemma.reconstruction.framework.modules.service.operation.CommunicationType
+import de.fhdo.lemma.reconstruction.framework.modules.service.operation.ExchangePattern
+import de.fhdo.lemma.reconstruction.framework.modules.service.operation.Parameter
+import de.fhdo.lemma.reconstruction.framework.modules.service.operation.ReconstructionOperationFactory
+import de.fhdo.lemma.reconstruction.framework.modules.service.operation.ReconstructionParameterFactory
 import de.fhdo.lemma.reconstruction.java.util.parser.JavaParseTree
 import de.fhdo.lemma.reconstruction.java.util.parser.domain.addDataStructureDependency
 import de.fhdo.lemma.reconstruction.java.util.parser.domain.getClassFromCompilationUnit
@@ -20,19 +31,6 @@ import de.fhdo.lemma.reconstruction.java.util.parser.domain.isEnum
 import de.fhdo.lemma.reconstruction.java.util.parser.domain.isPrimitiveTypeOrWrapper
 import de.fhdo.lemma.reconstruction.java.util.parser.util.getComplexName
 import de.fhdo.lemma.reconstruction.java.util.parser.util.handlePrimitiveTypeAttribute
-import de.fhdo.reconstruction.framework.modules.AbstractReconstructionElement
-import de.fhdo.reconstruction.framework.modules.common.createMetaData
-import de.fhdo.reconstruction.framework.modules.domain.datastructure.ClassType
-import de.fhdo.reconstruction.framework.modules.domain.datastructure.ComplexType
-import de.fhdo.reconstruction.framework.modules.domain.datastructure.DataStructure
-import de.fhdo.reconstruction.framework.modules.domain.datastructure.Field
-import de.fhdo.reconstruction.framework.modules.domain.datastructure.ReconstructionDataStructureFactory
-import de.fhdo.reconstruction.framework.modules.domain.datastructure.ReconstructionFieldFactory
-import de.fhdo.reconstruction.framework.modules.service.operation.CommunicationType
-import de.fhdo.reconstruction.framework.modules.service.operation.ExchangePattern
-import de.fhdo.reconstruction.framework.modules.service.operation.Parameter
-import de.fhdo.reconstruction.framework.modules.service.operation.ReconstructionOperationFactory
-import de.fhdo.reconstruction.framework.modules.service.operation.ReconstructionParameterFactory
 
 /**
  * Object for storing the reconstructed data structures. The handling of the reconstructed information is realized via
@@ -238,4 +236,3 @@ private fun handleUnknownParameter(name: String, clazz: ClassOrInterfaceType, pa
     parameter.complexType = complexType
     return parameter
 }
-

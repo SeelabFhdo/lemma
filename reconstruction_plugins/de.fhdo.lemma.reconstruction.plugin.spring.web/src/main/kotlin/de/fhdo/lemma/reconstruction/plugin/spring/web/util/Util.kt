@@ -2,10 +2,10 @@ package de.fhdo.lemma.reconstruction.plugin.spring.web.util
 
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration
 import de.fhdo.lemma.model_processing.code_generation.java_base.ast.hasAnnotation
+import de.fhdo.lemma.reconstruction.framework.modules.service.getServiceReconstructionFilesAndParseTrees
+import de.fhdo.lemma.reconstruction.framework.plugins.AbstractParseTree
 import de.fhdo.lemma.reconstruction.java.util.parser.JavaParseTree
 import de.fhdo.lemma.reconstruction.java.util.parser.util.getApplicationClazzFromAbstractParseTree
-import de.fhdo.reconstruction.framework.modules.service.getServiceReconstructionFilesAndParseTrees
-import de.fhdo.reconstruction.framework.plugins.AbstractParseTree
 import java.io.File
 
 /**
