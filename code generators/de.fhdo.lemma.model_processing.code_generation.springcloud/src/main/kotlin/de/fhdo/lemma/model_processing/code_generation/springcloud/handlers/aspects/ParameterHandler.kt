@@ -28,12 +28,14 @@ internal class ParameterHandler : AspectHandlerI {
         "java.PathVariable" to listOf(MethodDeclaration::class.java),
         "java.RequestBody" to listOf(MethodDeclaration::class.java),
         "java.RequestParam" to listOf(MethodDeclaration::class.java),
+        "java.RequestHeader" to listOf(MethodDeclaration::class.java),
         "java.Valid" to listOf(MethodDeclaration::class.java),
 
         "Spring.ResponseStatus" to listOf(ClassOrInterfaceDeclaration::class.java),
         "Spring.PathVariable" to listOf(MethodDeclaration::class.java),
         "Spring.RequestBody" to listOf(MethodDeclaration::class.java),
         "Spring.RequestParam" to listOf(MethodDeclaration::class.java),
+        "Spring.RequestHeader" to listOf(MethodDeclaration::class.java),
         "Spring.Valid" to listOf(MethodDeclaration::class.java)
     )
 
