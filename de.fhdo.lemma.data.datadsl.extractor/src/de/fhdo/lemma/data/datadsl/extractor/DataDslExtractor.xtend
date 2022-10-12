@@ -180,7 +180,7 @@ class DataDslExtractor {
      * Extract CollectionType
      */
     def String extractToString(CollectionType collectionType) {
-        val preamble = '''collection «lemmaName(CollectionType.name)»'''
+        val preamble = '''collection «lemmaName(collectionType.name)»'''
 
         // Extract primitive collection
         if (collectionType.isPrimitiveCollection)

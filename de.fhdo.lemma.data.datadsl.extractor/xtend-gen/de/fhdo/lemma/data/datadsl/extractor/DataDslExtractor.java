@@ -340,7 +340,7 @@ public class DataDslExtractor {
     {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("collection ");
-      String _lemmaName = Util.lemmaName(CollectionType.class.getName());
+      String _lemmaName = Util.lemmaName(collectionType.getName());
       _builder.append(_lemmaName);
       final String preamble = _builder.toString();
       String _xifexpression = null;
