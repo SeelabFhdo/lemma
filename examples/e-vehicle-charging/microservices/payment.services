@@ -18,10 +18,10 @@ import microservices from "charging.services" as chargingServices
 @technology(java)
 @technology(shared)
 @endpoints(shared::_protocols.rest: "/payment";)
-functional microservice de.fhdo.PaymentService {
+public functional microservice de.fhdo.PaymentService {
     // The Invoice interface offers functions for payment
     @endpoints(shared::_protocols.rest: "/invoice";)
-    public interface InvoiceInterface {
+    interface InvoiceInterface {
         // Get an invoice
         @endpoints(shared::_protocols.rest: "/{invoiceNumber}";)
         getInvoice(

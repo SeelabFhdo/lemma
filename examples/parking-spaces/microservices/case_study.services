@@ -65,8 +65,8 @@ functional microservice com.example.allocationsovertime.AllocationsOverTime {
 /* Parking space management */
 @technology(java)
 @technology(shared)
-functional microservice com.example.parkingspacemanagement.ParkingSpaceManagement {
-    interface ParkingSpaceInformation {
+public functional microservice com.example.parkingspacemanagement.ParkingSpaceManagement {
+    architecture interface ParkingSpaceInformation {
         @shared::_aspects.get
         getInformation(
             sync in id : long,
@@ -80,7 +80,7 @@ functional microservice com.example.parkingspacemanagement.ParkingSpaceManagemen
         );
     }
 
-    public interface ParkingSpaceMgmt {
+    interface ParkingSpaceMgmt {
         createParkingSpace(
             sync in newSpace : domain::ParkingSpace.ParkingSpace,
             sync out id : long

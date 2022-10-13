@@ -570,6 +570,58 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
   }
   
   /**
+   * Check interface visibility
+   */
+  @Check
+  public void checkVisibility(final Interface interface_) {
+    boolean _or = false;
+    Microservice _microservice = null;
+    if (interface_!=null) {
+      _microservice=interface_.getMicroservice();
+    }
+    boolean _tripleEquals = (_microservice == null);
+    if (_tripleEquals) {
+      _or = true;
+    } else {
+      Visibility _effectiveVisibility = interface_.getEffectiveVisibility();
+      boolean _tripleNotEquals = (_effectiveVisibility != null);
+      _or = _tripleNotEquals;
+    }
+    if (_or) {
+      return;
+    }
+    String _name = interface_.getMicroservice().getEffectiveVisibility().name();
+    String _lowerCase = null;
+    if (_name!=null) {
+      _lowerCase=_name.toLowerCase();
+    }
+    final String microserviceVisibility = _lowerCase;
+    if ((microserviceVisibility == null)) {
+      return;
+    }
+    String _name_1 = interface_.getVisibility().name();
+    String _lowerCase_1 = null;
+    if (_name_1!=null) {
+      _lowerCase_1=_name_1.toLowerCase();
+    }
+    final String interfaceVisibility = _lowerCase_1;
+    if ((interfaceVisibility == null)) {
+      return;
+    }
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Interface visibility (");
+    _builder.append(interfaceVisibility);
+    _builder.append(") must not exceed the visibility ");
+    StringConcatenation _builder_1 = new StringConcatenation();
+    _builder_1.append("of its defining microservice (");
+    _builder_1.append(microserviceVisibility);
+    _builder_1.append(")");
+    String _plus = (_builder.toString() + _builder_1);
+    this.error(_plus, interface_, 
+      ServicePackage.Literals.INTERFACE__VISIBILITY);
+  }
+  
+  /**
    * Warn, if a required interface is already marked as being required by its containing
    * microservice
    */
@@ -610,6 +662,58 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
       this.warning("Microservice does not define any implemented operation ", importedMicroservice, 
         ServicePackage.Literals.POSSIBLY_IMPORTED_MICROSERVICE__MICROSERVICE);
     }
+  }
+  
+  /**
+   * Check operation visibility
+   */
+  @Check
+  public void checkVisibility(final Operation operation) {
+    boolean _or = false;
+    Interface _interface = null;
+    if (operation!=null) {
+      _interface=operation.getInterface();
+    }
+    boolean _tripleEquals = (_interface == null);
+    if (_tripleEquals) {
+      _or = true;
+    } else {
+      Visibility _effectiveVisibility = operation.getEffectiveVisibility();
+      boolean _tripleNotEquals = (_effectiveVisibility != null);
+      _or = _tripleNotEquals;
+    }
+    if (_or) {
+      return;
+    }
+    String _name = operation.getInterface().getEffectiveVisibility().name();
+    String _lowerCase = null;
+    if (_name!=null) {
+      _lowerCase=_name.toLowerCase();
+    }
+    final String interfaceVisibility = _lowerCase;
+    if ((interfaceVisibility == null)) {
+      return;
+    }
+    String _name_1 = operation.getVisibility().name();
+    String _lowerCase_1 = null;
+    if (_name_1!=null) {
+      _lowerCase_1=_name_1.toLowerCase();
+    }
+    final String operationVisibility = _lowerCase_1;
+    if ((operationVisibility == null)) {
+      return;
+    }
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("Operation visibility (");
+    _builder.append(operationVisibility);
+    _builder.append(") must not exceed the visibility ");
+    StringConcatenation _builder_1 = new StringConcatenation();
+    _builder_1.append("of its defining interface (");
+    _builder_1.append(interfaceVisibility);
+    _builder_1.append(")");
+    String _plus = (_builder.toString() + _builder_1);
+    this.error(_plus, operation, 
+      ServicePackage.Literals.OPERATION__VISIBILITY);
   }
   
   /**

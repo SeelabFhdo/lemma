@@ -14,7 +14,7 @@ import technology from "../technology/shared.technology" as shared
 @technology(go)
 @technology(shared)
 @endpoints(shared::_protocols.rest, shared::_protocols.mqtt : "/environment";)
-functional microservice de.fhdo.EnvironmentService version v01 {
+public functional microservice de.fhdo.EnvironmentService version v01 {
     /*
      * The infrastructure microservices are required for the provisioning of cross-cutting concerns,
      * e.g., scalability and reliability.
@@ -27,7 +27,7 @@ functional microservice de.fhdo.EnvironmentService version v01 {
 
     // The EnvironmentSensorInterface is responsible for receiving sensor data information
     @endpoints(shared::_protocols.mqtt: "/sensor/";)
-    public interface EnvironmentSensorInterface {
+    interface EnvironmentSensorInterface {
         @endpoints (shared::_protocols.mqtt: "/receive";)
         receiveSensorData(
             async in rawSensorData : enviromentData::v01.EnvironmentalSensors.RawSensorData
@@ -36,7 +36,7 @@ functional microservice de.fhdo.EnvironmentService version v01 {
 
     // The EnvironmentDataInterface interface is providing sensor data to its consumers
     @endpoints(shared::_protocols.rest: "/data";)
-    public interface EnvironmentDataInterface {
+    interface EnvironmentDataInterface {
         // Provides data aggregated by sensors
         @endpoints(shared::_protocols.rest: "/sensordata/{sensorId}";)
         readSensorData(

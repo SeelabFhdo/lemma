@@ -431,6 +431,28 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
     }
 
     /**
+     * Check interface visibility
+     */
+    @Check
+    def checkVisibility(Interface ^interface) {
+        if (interface?.microservice === null || interface.effectiveVisibility !== null)
+            return
+
+        val microserviceVisibility = interface.microservice.effectiveVisibility.name()?.toLowerCase
+        if (microserviceVisibility === null)
+            return
+
+        val interfaceVisibility = interface.visibility.name()?.toLowerCase
+        if (interfaceVisibility === null) {
+            return
+        }
+
+        error('''Interface visibility («interfaceVisibility») must not exceed the visibility ''' +
+            '''of its defining microservice («microserviceVisibility»)''', interface,
+            ServicePackage::Literals.INTERFACE__VISIBILITY)
+    }
+
+    /**
      * Warn, if a required interface is already marked as being required by its containing
      * microservice
      */
@@ -464,6 +486,28 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
         if (!importedMicroservice.microservice.effectivelyImplemented)
             warning("Microservice does not define any implemented operation ", importedMicroservice,
                 ServicePackage::Literals.POSSIBLY_IMPORTED_MICROSERVICE__MICROSERVICE)
+    }
+
+    /**
+     * Check operation visibility
+     */
+    @Check
+    def checkVisibility(Operation operation) {
+        if (operation?.interface === null || operation.effectiveVisibility !== null)
+            return
+
+        val interfaceVisibility = operation.interface.effectiveVisibility.name()?.toLowerCase
+        if (interfaceVisibility === null)
+            return
+
+        val operationVisibility = operation.visibility.name()?.toLowerCase
+        if (operationVisibility === null) {
+            return
+        }
+
+        error('''Operation visibility («operationVisibility») must not exceed the visibility ''' +
+            '''of its defining interface («interfaceVisibility»)''', operation,
+            ServicePackage::Literals.OPERATION__VISIBILITY)
     }
 
     /**
