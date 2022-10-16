@@ -156,7 +156,7 @@ class LemmaServiceSubGenerator {
         val dataImport = serviceFactory.createImport
         dataImport.importType = ImportType.DATATYPES
         dataImport.importURI = uri
-        if(model.versions.get(0)?.contexts.get(0)?.name.isNullOrEmpty)
+        if (model.versions.get(0)?.contexts.get(0)?.name.isNullOrEmpty)
             throw new Exception("Name of Data Model to be imported not set.")
         dataImport.name = model.versions.get(0)?.contexts.get(0)?.name.concat("Data")
         dataImport.serviceModel = serviceModel
@@ -314,7 +314,7 @@ class LemmaServiceSubGenerator {
         if (openApiOperation.requestBody !== null) {
             // Currently, only one media type is selected from the body because the JSON structure
             // comprises a type multiple times for different media types
-            if(openApiOperation.requestBody.content !== null) {
+            if (openApiOperation.requestBody.content !== null) {
                 val schema = openApiOperation.requestBody.content?.values.get(0).schema
                 lemmaOperation.parameters.add(createLemmaInParameterFromMediaTypeValue(schema))
             }

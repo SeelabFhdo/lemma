@@ -25,7 +25,7 @@ final class OpenApiUtil {
     static def String removeInvalidCharsFromName(String s) {
         val ret = s.replaceAll("[^a-zA-Z0-9_]", "")
 
-        if(s.isNullOrEmpty)
+        if (s.isNullOrEmpty)
             return ""
         else if (!Character.isAlphabetic(ret.charAt(0)))
                 return '''v«ret»'''
