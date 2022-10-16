@@ -102,12 +102,13 @@ class SpecifyUrlDialog extends TitleAreaDialog {
             return
         }
 
+        var errorOccurred = false
         try {
             val generator = new LemmaGenerator()
             val parsingMessages = generator.parse(fetchUrl.toString)
             MessageDialog.openInformation(shell, "Parsing Report",
                 '''«FOR msg : parsingMessages»
-                «msg»
+                    «msg»
                 «ENDFOR»''')
 
             if (generator.isParsed){
@@ -122,7 +123,8 @@ class SpecifyUrlDialog extends TitleAreaDialog {
                 if (generator.transMsgs.empty)
                     MessageDialog.openInformation(shell, "Transformation Report",
                         "Transformation completed successfully.")
-                else
+                else {
+                    errorOccurred = true
                     MessageDialog.openError(shell, "Transformation Report",
                         '''
                         There were errors during the transformation:
@@ -131,15 +133,21 @@ class SpecifyUrlDialog extends TitleAreaDialog {
                         «ENDFOR»
                         '''
                     )
-            } else
+                }
+            } else {
+                errorOccurred = true
                 MessageDialog.openError(shell, "Parsing Error", "Generation of in-memory " +
                     "representation not possible for the OpenAPI specification URL " +
                     fetchUrl.toString)
+            }
 
-        } catch (Exception ex)
+        } catch (Exception ex) {
+            errorOccurred = true
             MessageDialog.openError(shell, "Error", "Error during transformation: " + ex.message)
+        }
 
-        super.okPressed()
+        if (!errorOccurred)
+            super.okPressed()
     }
 
     /**
@@ -235,8 +243,8 @@ class SpecifyUrlDialog extends TitleAreaDialog {
             fileDialog.setText("Please select an OpenAPI specification file")
             val selectedFile = fileDialog.open()
             if (selectedFile === null)
-                MessageDialog.openError(shell, "No File Selected", "Please select an " +
-                    "OpenAPI specification file in JSON for YAML format.")
+                MessageDialog.openError(shell, "No File Selected", "Please select an OpenAPI " +
+                    "specification file in JSON for YAML format.")
             else
                 txtUrl.text = new File(selectedFile).toURI.toString
         ]))

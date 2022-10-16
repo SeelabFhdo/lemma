@@ -5,7 +5,7 @@ import de.fhdo.lemma.service.openapi.LemmaTechnologySubGenerator;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
 import org.apache.commons.validator.routines.UrlValidator;
@@ -154,9 +154,10 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     if (_not) {
       return;
     }
+    boolean errorOccurred = false;
     try {
       final LemmaGenerator generator = new LemmaGenerator();
-      final ArrayList<String> parsingMessages = generator.parse(this.fetchUrl.toString());
+      final LinkedList<String> parsingMessages = generator.parse(this.fetchUrl.toString());
       Shell _shell = this.getShell();
       StringConcatenation _builder = new StringConcatenation();
       {
@@ -164,6 +165,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
           _builder.newLineIfNotEmpty();
           _builder.append(msg);
           _builder.newLineIfNotEmpty();
+          _builder.append("                ");
         }
       }
       MessageDialog.openInformation(_shell, "Parsing Report", _builder.toString());
@@ -186,6 +188,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
           MessageDialog.openInformation(this.getShell(), "Transformation Report", 
             "Transformation completed successfully.");
         } else {
+          errorOccurred = true;
           Shell _shell_1 = this.getShell();
           StringConcatenation _builder_4 = new StringConcatenation();
           _builder_4.append("There were errors during the transformation:");
@@ -201,6 +204,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
           MessageDialog.openError(_shell_1, "Transformation Report", _builder_4.toString());
         }
       } else {
+        errorOccurred = true;
         Shell _shell_2 = this.getShell();
         String _string = this.fetchUrl.toString();
         String _plus = (("Generation of in-memory " + 
@@ -210,6 +214,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     } catch (final Throwable _t) {
       if (_t instanceof Exception) {
         final Exception ex = (Exception)_t;
+        errorOccurred = true;
         Shell _shell_3 = this.getShell();
         String _message = ex.getMessage();
         String _plus_1 = ("Error during transformation: " + _message);
@@ -218,7 +223,9 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
         throw Exceptions.sneakyThrow(_t);
       }
     }
-    super.okPressed();
+    if ((!errorOccurred)) {
+      super.okPressed();
+    }
   }
   
   /**
@@ -334,8 +341,8 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
       fileDialog.setText("Please select an OpenAPI specification file");
       final String selectedFile = fileDialog.open();
       if ((selectedFile == null)) {
-        MessageDialog.openError(this.getShell(), "No File Selected", ("Please select an " + 
-          "OpenAPI specification file in JSON for YAML format."));
+        MessageDialog.openError(this.getShell(), "No File Selected", ("Please select an OpenAPI " + 
+          "specification file in JSON for YAML format."));
       } else {
         this.txtUrl.setText(new File(selectedFile).toURI().toString());
       }
