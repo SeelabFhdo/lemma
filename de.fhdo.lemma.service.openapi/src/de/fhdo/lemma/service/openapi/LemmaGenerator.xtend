@@ -8,6 +8,9 @@ import org.slf4j.LoggerFactory
 import java.net.URL
 import java.nio.file.Paths
 import java.io.File
+import picocli.CommandLine.Command
+import picocli.CommandLine.Option
+import picocli.CommandLine
 
 /**
  * This class is the central entrypoint for the generation of LEMMA models from an OpenAPI
@@ -19,15 +22,43 @@ import java.io.File
  *
  * @author <a href="mailto:jonas.sorgalla@fh-dortmund.de">Jonas Sorgalla</a>
  */
-class LemmaGenerator {
+
+@Command(name = "transform", description = "Transform OpenAPI specification files into LEMMA " +
+    "domain, service, and technology models.")
+class LemmaGenerator implements Runnable {
     /* SLF4j LOGGER */
     static val LOGGER = LoggerFactory.getLogger(LemmaGenerator)
 
+    /* CLI options for standalone execution */
+    @Option(names = #["-u", "--url"], description = "URL pointing to the OpenAPI specification " +
+        "file (file:/ or https:// URI)", required = true)
+    var String fetchUrl
+
+    @Option(names = #["-f", "--target_folder"], description = "Path to the folder where the " +
+        "generated LEMMA models shall be saved", required = true)
+    var String targetFolder
+
+    @Option(names = #["-d", "--data_model_name"], description = "Name for the generated LEMMA " +
+        "data model", required = true)
+    var String dataModelName
+
+    @Option(names = #["-s", "--service_model_name"], description = "Name for the generated LEMMA " +
+        "service model", required = true)
+    var String serviceModelName
+
+    @Option(names = #["-t", "--technology_model_name"], description = "Name for the generated " +
+        "LEMMA technology model", required = true)
+    var String technologyModelName
+
+    @Option(names = #["-p", "--service_qualifier"], description = "Qualifier for generated " +
+        "LEMMA microservice definitions in Java package notation", required = true)
+    var String serviceQualifier
+
     /* OpenAPI schema which will be used as source for the generation */
-    static OpenAPI openAPI
+    OpenAPI openAPI
 
     /* Log of all encountered exceptions during all transformations */
-    static List<String> transMsgs = <String>newArrayList
+    List<String> transMsgs = <String>newArrayList
 
     def getTransMsgs() {
         return transMsgs.unmodifiableView
@@ -70,7 +101,7 @@ class LemmaGenerator {
     /**
      * Central method which generates all models
      */
-    static def generateModels(String targetPath, String dataFilename, String technologyFilename,
+    def generateModels(String targetPath, String dataFilename, String technologyFilename,
         String serviceFilename, String serviceQualifier) {
         val terminatedTargetPath = if (!targetPath.endsWith(File.separator))
                 '''«targetPath»«File.separator»'''
@@ -98,36 +129,23 @@ class LemmaGenerator {
     }
 
     /**
-     * Entrypoint for standalone execution. It takes the following mandatory parameters in the given
-     * order to call the OpenAPI2LEMMA generator.
-     * <ul>
-     * <li><i>openapiPath</i>: URL pointing to the OpenAPI specification (file:/ or https://).</li>
-     * <li><i>genPath</i>: Path to the folder where the generated LEMMA models will be saved (e.g.,
-     * C:\myfolder\test).</li>
-     * <li><i>dataFilename</i>: Name for the generated LEMMA data model.</li>
-     * <li><i>serviceFilename</i>: Name for the generated LEMMA service model.</li>
-     * <li><i>techFilename</i>: Name for the generated LEMMA technology model.</li>
-     * <li><i>prefixService</i>: Prefix for the package of the service model (e.g.,
-     * "my.example.package")</li>
-     * </ul>
+     * Entrypoint for CLI-based standalone execution of the OpenAPI2LEMMA generator
      */
-    // TODO: Refactor argument parsing towards something more sophisticated and safe like
-    //       https://picocli.info.
     def static void main(String[] args) {
-        val generator = new LemmaGenerator()
-        LOGGER.info("Starting standalone execution of OpenAPI2LEMMA Generator")
-        LOGGER.info("Checking arguments...")
-        if (args.length != 6)
-            exitWithError('''Not enough arguments (expected: 6, given: «args.length»)''')
+        CommandLine.run(new LemmaGenerator(), args);
+    }
 
-        // TODO: Swap serviceModelName and technologyModelName to be consistent with sub-generator
-        //       APIs and invocations
-        val fetchUrl = new URL(args.get(0))
-        val targetFolder = args.get(1).trim
-        val dataModelName = args.get(2).trim
-        val serviceModelName = args.get(3).trim
-        val technologyModelName = args.get(4).trim
-        val serviceQualifier = args.get(5).trim
+    /**
+     * Logic for the thread-based standalone execution of the OpenAPI2LEMMA generator
+     */
+    override run() {
+        LOGGER.info("Starting standalone execution of OpenAPI2LEMMA generator")
+        val fetchUrl = new URL(this.fetchUrl)
+        val targetFolder = this.targetFolder.trim
+        val dataModelName = this.dataModelName.trim
+        val serviceModelName = this.serviceModelName.trim
+        val technologyModelName = this.technologyModelName.trim
+        val serviceQualifier = this.serviceQualifier.trim
 
         if (targetFolder.empty ||
             dataModelName.empty ||
@@ -137,8 +155,8 @@ class LemmaGenerator {
             exitWithError("Arguments must not be empty")
 
         LOGGER.info("Parsing the OpenAPI specification URL...")
-        val parsingMessages = generator.parse(fetchUrl.toString)
-        if (!generator.isParsed)
+        val parsingMessages = parse(fetchUrl.toString)
+        if (!isParsed)
             exitWithError("OpenAPI specification URL could not be parsed")
 
         if (!parsingMessages.empty)
@@ -158,12 +176,12 @@ class LemmaGenerator {
             '''«serviceModelName».services''',
             serviceQualifier
         )
-        if (generator.transMsgs.empty)
+        if (transMsgs.empty)
             LOGGER.info("Transformation successful")
         else
             LOGGER.info(
                 '''Encountered problems during transformation:
-                «FOR msg : generator.transMsgs»
+                «FOR msg : transMsgs»
                     «msg»
                 «ENDFOR»'''
             )

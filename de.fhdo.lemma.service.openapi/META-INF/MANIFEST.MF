@@ -65,7 +65,8 @@ Bundle-ClassPath: .,
  lib/swagger-parser-v2-converter-2.0.29.jar,
  lib/swagger-parser-v3-2.0.29.jar,
  lib/uri-template-0.10.jar,
- lib/validation-api-1.1.0.Final.jar
+ lib/validation-api-1.1.0.Final.jar,
+ lib/picocli-3.9.6.jar
 Export-Package: de.fhdo.lemma.service.openapi;
   uses:="de.fhdo.lemma.service,
    org.eclipse.emf.ecore,

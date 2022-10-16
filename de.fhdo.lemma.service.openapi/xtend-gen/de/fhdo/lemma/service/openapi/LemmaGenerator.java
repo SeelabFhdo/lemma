@@ -19,6 +19,7 @@ import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import picocli.CommandLine;
 
 /**
  * This class is the central entrypoint for the generation of LEMMA models from an OpenAPI
@@ -30,32 +31,61 @@ import org.slf4j.LoggerFactory;
  * 
  * @author <a href="mailto:jonas.sorgalla@fh-dortmund.de">Jonas Sorgalla</a>
  */
+@CommandLine.Command(name = "transform", description = ("Transform OpenAPI specification files into LEMMA " + 
+  "domain, service, and technology models."))
 @SuppressWarnings("all")
-public class LemmaGenerator {
+public class LemmaGenerator implements Runnable {
   /**
    * SLF4j LOGGER
    */
   private static final Logger LOGGER = LoggerFactory.getLogger(LemmaGenerator.class);
   
   /**
+   * CLI options for standalone execution
+   */
+  @CommandLine.Option(names = { "-u", "--url" }, description = ("URL pointing to the OpenAPI specification " + 
+    "file (file:/ or https:// URI)"), required = true)
+  private String fetchUrl;
+  
+  @CommandLine.Option(names = { "-f", "--target_folder" }, description = ("Path to the folder where the " + 
+    "generated LEMMA models shall be saved"), required = true)
+  private String targetFolder;
+  
+  @CommandLine.Option(names = { "-d", "--data_model_name" }, description = ("Name for the generated LEMMA " + 
+    "data model"), required = true)
+  private String dataModelName;
+  
+  @CommandLine.Option(names = { "-s", "--service_model_name" }, description = ("Name for the generated LEMMA " + 
+    "service model"), required = true)
+  private String serviceModelName;
+  
+  @CommandLine.Option(names = { "-t", "--technology_model_name" }, description = ("Name for the generated " + 
+    "LEMMA technology model"), required = true)
+  private String technologyModelName;
+  
+  @CommandLine.Option(names = { "-p", "--service_qualifier" }, description = ("Qualifier for generated " + 
+    "LEMMA microservice definitions in Java package notation"), required = true)
+  private String serviceQualifier;
+  
+  /**
    * OpenAPI schema which will be used as source for the generation
    */
-  private static OpenAPI openAPI;
+  private OpenAPI openAPI;
   
   /**
    * Log of all encountered exceptions during all transformations
    */
-  private static List<String> transMsgs = CollectionLiterals.<String>newArrayList();
+  private List<String> transMsgs = CollectionLiterals.<String>newArrayList();
   
   public List<String> getTransMsgs() {
-    return Collections.<String>unmodifiableList(LemmaGenerator.transMsgs);
+    return Collections.<String>unmodifiableList(this.transMsgs);
   }
   
   /**
    * Checks whether there currently is a parsed in-memory to start the generation process
    */
   public boolean isParsed() {
-    return (LemmaGenerator.openAPI != null);
+    return (this.openAPI != null);
   }
   
   /**
@@ -82,7 +112,7 @@ public class LemmaGenerator {
     OpenAPI _openAPI = result.getOpenAPI();
     boolean _tripleNotEquals_1 = (_openAPI != null);
     if (_tripleNotEquals_1) {
-      LemmaGenerator.openAPI = result.getOpenAPI();
+      this.openAPI = result.getOpenAPI();
       returnMessages.add("In-memory model of OpenAPI specification URL loaded");
     } else {
       returnMessages.add(("There was an error generating the in-memory model for the given " + 
@@ -94,7 +124,7 @@ public class LemmaGenerator {
   /**
    * Central method which generates all models
    */
-  public static boolean generateModels(final String targetPath, final String dataFilename, final String technologyFilename, final String serviceFilename, final String serviceQualifier) {
+  public boolean generateModels(final String targetPath, final String dataFilename, final String technologyFilename, final String serviceFilename, final String serviceQualifier) {
     boolean _xblockexpression = false;
     {
       String _xifexpression = null;
@@ -111,61 +141,46 @@ public class LemmaGenerator {
       final String terminatedTargetPath = _xifexpression;
       LemmaGenerator.LOGGER.info("Starting generation of LEMMA data model...");
       final String dataModelPath = Paths.get(terminatedTargetPath, dataFilename).toString();
-      final LemmaDataSubGenerator dataGenerator = new LemmaDataSubGenerator(LemmaGenerator.openAPI, dataModelPath);
+      final LemmaDataSubGenerator dataGenerator = new LemmaDataSubGenerator(this.openAPI, dataModelPath);
       DataModel _generate = dataGenerator.generate();
       final Pair<String, DataModel> dataModel = Pair.<String, DataModel>of(dataFilename, _generate);
-      LemmaGenerator.transMsgs.addAll(dataGenerator.getTransMsgs());
+      this.transMsgs.addAll(dataGenerator.getTransMsgs());
       LemmaGenerator.LOGGER.info("Starting generation of LEMMA technology model...");
       final String technologyModelPath = Paths.get(terminatedTargetPath, technologyFilename).toString();
-      final LemmaTechnologySubGenerator technologyGenerator = new LemmaTechnologySubGenerator(LemmaGenerator.openAPI, technologyModelPath);
+      final LemmaTechnologySubGenerator technologyGenerator = new LemmaTechnologySubGenerator(this.openAPI, technologyModelPath);
       Technology _generate_1 = technologyGenerator.generate();
       final Pair<String, Technology> technology = Pair.<String, Technology>of(technologyFilename, _generate_1);
-      LemmaGenerator.transMsgs.addAll(technologyGenerator.getTransMsgs());
+      this.transMsgs.addAll(technologyGenerator.getTransMsgs());
       LemmaGenerator.LOGGER.info("Starting generation of LEMMA service model...");
       final String serviceModelPath = Paths.get(terminatedTargetPath, serviceFilename).toString();
-      final LemmaServiceSubGenerator serviceGenerator = new LemmaServiceSubGenerator(LemmaGenerator.openAPI, dataModel, technology, serviceModelPath);
+      final LemmaServiceSubGenerator serviceGenerator = new LemmaServiceSubGenerator(this.openAPI, dataModel, technology, serviceModelPath);
       serviceGenerator.generate(serviceQualifier);
-      _xblockexpression = LemmaGenerator.transMsgs.addAll(serviceGenerator.getTransMsgs());
+      _xblockexpression = this.transMsgs.addAll(serviceGenerator.getTransMsgs());
     }
     return _xblockexpression;
   }
   
   /**
-   * Entrypoint for standalone execution. It takes the following mandatory parameters in the given
-   * order to call the OpenAPI2LEMMA generator.
-   * <ul>
-   * <li><i>openapiPath</i>: URL pointing to the OpenAPI specification (file:/ or https://).</li>
-   * <li><i>genPath</i>: Path to the folder where the generated LEMMA models will be saved (e.g.,
-   * C:\myfolder\test).</li>
-   * <li><i>dataFilename</i>: Name for the generated LEMMA data model.</li>
-   * <li><i>serviceFilename</i>: Name for the generated LEMMA service model.</li>
-   * <li><i>techFilename</i>: Name for the generated LEMMA technology model.</li>
-   * <li><i>prefixService</i>: Prefix for the package of the service model (e.g.,
-   * "my.example.package")</li>
-   * </ul>
+   * Entrypoint for CLI-based standalone execution of the OpenAPI2LEMMA generator
    */
   public static void main(final String[] args) {
+    LemmaGenerator _lemmaGenerator = new LemmaGenerator();
+    CommandLine.<LemmaGenerator>run(_lemmaGenerator, args);
+  }
+  
+  /**
+   * Logic for the thread-based standalone execution of the OpenAPI2LEMMA generator
+   */
+  @Override
+  public void run() {
     try {
-      final LemmaGenerator generator = new LemmaGenerator();
-      LemmaGenerator.LOGGER.info("Starting standalone execution of OpenAPI2LEMMA Generator");
-      LemmaGenerator.LOGGER.info("Checking arguments...");
-      int _length = args.length;
-      boolean _notEquals = (_length != 6);
-      if (_notEquals) {
-        StringConcatenation _builder = new StringConcatenation();
-        _builder.append("Not enough arguments (expected: 6, given: ");
-        int _length_1 = args.length;
-        _builder.append(_length_1);
-        _builder.append(")");
-        LemmaGenerator.exitWithError(_builder.toString());
-      }
-      String _get = args[0];
-      final URL fetchUrl = new URL(_get);
-      final String targetFolder = (args[1]).trim();
-      final String dataModelName = (args[2]).trim();
-      final String serviceModelName = (args[3]).trim();
-      final String technologyModelName = (args[4]).trim();
-      final String serviceQualifier = (args[5]).trim();
+      LemmaGenerator.LOGGER.info("Starting standalone execution of OpenAPI2LEMMA generator");
+      final URL fetchUrl = new URL(this.fetchUrl);
+      final String targetFolder = this.targetFolder.trim();
+      final String dataModelName = this.dataModelName.trim();
+      final String serviceModelName = this.serviceModelName.trim();
+      final String technologyModelName = this.technologyModelName.trim();
+      final String serviceQualifier = this.serviceQualifier.trim();
       if (((((targetFolder.isEmpty() || 
         dataModelName.isEmpty()) || 
         serviceModelName.isEmpty()) || 
@@ -174,8 +189,8 @@ public class LemmaGenerator {
         LemmaGenerator.exitWithError("Arguments must not be empty");
       }
       LemmaGenerator.LOGGER.info("Parsing the OpenAPI specification URL...");
-      final ArrayList<String> parsingMessages = generator.parse(fetchUrl.toString());
-      boolean _isParsed = generator.isParsed();
+      final ArrayList<String> parsingMessages = this.parse(fetchUrl.toString());
+      boolean _isParsed = this.isParsed();
       boolean _not = (!_isParsed);
       if (_not) {
         LemmaGenerator.exitWithError("OpenAPI specification URL could not be parsed");
@@ -183,49 +198,48 @@ public class LemmaGenerator {
       boolean _isEmpty = parsingMessages.isEmpty();
       boolean _not_1 = (!_isEmpty);
       if (_not_1) {
-        StringConcatenation _builder_1 = new StringConcatenation();
-        _builder_1.append("Encountered messages during parsing:");
-        _builder_1.newLine();
+        StringConcatenation _builder = new StringConcatenation();
+        _builder.append("Encountered messages during parsing:");
+        _builder.newLine();
         {
           for(final String msg : parsingMessages) {
-            _builder_1.append("            ");
-            _builder_1.append("- ");
-            _builder_1.append(msg, "            ");
-            _builder_1.newLineIfNotEmpty();
-            _builder_1.append("            ");
+            _builder.append("            ");
+            _builder.append("- ");
+            _builder.append(msg, "            ");
+            _builder.newLineIfNotEmpty();
+            _builder.append("            ");
           }
         }
-        LemmaGenerator.LOGGER.info(_builder_1.toString());
+        LemmaGenerator.LOGGER.info(_builder.toString());
       }
       LemmaGenerator.LOGGER.info("... in-memory representation of OpenAPI specification URL parsed");
       LemmaGenerator.LOGGER.info("Starting LEMMA model generation...");
+      StringConcatenation _builder_1 = new StringConcatenation();
+      _builder_1.append(dataModelName);
+      _builder_1.append(".data");
       StringConcatenation _builder_2 = new StringConcatenation();
-      _builder_2.append(dataModelName);
-      _builder_2.append(".data");
+      _builder_2.append(technologyModelName);
+      _builder_2.append(".technology");
       StringConcatenation _builder_3 = new StringConcatenation();
-      _builder_3.append(technologyModelName);
-      _builder_3.append(".technology");
-      StringConcatenation _builder_4 = new StringConcatenation();
-      _builder_4.append(serviceModelName);
-      _builder_4.append(".services");
-      LemmaGenerator.generateModels(targetFolder, _builder_2.toString(), _builder_3.toString(), _builder_4.toString(), serviceQualifier);
-      boolean _isEmpty_1 = generator.getTransMsgs().isEmpty();
+      _builder_3.append(serviceModelName);
+      _builder_3.append(".services");
+      this.generateModels(targetFolder, _builder_1.toString(), _builder_2.toString(), _builder_3.toString(), serviceQualifier);
+      boolean _isEmpty_1 = this.transMsgs.isEmpty();
       if (_isEmpty_1) {
         LemmaGenerator.LOGGER.info("Transformation successful");
       } else {
-        StringConcatenation _builder_5 = new StringConcatenation();
-        _builder_5.append("Encountered problems during transformation:");
-        _builder_5.newLine();
+        StringConcatenation _builder_4 = new StringConcatenation();
+        _builder_4.append("Encountered problems during transformation:");
+        _builder_4.newLine();
         {
-          List<String> _transMsgs = generator.getTransMsgs();
-          for(final String msg_1 : _transMsgs) {
-            _builder_5.append("                ");
-            _builder_5.append(msg_1, "                ");
-            _builder_5.newLineIfNotEmpty();
-            _builder_5.append("                ");
+          for(final String msg_1 : this.transMsgs) {
+            _builder_4.append("                ");
+            _builder_4.append(msg_1, "                ");
+            _builder_4.newLineIfNotEmpty();
+            _builder_4.append("                ");
           }
         }
-        LemmaGenerator.LOGGER.info(_builder_5.toString());
+        LemmaGenerator.LOGGER.info(_builder_4.toString());
       }
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
