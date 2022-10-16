@@ -196,8 +196,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
           {
             List<String> _transMsgs = generator.getTransMsgs();
             for(final String msg_1 : _transMsgs) {
-              _builder_4.append("- ");
-              _builder_4.append(msg_1);
+              _builder_4.append(("\t- " + msg_1));
               _builder_4.newLineIfNotEmpty();
             }
           }

@@ -121,7 +121,7 @@ public class LemmaDataSubGenerator {
             if (_t instanceof Exception) {
               final Exception ex = (Exception)_t;
               StringConcatenation _builder = new StringConcatenation();
-              _builder.append("Error for DataStructure ");
+              _builder.append("Error for data structure ");
               _builder.append(key);
               _builder.append(". Structure will be skipped. ");
               String _plus = (_builder.toString() + 

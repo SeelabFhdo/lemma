@@ -72,12 +72,12 @@ class LemmaGenerator implements Runnable {
       * parsing.
       */
     def parse(String location) {
-        val returnMessages = newArrayList("Encountered messages while parsing the URL")
         val parseOptions = new ParseOptions()
         parseOptions.setResolve(true)
         parseOptions.setFlatten(true)
         val result = new OpenAPIParser().readLocation(location, null, parseOptions)
 
+        val returnMessages = newArrayList()
         if (result.messages !== null) {
             if (result.messages.empty)
                 returnMessages.add("No errors or warnings encountered")
@@ -92,7 +92,9 @@ class LemmaGenerator implements Runnable {
             returnMessages.add("There was an error generating the in-memory model for the given " +
                 "OpenAPI specification URL")
 
-        return returnMessages
+        val itemizedReturnMessages = newLinkedList("Encountered messages while parsing the URL:")
+        itemizedReturnMessages.addAll(returnMessages.map["\t- " + it])
+        return itemizedReturnMessages
     }
 
     /**
@@ -160,7 +162,7 @@ class LemmaGenerator implements Runnable {
         LOGGER.info(
             '''Encountered messages during parsing:
             «FOR msg : parsingMessages»
-                - «msg»
+                «msg»
             «ENDFOR»'''
         )
         LOGGER.info("... in-memory representation of OpenAPI specification URL parsed")
@@ -179,7 +181,7 @@ class LemmaGenerator implements Runnable {
             LOGGER.info(
                 '''Encountered problems during transformation:
                 «FOR msg : transMsgs»
-                    «msg»
+                    «"\t- " + msg»
                 «ENDFOR»'''
             )
     }

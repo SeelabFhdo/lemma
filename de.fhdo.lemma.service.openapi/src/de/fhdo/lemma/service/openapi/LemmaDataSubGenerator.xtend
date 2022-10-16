@@ -80,7 +80,7 @@ class LemmaDataSubGenerator {
             try {
                 getOrCreateDataStructure(targetContext, key, value)
             } catch (Exception ex) {
-                transMsgs.add('''Error for DataStructure «key». Structure will be skipped. ''' +
+                transMsgs.add('''Error for data structure «key». Structure will be skipped. ''' +
                     "Please refer to the debug log for details.")
                 LOGGER.debug(ex.message)
             }

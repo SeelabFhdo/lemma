@@ -129,7 +129,7 @@ class SpecifyUrlDialog extends TitleAreaDialog {
                         '''
                         There were errors during the transformation:
                         «FOR msg : generator.transMsgs»
-                            - «msg»
+                            «"\t- " + msg»
                         «ENDFOR»
                         '''
                     )

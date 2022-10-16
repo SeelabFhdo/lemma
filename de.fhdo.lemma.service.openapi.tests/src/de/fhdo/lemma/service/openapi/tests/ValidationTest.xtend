@@ -21,12 +21,12 @@ class ValidationTest {
 
         assertTrue(
             "Schema should not contain errors or warnings",
-            parsedSchema.contains("No errors or warnings encountered")
+            parsedSchema.contains("\t- No errors or warnings encountered")
         )
 
         assertFalse(
             "Generation of in-memory model must be possible from error- and warning-free schema",
-            parsedSchema.contains("There was an error generating the in-memory model for the " +
+            parsedSchema.contains("\t- There was an error generating the in-memory model for the " +
                 "given URL")
         )
     }

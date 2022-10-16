@@ -11,11 +11,14 @@ import java.net.URL;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
+import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.InputOutput;
+import org.eclipse.xtext.xbase.lib.ListExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -90,12 +93,12 @@ public class LemmaGenerator implements Runnable {
    * Swagger OpenAPI parsing framework. Return a list of all encountered messages during the
    * parsing.
    */
-  public ArrayList<String> parse(final String location) {
-    final ArrayList<String> returnMessages = CollectionLiterals.<String>newArrayList("Encountered messages while parsing the URL");
+  public LinkedList<String> parse(final String location) {
     final ParseOptions parseOptions = new ParseOptions();
     parseOptions.setResolve(true);
     parseOptions.setFlatten(true);
     final SwaggerParseResult result = new OpenAPIParser().readLocation(location, null, parseOptions);
+    final ArrayList<String> returnMessages = CollectionLiterals.<String>newArrayList();
     List<String> _messages = result.getMessages();
     boolean _tripleNotEquals = (_messages != null);
     if (_tripleNotEquals) {
@@ -115,7 +118,12 @@ public class LemmaGenerator implements Runnable {
       returnMessages.add(("There was an error generating the in-memory model for the given " + 
         "OpenAPI specification URL"));
     }
-    return returnMessages;
+    final LinkedList<String> itemizedReturnMessages = CollectionLiterals.<String>newLinkedList("Encountered messages while parsing the URL:");
+    final Function1<String, String> _function = (String it) -> {
+      return ("\t- " + it);
+    };
+    itemizedReturnMessages.addAll(ListExtensions.<String, String>map(returnMessages, _function));
+    return itemizedReturnMessages;
   }
   
   /**
@@ -186,7 +194,7 @@ public class LemmaGenerator implements Runnable {
         LemmaGenerator.exitWithError("Arguments must not be empty");
       }
       LemmaGenerator.LOGGER.info("Parsing the OpenAPI specification URL...");
-      final ArrayList<String> parsingMessages = this.parse(fetchUrl.toString());
+      final LinkedList<String> parsingMessages = this.parse(fetchUrl.toString());
       boolean _isParsed = this.isParsed();
       boolean _not = (!_isParsed);
       if (_not) {
@@ -201,7 +209,6 @@ public class LemmaGenerator implements Runnable {
         {
           for(final String msg : parsingMessages) {
             _builder.append("            ");
-            _builder.append("- ");
             _builder.append(msg, "            ");
             _builder.newLineIfNotEmpty();
             _builder.append("            ");
@@ -231,7 +238,7 @@ public class LemmaGenerator implements Runnable {
         {
           for(final String msg_1 : this.transMsgs) {
             _builder_4.append("                ");
-            _builder_4.append(msg_1, "                ");
+            _builder_4.append(("\t- " + msg_1), "                ");
             _builder_4.newLineIfNotEmpty();
             _builder_4.append("                ");
           }

@@ -1,7 +1,7 @@
 package de.fhdo.lemma.service.openapi.tests;
 
 import de.fhdo.lemma.service.openapi.LemmaGenerator;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -18,13 +18,13 @@ public class ValidationTest {
   @Test
   public void schemaShouldNotHaveErrors() {
     final LemmaGenerator generator = new LemmaGenerator();
-    final ArrayList<String> parsedSchema = generator.parse(ValidationTest.SCHEMA_PATH);
+    final LinkedList<String> parsedSchema = generator.parse(ValidationTest.SCHEMA_PATH);
     Assert.assertTrue(
       "Schema should not contain errors or warnings", 
-      parsedSchema.contains("No errors or warnings encountered"));
+      parsedSchema.contains("\t- No errors or warnings encountered"));
     Assert.assertFalse(
       "Generation of in-memory model must be possible from error- and warning-free schema", 
-      parsedSchema.contains(("There was an error generating the in-memory model for the " + 
+      parsedSchema.contains(("\t- There was an error generating the in-memory model for the " + 
         "given URL")));
   }
 }
