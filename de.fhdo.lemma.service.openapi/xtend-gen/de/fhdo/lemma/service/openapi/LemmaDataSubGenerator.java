@@ -87,11 +87,18 @@ public class LemmaDataSubGenerator {
    */
   private final String targetFile;
   
+  /**
+   * Constructor
+   */
   public LemmaDataSubGenerator(final OpenAPI openAPI, final String targetFile) {
     this.openAPI = openAPI;
     this.targetFile = targetFile;
   }
   
+  /**
+   * Generate LEMMA data model from a previously parsed OpenAPI specification file. This method
+   * returns the created model instance and also serializes it to the user's harddrive.
+   */
   public DataModel generate() {
     try {
       LemmaDataSubGenerator.LOGGER.debug("Initializing model instance...");
@@ -145,6 +152,9 @@ public class LemmaDataSubGenerator {
     }
   }
   
+  /**
+   * Initialize the data model instance
+   */
   private void initialize() {
     this.targetDataModel.getVersions().add(this.targetVersion);
     this.targetVersion.setName(OpenApiUtil.removeInvalidCharsFromName(this.openAPI.getInfo().getVersion()));
@@ -153,6 +163,12 @@ public class LemmaDataSubGenerator {
     this.targetContext.setVersion(this.targetVersion);
   }
   
+  /**
+   * Return a LEMMA data structure with the given name from an OpenAPI component object. In case a
+   * data structure with the given name was already created, because OpenAPI allows the multiple
+   * definition of a component object, it is returned. Otherwise, a new structure is created,
+   * cached, and returned.
+   */
   private DataStructure getOrCreateDataStructure(final Context context, final String name, final Schema<?> schema) {
     final String structureName = StringExtensions.toFirstUpper(name);
     StringConcatenation _builder = new StringConcatenation();
@@ -182,10 +198,18 @@ public class LemmaDataSubGenerator {
     return newStructure;
   }
   
+  /**
+   * Add fields to a given LEMMA data structure from information of a given OpenAPI schema
+   */
   private void addDataFieldsFromSchema(final DataStructure structure, final Schema<?> structureSchema) {
     this.addDataFieldsFromSchema(structure, null, structureSchema);
   }
   
+  /**
+   * Add field of the given name to the given LEMMA data structure based on the given OpenAPI
+   * schema. Note that this method recursively creates fields for inline-defined OpenAPI
+   * structures.
+   */
   private void addDataFieldsFromSchema(final DataStructure structure, final String fieldName, final Schema<?> structureSchema) {
     Map<String, Schema> _properties = structureSchema.getProperties();
     boolean _tripleNotEquals = (_properties != null);
@@ -199,6 +223,12 @@ public class LemmaDataSubGenerator {
     }
   }
   
+  /**
+   * Generate a LEMMA data field with the given name from the type of an OpenAPI schema. Primitive
+   * schema types such as "boolean" or "integer" are mapped to the corresponding LEMMA primitive
+   * types. OpenAPI arrays and references are mapped to LEMMA collection types and data
+   * structures, respectively.
+   */
   private DataField generateDataField(final String name, final Schema<?> structureSchema) {
     final DataField newDataField = this.dataFactory.createDataField();
     newDataField.setName(name);
@@ -248,6 +278,9 @@ public class LemmaDataSubGenerator {
         final Schema refSchema = this.openAPI.getComponents().getSchemas().get(refName);
         if (((refName != null) && (refSchema != null))) {
           newDataField.setComplexType(this.getOrCreateDataStructure(this.targetContext, refName, refSchema));
+        } else {
+          LemmaDataSubGenerator.LOGGER.info(("Encountered reference without a parseable name and/or schema. " + 
+            "The generated LEMMA data model may be incomplete."));
         }
       }
     }
@@ -257,15 +290,25 @@ public class LemmaDataSubGenerator {
     return newDataField;
   }
   
+  /**
+   * Throw an IllegalArgumentException in case an OpenAPI schema type cannot be transformed into a
+   * corresponding LEMMA type
+   */
   private void throwUnsupportedSchemaType(final Schema<?> schema) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("Schema type ");
     String _type = schema.getType();
     _builder.append(_type);
-    _builder.append(" not supported");
+    _builder.append(" is not supported.");
     throw new IllegalArgumentException(_builder.toString());
   }
   
+  /**
+   * Return a LEMMA collection type with the given name from an OpenAPI schema. In case a
+   * collection type with the given name was already created, because OpenAPI allows the multiple
+   * definition of schema types, it is returned. Otherwise, a new collection type is created,
+   * cached, and returned.
+   */
   private CollectionType getOrCreateStructuredCollectionType(final Context context, final String name, final Schema<?> schema) {
     final String typeName = LemmaDataSubGenerator.getCollectionTypeName(name);
     StringConcatenation _builder = new StringConcatenation();
@@ -294,10 +337,16 @@ public class LemmaDataSubGenerator {
     return newType;
   }
   
+  /**
+   * Helper method to get the name of a LEMMA collection type from an OpenAPI array schema
+   */
   public static String getCollectionTypeName(final ArraySchema schema) {
     return LemmaDataSubGenerator.getCollectionTypeName(schema.getType());
   }
   
+  /**
+   * Helper method to derive the name of a LEMMA collection type from a given base name
+   */
   public static String getCollectionTypeName(final String name) {
     StringConcatenation _builder = new StringConcatenation();
     String _firstUpper = StringExtensions.toFirstUpper(name);

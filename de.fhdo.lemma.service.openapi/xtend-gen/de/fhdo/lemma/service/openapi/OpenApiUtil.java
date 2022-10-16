@@ -30,18 +30,21 @@ public final class OpenApiUtil {
   
   public static String removeInvalidCharsFromName(final String s) {
     final String ret = s.replaceAll("[^a-zA-Z0-9_]", "");
-    String _xifexpression = null;
-    boolean _isAlphabetic = Character.isAlphabetic(ret.charAt(0));
-    boolean _not = (!_isAlphabetic);
-    if (_not) {
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append("v");
-      _builder.append(ret);
-      _xifexpression = _builder.toString();
+    boolean _isNullOrEmpty = StringExtensions.isNullOrEmpty(s);
+    if (_isNullOrEmpty) {
+      return "";
     } else {
-      _xifexpression = ret;
+      boolean _isAlphabetic = Character.isAlphabetic(ret.charAt(0));
+      boolean _not = (!_isAlphabetic);
+      if (_not) {
+        StringConcatenation _builder = new StringConcatenation();
+        _builder.append("v");
+        _builder.append(ret);
+        return _builder.toString();
+      } else {
+        return ret;
+      }
     }
-    return _xifexpression;
   }
   
   /**
@@ -102,6 +105,9 @@ public final class OpenApiUtil {
     return _xtrycatchfinallyexpression;
   }
   
+  /**
+   * Derive a LEMMA integer type from the given OpenAPI type description
+   */
   public static PrimitiveType deriveIntType(final String typeDesc) {
     PrimitiveType _switchResult = null;
     if (typeDesc != null) {
@@ -122,6 +128,9 @@ public final class OpenApiUtil {
     return _switchResult;
   }
   
+  /**
+   * Derive a LEMMA number type from the given OpenAPI type description
+   */
   public static PrimitiveType deriveNumberType(final String typeDesc) {
     PrimitiveType _switchResult = null;
     if (typeDesc != null) {
@@ -142,6 +151,11 @@ public final class OpenApiUtil {
     return _switchResult;
   }
   
+  /**
+   * Derive a LEMMA string type from the given OpenAPI type description. This also includes the
+   * OpenAPI date and date-time formats which do not represent dedicated types but only formats of
+   * OpenAPI's string type.
+   */
   public static PrimitiveType deriveStringType(final String typeDesc) {
     PrimitiveType _switchResult = null;
     if (typeDesc != null) {

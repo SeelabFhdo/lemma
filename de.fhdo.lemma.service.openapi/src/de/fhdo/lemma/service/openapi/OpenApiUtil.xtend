@@ -11,8 +11,7 @@ import de.fhdo.lemma.technology.Technology
 import de.fhdo.lemma.technology.technologydsl.extractor.TechnologyDslExtractor
 import de.fhdo.lemma.data.DataFactory
 import java.io.File
-
-// TODO: Add Javadoc comments to methods
+import de.fhdo.lemma.data.PrimitiveType
 
 /**
  * This class collects _static_ utility methods for the OpenAPI plugin.
@@ -26,11 +25,12 @@ final class OpenApiUtil {
     static def String removeInvalidCharsFromName(String s) {
         val ret = s.replaceAll("[^a-zA-Z0-9_]", "")
 
-        // TODO: What happens if s is empty?
-        return if (!Character.isAlphabetic(ret.charAt(0)))
-                '''v«ret»'''
+        if(s.isNullOrEmpty)
+            return ""
+        else if (!Character.isAlphabetic(ret.charAt(0)))
+                return '''v«ret»'''
             else
-                ret
+                return ret
     }
 
     /**
@@ -68,7 +68,10 @@ final class OpenApiUtil {
         }
     }
 
-    def static deriveIntType(String typeDesc) {
+    /**
+     * Derive a LEMMA integer type from the given OpenAPI type description
+     */
+    def static PrimitiveType deriveIntType(String typeDesc) {
         return switch (typeDesc) {
             case "int32": DATA_FACTORY.createPrimitiveInteger
             case "int64": DATA_FACTORY.createPrimitiveLong
@@ -76,7 +79,10 @@ final class OpenApiUtil {
        }
     }
 
-    def static deriveNumberType(String typeDesc) {
+    /**
+     * Derive a LEMMA number type from the given OpenAPI type description
+     */
+    def static PrimitiveType deriveNumberType(String typeDesc) {
         return switch (typeDesc) {
             case "double": DATA_FACTORY.createPrimitiveDouble
             case "float": DATA_FACTORY.createPrimitiveFloat
@@ -84,15 +90,20 @@ final class OpenApiUtil {
         }
     }
 
-    def static deriveStringType(String typeDesc) {
+    /**
+     * Derive a LEMMA string type from the given OpenAPI type description. This also includes the
+     * OpenAPI date and date-time formats which do not represent dedicated types but only formats of
+     * OpenAPI's string type.
+     */
+    def static PrimitiveType deriveStringType(String typeDesc) {
         return switch (typeDesc) {
             case "binary": DATA_FACTORY.createPrimitiveString
             case "byte": DATA_FACTORY.createPrimitiveString
-            // TODO: Why does this method (derive*String*Type) also handle date types?
             case "date": DATA_FACTORY.createPrimitiveDate
             case "date-time": DATA_FACTORY.createPrimitiveDate
             case "password": DATA_FACTORY.createPrimitiveString
             default: DATA_FACTORY.createPrimitiveString
         }
     }
+
 }

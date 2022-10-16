@@ -100,6 +100,9 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
   
   private String serviceQualifier;
   
+  /**
+   * Constructor
+   */
   public SpecifyUrlDialog(final Shell parentShell) {
     super(parentShell);
     TrayDialog.setDialogHelpAvailable(false);
@@ -142,7 +145,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
   }
   
   /**
-   * OK button was pressed
+   * OK button was pressed. Trigger generation.
    */
   @Override
   public void okPressed() {
@@ -181,11 +184,11 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
         boolean _isEmpty = generator.getTransMsgs().isEmpty();
         if (_isEmpty) {
           MessageDialog.openInformation(this.getShell(), "Transformation Report", 
-            "Transformation successfully completed");
+            "Transformation completed successfully.");
         } else {
           Shell _shell_1 = this.getShell();
           StringConcatenation _builder_4 = new StringConcatenation();
-          _builder_4.append("There were error during the transformation:");
+          _builder_4.append("There were errors during the transformation:");
           _builder_4.newLine();
           {
             List<String> _transMsgs = generator.getTransMsgs();
@@ -209,7 +212,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
         final Exception ex = (Exception)_t;
         Shell _shell_3 = this.getShell();
         String _message = ex.getMessage();
-        String _plus_1 = ("Error during extraction: " + _message);
+        String _plus_1 = ("Error during transformation: " + _message);
         MessageDialog.openError(_shell_3, "Error", _plus_1);
       } else {
         throw Exceptions.sneakyThrow(_t);
@@ -253,12 +256,15 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
       this.serviceModelName.isEmpty()) || 
       this.serviceQualifier.isEmpty());
     if (missingValues) {
-      MessageDialog.openError(this.getShell(), "Missing Field Values", ("Please specify a value " + 
-        "for each field"));
+      MessageDialog.openError(this.getShell(), "Missing Field Values", ("Please specify a value for " + 
+        "each field"));
     }
     return (!missingValues);
   }
   
+  /**
+   * Create the dialog area
+   */
   @Override
   public Control createDialogArea(final Composite parent) {
     Control _createDialogArea = super.createDialogArea(parent);
@@ -277,9 +283,12 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     return container;
   }
   
+  /**
+   * Create UI elements for URL/file specification
+   */
   private void createUrl(final Composite parent) {
     Label _label = new Label(parent, SWT.NULL);
-    _label.setText("URL:");
+    _label.setText("URL or File Path:");
     Text _text = new Text(parent, SWT.BORDER);
     this.txtUrl = _text;
     this.txtUrl.setMessage("Specify URL or Select File");
@@ -316,7 +325,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     this.btnUriWebLocation.addSelectionListener(SelectionListener.widgetSelectedAdapter(_function));
     Button _button_1 = new Button(buttonBar, SWT.BUTTON1);
     this.btnUriFileLocation = _button_1;
-    this.btnUriFileLocation.setText("Select OpenAPI Specification File");
+    this.btnUriFileLocation.setText("Select OpenAPI File");
     GridData _gridData_2 = new GridData(SWT.FILL, SWT.FILL, true, false);
     this.btnUriFileLocation.setLayoutData(_gridData_2);
     final Consumer<SelectionEvent> _function_1 = (SelectionEvent e) -> {
@@ -324,17 +333,25 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
       final FileDialog fileDialog = new FileDialog(_shell);
       fileDialog.setText("Please select an OpenAPI specification file");
       final String selectedFile = fileDialog.open();
-      this.txtUrl.setText(new File(selectedFile).toURI().toString());
+      if ((selectedFile == null)) {
+        MessageDialog.openError(this.getShell(), "No File Selected", ("Please select an " + 
+          "OpenAPI specification file in JSON for YAML format."));
+      } else {
+        this.txtUrl.setText(new File(selectedFile).toURI().toString());
+      }
     };
     this.btnUriFileLocation.addSelectionListener(SelectionListener.widgetSelectedAdapter(_function_1));
   }
   
+  /**
+   * Create the UI elements for target folder selection
+   */
   private void createTargetFolder(final Composite parent) {
     Label _label = new Label(parent, SWT.NULL);
     _label.setText("Target Folder:");
     Text _text = new Text(parent, SWT.BORDER);
     this.txtTargetFolder = _text;
-    this.txtTargetFolder.setMessage("Select Target Folder");
+    this.txtTargetFolder.setMessage("Select target folder for generated models.");
     this.txtTargetFolder.setEnabled(false);
     GridData _gridData = new GridData(SWT.FILL, SWT.FILL, true, false);
     this.txtTargetFolder.setLayoutData(_gridData);
@@ -346,13 +363,16 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     final Consumer<SelectionEvent> _function = (SelectionEvent e) -> {
       Shell _shell = this.getShell();
       final DirectoryDialog dirDialog = new DirectoryDialog(_shell);
-      dirDialog.setText("Select target folder.");
+      dirDialog.setText("Select target folder for generated models.");
       dirDialog.setFilterPath(ResourcesPlugin.getWorkspace().getRoot().getLocation().toString());
       this.txtTargetFolder.setText(dirDialog.open());
     };
     this.btnBrowseFolder.addSelectionListener(SelectionListener.widgetSelectedAdapter(_function));
   }
   
+  /**
+   * Create the UI elements for the data model name
+   */
   private void createDataModelName(final Composite container) {
     final Label lblDataModelName = new Label(container, SWT.NULL);
     lblDataModelName.setText("Data Model Name:");
@@ -364,6 +384,9 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     this.txtDataModelName.setLayoutData(layoutData);
   }
   
+  /**
+   * Create the UI elements for the technology model name
+   */
   private void createTechnologyModelName(final Composite container) {
     final Label lblTechnologyModelName = new Label(container, SWT.NULL);
     lblTechnologyModelName.setText("Technology Model Name:");
@@ -375,6 +398,9 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     this.txtTechnologyModelName.setLayoutData(layoutData);
   }
   
+  /**
+   * Create the UI elements for the service model name
+   */
   private void createServiceModelName(final Composite container) {
     final Label lblServiceModelName = new Label(container, SWT.NULL);
     lblServiceModelName.setText("Service Model Name:");
@@ -386,6 +412,9 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     this.txtServiceModelName.setLayoutData(layoutData);
   }
   
+  /**
+   * Create the UI elements for the microservice qualifier
+   */
   private void createServiceQualifier(final Composite container) {
     final Label lblServiceQualifier = new Label(container, SWT.NULL);
     lblServiceQualifier.setText("Microservice Package Qualifier:");
@@ -398,7 +427,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
   }
   
   /**
-   * Flag to indicate that dialog is resizable
+   * Indicate that the dialog is resizable
    */
   @Override
   public boolean isResizable() {
@@ -406,7 +435,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
   }
   
   /**
-   * Initial size
+   * Set window size
    */
   @Override
   public Point getInitialSize() {

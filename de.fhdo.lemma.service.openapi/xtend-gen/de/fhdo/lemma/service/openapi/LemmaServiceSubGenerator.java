@@ -137,6 +137,9 @@ public class LemmaServiceSubGenerator {
   
   private String dataModelLoc;
   
+  /**
+   * Constructor
+   */
   public LemmaServiceSubGenerator(final OpenAPI openApi, final Pair<String, DataModel> dataModel, final Pair<String, Technology> technology, final String targetFile) {
     LemmaServiceSubGenerator.LOGGER.debug("Creating new Service Sub Generator...");
     this.openApi = openApi;
@@ -146,96 +149,121 @@ public class LemmaServiceSubGenerator {
     this.dataModelLoc = Paths.get(new File(targetFile).getParent(), dataModel.getKey()).toString();
   }
   
+  /**
+   * Generate LEMMA service model from a previously parsed OpenAPI specification file. This method
+   * returns the created model instance and also serializes it to the user's harddrive.
+   */
   public void generate(final String serviceQualifier) {
-    LemmaServiceSubGenerator.LOGGER.debug("Adding data model import...");
-    this.createDataImport(this.dataModel.getKey(), this.dataModel.getValue());
-    LemmaServiceSubGenerator.LOGGER.debug("... data model import added");
-    LemmaServiceSubGenerator.LOGGER.debug("Adding technology import...");
-    this.createTechnologyImport(this.technology.getKey(), this.technology.getValue());
-    LemmaServiceSubGenerator.LOGGER.debug("... technology import added");
-    LemmaServiceSubGenerator.LOGGER.debug("Adding microservice...");
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append(serviceQualifier);
-    _builder.append(".");
-    String _removeInvalidCharsFromName = OpenApiUtil.removeInvalidCharsFromName(this.openApi.getInfo().getTitle());
-    final String microserviceName = (_builder.toString() + _removeInvalidCharsFromName);
-    final Microservice microservice = this.createFunctionalMicroservice(microserviceName);
-    LemmaServiceSubGenerator.LOGGER.debug("... microservice added");
-    LemmaServiceSubGenerator.LOGGER.debug("Adding interfaces...");
-    List<Tag> _tags = this.openApi.getTags();
-    boolean _tripleNotEquals = (_tags != null);
-    if (_tripleNotEquals) {
-      final Consumer<Tag> _function = (Tag it) -> {
-        this.createInterface(microservice, it.getName());
-      };
-      this.openApi.getTags().forEach(_function);
-    } else {
-      this.createInterface(microservice, LemmaServiceSubGenerator.DEFAULT_INTERFACE_NAME);
-    }
-    LemmaServiceSubGenerator.LOGGER.debug("... interfaces added");
-    LemmaServiceSubGenerator.LOGGER.debug("Creating interface operations for each path item...");
-    final BiConsumer<String, PathItem> _function_1 = (String key, PathItem value) -> {
-      try {
-        this.createOperations(microservice, key, value);
-      } catch (final Throwable _t) {
-        if (_t instanceof Exception) {
-          final Exception ex = (Exception)_t;
-          StringConcatenation _builder_1 = new StringConcatenation();
-          _builder_1.append("Error while creating operation ");
-          _builder_1.append(key);
-          _builder_1.append(". Operation is skipped. ");
-          String _plus = (_builder_1.toString() + 
-            "Please refer to the debug log for details.");
-          this.transMsgs.add(_plus);
-          LemmaServiceSubGenerator.LOGGER.debug(ex.getMessage());
-        } else {
-          throw Exceptions.sneakyThrow(_t);
-        }
+    try {
+      LemmaServiceSubGenerator.LOGGER.debug("Adding data model import...");
+      this.createDataImport(this.dataModel.getKey(), this.dataModel.getValue());
+      LemmaServiceSubGenerator.LOGGER.debug("... data model import added");
+      LemmaServiceSubGenerator.LOGGER.debug("Adding technology import...");
+      this.createTechnologyImport(this.technology.getKey(), this.technology.getValue());
+      LemmaServiceSubGenerator.LOGGER.debug("... technology import added");
+      LemmaServiceSubGenerator.LOGGER.debug("Adding microservice...");
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append(serviceQualifier);
+      _builder.append(".");
+      String _removeInvalidCharsFromName = OpenApiUtil.removeInvalidCharsFromName(this.openApi.getInfo().getTitle());
+      final String microserviceName = (_builder.toString() + _removeInvalidCharsFromName);
+      final Microservice microservice = this.createFunctionalMicroservice(microserviceName);
+      LemmaServiceSubGenerator.LOGGER.debug("... microservice added");
+      LemmaServiceSubGenerator.LOGGER.debug("Adding interfaces...");
+      List<Tag> _tags = this.openApi.getTags();
+      boolean _tripleNotEquals = (_tags != null);
+      if (_tripleNotEquals) {
+        final Consumer<Tag> _function = (Tag it) -> {
+          this.createInterface(microservice, it.getName());
+        };
+        this.openApi.getTags().forEach(_function);
+      } else {
+        this.createInterface(microservice, LemmaServiceSubGenerator.DEFAULT_INTERFACE_NAME);
       }
-    };
-    this.openApi.getPaths().forEach(_function_1);
-    LemmaServiceSubGenerator.LOGGER.debug("... operations created");
-    LemmaServiceSubGenerator.LOGGER.debug("... services created");
-    boolean _writeModel = OpenApiUtil.writeModel(this.serviceModel, this.targetFile);
-    if (_writeModel) {
-      LemmaServiceSubGenerator.LOGGER.info("Service model generation successful");
-      StringConcatenation _builder_1 = new StringConcatenation();
-      _builder_1.append("Model written to ");
-      _builder_1.append(this.targetFile);
-      LemmaServiceSubGenerator.LOGGER.info(_builder_1.toString());
-    } else {
-      LemmaServiceSubGenerator.LOGGER.info(("generated service model could not be written to hard disk. See debug " + 
-        "for more info."));
+      LemmaServiceSubGenerator.LOGGER.debug("... interfaces added");
+      LemmaServiceSubGenerator.LOGGER.debug("Creating interface operations for each path item...");
+      final BiConsumer<String, PathItem> _function_1 = (String key, PathItem value) -> {
+        try {
+          this.createOperations(microservice, key, value);
+        } catch (final Throwable _t) {
+          if (_t instanceof Exception) {
+            final Exception ex = (Exception)_t;
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("Error while creating operation ");
+            _builder_1.append(key);
+            _builder_1.append(". Operation is skipped. ");
+            String _plus = (_builder_1.toString() + 
+              "Please refer to the debug log for details.");
+            this.transMsgs.add(_plus);
+            LemmaServiceSubGenerator.LOGGER.debug(ex.getMessage());
+          } else {
+            throw Exceptions.sneakyThrow(_t);
+          }
+        }
+      };
+      this.openApi.getPaths().forEach(_function_1);
+      LemmaServiceSubGenerator.LOGGER.debug("... operations created");
+      LemmaServiceSubGenerator.LOGGER.debug("... services created");
+      boolean _writeModel = OpenApiUtil.writeModel(this.serviceModel, this.targetFile);
+      if (_writeModel) {
+        LemmaServiceSubGenerator.LOGGER.info("Service model generation successful");
+        StringConcatenation _builder_1 = new StringConcatenation();
+        _builder_1.append("Model written to ");
+        _builder_1.append(this.targetFile);
+        LemmaServiceSubGenerator.LOGGER.info(_builder_1.toString());
+      } else {
+        throw new Exception("Generated service model could not be written to hard disk.");
+      }
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
     }
   }
   
   /**
-   * Create and return a data model Import based on the given <strong>uri</strong> and
-   * <strong>model</strong>. The import is added to <italic>serviceModel</italic>.
+   * Create an Import instance for the given URI and within the context of the given data model.
+   * The import is added to the current serviceModel.
    */
   private Import createDataImport(final String uri, final DataModel model) {
-    final Import dataImport = this.serviceFactory.createImport();
-    dataImport.setImportType(ImportType.DATATYPES);
-    dataImport.setImportURI(uri);
-    Version _get = model.getVersions().get(0);
-    EList<Context> _contexts = null;
-    if (_get!=null) {
-      _contexts=_get.getContexts();
+    try {
+      final Import dataImport = this.serviceFactory.createImport();
+      dataImport.setImportType(ImportType.DATATYPES);
+      dataImport.setImportURI(uri);
+      Version _get = model.getVersions().get(0);
+      EList<Context> _contexts = null;
+      if (_get!=null) {
+        _contexts=_get.getContexts();
+      }
+      Context _get_1 = _contexts.get(0);
+      String _name = null;
+      if (_get_1!=null) {
+        _name=_get_1.getName();
+      }
+      boolean _isNullOrEmpty = StringExtensions.isNullOrEmpty(_name);
+      if (_isNullOrEmpty) {
+        throw new Exception("Name of Data Model to be imported not set.");
+      }
+      Version _get_2 = model.getVersions().get(0);
+      EList<Context> _contexts_1 = null;
+      if (_get_2!=null) {
+        _contexts_1=_get_2.getContexts();
+      }
+      Context _get_3 = _contexts_1.get(0);
+      String _name_1 = null;
+      if (_get_3!=null) {
+        _name_1=_get_3.getName();
+      }
+      dataImport.setName(_name_1.concat("Data"));
+      dataImport.setServiceModel(this.serviceModel);
+      LemmaServiceSubGenerator.LOGGER.debug("Data model import added");
+      return dataImport;
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
     }
-    Context _get_1 = _contexts.get(0);
-    String _name = null;
-    if (_get_1!=null) {
-      _name=_get_1.getName();
-    }
-    dataImport.setName(_name.concat("Data"));
-    dataImport.setServiceModel(this.serviceModel);
-    LemmaServiceSubGenerator.LOGGER.debug("Data model import added");
-    return dataImport;
   }
   
   /**
-   * Create and return a technology Import based on the given <strong>uri</strong> and
-   * <strong>model</strong>. The import is added to <italic>serviceModel</italic>.
+   * Create an Import instance for the given URI and within the context of the given technology
+   * model. The import is added to the current serviceModel.
    */
   private Import createTechnologyImport(final String uri, final Technology technology) {
     final Import techImport = this.serviceFactory.createImport();
@@ -248,8 +276,8 @@ public class LemmaServiceSubGenerator {
   }
   
   /**
-   * Create and return a <strong>Microservice</strong> with the given <strong>name</strong>. The
-   * service is added to <italic>serviceModel</italic>.
+   * Create a functional Microservice instance with the given name. The microservice is added to
+   * the current serviceModel.
    */
   private Microservice createFunctionalMicroservice(final String name) {
     StringConcatenation _builder = new StringConcatenation();
@@ -267,8 +295,8 @@ public class LemmaServiceSubGenerator {
   }
   
   /**
-   * Create and return a new <strong>Interface</strong> with the given <strong>name</strong>. The
-   * service is added to the given <strong>microservice</strong>.
+   * Create an Interface instance for the given microservice and with the given name. The import
+   * is added to the current serviceModel.
    */
   private Interface createInterface(final Microservice microservice, final String name) {
     final Interface interface_ = this.serviceFactory.createInterface();
@@ -278,6 +306,11 @@ public class LemmaServiceSubGenerator {
     return interface_;
   }
   
+  /**
+   * Create Operation instances for the OpenAPI operations in the given path item within an
+   * interface of the given LEMMA microservice. The target interface depends on the first tag of
+   * the currently processed OpenAPI operation.
+   */
   private void createOperations(final Microservice microservice, final String path, final PathItem item) {
     List<Server> _servers = item.getServers();
     boolean _tripleNotEquals = (_servers != null);
@@ -324,10 +357,13 @@ public class LemmaServiceSubGenerator {
     }
   }
   
+  /**
+   * Transform an OpenAPI operation to a LEMMA operation and add the operation to the
+   * corresponding interface of the given LEMMA microservice
+   */
   private boolean toLemmaOperation(final Operation openApiOperation, final Microservice microservice, final String type, final String path) {
     boolean _xblockexpression = false;
     {
-      final de.fhdo.lemma.service.Operation lemmaOperation = this.createLemmaOperation(type, path, openApiOperation);
       String _xifexpression = null;
       boolean _isNullOrEmpty = IterableExtensions.isNullOrEmpty(openApiOperation.getTags());
       boolean _not = (!_isNullOrEmpty);
@@ -336,25 +372,24 @@ public class LemmaServiceSubGenerator {
       } else {
         _xifexpression = LemmaServiceSubGenerator.DEFAULT_INTERFACE_NAME;
       }
-      final String tag = _xifexpression;
+      final String interfaceName = _xifexpression;
       final Function1<Interface, Boolean> _function = (Interface it) -> {
         String _name = it.getName();
-        return Boolean.valueOf(Objects.equal(_name, tag));
+        return Boolean.valueOf(Objects.equal(_name, interfaceName));
       };
       Interface _findFirst = IterableExtensions.<Interface>findFirst(microservice.getInterfaces(), _function);
       EList<de.fhdo.lemma.service.Operation> _operations = null;
       if (_findFirst!=null) {
         _operations=_findFirst.getOperations();
       }
-      _xblockexpression = _operations.add(lemmaOperation);
+      _xblockexpression = _operations.add(this.createLemmaOperation(type, path, openApiOperation));
     }
     return _xblockexpression;
   }
   
   /**
-   * Create and return a LEMMA </trong>Operation</strong> based on the <strong>Type</strong>,
-   * e.g., GET, PUT, or POST, the <strong>URI path</strong>, and the OpenAPI
-   * <strong>Operation</strong>.
+   * Create a LEMMA Operation instances from the given HTTP verb, e.g., GET, PUT, or POST, the
+   * given URI path, and OpenAPI Operation
    */
   private de.fhdo.lemma.service.Operation createLemmaOperation(final String type, final String path, final Operation openApiOperation) {
     final de.fhdo.lemma.service.Operation lemmaOperation = this.serviceFactory.createOperation();
@@ -366,6 +401,10 @@ public class LemmaServiceSubGenerator {
     return lemmaOperation;
   }
   
+  /**
+   * Add a LEMMA Endpoint for the "rest" protocol from the OpenAPI technology model with the given
+   * path to the given LEMMA Operation
+   */
   private void addRestEndpoint(final de.fhdo.lemma.service.Operation lemmaOperation, final String type, final String path, final Operation openApiOperation) {
     final Endpoint endpoint = this.serviceFactory.createEndpoint();
     final ImportedProtocolAndDataFormat protocol = this.serviceFactory.createImportedProtocolAndDataFormat();
@@ -379,6 +418,10 @@ public class LemmaServiceSubGenerator {
     lemmaOperation.getEndpoints().add(endpoint);
   }
   
+  /**
+   * Add a LEMMA ImportedServiceAspect for the given HTTP verb from the OpenAPI technology model
+   * to the given LEMMA Operation
+   */
   private void addRestAspect(final de.fhdo.lemma.service.Operation lemmaOperation, final String type, final Operation openApiOperation) {
     final ImportedServiceAspect aspect = this.serviceFactory.createImportedServiceAspect();
     ServiceAspect _xifexpression = null;
@@ -401,6 +444,10 @@ public class LemmaServiceSubGenerator {
     lemmaOperation.getAspects().add(aspect);
   }
   
+  /**
+   * Add a LEMMA ApiOperationComment that identifies the HTTP verb, path, summary, and description
+   * of the given OpenAPI Operation on the corresponding LEMMA Operation
+   */
   private void addComment(final de.fhdo.lemma.service.Operation lemmaOperation, final String type, final String path, final Operation openApiOperation) {
     final ApiOperationComment comment = this.serviceFactory.createApiOperationComment();
     StringConcatenation _builder = new StringConcatenation();
@@ -422,10 +469,9 @@ public class LemmaServiceSubGenerator {
   }
   
   /**
-   * Derive LEMMA Parameters from the given OpenAPI <strong>operation</strong>. According to
-   * OpenAPI 3.0.3 either the <italic>parameters</italic> field is used as input for generating
-   * the LEMMA Parameters or, in case the HTTP method supports a body, the
-   * <italic>requestBody</italic> is used (cf. RFC 7231).
+   * Derive LEMMA Parameters from the given OpenAPI Operation. According to OpenAPI 3.0.3, either
+   * the "parameters" field is used as input for deriving the LEMMA Parameters or, in case the
+   * HTTP method supports a body, the "requestBody" field is used (cf. RFC 7231).
    */
   private void addParameters(final de.fhdo.lemma.service.Operation lemmaOperation, final Operation openApiOperation) {
     List<Parameter> _parameters = openApiOperation.getParameters();
@@ -441,12 +487,16 @@ public class LemmaServiceSubGenerator {
     boolean _tripleNotEquals_1 = (_requestBody != null);
     if (_tripleNotEquals_1) {
       Content _content = openApiOperation.getRequestBody().getContent();
-      Collection<MediaType> _values = null;
-      if (_content!=null) {
-        _values=_content.values();
+      boolean _tripleNotEquals_2 = (_content != null);
+      if (_tripleNotEquals_2) {
+        Content _content_1 = openApiOperation.getRequestBody().getContent();
+        Collection<MediaType> _values = null;
+        if (_content_1!=null) {
+          _values=_content_1.values();
+        }
+        final Schema schema = (((MediaType[])Conversions.unwrapArray(_values, MediaType.class))[0]).getSchema();
+        lemmaOperation.getParameters().add(this.createLemmaInParameterFromMediaTypeValue(schema));
       }
-      final Schema schema = (((MediaType[])Conversions.unwrapArray(_values, MediaType.class))[0]).getSchema();
-      lemmaOperation.getParameters().add(this.createLemmaInParameterFromMediaTypeValue(schema));
     }
     ApiResponses _responses = openApiOperation.getResponses();
     if (_responses!=null) {
@@ -466,8 +516,7 @@ public class LemmaServiceSubGenerator {
   }
   
   /**
-   * Create and return a LEMMA <strong>Parameter</strong> from an OpenAPI
-   * <strong>Parameter</strong>
+   * Create an incoming synchronous LEMMA Parameter from an OpenAPI Parameter
    */
   private de.fhdo.lemma.service.Parameter createLemmaInParameter(final Parameter openApiParameter) {
     final de.fhdo.lemma.service.Parameter lemmaParameter = this.serviceFactory.createParameter();
@@ -497,8 +546,7 @@ public class LemmaServiceSubGenerator {
   }
   
   /**
-   * Create and return a new <strong>ImportedType</strong> from a given OpenAPI
-   * <strong>ref</strong> string
+   * Create a LEMMA ImportedType instance from an OpenAPI "ref" string
    */
   private ImportedType createImportedComplexTypeFromRef(final String ref) {
     final ImportedType importedType = this.serviceFactory.createImportedType();
@@ -525,7 +573,6 @@ public class LemmaServiceSubGenerator {
         Object _xblockexpression_1 = null;
         {
           LemmaServiceSubGenerator.LOGGER.error(ex.getMessage());
-          ex.printStackTrace();
           _xblockexpression_1 = null;
         }
         _xtrycatchfinallyexpression = ((ImportedType)_xblockexpression_1);
@@ -537,19 +584,18 @@ public class LemmaServiceSubGenerator {
   }
   
   /**
-   * Find a previously created <strong>ComplexType</strong> for the given OpenAPI
-   * <strong>ref</strong> string from the data model. Throw a ComplexTypeException in case no
-   * matching ComplexType was found.
+   * Find a previously created LEMMA ComplexType for the given OpenAPI "ref" string in the current
+   * data model. Throws an IllegalArgumentException in case no matching ComplexType was found.
    */
   private ComplexType findComplexTypeFromRef(final String ref) {
     final String[] parts = ref.split("/");
     if (((((List<String>)Conversions.doWrapArray(parts)).size() < 4) && (!ref.startsWith("#/components/schemas/")))) {
       StringConcatenation _builder = new StringConcatenation();
-      _builder.append("Could not find matching type for ");
-      _builder.append(ref);
-      _builder.append(" in ");
-      String _plus = (_builder.toString() + 
-        "data model");
+      _builder.append("Could not find matching complex type for ref ");
+      StringConcatenation _builder_1 = new StringConcatenation();
+      _builder_1.append(ref);
+      _builder_1.append(" in data model");
+      String _plus = (_builder.toString() + _builder_1);
       throw new IllegalArgumentException(_plus);
     }
     final Function1<ComplexType, Boolean> _function = (ComplexType it) -> {
@@ -561,8 +607,7 @@ public class LemmaServiceSubGenerator {
   }
   
   /**
-   * Create and return a LEMMA <strong>Parameter</strong> based on an OpenAPI
-   * <strong>Parameter</strong>
+   * Create an incoming synchronous LEMMA Parameter from a given OpenAPI Schema
    */
   private de.fhdo.lemma.service.Parameter createLemmaInParameterFromMediaTypeValue(final Schema<?> schema) {
     final de.fhdo.lemma.service.Parameter lemmaParameter = this.serviceFactory.createParameter();
@@ -588,7 +633,8 @@ public class LemmaServiceSubGenerator {
   }
   
   /**
-   * Set LEMMA parameter type based on a given OpenAPI schema
+   * Set the primitive or array type of the given LEMMA parameter based on the given OpenAPI
+   * Schema
    */
   private void setPrimitiveOrArrayDataTypeFromSchema(final de.fhdo.lemma.service.Parameter parameter, final Schema<?> schema) {
     String _type = schema.getType();
@@ -635,7 +681,7 @@ public class LemmaServiceSubGenerator {
   }
   
   /**
-   * Create and return an <strong>ImportedType</strong> instance for a domain concept from the
+   * Creates a LEMMA ImportedType instance for a domain concept of the given name in the current
    * data model
    */
   private ImportedType createImportedComplexTypeFromDomainConcept(final String domainConceptName) {
@@ -656,6 +702,10 @@ public class LemmaServiceSubGenerator {
     return _xifexpression;
   }
   
+  /**
+   * Create or retrieve a previously created CollectionType from an OpenAPI ArraySchema in the
+   * current data model
+   */
   private CollectionType getOrCreateCollectionTypeFromSchema(final ArraySchema schema) {
     try {
       final CollectionType collectionType = this.dataFactory.createCollectionType();
@@ -750,6 +800,9 @@ public class LemmaServiceSubGenerator {
     }
   }
   
+  /**
+   * Create an outgoing synchronous LEMMA Parameter from the given OpenAPI ApiResponse
+   */
   private de.fhdo.lemma.service.Parameter createLemmaOutParameter(final ApiResponse response) {
     final de.fhdo.lemma.service.Parameter lemmaParameter = this.serviceFactory.createParameter();
     lemmaParameter.setCommunicationType(CommunicationType.SYNCHRONOUS);

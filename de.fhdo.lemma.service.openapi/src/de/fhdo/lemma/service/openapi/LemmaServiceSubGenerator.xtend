@@ -24,8 +24,6 @@ import java.nio.file.Paths
 
 import static de.fhdo.lemma.service.openapi.LemmaTechnologySubGenerator.*
 
-// TODO: Add Javadoc comments to methods
-
 /**
  * This class is responsible for handling the generation of a LEMMA service model from an OpenAPI
  * file in the JSON or YAML format.
@@ -90,6 +88,9 @@ class LemmaServiceSubGenerator {
 
     String dataModelLoc
 
+    /**
+     * Constructor
+     */
     new(OpenAPI openApi, Pair<String, DataModel> dataModel,Pair<String, Technology> technology,
         String targetFile) {
         LOGGER.debug("Creating new Service Sub Generator...")
@@ -100,6 +101,10 @@ class LemmaServiceSubGenerator {
         dataModelLoc = Paths.get(new File(targetFile).parent, dataModel.key).toString
     }
 
+    /**
+     * Generate LEMMA service model from a previously parsed OpenAPI specification file. This method
+     * returns the created model instance and also serializes it to the user's harddrive.
+     */
     def generate(String serviceQualifier) {
         LOGGER.debug("Adding data model import...")
         createDataImport(dataModel.key, dataModel.value)
@@ -140,22 +145,19 @@ class LemmaServiceSubGenerator {
             LOGGER.info("Service model generation successful")
             LOGGER.info('''Model written to «targetFile»''')
         } else
-            // TODO: Why not throw an Exception as is the case for the data and technology sub-
-            //       generators, and thus make the generate() APIs consistent?
-            LOGGER.info("generated service model could not be written to hard disk. See debug " +
-                "for more info.")
+            throw new Exception("Generated service model could not be written to hard disk.")
     }
 
     /**
-     * Create and return a data model Import based on the given <strong>uri</strong> and
-     * <strong>model</strong>. The import is added to <italic>serviceModel</italic>.
+     * Create an Import instance for the given URI and within the context of the given data model.
+     * The import is added to the current serviceModel.
      */
     private def createDataImport(String uri, DataModel model) {
         val dataImport = serviceFactory.createImport
         dataImport.importType = ImportType.DATATYPES
         dataImport.importURI = uri
-        // TODO: Why not Xtend templating?
-        // TODO: What happens if "...name" is null?
+        if(model.versions.get(0)?.contexts.get(0)?.name.isNullOrEmpty)
+            throw new Exception("Name of Data Model to be imported not set.")
         dataImport.name = model.versions.get(0)?.contexts.get(0)?.name.concat("Data")
         dataImport.serviceModel = serviceModel
         LOGGER.debug("Data model import added")
@@ -163,8 +165,8 @@ class LemmaServiceSubGenerator {
     }
 
     /**
-     * Create and return a technology Import based on the given <strong>uri</strong> and
-     * <strong>model</strong>. The import is added to <italic>serviceModel</italic>.
+     * Create an Import instance for the given URI and within the context of the given technology
+     * model. The import is added to the current serviceModel.
      */
     private def createTechnologyImport(String uri, Technology technology) {
         val techImport = serviceFactory.createImport
@@ -177,8 +179,8 @@ class LemmaServiceSubGenerator {
     }
 
     /**
-     * Create and return a <strong>Microservice</strong> with the given <strong>name</strong>. The
-     * service is added to <italic>serviceModel</italic>.
+     * Create a functional Microservice instance with the given name. The microservice is added to
+     * the current serviceModel.
      */
     private def createFunctionalMicroservice(String name) {
         LOGGER.info('''Microservice name: «name»''')
@@ -193,8 +195,8 @@ class LemmaServiceSubGenerator {
     }
 
     /**
-     * Create and return a new <strong>Interface</strong> with the given <strong>name</strong>. The
-     * service is added to the given <strong>microservice</strong>.
+     * Create an Interface instance for the given microservice and with the given name. The import
+     * is added to the current serviceModel.
      */
     private def createInterface(Microservice microservice, String name) {
         val interface = serviceFactory.createInterface
@@ -204,6 +206,11 @@ class LemmaServiceSubGenerator {
         return interface
     }
 
+    /**
+     * Create Operation instances for the OpenAPI operations in the given path item within an
+     * interface of the given LEMMA microservice. The target interface depends on the first tag of
+     * the currently processed OpenAPI operation.
+     */
     private def void createOperations(Microservice microservice, String path, PathItem item) {
         if (item.servers !== null)
             throw new UnsupportedOperationException("Servers operation currently not supported")
@@ -220,20 +227,23 @@ class LemmaServiceSubGenerator {
         item.trace?.toLemmaOperation(microservice, "TRACE", path)
     }
 
+    /**
+     * Transform an OpenAPI operation to a LEMMA operation and add the operation to the
+     * corresponding interface of the given LEMMA microservice
+     */
     private def toLemmaOperation(Operation openApiOperation, Microservice microservice, String type,
         String path) {
-        val lemmaOperation = createLemmaOperation(type, path, openApiOperation)
-        val tag = if (!openApiOperation.tags.nullOrEmpty)
+        val interfaceName = if (!openApiOperation.tags.nullOrEmpty)
                 openApiOperation.tags.get(0)
             else
                 DEFAULT_INTERFACE_NAME
-        microservice.interfaces.findFirst[name == tag]?.operations.add(lemmaOperation)
+        microservice.interfaces.findFirst[name == interfaceName]?.operations
+            .add(createLemmaOperation(type, path, openApiOperation))
     }
 
     /**
-     * Create and return a LEMMA </trong>Operation</strong> based on the <strong>Type</strong>,
-     * e.g., GET, PUT, or POST, the <strong>URI path</strong>, and the OpenAPI
-     * <strong>Operation</strong>.
+     * Create a LEMMA Operation instances from the given HTTP verb, e.g., GET, PUT, or POST, the
+     * given URI path, and OpenAPI Operation
      */
     private def createLemmaOperation(String type, String path, Operation openApiOperation) {
         val lemmaOperation = serviceFactory.createOperation
@@ -245,6 +255,10 @@ class LemmaServiceSubGenerator {
         return lemmaOperation
     }
 
+    /**
+     * Add a LEMMA Endpoint for the "rest" protocol from the OpenAPI technology model with the given
+     * path to the given LEMMA Operation
+     */ 
     private def void addRestEndpoint(de.fhdo.lemma.service.Operation lemmaOperation, String type,
         String path, Operation openApiOperation) {
         val endpoint = serviceFactory.createEndpoint
@@ -256,6 +270,10 @@ class LemmaServiceSubGenerator {
         lemmaOperation.endpoints.add(endpoint)
     }
 
+    /**
+     * Add a LEMMA ImportedServiceAspect for the given HTTP verb from the OpenAPI technology model
+     * to the given LEMMA Operation
+     */
     private def void addRestAspect(de.fhdo.lemma.service.Operation lemmaOperation, String type,
         Operation openApiOperation) {
         val aspect = serviceFactory.createImportedServiceAspect
@@ -266,6 +284,10 @@ class LemmaServiceSubGenerator {
         lemmaOperation.aspects.add(aspect)
     }
 
+    /**
+     * Add a LEMMA ApiOperationComment that identifies the HTTP verb, path, summary, and description
+     * of the given OpenAPI Operation on the corresponding LEMMA Operation
+     */ 
     private def void addComment(de.fhdo.lemma.service.Operation lemmaOperation, String type,
         String path, Operation openApiOperation) {
         val comment = serviceFactory.createApiOperationComment
@@ -278,10 +300,9 @@ class LemmaServiceSubGenerator {
     }
 
     /**
-     * Derive LEMMA Parameters from the given OpenAPI <strong>operation</strong>. According to
-     * OpenAPI 3.0.3 either the <italic>parameters</italic> field is used as input for generating
-     * the LEMMA Parameters or, in case the HTTP method supports a body, the
-     * <italic>requestBody</italic> is used (cf. RFC 7231).
+     * Derive LEMMA Parameters from the given OpenAPI Operation. According to OpenAPI 3.0.3, either
+     * the "parameters" field is used as input for deriving the LEMMA Parameters or, in case the
+     * HTTP method supports a body, the "requestBody" field is used (cf. RFC 7231).
      */
     private def void addParameters(de.fhdo.lemma.service.Operation lemmaOperation,
         Operation openApiOperation) {
@@ -293,9 +314,10 @@ class LemmaServiceSubGenerator {
         if (openApiOperation.requestBody !== null) {
             // Currently, only one media type is selected from the body because the JSON structure
             // comprises a type multiple times for different media types
-            // TODO: What happens if requestBody.content is null?
-            val schema = openApiOperation.requestBody.content?.values.get(0).schema
-            lemmaOperation.parameters.add(createLemmaInParameterFromMediaTypeValue(schema))
+            if(openApiOperation.requestBody.content !== null) {
+                val schema = openApiOperation.requestBody.content?.values.get(0).schema
+                lemmaOperation.parameters.add(createLemmaInParameterFromMediaTypeValue(schema))
+            }
         }
 
         // Currently, only successful HTTP requests (return code 200) are supported as LEMMA OUT
@@ -309,8 +331,7 @@ class LemmaServiceSubGenerator {
     }
 
     /**
-     * Create and return a LEMMA <strong>Parameter</strong> from an OpenAPI
-     * <strong>Parameter</strong>
+     * Create an incoming synchronous LEMMA Parameter from an OpenAPI Parameter
      */
     private def createLemmaInParameter(Parameter openApiParameter) {
         val lemmaParameter = serviceFactory.createParameter
@@ -319,16 +340,6 @@ class LemmaServiceSubGenerator {
         lemmaParameter.name = openApiParameter.name.toLowerCase
         lemmaParameter.optional = !openApiParameter.required
 
-        // TODO: The following statement was refactored from
-        //      var Schema schema
-        //      if (parameter.content !== null) {
-        //          println(parameter)
-        //      } else {
-        //          schema = parameter.schema
-        //      }
-        // In case parameter.content is not null, schema will be null (the following statement
-        // adopts this behavior). Does this behavior make sense at all? If so, why? And what happens
-        // if schema is null?
         val schema = if (openApiParameter.content === null) openApiParameter.schema else null
 
         if (!openApiParameter.get$ref.nullOrEmpty)
@@ -340,8 +351,7 @@ class LemmaServiceSubGenerator {
     }
 
     /**
-     * Create and return a new <strong>ImportedType</strong> from a given OpenAPI
-     * <strong>ref</strong> string
+     * Create a LEMMA ImportedType instance from an OpenAPI "ref" string
      */
     private def createImportedComplexTypeFromRef(String ref) {
         val importedType = serviceFactory.createImportedType
@@ -355,35 +365,26 @@ class LemmaServiceSubGenerator {
                 null
         } catch (IllegalArgumentException ex) {
             LOGGER.error(ex.message)
-            // TODO: We usually don't print to stacktrace. Are there any alternative, more sensible
-            //       failure handling mechanisms?
-            ex.printStackTrace()
             null
         }
     }
 
     /**
-     * Find a previously created <strong>ComplexType</strong> for the given OpenAPI
-     * <strong>ref</strong> string from the data model. Throw a ComplexTypeException in case no
-     * matching ComplexType was found.
+     * Find a previously created LEMMA ComplexType for the given OpenAPI "ref" string in the current
+     * data model. Throws an IllegalArgumentException in case no matching ComplexType was found.
      */
     private def findComplexTypeFromRef(String ref) {
-        // TODO: Refactored for the better. Please check if behavior remained consistent with
-        //       previous implementation (https://github.com/SeelabFhdo/lemma/blob/
-        //       e27de7ccd3f8dfd5cd77eede2cb0c7491dcc1756/de.fhdo.lemma.service.openapi/src/de/fhdo/
-        //       lemma/service/openapi/LemmaServiceSubGenerator.xtend#L503).
         val parts = ref.split("/")
         if (parts.size < 4 && !ref.startsWith("#/components/schemas/"))
-            throw new IllegalArgumentException('''Could not find matching type for «ref» in ''' +
-                "data model")
+            throw new IllegalArgumentException('''Could not find matching complex type for ref ''' +
+                '''«ref» in data model''')
 
         return dataModel.value.versions.get(0).contexts.get(0).complexTypes
             .findFirst[name == parts.get(3).toFirstUpper]
     }
 
     /**
-     * Create and return a LEMMA <strong>Parameter</strong> based on an OpenAPI
-     * <strong>Parameter</strong>
+     * Create an incoming synchronous LEMMA Parameter from a given OpenAPI Schema
      */
     private def createLemmaInParameterFromMediaTypeValue(Schema<?> schema) {
         val lemmaParameter = serviceFactory.createParameter
@@ -407,12 +408,9 @@ class LemmaServiceSubGenerator {
         return lemmaParameter
     }
 
-    // TODO: This method seems to share functionality with
-    //       LemmaDataSubGenerator.generateDataField(). Please consider merging the overlapping
-    //       parts into a reusable utility method to lower the places that require adaptations in
-    //       case type-specific LEMMA semantics change.
     /**
-     * Set LEMMA parameter type based on a given OpenAPI schema
+     * Set the primitive or array type of the given LEMMA parameter based on the given OpenAPI
+     * Schema
      */
     private def void setPrimitiveOrArrayDataTypeFromSchema(
         de.fhdo.lemma.service.Parameter parameter,
@@ -422,7 +420,6 @@ class LemmaServiceSubGenerator {
             case "array": {
                 // In this case the actual data model is altered and persisted again because the
                 // data sub-generator does not scan for occurrences of array types in operations
-                // TODO: Can we empower the sub-generator to support such scanning?
                 val arraySchema = schema as ArraySchema
                 val existingType = createImportedComplexTypeFromDomainConcept(
                         LemmaDataSubGenerator.getCollectionTypeName(arraySchema)
@@ -462,7 +459,7 @@ class LemmaServiceSubGenerator {
     }
 
     /**
-     * Create and return an <strong>ImportedType</strong> instance for a domain concept from the
+     * Creates a LEMMA ImportedType instance for a domain concept of the given name in the current
      * data model
      */
     private def createImportedComplexTypeFromDomainConcept(String domainConceptName) {
@@ -477,6 +474,10 @@ class LemmaServiceSubGenerator {
             null
     }
 
+    /**
+     * Create or retrieve a previously created CollectionType from an OpenAPI ArraySchema in the
+     * current data model
+     */
     private def getOrCreateCollectionTypeFromSchema(ArraySchema schema) {
         val collectionType = dataFactory.createCollectionType
         collectionType.name = LemmaDataSubGenerator.getCollectionTypeName(schema)
@@ -523,10 +524,9 @@ class LemmaServiceSubGenerator {
         return collectionType
     }
 
-    // TODO: Heavily refactored from https://github.com/SeelabFhdo/lemma/blob/
-    //       e27de7ccd3f8dfd5cd77eede2cb0c7491dcc1756/de.fhdo.lemma.service.openapi/src/de/fhdo/
-    //       lemma/service/openapi/LemmaServiceSubGenerator.xtend#L237. Please check for consistent
-    //       bevahior.
+    /**
+     * Create an outgoing synchronous LEMMA Parameter from the given OpenAPI ApiResponse
+     */
     private def createLemmaOutParameter(ApiResponse response) {
         val lemmaParameter = serviceFactory.createParameter
         lemmaParameter.communicationType = CommunicationType.SYNCHRONOUS

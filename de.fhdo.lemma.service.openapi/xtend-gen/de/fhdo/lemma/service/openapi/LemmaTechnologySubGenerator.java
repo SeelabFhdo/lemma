@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * This class is responsible for handling the generation of a LEMMA technology model for the OpenAPI
- * technology from an OpenAPI file in the JSON or YAML format.
+ * technology from an OpenAPI specification file in the JSON or YAML format.
  * 
  * @author <a href="mailto:jonas.sorgalla@fh-dortmund.de">Jonas Sorgalla</a>
  */
@@ -81,8 +81,8 @@ public class LemmaTechnologySubGenerator {
   private final DataFactory dataFactory = DataFactory.eINSTANCE;
   
   /**
-   * Predefined instance of the <strong>TechnologyModel</strong>. This instance is populated with
-   * the various technologies from the OpenAPI model, e.g., media types.
+   * Predefined instance of the TechnologyModel. This instance is populated with technology
+   * information relevant to OpenAPI, e.g., media types.
    */
   private final Technology technology = this.TECHNOLOGY_FACTORY.createTechnology();
   
@@ -102,12 +102,19 @@ public class LemmaTechnologySubGenerator {
    */
   private String targetFile;
   
+  /**
+   * Constructor
+   */
   public LemmaTechnologySubGenerator(final OpenAPI api, final String targetFile) {
     LemmaTechnologySubGenerator.LOGGER.debug("Creating new Technology Sub Generator...");
     this.openApi = api;
     this.targetFile = targetFile;
   }
   
+  /**
+   * Generate the LEMMA technology model for OpenAPI. This method returns the created model
+   * instance and also serializes it to the user's harddrive.
+   */
   public Technology generate() {
     try {
       LemmaTechnologySubGenerator.LOGGER.debug("Initializing model instance...");
@@ -132,12 +139,21 @@ public class LemmaTechnologySubGenerator {
     }
   }
   
+  /**
+   * Initialize the technology model instance
+   */
   private void initialize() {
     this.technology.setName(OpenApiUtil.removeInvalidCharsFromName(LemmaTechnologySubGenerator.TECHNOLOGY_MODEL_NAME));
     this.addPrimitiveTypes(this.technology);
     this.addAspects(this.technology);
   }
   
+  /**
+   * Add "rest" protocol to the technology model and derive the protocol's data formats from the
+   * media types of the given OpenAPI specification. The default format will be JSON if the
+   * specification comprises it, otherwise the format derived from the first defined media type
+   * will be set as default.
+   */
   private boolean addRestProtocol(final Technology technology) {
     boolean _xblockexpression = false;
     {
@@ -154,6 +170,12 @@ public class LemmaTechnologySubGenerator {
         rest.getDataFormats().add(dataFormat);
       };
       mediaTypes.forEach(_function_1);
+      boolean _isEmpty = rest.getDataFormats().isEmpty();
+      if (_isEmpty) {
+        final DataFormat emptyFormat = this.TECHNOLOGY_FACTORY.createDataFormat();
+        emptyFormat.setFormatName("NO_FORMAT_ENCOUNTERED_DURING_PARSING");
+        rest.getDataFormats().add(emptyFormat);
+      }
       DataFormat _elvis = null;
       final Function1<DataFormat, Boolean> _function_2 = (DataFormat it) -> {
         String _formatName = it.getFormatName();
@@ -172,6 +194,9 @@ public class LemmaTechnologySubGenerator {
     return _xblockexpression;
   }
   
+  /**
+   * Search media types in the requests and responses of the OpenAPI specification
+   */
   private HashSet<String> searchMediaTypes(final PathItem item) {
     final Iterable<Operation> httpVerbs = IterableExtensions.<Operation>filterNull(CollectionLiterals.<Operation>newArrayList(item.getDelete(), item.getGet(), item.getHead(), item.getOptions(), item.getPatch(), 
       item.getPost(), item.getPut()));
@@ -206,44 +231,47 @@ public class LemmaTechnologySubGenerator {
   }
   
   /**
-   * Creates OpenApi data types corresponding to <italic>OpenApi v3.0.3 - Data Types</italic>.
-   * OpenApi data type formats are represented as individual types.
+   * Add primitive types to the given LEMMA technology model following the OpenAPI 3.0.3
+   * specification
    */
   private void addPrimitiveTypes(final Technology technology) {
-    technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("Integer", true, 
-      this.dataFactory.createPrimitiveInteger()));
-    technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("Int32", false, 
-      this.dataFactory.createPrimitiveInteger()));
-    technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("Int64", true, 
-      this.dataFactory.createPrimitiveLong()));
-    technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("Number", true, 
-      this.dataFactory.createPrimitiveFloat()));
-    technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("Float", false, 
-      this.dataFactory.createPrimitiveFloat()));
-    technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("Double", true, 
-      this.dataFactory.createPrimitiveDouble()));
-    technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("String", true, 
-      this.dataFactory.createPrimitiveString()));
-    technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("Byte", true, 
-      this.dataFactory.createPrimitiveByte()));
     technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("Binary", false, 
       this.dataFactory.createPrimitiveString()));
     technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("Boolean", true, 
       this.dataFactory.createPrimitiveBoolean()));
+    technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("Byte", true, 
+      this.dataFactory.createPrimitiveByte()));
+    technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("Char", true, 
+      this.dataFactory.createPrimitiveCharacter()));
     technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("Date", true, 
       this.dataFactory.createPrimitiveDate()));
     technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("DateTime", false, 
       this.dataFactory.createPrimitiveString()));
+    technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("Double", true, 
+      this.dataFactory.createPrimitiveDouble()));
+    technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("Float", false, 
+      this.dataFactory.createPrimitiveFloat()));
+    technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("Int32", false, 
+      this.dataFactory.createPrimitiveInteger()));
+    technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("Int64", true, 
+      this.dataFactory.createPrimitiveLong()));
+    technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("Integer", true, 
+      this.dataFactory.createPrimitiveInteger()));
+    technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("Number", true, 
+      this.dataFactory.createPrimitiveFloat()));
     technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("Password", false, 
+      this.dataFactory.createPrimitiveString()));
+    technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("Short", true, 
+      this.dataFactory.createPrimitiveShort()));
+    technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("String", true, 
       this.dataFactory.createPrimitiveString()));
     technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("Unspecified", true, 
       this.dataFactory.createPrimitiveUnspecified()));
-    technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("Short", true, 
-      this.dataFactory.createPrimitiveShort()));
-    technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("Char", true, 
-      this.dataFactory.createPrimitiveCharacter()));
   }
   
+  /**
+   * Helper method to create a technology specific LEMMA type
+   */
   private TechnologySpecificPrimitiveType createTechnologySpecificPrimitiveType(final String name, final boolean default_, final PrimitiveType baseType) {
     final TechnologySpecificPrimitiveType type = this.TECHNOLOGY_FACTORY.createTechnologySpecificPrimitiveType();
     type.setName(name);
@@ -253,7 +281,7 @@ public class LemmaTechnologySubGenerator {
   }
   
   /**
-   * Create default aspects for HTTP-based communication, i.e., request methods and response codes
+   * Add OpenAPI-related aspects to the technology model
    */
   private void addAspects(final Technology technology) {
     technology.getServiceAspects().add(this.createOperationsAspect(LemmaTechnologySubGenerator.HTTP_DELETE_ASPECT_NAME));
@@ -268,6 +296,9 @@ public class LemmaTechnologySubGenerator {
     technology.getServiceAspects().add(this.createOperationsAspect(LemmaTechnologySubGenerator.UNSPECIFIED_ASPECT_NAME));
   }
   
+  /**
+   * Create a single-valued LEMMA service aspect with microservice operations as join point type
+   */
   private ServiceAspect createOperationsAspect(final String name) {
     final ServiceAspect aspect = this.TECHNOLOGY_FACTORY.createServiceAspect();
     aspect.setName(name);
@@ -276,6 +307,10 @@ public class LemmaTechnologySubGenerator {
     return aspect;
   }
   
+  /**
+   * Create a single-valued LEMMA service aspect with microservice operation parameters as join
+   * point type
+   */
   private ServiceAspect createParametersAspect(final String name) {
     final ServiceAspect aspect = this.TECHNOLOGY_FACTORY.createServiceAspect();
     aspect.setName(name);

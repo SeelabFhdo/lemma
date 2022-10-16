@@ -28,8 +28,6 @@ import org.eclipse.jface.dialogs.IInputValidator
 import org.apache.commons.validator.routines.UrlValidator
 import de.fhdo.lemma.service.openapi.LemmaTechnologySubGenerator
 
-// TODO: Add Javadoc comments to methods
-
 /**
  * The dialog for the transformation of OpenAPI specifications to LEMMA models.
  *
@@ -59,6 +57,9 @@ class SpecifyUrlDialog extends TitleAreaDialog {
     String serviceModelName
     String serviceQualifier
 
+    /**
+     * Constructor
+     */
     new(Shell parentShell) {
         super(parentShell)
         dialogHelpAvailable = false
@@ -94,7 +95,7 @@ class SpecifyUrlDialog extends TitleAreaDialog {
     }
 
     /**
-     * OK button was pressed
+     * OK button was pressed. Trigger generation.
      */
     override okPressed() {
         if (!syncInput()) {
@@ -104,7 +105,7 @@ class SpecifyUrlDialog extends TitleAreaDialog {
         try {
             val generator = new LemmaGenerator()
             val parsingMessages = generator.parse(fetchUrl.toString)
-            MessageDialog.openInformation(this.shell, "Parsing Report",
+            MessageDialog.openInformation(shell, "Parsing Report",
                 '''«FOR msg : parsingMessages»
                 «msg»
                 «ENDFOR»''')
@@ -120,13 +121,11 @@ class SpecifyUrlDialog extends TitleAreaDialog {
 
                 if (generator.transMsgs.empty)
                     MessageDialog.openInformation(shell, "Transformation Report",
-                        "Transformation successfully completed")
+                        "Transformation completed successfully.")
                 else
-                    // TODO: The original code talked about "problems" when transMsgs is not empty.
-                    //       Is that correct (I also invoke openError() here for that reason)?
                     MessageDialog.openError(shell, "Transformation Report",
                         '''
-                        There were error during the transformation:
+                        There were errors during the transformation:
                         «FOR msg : generator.transMsgs»
                             - «msg»
                         «ENDFOR»
@@ -137,13 +136,8 @@ class SpecifyUrlDialog extends TitleAreaDialog {
                     "representation not possible for the OpenAPI specification URL " +
                     fetchUrl.toString)
 
-        } catch (Exception ex) {
-            // TODO: I recognized that throughout all OpenAPI plugins the terms "extraction",
-            //       "generation", and "transformation are used interchangeably. Please decide for
-            //       one term and use it consistently.
-            MessageDialog.openError(shell, "Error", "Error during extraction: " +
-                ex.message)
-        }
+        } catch (Exception ex)
+            MessageDialog.openError(shell, "Error", "Error during transformation: " + ex.message)
 
         super.okPressed()
     }
@@ -172,11 +166,14 @@ class SpecifyUrlDialog extends TitleAreaDialog {
             serviceModelName.empty ||
             serviceQualifier.empty
         if (missingValues)
-            MessageDialog.openError(this.shell, "Missing Field Values", "Please specify a value " +
-                "for each field")
+            MessageDialog.openError(shell, "Missing Field Values", "Please specify a value for " +
+                "each field")
         return !missingValues
     }
 
+    /**
+     * Create the dialog area
+     */
     override createDialogArea(Composite parent) {
         val area = super.createDialogArea(parent) as Composite
         val container = new Composite(area, SWT.NONE)
@@ -193,10 +190,11 @@ class SpecifyUrlDialog extends TitleAreaDialog {
         return container
     }
 
+    /**
+     * Create UI elements for URL/file specification
+     */
     private def createUrl(Composite parent) {
-        // TODO: It seems inconsistent that the label is named "URL:" while the text field also
-        //       allows the selection of a file
-        new Label(parent, SWT.NULL).text = "URL:"
+        new Label(parent, SWT.NULL).text = "URL or File Path:"
 
         txtUrl = new Text(parent, SWT.BORDER)
         txtUrl.message = "Specify URL or Select File"
@@ -230,14 +228,17 @@ class SpecifyUrlDialog extends TitleAreaDialog {
         ]))
 
         btnUriFileLocation = new Button(buttonBar, SWT.BUTTON1)
-        btnUriFileLocation.text = "Select OpenAPI Specification File"
+        btnUriFileLocation.text = "Select OpenAPI File"
         btnUriFileLocation.layoutData = new GridData(SWT.FILL, SWT.FILL, true, false)
         btnUriFileLocation.addSelectionListener(SelectionListener.widgetSelectedAdapter([ e |
             val fileDialog = new FileDialog(shell)
             fileDialog.setText("Please select an OpenAPI specification file")
-            // TODO: What happens if open() returns null?
             val selectedFile = fileDialog.open()
-            txtUrl.text = new File(selectedFile).toURI.toString
+            if (selectedFile === null)
+                MessageDialog.openError(shell, "No File Selected", "Please select an " +
+                    "OpenAPI specification file in JSON for YAML format.")
+            else
+                txtUrl.text = new File(selectedFile).toURI.toString
         ]))
     }
 
@@ -256,28 +257,31 @@ class SpecifyUrlDialog extends TitleAreaDialog {
         }
     }
 
+    /**
+     * Create the UI elements for target folder selection
+     */
     private def createTargetFolder(Composite parent) {
         new Label(parent, SWT.NULL).text = "Target Folder:"
 
         txtTargetFolder = new Text(parent, SWT.BORDER)
-        // TODO: Target folder for what?
-        txtTargetFolder.message = "Select Target Folder"
+        txtTargetFolder.message = "Select target folder for generated models."
         txtTargetFolder.enabled = false
         txtTargetFolder.layoutData = new GridData(SWT.FILL, SWT.FILL, true, false)
 
         btnBrowseFolder = new Button(parent, SWT.PUSH)
-        // TODO: Target folder for what?
         btnBrowseFolder.text = "Select Target Folder"
         btnBrowseFolder.layoutData = new GridData(SWT.FILL, SWT.FILL, true, false)
         btnBrowseFolder.addSelectionListener(SelectionListener.widgetSelectedAdapter([ e |
             val dirDialog = new DirectoryDialog(shell)
-            // TODO: Target folder for what?
-            dirDialog.setText("Select target folder.")
+            dirDialog.setText("Select target folder for generated models.")
             dirDialog.filterPath = ResourcesPlugin.getWorkspace().getRoot().getLocation().toString()
             txtTargetFolder.text = dirDialog.open()
         ]))
     }
 
+    /**
+     * Create the UI elements for the data model name
+     */
     private def createDataModelName(Composite container) {
         val lblDataModelName = new Label(container, SWT.NULL)
         lblDataModelName.setText("Data Model Name:")
@@ -289,6 +293,9 @@ class SpecifyUrlDialog extends TitleAreaDialog {
         txtDataModelName.setLayoutData(layoutData)
     }
 
+    /**
+     * Create the UI elements for the technology model name
+     */
     private def createTechnologyModelName(Composite container) {
         val lblTechnologyModelName = new Label(container, SWT.NULL)
         lblTechnologyModelName.setText("Technology Model Name:")
@@ -300,6 +307,9 @@ class SpecifyUrlDialog extends TitleAreaDialog {
         txtTechnologyModelName.setLayoutData(layoutData)
     }
 
+    /**
+     * Create the UI elements for the service model name
+     */
     private def createServiceModelName(Composite container) {
         val lblServiceModelName = new Label(container, SWT.NULL)
         lblServiceModelName.setText("Service Model Name:")
@@ -311,6 +321,9 @@ class SpecifyUrlDialog extends TitleAreaDialog {
         txtServiceModelName.setLayoutData(layoutData)
     }
 
+    /**
+     * Create the UI elements for the microservice qualifier
+     */
     private def createServiceQualifier(Composite container) {
         val lblServiceQualifier = new Label(container, SWT.NULL)
         lblServiceQualifier.setText("Microservice Package Qualifier:")
@@ -323,14 +336,14 @@ class SpecifyUrlDialog extends TitleAreaDialog {
     }
 
     /**
-     * Flag to indicate that dialog is resizable
+     * Indicate that the dialog is resizable
      */
     override isResizable() {
         return true
     }
 
     /**
-     * Initial size
+     * Set window size
      */
     override getInitialSize() {
         val shellSize = super.getInitialSize()

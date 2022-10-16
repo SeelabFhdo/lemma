@@ -22,12 +22,9 @@ import org.slf4j.LoggerFactory;
 import picocli.CommandLine;
 
 /**
- * This class is the central entrypoint for the generation of LEMMA models from an OpenAPI
- * specification file (v3.0.3). The class supports the generation from JSON as well as YAML OpenAPI
- * files.
- * 
- * @see <a href="https://github.com/SeelabFhdo/lemma">LEMMA on GitHub</a>
- * @see <a href="https://www.openapis.org/">OpenAPI Specification</a>
+ * Entrypoint for the generation of LEMMA models from an OpenAPI specification file (v3.0.3). The
+ * class supports the generation of LEMMA models from JSON-based and YAML-based OpenAPI
+ * specification files.
  * 
  * @author <a href="mailto:jonas.sorgalla@fh-dortmund.de">Jonas Sorgalla</a>
  */

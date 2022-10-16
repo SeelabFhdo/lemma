@@ -3,16 +3,14 @@ package de.fhdo.lemma.service.openapi
 import de.fhdo.lemma.data.CollectionType
 import de.fhdo.lemma.data.Context
 import de.fhdo.lemma.data.DataFactory
+import de.fhdo.lemma.data.DataField
+import de.fhdo.lemma.data.DataModel
 import de.fhdo.lemma.data.DataStructure
 import io.swagger.v3.oas.models.OpenAPI
 import io.swagger.v3.oas.models.media.ArraySchema
 import io.swagger.v3.oas.models.media.Schema
-import org.slf4j.LoggerFactory
-import de.fhdo.lemma.data.DataModel
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.fhdo.lemma.data.DataField
-
-// TODO: Add Javadoc comments to methods
+import org.slf4j.LoggerFactory
 
 /**
  * This class is responsible for handling the generation of a LEMMA data model from an OpenAPI file
@@ -60,11 +58,18 @@ class LemmaDataSubGenerator {
     /* Location where the generated file is written */
     val String targetFile
 
+    /**
+     * Constructor
+     */
     new(OpenAPI openAPI, String targetFile) {
         this.openAPI = openAPI
         this.targetFile = targetFile
     }
 
+    /**
+     * Generate LEMMA data model from a previously parsed OpenAPI specification file. This method
+     * returns the created model instance and also serializes it to the user's harddrive.
+     */
     def DataModel generate() {
         LOGGER.debug("Initializing model instance...")
         initialize()
@@ -91,6 +96,9 @@ class LemmaDataSubGenerator {
         return targetDataModel
     }
 
+    /**
+     * Initialize the data model instance
+     */
     private def initialize() {
         targetDataModel.versions.add(targetVersion)
 
@@ -101,6 +109,12 @@ class LemmaDataSubGenerator {
         targetContext.version = targetVersion
     }
 
+    /**
+     * Return a LEMMA data structure with the given name from an OpenAPI component object. In case a
+     * data structure with the given name was already created, because OpenAPI allows the multiple
+     * definition of a component object, it is returned. Otherwise, a new structure is created,
+     * cached, and returned.
+     */
     private def DataStructure getOrCreateDataStructure(Context context, String name,
         Schema<?> schema) {
         val structureName = name.toFirstUpper
@@ -121,10 +135,18 @@ class LemmaDataSubGenerator {
         return newStructure
     }
 
+    /**
+     * Add fields to a given LEMMA data structure from information of a given OpenAPI schema
+     */
     private def void addDataFieldsFromSchema(DataStructure structure, Schema<?> structureSchema) {
         structure.addDataFieldsFromSchema(null, structureSchema)
     }
 
+    /**
+     * Add field of the given name to the given LEMMA data structure based on the given OpenAPI
+     * schema. Note that this method recursively creates fields for inline-defined OpenAPI
+     * structures.
+     */
     private def void addDataFieldsFromSchema(DataStructure structure, String fieldName,
         Schema<?> structureSchema) {
         if (structureSchema.properties !== null)
@@ -135,6 +157,12 @@ class LemmaDataSubGenerator {
             structure.dataFields.add(generateDataField(fieldName, structureSchema))
     }
 
+    /**
+     * Generate a LEMMA data field with the given name from the type of an OpenAPI schema. Primitive
+     * schema types such as "boolean" or "integer" are mapped to the corresponding LEMMA primitive
+     * types. OpenAPI arrays and references are mapped to LEMMA collection types and data
+     * structures, respectively.
+     */
     private def DataField generateDataField(String name, Schema<?> structureSchema) {
         val newDataField = dataFactory.createDataField
         newDataField.name = name
@@ -157,17 +185,19 @@ class LemmaDataSubGenerator {
                 newDataField.primitiveType = OpenApiUtil.deriveStringType(structureSchema.format)
 
             case null: {
-                // Currently, we only support references for this case
+                // Currently, we only support references for untyped schemas
                 if (structureSchema.get$ref === null)
                     throwUnsupportedSchemaType(structureSchema)
 
                 val ref = structureSchema.get$ref
                 val refName = ref.substring(ref.lastIndexOf("/") + 1)
                 val refSchema = openAPI.components.schemas.get(refName)
-                // TODO: What should happen when refName or refSchema is null?
                 if (refName !== null && refSchema !== null)
                     newDataField.complexType = getOrCreateDataStructure(targetContext, refName,
                         refSchema)
+                else
+                    LOGGER.info("Encountered reference without a parseable name and/or schema. " +
+                        "The generated LEMMA data model may be incomplete.")
             }
 
             default:
@@ -177,10 +207,20 @@ class LemmaDataSubGenerator {
         return newDataField
     }
 
+    /**
+     * Throw an IllegalArgumentException in case an OpenAPI schema type cannot be transformed into a
+     * corresponding LEMMA type
+     */
     private def throwUnsupportedSchemaType(Schema<?> schema) {
-        throw new IllegalArgumentException('''Schema type «schema.type» not supported''')
+        throw new IllegalArgumentException('''Schema type «schema.type» is not supported.''')
     }
 
+    /**
+     * Return a LEMMA collection type with the given name from an OpenAPI schema. In case a
+     * collection type with the given name was already created, because OpenAPI allows the multiple
+     * definition of schema types, it is returned. Otherwise, a new collection type is created,
+     * cached, and returned.
+     */
     private def getOrCreateStructuredCollectionType(Context context, String name,
         Schema<?> schema) {
         val typeName = name.collectionTypeName
@@ -201,10 +241,17 @@ class LemmaDataSubGenerator {
         return newType
     }
 
+
+    /**
+     * Helper method to get the name of a LEMMA collection type from an OpenAPI array schema
+     */
     static def getCollectionTypeName(ArraySchema schema) {
         schema.type.collectionTypeName
     }
 
+    /**
+     * Helper method to derive the name of a LEMMA collection type from a given base name
+     */
     static def getCollectionTypeName(String name) {
         '''«name.toFirstUpper»Collection'''.toString
     }
