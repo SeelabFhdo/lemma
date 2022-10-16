@@ -100,7 +100,7 @@ class LemmaServiceSubGenerator {
         dataModelLoc = Paths.get(new File(targetFile).parent, dataModel.key).toString
     }
 
-    def generate(String servicePrefix) {
+    def generate(String serviceQualifier) {
         LOGGER.debug("Adding data model import...")
         createDataImport(dataModel.key, dataModel.value)
         LOGGER.debug("... data model import added")
@@ -110,7 +110,7 @@ class LemmaServiceSubGenerator {
         LOGGER.debug("... technology import added")
 
         LOGGER.debug("Adding microservice...")
-        val microserviceName = '''«servicePrefix».''' +
+        val microserviceName = '''«serviceQualifier».''' +
             OpenApiUtil.removeInvalidCharsFromName(openApi.info.title)
         val microservice = createFunctionalMicroservice(microserviceName)
         LOGGER.debug("... microservice added")

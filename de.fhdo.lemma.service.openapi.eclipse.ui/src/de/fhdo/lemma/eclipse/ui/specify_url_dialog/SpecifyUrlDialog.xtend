@@ -44,7 +44,7 @@ class SpecifyUrlDialog extends TitleAreaDialog {
     Text txtDataModelName
     Text txtTechnologyModelName
     Text txtServiceModelName
-    Text txtServicePrefix
+    Text txtServiceQualifier
 
     Button btnBrowseFolder
     Button btnUriWebLocation
@@ -57,7 +57,7 @@ class SpecifyUrlDialog extends TitleAreaDialog {
     String dataModelName
     String technologyModelName
     String serviceModelName
-    String servicePrefix
+    String serviceQualifier
 
     new(Shell parentShell) {
         super(parentShell)
@@ -115,7 +115,7 @@ class SpecifyUrlDialog extends TitleAreaDialog {
                     '''«dataModelName».data''',
                     '''«technologyModelName».technology''',
                     '''«serviceModelName».services''',
-                    servicePrefix
+                    serviceQualifier
                 )
 
                 if (generator.transMsgs.empty)
@@ -164,13 +164,13 @@ class SpecifyUrlDialog extends TitleAreaDialog {
         dataModelName = txtDataModelName.getText.trim
         technologyModelName = txtTechnologyModelName.text.trim
         serviceModelName = txtServiceModelName.getText.trim
-        servicePrefix = txtServicePrefix.text.trim
+        serviceQualifier = txtServiceQualifier.text.trim
 
         val missingValues = targetFolder.empty ||
             dataModelName.empty ||
             technologyModelName.empty ||
             serviceModelName.empty ||
-            servicePrefix.empty
+            serviceQualifier.empty
         if (missingValues)
             MessageDialog.openError(this.shell, "Missing Field Values", "Please specify a value " +
                 "for each field")
@@ -188,7 +188,7 @@ class SpecifyUrlDialog extends TitleAreaDialog {
         createDataModelName(container)
         createTechnologyModelName(container)
         createServiceModelName(container)
-        createServicePrefix(container)
+        createServiceQualifier(container)
 
         return container
     }
@@ -311,15 +311,15 @@ class SpecifyUrlDialog extends TitleAreaDialog {
         txtServiceModelName.setLayoutData(layoutData)
     }
 
-    private def createServicePrefix(Composite container) {
-        val lblServicePrefix = new Label(container, SWT.NULL)
-        lblServicePrefix.setText("Service Model Prefix:")
+    private def createServiceQualifier(Composite container) {
+        val lblServiceQualifier = new Label(container, SWT.NULL)
+        lblServiceQualifier.setText("Microservice Package Qualifier:")
 
-        txtServicePrefix = new Text(container, SWT.BORDER)
-        txtServicePrefix.message = "org.example"
+        txtServiceQualifier = new Text(container, SWT.BORDER)
+        txtServiceQualifier.message = "org.example"
         val layoutData = new GridData(SWT.FILL, SWT.FILL, true, false)
         layoutData.horizontalSpan = 2
-        txtServicePrefix.setLayoutData(layoutData)
+        txtServiceQualifier.setLayoutData(layoutData)
     }
 
     /**

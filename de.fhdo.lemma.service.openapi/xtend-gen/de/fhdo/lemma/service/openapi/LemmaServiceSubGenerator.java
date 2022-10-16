@@ -7,6 +7,7 @@ import de.fhdo.lemma.data.Context;
 import de.fhdo.lemma.data.DataFactory;
 import de.fhdo.lemma.data.DataField;
 import de.fhdo.lemma.data.DataModel;
+import de.fhdo.lemma.data.Type;
 import de.fhdo.lemma.data.Version;
 import de.fhdo.lemma.service.ApiOperationComment;
 import de.fhdo.lemma.service.Endpoint;
@@ -145,7 +146,7 @@ public class LemmaServiceSubGenerator {
     this.dataModelLoc = Paths.get(new File(targetFile).getParent(), dataModel.getKey()).toString();
   }
   
-  public void generate(final String servicePrefix) {
+  public void generate(final String serviceQualifier) {
     LemmaServiceSubGenerator.LOGGER.debug("Adding data model import...");
     this.createDataImport(this.dataModel.getKey(), this.dataModel.getValue());
     LemmaServiceSubGenerator.LOGGER.debug("... data model import added");
@@ -154,7 +155,7 @@ public class LemmaServiceSubGenerator {
     LemmaServiceSubGenerator.LOGGER.debug("... technology import added");
     LemmaServiceSubGenerator.LOGGER.debug("Adding microservice...");
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append(servicePrefix);
+    _builder.append(serviceQualifier);
     _builder.append(".");
     String _removeInvalidCharsFromName = OpenApiUtil.removeInvalidCharsFromName(this.openApi.getInfo().getTitle());
     final String microserviceName = (_builder.toString() + _removeInvalidCharsFromName);
@@ -508,7 +509,7 @@ public class LemmaServiceSubGenerator {
       {
         importedType.setType(this.findComplexTypeFromRef(ref));
         ImportedType _xifexpression = null;
-        Object _type = importedType.getType();
+        Type _type = importedType.getType();
         boolean _tripleNotEquals = (_type != null);
         if (_tripleNotEquals) {
           _xifexpression = importedType;
@@ -645,7 +646,7 @@ public class LemmaServiceSubGenerator {
     };
     importedType.setType(IterableExtensions.<ComplexType>findFirst(this.dataModel.getValue().getVersions().get(0).getContexts().get(0).getComplexTypes(), _function));
     ImportedType _xifexpression = null;
-    Object _type = importedType.getType();
+    Type _type = importedType.getType();
     boolean _tripleNotEquals = (_type != null);
     if (_tripleNotEquals) {
       _xifexpression = importedType;

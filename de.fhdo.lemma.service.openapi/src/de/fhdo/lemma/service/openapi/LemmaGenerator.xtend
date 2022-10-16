@@ -24,10 +24,10 @@ class LemmaGenerator {
     static val LOGGER = LoggerFactory.getLogger(LemmaGenerator)
 
     /* OpenAPI schema which will be used as source for the generation */
-    OpenAPI openAPI
+    static OpenAPI openAPI
 
     /* Log of all encountered exceptions during all transformations */
-    List<String> transMsgs = <String>newArrayList
+    static List<String> transMsgs = <String>newArrayList
 
     def getTransMsgs() {
         return transMsgs.unmodifiableView
@@ -70,9 +70,8 @@ class LemmaGenerator {
     /**
      * Central method which generates all models
      */
-    def generateModels(String targetPath, String dataFilename, String technologyFilename,
-        String serviceFilename, String servicePrefix) {
-        // TODO: Check if termination is really necessary
+    static def generateModels(String targetPath, String dataFilename, String technologyFilename,
+        String serviceFilename, String serviceQualifier) {
         val terminatedTargetPath = if (!targetPath.endsWith(File.separator))
                 '''«targetPath»«File.separator»'''
             else
@@ -94,7 +93,7 @@ class LemmaGenerator {
         val serviceModelPath = Paths.get(terminatedTargetPath, serviceFilename).toString
         val serviceGenerator = new LemmaServiceSubGenerator(openAPI, dataModel, technology,
             serviceModelPath)
-        serviceGenerator.generate(servicePrefix)
+        serviceGenerator.generate(serviceQualifier)
         transMsgs.addAll(serviceGenerator.transMsgs)
     }
 
@@ -128,13 +127,13 @@ class LemmaGenerator {
         val dataModelName = args.get(2).trim
         val serviceModelName = args.get(3).trim
         val technologyModelName = args.get(4).trim
-        val servicePrefix = args.get(5).trim
+        val serviceQualifier = args.get(5).trim
 
         if (targetFolder.empty ||
             dataModelName.empty ||
             serviceModelName.empty ||
             technologyModelName.isEmpty ||
-            servicePrefix.empty)
+            serviceQualifier.empty)
             exitWithError("Arguments must not be empty")
 
         LOGGER.info("Parsing the OpenAPI specification URL...")
@@ -152,12 +151,12 @@ class LemmaGenerator {
         LOGGER.info("... in-memory representation of OpenAPI specification URL parsed")
 
         LOGGER.info("Starting LEMMA model generation...")
-        generator.generateModels(
+        generateModels(
             targetFolder,
             '''«dataModelName».data''',
             '''«technologyModelName».technology''',
             '''«serviceModelName».services''',
-            servicePrefix
+            serviceQualifier
         )
         if (generator.transMsgs.empty)
             LOGGER.info("Transformation successful")

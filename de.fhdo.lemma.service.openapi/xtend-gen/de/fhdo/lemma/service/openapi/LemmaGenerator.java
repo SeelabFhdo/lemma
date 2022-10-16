@@ -40,22 +40,22 @@ public class LemmaGenerator {
   /**
    * OpenAPI schema which will be used as source for the generation
    */
-  private OpenAPI openAPI;
+  private static OpenAPI openAPI;
   
   /**
    * Log of all encountered exceptions during all transformations
    */
-  private List<String> transMsgs = CollectionLiterals.<String>newArrayList();
+  private static List<String> transMsgs = CollectionLiterals.<String>newArrayList();
   
   public List<String> getTransMsgs() {
-    return Collections.<String>unmodifiableList(this.transMsgs);
+    return Collections.<String>unmodifiableList(LemmaGenerator.transMsgs);
   }
   
   /**
    * Checks whether there currently is a parsed in-memory to start the generation process
    */
   public boolean isParsed() {
-    return (this.openAPI != null);
+    return (LemmaGenerator.openAPI != null);
   }
   
   /**
@@ -82,7 +82,7 @@ public class LemmaGenerator {
     OpenAPI _openAPI = result.getOpenAPI();
     boolean _tripleNotEquals_1 = (_openAPI != null);
     if (_tripleNotEquals_1) {
-      this.openAPI = result.getOpenAPI();
+      LemmaGenerator.openAPI = result.getOpenAPI();
       returnMessages.add("In-memory model of OpenAPI specification URL loaded");
     } else {
       returnMessages.add(("There was an error generating the in-memory model for the given " + 
@@ -94,7 +94,7 @@ public class LemmaGenerator {
   /**
    * Central method which generates all models
    */
-  public boolean generateModels(final String targetPath, final String dataFilename, final String technologyFilename, final String serviceFilename, final String servicePrefix) {
+  public static boolean generateModels(final String targetPath, final String dataFilename, final String technologyFilename, final String serviceFilename, final String serviceQualifier) {
     boolean _xblockexpression = false;
     {
       String _xifexpression = null;
@@ -111,21 +111,21 @@ public class LemmaGenerator {
       final String terminatedTargetPath = _xifexpression;
       LemmaGenerator.LOGGER.info("Starting generation of LEMMA data model...");
       final String dataModelPath = Paths.get(terminatedTargetPath, dataFilename).toString();
-      final LemmaDataSubGenerator dataGenerator = new LemmaDataSubGenerator(this.openAPI, dataModelPath);
+      final LemmaDataSubGenerator dataGenerator = new LemmaDataSubGenerator(LemmaGenerator.openAPI, dataModelPath);
       DataModel _generate = dataGenerator.generate();
       final Pair<String, DataModel> dataModel = Pair.<String, DataModel>of(dataFilename, _generate);
-      this.transMsgs.addAll(dataGenerator.getTransMsgs());
+      LemmaGenerator.transMsgs.addAll(dataGenerator.getTransMsgs());
       LemmaGenerator.LOGGER.info("Starting generation of LEMMA technology model...");
       final String technologyModelPath = Paths.get(terminatedTargetPath, technologyFilename).toString();
-      final LemmaTechnologySubGenerator technologyGenerator = new LemmaTechnologySubGenerator(this.openAPI, technologyModelPath);
+      final LemmaTechnologySubGenerator technologyGenerator = new LemmaTechnologySubGenerator(LemmaGenerator.openAPI, technologyModelPath);
       Technology _generate_1 = technologyGenerator.generate();
       final Pair<String, Technology> technology = Pair.<String, Technology>of(technologyFilename, _generate_1);
-      this.transMsgs.addAll(technologyGenerator.getTransMsgs());
+      LemmaGenerator.transMsgs.addAll(technologyGenerator.getTransMsgs());
       LemmaGenerator.LOGGER.info("Starting generation of LEMMA service model...");
       final String serviceModelPath = Paths.get(terminatedTargetPath, serviceFilename).toString();
-      final LemmaServiceSubGenerator serviceGenerator = new LemmaServiceSubGenerator(this.openAPI, dataModel, technology, serviceModelPath);
-      serviceGenerator.generate(servicePrefix);
-      _xblockexpression = this.transMsgs.addAll(serviceGenerator.getTransMsgs());
+      final LemmaServiceSubGenerator serviceGenerator = new LemmaServiceSubGenerator(LemmaGenerator.openAPI, dataModel, technology, serviceModelPath);
+      serviceGenerator.generate(serviceQualifier);
+      _xblockexpression = LemmaGenerator.transMsgs.addAll(serviceGenerator.getTransMsgs());
     }
     return _xblockexpression;
   }
@@ -165,12 +165,12 @@ public class LemmaGenerator {
       final String dataModelName = (args[2]).trim();
       final String serviceModelName = (args[3]).trim();
       final String technologyModelName = (args[4]).trim();
-      final String servicePrefix = (args[5]).trim();
+      final String serviceQualifier = (args[5]).trim();
       if (((((targetFolder.isEmpty() || 
         dataModelName.isEmpty()) || 
         serviceModelName.isEmpty()) || 
         technologyModelName.isEmpty()) || 
-        servicePrefix.isEmpty())) {
+        serviceQualifier.isEmpty())) {
         LemmaGenerator.exitWithError("Arguments must not be empty");
       }
       LemmaGenerator.LOGGER.info("Parsing the OpenAPI specification URL...");
@@ -208,8 +208,8 @@ public class LemmaGenerator {
       StringConcatenation _builder_4 = new StringConcatenation();
       _builder_4.append(serviceModelName);
       _builder_4.append(".services");
-      generator.generateModels(targetFolder, _builder_2.toString(), _builder_3.toString(), _builder_4.toString(), servicePrefix);
-      boolean _isEmpty_1 = generator.transMsgs.isEmpty();
+      LemmaGenerator.generateModels(targetFolder, _builder_2.toString(), _builder_3.toString(), _builder_4.toString(), serviceQualifier);
+      boolean _isEmpty_1 = generator.getTransMsgs().isEmpty();
       if (_isEmpty_1) {
         LemmaGenerator.LOGGER.info("Transformation successful");
       } else {
@@ -217,7 +217,8 @@ public class LemmaGenerator {
         _builder_5.append("Encountered problems during transformation:");
         _builder_5.newLine();
         {
-          for(final String msg_1 : generator.transMsgs) {
+          List<String> _transMsgs = generator.getTransMsgs();
+          for(final String msg_1 : _transMsgs) {
             _builder_5.append("                ");
             _builder_5.append(msg_1, "                ");
             _builder_5.newLineIfNotEmpty();

@@ -79,7 +79,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
   
   private Text txtServiceModelName;
   
-  private Text txtServicePrefix;
+  private Text txtServiceQualifier;
   
   private Button btnBrowseFolder;
   
@@ -98,7 +98,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
   
   private String serviceModelName;
   
-  private String servicePrefix;
+  private String serviceQualifier;
   
   public SpecifyUrlDialog(final Shell parentShell) {
     super(parentShell);
@@ -177,7 +177,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
         _builder_3.append(".services");
         generator.generateModels(
           this.targetFolder, _builder_1.toString(), _builder_2.toString(), _builder_3.toString(), 
-          this.servicePrefix);
+          this.serviceQualifier);
         boolean _isEmpty = generator.getTransMsgs().isEmpty();
         if (_isEmpty) {
           MessageDialog.openInformation(this.getShell(), "Transformation Report", 
@@ -246,12 +246,12 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     this.dataModelName = this.txtDataModelName.getText().trim();
     this.technologyModelName = this.txtTechnologyModelName.getText().trim();
     this.serviceModelName = this.txtServiceModelName.getText().trim();
-    this.servicePrefix = this.txtServicePrefix.getText().trim();
+    this.serviceQualifier = this.txtServiceQualifier.getText().trim();
     final boolean missingValues = ((((this.targetFolder.isEmpty() || 
       this.dataModelName.isEmpty()) || 
       this.technologyModelName.isEmpty()) || 
       this.serviceModelName.isEmpty()) || 
-      this.servicePrefix.isEmpty());
+      this.serviceQualifier.isEmpty());
     if (missingValues) {
       MessageDialog.openError(this.getShell(), "Missing Field Values", ("Please specify a value " + 
         "for each field"));
@@ -273,7 +273,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     this.createDataModelName(container);
     this.createTechnologyModelName(container);
     this.createServiceModelName(container);
-    this.createServicePrefix(container);
+    this.createServiceQualifier(container);
     return container;
   }
   
@@ -386,15 +386,15 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     this.txtServiceModelName.setLayoutData(layoutData);
   }
   
-  private void createServicePrefix(final Composite container) {
-    final Label lblServicePrefix = new Label(container, SWT.NULL);
-    lblServicePrefix.setText("Service Model Prefix:");
+  private void createServiceQualifier(final Composite container) {
+    final Label lblServiceQualifier = new Label(container, SWT.NULL);
+    lblServiceQualifier.setText("Microservice Package Qualifier:");
     Text _text = new Text(container, SWT.BORDER);
-    this.txtServicePrefix = _text;
-    this.txtServicePrefix.setMessage("org.example");
+    this.txtServiceQualifier = _text;
+    this.txtServiceQualifier.setMessage("org.example");
     final GridData layoutData = new GridData(SWT.FILL, SWT.FILL, true, false);
     layoutData.horizontalSpan = 2;
-    this.txtServicePrefix.setLayoutData(layoutData);
+    this.txtServiceQualifier.setLayoutData(layoutData);
   }
   
   /**
