@@ -179,7 +179,7 @@ class LemmaDataSubGenerator {
                 newDataField.primitiveType = OpenApiUtil.deriveIntType(structureSchema.format)
 
             case "number":
-                newDataField.primitiveType = OpenApiUtil.deriveNumberType(structureSchema.format)
+                newDataField.primitiveType = OpenApiUtil.deriveFloatType(structureSchema.format)
 
             case "string":
                 newDataField.primitiveType = OpenApiUtil.deriveStringType(structureSchema.format)

@@ -657,7 +657,7 @@ public class LemmaServiceSubGenerator {
           parameter.setPrimitiveType(OpenApiUtil.deriveIntType(schema.getFormat()));
           break;
         case "number":
-          parameter.setPrimitiveType(OpenApiUtil.deriveNumberType(schema.getFormat()));
+          parameter.setPrimitiveType(OpenApiUtil.deriveFloatType(schema.getFormat()));
           break;
         case "object":
           Object _additionalProperties = schema.getAdditionalProperties();

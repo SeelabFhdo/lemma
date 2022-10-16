@@ -254,7 +254,7 @@ public class LemmaDataSubGenerator {
     if (!_matched) {
       if (Objects.equal(_type, "number")) {
         _matched=true;
-        newDataField.setPrimitiveType(OpenApiUtil.deriveNumberType(structureSchema.getFormat()));
+        newDataField.setPrimitiveType(OpenApiUtil.deriveFloatType(structureSchema.getFormat()));
       }
     }
     if (!_matched) {

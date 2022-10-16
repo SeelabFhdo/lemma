@@ -81,14 +81,15 @@ final class OpenApiUtil {
     }
 
     /**
-     * Derive a LEMMA number type from the given OpenAPI type description
+     * Derive a LEMMA floating point type from the given OpenAPI type description. Note that this
+     * method always returns a LEMMA PrimitiveDouble, except for "float" type descriptions for which
+     * it returns a LEMMA PrimitiveFloat.
      */
-    def static PrimitiveType deriveNumberType(String typeDesc) {
-        return switch (typeDesc) {
-            case "double": DATA_FACTORY.createPrimitiveDouble
-            case "float": DATA_FACTORY.createPrimitiveFloat
-            default: DATA_FACTORY.createPrimitiveDouble
-        }
+    def static PrimitiveType deriveFloatType(String typeDesc) {
+        return if (typeDesc == "float")
+                DATA_FACTORY.createPrimitiveFloat
+            else
+                DATA_FACTORY.createPrimitiveDouble
     }
 
     /**

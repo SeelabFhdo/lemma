@@ -441,7 +441,7 @@ class LemmaServiceSubGenerator {
                 parameter.primitiveType = OpenApiUtil.deriveIntType(schema.format)
 
             case "number":
-                parameter.primitiveType = OpenApiUtil.deriveNumberType(schema.format)
+                parameter.primitiveType = OpenApiUtil.deriveFloatType(schema.format)
 
             case "object": {
                 parameter.setPrimitiveOrArrayDataTypeFromSchema(

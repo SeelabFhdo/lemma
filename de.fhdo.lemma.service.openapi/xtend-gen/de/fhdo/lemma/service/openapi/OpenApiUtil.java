@@ -123,26 +123,19 @@ public final class OpenApiUtil {
   }
   
   /**
-   * Derive a LEMMA number type from the given OpenAPI type description
+   * Derive a LEMMA floating point type from the given OpenAPI type description. Note that this
+   * method always returns a LEMMA PrimitiveDouble, except for "float" type descriptions for which
+   * it returns a LEMMA PrimitiveFloat.
    */
-  public static PrimitiveType deriveNumberType(final String typeDesc) {
-    PrimitiveType _switchResult = null;
-    if (typeDesc != null) {
-      switch (typeDesc) {
-        case "double":
-          _switchResult = OpenApiUtil.DATA_FACTORY.createPrimitiveDouble();
-          break;
-        case "float":
-          _switchResult = OpenApiUtil.DATA_FACTORY.createPrimitiveFloat();
-          break;
-        default:
-          _switchResult = OpenApiUtil.DATA_FACTORY.createPrimitiveDouble();
-          break;
-      }
+  public static PrimitiveType deriveFloatType(final String typeDesc) {
+    PrimitiveType _xifexpression = null;
+    boolean _equals = Objects.equal(typeDesc, "float");
+    if (_equals) {
+      _xifexpression = OpenApiUtil.DATA_FACTORY.createPrimitiveFloat();
     } else {
-      _switchResult = OpenApiUtil.DATA_FACTORY.createPrimitiveDouble();
+      _xifexpression = OpenApiUtil.DATA_FACTORY.createPrimitiveDouble();
     }
-    return _switchResult;
+    return _xifexpression;
   }
   
   /**
