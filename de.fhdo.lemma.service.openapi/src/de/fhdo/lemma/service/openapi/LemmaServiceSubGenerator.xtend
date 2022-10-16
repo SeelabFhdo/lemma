@@ -245,12 +245,12 @@ class LemmaServiceSubGenerator {
      * Create a LEMMA Operation instances from the given HTTP verb, e.g., GET, PUT, or POST, the
      * given URI path, and OpenAPI Operation
      */
-    private def createLemmaOperation(String type, String path, Operation openApiOperation) {
+    private def createLemmaOperation(String httpVerb, String path, Operation openApiOperation) {
         val lemmaOperation = serviceFactory.createOperation
         lemmaOperation.name = openApiOperation.operationId
-        lemmaOperation.addRestEndpoint(type, path, openApiOperation)
-        lemmaOperation.addRestAspect(type, openApiOperation)
-        lemmaOperation.addComment(type, path, openApiOperation)
+        lemmaOperation.addRestEndpoint(path, openApiOperation)
+        lemmaOperation.addRestAspect(httpVerb, openApiOperation)
+        lemmaOperation.addComment(httpVerb, path, openApiOperation)
         lemmaOperation.addParameters(openApiOperation)
         return lemmaOperation
     }
@@ -258,9 +258,9 @@ class LemmaServiceSubGenerator {
     /**
      * Add a LEMMA Endpoint for the "rest" protocol from the OpenAPI technology model with the given
      * path to the given LEMMA Operation
-     */ 
-    private def void addRestEndpoint(de.fhdo.lemma.service.Operation lemmaOperation, String type,
-        String path, Operation openApiOperation) {
+     */
+    private def void addRestEndpoint(de.fhdo.lemma.service.Operation lemmaOperation, String path,
+        Operation openApiOperation) {
         val endpoint = serviceFactory.createEndpoint
         val protocol = serviceFactory.createImportedProtocolAndDataFormat
         // OpenAPI is a REST-focused specification. Thus, always use REST as protocol.
@@ -287,12 +287,12 @@ class LemmaServiceSubGenerator {
     /**
      * Add a LEMMA ApiOperationComment that identifies the HTTP verb, path, summary, and description
      * of the given OpenAPI Operation on the corresponding LEMMA Operation
-     */ 
-    private def void addComment(de.fhdo.lemma.service.Operation lemmaOperation, String type,
+     */
+    private def void addComment(de.fhdo.lemma.service.Operation lemmaOperation, String httpVerb,
         String path, Operation openApiOperation) {
         val comment = serviceFactory.createApiOperationComment
         comment.comment = '''
-            **Type** «type» Operation for path «path»
+            «httpVerb» Operation for Path «path»
             **Summary** «openApiOperation.summary»
             **Description** «openApiOperation.description»
         '''

@@ -391,12 +391,12 @@ public class LemmaServiceSubGenerator {
    * Create a LEMMA Operation instances from the given HTTP verb, e.g., GET, PUT, or POST, the
    * given URI path, and OpenAPI Operation
    */
-  private de.fhdo.lemma.service.Operation createLemmaOperation(final String type, final String path, final Operation openApiOperation) {
+  private de.fhdo.lemma.service.Operation createLemmaOperation(final String httpVerb, final String path, final Operation openApiOperation) {
     final de.fhdo.lemma.service.Operation lemmaOperation = this.serviceFactory.createOperation();
     lemmaOperation.setName(openApiOperation.getOperationId());
-    this.addRestEndpoint(lemmaOperation, type, path, openApiOperation);
-    this.addRestAspect(lemmaOperation, type, openApiOperation);
-    this.addComment(lemmaOperation, type, path, openApiOperation);
+    this.addRestEndpoint(lemmaOperation, path, openApiOperation);
+    this.addRestAspect(lemmaOperation, httpVerb, openApiOperation);
+    this.addComment(lemmaOperation, httpVerb, path, openApiOperation);
     this.addParameters(lemmaOperation, openApiOperation);
     return lemmaOperation;
   }
@@ -405,7 +405,7 @@ public class LemmaServiceSubGenerator {
    * Add a LEMMA Endpoint for the "rest" protocol from the OpenAPI technology model with the given
    * path to the given LEMMA Operation
    */
-  private void addRestEndpoint(final de.fhdo.lemma.service.Operation lemmaOperation, final String type, final String path, final Operation openApiOperation) {
+  private void addRestEndpoint(final de.fhdo.lemma.service.Operation lemmaOperation, final String path, final Operation openApiOperation) {
     final Endpoint endpoint = this.serviceFactory.createEndpoint();
     final ImportedProtocolAndDataFormat protocol = this.serviceFactory.createImportedProtocolAndDataFormat();
     final Function1<Protocol, Boolean> _function = (Protocol it) -> {
@@ -448,12 +448,11 @@ public class LemmaServiceSubGenerator {
    * Add a LEMMA ApiOperationComment that identifies the HTTP verb, path, summary, and description
    * of the given OpenAPI Operation on the corresponding LEMMA Operation
    */
-  private void addComment(final de.fhdo.lemma.service.Operation lemmaOperation, final String type, final String path, final Operation openApiOperation) {
+  private void addComment(final de.fhdo.lemma.service.Operation lemmaOperation, final String httpVerb, final String path, final Operation openApiOperation) {
     final ApiOperationComment comment = this.serviceFactory.createApiOperationComment();
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append("**Type** ");
-    _builder.append(type);
-    _builder.append(" Operation for path ");
+    _builder.append(httpVerb);
+    _builder.append(" Operation for Path ");
     _builder.append(path);
     _builder.newLineIfNotEmpty();
     _builder.append("**Summary** ");
