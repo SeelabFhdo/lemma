@@ -144,8 +144,11 @@ class LemmaDataSubGenerator {
 
     /**
      * Add field of the given name to the given LEMMA data structure based on the given OpenAPI
-     * schema. Note that this method recursively creates fields for inline-defined OpenAPI
-     * structures.
+     * schema. This method recursively creates fields for inline-defined OpenAPI structures
+     * identified by schemas that have properties. In case a schema has no properties, a single data
+     * field is added to the LEMMA data structure, which requires the given field name to be
+     * non-null. In case a schema has no properties and no field name was given, the method yields
+     * an IllegalArgumentException.
      */
     private def void addDataFieldsFromSchema(DataStructure structure, String fieldName,
         Schema<?> structureSchema) {
@@ -153,8 +156,12 @@ class LemmaDataSubGenerator {
             structureSchema.properties.forEach[name, schema |
                 structure.addDataFieldsFromSchema(name, schema)
             ]
-        else
+        else if (fieldName !== null)
             structure.dataFields.add(generateDataField(fieldName, structureSchema))
+        else
+            throw new IllegalArgumentException("Can't add data field(s) from OpenAPI schema to " +
+                '''structure «structure.buildQualifiedName(".")» because the schema has no ''' +
+                "properties and no field name was given")
     }
 
     /**
