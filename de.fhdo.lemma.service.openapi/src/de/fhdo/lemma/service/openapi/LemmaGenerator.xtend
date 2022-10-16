@@ -78,22 +78,19 @@ class LemmaGenerator implements Runnable {
         val result = new OpenAPIParser().readLocation(location, null, parseOptions)
 
         val returnMessages = newArrayList()
-        if (result.messages !== null) {
-            if (result.messages.empty)
-                returnMessages.add("No errors or warnings encountered")
-            else
-                returnMessages.addAll(result.messages)
-        }
+        if (result.messages !== null)
+            returnMessages.addAll(result.messages)
 
-        if (result.openAPI !== null) {
-            openAPI = result.openAPI
-            returnMessages.add("In-memory model of OpenAPI specification URL loaded")
-        } else
-            returnMessages.add("There was an error generating the in-memory model for the given " +
+        if (result.openAPI === null)
+            returnMessages.add("There were errors generating the in-memory model for the given " +
                 "OpenAPI specification URL")
+        openAPI = result.openAPI
 
-        val itemizedReturnMessages = newLinkedList("Encountered messages while parsing the URL:")
-        itemizedReturnMessages.addAll(returnMessages.map["\t- " + it])
+        val itemizedReturnMessages = newLinkedList()
+        if (!returnMessages.empty) {
+            itemizedReturnMessages.add("Encountered messages while parsing the URL:")
+            itemizedReturnMessages.addAll(returnMessages.map["\t- " + it])
+        }
         return itemizedReturnMessages
     }
 
@@ -159,12 +156,11 @@ class LemmaGenerator implements Runnable {
             exitWithError("OpenAPI specification URL could not be parsed")
 
         if (!parsingMessages.empty)
-        LOGGER.info(
-            '''Encountered messages during parsing:
-            «FOR msg : parsingMessages»
-                «msg»
-            «ENDFOR»'''
-        )
+            LOGGER.info(
+                '''«FOR msg : parsingMessages»
+                    «msg»
+                «ENDFOR»'''
+            )
         LOGGER.info("... in-memory representation of OpenAPI specification URL parsed")
 
         LOGGER.info("Starting LEMMA model generation...")

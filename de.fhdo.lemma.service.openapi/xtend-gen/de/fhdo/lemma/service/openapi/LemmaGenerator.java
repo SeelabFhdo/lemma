@@ -102,27 +102,25 @@ public class LemmaGenerator implements Runnable {
     List<String> _messages = result.getMessages();
     boolean _tripleNotEquals = (_messages != null);
     if (_tripleNotEquals) {
-      boolean _isEmpty = result.getMessages().isEmpty();
-      if (_isEmpty) {
-        returnMessages.add("No errors or warnings encountered");
-      } else {
-        returnMessages.addAll(result.getMessages());
-      }
+      returnMessages.addAll(result.getMessages());
     }
     OpenAPI _openAPI = result.getOpenAPI();
-    boolean _tripleNotEquals_1 = (_openAPI != null);
-    if (_tripleNotEquals_1) {
-      this.openAPI = result.getOpenAPI();
-      returnMessages.add("In-memory model of OpenAPI specification URL loaded");
-    } else {
-      returnMessages.add(("There was an error generating the in-memory model for the given " + 
+    boolean _tripleEquals = (_openAPI == null);
+    if (_tripleEquals) {
+      returnMessages.add(("There were errors generating the in-memory model for the given " + 
         "OpenAPI specification URL"));
     }
-    final LinkedList<String> itemizedReturnMessages = CollectionLiterals.<String>newLinkedList("Encountered messages while parsing the URL:");
-    final Function1<String, String> _function = (String it) -> {
-      return ("\t- " + it);
-    };
-    itemizedReturnMessages.addAll(ListExtensions.<String, String>map(returnMessages, _function));
+    this.openAPI = result.getOpenAPI();
+    final LinkedList<String> itemizedReturnMessages = CollectionLiterals.<String>newLinkedList();
+    boolean _isEmpty = returnMessages.isEmpty();
+    boolean _not = (!_isEmpty);
+    if (_not) {
+      itemizedReturnMessages.add("Encountered messages while parsing the URL:");
+      final Function1<String, String> _function = (String it) -> {
+        return ("\t- " + it);
+      };
+      itemizedReturnMessages.addAll(ListExtensions.<String, String>map(returnMessages, _function));
+    }
     return itemizedReturnMessages;
   }
   
@@ -204,14 +202,12 @@ public class LemmaGenerator implements Runnable {
       boolean _not_1 = (!_isEmpty);
       if (_not_1) {
         StringConcatenation _builder = new StringConcatenation();
-        _builder.append("Encountered messages during parsing:");
-        _builder.newLine();
         {
           for(final String msg : parsingMessages) {
-            _builder.append("            ");
-            _builder.append(msg, "            ");
             _builder.newLineIfNotEmpty();
-            _builder.append("            ");
+            _builder.append(msg);
+            _builder.newLineIfNotEmpty();
+            _builder.append("                ");
           }
         }
         LemmaGenerator.LOGGER.info(_builder.toString());

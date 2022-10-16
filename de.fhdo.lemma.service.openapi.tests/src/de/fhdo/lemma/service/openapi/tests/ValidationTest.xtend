@@ -19,10 +19,7 @@ class ValidationTest {
         val generator = new LemmaGenerator()
         val parsedSchema = generator.parse(SCHEMA_PATH)
 
-        assertTrue(
-            "Schema should not contain errors or warnings",
-            parsedSchema.contains("\t- No errors or warnings encountered")
-        )
+        assertTrue("Schema should not contain errors or warnings", parsedSchema.empty)
 
         assertFalse(
             "Generation of in-memory model must be possible from error- and warning-free schema",

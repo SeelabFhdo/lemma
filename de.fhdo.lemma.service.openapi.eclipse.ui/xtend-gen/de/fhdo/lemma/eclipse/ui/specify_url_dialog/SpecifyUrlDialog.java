@@ -158,17 +158,21 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     try {
       final LemmaGenerator generator = new LemmaGenerator();
       final LinkedList<String> parsingMessages = generator.parse(this.fetchUrl.toString());
-      Shell _shell = this.getShell();
-      StringConcatenation _builder = new StringConcatenation();
-      {
-        for(final String msg : parsingMessages) {
-          _builder.newLineIfNotEmpty();
-          _builder.append(msg);
-          _builder.newLineIfNotEmpty();
-          _builder.append("                ");
+      boolean _isEmpty = parsingMessages.isEmpty();
+      boolean _not_1 = (!_isEmpty);
+      if (_not_1) {
+        Shell _shell = this.getShell();
+        StringConcatenation _builder = new StringConcatenation();
+        {
+          for(final String msg : parsingMessages) {
+            _builder.newLineIfNotEmpty();
+            _builder.append(msg);
+            _builder.newLineIfNotEmpty();
+            _builder.append("                    ");
+          }
         }
+        MessageDialog.openInformation(_shell, "Parsing Report", _builder.toString());
       }
-      MessageDialog.openInformation(_shell, "Parsing Report", _builder.toString());
       boolean _isParsed = generator.isParsed();
       if (_isParsed) {
         StringConcatenation _builder_1 = new StringConcatenation();
@@ -183,8 +187,8 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
         generator.generateModels(
           this.targetFolder, _builder_1.toString(), _builder_2.toString(), _builder_3.toString(), 
           this.serviceQualifier);
-        boolean _isEmpty = generator.getTransMsgs().isEmpty();
-        if (_isEmpty) {
+        boolean _isEmpty_1 = generator.getTransMsgs().isEmpty();
+        if (_isEmpty_1) {
           MessageDialog.openInformation(this.getShell(), "Transformation Report", 
             "Transformation completed successfully.");
         } else {

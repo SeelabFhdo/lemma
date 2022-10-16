@@ -19,9 +19,7 @@ public class ValidationTest {
   public void schemaShouldNotHaveErrors() {
     final LemmaGenerator generator = new LemmaGenerator();
     final LinkedList<String> parsedSchema = generator.parse(ValidationTest.SCHEMA_PATH);
-    Assert.assertTrue(
-      "Schema should not contain errors or warnings", 
-      parsedSchema.contains("\t- No errors or warnings encountered"));
+    Assert.assertTrue("Schema should not contain errors or warnings", parsedSchema.isEmpty());
     Assert.assertFalse(
       "Generation of in-memory model must be possible from error- and warning-free schema", 
       parsedSchema.contains(("\t- There was an error generating the in-memory model for the " + 

@@ -106,10 +106,11 @@ class SpecifyUrlDialog extends TitleAreaDialog {
         try {
             val generator = new LemmaGenerator()
             val parsingMessages = generator.parse(fetchUrl.toString)
-            MessageDialog.openInformation(shell, "Parsing Report",
-                '''«FOR msg : parsingMessages»
-                    «msg»
-                «ENDFOR»''')
+            if (!parsingMessages.empty)
+                MessageDialog.openInformation(shell, "Parsing Report",
+                    '''«FOR msg : parsingMessages»
+                        «msg»
+                    «ENDFOR»''')
 
             if (generator.isParsed){
                 generator.generateModels(
