@@ -69,14 +69,15 @@ final class OpenApiUtil {
     }
 
     /**
-     * Derive a LEMMA integer type from the given OpenAPI type description
+     * Derive a LEMMA integer type from the given OpenAPI type description. Note that this method
+     * always returns a LEMMA PrimitiveInteger, except for "int64" type descriptions for which it
+     * returns a LEMMA PrimitiveLong.
      */
     def static PrimitiveType deriveIntType(String typeDesc) {
-        return switch (typeDesc) {
-            case "int32": DATA_FACTORY.createPrimitiveInteger
-            case "int64": DATA_FACTORY.createPrimitiveLong
-            default: DATA_FACTORY.createPrimitiveInteger
-       }
+        return if (typeDesc == "int64")
+                DATA_FACTORY.createPrimitiveLong
+            else
+                DATA_FACTORY.createPrimitiveInteger
     }
 
     /**

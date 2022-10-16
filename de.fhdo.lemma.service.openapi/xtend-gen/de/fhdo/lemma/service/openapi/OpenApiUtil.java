@@ -1,5 +1,6 @@
 package de.fhdo.lemma.service.openapi;
 
+import com.google.common.base.Objects;
 import de.fhdo.lemma.data.DataFactory;
 import de.fhdo.lemma.data.DataModel;
 import de.fhdo.lemma.data.PrimitiveType;
@@ -106,26 +107,19 @@ public final class OpenApiUtil {
   }
   
   /**
-   * Derive a LEMMA integer type from the given OpenAPI type description
+   * Derive a LEMMA integer type from the given OpenAPI type description. Note that this method
+   * always returns a LEMMA PrimitiveInteger, except for "int64" type descriptions for which it
+   * returns a LEMMA PrimitiveLong.
    */
   public static PrimitiveType deriveIntType(final String typeDesc) {
-    PrimitiveType _switchResult = null;
-    if (typeDesc != null) {
-      switch (typeDesc) {
-        case "int32":
-          _switchResult = OpenApiUtil.DATA_FACTORY.createPrimitiveInteger();
-          break;
-        case "int64":
-          _switchResult = OpenApiUtil.DATA_FACTORY.createPrimitiveLong();
-          break;
-        default:
-          _switchResult = OpenApiUtil.DATA_FACTORY.createPrimitiveInteger();
-          break;
-      }
+    PrimitiveType _xifexpression = null;
+    boolean _equals = Objects.equal(typeDesc, "int64");
+    if (_equals) {
+      _xifexpression = OpenApiUtil.DATA_FACTORY.createPrimitiveLong();
     } else {
-      _switchResult = OpenApiUtil.DATA_FACTORY.createPrimitiveInteger();
+      _xifexpression = OpenApiUtil.DATA_FACTORY.createPrimitiveInteger();
     }
-    return _switchResult;
+    return _xifexpression;
   }
   
   /**
