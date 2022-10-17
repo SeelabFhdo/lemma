@@ -139,7 +139,11 @@ class ContainerBaseIntermediateModelValidator extends AbstractXmiDeclarativeVali
             return
         }
 
-        if (container.endpoints === null || container.endpoints.empty)
+        val containerHasEndpoints = container.endpoints !== null && !container.endpoints.empty
+        val allSpecificationsHaveEndpoints = container.specifications
+            .forall[endpoints !== null && !endpoints.empty]
+
+        if (!containerHasEndpoints && !allSpecificationsHaveEndpoints)
             error('''Container "«container.name»" must specify at least one endpoint''',
                 IntermediatePackage.Literals.INTERMEDIATE_ENDPOINT_TECHNOLOGY__ENDPOINT)
     }
@@ -154,7 +158,11 @@ class ContainerBaseIntermediateModelValidator extends AbstractXmiDeclarativeVali
             return
         }
 
-        if (node.endpoints === null || node.endpoints.empty)
+        val nodeHasEndpoints = node.endpoints !== null && !node.endpoints.empty
+        val allSpecificationsHaveEndpoints = node.specifications
+            .forall[endpoints !== null && !endpoints.empty]
+
+        if (!nodeHasEndpoints && !allSpecificationsHaveEndpoints)
             error('''Infrastructure node "«node.name»" must specify at least one endpoint''',
                 IntermediatePackage.Literals.INTERMEDIATE_ENDPOINT_TECHNOLOGY__ENDPOINT)
     }
