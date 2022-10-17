@@ -14,6 +14,6 @@ class DockerFileTemplate {
             FROM «operationEnvironment»
             ARG JAR_FILE=target/«deployedServiceName»*.jar
             COPY ${JAR_FILE} «deployedServiceName».jar
-            ENTRYPOINT ["java", "-jar" , "/«deployedServiceName».jar"]
+            ENTRYPOINT ["java", "-jar", "/«deployedServiceName».jar"]
         '''
 }
