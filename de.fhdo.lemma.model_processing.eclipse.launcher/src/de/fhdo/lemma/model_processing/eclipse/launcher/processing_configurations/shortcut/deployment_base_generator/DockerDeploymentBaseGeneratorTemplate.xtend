@@ -18,7 +18,7 @@ final class DockerDeploymentBaseGeneratorTemplate extends AbstractDeploymentBase
      * Constructor
      */
     new(Shell parentShell, IProject project, IFile file) {
-        super(ProcessorExecutableType.LOCAL_JAVA_PROGRAM, parentShell, "Docker-based deployment " +
+        super(ProcessorExecutableType.LOCAL_DOCKER_IMAGE, parentShell, "Docker-based deployment " +
             "artifact generation", project, file)
     }
 

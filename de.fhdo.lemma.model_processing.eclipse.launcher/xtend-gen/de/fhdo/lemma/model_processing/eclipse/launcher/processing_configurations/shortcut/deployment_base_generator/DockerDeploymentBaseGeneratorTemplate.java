@@ -66,7 +66,7 @@ public final class DockerDeploymentBaseGeneratorTemplate extends AbstractDeploym
    * Constructor
    */
   public DockerDeploymentBaseGeneratorTemplate(final Shell parentShell, final IProject project, final IFile file) {
-    super(ProcessorExecutableType.LOCAL_JAVA_PROGRAM, parentShell, ("Docker-based deployment " + 
+    super(ProcessorExecutableType.LOCAL_DOCKER_IMAGE, parentShell, ("Docker-based deployment " + 
       "artifact generation"), project, file);
   }
   
