@@ -3,13 +3,12 @@ package de.fhdo.lemma.model_processing.code_generation.springcloud.zuul.code_gen
 import de.fhdo.lemma.model_processing.annotations.CodeGenerationModule
 import de.fhdo.lemma.model_processing.builtin_phases.code_generation.AbstractCodeGenerationModule
 import de.fhdo.lemma.operation.intermediate.IntermediatePackage
-import de.fhdo.lemma.model_processing.languages.LanguageDescription
 import de.fhdo.lemma.operation.intermediate.IntermediateOperationModel
 import org.jetbrains.annotations.NotNull
 import de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode
 import de.fhdo.lemma.model_processing.code_generation.springcloud.zuul.template.ZuulTemplate
 import java.io.File
-import de.fhdo.lemma.model_processing.code_generation.container_base.file.docker.OpenedDockerComposeFile
+import de.fhdo.lemma.model_processing.code_generation.deployment_base.file.docker.OpenedDockerComposeFile
 
 /**
  * Main class of the Spring Cloud Zuul code generation module of the Spring Cloud Zuul code

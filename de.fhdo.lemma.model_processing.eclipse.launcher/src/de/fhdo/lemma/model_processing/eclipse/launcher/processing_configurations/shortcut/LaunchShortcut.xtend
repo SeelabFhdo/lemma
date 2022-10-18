@@ -24,8 +24,6 @@ import de.fhdo.lemma.model_processing.eclipse.launcher.processing_configurations
 import de.fhdo.lemma.model_processing.eclipse.launcher.processing_configurations.shortcut.java_base_generator.DockerJavaBaseGeneratorTemplate
 import de.fhdo.lemma.model_processing.eclipse.launcher.processing_configurations.shortcut.java_base_generator.DockerTypeFocusedMappingModelJavaBaseGeneratorTemplate
 import de.fhdo.lemma.model_processing.eclipse.launcher.processing_configurations.shortcut.java_base_generator.TypeFocusedMappingModelJavaBaseGeneratorTemplate
-import de.fhdo.lemma.model_processing.eclipse.launcher.processing_configurations.shortcut.container_base_generator.ContainerBaseGeneratorTemplate
-import de.fhdo.lemma.model_processing.eclipse.launcher.processing_configurations.shortcut.container_base_generator.DockerContainerBaseGeneratorTemplate
 import org.eclipse.swt.widgets.Button
 import org.eclipse.swt.events.SelectionAdapter
 import org.eclipse.swt.events.SelectionEvent
@@ -47,6 +45,8 @@ import de.fhdo.lemma.model_processing.eclipse.launcher.processing_configurations
 import de.fhdo.lemma.model_processing.eclipse.launcher.processing_configurations.shortcut.zuul.ZuulGeneratorTemplate
 import de.fhdo.lemma.model_processing.eclipse.launcher.processing_configurations.shortcut.zuul.DockerZuulGeneratorTemplate
 import de.fhdo.lemma.model_processing.eclipse.launcher.processing_configurations.ProcessingConfiguration
+import de.fhdo.lemma.model_processing.eclipse.launcher.processing_configurations.shortcut.deployment_base_generator.DockerDeploymentBaseGeneratorTemplate
+import de.fhdo.lemma.model_processing.eclipse.launcher.processing_configurations.shortcut.deployment_base_generator.DeploymentBaseGeneratorTemplate
 
 /**
  * Launch shortcut for model processing launch configurations.
@@ -64,12 +64,12 @@ final class LaunchShortcut implements ILaunchShortcut2 {
                 TypeFocusedMappingModelJavaBaseGeneratorTemplate
             ),
         "operation" -> <Class<? extends AbstractLaunchConfigurationTemplate>>newArrayList(
-                ContainerBaseGeneratorTemplate,
+                DeploymentBaseGeneratorTemplate,
                 EurekaGeneratorTemplate,
                 MariaDBGeneratorTemplate,
                 MongoDBGeneratorTemplate,
                 ZuulGeneratorTemplate,
-                DockerContainerBaseGeneratorTemplate,
+                DockerDeploymentBaseGeneratorTemplate,
                 DockerEurekaGeneratorTemplate,
                 DockerMariaDBGeneratorTemplate,
                 DockerMongoDBGeneratorTemplate,

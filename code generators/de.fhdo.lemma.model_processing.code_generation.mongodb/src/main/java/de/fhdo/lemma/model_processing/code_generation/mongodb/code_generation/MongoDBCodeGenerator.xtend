@@ -6,18 +6,18 @@ import de.fhdo.lemma.operation.intermediate.IntermediatePackage
 import de.fhdo.lemma.operation.intermediate.IntermediateOperationModel
 import de.fhdo.lemma.model_processing.code_generation.mongodb.template.MongoDBTemplate
 import de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode
-import de.fhdo.lemma.model_processing.code_generation.container_base.file.property.OpenedPropertyFiles
-import de.fhdo.lemma.model_processing.code_generation.container_base.util.Util
-import de.fhdo.lemma.model_processing.code_generation.container_base.file.property.SortableProperties
-import de.fhdo.lemma.model_processing.code_generation.container_base.file.property.PropertyFile
-import de.fhdo.lemma.model_processing.code_generation.container_base.file.docker.OpenedDockerComposeFile
+import de.fhdo.lemma.model_processing.code_generation.deployment_base.file.property.OpenedPropertyFiles
+import de.fhdo.lemma.model_processing.code_generation.deployment_base.util.Util
+import de.fhdo.lemma.model_processing.code_generation.deployment_base.file.property.SortableProperties
+import de.fhdo.lemma.model_processing.code_generation.deployment_base.file.property.PropertyFile
+import de.fhdo.lemma.model_processing.code_generation.deployment_base.file.docker.OpenedDockerComposeFile
 import de.fhdo.lemma.operation.intermediate.IntermediateContainer
 import de.fhdo.lemma.operation.intermediate.OperationMicroserviceReference
 import java.io.File
 import java.nio.file.Paths
 import java.io.ByteArrayInputStream
 import org.jetbrains.annotations.NotNull
-import de.fhdo.lemma.model_processing.code_generation.container_base.file.docker.DockerComposeService
+import de.fhdo.lemma.model_processing.code_generation.deployment_base.file.docker.DockerComposeService
 
 /**
  * Main class of the MongoDB code generation module of the MongoDB code generator.

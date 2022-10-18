@@ -5,8 +5,8 @@ import de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils;
 import de.fhdo.lemma.model_processing.eclipse.launcher.LaunchConfigurationConstants;
 import de.fhdo.lemma.model_processing.eclipse.launcher.Utils;
 import de.fhdo.lemma.model_processing.eclipse.launcher.processing_configurations.ProcessingConfiguration;
-import de.fhdo.lemma.model_processing.eclipse.launcher.processing_configurations.shortcut.container_base_generator.ContainerBaseGeneratorTemplate;
-import de.fhdo.lemma.model_processing.eclipse.launcher.processing_configurations.shortcut.container_base_generator.DockerContainerBaseGeneratorTemplate;
+import de.fhdo.lemma.model_processing.eclipse.launcher.processing_configurations.shortcut.deployment_base_generator.DeploymentBaseGeneratorTemplate;
+import de.fhdo.lemma.model_processing.eclipse.launcher.processing_configurations.shortcut.deployment_base_generator.DockerDeploymentBaseGeneratorTemplate;
 import de.fhdo.lemma.model_processing.eclipse.launcher.processing_configurations.shortcut.eureka.DockerEurekaGeneratorTemplate;
 import de.fhdo.lemma.model_processing.eclipse.launcher.processing_configurations.shortcut.eureka.EurekaGeneratorTemplate;
 import de.fhdo.lemma.model_processing.eclipse.launcher.processing_configurations.shortcut.java_base_generator.DockerJavaBaseGeneratorTemplate;
@@ -481,12 +481,12 @@ public final class LaunchShortcut implements ILaunchShortcut2 {
     DockerTypeFocusedMappingModelJavaBaseGeneratorTemplate.class, 
     JavaBaseGeneratorTemplate.class, 
     TypeFocusedMappingModelJavaBaseGeneratorTemplate.class)), Pair.<String, ArrayList<Class<? extends AbstractLaunchConfigurationTemplate>>>of("operation", CollectionLiterals.<Class<? extends AbstractLaunchConfigurationTemplate>>newArrayList(
-    ContainerBaseGeneratorTemplate.class, 
+    DeploymentBaseGeneratorTemplate.class, 
     EurekaGeneratorTemplate.class, 
     MariaDBGeneratorTemplate.class, 
     MongoDBGeneratorTemplate.class, 
     ZuulGeneratorTemplate.class, 
-    DockerContainerBaseGeneratorTemplate.class, 
+    DockerDeploymentBaseGeneratorTemplate.class, 
     DockerEurekaGeneratorTemplate.class, 
     DockerMariaDBGeneratorTemplate.class, 
     DockerMongoDBGeneratorTemplate.class, 

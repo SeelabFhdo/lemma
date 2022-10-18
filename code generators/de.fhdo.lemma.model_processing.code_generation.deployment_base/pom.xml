@@ -2,11 +2,11 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>de.fhdo.lemma.model_processing.code_generation.mariadb</groupId>
-    <artifactId>de.fhdo.lemma.model_processing.code_generation.mariadb</artifactId>
+    <groupId>de.fhdo.lemma.model_processing.code_generation.deployment_base</groupId>
+    <artifactId>de.fhdo.lemma.model_processing.code_generation.deployment_base</artifactId>
     <version>0.8.5-SNAPSHOT</version>
-    <name>MariaDB Code Generator</name>
-    <description>A LEMMA code generator for the MariaDB technology.</description>
+    <name>Docker Code Generator</name>
+    <description>A LEMMA code generator for container configurations.</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -15,14 +15,12 @@
         <xtend.version>2.25.0</xtend.version>
         <snakeyaml.version>1.21</snakeyaml.version>
         <maven-assembly.version>3.3.0</maven-assembly.version>
+        <jackson.dataformat.version>2.12.3</jackson.dataformat.version>
+        <groovy.version>3.0.3</groovy.version> 
+        <kotlin.version>1.3.72</kotlin.version>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>de.fhdo.lemma.model_processing.code_generation.deployment_base</groupId>
-            <artifactId>de.fhdo.lemma.model_processing.code_generation.deployment_base</artifactId>
-            <version>${project.version}</version>
-        </dependency>
         <dependency>
             <groupId>org.eclipse.xtend</groupId>
             <artifactId>org.eclipse.xtend.lib</artifactId>
@@ -32,7 +30,11 @@
             <groupId>de.fhdo.lemma.model_processing</groupId>
             <artifactId>de.fhdo.lemma.model_processing</artifactId>
             <version>${project.version}</version>
-            <classifier>all-dependencies</classifier>
+        </dependency>
+        <dependency>
+            <groupId>de.fhdo.lemma.model_processing.utils</groupId>
+            <artifactId>de.fhdo.lemma.model_processing.utils</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>de.fhdo.lemma.operationdsl</groupId>
@@ -71,6 +73,11 @@
         </dependency>
         <dependency>
             <groupId>de.fhdo.lemma.intermediate</groupId>
+            <artifactId>de.fhdo.lemma.service.intermediate.metamodel</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.fhdo.lemma.intermediate</groupId>
             <artifactId>de.fhdo.lemma.operation.intermediate.metamodel</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -78,6 +85,22 @@
             <groupId>de.fhdo.lemma</groupId>
             <artifactId>de.fhdo.lemma.utils</artifactId>
             <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-yaml</artifactId>
+            <version>${jackson.dataformat.version}</version>
+        </dependency>
+        <!-- Required by log4j (Groovy execution engine) -->
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-jsr223</artifactId>
+            <version>${groovy.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib</artifactId>
+            <version>${kotlin.version}</version>
         </dependency>
     </dependencies>
 
@@ -119,7 +142,7 @@
                 <finalName>${project.artifactId}-${project.version}-standalone</finalName>
                 <archive>
                   <manifest>
-                    <mainClass>de.fhdo.lemma.model_processing.code_generation.mariadb.MariaDBGenerator</mainClass>
+                    <mainClass>de.fhdo.lemma.model_processing.code_generation.deployment_base.DeploymentBaseGenerator</mainClass>
                   </manifest>
                   <manifestEntries>
                     <!-- Prevent "WARNING: sun.reflect.Reflection.getCallerClass is not supported" from log4j -->

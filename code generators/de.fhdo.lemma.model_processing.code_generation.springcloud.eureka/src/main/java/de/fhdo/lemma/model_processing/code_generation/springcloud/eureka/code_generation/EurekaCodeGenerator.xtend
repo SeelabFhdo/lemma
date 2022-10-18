@@ -3,21 +3,20 @@ package de.fhdo.lemma.model_processing.code_generation.springcloud.eureka.code_g
 import de.fhdo.lemma.model_processing.annotations.CodeGenerationModule
 import de.fhdo.lemma.model_processing.builtin_phases.code_generation.AbstractCodeGenerationModule
 import de.fhdo.lemma.operation.intermediate.IntermediatePackage
-import de.fhdo.lemma.model_processing.languages.LanguageDescription
 import de.fhdo.lemma.operation.intermediate.IntermediateOperationModel
 import org.jetbrains.annotations.NotNull
 import de.fhdo.lemma.operation.intermediate.IntermediateContainer
 import de.fhdo.lemma.operation.intermediate.OperationMicroserviceReference
-import de.fhdo.lemma.model_processing.code_generation.container_base.util.Util
+import de.fhdo.lemma.model_processing.code_generation.deployment_base.util.Util
 import java.nio.file.Paths
 import java.io.File
-import de.fhdo.lemma.model_processing.code_generation.container_base.file.property.OpenedPropertyFiles
-import de.fhdo.lemma.model_processing.code_generation.container_base.file.property.SortableProperties
+import de.fhdo.lemma.model_processing.code_generation.deployment_base.file.property.OpenedPropertyFiles
+import de.fhdo.lemma.model_processing.code_generation.deployment_base.file.property.SortableProperties
 import java.io.ByteArrayInputStream
-import de.fhdo.lemma.model_processing.code_generation.container_base.file.property.PropertyFile
+import de.fhdo.lemma.model_processing.code_generation.deployment_base.file.property.PropertyFile
 import de.fhdo.lemma.model_processing.code_generation.springcloud.eureka.template.EurekaTemplate
 import de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode
-import de.fhdo.lemma.model_processing.code_generation.container_base.file.docker.OpenedDockerComposeFile
+import de.fhdo.lemma.model_processing.code_generation.deployment_base.file.docker.OpenedDockerComposeFile
 
 /**
  * Main class of the Spring Cloud Eureka code generation module of the Spring Cloud Eureka code

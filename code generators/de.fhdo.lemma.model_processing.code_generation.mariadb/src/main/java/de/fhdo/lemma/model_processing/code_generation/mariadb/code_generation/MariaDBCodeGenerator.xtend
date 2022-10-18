@@ -5,23 +5,23 @@ import de.fhdo.lemma.model_processing.builtin_phases.code_generation.AbstractCod
 import de.fhdo.lemma.operation.intermediate.IntermediateOperationModel
 import java.io.File
 import de.fhdo.lemma.operation.intermediate.IntermediateContainer
-import de.fhdo.lemma.model_processing.code_generation.container_base.file.property.OpenedPropertyFiles
+import de.fhdo.lemma.model_processing.code_generation.deployment_base.file.property.OpenedPropertyFiles
 import java.nio.file.Paths
 import de.fhdo.lemma.operation.intermediate.OperationMicroserviceReference
-import de.fhdo.lemma.model_processing.code_generation.container_base.util.Util
-import de.fhdo.lemma.model_processing.code_generation.container_base.file.property.SortableProperties
+import de.fhdo.lemma.model_processing.code_generation.deployment_base.util.Util
+import de.fhdo.lemma.model_processing.code_generation.deployment_base.file.property.SortableProperties
 import java.io.ByteArrayInputStream
-import de.fhdo.lemma.model_processing.code_generation.container_base.file.property.PropertyFile
+import de.fhdo.lemma.model_processing.code_generation.deployment_base.file.property.PropertyFile
 import de.fhdo.lemma.model_processing.code_generation.mariadb.template.MariaDBTemplate
 import de.fhdo.lemma.operation.intermediate.IntermediateOperationNode
-import de.fhdo.lemma.model_processing.code_generation.container_base.file.docker.OpenedDockerComposeFile
+import de.fhdo.lemma.model_processing.code_generation.deployment_base.file.docker.OpenedDockerComposeFile
 import de.fhdo.lemma.operation.intermediate.IntermediateInfrastructureNode
-import de.fhdo.lemma.model_processing.code_generation.container_base.file.docker.DockerComposeService
+import de.fhdo.lemma.model_processing.code_generation.deployment_base.file.docker.DockerComposeService
 import de.fhdo.lemma.operation.intermediate.IntermediatePackage
 import org.jetbrains.annotations.NotNull
 
 /**
- * Main class of the MariaDB code generation module of the container base code generator.
+ * Main class of the MariaDB code generation module of the MariaDB code generator.
  *
  * @author <a href="mailto:philip.wizenty@fh-dortmund.de">Philip Wizenty</a>
  */
