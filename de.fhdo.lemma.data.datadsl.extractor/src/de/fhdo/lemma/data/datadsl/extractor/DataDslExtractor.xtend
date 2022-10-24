@@ -17,6 +17,8 @@ import de.fhdo.lemma.data.Enumeration
 import de.fhdo.lemma.data.EnumerationField
 import de.fhdo.lemma.data.CollectionType
 import de.fhdo.lemma.data.Version
+import de.fhdo.lemma.data.ComplexTypeFeature
+import de.fhdo.lemma.data.DataFieldFeature
 
 /**
  * Model-to-text extractor for the Data DSL.
@@ -82,7 +84,10 @@ class DataDslExtractor {
      * Extract DataStructure
      */
     def String extractToString(DataStructure dataStructure) {
-        val preamble = '''structure «lemmaName(dataStructure.name)»'''
+        var preamble = '''structure «lemmaName(dataStructure.name)»'''
+        if (!dataStructure.features.empty)
+            preamble += '''<«dataStructure.features.extractToString»>'''
+
         if (dataStructure.dataFields.empty)
             return '''«preamble» {}'''
 
@@ -95,6 +100,35 @@ class DataDslExtractor {
     }
 
     /**
+     * Extract ComplexTypeFeatures
+     */
+     def String extractToString(List<ComplexTypeFeature> features) {
+         '''«FOR f : features SEPARATOR ", "»«f.extractToString»«ENDFOR»'''
+     }
+
+    /**
+     * Extract ComplexTypeFeature
+     */
+    def String extractToString(ComplexTypeFeature feature) {
+        return switch (feature) {
+            case AGGREGATE: "aggregate"
+            case APPLICATION_SERVICE: "applicationService"
+            case DOMAIN_EVENT: "domainEvent"
+            case DOMAIN_SERVICE: "domainService"
+            case ENTITY: "entity"
+            case FACTORY: "factory"
+            case INFRASTRUCTURE_SERVICE: "infrastructureService"
+            case REPOSITORY: "repository"
+            case SERVICE: "service"
+            case SPECIFICATION: "specification"
+            case VALUE_OBJECT: "valueObject"
+            default:
+                throw new IllegalArgumentException("Extraction of complex type feature " +
+                    '''«feature» not supported''')
+        }
+    }
+
+    /**
      * Extract DataField
      */
     def String extractToString(DataField dataField) {
@@ -103,7 +137,31 @@ class DataDslExtractor {
             Type: directFieldType.extractTypeReferenceToString(qualifiedName(dataField))
             ImportedComplexType: directFieldType.extractTypeReferenceToString
         }
-        '''«type» «lemmaName(dataField.name)»'''
+        var dataFieldString = '''«type» «lemmaName(dataField.name)»'''
+        if (!dataField.features.empty)
+            dataFieldString +='''<«dataField.features.extractDataFieldFeaturesToString»>'''
+        return dataFieldString
+    }
+
+    /**
+     * Extract DataFieldFeatures
+     */
+     def String extractDataFieldFeaturesToString(List<DataFieldFeature> features) {
+         '''«FOR f : features SEPARATOR ", "»«f.extractToString»«ENDFOR»'''
+     }
+
+    /**
+     * Extract DataFieldFeature
+     */
+    def String extractToString(DataFieldFeature feature) {
+        return switch (feature) {
+            case IDENTIFIER: "identifier"
+            case NEVER_EMPTY: "neverEmpty"
+            case PART: "part"
+            default:
+                throw new IllegalArgumentException("Extraction of data field feature " +
+                    '''«feature» not supported''')
+        }
     }
 
     /**

@@ -2,9 +2,11 @@ package de.fhdo.lemma.data.datadsl.extractor;
 
 import de.fhdo.lemma.data.CollectionType;
 import de.fhdo.lemma.data.ComplexType;
+import de.fhdo.lemma.data.ComplexTypeFeature;
 import de.fhdo.lemma.data.ComplexTypeImport;
 import de.fhdo.lemma.data.Context;
 import de.fhdo.lemma.data.DataField;
+import de.fhdo.lemma.data.DataFieldFeature;
 import de.fhdo.lemma.data.DataModel;
 import de.fhdo.lemma.data.DataStructure;
 import de.fhdo.lemma.data.Enumeration;
@@ -138,18 +140,29 @@ public class DataDslExtractor {
       _builder.append("structure ");
       String _lemmaName = Util.lemmaName(dataStructure.getName());
       _builder.append(_lemmaName);
-      final String preamble = _builder.toString();
-      boolean _isEmpty = dataStructure.getDataFields().isEmpty();
-      if (_isEmpty) {
+      String preamble = _builder.toString();
+      boolean _isEmpty = dataStructure.getFeatures().isEmpty();
+      boolean _not = (!_isEmpty);
+      if (_not) {
+        String _preamble = preamble;
         StringConcatenation _builder_1 = new StringConcatenation();
-        _builder_1.append(preamble);
-        _builder_1.append(" {}");
-        return _builder_1.toString();
+        _builder_1.append("<");
+        String _extractToString = this.extractToString(dataStructure.getFeatures());
+        _builder_1.append(_extractToString);
+        _builder_1.append(">");
+        preamble = (_preamble + _builder_1);
       }
-      StringConcatenation _builder_2 = new StringConcatenation();
-      _builder_2.append(preamble);
-      _builder_2.append(" {");
-      _builder_2.newLineIfNotEmpty();
+      boolean _isEmpty_1 = dataStructure.getDataFields().isEmpty();
+      if (_isEmpty_1) {
+        StringConcatenation _builder_2 = new StringConcatenation();
+        _builder_2.append(preamble);
+        _builder_2.append(" {}");
+        return _builder_2.toString();
+      }
+      StringConcatenation _builder_3 = new StringConcatenation();
+      _builder_3.append(preamble);
+      _builder_3.append(" {");
+      _builder_3.newLineIfNotEmpty();
       {
         EList<DataField> _dataFields = dataStructure.getDataFields();
         boolean _hasElements = false;
@@ -157,48 +170,186 @@ public class DataDslExtractor {
           if (!_hasElements) {
             _hasElements = true;
           } else {
-            _builder_2.appendImmediate(",", "    ");
+            _builder_3.appendImmediate(",", "    ");
           }
-          _builder_2.append("    ");
-          String _extractToString = this.extractToString(f);
-          _builder_2.append(_extractToString, "    ");
-          _builder_2.newLineIfNotEmpty();
+          _builder_3.append("    ");
+          String _extractToString_1 = this.extractToString(f);
+          _builder_3.append(_extractToString_1, "    ");
+          _builder_3.newLineIfNotEmpty();
         }
       }
-      _builder_2.append("}");
-      _xblockexpression = _builder_2.toString();
+      _builder_3.append("}");
+      _xblockexpression = _builder_3.toString();
     }
     return _xblockexpression;
+  }
+  
+  /**
+   * Extract ComplexTypeFeatures
+   */
+  public String extractToString(final List<ComplexTypeFeature> features) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      boolean _hasElements = false;
+      for(final ComplexTypeFeature f : features) {
+        if (!_hasElements) {
+          _hasElements = true;
+        } else {
+          _builder.appendImmediate(", ", "");
+        }
+        String _extractToString = this.extractToString(f);
+        _builder.append(_extractToString);
+      }
+    }
+    return _builder.toString();
+  }
+  
+  /**
+   * Extract ComplexTypeFeature
+   */
+  public String extractToString(final ComplexTypeFeature feature) {
+    String _switchResult = null;
+    if (feature != null) {
+      switch (feature) {
+        case AGGREGATE:
+          _switchResult = "aggregate";
+          break;
+        case APPLICATION_SERVICE:
+          _switchResult = "applicationService";
+          break;
+        case DOMAIN_EVENT:
+          _switchResult = "domainEvent";
+          break;
+        case DOMAIN_SERVICE:
+          _switchResult = "domainService";
+          break;
+        case ENTITY:
+          _switchResult = "entity";
+          break;
+        case FACTORY:
+          _switchResult = "factory";
+          break;
+        case INFRASTRUCTURE_SERVICE:
+          _switchResult = "infrastructureService";
+          break;
+        case REPOSITORY:
+          _switchResult = "repository";
+          break;
+        case SERVICE:
+          _switchResult = "service";
+          break;
+        case SPECIFICATION:
+          _switchResult = "specification";
+          break;
+        case VALUE_OBJECT:
+          _switchResult = "valueObject";
+          break;
+        default:
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append(feature);
+          _builder.append(" not supported");
+          String _plus = ("Extraction of complex type feature " + _builder);
+          throw new IllegalArgumentException(_plus);
+      }
+    } else {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append(feature);
+      _builder.append(" not supported");
+      String _plus = ("Extraction of complex type feature " + _builder);
+      throw new IllegalArgumentException(_plus);
+    }
+    return _switchResult;
   }
   
   /**
    * Extract DataField
    */
   public String extractToString(final DataField dataField) {
-    String _xblockexpression = null;
-    {
-      final Object directFieldType = this.fieldType(dataField);
-      String _switchResult = null;
-      boolean _matched = false;
-      if (directFieldType instanceof Type) {
-        _matched=true;
-        _switchResult = this.extractTypeReferenceToString(((Type)directFieldType), Util.qualifiedName(dataField));
-      }
-      if (!_matched) {
-        if (directFieldType instanceof ImportedComplexType) {
-          _matched=true;
-          _switchResult = this.extractTypeReferenceToString(((ImportedComplexType)directFieldType));
-        }
-      }
-      final String type = _switchResult;
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append(type);
-      _builder.append(" ");
-      String _lemmaName = Util.lemmaName(dataField.getName());
-      _builder.append(_lemmaName);
-      _xblockexpression = _builder.toString();
+    final Object directFieldType = this.fieldType(dataField);
+    String _switchResult = null;
+    boolean _matched = false;
+    if (directFieldType instanceof Type) {
+      _matched=true;
+      _switchResult = this.extractTypeReferenceToString(((Type)directFieldType), Util.qualifiedName(dataField));
     }
-    return _xblockexpression;
+    if (!_matched) {
+      if (directFieldType instanceof ImportedComplexType) {
+        _matched=true;
+        _switchResult = this.extractTypeReferenceToString(((ImportedComplexType)directFieldType));
+      }
+    }
+    final String type = _switchResult;
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append(type);
+    _builder.append(" ");
+    String _lemmaName = Util.lemmaName(dataField.getName());
+    _builder.append(_lemmaName);
+    String dataFieldString = _builder.toString();
+    boolean _isEmpty = dataField.getFeatures().isEmpty();
+    boolean _not = (!_isEmpty);
+    if (_not) {
+      String _dataFieldString = dataFieldString;
+      StringConcatenation _builder_1 = new StringConcatenation();
+      _builder_1.append("<");
+      String _extractDataFieldFeaturesToString = this.extractDataFieldFeaturesToString(dataField.getFeatures());
+      _builder_1.append(_extractDataFieldFeaturesToString);
+      _builder_1.append(">");
+      dataFieldString = (_dataFieldString + _builder_1);
+    }
+    return dataFieldString;
+  }
+  
+  /**
+   * Extract DataFieldFeatures
+   */
+  public String extractDataFieldFeaturesToString(final List<DataFieldFeature> features) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      boolean _hasElements = false;
+      for(final DataFieldFeature f : features) {
+        if (!_hasElements) {
+          _hasElements = true;
+        } else {
+          _builder.appendImmediate(", ", "");
+        }
+        String _extractToString = this.extractToString(f);
+        _builder.append(_extractToString);
+      }
+    }
+    return _builder.toString();
+  }
+  
+  /**
+   * Extract DataFieldFeature
+   */
+  public String extractToString(final DataFieldFeature feature) {
+    String _switchResult = null;
+    if (feature != null) {
+      switch (feature) {
+        case IDENTIFIER:
+          _switchResult = "identifier";
+          break;
+        case NEVER_EMPTY:
+          _switchResult = "neverEmpty";
+          break;
+        case PART:
+          _switchResult = "part";
+          break;
+        default:
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append(feature);
+          _builder.append(" not supported");
+          String _plus = ("Extraction of data field feature " + _builder);
+          throw new IllegalArgumentException(_plus);
+      }
+    } else {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append(feature);
+      _builder.append(" not supported");
+      String _plus = ("Extraction of data field feature " + _builder);
+      throw new IllegalArgumentException(_plus);
+    }
+    return _switchResult;
   }
   
   /**
