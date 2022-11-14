@@ -72,6 +72,9 @@ abstract class OperationNode {
     contains PossiblyImportedOperationNode[] usedByNodes
     contains PossiblyImportedOperationNode[] dependsOnNodes
 
+    /**
+     * Get parts of the operation node for creating a qualified name
+     */
     op String[] getQualifiedNameParts() {
         if (name === null || name.empty)
             return newArrayList.asEList
@@ -79,6 +82,22 @@ abstract class OperationNode {
         val nameParts = newArrayList
         nameParts.addAll(name)
         nameParts.asEList
+    }
+
+    /**
+     * Build qualified name from qualified name parts
+     */
+    op String buildQualifiedName(String separator) {
+        if (separator === null)
+            return null
+
+        var String qualifiedName = ""
+        for (part : qualifiedNameParts)
+            qualifiedName += separator + part
+        // Remove leading separator
+        if (!qualifiedName.empty)
+            qualifiedName = qualifiedName.substring(separator.length)
+        return qualifiedName
     }
 }
 
@@ -272,5 +291,35 @@ class PossiblyImportedOperationNode {
                 node.deploymentTechnology.deploymentTechnology.buildQualifiedName(".", true, false)
             default: null
         }
+    }
+
+    /**
+     * Get parts of the possibly imported operation node for creating a qualified name
+     */
+    op String[] getQualifiedNameParts() {
+        val nameParts = newArrayList
+
+        val importUri = import?.importURI ?: ""
+        if (!importUri.empty)
+            nameParts.add(importUri)
+
+        nameParts.addAll(node.qualifiedNameParts)
+        nameParts.asEList
+    }
+
+    /**
+     * Build qualified name from qualified name parts
+     */
+    op String buildQualifiedName(String separator) {
+        if (separator === null)
+            return null
+
+        var String qualifiedName = ""
+        for (part : qualifiedNameParts)
+            qualifiedName += separator + part
+        // Remove leading separator
+        if (!qualifiedName.empty)
+            qualifiedName = qualifiedName.substring(separator.length)
+        return qualifiedName
     }
 }

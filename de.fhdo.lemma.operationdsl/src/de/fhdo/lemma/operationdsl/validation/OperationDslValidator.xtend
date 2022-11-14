@@ -543,7 +543,9 @@ class OperationDslValidator extends AbstractOperationDslValidator {
 
         val dependentNodesExist = EcoreUtil2
             .getSiblingsOfType(infrastructureNode, InfrastructureNode)
-            .exists[dependsOnNodes.contains(infrastructureNode)]
+            .map[dependsOnNodes.map[buildQualifiedName(".")]]
+            .flatten
+            .contains(infrastructureNode.buildQualifiedName("."))
         if (!dependentNodesExist) {
             warning("Node is not used by services or nodes, and no other node depends on it",
                 infrastructureNode, OperationPackage::Literals.OPERATION_NODE__NAME)

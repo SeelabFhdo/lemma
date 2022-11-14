@@ -759,10 +759,13 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
     if (((!infrastructureNode.getDeployedServices().isEmpty()) || (!infrastructureNode.getUsedByNodes().isEmpty()))) {
       return;
     }
-    final Function1<InfrastructureNode, Boolean> _function = (InfrastructureNode it) -> {
-      return Boolean.valueOf(it.getDependsOnNodes().contains(infrastructureNode));
+    final Function1<InfrastructureNode, List<String>> _function = (InfrastructureNode it) -> {
+      final Function1<PossiblyImportedOperationNode, String> _function_1 = (PossiblyImportedOperationNode it_1) -> {
+        return it_1.buildQualifiedName(".");
+      };
+      return ListExtensions.<PossiblyImportedOperationNode, String>map(it.getDependsOnNodes(), _function_1);
     };
-    final boolean dependentNodesExist = IterableExtensions.<InfrastructureNode>exists(EcoreUtil2.<InfrastructureNode>getSiblingsOfType(infrastructureNode, InfrastructureNode.class), _function);
+    final boolean dependentNodesExist = IterableExtensions.contains(Iterables.<String>concat(ListExtensions.<InfrastructureNode, List<String>>map(EcoreUtil2.<InfrastructureNode>getSiblingsOfType(infrastructureNode, InfrastructureNode.class), _function)), infrastructureNode.buildQualifiedName("."));
     if ((!dependentNodesExist)) {
       this.warning("Node is not used by services or nodes, and no other node depends on it", infrastructureNode, OperationPackage.Literals.OPERATION_NODE__NAME);
     }

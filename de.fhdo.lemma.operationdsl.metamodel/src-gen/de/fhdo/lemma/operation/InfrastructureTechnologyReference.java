@@ -32,72 +32,72 @@ import org.eclipse.emf.ecore.EObject;
  * @generated
  */
 public interface InfrastructureTechnologyReference extends EObject {
-	/**
-	 * Returns the value of the '<em><b>Import</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Import</em>' reference.
-	 * @see #setImport(Import)
-	 * @see de.fhdo.lemma.operation.OperationPackage#getInfrastructureTechnologyReference_Import()
-	 * @model
-	 * @generated
-	 */
-	Import getImport();
+    /**
+     * Returns the value of the '<em><b>Import</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Import</em>' reference.
+     * @see #setImport(Import)
+     * @see de.fhdo.lemma.operation.OperationPackage#getInfrastructureTechnologyReference_Import()
+     * @model
+     * @generated
+     */
+    Import getImport();
 
-	/**
-	 * Sets the value of the '{@link de.fhdo.lemma.operation.InfrastructureTechnologyReference#getImport <em>Import</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Import</em>' reference.
-	 * @see #getImport()
-	 * @generated
-	 */
-	void setImport(Import value);
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.operation.InfrastructureTechnologyReference#getImport <em>Import</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Import</em>' reference.
+     * @see #getImport()
+     * @generated
+     */
+    void setImport(Import value);
 
-	/**
-	 * Returns the value of the '<em><b>Infrastructure Technology</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Infrastructure Technology</em>' reference.
-	 * @see #setInfrastructureTechnology(InfrastructureTechnology)
-	 * @see de.fhdo.lemma.operation.OperationPackage#getInfrastructureTechnologyReference_InfrastructureTechnology()
-	 * @model
-	 * @generated
-	 */
-	InfrastructureTechnology getInfrastructureTechnology();
+    /**
+     * Returns the value of the '<em><b>Infrastructure Technology</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Infrastructure Technology</em>' reference.
+     * @see #setInfrastructureTechnology(InfrastructureTechnology)
+     * @see de.fhdo.lemma.operation.OperationPackage#getInfrastructureTechnologyReference_InfrastructureTechnology()
+     * @model
+     * @generated
+     */
+    InfrastructureTechnology getInfrastructureTechnology();
 
-	/**
-	 * Sets the value of the '{@link de.fhdo.lemma.operation.InfrastructureTechnologyReference#getInfrastructureTechnology <em>Infrastructure Technology</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Infrastructure Technology</em>' reference.
-	 * @see #getInfrastructureTechnology()
-	 * @generated
-	 */
-	void setInfrastructureTechnology(InfrastructureTechnology value);
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.operation.InfrastructureTechnologyReference#getInfrastructureTechnology <em>Infrastructure Technology</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Infrastructure Technology</em>' reference.
+     * @see #getInfrastructureTechnology()
+     * @generated
+     */
+    void setInfrastructureTechnology(InfrastructureTechnology value);
 
-	/**
-	 * Returns the value of the '<em><b>Infrastructure Node</b></em>' container reference.
-	 * It is bidirectional and its opposite is '{@link de.fhdo.lemma.operation.InfrastructureNode#getInfrastructureTechnology <em>Infrastructure Technology</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Infrastructure Node</em>' container reference.
-	 * @see #setInfrastructureNode(InfrastructureNode)
-	 * @see de.fhdo.lemma.operation.OperationPackage#getInfrastructureTechnologyReference_InfrastructureNode()
-	 * @see de.fhdo.lemma.operation.InfrastructureNode#getInfrastructureTechnology
-	 * @model opposite="infrastructureTechnology" transient="false"
-	 * @generated
-	 */
-	InfrastructureNode getInfrastructureNode();
+    /**
+     * Returns the value of the '<em><b>Infrastructure Node</b></em>' container reference.
+     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.operation.InfrastructureNode#getInfrastructureTechnology <em>Infrastructure Technology</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Infrastructure Node</em>' container reference.
+     * @see #setInfrastructureNode(InfrastructureNode)
+     * @see de.fhdo.lemma.operation.OperationPackage#getInfrastructureTechnologyReference_InfrastructureNode()
+     * @see de.fhdo.lemma.operation.InfrastructureNode#getInfrastructureTechnology
+     * @model opposite="infrastructureTechnology" transient="false"
+     * @generated
+     */
+    InfrastructureNode getInfrastructureNode();
 
-	/**
-	 * Sets the value of the '{@link de.fhdo.lemma.operation.InfrastructureTechnologyReference#getInfrastructureNode <em>Infrastructure Node</em>}' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Infrastructure Node</em>' container reference.
-	 * @see #getInfrastructureNode()
-	 * @generated
-	 */
-	void setInfrastructureNode(InfrastructureNode value);
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.operation.InfrastructureTechnologyReference#getInfrastructureNode <em>Infrastructure Node</em>}' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Infrastructure Node</em>' container reference.
+     * @see #getInfrastructureNode()
+     * @generated
+     */
+    void setInfrastructureNode(InfrastructureNode value);
 
 } // InfrastructureTechnologyReference
