@@ -1,6 +1,5 @@
 package de.fhdo.lemma.data.avro.ui.to_avro;
 
-import de.fhdo.lemma.data.avro.ui.to_avro.ProjectWorkbenchContentProvider;
 import de.fhdo.lemma.utils.LemmaUtils;
 import java.io.File;
 import org.eclipse.core.resources.IContainer;
@@ -90,7 +89,7 @@ public class ProjectFileSelectionDialog extends ElementTreeSelectionDialog {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("Resource ");
       _builder.append(filepath);
-      _builder.append(" already exists in");
+      _builder.append(" already exists in ");
       String _plus = (_builder.toString() + 
         "workspace and will be overwritten. Do you want to proceed?");
       this.filenameWarning.setDescriptionText(_plus);

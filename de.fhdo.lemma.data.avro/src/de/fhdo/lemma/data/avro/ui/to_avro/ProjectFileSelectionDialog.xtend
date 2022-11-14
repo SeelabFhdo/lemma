@@ -69,7 +69,7 @@ class ProjectFileSelectionDialog extends ElementTreeSelectionDialog {
     private def void updateFilenameWarningDisplay() {
         val filepath = treeViewer.selection.selectedContainer.projectRelativeFilepath
         if (filepath.existsInWorkspace) {
-            filenameWarning.descriptionText = '''Resource «filepath» already exists in''' +
+            filenameWarning.descriptionText = '''Resource «filepath» already exists in ''' +
                 "workspace and will be overwritten. Do you want to proceed?"
             filenameWarning.show
         } else
