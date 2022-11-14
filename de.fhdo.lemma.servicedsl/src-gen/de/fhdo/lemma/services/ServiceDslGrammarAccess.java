@@ -893,8 +893,12 @@ public class ServiceDslGrammarAccess extends AbstractElementFinder.AbstractGramm
 		private final Keyword cParamKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
 		private final Assignment cRequiredAssignment_0_1 = (Assignment)cAlternatives_0.eContents().get(1);
 		private final Keyword cRequiredRequiredKeyword_0_1_0 = (Keyword)cRequiredAssignment_0_1.eContents().get(0);
-		private final Assignment cReturnedAssignment_0_2 = (Assignment)cAlternatives_0.eContents().get(2);
-		private final Keyword cReturnedReturnedKeyword_0_2_0 = (Keyword)cReturnedAssignment_0_2.eContents().get(0);
+		private final Assignment cRequiredAssignment_0_2 = (Assignment)cAlternatives_0.eContents().get(2);
+		private final Keyword cRequiredRequiresKeyword_0_2_0 = (Keyword)cRequiredAssignment_0_2.eContents().get(0);
+		private final Assignment cReturnedAssignment_0_3 = (Assignment)cAlternatives_0.eContents().get(3);
+		private final Keyword cReturnedReturnedKeyword_0_3_0 = (Keyword)cReturnedAssignment_0_3.eContents().get(0);
+		private final Assignment cReturnedAssignment_0_4 = (Assignment)cAlternatives_0.eContents().get(4);
+		private final Keyword cReturnedReturnsKeyword_0_4_0 = (Keyword)cReturnedAssignment_0_4.eContents().get(0);
 		private final Assignment cParameterAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final CrossReference cParameterParameterCrossReference_1_0 = (CrossReference)cParameterAssignment_1.eContents().get(0);
 		private final RuleCall cParameterParameterIDTerminalRuleCall_1_0_1 = (RuleCall)cParameterParameterCrossReference_1_0.eContents().get(1);
@@ -902,18 +906,36 @@ public class ServiceDslGrammarAccess extends AbstractElementFinder.AbstractGramm
 		private final RuleCall cCommentAnythingParserRuleCall_2_0 = (RuleCall)cCommentAssignment_2.eContents().get(0);
 		
 		//ApiParameterComment returns ApiParameterComment:
-		//    ('@param' | required?='@required' | ^returned?='@returned')
+		//    (
+		//        '@param' |
+		//        required?='@required' |
+		//        required?='@requires' |
+		//        ^returned?='@returned' |
+		//        ^returned?='@returns'
+		//    )
 		//    parameter=[Parameter]
 		//    comment=Anything
 		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//('@param' | required?='@required' | ^returned?='@returned')
+		//(
+		//    '@param' |
+		//    required?='@required' |
+		//    required?='@requires' |
+		//    ^returned?='@returned' |
+		//    ^returned?='@returns'
+		//)
 		//parameter=[Parameter]
 		//comment=Anything
 		public Group getGroup() { return cGroup; }
 		
-		//('@param' | required?='@required' | ^returned?='@returned')
+		//(
+		//    '@param' |
+		//    required?='@required' |
+		//    required?='@requires' |
+		//    ^returned?='@returned' |
+		//    ^returned?='@returns'
+		//)
 		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 		
 		//'@param'
@@ -925,11 +947,23 @@ public class ServiceDslGrammarAccess extends AbstractElementFinder.AbstractGramm
 		//'@required'
 		public Keyword getRequiredRequiredKeyword_0_1_0() { return cRequiredRequiredKeyword_0_1_0; }
 		
+		//required?='@requires'
+		public Assignment getRequiredAssignment_0_2() { return cRequiredAssignment_0_2; }
+		
+		//'@requires'
+		public Keyword getRequiredRequiresKeyword_0_2_0() { return cRequiredRequiresKeyword_0_2_0; }
+		
 		//^returned?='@returned'
-		public Assignment getReturnedAssignment_0_2() { return cReturnedAssignment_0_2; }
+		public Assignment getReturnedAssignment_0_3() { return cReturnedAssignment_0_3; }
 		
 		//'@returned'
-		public Keyword getReturnedReturnedKeyword_0_2_0() { return cReturnedReturnedKeyword_0_2_0; }
+		public Keyword getReturnedReturnedKeyword_0_3_0() { return cReturnedReturnedKeyword_0_3_0; }
+		
+		//^returned?='@returns'
+		public Assignment getReturnedAssignment_0_4() { return cReturnedAssignment_0_4; }
+		
+		//'@returns'
+		public Keyword getReturnedReturnsKeyword_0_4_0() { return cReturnedReturnsKeyword_0_4_0; }
 		
 		//parameter=[Parameter]
 		public Assignment getParameterAssignment_1() { return cParameterAssignment_1; }
@@ -1910,21 +1944,23 @@ public class ServiceDslGrammarAccess extends AbstractElementFinder.AbstractGramm
 		private final Keyword cEndpointsKeyword_104 = (Keyword)cAlternatives.eContents().get(104);
 		private final Keyword cMicroserviceKeyword_105 = (Keyword)cAlternatives.eContents().get(105);
 		private final Keyword cRequiredKeyword_106 = (Keyword)cAlternatives.eContents().get(106);
-		private final Keyword cReturnedKeyword_107 = (Keyword)cAlternatives.eContents().get(107);
-		private final Keyword cTypedefKeyword_108 = (Keyword)cAlternatives.eContents().get(108);
-		private final Keyword cNoimplKeyword_109 = (Keyword)cAlternatives.eContents().get(109);
-		private final Keyword cInterfaceKeyword_110 = (Keyword)cAlternatives.eContents().get(110);
-		private final Keyword cParamKeyword_111 = (Keyword)cAlternatives.eContents().get(111);
-		private final Keyword cRefersKeyword_112 = (Keyword)cAlternatives.eContents().get(112);
-		private final Keyword cFaultKeyword_113 = (Keyword)cAlternatives.eContents().get(113);
-		private final Keyword cFunctionalKeyword_114 = (Keyword)cAlternatives.eContents().get(114);
-		private final Keyword cUtilityKeyword_115 = (Keyword)cAlternatives.eContents().get(115);
-		private final RuleCall cBOOLEANTerminalRuleCall_116 = (RuleCall)cAlternatives.eContents().get(116);
-		private final RuleCall cNUMBER_WITH_TRAILING_PERIODTerminalRuleCall_117 = (RuleCall)cAlternatives.eContents().get(117);
-		private final RuleCall cBIG_DECIMALTerminalRuleCall_118 = (RuleCall)cAlternatives.eContents().get(118);
-		private final RuleCall cIDTerminalRuleCall_119 = (RuleCall)cAlternatives.eContents().get(119);
-		private final RuleCall cSTRINGTerminalRuleCall_120 = (RuleCall)cAlternatives.eContents().get(120);
-		private final RuleCall cANY_OTHERTerminalRuleCall_121 = (RuleCall)cAlternatives.eContents().get(121);
+		private final Keyword cRequiresKeyword_107 = (Keyword)cAlternatives.eContents().get(107);
+		private final Keyword cReturnedKeyword_108 = (Keyword)cAlternatives.eContents().get(108);
+		private final Keyword cReturnsKeyword_109 = (Keyword)cAlternatives.eContents().get(109);
+		private final Keyword cTypedefKeyword_110 = (Keyword)cAlternatives.eContents().get(110);
+		private final Keyword cNoimplKeyword_111 = (Keyword)cAlternatives.eContents().get(111);
+		private final Keyword cInterfaceKeyword_112 = (Keyword)cAlternatives.eContents().get(112);
+		private final Keyword cParamKeyword_113 = (Keyword)cAlternatives.eContents().get(113);
+		private final Keyword cRefersKeyword_114 = (Keyword)cAlternatives.eContents().get(114);
+		private final Keyword cFaultKeyword_115 = (Keyword)cAlternatives.eContents().get(115);
+		private final Keyword cFunctionalKeyword_116 = (Keyword)cAlternatives.eContents().get(116);
+		private final Keyword cUtilityKeyword_117 = (Keyword)cAlternatives.eContents().get(117);
+		private final RuleCall cBOOLEANTerminalRuleCall_118 = (RuleCall)cAlternatives.eContents().get(118);
+		private final RuleCall cNUMBER_WITH_TRAILING_PERIODTerminalRuleCall_119 = (RuleCall)cAlternatives.eContents().get(119);
+		private final RuleCall cBIG_DECIMALTerminalRuleCall_120 = (RuleCall)cAlternatives.eContents().get(120);
+		private final RuleCall cIDTerminalRuleCall_121 = (RuleCall)cAlternatives.eContents().get(121);
+		private final RuleCall cSTRINGTerminalRuleCall_122 = (RuleCall)cAlternatives.eContents().get(122);
+		private final RuleCall cANY_OTHERTerminalRuleCall_123 = (RuleCall)cAlternatives.eContents().get(123);
 		
 		//// Rule to consume any character
 		//Anything:
@@ -1956,8 +1992,8 @@ public class ServiceDslGrammarAccess extends AbstractElementFinder.AbstractGramm
 		//        // All keywords of the Service DSL. If we don't specify them here, they will be recognized
 		//        // as regular grammar tokens in the Anything string.
 		//        'internal' | 'architecture' | 'public' | 'endpoints' | 'microservice' | 'required' |
-		//        'returned' | 'typedef' | 'noimpl' | 'interface' | 'param' | 'refers' | 'fault' |
-		//        'functional' | 'utility' |
+		//        'requires' | 'returned' | 'returns' | 'typedef' | 'noimpl' | 'interface' | 'param' |
+		//        'refers' | 'fault' | 'functional' | 'utility' |
 		//        // All other terminal rules of the Service and the Data DSL (from which the Service DSL
 		//        // inherits). If we don't specify them here, they will be recognized as regular grammar
 		//        // tokens in the Anything string.
@@ -1994,8 +2030,8 @@ public class ServiceDslGrammarAccess extends AbstractElementFinder.AbstractGramm
 		//    // All keywords of the Service DSL. If we don't specify them here, they will be recognized
 		//    // as regular grammar tokens in the Anything string.
 		//    'internal' | 'architecture' | 'public' | 'endpoints' | 'microservice' | 'required' |
-		//    'returned' | 'typedef' | 'noimpl' | 'interface' | 'param' | 'refers' | 'fault' |
-		//    'functional' | 'utility' |
+		//    'requires' | 'returned' | 'returns' | 'typedef' | 'noimpl' | 'interface' | 'param' |
+		//    'refers' | 'fault' | 'functional' | 'utility' |
 		//    // All other terminal rules of the Service and the Data DSL (from which the Service DSL
 		//    // inherits). If we don't specify them here, they will be recognized as regular grammar
 		//    // tokens in the Anything string.
@@ -2343,53 +2379,59 @@ public class ServiceDslGrammarAccess extends AbstractElementFinder.AbstractGramm
 		//'required'
 		public Keyword getRequiredKeyword_106() { return cRequiredKeyword_106; }
 		
+		//'requires'
+		public Keyword getRequiresKeyword_107() { return cRequiresKeyword_107; }
+		
 		//'returned'
-		public Keyword getReturnedKeyword_107() { return cReturnedKeyword_107; }
+		public Keyword getReturnedKeyword_108() { return cReturnedKeyword_108; }
+		
+		//'returns'
+		public Keyword getReturnsKeyword_109() { return cReturnsKeyword_109; }
 		
 		//'typedef'
-		public Keyword getTypedefKeyword_108() { return cTypedefKeyword_108; }
+		public Keyword getTypedefKeyword_110() { return cTypedefKeyword_110; }
 		
 		//'noimpl'
-		public Keyword getNoimplKeyword_109() { return cNoimplKeyword_109; }
+		public Keyword getNoimplKeyword_111() { return cNoimplKeyword_111; }
 		
 		//'interface'
-		public Keyword getInterfaceKeyword_110() { return cInterfaceKeyword_110; }
+		public Keyword getInterfaceKeyword_112() { return cInterfaceKeyword_112; }
 		
 		//'param'
-		public Keyword getParamKeyword_111() { return cParamKeyword_111; }
+		public Keyword getParamKeyword_113() { return cParamKeyword_113; }
 		
 		//'refers'
-		public Keyword getRefersKeyword_112() { return cRefersKeyword_112; }
+		public Keyword getRefersKeyword_114() { return cRefersKeyword_114; }
 		
 		//'fault'
-		public Keyword getFaultKeyword_113() { return cFaultKeyword_113; }
+		public Keyword getFaultKeyword_115() { return cFaultKeyword_115; }
 		
 		//'functional'
-		public Keyword getFunctionalKeyword_114() { return cFunctionalKeyword_114; }
+		public Keyword getFunctionalKeyword_116() { return cFunctionalKeyword_116; }
 		
 		//'utility'
-		public Keyword getUtilityKeyword_115() { return cUtilityKeyword_115; }
+		public Keyword getUtilityKeyword_117() { return cUtilityKeyword_117; }
 		
 		//// All other terminal rules of the Service and the Data DSL (from which the Service DSL
 		//// inherits). If we don't specify them here, they will be recognized as regular grammar
 		//// tokens in the Anything string.
 		//BOOLEAN
-		public RuleCall getBOOLEANTerminalRuleCall_116() { return cBOOLEANTerminalRuleCall_116; }
+		public RuleCall getBOOLEANTerminalRuleCall_118() { return cBOOLEANTerminalRuleCall_118; }
 		
 		//NUMBER_WITH_TRAILING_PERIOD
-		public RuleCall getNUMBER_WITH_TRAILING_PERIODTerminalRuleCall_117() { return cNUMBER_WITH_TRAILING_PERIODTerminalRuleCall_117; }
+		public RuleCall getNUMBER_WITH_TRAILING_PERIODTerminalRuleCall_119() { return cNUMBER_WITH_TRAILING_PERIODTerminalRuleCall_119; }
 		
 		//BIG_DECIMAL
-		public RuleCall getBIG_DECIMALTerminalRuleCall_118() { return cBIG_DECIMALTerminalRuleCall_118; }
+		public RuleCall getBIG_DECIMALTerminalRuleCall_120() { return cBIG_DECIMALTerminalRuleCall_120; }
 		
 		//ID
-		public RuleCall getIDTerminalRuleCall_119() { return cIDTerminalRuleCall_119; }
+		public RuleCall getIDTerminalRuleCall_121() { return cIDTerminalRuleCall_121; }
 		
 		//STRING
-		public RuleCall getSTRINGTerminalRuleCall_120() { return cSTRINGTerminalRuleCall_120; }
+		public RuleCall getSTRINGTerminalRuleCall_122() { return cSTRINGTerminalRuleCall_122; }
 		
 		//ANY_OTHER
-		public RuleCall getANY_OTHERTerminalRuleCall_121() { return cANY_OTHERTerminalRuleCall_121; }
+		public RuleCall getANY_OTHERTerminalRuleCall_123() { return cANY_OTHERTerminalRuleCall_123; }
 	}
 	
 	public class ImportTypeElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
@@ -2770,7 +2812,13 @@ public class ServiceDslGrammarAccess extends AbstractElementFinder.AbstractGramm
 	}
 	
 	//ApiParameterComment returns ApiParameterComment:
-	//    ('@param' | required?='@required' | ^returned?='@returned')
+	//    (
+	//        '@param' |
+	//        required?='@required' |
+	//        required?='@requires' |
+	//        ^returned?='@returned' |
+	//        ^returned?='@returns'
+	//    )
 	//    parameter=[Parameter]
 	//    comment=Anything
 	//;
@@ -2968,8 +3016,8 @@ public class ServiceDslGrammarAccess extends AbstractElementFinder.AbstractGramm
 	//        // All keywords of the Service DSL. If we don't specify them here, they will be recognized
 	//        // as regular grammar tokens in the Anything string.
 	//        'internal' | 'architecture' | 'public' | 'endpoints' | 'microservice' | 'required' |
-	//        'returned' | 'typedef' | 'noimpl' | 'interface' | 'param' | 'refers' | 'fault' |
-	//        'functional' | 'utility' |
+	//        'requires' | 'returned' | 'returns' | 'typedef' | 'noimpl' | 'interface' | 'param' |
+	//        'refers' | 'fault' | 'functional' | 'utility' |
 	//        // All other terminal rules of the Service and the Data DSL (from which the Service DSL
 	//        // inherits). If we don't specify them here, they will be recognized as regular grammar
 	//        // tokens in the Anything string.

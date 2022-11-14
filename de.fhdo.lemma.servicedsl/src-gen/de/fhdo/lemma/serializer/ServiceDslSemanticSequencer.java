@@ -308,7 +308,7 @@ public class ServiceDslSemanticSequencer extends TechnologyDslSemanticSequencer 
 	 *     ApiParameterComment returns ApiParameterComment
 	 *
 	 * Constraint:
-	 *     ((required?='@required' | returned?='@returned')? parameter=[Parameter|ID] comment=Anything)
+	 *     ((required?='@required' | required?='@requires' | returned?='@returned' | returned?='@returns')? parameter=[Parameter|ID] comment=Anything)
 	 */
 	protected void sequence_ApiParameterComment(ISerializationContext context, ApiParameterComment semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
