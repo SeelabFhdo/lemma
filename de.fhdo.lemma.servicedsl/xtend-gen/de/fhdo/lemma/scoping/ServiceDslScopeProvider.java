@@ -10,6 +10,8 @@ import com.google.common.collect.Iterables;
 import de.fhdo.lemma.data.ComplexType;
 import de.fhdo.lemma.data.DataModel;
 import de.fhdo.lemma.data.PrimitiveValue;
+import de.fhdo.lemma.service.ApiOperationComment;
+import de.fhdo.lemma.service.ApiParameterComment;
 import de.fhdo.lemma.service.Import;
 import de.fhdo.lemma.service.ImportedProtocolAndDataFormat;
 import de.fhdo.lemma.service.ImportedServiceAspect;
@@ -163,6 +165,12 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
       if (context instanceof TechnologySpecificPropertyValueAssignment) {
         _matched=true;
         _switchResult = this.getScope(((TechnologySpecificPropertyValueAssignment)context), reference);
+      }
+    }
+    if (!_matched) {
+      if (context instanceof ApiParameterComment) {
+        _matched=true;
+        _switchResult = this.getScope(((ApiParameterComment)context), reference);
       }
     }
     final IScope scope = _switchResult;
@@ -1240,5 +1248,39 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
       IterableExtensions.<Map.Entry<CommunicationType, Pair<Protocol, DataFormat>>>filter(containerResults.entrySet(), _function).forEach(_function_1);
     }
     return results;
+  }
+  
+  /**
+   * Build scope for API operation parameter comments
+   */
+  private IScope getScope(final ApiParameterComment comment, final EReference reference) {
+    if ((reference != ServicePackage.Literals.API_PARAMETER_COMMENT__PARAMETER)) {
+      return IScope.NULLSCOPE;
+    }
+    ApiOperationComment _operationComment = null;
+    if (comment!=null) {
+      _operationComment=comment.getOperationComment();
+    }
+    Operation _operation = null;
+    if (_operationComment!=null) {
+      _operation=_operationComment.getOperation();
+    }
+    final Operation operation = _operation;
+    if ((operation == null)) {
+      return IScope.NULLSCOPE;
+    }
+    List<ExchangePattern> _xifexpression = null;
+    boolean _isReturned = comment.isReturned();
+    if (_isReturned) {
+      _xifexpression = Collections.<ExchangePattern>unmodifiableList(CollectionLiterals.<ExchangePattern>newArrayList(ExchangePattern.INOUT, ExchangePattern.OUT));
+    } else {
+      _xifexpression = Collections.<ExchangePattern>unmodifiableList(CollectionLiterals.<ExchangePattern>newArrayList(ExchangePattern.INOUT, ExchangePattern.IN));
+    }
+    final List<ExchangePattern> exchangePatterns = _xifexpression;
+    final Function1<Parameter, Boolean> _function = (Parameter it) -> {
+      return Boolean.valueOf(exchangePatterns.contains(it.getExchangePattern()));
+    };
+    final Iterable<Parameter> parametersWithPatterns = IterableExtensions.<Parameter>filter(operation.getParameters(), _function);
+    return Scopes.scopeFor(parametersWithPatterns);
   }
 }

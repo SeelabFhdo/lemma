@@ -45,6 +45,7 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import java.util.regex.Pattern
 import de.fhdo.lemma.service.TechnologyReference
 import de.fhdo.lemma.utils.LemmaUtils
+import de.fhdo.lemma.service.ApiParameterComment
 
 /**
  * This class implements a custom scope provider for the Service DSL.
@@ -102,6 +103,9 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
 
             /* Technology-specific property value assignments */
             TechnologySpecificPropertyValueAssignment: context.getScope(reference)
+
+            /* API parameter comments */
+            ApiParameterComment: context.getScope(reference)
         }
 
         if (scope !== null)
@@ -1133,5 +1137,25 @@ class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
         }
 
         return results
+    }
+
+    /**
+     * Build scope for API operation parameter comments
+     */
+    private def getScope(ApiParameterComment comment, EReference reference) {
+        if (reference !== ServicePackage::Literals.API_PARAMETER_COMMENT__PARAMETER)
+            return IScope.NULLSCOPE
+
+        val operation = comment?.operationComment?.operation
+        if (operation === null)
+            return IScope.NULLSCOPE
+
+        val exchangePatterns = if (comment.returned)
+                #[ExchangePattern.INOUT, ExchangePattern.OUT]
+            else
+                #[ExchangePattern.INOUT, ExchangePattern.IN]
+        val parametersWithPatterns = operation.parameters
+            .filter[exchangePatterns.contains(it.exchangePattern)]
+        return Scopes::scopeFor(parametersWithPatterns)
     }
 }
