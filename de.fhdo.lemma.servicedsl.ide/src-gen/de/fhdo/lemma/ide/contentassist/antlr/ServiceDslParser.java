@@ -257,6 +257,7 @@ public class ServiceDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getApiOperationCommentAccess().getCommentAssignment_1(), "rule__ApiOperationComment__CommentAssignment_1");
 			builder.put(grammarAccess.getApiOperationCommentAccess().getParameterCommentsAssignment_2(), "rule__ApiOperationComment__ParameterCommentsAssignment_2");
 			builder.put(grammarAccess.getApiParameterCommentAccess().getRequiredAssignment_0_1(), "rule__ApiParameterComment__RequiredAssignment_0_1");
+			builder.put(grammarAccess.getApiParameterCommentAccess().getReturnedAssignment_0_2(), "rule__ApiParameterComment__ReturnedAssignment_0_2");
 			builder.put(grammarAccess.getApiParameterCommentAccess().getParameterAssignment_1(), "rule__ApiParameterComment__ParameterAssignment_1");
 			builder.put(grammarAccess.getApiParameterCommentAccess().getCommentAssignment_2(), "rule__ApiParameterComment__CommentAssignment_2");
 			builder.put(grammarAccess.getOperationAccess().getApiOperationCommentAssignment_0(), "rule__Operation__ApiOperationCommentAssignment_0");

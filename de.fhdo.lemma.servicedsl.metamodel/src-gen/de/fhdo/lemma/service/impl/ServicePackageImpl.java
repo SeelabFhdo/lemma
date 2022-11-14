@@ -1581,8 +1581,17 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getApiParameterComment_Returned() {
+        return (EAttribute)apiParameterCommentEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EReference getApiParameterComment_Parameter() {
-        return (EReference)apiParameterCommentEClass.getEStructuralFeatures().get(2);
+        return (EReference)apiParameterCommentEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -1591,7 +1600,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
      * @generated
      */
     public EReference getApiParameterComment_OperationComment() {
-        return (EReference)apiParameterCommentEClass.getEStructuralFeatures().get(3);
+        return (EReference)apiParameterCommentEClass.getEStructuralFeatures().get(4);
     }
 
     /**
@@ -2574,6 +2583,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         apiParameterCommentEClass = createEClass(API_PARAMETER_COMMENT);
         createEAttribute(apiParameterCommentEClass, API_PARAMETER_COMMENT__COMMENT);
         createEAttribute(apiParameterCommentEClass, API_PARAMETER_COMMENT__REQUIRED);
+        createEAttribute(apiParameterCommentEClass, API_PARAMETER_COMMENT__RETURNED);
         createEReference(apiParameterCommentEClass, API_PARAMETER_COMMENT__PARAMETER);
         createEReference(apiParameterCommentEClass, API_PARAMETER_COMMENT__OPERATION_COMMENT);
 
@@ -2915,6 +2925,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
         initEClass(apiParameterCommentEClass, ApiParameterComment.class, "ApiParameterComment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getApiParameterComment_Comment(), theEcorePackage.getEString(), "comment", null, 0, 1, ApiParameterComment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getApiParameterComment_Required(), theEcorePackage.getEBoolean(), "required", null, 0, 1, ApiParameterComment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getApiParameterComment_Returned(), theEcorePackage.getEBoolean(), "returned", null, 0, 1, ApiParameterComment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getApiParameterComment_Parameter(), this.getParameter(), null, "parameter", null, 0, 1, ApiParameterComment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getApiParameterComment_OperationComment(), this.getApiOperationComment(), this.getApiOperationComment_ParameterComments(), "operationComment", null, 0, 1, ApiParameterComment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

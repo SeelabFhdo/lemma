@@ -714,7 +714,7 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
      */
     @Check
     def warnParameterCommentDiffersFromOptionalFlag(ApiParameterComment parameterComment) {
-        if (parameterComment.parameter === null) {
+        if (parameterComment.parameter === null || parameterComment.returned) {
             return
         }
 

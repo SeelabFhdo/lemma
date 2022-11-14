@@ -2046,7 +2046,7 @@ public class OperationDslGrammarAccess extends AbstractElementFinder.AbstractGra
 	}
 	
 	//ApiParameterComment returns ApiParameterComment:
-	//    ('@param' | required?='@required')
+	//    ('@param' | required?='@required' | ^returned?='@returned')
 	//    parameter=[Parameter]
 	//    comment=Anything
 	//;
@@ -2232,8 +2232,8 @@ public class OperationDslGrammarAccess extends AbstractElementFinder.AbstractGra
 	//        // All keywords of the Service DSL. If we don't specify them here, they will be recognized
 	//        // as regular grammar tokens in the Anything string.
 	//        'internal' | 'architecture' | 'public' | 'endpoints' | 'microservice' | 'required' |
-	//        'typedef' | 'noimpl' | 'interface' | 'param' | 'refers' | 'fault' | 'functional' |
-	//        'utility' |
+	//        'returned' | 'typedef' | 'noimpl' | 'interface' | 'param' | 'refers' | 'fault' |
+	//        'functional' | 'utility' |
 	//        // All other terminal rules of the Service and the Data DSL (from which the Service DSL
 	//        // inherits). If we don't specify them here, they will be recognized as regular grammar
 	//        // tokens in the Anything string.

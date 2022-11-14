@@ -630,13 +630,22 @@ public interface IntermediatePackage extends EPackage {
     int INTERMEDIATE_API_PARAMETER_COMMENT__REQUIRED = 1;
 
     /**
+     * The feature id for the '<em><b>Returned</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int INTERMEDIATE_API_PARAMETER_COMMENT__RETURNED = 2;
+
+    /**
      * The feature id for the '<em><b>Parameter</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_API_PARAMETER_COMMENT__PARAMETER = 2;
+    int INTERMEDIATE_API_PARAMETER_COMMENT__PARAMETER = 3;
 
     /**
      * The feature id for the '<em><b>Operation Comment</b></em>' container reference.
@@ -645,7 +654,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_API_PARAMETER_COMMENT__OPERATION_COMMENT = 3;
+    int INTERMEDIATE_API_PARAMETER_COMMENT__OPERATION_COMMENT = 4;
 
     /**
      * The number of structural features of the '<em>Api Parameter Comment</em>' class.
@@ -654,7 +663,7 @@ public interface IntermediatePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int INTERMEDIATE_API_PARAMETER_COMMENT_FEATURE_COUNT = 4;
+    int INTERMEDIATE_API_PARAMETER_COMMENT_FEATURE_COUNT = 5;
 
     /**
      * The number of operations of the '<em>Api Parameter Comment</em>' class.
@@ -2027,6 +2036,17 @@ public interface IntermediatePackage extends EPackage {
     EAttribute getIntermediateApiParameterComment_Required();
 
     /**
+     * Returns the meta object for the attribute '{@link de.fhdo.lemma.service.intermediate.IntermediateApiParameterComment#isReturned <em>Returned</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Returned</em>'.
+     * @see de.fhdo.lemma.service.intermediate.IntermediateApiParameterComment#isReturned()
+     * @see #getIntermediateApiParameterComment()
+     * @generated
+     */
+    EAttribute getIntermediateApiParameterComment_Returned();
+
+    /**
      * Returns the meta object for the reference '{@link de.fhdo.lemma.service.intermediate.IntermediateApiParameterComment#getParameter <em>Parameter</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3245,6 +3265,14 @@ public interface IntermediatePackage extends EPackage {
          * @generated
          */
         EAttribute INTERMEDIATE_API_PARAMETER_COMMENT__REQUIRED = eINSTANCE.getIntermediateApiParameterComment_Required();
+
+        /**
+         * The meta object literal for the '<em><b>Returned</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute INTERMEDIATE_API_PARAMETER_COMMENT__RETURNED = eINSTANCE.getIntermediateApiParameterComment_Returned();
 
         /**
          * The meta object literal for the '<em><b>Parameter</b></em>' reference feature.

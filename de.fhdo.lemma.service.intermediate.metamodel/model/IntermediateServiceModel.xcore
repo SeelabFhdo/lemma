@@ -105,6 +105,7 @@ class IntermediateApiOperationComment {
 class IntermediateApiParameterComment {
     String comment
     boolean required
+    boolean returned
 
     refers IntermediateParameter parameter
 

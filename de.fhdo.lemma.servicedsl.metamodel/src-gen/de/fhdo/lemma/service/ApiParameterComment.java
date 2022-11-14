@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.fhdo.lemma.service.ApiParameterComment#getComment <em>Comment</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.ApiParameterComment#isRequired <em>Required</em>}</li>
+ *   <li>{@link de.fhdo.lemma.service.ApiParameterComment#isReturned <em>Returned</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.ApiParameterComment#getParameter <em>Parameter</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.ApiParameterComment#getOperationComment <em>Operation Comment</em>}</li>
  * </ul>
@@ -72,6 +73,28 @@ public interface ApiParameterComment extends EObject {
      * @generated
      */
     void setRequired(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Returned</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Returned</em>' attribute.
+     * @see #setReturned(boolean)
+     * @see de.fhdo.lemma.service.ServicePackage#getApiParameterComment_Returned()
+     * @model unique="false"
+     * @generated
+     */
+    boolean isReturned();
+
+    /**
+     * Sets the value of the '{@link de.fhdo.lemma.service.ApiParameterComment#isReturned <em>Returned</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Returned</em>' attribute.
+     * @see #isReturned()
+     * @generated
+     */
+    void setReturned(boolean value);
 
     /**
      * Returns the value of the '<em><b>Parameter</b></em>' reference.

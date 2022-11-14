@@ -506,6 +506,7 @@ rule IntermediateApiParameterComment(sourceParameter : Service!Parameter,
         i : Intermediate!IntermediateApiParameterComment(
             comment <- sourceComment.comment,
             required <- sourceComment.required,
+            returned <- sourceComment.returned,
             parameter <- targetParameter
         )
     do {

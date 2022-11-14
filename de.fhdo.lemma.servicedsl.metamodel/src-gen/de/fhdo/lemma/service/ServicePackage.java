@@ -1540,13 +1540,22 @@ public interface ServicePackage extends EPackage {
     int API_PARAMETER_COMMENT__REQUIRED = 1;
 
     /**
+     * The feature id for the '<em><b>Returned</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int API_PARAMETER_COMMENT__RETURNED = 2;
+
+    /**
      * The feature id for the '<em><b>Parameter</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int API_PARAMETER_COMMENT__PARAMETER = 2;
+    int API_PARAMETER_COMMENT__PARAMETER = 3;
 
     /**
      * The feature id for the '<em><b>Operation Comment</b></em>' container reference.
@@ -1555,7 +1564,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int API_PARAMETER_COMMENT__OPERATION_COMMENT = 3;
+    int API_PARAMETER_COMMENT__OPERATION_COMMENT = 4;
 
     /**
      * The number of structural features of the '<em>Api Parameter Comment</em>' class.
@@ -1564,7 +1573,7 @@ public interface ServicePackage extends EPackage {
      * @generated
      * @ordered
      */
-    int API_PARAMETER_COMMENT_FEATURE_COUNT = 4;
+    int API_PARAMETER_COMMENT_FEATURE_COUNT = 5;
 
     /**
      * The number of operations of the '<em>Api Parameter Comment</em>' class.
@@ -4058,6 +4067,17 @@ public interface ServicePackage extends EPackage {
     EAttribute getApiParameterComment_Required();
 
     /**
+     * Returns the meta object for the attribute '{@link de.fhdo.lemma.service.ApiParameterComment#isReturned <em>Returned</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Returned</em>'.
+     * @see de.fhdo.lemma.service.ApiParameterComment#isReturned()
+     * @see #getApiParameterComment()
+     * @generated
+     */
+    EAttribute getApiParameterComment_Returned();
+
+    /**
      * Returns the meta object for the reference '{@link de.fhdo.lemma.service.ApiParameterComment#getParameter <em>Parameter</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -6195,6 +6215,14 @@ public interface ServicePackage extends EPackage {
          * @generated
          */
         EAttribute API_PARAMETER_COMMENT__REQUIRED = eINSTANCE.getApiParameterComment_Required();
+
+        /**
+         * The meta object literal for the '<em><b>Returned</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute API_PARAMETER_COMMENT__RETURNED = eINSTANCE.getApiParameterComment_Returned();
 
         /**
          * The meta object literal for the '<em><b>Parameter</b></em>' reference feature.

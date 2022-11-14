@@ -1293,6 +1293,21 @@ ruleApiParameterComment returns [EObject current=null]
 					}
 				)
 			)
+			    |
+			(
+				(
+					lv_returned_2_0='@returned'
+					{
+						newLeafNode(lv_returned_2_0, grammarAccess.getApiParameterCommentAccess().getReturnedReturnedKeyword_0_2_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getApiParameterCommentRule());
+						}
+						setWithLastConsumed($current, "returned", lv_returned_2_0 != null, "@returned");
+					}
+				)
+			)
 		)
 		(
 			(
@@ -1301,9 +1316,9 @@ ruleApiParameterComment returns [EObject current=null]
 						$current = createModelElement(grammarAccess.getApiParameterCommentRule());
 					}
 				}
-				otherlv_2=RULE_ID
+				otherlv_3=RULE_ID
 				{
-					newLeafNode(otherlv_2, grammarAccess.getApiParameterCommentAccess().getParameterParameterCrossReference_1_0());
+					newLeafNode(otherlv_3, grammarAccess.getApiParameterCommentAccess().getParameterParameterCrossReference_1_0());
 				}
 			)
 		)
@@ -1312,7 +1327,7 @@ ruleApiParameterComment returns [EObject current=null]
 				{
 					newCompositeNode(grammarAccess.getApiParameterCommentAccess().getCommentAnythingParserRuleCall_2_0());
 				}
-				lv_comment_3_0=ruleAnything
+				lv_comment_4_0=ruleAnything
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getApiParameterCommentRule());
@@ -1320,7 +1335,7 @@ ruleApiParameterComment returns [EObject current=null]
 					set(
 						$current,
 						"comment",
-						lv_comment_3_0,
+						lv_comment_4_0,
 						"de.fhdo.lemma.ServiceDsl.Anything");
 					afterParserOrEnumRuleCall();
 				}
@@ -3224,100 +3239,106 @@ ruleAnything returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken(
 			newLeafNode(kw, grammarAccess.getAnythingAccess().getRequiredKeyword_106());
 		}
 		    |
+		kw='returned'
+		{
+			$current.merge(kw);
+			newLeafNode(kw, grammarAccess.getAnythingAccess().getReturnedKeyword_107());
+		}
+		    |
 		kw='typedef'
 		{
 			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getAnythingAccess().getTypedefKeyword_107());
+			newLeafNode(kw, grammarAccess.getAnythingAccess().getTypedefKeyword_108());
 		}
 		    |
 		kw='noimpl'
 		{
 			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getAnythingAccess().getNoimplKeyword_108());
+			newLeafNode(kw, grammarAccess.getAnythingAccess().getNoimplKeyword_109());
 		}
 		    |
 		kw='interface'
 		{
 			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getAnythingAccess().getInterfaceKeyword_109());
+			newLeafNode(kw, grammarAccess.getAnythingAccess().getInterfaceKeyword_110());
 		}
 		    |
 		kw='param'
 		{
 			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getAnythingAccess().getParamKeyword_110());
+			newLeafNode(kw, grammarAccess.getAnythingAccess().getParamKeyword_111());
 		}
 		    |
 		kw='refers'
 		{
 			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getAnythingAccess().getRefersKeyword_111());
+			newLeafNode(kw, grammarAccess.getAnythingAccess().getRefersKeyword_112());
 		}
 		    |
 		kw='fault'
 		{
 			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getAnythingAccess().getFaultKeyword_112());
+			newLeafNode(kw, grammarAccess.getAnythingAccess().getFaultKeyword_113());
 		}
 		    |
 		kw='functional'
 		{
 			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getAnythingAccess().getFunctionalKeyword_113());
+			newLeafNode(kw, grammarAccess.getAnythingAccess().getFunctionalKeyword_114());
 		}
 		    |
 		kw='utility'
 		{
 			$current.merge(kw);
-			newLeafNode(kw, grammarAccess.getAnythingAccess().getUtilityKeyword_114());
+			newLeafNode(kw, grammarAccess.getAnythingAccess().getUtilityKeyword_115());
 		}
 		    |
-		this_BOOLEAN_116=RULE_BOOLEAN
+		this_BOOLEAN_117=RULE_BOOLEAN
 		{
-			$current.merge(this_BOOLEAN_116);
+			$current.merge(this_BOOLEAN_117);
 		}
 		{
-			newLeafNode(this_BOOLEAN_116, grammarAccess.getAnythingAccess().getBOOLEANTerminalRuleCall_115());
-		}
-		    |
-		this_NUMBER_WITH_TRAILING_PERIOD_117=RULE_NUMBER_WITH_TRAILING_PERIOD
-		{
-			$current.merge(this_NUMBER_WITH_TRAILING_PERIOD_117);
-		}
-		{
-			newLeafNode(this_NUMBER_WITH_TRAILING_PERIOD_117, grammarAccess.getAnythingAccess().getNUMBER_WITH_TRAILING_PERIODTerminalRuleCall_116());
+			newLeafNode(this_BOOLEAN_117, grammarAccess.getAnythingAccess().getBOOLEANTerminalRuleCall_116());
 		}
 		    |
-		this_BIG_DECIMAL_118=RULE_BIG_DECIMAL
+		this_NUMBER_WITH_TRAILING_PERIOD_118=RULE_NUMBER_WITH_TRAILING_PERIOD
 		{
-			$current.merge(this_BIG_DECIMAL_118);
+			$current.merge(this_NUMBER_WITH_TRAILING_PERIOD_118);
 		}
 		{
-			newLeafNode(this_BIG_DECIMAL_118, grammarAccess.getAnythingAccess().getBIG_DECIMALTerminalRuleCall_117());
-		}
-		    |
-		this_ID_119=RULE_ID
-		{
-			$current.merge(this_ID_119);
-		}
-		{
-			newLeafNode(this_ID_119, grammarAccess.getAnythingAccess().getIDTerminalRuleCall_118());
+			newLeafNode(this_NUMBER_WITH_TRAILING_PERIOD_118, grammarAccess.getAnythingAccess().getNUMBER_WITH_TRAILING_PERIODTerminalRuleCall_117());
 		}
 		    |
-		this_STRING_120=RULE_STRING
+		this_BIG_DECIMAL_119=RULE_BIG_DECIMAL
 		{
-			$current.merge(this_STRING_120);
+			$current.merge(this_BIG_DECIMAL_119);
 		}
 		{
-			newLeafNode(this_STRING_120, grammarAccess.getAnythingAccess().getSTRINGTerminalRuleCall_119());
+			newLeafNode(this_BIG_DECIMAL_119, grammarAccess.getAnythingAccess().getBIG_DECIMALTerminalRuleCall_118());
 		}
 		    |
-		this_ANY_OTHER_121=RULE_ANY_OTHER
+		this_ID_120=RULE_ID
 		{
-			$current.merge(this_ANY_OTHER_121);
+			$current.merge(this_ID_120);
 		}
 		{
-			newLeafNode(this_ANY_OTHER_121, grammarAccess.getAnythingAccess().getANY_OTHERTerminalRuleCall_120());
+			newLeafNode(this_ID_120, grammarAccess.getAnythingAccess().getIDTerminalRuleCall_119());
+		}
+		    |
+		this_STRING_121=RULE_STRING
+		{
+			$current.merge(this_STRING_121);
+		}
+		{
+			newLeafNode(this_STRING_121, grammarAccess.getAnythingAccess().getSTRINGTerminalRuleCall_120());
+		}
+		    |
+		this_ANY_OTHER_122=RULE_ANY_OTHER
+		{
+			$current.merge(this_ANY_OTHER_122);
+		}
+		{
+			newLeafNode(this_ANY_OTHER_122, grammarAccess.getAnythingAccess().getANY_OTHERTerminalRuleCall_121());
 		}
 	)+
 ;

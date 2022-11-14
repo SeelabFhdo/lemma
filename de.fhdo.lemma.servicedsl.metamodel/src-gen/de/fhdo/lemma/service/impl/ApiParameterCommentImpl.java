@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <ul>
  *   <li>{@link de.fhdo.lemma.service.impl.ApiParameterCommentImpl#getComment <em>Comment</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.impl.ApiParameterCommentImpl#isRequired <em>Required</em>}</li>
+ *   <li>{@link de.fhdo.lemma.service.impl.ApiParameterCommentImpl#isReturned <em>Returned</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.impl.ApiParameterCommentImpl#getParameter <em>Parameter</em>}</li>
  *   <li>{@link de.fhdo.lemma.service.impl.ApiParameterCommentImpl#getOperationComment <em>Operation Comment</em>}</li>
  * </ul>
@@ -74,6 +75,26 @@ public class ApiParameterCommentImpl extends MinimalEObjectImpl.Container implem
      * @ordered
      */
     protected boolean required = REQUIRED_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #isReturned() <em>Returned</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isReturned()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean RETURNED_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isReturned() <em>Returned</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isReturned()
+     * @generated
+     * @ordered
+     */
+    protected boolean returned = RETURNED_EDEFAULT;
 
     /**
      * The cached value of the '{@link #getParameter() <em>Parameter</em>}' reference.
@@ -144,6 +165,27 @@ public class ApiParameterCommentImpl extends MinimalEObjectImpl.Container implem
         required = newRequired;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, ServicePackage.API_PARAMETER_COMMENT__REQUIRED, oldRequired, required));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public boolean isReturned() {
+        return returned;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setReturned(boolean newReturned) {
+        boolean oldReturned = returned;
+        returned = newReturned;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ServicePackage.API_PARAMETER_COMMENT__RETURNED, oldReturned, returned));
     }
 
     /**
@@ -291,6 +333,8 @@ public class ApiParameterCommentImpl extends MinimalEObjectImpl.Container implem
                 return getComment();
             case ServicePackage.API_PARAMETER_COMMENT__REQUIRED:
                 return isRequired();
+            case ServicePackage.API_PARAMETER_COMMENT__RETURNED:
+                return isReturned();
             case ServicePackage.API_PARAMETER_COMMENT__PARAMETER:
                 if (resolve) return getParameter();
                 return basicGetParameter();
@@ -314,6 +358,9 @@ public class ApiParameterCommentImpl extends MinimalEObjectImpl.Container implem
                 return;
             case ServicePackage.API_PARAMETER_COMMENT__REQUIRED:
                 setRequired((Boolean)newValue);
+                return;
+            case ServicePackage.API_PARAMETER_COMMENT__RETURNED:
+                setReturned((Boolean)newValue);
                 return;
             case ServicePackage.API_PARAMETER_COMMENT__PARAMETER:
                 setParameter((Parameter)newValue);
@@ -339,6 +386,9 @@ public class ApiParameterCommentImpl extends MinimalEObjectImpl.Container implem
             case ServicePackage.API_PARAMETER_COMMENT__REQUIRED:
                 setRequired(REQUIRED_EDEFAULT);
                 return;
+            case ServicePackage.API_PARAMETER_COMMENT__RETURNED:
+                setReturned(RETURNED_EDEFAULT);
+                return;
             case ServicePackage.API_PARAMETER_COMMENT__PARAMETER:
                 setParameter((Parameter)null);
                 return;
@@ -361,6 +411,8 @@ public class ApiParameterCommentImpl extends MinimalEObjectImpl.Container implem
                 return COMMENT_EDEFAULT == null ? comment != null : !COMMENT_EDEFAULT.equals(comment);
             case ServicePackage.API_PARAMETER_COMMENT__REQUIRED:
                 return required != REQUIRED_EDEFAULT;
+            case ServicePackage.API_PARAMETER_COMMENT__RETURNED:
+                return returned != RETURNED_EDEFAULT;
             case ServicePackage.API_PARAMETER_COMMENT__PARAMETER:
                 return parameter != null;
             case ServicePackage.API_PARAMETER_COMMENT__OPERATION_COMMENT:
@@ -383,6 +435,8 @@ public class ApiParameterCommentImpl extends MinimalEObjectImpl.Container implem
         result.append(comment);
         result.append(", required: ");
         result.append(required);
+        result.append(", returned: ");
+        result.append(returned);
         result.append(')');
         return result.toString();
     }

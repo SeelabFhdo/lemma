@@ -1059,9 +1059,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
    */
   @Check
   public void warnParameterCommentDiffersFromOptionalFlag(final ApiParameterComment parameterComment) {
-    Parameter _parameter = parameterComment.getParameter();
-    boolean _tripleEquals = (_parameter == null);
-    if (_tripleEquals) {
+    if (((parameterComment.getParameter() == null) || parameterComment.isReturned())) {
       return;
     }
     boolean _isRequired = parameterComment.isRequired();

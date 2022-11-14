@@ -687,8 +687,17 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getIntermediateApiParameterComment_Returned() {
+        return (EAttribute)intermediateApiParameterCommentEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EReference getIntermediateApiParameterComment_Parameter() {
-        return (EReference)intermediateApiParameterCommentEClass.getEStructuralFeatures().get(2);
+        return (EReference)intermediateApiParameterCommentEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -697,7 +706,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
      * @generated
      */
     public EReference getIntermediateApiParameterComment_OperationComment() {
-        return (EReference)intermediateApiParameterCommentEClass.getEStructuralFeatures().get(3);
+        return (EReference)intermediateApiParameterCommentEClass.getEStructuralFeatures().get(4);
     }
 
     /**
@@ -1398,6 +1407,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
         intermediateApiParameterCommentEClass = createEClass(INTERMEDIATE_API_PARAMETER_COMMENT);
         createEAttribute(intermediateApiParameterCommentEClass, INTERMEDIATE_API_PARAMETER_COMMENT__COMMENT);
         createEAttribute(intermediateApiParameterCommentEClass, INTERMEDIATE_API_PARAMETER_COMMENT__REQUIRED);
+        createEAttribute(intermediateApiParameterCommentEClass, INTERMEDIATE_API_PARAMETER_COMMENT__RETURNED);
         createEReference(intermediateApiParameterCommentEClass, INTERMEDIATE_API_PARAMETER_COMMENT__PARAMETER);
         createEReference(intermediateApiParameterCommentEClass, INTERMEDIATE_API_PARAMETER_COMMENT__OPERATION_COMMENT);
 
@@ -1571,6 +1581,7 @@ public class IntermediatePackageImpl extends EPackageImpl implements Intermediat
         initEClass(intermediateApiParameterCommentEClass, IntermediateApiParameterComment.class, "IntermediateApiParameterComment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getIntermediateApiParameterComment_Comment(), theEcorePackage.getEString(), "comment", null, 0, 1, IntermediateApiParameterComment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getIntermediateApiParameterComment_Required(), theEcorePackage.getEBoolean(), "required", null, 0, 1, IntermediateApiParameterComment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getIntermediateApiParameterComment_Returned(), theEcorePackage.getEBoolean(), "returned", null, 0, 1, IntermediateApiParameterComment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getIntermediateApiParameterComment_Parameter(), this.getIntermediateParameter(), null, "parameter", null, 0, 1, IntermediateApiParameterComment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getIntermediateApiParameterComment_OperationComment(), this.getIntermediateApiOperationComment(), this.getIntermediateApiOperationComment_ParameterComments(), "operationComment", null, 0, 1, IntermediateApiParameterComment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
