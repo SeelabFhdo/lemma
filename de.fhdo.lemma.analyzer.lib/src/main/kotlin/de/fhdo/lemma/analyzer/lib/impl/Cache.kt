@@ -62,12 +62,11 @@ internal object Cache : HashMap<CacheId, Any?>() {
     private val models = mutableMapOf<Class<out EObject>, MutableSet<EObject>>()
 
     /**
-     * Clear all cache [models] and all cache entries with the given [modelClazz]
+     * Clear all cache [models] and all cache entries
      */
-    internal fun clearCache(modelClazz: Class<*>) {
-        models.remove(modelClazz)
-        val cacheIdsOfModelClass = keys.filter { it.modelClazz == modelClazz }
-        cacheIdsOfModelClass.forEach { remove(it) }
+    internal fun clearCache() {
+        models.clear()
+        clear()
     }
 
     /**

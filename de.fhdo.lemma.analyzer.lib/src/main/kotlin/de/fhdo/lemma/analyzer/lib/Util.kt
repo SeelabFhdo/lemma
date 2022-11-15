@@ -110,16 +110,6 @@ internal fun EObject.getEffectiveProtocols() : List<IntermediateProtocolSpecific
 }
 
 /**
- * Get the metamodel concept for this [EObject], which is its first implemented interface, e.g.,
- * IntermediateMicroserviceImpl becomes IntermediateMicroservice, or the class of the [EObject] itself in case it does
- * not implement any interface.
- *
- * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)
- */
-internal fun EObject.getMetamodelConcept()
-    = if (javaClass.interfaces.isNotEmpty()) javaClass.interfaces[0] else javaClass
-
-/**
  * Resolve this [IntermediateComplexType].
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)

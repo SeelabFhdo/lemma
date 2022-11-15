@@ -1,6 +1,5 @@
 package de.fhdo.lemma.analyzer.lib.impl
 
-import de.fhdo.lemma.analyzer.lib.getMetamodelConcept
 import org.eclipse.emf.ecore.EObject
 
 /**
@@ -25,12 +24,9 @@ internal abstract class AbstractSingleModelTypeAnalyzer<T: EObject>(private val 
             models.clear()
         models.addAll(modelRoots.map { it as T })
 
-        if (clearCache && modelRoots.isNotEmpty()) {
-            // In case the previous unchecked cast to T succeeded, we can be sure that all model roots have the same
-            // type
-            val modelClazz = modelRoots[0].getMetamodelConcept()
-            Cache.clearCache(modelClazz)
-        }
+        if (clearCache && modelRoots.isNotEmpty())
+            Cache.clearCache()
+
         Cache.addModels(models, modelClazz)
     }
 }
