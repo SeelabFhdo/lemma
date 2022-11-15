@@ -60,6 +60,11 @@ internal class ServiceBasicAnalyzer
     override fun countSynchronousOperationsForInterfaces(interfaces: List<IntermediateInterface>)
         = countSynchronousOperations(interfaces.map { it.operations }.flatten())
 
+    override fun getHybridOperations() = Cache.allOperations().filter { operation ->
+        operation.parameters.any { it.communicationType == CommunicationType.ASYNCHRONOUS.name } &&
+        operation.parameters.any { it.communicationType == CommunicationType.SYNCHRONOUS.name }
+    }
+
     override fun getEffectiveProtocols() : Set<Triple<String, String, CommunicationType>> {
         val uniqueProtocolFormatCombinations = mutableSetOf<String>()
         val result = mutableSetOf<Triple<String, String, CommunicationType>>()

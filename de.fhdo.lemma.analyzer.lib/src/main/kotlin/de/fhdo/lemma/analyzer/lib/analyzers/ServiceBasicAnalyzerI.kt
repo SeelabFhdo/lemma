@@ -92,6 +92,11 @@ interface ServiceBasicAnalyzerI : AnalyzerI {
     fun countSynchronousOperationsForInterfaces(interfaces: List<IntermediateInterface>) : Int
 
     /**
+     * Get hybrid [IntermediateOperation]s that define at least one asynchronous and at least one synchronous parameter
+     */
+    fun getHybridOperations() : List<IntermediateOperation>
+
+    /**
      * Get all effective protocols and data formats from all microservices, interfaces, operations, and referred
      * operations. The result will be a [Set] consisting of [Triple]s. The first component of each [Triple] is the
      * protocol name. The second component identifies the data format. The third component is the [CommunicationType] of
