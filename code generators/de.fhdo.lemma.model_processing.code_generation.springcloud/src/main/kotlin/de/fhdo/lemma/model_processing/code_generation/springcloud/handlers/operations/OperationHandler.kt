@@ -17,9 +17,7 @@ import de.fhdo.lemma.model_processing.code_generation.java_base.handlers.CodeGen
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasAspect
 import de.fhdo.lemma.model_processing.code_generation.java_base.hasInputParameters
 import de.fhdo.lemma.model_processing.code_generation.java_base.isResultParameter
-import de.fhdo.lemma.model_processing.code_generation.springcloud.forAllTechnologies
 import de.fhdo.lemma.model_processing.code_generation.springcloud.forSpringTechnology
-import de.fhdo.lemma.model_processing.code_generation.springcloud.handlers.aspects.ResponseEntityHandler
 import de.fhdo.lemma.model_processing.code_generation.springcloud.handlers.aspects.ResponseEntityHandler.Companion.RESPONSE_ENTITY_ASPECT_NAMES
 import de.fhdo.lemma.model_processing.code_generation.springcloud.spring.addResponseStatusAnnotation
 import de.fhdo.lemma.model_processing.code_generation.springcloud.Context.State as State
@@ -69,7 +67,7 @@ internal class OperationHandler
             val currentReturnType = (node.type as ClassOrInterfaceType).nameAsString
             if (currentReturnType != "ResponseEntity") {
                 node.addImport("org.springframework.http.ResponseEntity", ImportTargetElementType.METHOD)
-                node.setType("ResponseEntity<$currentReturnType>")
+                node.setType("ResponseEntity<${node.typeAsString}>")
             }
         }
 
