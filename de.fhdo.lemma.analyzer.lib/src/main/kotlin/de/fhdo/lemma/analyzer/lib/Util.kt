@@ -9,7 +9,7 @@ import de.fhdo.lemma.data.intermediate.IntermediateDataModel
 import de.fhdo.lemma.data.intermediate.IntermediateDataStructure
 import de.fhdo.lemma.data.intermediate.IntermediateEnumeration
 import de.fhdo.lemma.data.intermediate.IntermediateImportedComplexType
-import de.fhdo.lemma.model_processing.utils.loadModelRoot
+import de.fhdo.lemma.model_processing.utils.loadModelRootRelative
 import de.fhdo.lemma.model_processing.utils.removeFileUri
 import de.fhdo.lemma.service.Visibility
 import de.fhdo.lemma.service.intermediate.IntermediateInterface
@@ -129,10 +129,7 @@ internal fun IntermediateComplexType.resolve() : IntermediateComplexType {
     val definingModelUri = if (this is IntermediateImportedComplexType) import.importUri else null
     val definingModel = if (definingModelUri != null) {
             val importingModelFilePath = eResource().uri.toString().removeFileUri()
-            // TODO: Replace with loadModelRootRelative from model processing Utils
-            val absolutePath = LemmaUtils.convertToAbsoluteFileUri(definingModelUri.removeFileUri(),
-                importingModelFilePath)
-            loadModelRoot(absolutePath)
+            loadModelRootRelative(definingModelUri, importingModelFilePath)
         } else
             getDefiningModel<IntermediateDataModel>()
     val (versionName, contextName, simpleName) = getQualifiedNameParts()
