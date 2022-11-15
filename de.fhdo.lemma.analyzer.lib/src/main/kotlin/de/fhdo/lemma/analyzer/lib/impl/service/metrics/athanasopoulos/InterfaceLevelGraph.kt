@@ -24,8 +24,8 @@ typealias SimilarityEdge = Triple<IntermediateOperation, IntermediateOperation, 
  * [Athanasopoulos et al.](https://ieeexplore.ieee.org/document/6763104). This suite defines the interface-level graph
  * of a service interface as an undirected, weighted graph. The vertices of the graph represent the interface's
  * operations. An edge connects two operation vertices iff its weight is greater zero. The weight calculation for an
- * edge between two operations happens by means of a of a similarity function. It determines the similarity (and thus
- * the edge weight) between two operations as a value in the interval [0, 1] based on certain characteristics of the
+ * edge between two operations happens by means of a similarity function. It determines the similarity (and thus the
+ * edge weight) between two operations as a value in the interval [0, 1] based on certain characteristics of the
  * compared operations.
  *
  * @author [Florian Rademacher](mailto:florian.rademacher@fh-dortmund.de)

@@ -10,7 +10,6 @@ import de.fhdo.lemma.technology.CommunicationType
 import de.fhdo.lemma.technology.ExchangePattern
 import org.jgrapht.Graph
 import org.jgrapht.GraphMapping
-import org.jgrapht.alg.isomorphism.VF2GraphIsomorphismInspector
 import org.jgrapht.alg.isomorphism.VF2SubgraphIsomorphismInspector
 import java.lang.IllegalArgumentException
 
@@ -122,7 +121,8 @@ internal class AthanasopoulosMetricsAnalyzer
         val op2ExchangePatterns = op1ExchangePatterns.oppositePatterns()
         val graph2 = MessageLevelGraph(op2, communicationType, op2ExchangePatterns)
 
-        val inspector = VF2GraphIsomorphismInspector(graph1, graph1, { v1, v2 -> v1.label.compareTo(v2.label) }, null)
+        val inspector = VF2SubgraphIsomorphismInspector(graph1, graph1, { v1, v2 -> v1.label.compareTo(v2.label) },
+            null)
         val maximumSubgraphVertexCount = inspector.mappings.asSequence().maximumMappingVertexCount(graph1)
         val uniqueVertices = graph1.vertexSet().map { it.label }.toMutableSet()
         uniqueVertices.addAll(graph2.vertexSet().map { it.label })
