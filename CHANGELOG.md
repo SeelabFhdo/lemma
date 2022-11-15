@@ -1,6 +1,135 @@
 # Changelog
 All notable changes to [LEMMA](https://github.com/SeelabFhdo/lemma/) will be documented in this file.
 
+## [0.8.6] - 2022-11-15
+### Added
+- Add Eclipse launchers for LEMMA model processors and processor chains
+- Add support to transform OpenAPI specifications into LEMMA models (contributed by [Jonas Sorgalla](https://www.github.com/josor001))
+- Add utility project for testing Xtext-based modeling languages
+- Avro Plugin: Enable direct Avro schema generation from domain model files
+- CQRS Genlet: Add Docker configuration for executing the Genlet in Live Validation mode
+- Data DSL: Add `getEffectivePropertyValues` function to the intermediate metamodel's `IntermediateImportedAspect` concept to enable the retrieval of the effective property values of aspect applications
+- Data DSL: Add explicit validation for non-empty Bounded Contexts
+- Data DSL: Add extractor support for features of data structures and data fields (contributed by [Philip Wizenty](https://www.github.com/pwizenty))
+- Data DSL: Add `sourceMappingModelUri` attribute to the intermediate metamodel's  `IntermediateComplexType` concept
+- Data DSL: Emit warning when DDD Specifications define data fields and thus attempt state definition
+- Data DSL: Emit warning when DDD Value Objects define non-side-effect-free operations
+- Data DSL: Emit warning when DDD Value Objects define mutable fields
+- Deployment Base Generator: Include name of deployed microservice in generated Docker Compose services
+- Deployment Base Generator: Introduce `customPortMapping` configuration property to enable the specification of custom port mappings for deployed microservices
+- Deployment Base Generator: Support the derivation of port specifications in generated Docker Compose files
+- Domain Events Genlet: Add Docker configuration for executing the Genlet in Live Validation mode
+- Eclipse UI: Enable intermediate domain model transformations from operation models
+- Examples: Add Charging Station Management example including source code generated from example models
+- Intermediate Model Transformations: Add infrastructure for programmatic transformation invocation
+- Java Base Generator: Add "add on relocation" serialization characteristic
+- Java Base Generator: Add Genlet path specifier for the root folder path of the currently generated microservice (contributed by [Dominik Pelkmann](https://www.github.com/pelkmann))
+- Java Base Generator: Add "keep on relocation" serialization characteristic
+- Java Base Generator: Add support for mapping collection types to Java `Collection` instances
+- Java Base Generator: Enable Genlets to modify generated dependency trees
+- Java Base Generator: Invoke Genlet validations on passed models prior to models' processing
+- Kafka Genlet: Add Docker configuration for executing the Genlet in Live Validation mode
+- Live Validation Server: Enable Docker-based execution
+- Model Processing: Add support for optional built-in arguments
+- Model Processing Framework: Add API for programmatic triggering of model validations
+- Modeling Languages: Implement custom Xtext reconcile strategy to support "on-the-fly" resolution of imported model elements
+- Operation DSL: Link instances of the intermediate metamodel's `IntermediateDeploymentTechnologyReference` concept with default operation environments in case no explicit environment is specified
+- Operation DSL: Set `qualifiedName` property for `IntermediateImportedAspects` in intermediate operation model transformations (contributed by [Dominik Pelkmann](https://www.github.com/pelkmann))
+- Operation DSL: Store the simple names of imported microservices in the `name` fields of `OperationMicroserviceReference` instances created during intermediate operation model transformations
+- Releng: Add script to check releng-related configuration files for consistency
+- Rename "Container Base Generator" to "Deployment Base Generator" (contributed by [Philip Wizenty](https://www.github.com/pwizenty))
+- Service DSL: Add "@returned" tag for the documentation of service parameters returned by modeled microservice operations
+- Service DSL: Add extractor plugin (contributed by [Jonas Sorgalla](https://www.github.com/josor001))
+- Service DSL: Add `sourceMappingModelUri` attribute to the intermediate metamodel's `IntermediateMicroservice` concept
+- Service DSL: Introduce "@requires" and "@returns" synonyms for "@required" and "@returned" API documentation tags
+- Spring Cloud Genlet: Add support for `@ElementCollection` annotation
+- Spring Cloud Genlet: Add `Unique` aspect to mark entity fields that hold unique column values
+- Spring Cloud Genlet: Support aspects with eponymous Spring annotation names in technology models with "Spring" qualifier
+- Static Analyzer: Add basic analysis method for retrieving microservice operations that mix synchronous and asynchronous parameters
+- Technology DSL: Add extractor plugin (contributed by [Jonas Sorgalla](https://www.github.com/josor001))
+
+### Changed
+- Avro Plugin: Correct warning message for already existing target files
+- CQRS Genlet: Fix issue display for modeled microservices that don't require other microservices
+- CQRS Genlet: Fix runtime warning concerning duplicate SLF4J bindings
+- CQRS Genlet: Perform source model validations only when elements exhibit the respective side aspects
+- Data DSL: Fix equivalence comparison for primitive types in validator
+- Data DSL: Fix infinite loop and NPE in cyclic import detection (contributed by [Dominik Pelkmann](https://www.github.com/pelkmann))
+- Data DSL: Fix infinite loop in cyclic inheritance detection
+- Data DSL: Replace `list` keyword with `collection` keyword
+- Data DSL: Prevent exception propagation for non-parseable dates
+- Deployment Base Generator: Consider service-specific endpoints when checking that an operation node has endpoints (contributed by [Philip Wizenty](https://www.github.com/pwizenty))
+- Deployment Base Generator: Fix error on startup concerning missing Groovy execution engine
+- Deployment Base Generator: Fix naming of generated Kubernetes deployment files
+- Deployment Base Generator: Fix port checking in intermediate model validator
+- Deployment Base Generator: Fix runtime warning concerning duplicate SLF4J bindings
+- Deployment Base Generator: Ignore modeled containers and infrastructure nodes that don't apply the deployment base technology model
+- Deployment Base Generator: Make error reporting on missing endpoints more precise
+- Deployment Base Generator: Prevent duplicate lines in generated root build scripts
+- Deployment Base Generator: Read artifact ID for Dockerfile from the Maven POM of a generated microservice or an application of the `ArtifactId` aspect
+- Deployment Base Generator: Sort port mappings generated from modeled infrastructure nodes
+- Deployment Base Generator: Use fully qualified name of microservice to derive file path segments for generated artifacts
+- Deployment Base Generator: Use fully qualified names to check for aspect applications
+- Deployment Base Generator: Use technology name instead of import alias for checking technology application
+- Deployment Base Generator: Use ".yaml" extension for generated Docker Compose files
+- Domain Events Genlet: Fix issue display for `EventGroup` checks in mapping models
+- Domain Events Genlet: Fix runtime warning concerning duplicate SLF4J bindings
+- Intermediate Model Transformations: Postpone relative URI conversion to the end of a transformation run
+- Intermediate Model Transformations: Preserve original intermediate data models as transformation results from mapping model transformations
+- Java Base Generator: Adapt visibility of `@Before` callbacks in Genlet-delegating intermediate model validators so that the callbacks become recognizable by the Model Processing Framework (contributed by [Dominik Pelkmann](https://www.github.com/pelkmann))
+- Java Base Generator: Change Java version of generated code to 11
+- Java Base Generator: Don't generate main microservice class in its own package to prevent problems with subsequent classpath scanning performed by additional frameworks like Spring
+- Java Base Generator: Enable commandline arguments to be passed as program arguments instead of code generation module arguments
+- Java Base Generator: Fix resolution of transitive domain model imports
+- Java Base Generator: Generate an executable microservice with a dedicated POM per modeled microservice defined in a given input model
+- Java Base Generator: Generate Java Collection type applications instead of custom classes from modeled collection types
+- Java Base Generator: Improve error message for service models that lack modeled Java microservices (contributed by [Simon Trebbau](https://www.github.com/SimonTrebbau))
+- Java Base Generator: In generated custom implementation classes, add `@Override` annotation to all overridable methods independent of their visibility
+- Java Base Generator: Make source model an optional argument in script-based executions of the generator
+- Java Base Generator: Preserve lexical information when parsing existing Java files
+- Java Base Generator: Prevent generation of ambiguous imports in generated classes
+- Kafka Genlet: Fix check of query side receiver operations for type-compatible command side sender operations
+- Kafka Genlet: Fix warning for error handling configurations that are effectively disabled by a Domain Events technology model
+- Live Validation Editor: Fix dialog height
+- Live Validation Editor: Preserve issues from regular model validations upon Live Validation issues' receipt
+- Live Validation Server: Report commandline parsing exceptions to user
+- Live Validation Server: Increase default timeout threshold to 2000 milliseconds
+- Live Validation Server: Print errors to error stream
+- Modeling Languages: Fix URI comparison in cyclic import checks
+- Modeling Languages: Make import path validation case sensitive (contributed by [Dominik Pelkmann](https://www.github.com/pelkmann))
+- Modeling Languages: Use absolute paths for checking the existence and uniqueness of imported files (contributed by [Dominik Pelkmann](https://www.github.com/pelkmann))
+- Model Processing Framework: Make handling of phase exceptions more robust by means of a global exception handler
+- Model Processing Framework: Print validation error messages to error stream
+- Model Processing Framework: Rename `--exit_on_error` option to `--continue_after_phase_errors` to better communicate its intention
+- Model Processing Framework: Switch from exit code `4` to `1` when model processing failed due to errors
+- Operation DSL: Fix check for existing dependent nodes of an infrastructure node
+- Operation DSL: Fix conversion of import URIs into absolute paths withing intermediate models
+- Releng: Mark fat JARs as multi-release JARs in their manifests to prevent runtime reflection warnings
+- Releng: Migrate build dependencies to Xtext 2.26 to prevent illegal reflective access during model parsing
+- Releng: Prevent illegal reflective access warnings in Docker-based model processor executions
+- Service DSL: Ensure that visibility of modeled microservice interfaces and operations does not exceed that of their defining microservices and interfaces, respectively
+- Service DSL: Enable modeling of unspecified parameter types for non-implemented microservice operations, i.e., microservice operations with the `noimpl` modifier (contributed by [Dominik Pelkmann](https://www.github.com/pelkmann))
+- Spring Cloud Genlet: Convert implemented types to extended types when turning classes with the `CrudRepository` aspect into Java interfaces
+- Spring Cloud Genlet: Enable console for H2 databases
+- Spring Cloud Genlet: Generate Spring Boot Maven Plugin dependency for building executable JAR files only when the Genlet effectively processed a microservice
+- Spring Cloud Genlet: Improve handling of inheritance hierarchies for the `Embeddable` aspect
+- Spring Cloud Genlet: Improve support for multiplicity-related aspects
+- Spring Cloud Genlet: Keep `@Entity` annotations on subclasses as expected by Hibernate
+- Spring Cloud Genlet: Remove redundant modifiers in `CrudRepository` interfaces
+- Spring Cloud Genlet: Use method return type as argument for generated ResponseEntity return type wrappers
+- Static Analyzer: Always clear complete cache for consistency in interlinked model elements
+- Static Analyzer: Like for message similarity, rely on `VF2SubgraphIsomorphismInspector` to calculate conversation similarity following Athanasopoulos et al.
+- Static Analyzer: Return `IntermediateComplexType` instances of Haupt resources instead of only their names
+- Update log4j dependencies to cope with [CVE-2021-44228](https://nvd.nist.gov/vuln/detail/CVE-2021-44228)
+
+### Removed
+- Avro Plugin: Remove dependency on Apache Commons Lang library to enable the plugin's usage as an Eclipse drop-in
+- Examples: Remove outdated example for model processor implementation
+- Kafka Genlet: Remove redundant source model validation for Kafka bootstrap endpoints on microservices
+- LEMMA UI Utils: Remove unused method `createEnumerationText`
+- Modeling Languages: Remove deprecated `org.eclipse.xtext.generator` bundle from Eclipse build properties
+- Service DSL: Remove redundant dependency on Data DSL's test plugin
+
 ## [0.8.5] - 2021-08-16
 ### Added
 - Data DSL: Add validation for duplicate list fields
@@ -51,7 +180,7 @@ All notable changes to [LEMMA](https://github.com/SeelabFhdo/lemma/) will be doc
 - Data DSL: Add extractor plugin.
 - Data DSL: Enable DDD feature specification for enumerations.
 - Documentation: Enable Docker build of documentations for intermediate metamodels.
-- Intermediate Model Transformations: Add intermediate operation model transformation (contributed by [Philip Wizenty](github.com/pwizenty)).
+- Intermediate Model Transformations: Add intermediate operation model transformation (contributed by [Philip Wizenty](https://www.github.com/pwizenty)).
 - Java Base Generator: Add support for Java's `UUID` type.
 - Java Base Generator: Dockerize the generator to make it portable.
 - Java Base Generator: Accompany the generator with a Python script to facilitate its Docker-based execution.
@@ -64,7 +193,7 @@ All notable changes to [LEMMA](https://github.com/SeelabFhdo/lemma/) will be doc
 - Model Processing Framework: Enable implementers to access arguments of validation phases.
 - Model Processing Framework: Introduce `@BeforeCheck` annotation to influence the execution of `@Check` methods in intermediate model validators.
 - Model Processing Framework: Introduce `@RethrowExceptions` annotation for intermediate model validator debugging.
-- Operation DSL: Integrate import concept for operation models (contributed by [Philip Wizenty](github.com/pwizenty)).
+- Operation DSL: Integrate import concept for operation models (contributed by [Philip Wizenty](https://www.github.com/pwizenty)).
 - Releng: Add build scripts for Windows.
 - Releng: Enable Maven build of Eclipse updatesite.
 - Releng: Enable LEMMA modules to provide their own Docker images, e.g., for code generator execution.
@@ -77,12 +206,12 @@ All notable changes to [LEMMA](https://github.com/SeelabFhdo/lemma/) will be doc
 - Spring Cloud Genlet: Add support for new `Application` aspect, which combines Spring Boot application name and port.
 - Spring Cloud Genlet: Add Domain Events sub-Genlet.
 - Spring Cloud Genlet: Add CQRS sub-Genlet.
-- UI: Enable execution of intermediate operation model transformations (contributed by [Philip Wizenty](github.com/pwizenty)).
-- Add code generator to automatically derive Docker containers from operation models (contributed by [Philip Wizenty](github.com/pwizenty)).
-- Add code generator for MariaDB (contributed by [Philip Wizenty](github.com/pwizenty)).
-- Add code generator for MongoDB (contributed by [Philip Wizenty](github.com/pwizenty)).
-- Add code generator for Spring Cloud Zuul (contributed by [Philip Wizenty](github.com/pwizenty)).
-- Add code generator for Spring Cloud Eureka (contributed by [Philip Wizenty](github.com/pwizenty)).
+- UI: Enable execution of intermediate operation model transformations (contributed by [Philip Wizenty](https://www.github.com/pwizenty)).
+- Add code generator to automatically derive Docker containers from operation models (contributed by [Philip Wizenty](https://www.github.com/pwizenty)).
+- Add code generator for MariaDB (contributed by [Philip Wizenty](https://www.github.com/pwizenty)).
+- Add code generator for MongoDB (contributed by [Philip Wizenty](https://www.github.com/pwizenty)).
+- Add code generator for Spring Cloud Zuul (contributed by [Philip Wizenty](https://www.github.com/pwizenty)).
+- Add code generator for Spring Cloud Eureka (contributed by [Philip Wizenty](https://www.github.com/pwizenty)).
 - Add plugin to generate Apache Avro schema specifications from LEMMA models and vice versa.
 - Add Python script to facilitate the execution of LEMMA model processors within Docker containers.
 - Add Spring Cloud Kafka Genlet.
@@ -116,7 +245,7 @@ All notable changes to [LEMMA](https://github.com/SeelabFhdo/lemma/) will be doc
 - Mapping DSL: Fix scoping of enumeration fields.
 - Model Processing Framework: Change check for microservice technology to be case-insensitive by default.
 - Model Processing Framework: Introduce `@ExplicitlyInvokedCodeGenerationModule` annotation for code generation modules that need to be explicitly invoked from the commandline.
-- Operation DSL: An operation node may now either be dependent on or used by the same operation node but not both (contributed by [Philip Wizenty](github.com/pwizenty)).
+- Operation DSL: An operation node may now either be dependent on or used by the same operation node but not both (contributed by [Philip Wizenty](https://www.github.com/pwizenty)).
 - Releng: Dockerize LEMMA builds.
 - Releng: Don't clone LEMMA repository twice during builds.
 - Releng: Fix errorlevel checking of batch scripts in Windows build.
@@ -152,7 +281,7 @@ All notable changes to [LEMMA](https://github.com/SeelabFhdo/lemma/) will be doc
 - Intermediate Model Transformations: Always assign `originalType` in intermediate data models according to the documentation.
 - Mapping DSL: Turn error on duplicate endpoints into a warning and thus introduce consistency with Service and Operation DSL.
 - Operation DSL: Fix checking of mandatory property values on infrastructure nodes that do not deploy services.
-- Releng: Fix build scripts (contributed by [Philip Wizenty](github.com/pwizenty)).
+- Releng: Fix build scripts (contributed by [Philip Wizenty](https://www.github.com/pwizenty)).
 - Releng: Rename `build/languages.sh` to `build/lemma.sh`.
 - Technology DSL: Fix checking of technology-specific primitive type mappings when first technology-specific type mapping is not a default mapping.
 - UI: Display erroneous models in model selection dialog again. They will be filtered and not displayed in the transformation target path specification dialog.
