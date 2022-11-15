@@ -50,10 +50,10 @@ class HttpResourceGraph(
 ) : DefaultDirectedGraph<ResourceGraphVertex, DefaultEdge>(DefaultEdge::class.java) {
     val resources: Resources
     val resourcesPerHttpMethod: ResourcesPerHttpMethod
-    val rootResources: List<String>
-    val readOnlyResources: Set<String>
-    val deleteResources: Set<String>
-    val postResources: Set<String>
+    val rootResources: Set<IntermediateComplexType>
+    val readOnlyResources: Set<IntermediateComplexType>
+    val deleteResources: Set<IntermediateComplexType>
+    val postResources: Set<IntermediateComplexType>
     val linkCount: Int
     val longestResourcePath: List<String>
 
@@ -66,7 +66,7 @@ class HttpResourceGraph(
         this.resourcesPerHttpMethod = resourcesPerHttpMethod
 
         setupResourceGraph(resources.values)
-        rootResources = getRoots().map { it.qualifiedName }
+        rootResources = getRoots().map { it.resourceType }.toSet()
         readOnlyResources = resourcesPerHttpMethod.filterReadOnlyResources()
         deleteResources = resourcesPerHttpMethod.filterByMethods(setOf(HttpMethod.DELETE))
         postResources = resourcesPerHttpMethod.filterByMethods(setOf(HttpMethod.POST))
@@ -252,13 +252,13 @@ class HttpResourceGraph(
     /**
      * Get the root resources of this [HttpResourceGraph]
      */
-    private fun getRoots() = vertexSet().filter { vertex -> incomingEdgesOf(vertex).isEmpty() }
+    private fun getRoots() = vertexSet().filter { vertex -> incomingEdgesOf(vertex).isEmpty() }.toSet()
 
     /**
      * Filter all read-only resources from this [ResourcesPerHttpMethod] instance. Read-only resources must stem from
      * microservice operations that do not provide [WRITE_HTTP_METHODS] but one or more [READ_ONLY_HTTP_METHODS].
      */
-    private fun ResourcesPerHttpMethod.filterReadOnlyResources() : Set<String> {
+    private fun ResourcesPerHttpMethod.filterReadOnlyResources() : Set<IntermediateComplexType> {
         val writeResources = filterByMethods(WRITE_HTTP_METHODS)
         return filterByMethods(READ_ONLY_HTTP_METHODS)
             // A read-only resource must not also be a write resource
@@ -270,7 +270,7 @@ class HttpResourceGraph(
      * Helper to filter the HTTP methods in this [ResourcesPerHttpMethod] instance by the given [httpMethods]
      */
     private fun ResourcesPerHttpMethod.filterByMethods(httpMethods: Set<HttpMethod>)
-        = httpMethods.mapNotNull { this[it] }.flatten().map { it.qualifiedName }.toSet()
+        = httpMethods.mapNotNull { this[it] }.flatten().toSet()
 
     /**
      * Find the longest path of vertices in the [HttpResourceGraph]. In case there are longest paths with the same

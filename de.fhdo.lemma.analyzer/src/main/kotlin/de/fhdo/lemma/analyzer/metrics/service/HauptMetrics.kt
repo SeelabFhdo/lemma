@@ -120,7 +120,7 @@ internal class HauptMetrics : AbstractAnalysisModule<IntermediateServiceModel>()
 
         blankLine()
         item("Resource Characterization:")
-        itemItem(rootResources.joinToString(", "), "Root resources (count: $rootResourcesCount)")
+        itemItem(rootResources.joinToString(", ") { it.qualifiedName }, "Root resources (count: $rootResourcesCount)")
         ValueStore["${VALUE_STORE_PREFIX}NumberOfRootResources"] = rootResourcesCount to listOf(microserviceIdentifier)
 
         itemItem(resourceLinkCount, "# Resource links")

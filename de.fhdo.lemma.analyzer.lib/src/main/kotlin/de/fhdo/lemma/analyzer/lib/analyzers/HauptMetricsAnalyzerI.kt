@@ -3,6 +3,7 @@ package de.fhdo.lemma.analyzer.lib.analyzers
 import de.fhdo.lemma.analyzer.lib.AnalyzerI
 import de.fhdo.lemma.analyzer.lib.impl.service.metrics.haupt.HttpResourceGraph
 import de.fhdo.lemma.analyzer.lib.impl.service.metrics.haupt.ResourcesPerHttpMethod
+import de.fhdo.lemma.data.intermediate.IntermediateComplexType
 import de.fhdo.lemma.service.intermediate.IntermediateMicroservice
 
 /**
@@ -22,24 +23,24 @@ interface HauptMetricsAnalyzerI : AnalyzerI {
     fun getResourcesPerHttpMethod(microservice: IntermediateMicroservice) : ResourcesPerHttpMethod
 
     /**
-     * Get the names of the root REST resources of the given [microservice]
+     * Get the [IntermediateComplexType]s representing the root REST resources of the given [microservice]
      */
-    fun getRootResources(microservice: IntermediateMicroservice) : List<String>
+    fun getRootResources(microservice: IntermediateMicroservice) : Set<IntermediateComplexType>
 
     /**
-     * Get the names of the read-only REST resources of the given [microservice]
+     * Get the [IntermediateComplexType]s representing the read-only REST resources of the given [microservice]
      */
-    fun getReadOnlyResources(microservice: IntermediateMicroservice) : Set<String>
+    fun getReadOnlyResources(microservice: IntermediateMicroservice) : Set<IntermediateComplexType>
 
     /**
-     * Get the names of the DELETE REST resources of the given [microservice]
+     * Get the [IntermediateComplexType]s representing the DELETE REST resources of the given [microservice]
      */
-    fun getDeleteResources(microservice: IntermediateMicroservice) : Set<String>
+    fun getDeleteResources(microservice: IntermediateMicroservice) : Set<IntermediateComplexType>
 
     /**
-     * Get the names of the POST REST resources of the given [microservice]
+     * Get the [IntermediateComplexType]s representing the POST REST resources of the given [microservice]
      */
-    fun getPostResources(microservice: IntermediateMicroservice) : Set<String>
+    fun getPostResources(microservice: IntermediateMicroservice) : Set<IntermediateComplexType>
 
     /**
      * Get the number of resource links of the given [microservice]
