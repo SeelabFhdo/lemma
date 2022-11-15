@@ -513,7 +513,7 @@ internal class GenerationGapSerializerBase : KoinComponent {
             removeElementsFromGeneratedMethodOnRelocation(originalMethod, method)
 
             // Create body of the method that delegated to the relocated version in the *GenImpl class
-            if (method.isPublic && method.isOverridable)
+            if (method.isOverridable)
                 method.addMarkerAnnotation("Override")
             val parameterString = method.parameters.map { it.name }.joinToString()
             val delegatingClassName = if (!method.isStatic) "super" else genImplClass.nameAsString
