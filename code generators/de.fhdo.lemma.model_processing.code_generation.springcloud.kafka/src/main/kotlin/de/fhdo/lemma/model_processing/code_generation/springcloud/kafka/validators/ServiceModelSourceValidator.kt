@@ -69,15 +69,6 @@ internal class ServiceModelSourceValidator : AbstractXtextModelValidator() {
             error("Kafka microservice requires BootstrapAddress aspect", ServicePackage.Literals.MICROSERVICE__NAME)
             return
         }
-
-        // The bootstrap address must also be an endpoint of the microservice for the kafka protocol being specified in
-        // the Kafka technology model
-        val bootstrapAddress = bootstrapAddressAspect.getPropertyValue("address")!!.trim()
-        val kafkaEndpointAddresses = microservice.getEndpointAddresses(kafkaAlias, "kafka")
-        if (bootstrapAddress !in kafkaEndpointAddresses)
-            error("Bootstrap address $bootstrapAddress is not defined as an endpoint address for " +
-                "the kafka protocol on this microservice", bootstrapAddressAspect,
-                ServicePackage.Literals.IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT)
     }
 
     /**
