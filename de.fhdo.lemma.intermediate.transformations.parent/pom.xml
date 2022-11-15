@@ -5,7 +5,7 @@
 
     <groupId>de.fhdo.lemma.intermediate</groupId>
     <artifactId>parent</artifactId>
-    <version>0.8.5-SNAPSHOT</version>
+    <version>0.8.6-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>

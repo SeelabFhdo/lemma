@@ -6,7 +6,7 @@
 
     <groupId>de.fhdo.lemma.msa</groupId>
     <artifactId>de.fhdo.lemma.msa</artifactId>
-    <version>0.8.5-SNAPSHOT</version>
+    <version>0.8.6-SNAPSHOT</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

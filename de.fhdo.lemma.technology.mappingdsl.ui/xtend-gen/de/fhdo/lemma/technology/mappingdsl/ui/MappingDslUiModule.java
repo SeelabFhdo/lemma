@@ -50,7 +50,7 @@ public class MappingDslUiModule extends AbstractMappingDslUiModule {
     return MappingDslReconcileStrategy.class;
   }
   
-  public MappingDslUiModule(final AbstractUIPlugin plugin) {
-    super(plugin);
+  public MappingDslUiModule(final AbstractUIPlugin arg0) {
+    super(arg0);
   }
 }

@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: de.fhdo.lemma.typechecking
 Bundle-Vendor: University of Applied Sciences and Arts Dortmund
 Bundle-SymbolicName: de.fhdo.lemma.typechecking;singleton:=true
-Bundle-Version: 0.8.5.qualifier
+Bundle-Version: 0.8.6.qualifier
 Require-Bundle: org.eclipse.emf.ecore,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.emf.ecore.xcore.lib,

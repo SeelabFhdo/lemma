@@ -6,7 +6,7 @@
         <relativePath>../de.fhdo.lemma.technology.technologydsl.parent/pom.xml</relativePath>
         <groupId>de.fhdo.lemma.technology.technologydsl</groupId>
         <artifactId>parent</artifactId>
-        <version>0.8.5-SNAPSHOT</version>
+        <version>0.8.6-SNAPSHOT</version>
     </parent>
 
     <artifactId>de.fhdo.lemma.technology.technologydsl.ui.tests</artifactId>

@@ -50,7 +50,7 @@ public class DataDslUiModule extends AbstractDataDslUiModule {
     return DataDslReconcileStrategy.class;
   }
   
-  public DataDslUiModule(final AbstractUIPlugin plugin) {
-    super(plugin);
+  public DataDslUiModule(final AbstractUIPlugin arg0) {
+    super(arg0);
   }
 }

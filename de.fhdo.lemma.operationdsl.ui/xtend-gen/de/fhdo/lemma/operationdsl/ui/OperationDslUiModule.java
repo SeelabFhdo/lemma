@@ -50,7 +50,7 @@ public class OperationDslUiModule extends AbstractOperationDslUiModule {
     return OperationDslReconcileStrategy.class;
   }
   
-  public OperationDslUiModule(final AbstractUIPlugin plugin) {
-    super(plugin);
+  public OperationDslUiModule(final AbstractUIPlugin arg0) {
+    super(arg0);
   }
 }

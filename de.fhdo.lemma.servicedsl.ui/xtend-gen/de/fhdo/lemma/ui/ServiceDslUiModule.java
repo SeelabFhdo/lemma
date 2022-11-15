@@ -56,7 +56,7 @@ public class ServiceDslUiModule extends AbstractServiceDslUiModule {
     return ServiceDslReconcileStrategy.class;
   }
   
-  public ServiceDslUiModule(final AbstractUIPlugin plugin) {
-    super(plugin);
+  public ServiceDslUiModule(final AbstractUIPlugin arg0) {
+    super(arg0);
   }
 }

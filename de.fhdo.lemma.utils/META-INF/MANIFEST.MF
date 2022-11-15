@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: de.fhdo.lemma.utils
 Bundle-Vendor: University of Applied Sciences and Arts Dortmund
 Bundle-SymbolicName: de.fhdo.lemma.utils;singleton:=true
-Bundle-Version: 0.8.5.qualifier
+Bundle-Version: 0.8.6.qualifier
 Require-Bundle: org.eclipse.emf.ecore,
  com.google.guava,
  org.eclipse.xtext.xbase.lib,

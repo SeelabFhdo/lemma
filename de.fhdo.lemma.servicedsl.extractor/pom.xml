@@ -7,7 +7,7 @@
         <relativePath>../de.fhdo.lemma.servicedsl.parent/pom.xml</relativePath>
         <groupId>de.fhdo.lemma.servicedsl</groupId>
         <artifactId>parent</artifactId>
-        <version>0.8.5-SNAPSHOT</version>
+        <version>0.8.6-SNAPSHOT</version>
     </parent>
 
     <artifactId>de.fhdo.lemma.servicedsl.extractor</artifactId>

@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.fhdo.lemma.model_processing.code_generation.springcloud.zuul</groupId>
     <artifactId>de.fhdo.lemma.model_processing.code_generation.springcloud.zuul</artifactId>
-    <version>0.8.5-SNAPSHOT</version>
+    <version>0.8.6-SNAPSHOT</version>
     <name>Spring Cloud Zuul Generator</name>
     <description>A LEMMA code generator for Spring Cloud Zuul components.</description>
 

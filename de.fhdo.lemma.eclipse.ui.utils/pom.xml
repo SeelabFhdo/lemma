@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.fhdo.lemma.eclipse.ui</groupId>
     <artifactId>de.fhdo.lemma.eclipse.ui.utils</artifactId>
-    <version>0.8.5-SNAPSHOT</version>
+    <version>0.8.6-SNAPSHOT</version>
     <packaging>eclipse-plugin</packaging>
 
     <profiles>

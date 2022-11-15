@@ -2,7 +2,7 @@
 <feature
       id="de.fhdo.lemma.eclipse.updatesite.feature"
       label="LEMMA Eclipse Feature"
-      version="0.8.5.qualifier">
+      version="0.8.6.qualifier">
 
    <requires>
       <import feature="org.eclipse.xtext.runtime" version="2.21.0" match="greaterOrEqual"/>

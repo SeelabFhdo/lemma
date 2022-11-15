@@ -7,7 +7,7 @@
         <relativePath>../de.fhdo.lemma.technology.mappingdsl.parent/pom.xml</relativePath>
         <groupId>de.fhdo.lemma.technology.mappingdsl</groupId>
         <artifactId>parent</artifactId>
-        <version>0.8.5-SNAPSHOT</version>
+        <version>0.8.6-SNAPSHOT</version>
     </parent>
 
     <artifactId>de.fhdo.lemma.technology.mappingdsl.extractor</artifactId>

@@ -7,7 +7,7 @@ in an executable form.
 You can build the image locally by running the `build.sh` script included in
 this source code folder. The script requires the
 [Live Validation server to have been built locally](https://github.com/SeelabFhdo/lemma/blob/main/de.fhdo.lemma.live_validation/server/README.md)
-and its LEMMA version as first argument, e.g., `./build.sh 0.8.5-SNAPSHOT`.
+and its LEMMA version as first argument, e.g., `./build.sh 0.8.6-SNAPSHOT`.
 
 ## Executing the Image
 You can execute the image by running `docker-compose up` from this source code

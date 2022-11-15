@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: de.fhdo.lemma.eclipse.ui.editor
 Bundle-Vendor: University of Applied Sciences and Arts Dortmund
 Bundle-SymbolicName: de.fhdo.lemma.eclipse.ui.editor;singleton:=true
-Bundle-Version: 0.8.5.qualifier
+Bundle-Version: 0.8.6.qualifier
 Automatic-Module-Name: de.fhdo.lemma.eclipse.ui.editor
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: de.fhdo.lemma.eclipse.ui.editor,
