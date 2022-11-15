@@ -22,6 +22,7 @@ class ProgrammaticIntermediateModelTransformation {
     // ensure that the introduction of parameterized constructors results in a compilation error.
     static val List<() => AbstractUiModelTransformationStrategy>
         AVAILABLE_TRANSFORMATION_STRATEGY_CONSTRUCTORS = #[
+            [new DataModelTransformationStrategy()],
             [new ServiceModelTransformationStrategy()],
             [new OperationModelTransformationStrategy()]
         ]

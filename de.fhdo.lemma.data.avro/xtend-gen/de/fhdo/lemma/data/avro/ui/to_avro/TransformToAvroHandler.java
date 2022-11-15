@@ -1,15 +1,16 @@
 package de.fhdo.lemma.data.avro.ui.to_avro;
 
 import com.google.common.base.Objects;
+import com.google.common.base.Predicate;
 import de.fhdo.lemma.data.avro.AvroGenerator;
 import de.fhdo.lemma.data.avro.Shared;
 import de.fhdo.lemma.data.avro.ui.Util;
-import de.fhdo.lemma.data.avro.ui.to_avro.LemmaToAvroDialog;
-import de.fhdo.lemma.data.avro.ui.to_avro.ProjectFileSelectionDialog;
 import de.fhdo.lemma.data.intermediate.IntermediateComplexType;
 import de.fhdo.lemma.data.intermediate.IntermediateContext;
 import de.fhdo.lemma.data.intermediate.IntermediateDataModel;
 import de.fhdo.lemma.data.intermediate.IntermediateVersion;
+import de.fhdo.lemma.eclipse.ui.ModelFile;
+import de.fhdo.lemma.eclipse.ui.ProgrammaticIntermediateModelTransformation;
 import de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils;
 import de.fhdo.lemma.utils.LemmaUtils;
 import java.io.FileOutputStream;
@@ -27,7 +28,9 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
@@ -38,6 +41,7 @@ import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function0;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
+import org.eclipse.xtext.xbase.lib.Functions.Function2;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
@@ -72,6 +76,8 @@ public class TransformToAvroHandler extends AbstractHandler {
    */
   private static final Shell SHELL = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
   
+  private boolean intermediateDataModelTransformationExceptionOccurred;
+  
   /**
    * Execute handler
    */
@@ -83,25 +89,47 @@ public class TransformToAvroHandler extends AbstractHandler {
       return null;
     }
     final IFile selectedFile = Util.getSelectedFile(event);
-    XMIResource _asXmiResource = null;
-    if (selectedFile!=null) {
-      _asXmiResource=this.asXmiResource(selectedFile);
+    if ((selectedFile == null)) {
+      return null;
     }
-    IntermediateDataModel _intermediateDataModelRoot = null;
-    if (_asXmiResource!=null) {
-      _intermediateDataModelRoot=this.getIntermediateDataModelRoot(_asXmiResource);
+    String _fileExtension = selectedFile.getFileExtension();
+    boolean _equals = Objects.equal(_fileExtension, "xmi");
+    if (_equals) {
+      this.triggerAvroGeneration(selectedFile);
+    } else {
+      String _fileExtension_1 = selectedFile.getFileExtension();
+      boolean _equals_1 = Objects.equal(_fileExtension_1, "data");
+      if (_equals_1) {
+        this.performIntermediateTransformationAndTriggerAvroGeneration(selectedFile);
+      }
     }
-    final IntermediateDataModel selectedDataModelRoot = _intermediateDataModelRoot;
+    return null;
+  }
+  
+  /**
+   * Trigger Avro generation from the given IFile which must comprise an intermediate data model
+   * in the XMI format
+   */
+  private Object triggerAvroGeneration(final IFile intermediateDataModelFile) {
+    return this.triggerAvroGeneration(intermediateDataModelFile, this.asXmiResource(intermediateDataModelFile));
+  }
+  
+  /**
+   * Trigger Avro generation for the given IFile and intermediate data model XMI resource
+   */
+  private Object triggerAvroGeneration(final IFile intermediateDataModelFile, final XMIResource intermediateDataModelResource) {
+    final IntermediateDataModel selectedDataModelRoot = this.getIntermediateDataModelRoot(intermediateDataModelResource);
     if ((selectedDataModelRoot == null)) {
       return null;
     }
     final List<? extends EObject> initialModelElements = de.fhdo.lemma.data.avro.Util.getTopLevelComplexTypeContainers(selectedDataModelRoot);
     boolean _isEmpty = initialModelElements.isEmpty();
     if (_isEmpty) {
-      Util.showError("Domain Model Load Error", "Intermediate LEMMA domain model is empty.");
+      Util.showError("Avro Schema Transformation Error", ("Intermediate LEMMA domain model is " + 
+        "empty."));
       return null;
     }
-    final Pair<TransformToAvroHandler.SelectElementsDialogResult, String> selectModelElementsInfo = this.selectModelElements(selectedFile, initialModelElements);
+    final Pair<TransformToAvroHandler.SelectElementsDialogResult, String> selectModelElementsInfo = this.selectModelElements(intermediateDataModelFile, initialModelElements);
     if ((selectModelElementsInfo == null)) {
       return null;
     }
@@ -114,7 +142,7 @@ public class TransformToAvroHandler extends AbstractHandler {
       _builder.append(".");
       String _plus = (("Selected model elements were " + 
         "successfully transformed to Avro schema specifications in file ") + _builder);
-      Util.showInfo("Avro schema transformation successful", _plus);
+      Util.showInfo("Avro Schema Transformation Successful", _plus);
     }
     return null;
   }
@@ -131,9 +159,15 @@ public class TransformToAvroHandler extends AbstractHandler {
         final Exception ex = (Exception)_t;
         Object _xblockexpression = null;
         {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("XMI resource from ");
+          IPath _fullPath = file.getFullPath();
+          _builder.append(_fullPath);
+          _builder.append(": ");
           String _errorMessageOrSimpleClassName = de.fhdo.lemma.data.avro.Util.getErrorMessageOrSimpleClassName(ex);
-          String _plus = ("An error occurred while loading XMI resource: " + _errorMessageOrSimpleClassName);
-          Util.showError("XMI Load Error", _plus);
+          _builder.append(_errorMessageOrSimpleClassName);
+          String _plus = ("An error occurred while loading the " + _builder);
+          Util.showError("Avro Schema Transformation Error", _plus);
           _xblockexpression = null;
         }
         _xtrycatchfinallyexpression = ((XMIResource)_xblockexpression);
@@ -156,8 +190,8 @@ public class TransformToAvroHandler extends AbstractHandler {
       if (_t instanceof Exception) {
         Object _xblockexpression = null;
         {
-          Util.showError("XMI Load Error", ("XMI resource does not represent an intermediate LEMMA " + 
-            "domain model."));
+          Util.showError("Avro Schema Transformation Error", ("XMI resource is not an intermediate " + 
+            "LEMMA domain model."));
           _xblockexpression = null;
         }
         _xtrycatchfinallyexpression = ((IntermediateDataModel)_xblockexpression);
@@ -273,7 +307,7 @@ public class TransformToAvroHandler extends AbstractHandler {
           String _plus = ("An error occurred while trying to " + _builder);
           String _errorMessageOrSimpleClassName = de.fhdo.lemma.data.avro.Util.getErrorMessageOrSimpleClassName(ex);
           String _plus_1 = (_plus + _errorMessageOrSimpleClassName);
-          Util.showError("Avro schema transformation error", _plus_1);
+          Util.showError("Avro Schema Transformation Error", _plus_1);
           return null;
         } else {
           throw Exceptions.sneakyThrow(_t);
@@ -364,5 +398,61 @@ public class TransformToAvroHandler extends AbstractHandler {
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
+  }
+  
+  /**
+   * Transform the given IFile which must comprise a LEMMA data model into the corresponding
+   * intermediate representation and then trigger Avro generation for this representation
+   */
+  private void performIntermediateTransformationAndTriggerAvroGeneration(final IFile dataModelFile) {
+    this.intermediateDataModelTransformationExceptionOccurred = false;
+    final ProgrammaticIntermediateModelTransformation transformation = new ProgrammaticIntermediateModelTransformation(dataModelFile);
+    final Predicate<ModelFile> _function = (ModelFile it) -> {
+      return true;
+    };
+    final Predicate<ProgrammaticIntermediateModelTransformation.ProgrammaticIntermediateModelTransformationException> _function_1 = (ProgrammaticIntermediateModelTransformation.ProgrammaticIntermediateModelTransformationException it) -> {
+      return this.transformationExceptionOccurred(it);
+    };
+    final Predicate<List<ProgrammaticIntermediateModelTransformation.ProgrammaticIntermediateModelTransformationResult>> _function_2 = (List<ProgrammaticIntermediateModelTransformation.ProgrammaticIntermediateModelTransformationResult> it) -> {
+      return this.triggerAvroGeneration(it);
+    };
+    final Function2<List<ProgrammaticIntermediateModelTransformation.ProgrammaticIntermediateModelTransformationResult>, List<ProgrammaticIntermediateModelTransformation.ProgrammaticIntermediateModelTransformationException>, Boolean> _function_3 = (List<ProgrammaticIntermediateModelTransformation.ProgrammaticIntermediateModelTransformationResult> $0, List<ProgrammaticIntermediateModelTransformation.ProgrammaticIntermediateModelTransformationException> $1) -> {
+      return Boolean.valueOf(true);
+    };
+    transformation.run(
+      "AVRO_INTERMEDIATE_TRANSFORMATION", dataModelFile, 
+      TransformToAvroHandler.SHELL.getDisplay(), 
+      false, _function, _function_1, _function_2, _function_3);
+  }
+  
+  /**
+   * Catch exceptions occurred during the intermediate transformation of the selected LEMMA data
+   * model
+   */
+  private boolean transformationExceptionOccurred(final Exception exception) {
+    this.intermediateDataModelTransformationExceptionOccurred = true;
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("domain model failed: ");
+    String _message = exception.getMessage();
+    _builder.append(_message);
+    _builder.append(".");
+    String _plus = ("Intermediate transformation of LEMMA " + _builder);
+    Util.showError("Avro Schema Transformation Error", _plus);
+    return false;
+  }
+  
+  /**
+   * Trigger Avro generation for the successfully transformed intermediate LEMMA data model
+   */
+  private boolean triggerAvroGeneration(final List<ProgrammaticIntermediateModelTransformation.ProgrammaticIntermediateModelTransformationResult> results) {
+    if ((this.intermediateDataModelTransformationExceptionOccurred || results.isEmpty())) {
+      return false;
+    }
+    final ProgrammaticIntermediateModelTransformation.ProgrammaticIntermediateModelTransformationResult result = results.get(0);
+    Resource _resource = result.getResult().getOutputModel().getResource();
+    final XMIResource intermediateDataModelResource = ((XMIResource) _resource);
+    Object _data = result.getData();
+    this.triggerAvroGeneration(((IFile) _data), intermediateDataModelResource);
+    return true;
   }
 }

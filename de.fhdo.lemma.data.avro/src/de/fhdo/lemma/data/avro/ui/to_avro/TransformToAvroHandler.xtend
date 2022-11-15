@@ -29,6 +29,8 @@ import de.fhdo.lemma.data.avro.ui.Util
 import org.eclipse.emf.ecore.xmi.XMIResource
 import org.apache.avro.Protocol
 import de.fhdo.lemma.utils.LemmaUtils
+import de.fhdo.lemma.eclipse.ui.ProgrammaticIntermediateModelTransformation
+import de.fhdo.lemma.eclipse.ui.ProgrammaticIntermediateModelTransformation.ProgrammaticIntermediateModelTransformationResult
 
 /**
  * Handler to control the conversion of LEMMA models to Avro schema specification files.
@@ -41,6 +43,8 @@ class TransformToAvroHandler extends AbstractHandler {
      */
     static val SHELL = PlatformUI.workbench.activeWorkbenchWindow.shell
 
+    var boolean intermediateDataModelTransformationExceptionOccurred
+
     /**
      * Execute handler
      */
@@ -50,25 +54,51 @@ class TransformToAvroHandler extends AbstractHandler {
 
         /* Load IntermediateDataModel instance from selected file */
         val selectedFile = getSelectedFile(event)
-        val selectedDataModelRoot = selectedFile?.asXmiResource?.intermediateDataModelRoot
+        if (selectedFile === null)
+            return null
+
+        if (selectedFile.fileExtension == "xmi")
+            selectedFile.triggerAvroGeneration()
+        else if (selectedFile.fileExtension == "data")
+            selectedFile.performIntermediateTransformationAndTriggerAvroGeneration()
+
+        return null
+    }
+
+    /**
+     * Trigger Avro generation from the given IFile which must comprise an intermediate data model
+     * in the XMI format
+     */
+    private def triggerAvroGeneration(IFile intermediateDataModelFile) {
+        intermediateDataModelFile.triggerAvroGeneration(intermediateDataModelFile.asXmiResource)
+    }
+
+    /**
+     * Trigger Avro generation for the given IFile and intermediate data model XMI resource
+     */
+    private def triggerAvroGeneration(IFile intermediateDataModelFile,
+        XMIResource intermediateDataModelResource) {
+        val selectedDataModelRoot = intermediateDataModelResource.intermediateDataModelRoot
         if (selectedDataModelRoot === null)
             return null
 
         /*
-         * Get top-level complex type containers from loaded model as initial model elements, from
+         * Get top-level complex type containers from loaded model as initial model elements from
          * which the user may select the source LEMMA model elements to derive Avro schemas from
          */
         val initialModelElements = getTopLevelComplexTypeContainers(selectedDataModelRoot)
         if (initialModelElements.empty) {
-            showError("Domain Model Load Error", "Intermediate LEMMA domain model is empty.")
+            showError("Avro Schema Transformation Error", "Intermediate LEMMA domain model is " +
+                "empty.")
             return null
         }
 
         /*
-         * Get selected source LEMMA model elements to derive Avro schemas from, as well as the
+         * Get selected source LEMMA model elements to derive Avro schemas from as well as the
          * target file path for the Avro schema file
          */
-        val selectModelElementsInfo = selectModelElements(selectedFile, initialModelElements)
+        val selectModelElementsInfo = selectModelElements(intermediateDataModelFile,
+            initialModelElements)
         if (selectModelElementsInfo === null)
             return null
 
@@ -76,10 +106,10 @@ class TransformToAvroHandler extends AbstractHandler {
         val avroSchemaFilepath = selectModelElementsInfo.value
 
         /*
-         * Perform Avro generation
+         * Perform actual Avro generation
          */
         if (avroGeneration(selectElementsResult, avroSchemaFilepath))
-            showInfo("Avro schema transformation successful", "Selected model elements were " +
+            showInfo("Avro Schema Transformation Successful", "Selected model elements were " +
                 "successfully transformed to Avro schema specifications in file " +
                 '''«avroSchemaFilepath».''')
 
@@ -93,8 +123,8 @@ class TransformToAvroHandler extends AbstractHandler {
         return try {
             loadXmiResource(file)
         } catch (Exception ex) {
-            showError("XMI Load Error", "An error occurred while loading XMI resource: " +
-                getErrorMessageOrSimpleClassName(ex))
+            showError("Avro Schema Transformation Error", "An error occurred while loading the " +
+                '''XMI resource from «file.fullPath»: «getErrorMessageOrSimpleClassName(ex)»''')
             null
         }
     }
@@ -106,8 +136,8 @@ class TransformToAvroHandler extends AbstractHandler {
         return try {
             xmiResource.contents.get(0) as IntermediateDataModel
         } catch (Exception ex) {
-            showError("XMI Load Error", "XMI resource does not represent an intermediate LEMMA " +
-                "domain model.")
+            showError("Avro Schema Transformation Error", "XMI resource is not an intermediate " +
+                "LEMMA domain model.")
             null
         }
     }
@@ -144,20 +174,6 @@ class TransformToAvroHandler extends AbstractHandler {
     }
 
     /**
-     * Let the user select the source LEMMA elements to be transformed to Avro schemas
-     */
-    private def SelectElementsDialogResult selectElementsDialog(String modelFilename,
-        List<? extends EObject> initialElements) {
-        val dialog = new LemmaToAvroDialog(SHELL, modelFilename, initialElements)
-        dialog.create()
-
-        return if (dialog.open() != Window.CANCEL)
-                new SelectElementsDialogResult(dialog)
-            else
-                null
-    }
-
-    /**
      * Helper class to encapsulate the elements, protocol name and documentation from an instance of
      * the LemmaToAvroDialog
      */
@@ -171,6 +187,20 @@ class TransformToAvroHandler extends AbstractHandler {
             protocolName = dialog.protocolName
             protocolDocumentation = dialog.protocolDocumentation
         }
+    }
+
+    /**
+     * Let the user select the source LEMMA elements to be transformed to Avro schemas
+     */
+    private def SelectElementsDialogResult selectElementsDialog(String modelFilename,
+        List<? extends EObject> initialElements) {
+        val dialog = new LemmaToAvroDialog(SHELL, modelFilename, initialElements)
+        dialog.create()
+
+        return if (dialog.open() != Window.CANCEL)
+                new SelectElementsDialogResult(dialog)
+            else
+                null
     }
 
     /**
@@ -221,7 +251,7 @@ class TransformToAvroHandler extends AbstractHandler {
             try {
                 schemas.addAll(element.generateSchemas)
             } catch (Exception ex) {
-                showError("Avro schema transformation error", "An error occurred while trying to " +
+                showError("Avro Schema Transformation Error", "An error occurred while trying to " +
                     '''transform model element «qualifiedName(element)» to an Avro schema: ''' +
                     getErrorMessageOrSimpleClassName(ex))
                 return null
@@ -273,4 +303,51 @@ class TransformToAvroHandler extends AbstractHandler {
     private def void writeToFile(Protocol protocol, String targetFilepath) {
         Files.write(Paths.get(targetFilepath), protocol.toString(true).bytes)
     }
+
+    /**
+     * Transform the given IFile which must comprise a LEMMA data model into the corresponding
+     * intermediate representation and then trigger Avro generation for this representation
+     */
+    private def performIntermediateTransformationAndTriggerAvroGeneration(IFile dataModelFile) {
+        intermediateDataModelTransformationExceptionOccurred = false
+
+        val transformation = new ProgrammaticIntermediateModelTransformation(dataModelFile)
+        transformation.run(
+            "AVRO_INTERMEDIATE_TRANSFORMATION",
+            dataModelFile,
+            SHELL.display,
+            false,
+            [true],
+            [transformationExceptionOccurred],
+            [triggerAvroGeneration],
+            [true]
+        )
+    }
+
+    /**
+     * Catch exceptions occurred during the intermediate transformation of the selected LEMMA data
+     * model
+     */
+    private def transformationExceptionOccurred(Exception exception) {
+        intermediateDataModelTransformationExceptionOccurred = true
+        showError("Avro Schema Transformation Error", "Intermediate transformation of LEMMA " +
+            '''domain model failed: «exception.message».''')
+        return false
+    }
+
+    /**
+     * Trigger Avro generation for the successfully transformed intermediate LEMMA data model
+     */
+    private def boolean triggerAvroGeneration(
+        List<ProgrammaticIntermediateModelTransformationResult> results
+    ) {
+        if (intermediateDataModelTransformationExceptionOccurred || results.empty)
+            return false
+
+        val result = results.get(0)
+        val intermediateDataModelResource = result.result.outputModel.resource as XMIResource
+        triggerAvroGeneration(result.data as IFile, intermediateDataModelResource)
+
+        return true
+     }
 }

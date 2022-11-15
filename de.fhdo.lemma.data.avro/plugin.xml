@@ -44,7 +44,10 @@
                         ifEmpty="false">
                         <adapt
                             type="org.eclipse.core.resources.IResource">
+                            <or>
                                 <test property="org.eclipse.core.resources.name" value="*.xmi" />
+                                <test property="org.eclipse.core.resources.name" value="*.data" />
+                            </or>
                         </adapt>
                     </iterate>
                 </with>

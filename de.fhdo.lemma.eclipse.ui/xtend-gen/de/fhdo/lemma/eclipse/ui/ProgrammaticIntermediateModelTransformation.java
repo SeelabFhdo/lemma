@@ -100,6 +100,8 @@ public class ProgrammaticIntermediateModelTransformation {
   }
   
   private static final List<Function0<? extends AbstractUiModelTransformationStrategy>> AVAILABLE_TRANSFORMATION_STRATEGY_CONSTRUCTORS = Collections.<Function0<? extends AbstractUiModelTransformationStrategy>>unmodifiableList(CollectionLiterals.<Function0<? extends AbstractUiModelTransformationStrategy>>newArrayList(((Function0<AbstractUiModelTransformationStrategy>) () -> {
+    return new DataModelTransformationStrategy();
+  }), ((Function0<AbstractUiModelTransformationStrategy>) () -> {
     return new ServiceModelTransformationStrategy();
   }), ((Function0<AbstractUiModelTransformationStrategy>) () -> {
     return new OperationModelTransformationStrategy();

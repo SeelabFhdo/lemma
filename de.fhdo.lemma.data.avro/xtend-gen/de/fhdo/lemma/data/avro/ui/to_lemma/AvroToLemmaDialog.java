@@ -2,8 +2,6 @@ package de.fhdo.lemma.data.avro.ui.to_lemma;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
-import de.fhdo.lemma.data.avro.ui.to_lemma.SchemaTreeContentProvider;
-import de.fhdo.lemma.data.avro.ui.to_lemma.SchemaTreeLabelProvider;
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.Consumer;

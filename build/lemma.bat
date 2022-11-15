@@ -18,10 +18,8 @@ set modules=%modules%;de.fhdo.lemma.servicedsl.parent
 set modules=%modules%;de.fhdo.lemma.technology.mappingdsl.parent
 set modules=%modules%;de.fhdo.lemma.operationdsl.parent
 
-REM Transformations
+REM Intermediate Transformations
 set modules=%modules%;de.fhdo.lemma.intermediate.transformations.parent
-set modules=%modules%;de.fhdo.lemma.data.avro.parent
-set modules=%modules%;de.fhdo.lemma.service.openapi.parent
 
 REM Live Validation Framework
 set modules=%modules%;de.fhdo.lemma.live_validation
@@ -39,6 +37,10 @@ set modules=%modules%;de.fhdo.lemma.technology.mappingdsl.ui.tests
 set modules=%modules%;de.fhdo.lemma.operationdsl.ui
 set modules=%modules%;de.fhdo.lemma.operationdsl.ui.tests
 set modules=%modules%;de.fhdo.lemma.model_processing.eclipse.launcher.parent
+
+REM Other Transformations
+set modules=%modules%;de.fhdo.lemma.data.avro.parent
+set modules=%modules%;de.fhdo.lemma.service.openapi.parent
 
 REM OCL
 set modules=%modules%;de.fhdo.lemma.ocl

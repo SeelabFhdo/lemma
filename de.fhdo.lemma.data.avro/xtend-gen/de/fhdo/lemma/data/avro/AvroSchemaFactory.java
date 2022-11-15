@@ -1,8 +1,6 @@
 package de.fhdo.lemma.data.avro;
 
 import com.google.common.base.Objects;
-import de.fhdo.lemma.data.avro.Shared;
-import de.fhdo.lemma.data.avro.Util;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.avro.Schema;
