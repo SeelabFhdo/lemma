@@ -87,19 +87,26 @@ For information about the current version of LEMMA please refer to its [Changelo
 ## Science
 LEMMA has its roots in Software Engineering research, and more specifically in the Software Architecture and Model-driven Engineering research communities. Thus, there are several papers that concern LEMMA's design and its application:
 
+### 2022
+
+- Rademacher, Florian ["A Language Ecosystem for Modeling Microservice Architecture."](https://kobra.uni-kassel.de/handle/123456789/14176) PhD Thesis. Department of Electrical Engineering and Computer Science, University of Kassel.
+
+- Rademacher, Florian, et al. ["Towards an Extensible Approach for Generative Microservice Development and Deployment Using LEMMA."](https://link.springer.com/chapter/10.1007/978-3-031-15116-3_12) Software Architecture (ECSA 2021). Springer, 2022.
+
+- Giallorenzo, Saverio, et al. ["Model-Driven Generation of Microservice Interfaces: From LEMMA Domain Models to Jolie APIs."](https://link.springer.com/chapter/10.1007/978-3-031-08143-9_13) Coordination Models and Languages (COORDINATION 2022). Springer, 2021. 276-284.
+
 ### 2021
-- Giallorenzo, Saverio, et al. ["Jolie and LEMMA: Model-Driven Engineering and Programming Languages Meet on Microservices."](https://link.springer.com/chapter/10.1007/978-3-030-78142-2_17) Coordination Models and
-Languages. Springer, Cham, 2021. 276-284.
-- Rademacher, Florian, et al. ["Towards Holistic Modeling of Microservice Architectures Using LEMMA"](http://ceur-ws.org/Vol-2978/mde4sa-paper2.pdf) Companion Proceedings of the 15th European Conference on Software Architecture 2021. CEUR-WS, 2021.
-- Sorgalla, Jonas, et al. ["Applying Model-Driven Engineering to Stimulate the Adoption of DevOps Processes in Small and Medium-Sized Development Organizations."](https://link.springer.com/article/10.1007/s42979-021-00825-z) SN Computer Science. Springer, Cham, 2021.
+- Giallorenzo, Saverio, et al. ["Jolie and LEMMA: Model-Driven Engineering and Programming Languages Meet on Microservices."](https://link.springer.com/chapter/10.1007/978-3-030-78142-2_17) Coordination Models and Languages (COORDINATION 2021). Springer, 2021. 276-284.
+- Rademacher, Florian, et al. ["Towards Holistic Modeling of Microservice Architectures Using LEMMA."](http://ceur-ws.org/Vol-2978/mde4sa-paper2.pdf) Companion Proceedings of the 15th European Conference on Software Architecture 2021. CEUR-WS, 2021.
+- Sorgalla, Jonas, et al. ["Applying Model-Driven Engineering to Stimulate the Adoption of DevOps Processes in Small and Medium-Sized Development Organizations."](https://link.springer.com/article/10.1007/s42979-021-00825-z) SN Computer Science. Springer, 2021.
 
 ### 2020
-- Rademacher, Florian, et al. ["Graphical and textual model-driven microservice development."](https://link.springer.com/chapter/10.1007/978-3-030-31646-4_7) Microservices. Springer, Cham, 2020. 147-179.
+- Rademacher, Florian, et al. ["Graphical and textual model-driven microservice development."](https://link.springer.com/chapter/10.1007/978-3-030-31646-4_7) Microservices. Springer, 2020. 147-179.
 - Rademacher, Florian, Sabine Sachweh, and Albert Zündorf. ["Deriving Microservice Code from Underspecified Domain Models Using DevOps-Enabled Modeling Languages and Model Transformations."](https://ieeexplore.ieee.org/abstract/document/9226287) 2020 46th Euromicro Conference on Software Engineering and Advanced Applications (SEAA). IEEE, 2020.
-- Rademacher, Florian, Sabine Sachweh, and Albert Zündorf. ["A Modeling Method for Systematic Architecture Reconstruction of Microservice-Based Software Systems."](https://link.springer.com/chapter/10.1007/978-3-030-49418-6_21) Enterprise, Business-Process and Information Systems Modeling. Springer, Cham, 2020. 311-326.
+- Rademacher, Florian, Sabine Sachweh, and Albert Zündorf. ["A Modeling Method for Systematic Architecture Reconstruction of Microservice-Based Software Systems."](https://link.springer.com/chapter/10.1007/978-3-030-49418-6_21) Enterprise, Business-Process and Information Systems Modeling. Springer, 2020. 311-326.
 - Sorgalla, Jonas, et al. ["Modeling microservice architecture: a comparative experiment towards the effectiveness of two approaches."](https://dl.acm.org/doi/abs/10.1145/3341105.3374065) Proceedings of the 35th Annual ACM Symposium on Applied Computing. 2020.
 - Sorgalla, Jonas, et al. ["Model-driven Development of Microservice Architecture: An Experiment on the Quality in Use of a UML-and a DSL-based Approach."](https://kobra.uni-kassel.de/handle/123456789/11912) (2020).
-- Sorgalla, Jonas, Sabine Sachweh, and Albert Zündorf. ["Exploring the Microservice Development Process in Small and Medium-Sized Organizations"](https://link.springer.com/chapter/10.1007/978-3-030-64148-1_28) Product-Focused Software Process Improvement. Springer, Cham, 2020. 453-460.
+- Sorgalla, Jonas, Sabine Sachweh, and Albert Zündorf. ["Exploring the Microservice Development Process in Small and Medium-Sized Organizations"](https://link.springer.com/chapter/10.1007/978-3-030-64148-1_28) Product-Focused Software Process Improvement. Springer, 2020. 453-460.
 
 ### 2019
 - Rademacher, Florian, Sabine Sachweh, and Albert Zündorf. ["Aspect-oriented modeling of technology heterogeneity in microservice architecture."](https://ieeexplore.ieee.org/abstract/document/8703913) 2019 IEEE International Conference on Software Architecture (ICSA). IEEE, 2019.
@@ -112,7 +119,7 @@ Languages. Springer, Cham, 2021. 276-284.
 
 ### 2017
 - Rademacher, Florian, Sabine Sachweh, and Albert Zündorf. ["Differences between model-driven development of service-oriented and microservice architecture."](https://ieeexplore.ieee.org/abstract/document/7958454) 2017 IEEE International Conference on Software Architecture Workshops (ICSAW). IEEE, 2017.
-- Rademacher, Florian, Sabine Sachweh, and Albert Zündorf. ["Towards a UML profile for domain-driven design of microservice architectures."](https://link.springer.com/chapter/10.1007/978-3-319-74781-1_17) International Conference on Software Engineering and Formal Methods. Springer, Cham, 2017.
+- Rademacher, Florian, Sabine Sachweh, and Albert Zündorf. ["Towards a UML profile for domain-driven design of microservice architectures."](https://link.springer.com/chapter/10.1007/978-3-319-74781-1_17) International Conference on Software Engineering and Formal Methods. Springer, 2017.
 
 ## Contributors
 Kudos to all LEMMA contributors :tada::tada::tada:
