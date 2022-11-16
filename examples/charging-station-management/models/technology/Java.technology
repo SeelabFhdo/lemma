@@ -1,0 +1,151 @@
+technology Java {
+    types {
+        primitive type Boolean based on boolean default;
+        primitive type Byte based on byte default;
+        primitive type Character based on char default;
+        primitive type Date based on date default;
+        primitive type Double based on double default;
+        primitive type Float based on float default;
+        primitive type Integer based on int default;
+        primitive type Long based on long default;
+        primitive type Short based on short default;
+        primitive type String based on string default;
+        primitive type Object based on unspecified default;
+        primitive type BigDecimal;
+
+        compatibility matrix {
+            Double -> BigDecimal;
+        }
+    }
+
+    service aspects {
+        aspect Access<singleval> for types {
+            string value = "FIELD";
+        }
+
+		aspect Array<singleval> for fields;
+
+        aspect AttributeOverride for fields {
+            string name<mandatory>;
+            string column<mandatory>;
+        }
+
+		// Synonym for AttributeOverride
+        aspect AttributeOverrideColumn for fields {
+            string name<mandatory>;
+            string column<mandatory>;
+        }
+
+		aspect Collection<singleval> for types;
+
+		aspect Constant<singleval> for fields;
+
+		aspect Constructor<singleval> for domainOperations;
+
+		aspect Constructor<singleval> for types {
+			boolean initializing = true;
+			boolean protectInitializing;
+		}
+
+		aspect DecimalMax for fields {
+			boolean inclusive;
+		}
+
+		aspect DecimalMin for fields {
+			boolean inclusive;
+		}
+
+		aspect ElementCollection<singleval> for fields {
+			string collectionTable = "";
+		}
+
+        aspect Embeddable<singleval> for fields, types;
+
+        aspect Embedded<singleval> for fields, types;
+
+        aspect EmbeddedId<singleval> for fields, types;
+
+        aspect Enumerated<singleval> for fields {
+            string value = "STRING";
+        }
+
+		aspect GeneratedValue<singleval> for fields;
+
+		aspect LinkedList<singleval> for types;
+
+		aspect List<singleval> for types;
+
+		aspect ManyToOne<singleval> for fields {
+			boolean cascadeAll = true;
+			boolean cascadeDetach = false;
+			boolean cascadeMerge = false;
+			boolean cascadePersist = false;
+			boolean cascadeRefresh = false;
+			boolean cascadeRemove = false;
+			boolean fetchEager = false;
+			boolean fetchLazy = true;
+			boolean optional;
+			string joinColumn;
+		}
+
+		aspect ManyToMany<singleval> for fields {
+			boolean cascadeAll = true;
+			boolean cascadeDetach = false;
+			boolean cascadeMerge = false;
+			boolean cascadePersist = false;
+			boolean cascadeRefresh = false;
+			boolean cascadeRemove = false;
+			boolean fetchEager = false;
+			boolean fetchLazy = true;
+			string mappedBy;
+			string joinColumn;
+		}
+
+		aspect Map<singleval> for types;
+
+		aspect NotNull<singleval> for fields;
+
+		aspect OneToMany<singleval> for fields {
+			boolean cascadeAll = true;
+			boolean cascadeDetach = false;
+			boolean cascadeMerge = false;
+			boolean cascadePersist = false;
+			boolean cascadeRefresh = false;
+			boolean cascadeRemove = false;
+			boolean fetchEager = false;
+			boolean fetchLazy = true;
+			string mappedBy;
+			string joinColumn;
+		}
+
+		aspect OneToOne<singleval> for fields {
+			boolean cascadeAll = true;
+			boolean cascadeDetach = false;
+			boolean cascadeMerge = false;
+			boolean cascadePersist = false;
+			boolean cascadeRefresh = false;
+			boolean cascadeRemove = false;
+			boolean fetchEager = false;
+			boolean fetchLazy = true;
+			string mappedBy;
+			boolean optional;
+			string joinColumn;
+		}
+
+		aspect Optional<singleval> for domainParameters;
+
+		aspect Set<singleval> for operations, parameters, types;
+
+		aspect Static<singleval> for domainOperations;
+
+        aspect Table<singleval> for types {
+            string name<mandatory>;
+        }
+
+        aspect Transactional<singleval> for types;
+
+        aspect Unique<singleval> for fields;
+
+        aspect Version<singleval> for fields;
+    }
+}

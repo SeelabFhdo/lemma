@@ -1,0 +1,158 @@
+{
+  "type" : "record",
+  "name" : "ParkingAreaDeletedEvent",
+  "namespace" : "ChargingStationManagement",
+  "doc" : "",
+  "fields" : [ {
+    "name" : "parkingAreaId",
+    "type" : "long",
+    "doc" : ""
+  } ],
+  "lemmaName" : "ChargingStationManagement.ParkingAreaDeletedEvent"
+}
+{
+  "type" : "record",
+  "name" : "ParkingAreaUpdatedEvent",
+  "namespace" : "ChargingStationManagement",
+  "doc" : "",
+  "fields" : [ {
+    "name" : "commonId",
+    "type" : "long",
+    "doc" : ""
+  }, {
+    "name" : "info",
+    "type" : {
+      "type" : "record",
+      "name" : "ParkingAreaInformation",
+      "doc" : "",
+      "fields" : [ {
+        "name" : "ownerId",
+        "type" : "long",
+        "doc" : ""
+      }, {
+        "name" : "name",
+        "type" : "string",
+        "doc" : ""
+      }, {
+        "name" : "description",
+        "type" : "string",
+        "doc" : ""
+      }, {
+        "name" : "location",
+        "type" : {
+          "type" : "record",
+          "name" : "Location",
+          "doc" : "",
+          "fields" : [ {
+            "name" : "latitude",
+            "type" : "double",
+            "doc" : ""
+          }, {
+            "name" : "longitude",
+            "type" : "double",
+            "doc" : ""
+          } ],
+          "lemmaName" : "ChargingStationManagement.Location"
+        },
+        "doc" : "",
+        "default" : {
+          "latitude" : 0,
+          "longitude" : 0
+        }
+      }, {
+        "name" : "parkingSpaceCount",
+        "type" : "int",
+        "doc" : ""
+      }, {
+        "name" : "availability",
+        "type" : {
+          "type" : "array",
+          "items" : {
+            "type" : "record",
+            "name" : "TimePeriods",
+            "doc" : "",
+            "fields" : [ {
+              "name" : "p",
+              "type" : {
+                "type" : "record",
+                "name" : "TimePeriod",
+                "doc" : "",
+                "fields" : [ {
+                  "name" : "start",
+                  "type" : {
+                    "type" : "long",
+                    "logicalType" : "timestamp-micros"
+                  },
+                  "doc" : ""
+                }, {
+                  "name" : "end",
+                  "type" : {
+                    "type" : "long",
+                    "logicalType" : "timestamp-micros"
+                  },
+                  "doc" : ""
+                } ],
+                "lemmaName" : "ChargingStationManagement.TimePeriod"
+              },
+              "doc" : "",
+              "default" : {
+                "start" : 0,
+                "end" : 0
+              }
+            } ],
+            "lemmaName" : "ChargingStationManagement.TimePeriods"
+          },
+          "lemmaName" : "ChargingStationManagement.TimePeriods"
+        },
+        "doc" : "",
+        "default" : [ ]
+      }, {
+        "name" : "activated",
+        "type" : "boolean",
+        "doc" : ""
+      }, {
+        "name" : "blocked",
+        "type" : "boolean",
+        "doc" : ""
+      }, {
+        "name" : "offered",
+        "type" : "boolean",
+        "doc" : ""
+      }, {
+        "name" : "chargerSpeed",
+        "type" : {
+          "type" : "enum",
+          "name" : "ChargerSpeed",
+          "doc" : "",
+          "symbols" : [ "FAST", "NORMAL" ],
+          "lemmaName" : "ChargingStationManagement.ChargerSpeed"
+        },
+        "doc" : "",
+        "default" : "FAST"
+      }, {
+        "name" : "plugType",
+        "type" : "string",
+        "doc" : ""
+      } ],
+      "lemmaName" : "ChargingStationManagement.ParkingAreaInformation"
+    },
+    "doc" : "",
+    "default" : {
+      "ownerId" : 0,
+      "name" : "",
+      "description" : "",
+      "location" : {
+        "latitude" : 0,
+        "longitude" : 0
+      },
+      "parkingSpaceCount" : 0,
+      "availability" : [ ],
+      "activated" : false,
+      "blocked" : false,
+      "offered" : false,
+      "chargerSpeed" : "FAST",
+      "plugType" : ""
+    }
+  } ],
+  "lemmaName" : "ChargingStationManagement.ParkingAreaUpdatedEvent"
+}

@@ -1,0 +1,12 @@
+technology ZooKeeper {
+	infrastructure technologies {
+		ZooKeeper {
+			operation environments = "confluentinc/cp-zookeeper:7.0.1";
+
+			service properties {
+				int clientPort<mandatory>;
+				int tickTime = 2000;
+			}
+		}
+	}
+}

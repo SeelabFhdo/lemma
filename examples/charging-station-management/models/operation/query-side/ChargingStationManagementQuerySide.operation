@@ -1,0 +1,20 @@
+import microservices from "../../microservices/query-side/ChargingStationManagementQuerySide.services" as QuerySideServices
+import technology from "../../technology/DeploymentBase.technology" as DeploymentBase
+import nodes from "../Infrastructure.operation" as Infrastructure
+
+@technology(DeploymentBase)
+container QuerySideContainer
+deployment technology
+	DeploymentBase::_deployment.Docker
+deploys
+	QuerySideServices::de.puls.ChargingStationManagementQuerySide
+depends on nodes
+	Infrastructure::APIGateway,
+	Infrastructure::MongoDB,
+	Infrastructure::ServiceRegistry {
+	default values {
+		basic endpoints {
+			DeploymentBase::_protocols.http: "localhost:8085";
+		}
+	}
+}

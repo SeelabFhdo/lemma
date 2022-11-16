@@ -1,0 +1,104 @@
+import datatypes from "../../domain/ChargingStationManagement.data" as Domain
+import microservices from "../command-side/ChargingStationManagementCommandSide.services" as CommandSide
+import technology from "../../technology/Java.technology" as Java
+import technology from "../../technology/Spring.technology" as Spring
+import technology from "../../technology/Kafka.technology" as Kafka
+import technology from "../../technology/DomainEvents.technology" as DomainEvents
+import technology from "../../technology/Cqrs.technology" as CQRS
+
+@technology(Java)
+@technology(Spring)
+@technology(Kafka)
+@technology(DomainEvents)
+@technology(CQRS)
+@endpoints(Kafka::_protocols.kafka: "localhost:9092";)
+@Spring::_aspects.Application(name="ChargingStationManagementQuerySide", port=8085)
+@Spring::_aspects.DatasourceConfiguration(
+	url = "jdbc:h2:mem:query-side-db",
+	username = "${QUERY_SIDE_SERVICE_DB_USER}",
+	password = "${QUERY_SIDE_SERVICE_DB_PASSWORD}"
+)
+@Kafka::_aspects.BootstrapAddress("localhost:9092")
+@Kafka::_aspects.AvroRegistryAddress("http://localhost:8081")
+@CQRS::_aspects.QuerySide("ChargingStationManagement")
+public functional microservice de.puls.ChargingStationManagementQuerySide {
+    required microservices {
+        CommandSide::de.puls.ChargingStationManagementCommandSide
+    }
+
+    @endpoints(Spring::_protocols.rest: "/resources";)
+    interface QuerySide {
+        ---
+        API endpoint for retrieving information about a single parking area
+        @required id Identifier of the parking area
+        @returns parkingArea The parking area
+        @returns parkingAreaNotFound Fault indicating that the requested parking
+                                     area does not exist
+        ---
+        @endpoints(Spring::_protocols.rest: "/parkingarea/id/{id}";)
+        @Spring::_aspects.Get
+        getParkingArea(
+            @Spring::_aspects.PathVariable
+            sync id : long,
+
+            @Spring::_aspects.ResponseEntity
+            sync out parkingArea : Domain::ChargingStationManagement.ParkingAreaInformation,
+
+            @Spring::_aspects.ResponseStatus("NOT_FOUND")
+            sync out fault parkingAreaNotFound : string
+        );
+
+        ---
+        API endpoint for retrieving all parking areas in a given geographic area
+        @required northEastBound Coordinates for north-east area bound
+        @required southWestBound Coordinates for south-west area bound
+        @returns parkingAreas The list of the found parking Areas
+        @returns noParkingAreasFound Fault indicating that no parking areas were
+                                     found
+        ---
+        @endpoints(Spring::_protocols.rest: "/parkingarea/geo";)
+        @Spring::_aspects.Get
+        getParkingAreas(
+            @Spring::_aspects.RequestBody
+            @Spring::_aspects.Valid
+            sync northEastBound : Domain::ChargingStationManagement.Location,
+
+            @Spring::_aspects.RequestBody
+            @Spring::_aspects.Valid
+            sync southWestBound : Domain::ChargingStationManagement.Location,
+
+            @Spring::_aspects.ResponseEntity
+            sync out parkingAreas : Domain::ChargingStationManagement.ParkingAreaInformationList,
+
+            @Spring::_aspects.ResponseStatus("NOT_FOUND")
+            sync out fault noParkingAreasFound : string
+        );
+
+        @Kafka::_aspects.AvroParticipant(
+            topic="parkingAreaCreatedEvents",
+            consumerGroup="parkingAreaCreatedEvents"
+        )
+        @DomainEvents::_aspects.Consumer(handlerName="ParkingAreaConsumerService")
+        receiveParkingAreaCreatedEvent(
+            async event : Domain::ChargingStationManagement.ParkingAreaCreatedEvent
+        );
+
+        @Kafka::_aspects.AvroParticipant(
+            topic="parkingAreaUpdatedEvents",
+            consumerGroup="parkingAreaUpdatedEvents"
+        )
+        @DomainEvents::_aspects.Consumer(handlerName="ParkingAreaConsumerService")
+        receiveParkingAreaUpdatedEvent(
+            async event : Domain::ChargingStationManagement.ParkingAreaUpdatedEvent
+        );
+
+        @Kafka::_aspects.AvroParticipant(
+            topic="parkingAreaDeletedEvents",
+            consumerGroup="parkingAreaDeletedEvents"
+        )
+        @DomainEvents::_aspects.Consumer(handlerName="ParkingAreaConsumerService")
+        receiveParkingAreaDeletedEvent(
+            async event : Domain::ChargingStationManagement.ParkingAreaDeletedEvent
+        );
+    }
+}

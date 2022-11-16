@@ -1,0 +1,17 @@
+technology Lenses {
+	infrastructure technologies {
+		Lenses {
+			operation environments = "lensesio/lenses";
+
+			service properties {
+				string password<mandatory>;
+				string port<mandatory>;
+				string user<mandatory>;
+			}
+		}
+
+		LensesCli {
+			operation environments = "lensesio/lenses-cli";
+		}
+	}
+}

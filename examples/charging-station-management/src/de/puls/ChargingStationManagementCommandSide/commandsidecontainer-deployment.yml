@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: commandsidecontainer
+  name: commandsidecontainer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: commandsidecontainer
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: commandsidecontainer
+    spec:
+      containers:
+      - image: commandsidecontainer
+        imagePullPolicy: "Never"
+        name: commandsidecontainer
+        resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: commandsidecontainer
+  name: commandsidecontainer
+spec:
+  ports:
+  - name: "8080"
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: commandsidecontainer
+  type: ClusterIP
+status:
+  loadBalancer: {}

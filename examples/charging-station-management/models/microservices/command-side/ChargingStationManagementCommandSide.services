@@ -1,0 +1,88 @@
+import datatypes from "../../domain/ChargingStationManagement.data" as Domain
+import technology from "../../technology/Java.technology" as Java
+import technology from "../../technology/Spring.technology" as Spring
+import technology from "../../technology/Kafka.technology" as Kafka
+import technology from "../../technology/DomainEvents.technology" as DomainEvents
+import technology from "../../technology/Cqrs.technology" as CQRS
+
+@technology(Java)
+@technology(Spring)
+@technology(Kafka)
+@technology(DomainEvents)
+@technology(CQRS)
+@endpoints(Kafka::_protocols.kafka: "localhost:9092";)
+@Spring::_aspects.Application(name="ChargingStationManagementCommandSide")
+@Spring::_aspects.DatasourceConfiguration(
+	url = "jdbc:h2:mem:command-side-db",
+	username = "${COMMAND_SIDE_SERVICE_DB_USER}",
+	password = "${COMMAND_SIDE_SERVICE_DB_PASSWORD}"
+)
+@Kafka::_aspects.BootstrapAddress("localhost:9092")
+@Kafka::_aspects.AvroRegistryAddress("http://localhost:8081")
+@CQRS::_aspects.CommandSide("ChargingStationManagement")
+public functional microservice de.puls.ChargingStationManagementCommandSide {
+    @endpoints(Spring::_protocols.rest: "/resources";)
+    interface CommandSide {
+        ---
+        API endpoint for creating a parking area
+        @required command Command object to specify the values of the new parking area
+        @returns response CreateParkingAreaCommandResponse with the identifier of the
+                          created parking area or an error message
+        ---
+        @endpoints(Spring::_protocols.rest: "/parkingarea";)
+        @Spring::_aspects.Post
+        createParkingArea(
+            @Spring::_aspects.RequestBody
+            @Spring::_aspects.Valid
+            sync command : Domain::ChargingStationManagement.CreateParkingAreaCommand,
+
+			@Spring::_aspects.ResponseEntity
+            sync out response: Domain::ChargingStationManagement.CreateParkingAreaCommandResponse
+        );
+
+        ---
+        API endpoint for updating a parking area
+        @required id Identifier of the parking area to be updated
+        @required command Command object to specify the values of the updated parking area
+        ---
+        @endpoints(Spring::_protocols.rest: "/parkingarea/{id}";)
+        @Spring::_aspects.Put
+        updateParkingArea(
+            @Spring::_aspects.PathVariable
+            sync id : long,
+
+            @Spring::_aspects.RequestBody
+            @Spring::_aspects.Valid
+            sync command : Domain::ChargingStationManagement.UpdateParkingAreaCommand
+        );
+
+        ---
+        API endpoint for deleting a parking area
+        @required id Identifier of the parking area to be deleted
+        ---
+        @endpoints(Spring::_protocols.rest: "/parkingarea/{id}";)
+        @Spring::_aspects.Delete
+        deleteParkingArea(
+            @Spring::_aspects.PathVariable
+            sync id : long
+        );
+
+        @Kafka::_aspects.AvroParticipant(topic="parkingAreaCreatedEvents")
+        @DomainEvents::_aspects.Producer("ParkingAreaProducerService")
+        sendParkingAreaCreatedEvent(
+            async out event : Domain::ChargingStationManagement.ParkingAreaCreatedEvent
+        );
+
+        @Kafka::_aspects.AvroParticipant(topic="parkingAreaUpdatedEvents")
+        @DomainEvents::_aspects.Producer("ParkingAreaProducerService")
+        sendParkingAreaUpdatedEvent(
+            async out event : Domain::ChargingStationManagement.ParkingAreaUpdatedEvent
+        );
+
+        @Kafka::_aspects.AvroParticipant(topic="parkingAreaDeletedEvents")
+        @DomainEvents::_aspects.Producer("ParkingAreaProducerService")
+        sendParkingAreaDeletedEvent(
+            async out event : Domain::ChargingStationManagement.ParkingAreaDeletedEvent
+        );
+    }
+}

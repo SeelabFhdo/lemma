@@ -1,0 +1,42 @@
+technology DockerCompose {
+    infrastructure technologies {
+        DockerCompose {
+			operation environments = "docker-compose:1.29.2";
+		}
+
+		GenericService {
+			operation environments = "docker-compose:1.29.2";
+
+			service properties {
+				string image<mandatory>;
+			}
+		}
+    }
+
+    operation aspects {
+    	aspect command<singleval> for infrastructure {
+    		string value<mandatory>;
+    	}
+
+    	aspect container_name<singleval> for infrastructure {
+    		string value<mandatory>;
+    	}
+
+    	aspect environmentVariable for infrastructure {
+    		string name<mandatory>;
+    		string value<mandatory>;
+    	}
+
+    	aspect hostname<singleval> for infrastructure {
+    		string value<mandatory>;
+    	}
+
+    	aspect port for infrastructure {
+    		int value<mandatory>;
+    	}
+
+    	aspect volume for infrastructure {
+    		string value<mandatory>;
+    	}
+    }
+}

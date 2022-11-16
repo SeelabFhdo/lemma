@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: querysidecontainer
+  name: querysidecontainer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: querysidecontainer
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: querysidecontainer
+    spec:
+      containers:
+      - image: querysidecontainer
+        imagePullPolicy: "Never"
+        name: querysidecontainer
+        resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: querysidecontainer
+  name: querysidecontainer
+spec:
+  ports:
+  - name: "8085"
+    port: 8085
+    targetPort: 8085
+  selector:
+    app: querysidecontainer
+  type: ClusterIP
+status:
+  loadBalancer: {}

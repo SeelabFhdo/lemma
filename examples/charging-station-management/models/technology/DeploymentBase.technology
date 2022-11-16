@@ -1,0 +1,22 @@
+technology DeploymentBase {
+	protocols {
+        sync http data formats "application/json" default with format "application/json";
+    }
+
+    deployment technologies {
+        Docker {
+            operation environments = "openjdk:11-alpine" default, "openjdk:17-alpine";
+
+            service properties {
+                string customPortMapping;
+            }
+        }
+    }
+
+    operation aspects {
+        // Operation aspect for the configuration of custom dockerfiles
+        aspect Dockerfile<singleval> for containers, infrastructure {
+            string contents <mandatory>;
+        }
+    }
+}

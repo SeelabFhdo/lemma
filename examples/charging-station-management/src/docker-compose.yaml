@@ -1,0 +1,22 @@
+---
+version: "3.7"
+services:
+  ChargingStationManagementCommandSide_in_CommandSideContainer:
+    build: "de/puls/ChargingStationManagementCommandSide"
+    image: "commandsidecontainer"
+    ports:
+    - "8080:8080"
+    networks:
+    - "default-network"
+    container_name: "commandsidecontainer"
+  ChargingStationManagementQuerySide_in_QuerySideContainer:
+    build: "de/puls/ChargingStationManagementQuerySide"
+    image: "querysidecontainer"
+    ports:
+    - "8085:8085"
+    networks:
+    - "default-network"
+    container_name: "querysidecontainer"
+networks:
+  default-network:
+    driver: "bridge"

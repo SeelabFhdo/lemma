@@ -1,0 +1,190 @@
+import nodes from "command-side/ChargingStationManagementCommandSide.operation" as CommandSideNodes
+import nodes from "query-side/ChargingStationManagementQuerySide.operation" as QuerySideNodes
+
+import technology from "../technology/ConfluentEnterpriseControlCenter.technology" as ConfluentEnterpriseControlCenter
+import technology from "../technology/ConfluentKafkaRest.technology" as ConfluentKafkaRest
+import technology from "../technology/ConfluentSchemaRegistry.technology" as ConfluentSchemaRegistry
+import technology from "../technology/DockerCompose.technology" as DockerCompose
+import technology from "../technology/Eureka.technology" as Eureka
+import technology from "../technology/Kafka.technology" as Kafka
+import technology from "../technology/Lenses.technology" as Lenses
+import technology from "../technology/Mongodb.technology" as MongoDB
+import technology from "../technology/ZooKeeper.technology" as ZooKeeper
+import technology from "../technology/Zuul.technology" as Zuul
+
+@technology(DockerCompose)
+@technology(ZooKeeper)
+BrokerCoordinator is ZooKeeper::_infrastructure.ZooKeeper {
+	default values {
+		clientPort = 2181
+	}
+}
+
+@technology(DockerCompose)
+@technology(Kafka)
+Broker is Kafka::_infrastructure.Kafka
+depends on nodes BrokerCoordinator
+used by nodes
+	CommandSideNodes::CommandSideContainer,
+	QuerySideNodes::QuerySideContainer
+{
+	aspects {
+		DockerCompose::_aspects.hostname("broker");
+		DockerCompose::_aspects.port(9092);
+		DockerCompose::_aspects.port(9101);
+	}
+
+	default values {
+		brokerId = 1
+		listenerSecurityProtocolMap = "PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT"
+		advertisedListeners = "PLAINTEXT://broker:29092,PLAINTEXT_HOST://localhost:9092"
+		listeners = "PLAINTEXT_HOST://0.0.0.0:9092"
+		metricReporters = "io.confluent.metrics.reporter.ConfluentMetricsReporter"
+		topicReplicationFactor = 1
+		initialRebalanceDelay = 0
+		confluentLicenseTopicReplicationFactor = 1
+		confluentBalancerTopicReplicationFactor = 1
+		transactionStateLogMin = 1
+		transactionStateLogReplicationFactor = 1
+		jmxHostname = "localhost"
+		metricsReporterBootstrapServers = "broker:29092"
+		metricsReporterTopicReplicas = 1
+		metricsEnable = true
+	}
+}
+
+@technology(ConfluentSchemaRegistry)
+@technology(DockerCompose)
+SchemaRegistry is ConfluentSchemaRegistry::_infrastructure.ConfluentSchemaRegistry
+depends on nodes Broker {
+	aspects {
+		DockerCompose::_aspects.port(8081);
+	}
+
+	default values {
+		kafkastoreBootstrapServers = "broker:29092"
+	}
+}
+
+@technology(DockerCompose)
+@technology(Lenses)
+BrokerMonitoring is Lenses::_infrastructure.Lenses
+depends on nodes Broker, SchemaRegistry {
+	aspects {
+		DockerCompose::_aspects.port(9102);
+		DockerCompose::_aspects.port(9991);
+	}
+
+	default values {
+		port = "${LENSES_PORT}"
+		user = "${LENSES_SECURITY_USER}"
+		password = "${LENSES_SECURITY_PASSWORD}"
+	}
+}
+
+@technology(DockerCompose)
+@technology(Lenses)
+BrokerMonitoringProvision is Lenses::_infrastructure.LensesCli
+depends on nodes BrokerMonitoring {
+	aspects {
+		DockerCompose::_aspects.volume("./lenses-provision.yaml:/mnt/provision-secrets/provision.yaml");
+		DockerCompose::_aspects.volume("./lenses-license.json:/mnt/secrets/license.json");
+
+		DockerCompose::_aspects.command('
+			- bash
+      		- -c
+      		- |
+        	lenses-cli provision --wait-for-lenses \\
+          		--host="lenses:${LENSES_PORT}" \\
+          		--user="${LENSES_SECURITY_USER}" \\
+          		--pass="${LENSES_SECURITY_PASSWORD}" \\
+          		/mnt/provision-secrets/provision.yaml
+		');
+	}
+}
+
+@technology(ConfluentEnterpriseControlCenter)
+@technology(DockerCompose)
+ControlCenter is ConfluentEnterpriseControlCenter::_infrastructure.ConfluentEnterpriseControlCenter
+depends on nodes Broker, SchemaRegistry {
+	default values {
+		bootstrapServers = "broker:29092"
+		internalTopicsPartitions = 1
+		metricsTopicReplication = 1
+		monitoringInterceptorTopicPartitions = 1
+		port = 9021
+		replicationFactor = 1
+	}
+}
+
+@technology(ConfluentKafkaRest)
+@technology(DockerCompose)
+RestProxy is ConfluentKafkaRest::_infrastructure.ConfluentKafkaRest
+depends on nodes Broker, SchemaRegistry {
+	aspects {
+		DockerCompose::_aspects.port(8082);
+	}
+
+	default values {
+		bootstrapServers = "broker:29092"
+		listeners = "PLAINTEXT_HOST://0.0.0.0:8082"
+	}
+}
+
+@technology(DockerCompose)
+DefaultSchemaInstaller is DockerCompose::_infrastructure.GenericService
+depends on nodes BrokerMonitoringProvision {
+	aspects {
+		DockerCompose::_aspects.container_name("default_schema_installer");
+		DockerCompose::_aspects.hostname("default_schema_installer");
+		DockerCompose::_aspects.volume("./schemas:/mnt/default_schemas");
+
+		DockerCompose::_aspects.command('
+			- /mnt/default_schemas
+      		- http://BrokerMonitoring:9991
+		');
+	}
+
+	default values {
+	    image = "lenses/default_schema_installer:latest"
+	}
+}
+
+@technology(Zuul)
+APIGateway is Zuul::_infrastructure.Zuul
+	depends on nodes ServiceRegistry
+	used by nodes CommandSideNodes::CommandSideContainer, QuerySideNodes::QuerySideContainer{
+	aspects {
+		Zuul::_aspects.isAPIGateway;
+	}
+
+	default values {
+		hostname = "APIGateway"
+		port = 8080
+		eurekaUri = "ServiceRegistry:8761"
+	}
+}
+
+@technology(Eureka)
+ServiceRegistry is Eureka::_infrastructure.Eureka
+	used by nodes CommandSideNodes::CommandSideContainer, QuerySideNodes::QuerySideContainer {
+	aspects {
+		Eureka::_aspects.isServiceDiscovery;
+	}
+
+	default values {
+		hostname = "ServiceRegistry"
+		port = 8761
+	}
+}
+
+@technology(MongoDB)
+MongoDB is MongoDB::_infrastructure.MongoDB
+	used by nodes CommandSideNodes::CommandSideContainer, QuerySideNodes::QuerySideContainer {
+	default values {
+		port = 27017
+		database = "parkAndCharge"
+		userName = "${mongoDBUsername}"
+		password = "${mongoDBPassword}"
+	}
+}

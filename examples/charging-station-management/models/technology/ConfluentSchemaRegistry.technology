@@ -1,0 +1,11 @@
+technology ConfluentSchemaRegistry {
+	infrastructure technologies {
+		ConfluentSchemaRegistry {
+			operation environments = "confluentinc/cp-schema-registry:7.0.1";
+
+			service properties {
+				string kafkastoreBootstrapServers<mandatory>;
+			}
+		}
+	}
+}

@@ -1,0 +1,77 @@
+import microservices from "ChargingStationManagementQuerySide.services" as QuerySideServices
+import technology from "../../technology/Java.technology" as Java
+import technology from "../../technology/Kafka.technology" as Kafka
+import technology from "../../technology/Spring.technology" as Spring
+
+@technology(Kafka)
+type QuerySideServices::Domain::ChargingStationManagement.ParkingAreaCreatedEvent {
+    aspects {
+        Kafka::_aspects.AvroSchema(file="ParkingAreaCreatedEvent.avsc");
+    }
+}
+
+@technology(Kafka)
+type QuerySideServices::Domain::ChargingStationManagement.ParkingAreaUpdatedEvent {
+    aspects {
+        Kafka::_aspects.AvroSchema(file="ParkingAreaUpdatedEvent.avsc");
+    }
+}
+
+@technology(Kafka)
+type QuerySideServices::Domain::ChargingStationManagement.ParkingAreaDeletedEvent {
+    aspects {
+        Kafka::_aspects.AvroSchema(file="ParkingAreaDeletedEvent.avsc");
+    }
+}
+
+@technology(Java)
+type QuerySideServices::Domain::ChargingStationManagement.ParkingArea {
+    aspects {
+        Java::_aspects.Table("ParkingArea");
+    }
+
+	id {
+		aspects {
+			Java::_aspects.GeneratedValue;
+		}
+	}
+
+	commonId {
+		aspects {
+			Java::_aspects.Unique;
+		}
+	}
+
+	availability {
+		aspects {
+			Java::_aspects.ElementCollection("");
+		}
+	}
+
+    location {
+    	aspects {
+    		Java::_aspects.Embedded;
+    	}
+    }
+}
+
+@technology(Spring)
+type QuerySideServices::Domain::ChargingStationManagement.ParkingAreaRepository {
+    aspects {
+        Spring::_aspects.CrudRepository;
+    }
+}
+
+@technology(Java)
+type QuerySideServices::Domain::ChargingStationManagement.Location {
+    aspects {
+        Java::_aspects.Embeddable;
+    }
+}
+
+@technology(Java)
+type QuerySideServices::Domain::ChargingStationManagement.TimePeriod {
+    aspects {
+        Java::_aspects.Embeddable;
+    }
+}

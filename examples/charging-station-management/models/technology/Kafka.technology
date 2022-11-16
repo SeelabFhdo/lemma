@@ -1,0 +1,63 @@
+technology Kafka {
+    protocols {
+        async kafka data formats "binary" default with format "binary";
+    }
+
+    service aspects {
+        aspect AvroParticipant for operations {
+            selector(protocol = kafka);
+            string topic<mandatory>;
+            string consumerGroup;
+        }
+
+        aspect AvroRegistryAddress<singleval> for microservices {
+            string address<mandatory>;
+        }
+
+        aspect AvroSchema<singleval> for types, fields {
+            string file<mandatory>;
+            string ^type;
+            boolean fromResources = true;
+        }
+
+        aspect BootstrapAddress<singleval> for microservices {
+            string address<mandatory>;
+        }
+
+        aspect ErrorHandlingConfiguration for operations {
+            long retriesUponError;
+        }
+
+        aspect Participant for operations {
+            selector(protocol = kafka);
+            string topic<mandatory>;
+            string consumerGroup;
+        }
+    }
+
+    infrastructure technologies {
+        Kafka {
+            operation environments = "confluentinc/cp-server:7.0.1" default;
+
+            service properties {
+            	string advertisedListeners;
+            	int brokerId;
+            	int confluentBalancerTopicReplicationFactor;
+            	int confluentLicenseTopicReplicationFactor;
+            	int initialRebalanceDelay;
+            	int jmxPort = 9101;
+            	string jmxHostname;
+            	string listeners;
+            	string listenerSecurityProtocolMap;
+            	boolean metricsEnable;
+            	string metricReporters;
+            	string metricsReporterBootstrapServers;
+            	int metricsReporterTopicReplicas;
+            	string supportCustomerId = "anonymous";
+            	int topicReplicationFactor;
+            	int transactionStateLogMin;
+            	int transactionStateLogReplicationFactor;
+            }
+        }
+    }
+}

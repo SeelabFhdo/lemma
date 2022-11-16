@@ -1,0 +1,20 @@
+technology Eureka {
+	infrastructure technologies {
+		Eureka {
+			operation environments = "openjdk:11-jdk-slim";
+            service properties {
+                string hostname<mandatory>;
+                int port<mandatory>;
+                string imageType;
+                string mavenGroupId;
+            	string mavenArtifactId;
+            	string mavenVersion;
+            	string mavenName;
+            	string programmingLanguage;
+            }
+		}
+	}
+	operation aspects {
+		aspect isServiceDiscovery <singleval> for infrastructure;
+	}
+}

@@ -1,0 +1,12 @@
+technology ConfluentKafkaRest {
+	infrastructure technologies {
+		ConfluentKafkaRest {
+			operation environments = "confluentinc/cp-kafka-rest:7.0.1";
+
+			service properties {
+				string bootstrapServers<mandatory>;
+				string listeners;
+			}
+		}
+	}
+}

@@ -1,0 +1,13 @@
+technology CQRS {
+	service aspects {
+		aspect CommandSide for microservices {
+			string logicalService;
+		}
+		aspect QuerySide for microservices {
+			string logicalService;
+		}
+
+		aspect CommandSide for interfaces;
+		aspect QuerySide for interfaces;
+	}
+}

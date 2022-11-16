@@ -1,0 +1,121 @@
+technology Spring {
+    protocols {
+        sync rest data formats "application/json" default with format "application/json";
+    }
+
+    service aspects {
+        aspect Application<singleval> for microservices {
+            string name;
+            int port;
+        }
+
+		aspect ApplicationProperty for microservices {
+			string name<mandatory>;
+			string value<mandatory>;
+		}
+
+        aspect CrudRepository<singleval> for types;
+
+		// Synonym for ApplicationProperty
+        aspect CustomProperty for microservices {
+			string name<mandatory>;
+			string value<mandatory>;
+		}
+
+		aspect DatasourceConfiguration for microservices {
+        	string driverClassName = "org.h2.Driver";
+        	string url<mandatory>;
+        	string username<mandatory>;
+        	string password<mandatory>;
+        }
+
+		aspect Delete<singleval> for operations {
+            selector(protocol = rest);
+        }
+
+		aspect Get<singleval> for operations {
+            selector(protocol = rest);
+        }
+
+		aspect HibernateConfiguration<singleval> for microservices {
+            string ddlAuto;
+        }
+
+		aspect JacksonConfiguration<singleval> for microservices {
+            boolean INDENT_OUTPUT;
+            string defaultPropertyInclusion;
+        }
+
+        aspect JpaShowSql<singleval> for microservices {
+            boolean showSql = true;
+        }
+
+        aspect JsonFormat<singleval> for fields {
+        	string pattern<mandatory>;
+        }
+
+        aspect JsonIgnore<singleval> for fields;
+
+        aspect JsonProperty<singleval> for fields {
+        	string name;
+        }
+
+        aspect JsonUnwrapped<singleval> for fields;
+
+		aspect MessageMapping<singleval> for operations {
+			string value<mandatory>;
+		}
+
+		aspect Multimap<singleval> for domainOperations;
+
+		aspect Patch<singleval> for operations {
+            selector(protocol = rest);
+        }
+
+		aspect PathVariable<singleval> for parameters {
+            selector(protocol = rest, exchange_pattern = in);
+        }
+
+        aspect Post<singleval> for operations {
+            selector(protocol = rest);
+        }
+
+        aspect Put<singleval> for operations {
+            selector(protocol = rest);
+        }
+
+		aspect ResponseStatus for parameters {
+            selector(exchange_pattern = out);
+            string status<mandatory>;
+        }
+
+        aspect RequestBody<singleval> for parameters {
+            selector(exchange_pattern = in);
+        }
+
+		aspect RequestParam<singleval> for parameters {
+			string defaultValue;
+			string value;
+		}
+
+		aspect ResourceSupport<singleval> for types;
+
+		aspect ResponseEntity<singleval> for parameters {
+            selector(protocol = rest, exchange_pattern = out);
+        }
+
+		aspect SendTo<singleval> for operations {
+			string value<mandatory>;
+		}
+
+		aspect UserDetails<singleval> for types;
+
+		aspect UserDetailsService<singleval> for types;
+
+		aspect Valid<singleval> for parameters, fields;
+
+		aspect Value<singleval> for fields {
+			string value<mandatory>;
+		}
+    }
+}

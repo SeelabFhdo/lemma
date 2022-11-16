@@ -1,0 +1,91 @@
+context ChargingStationManagement {
+    structure ParkingArea<aggregate, entity> {
+        long id<identifier>,
+        long commonId,
+        long ownerId,
+        string name,
+        string description,
+        Location location<part>,
+        int parkingSpaceCount,
+        TimePeriods availability<part>,
+        ChargerSpeed chargerSpeed,
+        string plugType,
+        boolean activated,
+        boolean blocked,
+        boolean offered,
+        date createdDate,
+        date lastModifiedDate,
+        function ParkingAreaInformation toParkingAreaInformation
+    }
+
+	structure ParkingAreaInformation<valueObject> {
+        immutable long ownerId,
+        immutable string name,
+        immutable string description,
+        immutable Location location,
+        immutable int parkingSpaceCount,
+        immutable TimePeriods availability,
+        immutable boolean activated,
+        immutable boolean blocked,
+        immutable boolean offered,
+        immutable ChargerSpeed chargerSpeed,
+        immutable string plugType
+    }
+
+	structure ParkingAreaFactory<factory> {
+        function ParkingArea fromParkingAreaInformation(ParkingAreaInformation info)
+    }
+
+	structure CreateParkingAreaCommand<valueObject> {
+        immutable ParkingAreaInformation info
+    }
+
+    structure CreateParkingAreaCommandResponse<valueObject> {
+    	immutable long id,
+    	immutable string errorMessage
+    }
+
+    structure Location<valueObject> {
+        immutable double latitude,
+        immutable double longitude
+    }
+
+    structure TimePeriod<valueObject> {
+        immutable date start,
+        immutable date end
+    }
+
+    collection TimePeriods { TimePeriod p }
+
+    enum ChargerSpeed {
+        FAST,
+        NORMAL
+    }
+
+    structure ParkingAreaRepository<repository> {
+        ParkingAreas managedParkingAreas,
+        function ParkingArea findByCommonId(long commonId)
+    }
+
+    collection ParkingAreas { ParkingArea p }
+
+    collection ParkingAreaInformationList { ParkingAreaInformation i }
+
+    structure ParkingAreaCreatedEvent<domainEvent, valueObject> {
+        immutable long commonId,
+        immutable ParkingAreaInformation info
+    }
+
+    structure UpdateParkingAreaCommand<valueObject> {
+        immutable ParkingAreaInformation info
+    }
+
+    structure ParkingAreaUpdatedEvent<domainEvent, valueObject> {
+        immutable long commonId,
+        immutable ParkingAreaInformation info
+    }
+
+    structure ParkingAreaDeletedEvent<domainEvent, valueObject> {
+        immutable long parkingAreaId
+    }
+}

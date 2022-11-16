@@ -1,0 +1,22 @@
+technology Zuul {
+	infrastructure technologies {
+		Zuul {
+			operation environments = "openjdk:11-jdk-slim";
+			service properties {
+                string hostname<mandatory>;
+                int port<mandatory>;
+                string mavenGroupId;
+            	string mavenArtifactId;
+            	string mavenVersion;
+            	string mavenName;
+            	string eurekaUri<mandatory>;
+            	string imageType;
+            	string programmingLanguage;
+            }
+		}
+	}
+
+		operation aspects {
+		aspect isAPIGateway <singleval> for infrastructure;
+	}
+}
