@@ -86,7 +86,7 @@ abstract class AbstractCodeGeneratorCompletionDialog extends AbstractTemplateCom
         if (!generatorNameAddendum.empty)
             generatorNameAddendum = StringUtils.replace(generatorNameAddendum, " ", "_") + "_"
         val configurationNamePrefix = '''Run_«generatorShortName»_«generatorNameAddendum»''' +
-            ''''«fileBasename»_«fileExtension»'''
+            '''«fileBasename»_«fileExtension»'''
         configurationTemplate.launchConfigurationName = LAUNCH_MANAGER
             .generateLaunchConfigurationName(configurationNamePrefix)
     }

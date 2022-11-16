@@ -105,7 +105,6 @@ public abstract class AbstractCodeGeneratorCompletionDialog extends AbstractLaun
     _builder.append("_");
     _builder.append(generatorNameAddendum);
     StringConcatenation _builder_1 = new StringConcatenation();
-    _builder_1.append("\'");
     _builder_1.append(fileBasename);
     _builder_1.append("_");
     _builder_1.append(fileExtension);
