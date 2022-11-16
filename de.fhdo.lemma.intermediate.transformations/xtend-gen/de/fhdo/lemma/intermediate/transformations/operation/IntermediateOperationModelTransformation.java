@@ -16,7 +16,6 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
@@ -91,14 +90,13 @@ public class IntermediateOperationModelTransformation extends AbstractAtlInputOu
   @Override
   public void populateOutputModelWithImportTargetPaths(final TransformationModelDescription modelDescription, final EObject modelRoot, final Map<String, String> targetPaths) {
     final IntermediateOperationModel operationModelRoot = ((IntermediateOperationModel) modelRoot);
-    final String workspacePath = ResourcesPlugin.getWorkspace().getRoot().getLocation().toString();
     final BiConsumer<String, String> _function = (String importName, String targetPath) -> {
       final Function1<IntermediateImport, Boolean> _function_1 = (IntermediateImport it) -> {
         String _name = it.getName();
         return Boolean.valueOf(Objects.equal(_name, importName));
       };
       final IntermediateImport import_ = IterableExtensions.<IntermediateImport>findFirst(operationModelRoot.getImports(), _function_1);
-      import_.setImportUri(LemmaUtils.convertToFileUri((workspacePath + targetPath)));
+      import_.setImportUri(LemmaUtils.convertProjectPathToAbsoluteFileUri(targetPath));
     };
     targetPaths.forEach(_function);
   }
