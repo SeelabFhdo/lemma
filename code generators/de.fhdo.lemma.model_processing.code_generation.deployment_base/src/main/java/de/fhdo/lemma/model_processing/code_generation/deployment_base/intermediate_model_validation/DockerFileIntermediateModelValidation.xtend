@@ -41,7 +41,7 @@ class DockerFileIntermediateModelValidation extends AbstractXmiDeclarativeValida
     def checkVersionOfDeplyedServices(IntermediateContainer container) {
         if (container.deployedServices.get(0).version === null)
             warning("The version of the deployed microservice is not set, the version will be "
-                + "automaticly set to \"v0\"",
+                + "automatically set to \"v0\"",
                 IntermediatePackage.Literals.OPERATION_MICROSERVICE_REFERENCE__NODE)
     }
 
