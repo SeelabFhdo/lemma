@@ -7,6 +7,7 @@ import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.validation.Issue
 import org.eclipse.xtext.diagnostics.Severity
 import de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils
+import java.util.Objects
 
 /**
  * Wrapper for model files. It encapsulates the IFile instance and further, model-specific
@@ -148,5 +149,12 @@ class ModelFile implements Comparable<ModelFile> {
             return false
 
         return compareTo(o as ModelFile) === 0
+    }
+
+    /**
+     * Get hash code
+     */
+    override hashCode() {
+        return Objects.hashCode(file?.fullPath?.toString)
     }
 }

@@ -2,7 +2,9 @@ package de.fhdo.lemma.eclipse.ui;
 
 import de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils;
 import java.util.List;
+import java.util.Objects;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.xtend.lib.annotations.AccessorType;
 import org.eclipse.xtend.lib.annotations.Accessors;
 import org.eclipse.xtext.diagnostics.Severity;
@@ -159,6 +161,22 @@ public class ModelFile implements Comparable<ModelFile> {
     }
     int _compareTo = this.compareTo(((ModelFile) o));
     return (_compareTo == 0);
+  }
+  
+  /**
+   * Get hash code
+   */
+  @Override
+  public int hashCode() {
+    IPath _fullPath = null;
+    if (this.file!=null) {
+      _fullPath=this.file.getFullPath();
+    }
+    String _string = null;
+    if (_fullPath!=null) {
+      _string=_fullPath.toString();
+    }
+    return Objects.hashCode(_string);
   }
   
   @Pure
