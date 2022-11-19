@@ -98,7 +98,7 @@ if __name__ == '__main__':
     try:
         versionIdentifier = identifier_from_build_file(sys.argv[1])
         if not versionIdentifier:
-            error_and_die(ex)
+            error_and_die('No version identifier in build file. Exiting.')
         print(versionIdentifier)
     except Exception as ex:
         error_and_die(ex)
