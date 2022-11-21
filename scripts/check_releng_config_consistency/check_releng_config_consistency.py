@@ -208,14 +208,14 @@ def _parse_modules_from_windows_config(configFilepath: str) -> Set[str]:
             line = l.strip()
             if not line or line.startswith('REM'):
                 continue
-            
+
             m = WINDOWS_BUILD_MODULE_REGEX.match(l)
             if m:
                 modules.add(m.group('name').strip())
-    
+
     return modules
 
-def _posix_seps(path: str):
+def _posix_seps(path: str) -> str:
     """Convert a given path to a POSIX representation in which separators of the
     current OS are replaced by POSIX separators."""
 
@@ -226,7 +226,7 @@ def _posix_seps(path: str):
     else:
         return path
 
-def _module_and_parent(module: str, parent: str):
+def _module_and_parent(module: str, parent: str) -> str:
     """Build a string consisting of a LEMMA module name and the name of its
     parent if it has one."""
 
@@ -235,7 +235,7 @@ def _module_and_parent(module: str, parent: str):
     else:
         return '"%s"' % module
 
-def _windows_seps(path: str):
+def _windows_seps(path: str) -> str:
     """Convert a given path to a Windows representation in which separators of
     the current OS are replaced by Windows separators."""
 
