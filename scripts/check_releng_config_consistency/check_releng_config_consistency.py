@@ -161,13 +161,20 @@ def _distribute_parent_info(moduleInfo: List[ModuleInfo]):
     """
 
     for i in moduleInfo:
-        projectName = i.get_name()
-        parentInfo = next(
-                (i for i in moduleInfo if projectName in i.get_children()),
-                None
-            )
+        parentInfo = _find_parent(i, moduleInfo)
         if parentInfo:
             i.set_parent(parentInfo.get_name())
+
+def _find_parent(child: ModuleInfo, potentialParents: List[ModuleInfo])\
+    -> ModuleInfo:
+    """Find the parent ModuleInfo for the given child from the given list of
+    potential parent ModuleInfo instances.
+    """
+
+    return next(
+        (p for p in potentialParents if child.get_name() in p.get_children()),
+        None
+    )
 
 def _parse_modules_from_lemma_config(configFilepath: str) -> Set[str]:
     """Parse module names from a LEMMA configuration which is a simple text file
@@ -244,14 +251,31 @@ def _filter_eclipse_plugins(moduleInfo: List[ModuleInfo]) -> List[ModuleInfo]:
     Eclipse plugins.
     """
 
-    pluginInfo = []
+    pluginInfo = {}
 
     for i in moduleInfo:
         dir = dirname(i.get_filepath())
+        # We identify Eclipse plugins by the existence of certain files.
+        # However, we also return the "sibling" modules of the plugins which
+        # enables to check their configuration, e.g., in the Eclipse Updatesite
+        # feature. For example, the "de.fhdo.lemma.servicedsl.metamodel" module
+        # exhibits the "plugin.xml" file identifying it as an Eclipse plugin.
+        # The parent module of the "metamodel" module is
+        # "de.fhdo.lemma.servicedsl.parent" and one of its children is the
+        # "de.fhdo.lemma.servicedsl.extractor". The "extractor" module is thus a
+        # sibling of the "metamodel" module since both modules have the same
+        # parent.
         if _any_file_exists(dir, PLUGIN_IDENTIFYING_FILES):
-            pluginInfo.append(i)
+            pluginInfo[i.get_name()] = i
+            pluginParent = _find_parent(i, moduleInfo)
+            pluginSiblings = filter(
+                    lambda c: c.get_name() in pluginParent.get_children(),
+                    moduleInfo
+                ) if pluginParent else {}
+            pluginSiblings = {c.get_name(): c for c in pluginSiblings}
+            pluginInfo = {**pluginInfo, **pluginSiblings}
 
-    return pluginInfo
+    return pluginInfo.values()
 
 def _parse_plugins_from_updatesite_feature(configFilepath: str) -> Set[str]:
     """Parse Eclipse plugin names from the given feature configuration which is
