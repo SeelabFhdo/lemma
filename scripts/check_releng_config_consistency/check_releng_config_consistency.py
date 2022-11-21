@@ -31,7 +31,7 @@ PLUGIN_IDENTIFYING_FILES = ['plugin.xml']
 RELATIVE_BUILD_CONFIG_FILEPATH_FROM_MODULE_DIR = join('build',
     'lemma-build-modules.txt')
 RELATIVE_DEPLOYMENT_CONFIG_FILEPATH_FROM_MODULE_DIR = join('build', 'deploy',
-    'lemma-deployment-modules.txt')    
+    'lemma-deployment-modules.txt')
 RELATIVE_UPDATESITE_CONFIG_FILEPATH_FROM_MODULE_DIR = join(
         'build',
         'updatesite',
@@ -63,10 +63,10 @@ def _find_module_files(rootDir: str, simpleFilenames: List[str])\
 
     for root, dirs, _ in os.walk(rootDir):
         for dirObj in dirs:
-            dir = str(dirObj)            
+            dir = str(dirObj)
             if not dir.startswith(MODULE_DIR_PREFIX):
                 continue
-            
+
             dirPath = join(root, dir)
             moduleFile = _any_file_exists(dirPath, simpleFilenames)
             if moduleFile:
@@ -127,7 +127,7 @@ def _parse_pom_files(moduleDir: str, pomFilepaths: Set[str])\
     for filepath in pomFilepaths:
         pomXml = etree.parse(filepath)
         childrenXml = pomXml.findall(MAVEN_POM_MODULES)
-        
+
         if childrenXml:
             children = {basename(m.text) for m in childrenXml}
         else:
@@ -189,9 +189,9 @@ def _parse_modules_from_lemma_config(configFilepath: str) -> Set[str]:
             line = l.strip()
             if not line or line.startswith('#'):
                 continue
-            
+
             modules.add(line)
-    
+
     return modules
 
 def _parse_modules_from_windows_config(configFilepath: str) -> Set[str]:
@@ -289,17 +289,17 @@ def _parse_plugins_from_updatesite_feature(configFilepath: str) -> Set[str]:
 if __name__ == '__main__':
     if len(sys.argv) <= 1:
         _error_and_die('Missing module directory. Exiting.')
-    
+
     moduleDir = sys.argv[1]
     if not isdir(moduleDir):
-        _error_and_die('Module directory "%s" does not exist. Exiting.' % 
+        _error_and_die('Module directory "%s" does not exist. Exiting.' %
             moduleDir)
 
     # Check the consistency of LEMMA build and deployment configurations with
     # existing filesystem modules
     pomFiles = _find_module_files(moduleDir, MAVEN_POM_FILES)
     pomInfo = _parse_pom_files(moduleDir, pomFiles)
-    
+
     gradleFiles = _find_module_files(moduleDir, GRADLE_PROJECT_FILES)
     gradleInfo = _parse_gradle_files(moduleDir, gradleFiles)
 
@@ -328,19 +328,19 @@ if __name__ == '__main__':
         posixParent = _posix_seps(i.get_parent())
         if posixModule not in configuredBuildModules\
             and posixParent not in configuredBuildModules:
-            messages.append('No build config entry: %s' %\
+            messages.append('No build config entry: %s' %
                 _module_and_parent(posixModule, posixParent))
-        
+
         if posixModule not in configuredDeploymentModules\
             and posixParent not in configuredDeploymentModules:
-            messages.append('No deployment config entry: %s' %\
+            messages.append('No deployment config entry: %s' %
                 _module_and_parent(posixModule, posixParent))
 
         windowsModule = _windows_seps(i.get_name())
         windowsParent = _windows_seps(i.get_parent())
         if windowsModule not in configuredWindowsBuildModules\
             and windowsParent not in configuredWindowsBuildModules:
-            messages.append('No Windows build config entry: %s' %\
+            messages.append('No Windows build config entry: %s' %
                 _module_and_parent(windowsModule, windowsParent))
 
     # Check the consistency of LEMMA's Eclipse Updatesite configuration with
@@ -360,16 +360,16 @@ if __name__ == '__main__':
         )
 
     for p in eclipsePluginProjects:
-        pluginName = p.get_name()        
+        pluginName = p.get_name()
         pluginParent = p.get_parent()
 
-        if pluginName not in configuredUpdatesitePlugins \
+        if pluginName not in configuredUpdatesitePlugins\
             and pluginParent not in configuredUpdatesitePlugins:
-            print('No corresponding updatesite config: %s' %
+            print('No corresponding Updatesite config: %s' %
                 _module_and_parent(pluginName, pluginParent))
 
         if pluginName not in configuredUpdatesiteFeaturePlugins:
-            messages.append('No corresponding updatesite feature: %s' %
+            messages.append('No corresponding Updatesite feature: %s' %
                 pluginName)
 
     # Print out error messages and exit with a corresponding status code
