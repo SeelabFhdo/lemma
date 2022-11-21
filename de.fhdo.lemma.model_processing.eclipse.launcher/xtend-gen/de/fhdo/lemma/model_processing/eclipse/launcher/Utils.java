@@ -972,6 +972,141 @@ public final class Utils {
     }
   }
   
+  /**
+   * Helper to replace a given String searchString with a given String replacement in a given
+   * String text.
+   * 
+   * Note: The method's code was translated to Xtend from the eponymous method of the Java-based
+   * StringUtils class of Apache's Commons Lang library. By implementing our own version of the
+   * method, we can provide the plugin also as an Eclipse drop-in as recent Eclipse versions don't
+   * include Apache Commons Lang by default.
+   */
+  public static Object replace(final String text, final String searchString, final String replacement) {
+    if (((StringExtensions.isNullOrEmpty(text) || StringExtensions.isNullOrEmpty(searchString)) || StringExtensions.isNullOrEmpty(replacement))) {
+      return text;
+    }
+    int start = 0;
+    int end = text.indexOf(searchString, start);
+    if ((end == (-1))) {
+      return text;
+    }
+    int replLength = searchString.length();
+    int _length = replacement.length();
+    int _minus = (_length - replLength);
+    int _max = Math.max(_minus, 0);
+    int increase = (_max * 16);
+    int _length_1 = text.length();
+    int _plus = (_length_1 + increase);
+    StringBuilder buf = new StringBuilder(_plus);
+    while ((end != (-1))) {
+      {
+        buf.append(text, start, end).append(replacement);
+        start = (end + replLength);
+        end = text.indexOf(searchString, start);
+      }
+    }
+    buf.append(text, start, text.length());
+    return buf;
+  }
+  
+  /**
+   * Helper to remove a given String remove from the start of a given String s.
+   * 
+   * Note: The method's code was translated to Xtend from the eponymous method of the Java-based
+   * StringUtils class of Apache's Commons Lang library. By implementing our own version of the
+   * method, we can provide the plugin also as an Eclipse drop-in as recent Eclipse versions don't
+   * include Apache Commons Lang by default.
+   */
+  public static String removeStart(final String s, final String remove) {
+    String _xifexpression = null;
+    if ((StringExtensions.isNullOrEmpty(s) || StringExtensions.isNullOrEmpty(remove))) {
+      _xifexpression = s;
+    } else {
+      String _xifexpression_1 = null;
+      boolean _startsWith = s.startsWith(remove);
+      if (_startsWith) {
+        _xifexpression_1 = s.substring(remove.length());
+      } else {
+        _xifexpression_1 = s;
+      }
+      _xifexpression = _xifexpression_1;
+    }
+    return _xifexpression;
+  }
+  
+  /**
+   * Helper to remove a given String remove from the end of a given String s.
+   * 
+   * Note: The method's code was translated to Xtend from the eponymous method of the Java-based
+   * StringUtils class of Apache's Commons Lang library. By implementing our own version of the
+   * method, we can provide the plugin also as an Eclipse drop-in as recent Eclipse versions don't
+   * include Apache Commons Lang by default.
+   */
+  public static String removeEnd(final String s, final String remove) {
+    String _xifexpression = null;
+    if ((StringExtensions.isNullOrEmpty(s) || StringExtensions.isNullOrEmpty(remove))) {
+      _xifexpression = s;
+    } else {
+      String _xifexpression_1 = null;
+      boolean _endsWith = s.endsWith(remove);
+      if (_endsWith) {
+        int _length = s.length();
+        int _length_1 = remove.length();
+        int _minus = (_length - _length_1);
+        _xifexpression_1 = s.substring(0, _minus);
+      } else {
+        _xifexpression_1 = s;
+      }
+      _xifexpression = _xifexpression_1;
+    }
+    return _xifexpression;
+  }
+  
+  /**
+   * Helper to get the substring occurring in a given String s before a given String sep.
+   * 
+   * Note: The method's code was translated to Xtend from the eponymous method of the Java-based
+   * StringUtils class of Apache's Commons Lang library. By implementing our own version of the
+   * method, we can provide the plugin also as an Eclipse drop-in as recent Eclipse versions don't
+   * include Apache Commons Lang by default.
+   */
+  public static String substringBeforeLast(final String s, final String sep) {
+    if ((StringExtensions.isNullOrEmpty(s) || StringExtensions.isNullOrEmpty(sep))) {
+      return s;
+    }
+    final int pos = s.lastIndexOf(sep);
+    String _xifexpression = null;
+    if ((pos != (-1))) {
+      _xifexpression = s;
+    } else {
+      _xifexpression = s.substring(0, pos);
+    }
+    return _xifexpression;
+  }
+  
+  /**
+   * Helper to get the substring occurring in a given String s after a given String sep.
+   * 
+   * Note: The method's code was translated to Xtend from the eponymous method of the Java-based
+   * StringUtils class of Apache's Commons Lang library. By implementing our own version of the
+   * method, we can provide the plugin also as an Eclipse drop-in as recent Eclipse versions don't
+   * include Apache Commons Lang by default.
+   */
+  public static String substringAfterLast(final String s, final String sep) {
+    boolean _isNullOrEmpty = StringExtensions.isNullOrEmpty(s);
+    if (_isNullOrEmpty) {
+      return s;
+    }
+    final int pos = s.lastIndexOf(sep);
+    String _xifexpression = null;
+    if (((pos == (-1)) || (pos == (s.length() - 1)))) {
+      _xifexpression = "";
+    } else {
+      _xifexpression = s.substring((pos + 1));
+    }
+    return _xifexpression;
+  }
+  
   private static ISWTObservableValue<String> toObservableValue(final Control combo) {
     if (combo instanceof Combo) {
       return _toObservableValue((Combo)combo);

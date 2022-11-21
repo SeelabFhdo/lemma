@@ -18,7 +18,6 @@ import org.eclipse.jface.dialogs.MessageDialog
 import java.beans.PropertyChangeEvent
 import static de.fhdo.lemma.model_processing.eclipse.launcher.Utils.*
 import org.apache.commons.io.FilenameUtils
-import org.apache.commons.lang.StringUtils
 import de.fhdo.lemma.model_processing.eclipse.launcher.processing_configurations.ProcessorExecutableType
 import de.fhdo.lemma.model_processing.eclipse.launcher.processing_configurations.ProcessorExecutableTypesInformationManager
 
@@ -84,7 +83,7 @@ abstract class AbstractCodeGeneratorCompletionDialog extends AbstractTemplateCom
         val fileExtension = file.fileExtension ?: ""
         var generatorNameAddendum = getGeneratorNameAddendum()
         if (!generatorNameAddendum.empty)
-            generatorNameAddendum = StringUtils.replace(generatorNameAddendum, " ", "_") + "_"
+            generatorNameAddendum = replace(generatorNameAddendum, " ", "_") + "_"
         val configurationNamePrefix = '''Run_«generatorShortName»_«generatorNameAddendum»''' +
             '''«fileBasename»_«fileExtension»'''
         configurationTemplate.launchConfigurationName = LAUNCH_MANAGER

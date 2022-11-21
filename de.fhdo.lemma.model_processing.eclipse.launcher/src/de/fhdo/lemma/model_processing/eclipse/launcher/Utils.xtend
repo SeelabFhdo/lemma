@@ -725,4 +725,107 @@ final class Utils {
                 ]
             ]
     }
+
+    /**
+     * Helper to replace a given String searchString with a given String replacement in a given
+     * String text.
+     *
+     * Note: The method's code was translated to Xtend from the eponymous method of the Java-based
+     * StringUtils class of Apache's Commons Lang library. By implementing our own version of the
+     * method, we can provide the plugin also as an Eclipse drop-in as recent Eclipse versions don't
+     * include Apache Commons Lang by default.
+     */
+    static def replace(String text, String searchString, String replacement) {
+        if (text.nullOrEmpty || searchString.nullOrEmpty || replacement.nullOrEmpty)
+            return text
+
+        var start = 0
+        var end = text.indexOf(searchString, start)
+        if (end == -1)
+            return text
+
+        var replLength = searchString.length()
+        var increase = Math.max(replacement.length - replLength, 0) * 16
+        var buf = new StringBuilder(text.length + increase)
+        while (end != -1) {
+            buf.append(text, start, end).append(replacement)
+            start = end + replLength
+            end = text.indexOf(searchString, start)
+        }
+
+        buf.append(text, start, text.length)
+        return buf
+    }
+
+    /**
+     * Helper to remove a given String remove from the start of a given String s.
+     *
+     * Note: The method's code was translated to Xtend from the eponymous method of the Java-based
+     * StringUtils class of Apache's Commons Lang library. By implementing our own version of the
+     * method, we can provide the plugin also as an Eclipse drop-in as recent Eclipse versions don't
+     * include Apache Commons Lang by default.
+     */
+    static def removeStart(String s, String remove) {
+        return if (s.nullOrEmpty || remove.nullOrEmpty)
+                s
+            else if (s.startsWith(remove))
+                s.substring(remove.length)
+            else
+                s
+    }
+
+    /**
+     * Helper to remove a given String remove from the end of a given String s.
+     *
+     * Note: The method's code was translated to Xtend from the eponymous method of the Java-based
+     * StringUtils class of Apache's Commons Lang library. By implementing our own version of the
+     * method, we can provide the plugin also as an Eclipse drop-in as recent Eclipse versions don't
+     * include Apache Commons Lang by default.
+     */
+    static def removeEnd(String s, String remove) {
+        return if (s.nullOrEmpty || remove.nullOrEmpty)
+                s
+            else if (s.endsWith(remove))
+                s.substring(0, s.length - remove.length)
+            else
+                s
+    }
+
+    /**
+     * Helper to get the substring occurring in a given String s before a given String sep.
+     *
+     * Note: The method's code was translated to Xtend from the eponymous method of the Java-based
+     * StringUtils class of Apache's Commons Lang library. By implementing our own version of the
+     * method, we can provide the plugin also as an Eclipse drop-in as recent Eclipse versions don't
+     * include Apache Commons Lang by default.
+     */
+    static def substringBeforeLast(String s, String sep) {
+        if (s.nullOrEmpty || sep.nullOrEmpty)
+            return s
+
+        val pos = s.lastIndexOf(sep)
+        return if (pos !== -1)
+                s
+            else
+                s.substring(0, pos)
+    }
+
+    /**
+     * Helper to get the substring occurring in a given String s after a given String sep.
+     *
+     * Note: The method's code was translated to Xtend from the eponymous method of the Java-based
+     * StringUtils class of Apache's Commons Lang library. By implementing our own version of the
+     * method, we can provide the plugin also as an Eclipse drop-in as recent Eclipse versions don't
+     * include Apache Commons Lang by default.
+     */
+    static def substringAfterLast(String s, String sep) {
+        if (s.nullOrEmpty)
+            return s
+
+        val pos = s.lastIndexOf(sep)
+        return if (pos == -1 || pos == s.length - 1)
+                ""
+            else
+                s.substring(pos + 1)
+    }
 }

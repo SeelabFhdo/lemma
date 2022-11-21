@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
@@ -132,9 +131,9 @@ public final class LocalDockerImageSelectionDialog extends Dialog {
     final ArrayList<Pair<String, String>> splitImagesAndTags = CollectionLiterals.<Pair<String, String>>newArrayList();
     final ArrayList<String> unparseableImages = CollectionLiterals.<String>newArrayList();
     final Consumer<String> _function = (String it) -> {
-      final String result = StringUtils.removeEnd(StringUtils.removeStart(it, "\'"), "\'");
-      final String image = StringUtils.substringBeforeLast(result, imageTagSeperator);
-      final String tag = StringUtils.substringAfterLast(result, imageTagSeperator);
+      final String result = Utils.removeEnd(Utils.removeStart(it, "\'"), "\'");
+      final String image = Utils.substringBeforeLast(result, imageTagSeperator);
+      final String tag = Utils.substringAfterLast(result, imageTagSeperator);
       if (((!StringExtensions.isNullOrEmpty(image)) && (!StringExtensions.isNullOrEmpty(tag)))) {
         Pair<String, String> _mappedTo = Pair.<String, String>of(image, tag);
         splitImagesAndTags.add(_mappedTo);

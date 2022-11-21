@@ -8,7 +8,6 @@ import de.fhdo.lemma.model_processing.eclipse.launcher.processing_configurations
 import de.fhdo.lemma.model_processing.eclipse.launcher.processing_configurations.shortcut.AbstractLaunchConfigurationTemplate;
 import java.beans.PropertyChangeEvent;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.debug.core.DebugPlugin;
@@ -95,7 +94,7 @@ public abstract class AbstractCodeGeneratorCompletionDialog extends AbstractLaun
     boolean _isEmpty = generatorNameAddendum.isEmpty();
     boolean _not = (!_isEmpty);
     if (_not) {
-      String _replace = StringUtils.replace(generatorNameAddendum, " ", "_");
+      Object _replace = Utils.replace(generatorNameAddendum, " ", "_");
       String _plus = (_replace + "_");
       generatorNameAddendum = _plus;
     }

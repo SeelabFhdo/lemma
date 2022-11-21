@@ -6,7 +6,6 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.jface.dialogs.Dialog
 
 import static de.fhdo.lemma.model_processing.eclipse.launcher.Utils.*
-import static org.apache.commons.lang.StringUtils.*
 import org.eclipse.jface.viewers.TableViewer
 import org.eclipse.jface.viewers.IStructuredContentProvider
 import org.eclipse.swt.layout.GridData
