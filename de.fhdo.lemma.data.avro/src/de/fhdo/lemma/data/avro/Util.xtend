@@ -25,7 +25,6 @@ import de.fhdo.lemma.technology.mapping.ComplexTypeMapping
 import java.util.Collection
 import java.util.function.Function
 import java.util.Set
-import org.apache.commons.lang.StringUtils
 import de.fhdo.lemma.data.intermediate.IntermediateVersion
 import de.fhdo.lemma.data.intermediate.IntermediateContext
 import de.fhdo.lemma.data.intermediate.IntermediateComplexType
@@ -64,7 +63,29 @@ final class Util {
      */
     static def int qualifyingLevelCount(String qualifiedString) {
         val qualifyingParts = LemmaUtils.getQualifyingParts(qualifiedString)
-        StringUtils.countMatches(qualifyingParts, ".")
+        countMatches(qualifyingParts, ".")
+    }
+
+    /**
+     * Helper to count how often a given String sub is comprised in a given String s.
+     *
+     * Note: The method's code was translated to Xtend from the eponymous method of the Java-based
+     * StringUtils class of Apache's Commons Lang library. By implementing our own version of the
+     * method, we can provide the plugin also as an Eclipse drop-in as recent Eclipse versions don't
+     * include Apache Commons Lang by default.
+     */
+    private static def int countMatches(String s, String sub) {
+        if (s.nullOrEmpty || sub.nullOrEmpty)
+            return 0
+
+        var count = 0
+        var idx = 0
+        while ((idx = s.indexOf(sub, idx)) != -1) {
+            count++
+            idx += sub.length
+        }
+
+        return count
     }
 
     /**

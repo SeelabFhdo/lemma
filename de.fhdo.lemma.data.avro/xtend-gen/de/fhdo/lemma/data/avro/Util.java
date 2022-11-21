@@ -28,7 +28,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -116,9 +115,34 @@ public final class Util {
     int _xblockexpression = (int) 0;
     {
       final String qualifyingParts = LemmaUtils.getQualifyingParts(qualifiedString);
-      _xblockexpression = StringUtils.countMatches(qualifyingParts, ".");
+      _xblockexpression = Util.countMatches(qualifyingParts, ".");
     }
     return _xblockexpression;
+  }
+  
+  /**
+   * Helper to count how often a given String sub is comprised in a given String s.
+   * 
+   * Note: The method's code was translated to Xtend from the eponymous method of the Java-based
+   * StringUtils class of Apache's Commons Lang library. By implementing our own version of the
+   * method, we can provide the plugin also as an Eclipse drop-in as recent Eclipse versions don't
+   * include Apache Commons Lang by default.
+   */
+  private static int countMatches(final String s, final String sub) {
+    if ((StringExtensions.isNullOrEmpty(s) || StringExtensions.isNullOrEmpty(sub))) {
+      return 0;
+    }
+    int count = 0;
+    int idx = 0;
+    while (((idx = s.indexOf(sub, idx)) != (-1))) {
+      {
+        count++;
+        int _idx = idx;
+        int _length = sub.length();
+        idx = (_idx + _length);
+      }
+    }
+    return count;
   }
   
   /**
