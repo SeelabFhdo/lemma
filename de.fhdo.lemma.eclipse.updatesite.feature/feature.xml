@@ -259,6 +259,13 @@
          unpack="false"/>
 
    <plugin
+         id="de.fhdo.lemma.service.openapi"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="de.fhdo.lemma.service.openapi.eclipse.ui"
          download-size="0"
          install-size="0"
