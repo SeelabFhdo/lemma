@@ -68,7 +68,8 @@ You can install LEMMA from a running Eclipse instance via the following Eclipse 
 As an alternative to the Eclipse updatesite, you may also download the LEMMA Eclipse plugins for its latest release as a set of Eclipse dropins. You can find these dropins as an asset of [LEMMA's latest release on GitHub](https://github.com/SeelabFhdo/lemma/releases). However, in this case you will also need to manually install the Eclipse plugins for the [ATL Transformation Language and EMFTVM](https://www.eclipse.org/atl/) version 4.5 or greater. The corresponding Eclipse updatesite is available here: [https://download.eclipse.org/mmt/atl/updates/releases/](https://download.eclipse.org/mmt/atl/updates/releases/).
 
 ## Examples
-We provide three examples in the form of a set of LEMMA models that describe coherent microservice architectures including their domain data, microservice APIs, and their operation. You can find the modeling examples on GitHub:
+We provide several examples for using LEMMA to describe coherent (parts of) microservice architectures including their domain data, microservice APIs, and operation. You can find these examples on GitHub:
+- [Charging Station Management Example](https://github.com/SeelabFhdo/lemma/tree/main/examples/charging-station-management)
 - [Parking Space Example](https://github.com/SeelabFhdo/lemma/tree/main/examples/parking-spaces)
 - [E-Vehicle Charging Example](https://github.com/SeelabFhdo/lemma/tree/main/examples/e-vehicle-charging)
 - [Food to Go Example](https://github.com/SeelabFhdo/lemma/tree/main/examples/food-to-go)
