@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to [LEMMA](https://github.com/SeelabFhdo/lemma/) will be documented in this file.
 
-## [0.8.6] - 2022-11-15
+## [0.8.6] - 2022-11-22
 ### Added
 - Add Eclipse launchers for LEMMA model processors and processor chains
 - Add support to transform OpenAPI specifications into LEMMA models (contributed by [Jonas Sorgalla](https://www.github.com/josor001))
