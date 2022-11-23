@@ -2,13 +2,9 @@ pipeline {
     agent none
 
     environment {
-        DISCORD_WEBHOOK = credentials("lemma-builds-discord-webhook-url")
         BASE_BRANCH_URL = "https://github.com/SeelabFhdo/lemma"
-        RELEASE_TAG_PATTERN = /^v[0-9]+\.[0-9]+(\.[0-9]+)?/
+        DISCORD_WEBHOOK = credentials("lemma-builds-discord-webhook-url")
 
-        CODE_GENERATORS_FOLDER = "code generators"
-        JAVA_GENERATOR_IMAGE = "lemma/java_generator:latest"
-        VERSION_PATTERN = /version\s*=\s*(?<version>.+)/
         LEMMA_LOCAL_DOCKER_REPO = "lemma"
         LEMMA_DOCKER_HUB_REPO = "lemmahub"
 
