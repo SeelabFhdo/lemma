@@ -20,26 +20,36 @@
 # use it to publish the image to various registries. In case the invoked script
 # does not export the variable, the "docker-images-push" script will exit with
 # an error code.
-
-# The "docker-images-push" script may receive the following CLI arguments:
-#   - Unnamed first argument: Path to the file of relevant LEMMA modules. By
-#                             default, the script will assume the module file
-#                             "lemma-build-modules.txt" from LEMMA's build root.
 #
-#   - registry, user, password tuples: These tuples determine the registries to
-#                                      publish built Docker images to. The
-#                                      script expects them in the following
-#                                      form and after a possible LEMMA module
-#                                      file:
-#       registry='registry1' user='registry1User' password='registry1Password' \
-#       registry='registry2' user='registry2User' password='registry2Password' \
+# The "docker-images-push" script may receive the following CLI arguments:
+#   - Unnamed first argument:
+#       Path to the file of relevant LEMMA modules. By default, the script will
+#       assume the module file "lemma-build-modules.txt" from LEMMA's build
+#       root.
+#
+#   - registry, user, password, repository tuples:
+#       These tuples determine the registries to publish built Docker images to.
+#       The script expects them in the following form and after a possible LEMMA
+#       module file:
+#           registry='registry1' user='registry1User' \
+#               password='registry1Password' \
+#           registry='registry2' user='registry2User' \
+#               password='registry2Password' repository='repository2'
 #       ...
-#                                      In case no registry tuples are provided,
-#                                      the script will only build the images and
-#                                      not publish them.
+#
+#       Note that the repository part of a registry tuple is optional. In case
+#       it is provided, the script will replace the repository tag of an image
+#       with the repository part before the image is pushed. Assuming that a
+#       certain repository part receives the value "custom" will result in an
+#       image called "repo/image:tag" to be renamed to "custom/image:tag" prior
+#       to its push into the corresponding registry.
+#
+#       In case no registry tuples are provided, the script will only build the
+#       images and not publish them.
 
 declare -A registryUsers
 declare -A registryPasswords
+declare -A registryRepositories
 
 # Extract relevant LEMMA modules from the passed module file. Lines starting
 # with "#" and empty lines are ignored. All other lines are interpreted as LEMMA
@@ -140,7 +150,17 @@ do_image_push() {
         user=${registryUsers[$R]}
         password=${registryPasswords[$R]}
         echo "$password" | docker login --username "$user" --password-stdin "https://$registry"
-        registryTag="$registry/$tag"
+        repository=${registryRepositories[$R]}
+        # Use custom repository for the image in case the user provided one with
+        # the registry tuple
+        if [ -n "$repository" ]
+        then
+            imageName=${tag#*/}
+            targetTag=$repository/$imageName
+        else
+            targetTag=$tag
+        fi
+        registryTag="$registry/$targetTag"
         docker image tag $tag $registryTag
         docker push $registryTag
         docker logout $registry
@@ -181,6 +201,8 @@ do
             registryUsers[$current_registry]=$value ;;
         password)
             registryPasswords[$current_registry]=$value ;;
+        repository)
+            registryRepositories[$current_registry]=$value ;;
         *)
     esac
 done

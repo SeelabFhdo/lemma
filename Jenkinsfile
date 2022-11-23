@@ -9,7 +9,13 @@ pipeline {
         CODE_GENERATORS_FOLDER = "code generators"
         JAVA_GENERATOR_IMAGE = "lemma/java_generator:latest"
         VERSION_PATTERN = /version\s*=\s*(?<version>.+)/
+        LEMMA_LOCAL_DOCKER_REPO = "lemma"
+        LEMMA_DOCKER_HUB_REPO = "lemmahub"
 
+        DOCKER_HUB_REGISTRY_CREDENTIALS_KEY = "lemma-dockerhub-registry"
+        DOCKER_HUB_REGISTRY_CREDENTIALS = credentials("$DOCKER_HUB_REGISTRY_CREDENTIALS_KEY")
+        DOCKER_HUB_REGISTRY_REPOSITORY = "${LEMMA_DOCKER_HUB_REPO}"
+        DOCKER_HUB_REGISTRY_URL = "https://registry.hub.docker.com"
         DOCKER_NEXUS_REGISTRY_CREDENTIALS_KEY = "seelab-nexus-docker-registry"
         DOCKER_NEXUS_REGISTRY_CREDENTIALS = credentials("$DOCKER_NEXUS_REGISTRY_CREDENTIALS_KEY")
         DOCKER_NEXUS_REGISTRY_URL = "https://docker.repository.seelab.fh-dortmund.de"
@@ -17,10 +23,17 @@ pipeline {
         DOCKER_RANCHER_REGISTRY_CREDENTIALS = credentials("$DOCKER_RANCHER_REGISTRY_CREDENTIALS_KEY")
         DOCKER_RANCHER_REGISTRY_URL = "http://registry.seelab.fh-dortmund.de"
 
-        BUILD_IMAGE = "lemma/build:latest"
-        BUILD_UPDATESITE_IMAGE = "lemma/updatesite:latest"
+        BUILD_IMAGE_NAME = "build:latest"
+        BUILD_IMAGE = "${LEMMA_LOCAL_DOCKER_REPO}/${BUILD_IMAGE_NAME}"
+        BUILD_IMAGE_DOCKER_HUB = "${LEMMA_DOCKER_HUB_REPO}/${BUILD_IMAGE_NAME}"
 
-        DEPLOY_IMAGE = "lemma/deploy:latest"
+        BUILD_UPDATESITE_IMAGE_NAME = "updatesite:latest"
+        BUILD_UPDATESITE_IMAGE = "${LEMMA_LOCAL_DOCKER_REPO}/${BUILD_UPDATESITE_IMAGE_NAME}"
+        BUILD_UPDATESITE_IMAGE_DOCKER_HUB = "${LEMMA_DOCKER_HUB_REPO}/${BUILD_UPDATESITE_IMAGE_NAME}"
+
+        DEPLOY_IMAGE_NAME = "deploy:latest"
+        DEPLOY_IMAGE = "${LEMMA_LOCAL_DOCKER_REPO}/${DEPLOY_IMAGE_NAME}"
+        DEPLOY_IMAGE_DOCKER_HUB = "${LEMMA_DOCKER_HUB_REPO}/${DEPLOY_IMAGE_NAME}"
         DEPLOY_MAVEN_REPOSITORY_CREDENTIALS = credentials("seelab-nexus-maven-repository")
         DEPLOY_MAVEN_SNAPSHOTS_ID = "nexus-snapshots"
         DEPLOY_MAVEN_SNAPSHOTS_URL = "https://repository.seelab.fh-dortmund.de/repository/maven-snapshots/"
@@ -121,6 +134,13 @@ pipeline {
                                 DOCKER_RANCHER_REGISTRY_CREDENTIALS_KEY) {
                                 buildImage.push()
                             }
+
+                            buildImageDockerHub = docker.build BUILD_IMAGE_DOCKER_HUB,
+                                "./build/docker"
+                            docker.withRegistry(DOCKER_HUB_REGISTRY_URL,
+                                DOCKER_HUB_REGISTRY_CREDENTIALS_KEY) {
+                                buildImageDockerHub.push()
+                            }
                         }
                     }
                 }
@@ -150,6 +170,13 @@ pipeline {
                             docker.withRegistry(DOCKER_RANCHER_REGISTRY_URL,
                                 DOCKER_RANCHER_REGISTRY_CREDENTIALS_KEY) {
                                 updatesiteImage.push()
+                            }
+
+                            updatesiteImageDockerHub = docker.build BUILD_UPDATESITE_IMAGE_DOCKER_HUB,
+                                "./build/updatesite/docker"
+                            docker.withRegistry(DOCKER_HUB_REGISTRY_URL,
+                                DOCKER_HUB_REGISTRY_CREDENTIALS_KEY) {
+                                updatesiteImageDockerHub.push()
                             }
                         }
                     }
@@ -188,6 +215,17 @@ pipeline {
                                 docker.withRegistry(DOCKER_RANCHER_REGISTRY_URL,
                                     DOCKER_RANCHER_REGISTRY_CREDENTIALS_KEY) {
                                     deployImage.push()
+                                }
+
+                                deployImageDockerHub = docker.build(DEPLOY_IMAGE_DOCKER_HUB,
+                                    "--build-arg MAVEN_SETTINGS_XML=\"\$(cat ./build/docker/settings.xml)\" \
+                                    --build-arg GRADLE_PROPERTIES=\"\$(cat ./build/docker/gradle.properties)\" \
+                                    --build-arg JENKINS_UID=\"\$(id -u jenkins)\" \
+                                    ./build/deploy/docker"
+                                )
+                                docker.withRegistry(DOCKER_HUB_REGISTRY_URL,
+                                    DOCKER_HUB_REGISTRY_CREDENTIALS_KEY) {
+                                    deployImageDockerHub.push()
                                 }
                             }
                         }
@@ -232,7 +270,11 @@ pipeline {
                                     "password=\'$DOCKER_NEXUS_REGISTRY_CREDENTIALS_PSW\' " +
                                     "registry=\'$DOCKER_RANCHER_REGISTRY_URL\' " +
                                     "user=\'$DOCKER_RANCHER_REGISTRY_CREDENTIALS_USR\' " +
-                                    "password=\'$DOCKER_RANCHER_REGISTRY_CREDENTIALS_PSW\'"
+                                    "password=\'$DOCKER_RANCHER_REGISTRY_CREDENTIALS_PSW\'" +
+                                    "registry=\'$DOCKER_HUB_REGISTRY_URL\' " +
+                                    "user=\'$DOCKER_HUB_REGISTRY_CREDENTIALS_USR\' " +
+                                    "password=\'$DOCKER_HUB_REGISTRY_CREDENTIALS_PSW\' " +
+                                    "repository=\'$DOCKER_HUB_REGISTRY_REPOSITORY\' "
                                 sh "cd build/docker-images-push && ./docker-images-push.sh $publishArgs"
                             } else
                                 sh "cd build/docker-images-push && ./docker-images-push.sh"
