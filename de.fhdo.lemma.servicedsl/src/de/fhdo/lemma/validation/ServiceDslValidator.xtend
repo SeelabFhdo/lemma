@@ -49,6 +49,8 @@ import de.fhdo.lemma.data.PrimitiveUnspecified
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 class ServiceDslValidator extends AbstractServiceDslValidator {
+	public static final String INSUFFICIENT_ACCESS_CONTROL = "insufficientAccessControl";
+	
     @Inject
     ServiceDslQualifiedNameProvider nameProvider
 
@@ -1103,5 +1105,23 @@ class ServiceDslValidator extends AbstractServiceDslValidator {
                 ]
             }
         ]
+    }
+    
+    @Check
+    def checkInsufficientAccessControl(Operation operation) {
+    	if (operation.aspects.nullOrEmpty)
+    		return
+    		
+    	val aspectPresent = operation.aspects.exists[
+    		val qualifiedName = it.importedAspect.buildQualifiedName(".", true, false)
+    		qualifiedName == "SecurityAspects.AccessRole"
+    	]
+    	
+    	if (!aspectPresent)
+    		warning('''Operation lacks permitted access roles ''' +
+    			'''(security smell: Insufficiant Access Control)''',
+    			operation,
+                ServicePackage.Literals.OPERATION__NAME,
+                INSUFFICIENT_ACCESS_CONTROL)
     }
 }

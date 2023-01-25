@@ -36,6 +36,7 @@ Workflow {
             referencedResource = "platform:/resource/de.fhdo.lemma.technology.technologydsl.metamodel/model/TechnologyDefinitionModel.xcore"
 
             fragment = ecore2xtext.Ecore2XtextValueConverterServiceFragment2 auto-inject {}
+            fragment = ui.quickfix.QuickfixProviderFragment2 {}
 
             formatter = {
                 generateStub = true

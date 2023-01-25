@@ -352,7 +352,7 @@ public class ServiceDslExtractor {
   /**
    * Extract Operation
    */
-  private CharSequence generate(final Operation operation) {
+  public CharSequence generate(final Operation operation) {
     CharSequence _xblockexpression = null;
     {
       String _xifexpression = null;
@@ -424,20 +424,31 @@ public class ServiceDslExtractor {
       }
       _builder_2.newLineIfNotEmpty();
       final String aspects = _builder_2.toString();
-      final Function1<Parameter, CharSequence> _function_2 = (Parameter it) -> {
-        return this.generate(it);
-      };
-      final String parameters = String.join(", ", ListExtensions.<Parameter, CharSequence>map(operation.getParameters(), _function_2));
       StringConcatenation _builder_3 = new StringConcatenation();
-      _builder_3.append(comment);
-      _builder_3.append(endpoints);
-      _builder_3.append(aspects);
+      {
+        EList<Parameter> _parameters = operation.getParameters();
+        boolean _hasElements = false;
+        for(final Parameter parameter : _parameters) {
+          if (!_hasElements) {
+            _hasElements = true;
+          } else {
+            _builder_3.appendImmediate(",", "");
+          }
+          CharSequence _generate_2 = this.generate(parameter);
+          _builder_3.append(_generate_2);
+        }
+      }
+      final String parameters = _builder_3.toString();
+      StringConcatenation _builder_4 = new StringConcatenation();
+      _builder_4.append(comment);
+      _builder_4.append(endpoints);
+      _builder_4.append(aspects);
       String _name_2 = operation.getName();
-      _builder_3.append(_name_2);
-      _builder_3.append("(");
-      _builder_3.append(parameters);
-      _builder_3.append(");");
-      _xblockexpression = _builder_3;
+      _builder_4.append(_name_2);
+      _builder_4.append("(");
+      _builder_4.append(parameters);
+      _builder_4.append(");");
+      _xblockexpression = _builder_4;
     }
     return _xblockexpression;
   }
@@ -453,14 +464,20 @@ public class ServiceDslExtractor {
       for(final ImportedServiceAspect a : _aspects) {
         if (!_hasElements) {
           _hasElements = true;
+          _builder.append("\n\t");
         } else {
-          _builder.appendImmediate(" ", "");
+          _builder.appendImmediate("\n\t", "");
         }
         CharSequence _generate = this.generate(a);
         _builder.append(_generate);
       }
+      if (_hasElements) {
+        _builder.append("\n");
+      }
     }
     _builder.append(" ");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t");
     String _generate_1 = this.generate(parameter.getCommunicationType());
     _builder.append(_generate_1);
     _builder.append(" ");
@@ -472,6 +489,7 @@ public class ServiceDslExtractor {
     _builder.append(" : ");
     String _generateType = this.generateType(parameter);
     _builder.append(_generateType);
+    _builder.newLineIfNotEmpty();
     return _builder;
   }
   

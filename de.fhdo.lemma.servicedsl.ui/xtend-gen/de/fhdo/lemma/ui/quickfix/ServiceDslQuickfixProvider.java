@@ -3,7 +3,29 @@
  */
 package de.fhdo.lemma.ui.quickfix;
 
+import de.fhdo.lemma.service.Operation;
+import de.fhdo.lemma.servicedsl.extractor.ServiceDslExtractor;
+import de.fhdo.lemma.validation.ServiceDslValidator;
+import java.util.ArrayList;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.dialogs.ListSelectionDialog;
+import org.eclipse.xtend2.lib.StringConcatenation;
+import org.eclipse.xtext.ui.editor.model.IXtextDocument;
+import org.eclipse.xtext.ui.editor.model.edit.IModificationContext;
+import org.eclipse.xtext.ui.editor.model.edit.ISemanticModification;
 import org.eclipse.xtext.ui.editor.quickfix.DefaultQuickfixProvider;
+import org.eclipse.xtext.ui.editor.quickfix.Fix;
+import org.eclipse.xtext.ui.editor.quickfix.IssueResolutionAcceptor;
+import org.eclipse.xtext.validation.Issue;
+import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 
 /**
  * Custom quickfixes.
@@ -12,4 +34,69 @@ import org.eclipse.xtext.ui.editor.quickfix.DefaultQuickfixProvider;
  */
 @SuppressWarnings("all")
 public class ServiceDslQuickfixProvider extends DefaultQuickfixProvider {
+  /**
+   * Current shell
+   */
+  private static final Shell SHELL = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+  
+  @Fix(ServiceDslValidator.INSUFFICIENT_ACCESS_CONTROL)
+  public void resolveInsufficiantAccessControl(final Issue issue, final IssueResolutionAcceptor acceptor) {
+    final ISemanticModification _function = (EObject element, IModificationContext context) -> {
+      final IXtextDocument xtextDocument = context.getXtextDocument();
+      Integer _lineNumber = issue.getLineNumber();
+      int _minus = ((_lineNumber).intValue() - 1);
+      final int offset = xtextDocument.getLineOffset(_minus);
+      final String insert = ("        @SecurityAspects::_aspects.AccessRole(name=\"user\")" + "\n");
+      final Operation operation = ((Operation) element);
+      final ServiceDslExtractor extractor = new ServiceDslExtractor();
+      final ArrayList<String> list = CollectionLiterals.<String>newArrayList();
+      list.add("Enable role-based access control.");
+      list.add("Disable public availability.");
+      ArrayContentProvider _instance = ArrayContentProvider.getInstance();
+      LabelProvider _labelProvider = new LabelProvider();
+      final ListSelectionDialog dialog = new ListSelectionDialog(ServiceDslQuickfixProvider.SHELL, list, _instance, _labelProvider, 
+        "Select Refactoring Option:");
+      dialog.setTitle("Insufficient Access Control Refactoring Dialog");
+      dialog.setInitialSelections(list);
+      dialog.open();
+      xtextDocument.replace(offset, 0, insert);
+      String content12 = extractor.generate(operation).toString();
+      String _name = operation.getName();
+      String _trim = insert.trim();
+      String _plus = (_trim + "\n");
+      String _name_1 = operation.getName();
+      String _plus_1 = (_plus + _name_1);
+      content12 = content12.replaceFirst(_name, _plus_1);
+      this.createEditor(element.eResource(), content12.toString());
+      final Object[] result = dialog.getResult();
+      final StyledText text = new StyledText(ServiceDslQuickfixProvider.SHELL, SWT.BORDER);
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("Modification summery of ");
+      String _name_2 = operation.getName();
+      _builder.append(_name_2);
+      _builder.append(" endpoint:");
+      _builder.newLineIfNotEmpty();
+      _builder.append("\t");
+      _builder.append("- Added security aspect to line ");
+      Integer _lineNumber_1 = issue.getLineNumber();
+      _builder.append(_lineNumber_1, "\t");
+      _builder.append(". ");
+      _builder.newLineIfNotEmpty();
+      final String message = _builder.toString();
+      MessageDialog.openConfirm(ServiceDslQuickfixProvider.SHELL, "Security Smell Refactoring Summery", message);
+    };
+    acceptor.accept(issue, "Add security aspect to enable role based authorization.", 
+      "Insufficient Access Control", 
+      "error.gif", _function);
+  }
+  
+  public int createEditor(final Resource resource, final String content) {
+    int _xblockexpression = (int) 0;
+    {
+      final SecuritySmellDialog dialog = new SecuritySmellDialog(ServiceDslQuickfixProvider.SHELL, resource, content);
+      dialog.create();
+      _xblockexpression = dialog.open();
+    }
+    return _xblockexpression;
+  }
 }

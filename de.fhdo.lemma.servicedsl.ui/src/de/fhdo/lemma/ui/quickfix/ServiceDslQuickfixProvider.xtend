@@ -3,22 +3,92 @@
  */
 package de.fhdo.lemma.ui.quickfix
 
+import de.fhdo.lemma.service.Operation
+import de.fhdo.lemma.servicedsl.extractor.ServiceDslExtractor
+import de.fhdo.lemma.validation.ServiceDslValidator
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.jface.dialogs.MessageDialog
+import org.eclipse.jface.viewers.ArrayContentProvider
+import org.eclipse.jface.viewers.LabelProvider
+import org.eclipse.swt.SWT
+import org.eclipse.swt.custom.StyledText
+import org.eclipse.ui.PlatformUI
+import org.eclipse.ui.dialogs.ListSelectionDialog
+import org.eclipse.xtext.ui.editor.model.edit.IModificationContext
 import org.eclipse.xtext.ui.editor.quickfix.DefaultQuickfixProvider
+import org.eclipse.xtext.ui.editor.quickfix.Fix
+import org.eclipse.xtext.ui.editor.quickfix.IssueResolutionAcceptor
+import org.eclipse.xtext.validation.Issue
 
 /**
  * Custom quickfixes.
  *
  * See https://www.eclipse.org/Xtext/documentation/310_eclipse_support.html#quick-fixes
  */
-class ServiceDslQuickfixProvider extends DefaultQuickfixProvider {
+class ServiceDslQuickfixProvider extends DefaultQuickfixProvider {	
+	/**
+     * Current shell
+     */
+    static val SHELL = PlatformUI.workbench.activeWorkbenchWindow.shell
+    
+	@Fix(ServiceDslValidator.INSUFFICIENT_ACCESS_CONTROL)
+	def resolveInsufficiantAccessControl(Issue issue, IssueResolutionAcceptor acceptor) {
+		acceptor.accept(issue, "Add security aspect to enable role based authorization.", 
+		"Insufficient Access Control", 
+		"error.gif")[
+			EObject element, IModificationContext context |
+			val xtextDocument = context.getXtextDocument()
+			val offset = xtextDocument.getLineOffset(issue.lineNumber - 1)
+			val insert= "        @SecurityAspects::_aspects.AccessRole(name=\"user\")" + "\n"
+			val operation = element as Operation
+			
+			val extractor = new ServiceDslExtractor()
+			
+			
+			
+			
+			val list = newArrayList
+			list.add("Enable role-based access control.")
+			list.add("Disable public availability.")
+	
+			val dialog = new ListSelectionDialog(SHELL, 
+				list, 
+				ArrayContentProvider.instance,
+				new LabelProvider(),
+				"Select Refactoring Option:"
+			)
+			dialog.setTitle("Insufficient Access Control Refactoring Dialog")
+			dialog.setInitialSelections = list
+				
 
-//	@Fix(ServiceDslValidator.INVALID_NAME)
-//	def capitalizeName(Issue issue, IssueResolutionAcceptor acceptor) {
-//		acceptor.accept(issue, 'Capitalize name', 'Capitalize the name.', 'upcase.png') [
-//			context |
-//			val xtextDocument = context.xtextDocument
-//			val firstLetter = xtextDocument.get(issue.offset, 1)
-//			xtextDocument.replace(issue.offset, 1, firstLetter.toUpperCase)
-//		]
-//	}
+			dialog.open
+			xtextDocument.replace(offset, 0, insert)	
+			var content12 = extractor.generate(operation).toString
+			content12 = content12.replaceFirst(operation.name, insert.trim + "\n" + operation.name)
+			createEditor(element.eResource, content12.toString)
+			
+			
+			val result = dialog.getResult();
+			val text = new StyledText(SHELL, SWT.BORDER)
+			val message = 
+			'''
+			Modification summery of «operation.name» endpoint:
+				- Added security aspect to line «issue.lineNumber». 
+			'''
+			MessageDialog.openConfirm(SHELL, "Security Smell Refactoring Summery", message)
+			
+			
+			
+			
+			
+				
+		]
+	}
+	
+	def createEditor(Resource resource, String content) {
+		val dialog = new SecuritySmellDialog(SHELL, resource, content)
+		dialog.create
+		dialog.open
+	}
 }

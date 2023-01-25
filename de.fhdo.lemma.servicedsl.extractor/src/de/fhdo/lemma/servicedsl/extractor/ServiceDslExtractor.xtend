@@ -146,7 +146,7 @@ class ServiceDslExtractor {
     /**
      * Extract Operation
      */
-    private def generate(Operation operation) {
+    def generate(Operation operation) {
         val comment = if (operation.apiOperationComment !== null) {
             '''
             ---
@@ -171,8 +171,9 @@ class ServiceDslExtractor {
         val aspects = '''
         «FOR a: operation.aspects»«a.generate»«ENDFOR»
         '''
-
-        val parameters = String.join(", ", operation.parameters.map[generate])
+        
+        val parameters = 
+        	'''«FOR parameter : operation.parameters SEPARATOR ","»«generate(parameter)»«ENDFOR»'''
 
         '''«comment»«endpoints»«aspects»«operation.name»(«parameters»);'''
     }
@@ -181,10 +182,11 @@ class ServiceDslExtractor {
      * Extract Parameter
      */
     private def generate(Parameter parameter) {
-        '''«FOR a : parameter.aspects SEPARATOR ' '»«a.generate»«ENDFOR
-        » «parameter.communicationType.generate» «parameter.exchangePattern.generate» «
-        parameter.name» : «parameter.generateType
-        »'''
+        '''
+          	«FOR a : parameter.aspects BEFORE "\n\t" SEPARATOR "\n\t" AFTER "\n"»«a.generate»«ENDFOR» 
+          	«"\t"»«parameter.communicationType.generate» «parameter.exchangePattern.generate» «
+        	parameter.name» : «parameter.generateType»
+    	'''
     }
 
     /**

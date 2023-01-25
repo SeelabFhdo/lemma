@@ -74,6 +74,8 @@ import org.eclipse.xtext.xbase.lib.ListExtensions;
  */
 @SuppressWarnings("all")
 public class ServiceDslValidator extends AbstractServiceDslValidator {
+  public static final String INSUFFICIENT_ACCESS_CONTROL = "insufficientAccessControl";
+  
   @Inject
   private ServiceDslQualifiedNameProvider nameProvider;
   
@@ -1582,5 +1584,32 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
       }
     };
     endpoints.forEach(_function);
+  }
+  
+  @Check
+  public void checkInsufficientAccessControl(final Operation operation) {
+    boolean _isNullOrEmpty = IterableExtensions.isNullOrEmpty(operation.getAspects());
+    if (_isNullOrEmpty) {
+      return;
+    }
+    final Function1<ImportedServiceAspect, Boolean> _function = (ImportedServiceAspect it) -> {
+      boolean _xblockexpression = false;
+      {
+        final String qualifiedName = it.getImportedAspect().buildQualifiedName(".", true, false);
+        _xblockexpression = Objects.equal(qualifiedName, "SecurityAspects.AccessRole");
+      }
+      return Boolean.valueOf(_xblockexpression);
+    };
+    final boolean aspectPresent = IterableExtensions.<ImportedServiceAspect>exists(operation.getAspects(), _function);
+    if ((!aspectPresent)) {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("Operation lacks permitted access roles ");
+      StringConcatenation _builder_1 = new StringConcatenation();
+      _builder_1.append("(security smell: Insufficiant Access Control)");
+      String _plus = (_builder.toString() + _builder_1);
+      this.warning(_plus, operation, 
+        ServicePackage.Literals.OPERATION__NAME, 
+        ServiceDslValidator.INSUFFICIENT_ACCESS_CONTROL);
+    }
   }
 }
