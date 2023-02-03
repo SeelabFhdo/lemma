@@ -151,11 +151,14 @@ class ServiceDslExtractor {
             '''
             ---
             «operation.apiOperationComment.comment»
-            «FOR param : operation.parameters.filter[!it.isOptional]»
-            @required «param.name» [INSERT PARAMETER DESC HERE]
+            «FOR param : operation.parameters.filter[!it.isOptional && !it.outgoing]»
+            @requires «param.name» [INSERT PARAMETER DESC HERE]
             «ENDFOR»
-            «FOR param : operation.parameters.filter[it.isOptional]»
+            «FOR param : operation.parameters.filter[it.isOptional && !it.outgoing]»
             @param «param.name» [INSERT PARAMETER DESC HERE]
+            «ENDFOR»
+            «FOR param : operation.parameters.filter[it.outgoing]»
+            @returns «param.name» [INSERT PARAMETER DESC HERE]
             «ENDFOR»
             ---
             '''
@@ -175,6 +178,13 @@ class ServiceDslExtractor {
         val parameters = String.join(", ", operation.parameters.map[generate])
 
         '''«comment»«endpoints»«aspects»«operation.name»(«parameters»);'''
+    }
+
+    /**
+     * Helper to check if a given Parameter is outgoing
+     */
+    private def outgoing(Parameter parameter) {
+        return parameter.exchangePattern == ExchangePattern.OUT
     }
 
     /**

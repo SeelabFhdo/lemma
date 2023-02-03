@@ -40,7 +40,7 @@ import org.eclipse.xtext.xbase.lib.ListExtensions;
 @SuppressWarnings("all")
 public class ServiceDslExtractor {
   private static final String ID_PATTERN = "(\\^?)([a-zA-Z_])\\w*";
-  
+
   private static final String QUALIFIED_NAME_PATTERN = new Function0<String>() {
     @Override
     public String apply() {
@@ -52,7 +52,7 @@ public class ServiceDslExtractor {
       return _builder.toString();
     }
   }.apply();
-  
+
   private static final String QUALIFIED_NAME_WITH_AT_LEAST_ONE_LEVEL_PATTERN = new Function0<String>() {
     @Override
     public String apply() {
@@ -64,9 +64,9 @@ public class ServiceDslExtractor {
       return _plus;
     }
   }.apply();
-  
+
   private ArrayList<String> importedTechnologyAliases = CollectionLiterals.<String>newArrayList();
-  
+
   /**
    * Extract ServiceModel
    */
@@ -98,7 +98,7 @@ public class ServiceDslExtractor {
     }
     return _xblockexpression;
   }
-  
+
   /**
    * Extract Imports
    */
@@ -152,7 +152,7 @@ public class ServiceDslExtractor {
     _builder_1.append(_name);
     return _builder_1.toString();
   }
-  
+
   /**
    * Extract Microservice
    */
@@ -203,7 +203,7 @@ public class ServiceDslExtractor {
     }
     return _xblockexpression;
   }
-  
+
   /**
    * Extracts the name of a Microservice
    */
@@ -221,7 +221,7 @@ public class ServiceDslExtractor {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Extract Visibility of a Microservice
    */
@@ -254,7 +254,7 @@ public class ServiceDslExtractor {
     }
     return _switchResult;
   }
-  
+
   /**
    * Extract MicroserviceType of a Microservice
    */
@@ -287,7 +287,7 @@ public class ServiceDslExtractor {
     }
     return _switchResult;
   }
-  
+
   /**
    * Extract Interface
    */
@@ -310,7 +310,7 @@ public class ServiceDslExtractor {
     _builder.append("}");
     return _builder;
   }
-  
+
   /**
    * Extract Endpoint
    */
@@ -348,7 +348,7 @@ public class ServiceDslExtractor {
     _builder.append(";");
     return _builder;
   }
-  
+
   /**
    * Extract Operation
    */
@@ -367,12 +367,11 @@ public class ServiceDslExtractor {
         _builder.newLineIfNotEmpty();
         {
           final Function1<Parameter, Boolean> _function = (Parameter it) -> {
-            boolean _isOptional = it.isOptional();
-            return Boolean.valueOf((!_isOptional));
+            return Boolean.valueOf(((!it.isOptional()) && (!this.outgoing(it))));
           };
           Iterable<Parameter> _filter = IterableExtensions.<Parameter>filter(operation.getParameters(), _function);
           for(final Parameter param : _filter) {
-            _builder.append("@required ");
+            _builder.append("@requires ");
             String _name = param.getName();
             _builder.append(_name);
             _builder.append(" [INSERT PARAMETER DESC HERE]");
@@ -381,13 +380,26 @@ public class ServiceDslExtractor {
         }
         {
           final Function1<Parameter, Boolean> _function_1 = (Parameter it) -> {
-            return Boolean.valueOf(it.isOptional());
+            return Boolean.valueOf((it.isOptional() && (!this.outgoing(it))));
           };
           Iterable<Parameter> _filter_1 = IterableExtensions.<Parameter>filter(operation.getParameters(), _function_1);
           for(final Parameter param_1 : _filter_1) {
             _builder.append("@param ");
             String _name_1 = param_1.getName();
             _builder.append(_name_1);
+            _builder.append(" [INSERT PARAMETER DESC HERE]");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+        {
+          final Function1<Parameter, Boolean> _function_2 = (Parameter it) -> {
+            return Boolean.valueOf(this.outgoing(it));
+          };
+          Iterable<Parameter> _filter_2 = IterableExtensions.<Parameter>filter(operation.getParameters(), _function_2);
+          for(final Parameter param_2 : _filter_2) {
+            _builder.append("@returns ");
+            String _name_2 = param_2.getName();
+            _builder.append(_name_2);
             _builder.append(" [INSERT PARAMETER DESC HERE]");
             _builder.newLineIfNotEmpty();
           }
@@ -424,16 +436,16 @@ public class ServiceDslExtractor {
       }
       _builder_2.newLineIfNotEmpty();
       final String aspects = _builder_2.toString();
-      final Function1<Parameter, CharSequence> _function_2 = (Parameter it) -> {
+      final Function1<Parameter, CharSequence> _function_3 = (Parameter it) -> {
         return this.generate(it);
       };
-      final String parameters = String.join(", ", ListExtensions.<Parameter, CharSequence>map(operation.getParameters(), _function_2));
+      final String parameters = String.join(", ", ListExtensions.<Parameter, CharSequence>map(operation.getParameters(), _function_3));
       StringConcatenation _builder_3 = new StringConcatenation();
       _builder_3.append(comment);
       _builder_3.append(endpoints);
       _builder_3.append(aspects);
-      String _name_2 = operation.getName();
-      _builder_3.append(_name_2);
+      String _name_3 = operation.getName();
+      _builder_3.append(_name_3);
       _builder_3.append("(");
       _builder_3.append(parameters);
       _builder_3.append(");");
@@ -441,7 +453,15 @@ public class ServiceDslExtractor {
     }
     return _xblockexpression;
   }
-  
+
+  /**
+   * Helper to check if a given Parameter is outgoing
+   */
+  private boolean outgoing(final Parameter parameter) {
+    ExchangePattern _exchangePattern = parameter.getExchangePattern();
+    return Objects.equal(_exchangePattern, ExchangePattern.OUT);
+  }
+
   /**
    * Extract Parameter
    */
@@ -474,7 +494,7 @@ public class ServiceDslExtractor {
     _builder.append(_generateType);
     return _builder;
   }
-  
+
   /**
    * Extract CommunicationType
    */
@@ -504,7 +524,7 @@ public class ServiceDslExtractor {
     }
     return _switchResult;
   }
-  
+
   /**
    * Extract ExchangePattern
    */
@@ -537,7 +557,7 @@ public class ServiceDslExtractor {
     }
     return _switchResult;
   }
-  
+
   /**
    * Extract ImportedServiceAspect
    */
@@ -561,7 +581,7 @@ public class ServiceDslExtractor {
     }
     return _builder;
   }
-  
+
   /**
    * Extract Parameter
    */
@@ -584,14 +604,14 @@ public class ServiceDslExtractor {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Extract PrimitiveType
    */
   private String generate(final PrimitiveType type) {
     return type.getTypeName();
   }
-  
+
   /**
    * Extract Technology Annotations of a Microservice
    */
@@ -612,7 +632,7 @@ public class ServiceDslExtractor {
     }
     return _builder;
   }
-  
+
   /**
    * Extract Protocol
    */
@@ -648,7 +668,7 @@ public class ServiceDslExtractor {
     }
     return _builder_1.toString();
   }
-  
+
   /**
    * Extract ImportedType
    */
