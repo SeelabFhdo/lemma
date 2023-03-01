@@ -1,0 +1,12 @@
+- processor:
+  - description: "LEMMA Spring Cloud Config Generator"
+  - docker:
+    - image: "lemma/config_generator:latest"
+    - repository: "docker.repository.seelab.fh-dortmund.de"
+    - buildscript: "./build.sh"
+    - lemma_version_file: "../pom.xml"
+
+- required_args:
+  - builtin:
+    - intermediate_model: "path to intermediate operation model (must be relative to model base path)"
+    - target_folder: "path to generation target folder"
