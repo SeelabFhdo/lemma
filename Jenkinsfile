@@ -15,9 +15,6 @@ pipeline {
         DOCKER_NEXUS_REGISTRY_CREDENTIALS_KEY = "seelab-nexus-docker-registry"
         DOCKER_NEXUS_REGISTRY_CREDENTIALS = credentials("$DOCKER_NEXUS_REGISTRY_CREDENTIALS_KEY")
         DOCKER_NEXUS_REGISTRY_URL = "https://docker.repository.seelab.fh-dortmund.de"
-        DOCKER_RANCHER_REGISTRY_CREDENTIALS_KEY = "seelab-rancher-docker-registry"
-        DOCKER_RANCHER_REGISTRY_CREDENTIALS = credentials("$DOCKER_RANCHER_REGISTRY_CREDENTIALS_KEY")
-        DOCKER_RANCHER_REGISTRY_URL = "http://registry.seelab.fh-dortmund.de"
 
         BUILD_IMAGE_NAME = "build:latest"
         BUILD_IMAGE = "${LEMMA_LOCAL_DOCKER_REPO}/${BUILD_IMAGE_NAME}"
@@ -126,10 +123,6 @@ pipeline {
                                 DOCKER_NEXUS_REGISTRY_CREDENTIALS_KEY) {
                                 buildImage.push()
                             }
-                            docker.withRegistry(DOCKER_RANCHER_REGISTRY_URL,
-                                DOCKER_RANCHER_REGISTRY_CREDENTIALS_KEY) {
-                                buildImage.push()
-                            }
 
                             buildImageDockerHub = docker.build BUILD_IMAGE_DOCKER_HUB,
                                 "./build/docker"
@@ -161,10 +154,6 @@ pipeline {
                                 "./build/updatesite/docker"
                             docker.withRegistry(DOCKER_NEXUS_REGISTRY_URL,
                                 DOCKER_NEXUS_REGISTRY_CREDENTIALS_KEY) {
-                                updatesiteImage.push()
-                            }
-                            docker.withRegistry(DOCKER_RANCHER_REGISTRY_URL,
-                                DOCKER_RANCHER_REGISTRY_CREDENTIALS_KEY) {
                                 updatesiteImage.push()
                             }
 
@@ -206,10 +195,6 @@ pipeline {
                             if (env.BRANCH_NAME == 'main') {
                                 docker.withRegistry(DOCKER_NEXUS_REGISTRY_URL,
                                     DOCKER_NEXUS_REGISTRY_CREDENTIALS_KEY) {
-                                    deployImage.push()
-                                }
-                                docker.withRegistry(DOCKER_RANCHER_REGISTRY_URL,
-                                    DOCKER_RANCHER_REGISTRY_CREDENTIALS_KEY) {
                                     deployImage.push()
                                 }
 
@@ -264,9 +249,6 @@ pipeline {
                                     "registry=\'$DOCKER_NEXUS_REGISTRY_URL\' " +
                                     "user=\'$DOCKER_NEXUS_REGISTRY_CREDENTIALS_USR\' " +
                                     "password=\'$DOCKER_NEXUS_REGISTRY_CREDENTIALS_PSW\' " +
-                                    "registry=\'$DOCKER_RANCHER_REGISTRY_URL\' " +
-                                    "user=\'$DOCKER_RANCHER_REGISTRY_CREDENTIALS_USR\' " +
-                                    "password=\'$DOCKER_RANCHER_REGISTRY_CREDENTIALS_PSW\'" +
                                     "registry=\'$DOCKER_HUB_REGISTRY_URL\' " +
                                     "user=\'$DOCKER_HUB_REGISTRY_CREDENTIALS_USR\' " +
                                     "password=\'$DOCKER_HUB_REGISTRY_CREDENTIALS_PSW\' " +
