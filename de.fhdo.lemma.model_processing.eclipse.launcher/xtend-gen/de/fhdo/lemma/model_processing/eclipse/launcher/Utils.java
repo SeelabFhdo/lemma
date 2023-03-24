@@ -102,28 +102,28 @@ public final class Utils {
   public static class ImportInfo {
     @Accessors(AccessorType.PUBLIC_GETTER)
     private final String alias;
-    
+
     @Accessors(AccessorType.PUBLIC_GETTER)
     private final String importUri;
-    
+
     public ImportInfo(final String alias, final String importUri) {
       this.alias = alias;
       this.importUri = importUri;
     }
-    
+
     @Pure
     public String getAlias() {
       return this.alias;
     }
-    
+
     @Pure
     public String getImportUri() {
       return this.importUri;
     }
   }
-  
+
   private static final List<? extends Class<? extends EObject>> TRANSFORMABLE_MODEL_KINDS = Collections.<Class<? extends EObject>>unmodifiableList(CollectionLiterals.<Class<? extends EObject>>newArrayList(DataModel.class, ServiceModel.class, OperationModel.class));
-  
+
   /**
    * Find a file with a certain name in a certain project of the current workspace
    */
@@ -145,7 +145,7 @@ public final class Utils {
     }
     return _xtrycatchfinallyexpression;
   }
-  
+
   /**
    * Find a certain project of the current workspace
    */
@@ -156,7 +156,7 @@ public final class Utils {
     };
     return IterableExtensions.<IProject>findFirst(((Iterable<IProject>)Conversions.doWrapArray(ResourcesPlugin.getWorkspace().getRoot().getProjects())), _function);
   }
-  
+
   /**
    * Throw an IllegalArgumentException with a given message in case a given String is null or
    * empty
@@ -167,7 +167,7 @@ public final class Utils {
       throw new IllegalArgumentException(errorMessage);
     }
   }
-  
+
   /**
    * Throw an IllegalArgumentException with a given message in case a given String is empty
    */
@@ -177,7 +177,7 @@ public final class Utils {
       throw new IllegalArgumentException(errorMessage);
     }
   }
-  
+
   /**
    * Throw an IllegalArgumentException with a given message in case a given object is null
    */
@@ -186,7 +186,7 @@ public final class Utils {
       throw new IllegalArgumentException(errorMessage);
     }
   }
-  
+
   /**
    * Find an XML element's first child that has a given tag
    */
@@ -204,7 +204,7 @@ public final class Utils {
     }
     return null;
   }
-  
+
   /**
    * Check if all elements of two lists are equal (==-semantics)
    */
@@ -227,7 +227,7 @@ public final class Utils {
     }
     return true;
   }
-  
+
   /**
    * Perform a "flat" copy of a given list. A "flat" copy is a new ArrayList instance that
    * comprises the same elements of the given list.
@@ -237,7 +237,7 @@ public final class Utils {
     copy.addAll(list);
     return copy;
   }
-  
+
   /**
    * Add an element to the given list and return the list
    */
@@ -245,7 +245,7 @@ public final class Utils {
     list.add(element);
     return list;
   }
-  
+
   /**
    * Move an element one index up in a given list and return the list. Note that the "move up"-
    * behavior is "rotating", i.e., an item at index 0 will be put to the end of the list.
@@ -267,7 +267,7 @@ public final class Utils {
     }
     return list;
   }
-  
+
   /**
    * Move an element one index down in a given list and return the list. Note that the "move
    * down"-behavior is "rotating", i.e., an item at the end of the list will be put to index 0.
@@ -291,7 +291,7 @@ public final class Utils {
     }
     return list;
   }
-  
+
   /**
    * Add an element from the given list and return the list
    */
@@ -299,7 +299,7 @@ public final class Utils {
     list.remove(element);
     return list;
   }
-  
+
   /**
    * Remove all given elements from a list and return the list
    */
@@ -307,7 +307,7 @@ public final class Utils {
     list.removeAll(elements);
     return list;
   }
-  
+
   /**
    * Bind a UI control to a property of a Bean class and attach a validation listener to the
    * control. A validation listener will call the given validation procedure each time the control
@@ -324,7 +324,7 @@ public final class Utils {
     final Binding bindValue = dataBindingContext.<String, Object>bindValue(target, model, ((UpdateValueStrategy<? super String, ?>)updateStrategy), null);
     return Pair.<Binding, ControlDecoration>of(bindValue, decoration);
   }
-  
+
   /**
    * Wrap a generic SWT Control into an ISWTObservableValue
    */
@@ -341,21 +341,21 @@ public final class Utils {
     String _plus = (_builder.toString() + _builder_1);
     throw new IllegalArgumentException(_plus);
   }
-  
+
   /**
    * Wrap an SWT Text into an ISWTObservableValue
    */
   private static ISWTObservableValue<String> _toObservableValue(final Text text) {
     return WidgetProperties.<Text>text(SWT.Modify).observe(text);
   }
-  
+
   /**
    * Wrap an SWT Combo into an ISWTObservableValue
    */
   private static ISWTObservableValue<String> _toObservableValue(final Combo combo) {
     return WidgetProperties.comboSelection().observe(combo);
   }
-  
+
   /**
    * Add a validation listener to a generic SWT Control
    */
@@ -367,7 +367,7 @@ public final class Utils {
     String _plus = ("Validation listeners not supported for controls of " + _builder);
     throw new IllegalArgumentException(_plus);
   }
-  
+
   /**
    * Add a validation listener to an SWT Text
    */
@@ -389,7 +389,7 @@ public final class Utils {
     };
     text.addModifyListener(_function);
   }
-  
+
   /**
    * Add a validation listener to an SWT Combo
    */
@@ -399,7 +399,7 @@ public final class Utils {
       public void widgetDefaultSelected(final SelectionEvent event) {
         this.widgetSelected(event);
       }
-      
+
       @Override
       public void widgetSelected(final SelectionEvent event) {
         try {
@@ -418,7 +418,7 @@ public final class Utils {
       }
     });
   }
-  
+
   /**
    * Check if the user selected only a single row in a given TableViewer. If so, return the
    * corresponding IStructuredSelection instance. Otherwise display an error dialog.
@@ -455,7 +455,7 @@ public final class Utils {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Check if the user selected at least one row in a given TableViewer. If so, return the
    * corresponding IStructuredSelection instance. Otherwise display an error dialog.
@@ -478,16 +478,16 @@ public final class Utils {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Print the given string to the MessageConsoleStream indenting it by one INDENT
    */
   public static void printlnIndent(final MessageConsoleStream stream, final String s) {
     Utils.printlnIndent(stream, s, 1);
   }
-  
+
   public static final String INDENT = " ".repeat(2);
-  
+
   /**
    * Print the given string to the MessageConsoleStream indenting it by the given number of
    * INDENTs
@@ -497,21 +497,21 @@ public final class Utils {
     String _plus = (_repeat + s);
     stream.println(_plus);
   }
-  
+
   /**
    * Get the currently active SWT Shell
    */
   public static Shell getActiveShell() {
     return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
   }
-  
+
   /**
    * Get the current workbench display
    */
   public static Display getWorkbenchDisplay() {
     return PlatformUI.getWorkbench().getDisplay();
   }
-  
+
   /**
    * Execute the given command in a blocking fashion. The command will be executed in a new
    * Process and the helper will wait for the Process to terminate in at most
@@ -573,7 +573,7 @@ public final class Utils {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Parse the source model file of the given model processing configuration for imports. The
    * method returns a list of Pairs whose keys are the EObject classes of the root elements of the
@@ -595,7 +595,7 @@ public final class Utils {
     }
     return imports;
   }
-  
+
   /**
    * Retrieve all imports from a LEMMA model represented by the given IFile. The helper returns a
    * list of Pairs whose keys are the EObject classes of the root elements of the imported
@@ -625,7 +625,7 @@ public final class Utils {
       }
     }
   }
-  
+
   /**
    * Return a list of Pairs of root element types and ImportInfo instances of imports in a given
    * DataModel
@@ -639,7 +639,7 @@ public final class Utils {
     };
     return ListExtensions.<ComplexTypeImport, Pair<Class<DataModel>, Utils.ImportInfo>>map(modelRoot.getComplexTypeImports(), _function);
   }
-  
+
   /**
    * Return a list of Pairs of root element types and ImportInfo instances of imports in a given
    * Technology
@@ -653,7 +653,7 @@ public final class Utils {
     };
     return ListExtensions.<TechnologyImport, Pair<Class<Technology>, Utils.ImportInfo>>map(modelRoot.getImports(), _function);
   }
-  
+
   /**
    * Return a list of Pairs of root element types and ImportInfo instances of imports in a given
    * ServiceModel
@@ -668,7 +668,7 @@ public final class Utils {
     };
     return ListExtensions.<Import, Pair<Class<? extends EObject>, Utils.ImportInfo>>map(modelRoot.getImports(), _function);
   }
-  
+
   /**
    * Helper to get the EObject class of a model that is imported using a certain ImportType
    */
@@ -694,7 +694,7 @@ public final class Utils {
     }
     return _switchResult;
   }
-  
+
   /**
    * Return a list of Pairs of root element types and ImportInfo instances of imports in a given
    * TechnologyMapping
@@ -709,7 +709,7 @@ public final class Utils {
     };
     return ListExtensions.<Import, Pair<Class<? extends EObject>, Utils.ImportInfo>>map(modelRoot.getImports(), _function);
   }
-  
+
   /**
    * Return a list of Pairs of root element types and ImportInfo instances of imports in a given
    * OperationModel
@@ -724,7 +724,7 @@ public final class Utils {
     };
     return ListExtensions.<Import, Pair<Class<? extends EObject>, Utils.ImportInfo>>map(modelRoot.getImports(), _function);
   }
-  
+
   /**
    * Make the paths of a DataModel's imports absolute w.r.t. the given base IFile
    */
@@ -732,7 +732,7 @@ public final class Utils {
     Utils.makeImportPathsAbsoluteFromBasefilePath(modelRoot, 
       basefile.getRawLocation().makeAbsolute().toString());
   }
-  
+
   /**
    * Make the paths of a DataModel's imports absolute w.r.t. the given base path
    */
@@ -742,7 +742,7 @@ public final class Utils {
     };
     modelRoot.getComplexTypeImports().forEach(_function);
   }
-  
+
   /**
    * Make the paths of a Technology's imports absolute w.r.t. the given base IFile
    */
@@ -750,7 +750,7 @@ public final class Utils {
     Utils.makeImportPathsAbsoluteFromBasefilePath(modelRoot, 
       basefile.getRawLocation().makeAbsolute().toString());
   }
-  
+
   /**
    * Make the paths of a Technology's imports absolute w.r.t. the given base path
    */
@@ -760,7 +760,7 @@ public final class Utils {
     };
     modelRoot.getImports().forEach(_function);
   }
-  
+
   /**
    * Make the paths of a ServiceModel's imports absolute w.r.t. the given base IFile
    */
@@ -768,7 +768,7 @@ public final class Utils {
     Utils.makeImportPathsAbsoluteFromBasefilePath(modelRoot, 
       basefile.getRawLocation().makeAbsolute().toString());
   }
-  
+
   /**
    * Make the paths of a ServiceModel's imports absolute w.r.t. the given base path
    */
@@ -778,14 +778,14 @@ public final class Utils {
     };
     modelRoot.getImports().forEach(_function);
   }
-  
+
   /**
    * Make the path of the given Import absolute w.r.t. the given base path
    */
   private static void makeImportPathAbsolute(final Import import_, final String absoluteBasefilePath) {
     import_.setImportURI(LemmaUtils.convertToAbsolutePath(import_.getImportURI(), absoluteBasefilePath));
   }
-  
+
   /**
    * Make the paths of a TechnologyMapping's imports absolute w.r.t. the given base IFile
    */
@@ -793,7 +793,7 @@ public final class Utils {
     Utils.makeImportPathsAbsoluteFromBasefilePath(modelRoot, 
       basefile.getRawLocation().makeAbsolute().toString());
   }
-  
+
   /**
    * Make the paths of a TechnologyMapping's imports absolute w.r.t. the given base path
    */
@@ -803,7 +803,7 @@ public final class Utils {
     };
     modelRoot.getImports().forEach(_function);
   }
-  
+
   /**
    * Make the paths of an OperationModel's imports absolute w.r.t. the given base IFile
    */
@@ -811,7 +811,7 @@ public final class Utils {
     Utils.makeImportPathsAbsoluteFromBasefilePath(modelRoot, 
       basefile.getRawLocation().makeAbsolute().toString());
   }
-  
+
   /**
    * Make the paths of an OperationModel's imports absolute w.r.t. the given base path
    */
@@ -821,7 +821,7 @@ public final class Utils {
     };
     modelRoot.getImports().forEach(_function);
   }
-  
+
   /**
    * Programmatically trigger the validation of a text field by temporarily changing its value to
    * a different one
@@ -834,7 +834,7 @@ public final class Utils {
     field.setText(_builder.toString());
     field.setText(currentText);
   }
-  
+
   /**
    * Parse the given XML String into an XML Document
    */
@@ -848,7 +848,7 @@ public final class Utils {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Return the root element of the given XML Document if it has the given tag or null otherwise
    */
@@ -863,7 +863,7 @@ public final class Utils {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Get all model processing launch configurations
    */
@@ -880,7 +880,7 @@ public final class Utils {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Get the IFile selected by the given ISelection
    */
@@ -898,7 +898,7 @@ public final class Utils {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Get the IFile that is currently edited in the given IEditorPart
    */
@@ -918,7 +918,7 @@ public final class Utils {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Get or create an Eclipse MessageConsole with the given name, and also reveal it
    */
@@ -937,7 +937,7 @@ public final class Utils {
     consoleManager.showConsoleView(console);
     return ((MessageConsole) console);
   }
-  
+
   /**
    * Create a new error MessageStream for the given MessageConsole. An error MessageStream has a
    * different color (normally red) than a "regular" MessageStream.
@@ -950,7 +950,7 @@ public final class Utils {
     Utils.getWorkbenchDisplay().syncExec(_function);
     return stream;
   }
-  
+
   /**
    * Get the launch configurations applicable to the given IFile as a mapped resource
    */
@@ -971,7 +971,7 @@ public final class Utils {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Helper to replace a given String searchString with a given String replacement in a given
    * String text.
@@ -1008,7 +1008,7 @@ public final class Utils {
     buf.append(text, start, text.length());
     return buf;
   }
-  
+
   /**
    * Helper to remove a given String remove from the start of a given String s.
    * 
@@ -1033,7 +1033,7 @@ public final class Utils {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Helper to remove a given String remove from the end of a given String s.
    * 
@@ -1061,7 +1061,7 @@ public final class Utils {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Helper to get the substring occurring in a given String s before a given String sep.
    * 
@@ -1076,14 +1076,14 @@ public final class Utils {
     }
     final int pos = s.lastIndexOf(sep);
     String _xifexpression = null;
-    if ((pos != (-1))) {
+    if ((pos == (-1))) {
       _xifexpression = s;
     } else {
       _xifexpression = s.substring(0, pos);
     }
     return _xifexpression;
   }
-  
+
   /**
    * Helper to get the substring occurring in a given String s after a given String sep.
    * 
@@ -1106,7 +1106,7 @@ public final class Utils {
     }
     return _xifexpression;
   }
-  
+
   private static ISWTObservableValue<String> toObservableValue(final Control combo) {
     if (combo instanceof Combo) {
       return _toObservableValue((Combo)combo);
@@ -1119,7 +1119,7 @@ public final class Utils {
         Arrays.<Object>asList(combo).toString());
     }
   }
-  
+
   private static void addValidationListener(final Control combo, final ControlDecoration decoration, final Procedure1<? super String> validationProcedure) {
     if (combo instanceof Combo
          && validationProcedure != null) {
@@ -1138,7 +1138,7 @@ public final class Utils {
         Arrays.<Object>asList(combo, decoration, validationProcedure).toString());
     }
   }
-  
+
   public static List<? extends Pair<? extends Class<? extends EObject>, Utils.ImportInfo>> typedImports(final EObject modelRoot) {
     if (modelRoot instanceof DataModel) {
       return _typedImports((DataModel)modelRoot);
@@ -1155,7 +1155,7 @@ public final class Utils {
         Arrays.<Object>asList(modelRoot).toString());
     }
   }
-  
+
   public static void makeImportPathsAbsolute(final EObject modelRoot, final IFile basefile) {
     if (modelRoot instanceof DataModel) {
       _makeImportPathsAbsolute((DataModel)modelRoot, basefile);
@@ -1177,7 +1177,7 @@ public final class Utils {
         Arrays.<Object>asList(modelRoot, basefile).toString());
     }
   }
-  
+
   public static void makeImportPathsAbsoluteFromBasefilePath(final EObject modelRoot, final String absoluteBasefilePath) {
     if (modelRoot instanceof DataModel) {
       _makeImportPathsAbsoluteFromBasefilePath((DataModel)modelRoot, absoluteBasefilePath);

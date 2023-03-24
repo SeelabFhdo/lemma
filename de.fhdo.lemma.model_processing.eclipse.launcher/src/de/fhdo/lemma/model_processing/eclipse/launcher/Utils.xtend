@@ -804,7 +804,7 @@ final class Utils {
             return s
 
         val pos = s.lastIndexOf(sep)
-        return if (pos !== -1)
+        return if (pos == -1)
                 s
             else
                 s.substring(0, pos)
