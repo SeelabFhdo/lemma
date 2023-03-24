@@ -47,9 +47,12 @@ dependencies {
     implementation("de.fhdo.lemma.intermediate:de.fhdo.lemma.data.intermediate.metamodel:$lemmaEclipsePluginsVersion")
     implementation("de.fhdo.lemma.intermediate:de.fhdo.lemma.service.intermediate.metamodel:" +
         lemmaEclipsePluginsVersion)
+    implementation("de.fhdo.lemma.intermediate:de.fhdo.lemma.operation.intermediate.metamodel:" +
+            lemmaEclipsePluginsVersion)
     implementation("de.fhdo.lemma.model_processing:de.fhdo.lemma.model_processing:$modelProcessingVersion")
     implementation("de.fhdo.lemma.model_processing.utils:de.fhdo.lemma.model_processing.utils:$modelProcessingVersion")
     implementation("de.fhdo.lemma.servicedsl:de.fhdo.lemma.servicedsl:$lemmaEclipsePluginsVersion")
+    implementation("de.fhdo.lemma.operationdsl:de.fhdo.lemma.operationdsl:$lemmaEclipsePluginsVersion")
     implementation("info.picocli:picocli:$picocliVersion")
     implementation("io.github.classgraph:classgraph:$classgraphVersion")
     implementation("org.apache.logging.log4j:log4j-api:$log4jVersion")
@@ -63,6 +66,7 @@ dependencies {
     implementation("org.eclipse.lsp4j:org.eclipse.lsp4j.jsonrpc:$lsp4jVersion")
     implementation("org.eclipse.xtext:org.eclipse.xtext.ecore:$xtextVersion")
     implementation("org.fusesource.jansi:jansi:$jansiVersion")
+    implementation("junit:junit:4.13.1")
 }
 
 tasks.withType<KotlinCompile> {
