@@ -31,7 +31,7 @@ public abstract class AbstractMongoDBGeneratorTemplate extends AbstractCodeGener
   public AbstractMongoDBGeneratorTemplate(final ProcessorExecutableType generatorExecutableType, final Shell parentShell, final String name, final IProject project, final IFile file) {
     super(generatorExecutableType, parentShell, name, project, file);
   }
-  
+
   /**
    * The template is applicable when the source operation model applies the MongoDB technology to
    * at least one infrastructure node

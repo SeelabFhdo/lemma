@@ -90,7 +90,7 @@ public class DataDslScopeProvider extends AbstractDataDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Build scope for the given reference in the context of a data model
    */
@@ -102,7 +102,7 @@ public class DataDslScopeProvider extends AbstractDataDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Build scope for the given reference in the context of an imported complex type
    */
@@ -126,7 +126,7 @@ public class DataDslScopeProvider extends AbstractDataDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Convenience method to create a scope for imported complex types of certain types
    */
@@ -159,7 +159,7 @@ public class DataDslScopeProvider extends AbstractDataDslScopeProvider {
     return LemmaUtils.<EObject, DataModel, ComplexType>getScopeForPossiblyImportedConcept(container, qualifiedNameParts, 
       DataModel.class, importUri, _function, _function_1);
   }
-  
+
   /**
    * Helper to get all complex types being defined in a data model
    */
@@ -180,7 +180,7 @@ public class DataDslScopeProvider extends AbstractDataDslScopeProvider {
     allComplexTypes.addAll(dataModel.getComplexTypes());
     return allComplexTypes;
   }
-  
+
   /**
    * Build scope for the given reference in the context of a data structure
    */
@@ -205,7 +205,7 @@ public class DataDslScopeProvider extends AbstractDataDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Convenience method to create a scope for super structures
    */
@@ -223,7 +223,7 @@ public class DataDslScopeProvider extends AbstractDataDslScopeProvider {
       structure.getQualifiedNameParts(), 
       DataModel.class);
   }
-  
+
   /**
    * Build scope for the given reference in the context of a data structure
    */
@@ -242,7 +242,7 @@ public class DataDslScopeProvider extends AbstractDataDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Build scope for the given reference in the context of a data field
    */
@@ -261,7 +261,7 @@ public class DataDslScopeProvider extends AbstractDataDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Build scope for the given reference in the context of a data operation
    */

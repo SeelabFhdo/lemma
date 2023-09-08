@@ -33,7 +33,7 @@ public class DockerJavaBaseGeneratorTemplate extends AbstractJavaBaseGeneratorTe
     public TemplateCompletionDialog(final Shell parentShell, final IProject project, final IFile file) {
       super(parentShell, project, file);
     }
-    
+
     /**
      * Addendum for the generator short name as part of the launch configuration name
      */
@@ -41,7 +41,7 @@ public class DockerJavaBaseGeneratorTemplate extends AbstractJavaBaseGeneratorTe
     public String getGeneratorNameAddendum() {
       return "Docker";
     }
-    
+
     /**
      * Addendum for generator long name as part of the label for the generator executable path's
      * text field
@@ -50,7 +50,7 @@ public class DockerJavaBaseGeneratorTemplate extends AbstractJavaBaseGeneratorTe
     public String getGeneratorExecutableLabelTextAddendum() {
       return "Docker image";
     }
-    
+
     /**
      * Create the dialog
      */
@@ -70,7 +70,7 @@ public class DockerJavaBaseGeneratorTemplate extends AbstractJavaBaseGeneratorTe
       String _plus = (_builder.toString() + _builder_1);
       this.setMessage(_plus);
     }
-    
+
     /**
      * Create the dialog area
      */
@@ -83,23 +83,23 @@ public class DockerJavaBaseGeneratorTemplate extends AbstractJavaBaseGeneratorTe
       return area;
     }
   }
-  
+
   protected static final String TEMPLATE_NAME = "Docker-based Java microservice generation";
-  
+
   /**
    * Constructor
    */
   public DockerJavaBaseGeneratorTemplate(final Shell parentShell, final IProject project, final IFile file) {
     this(parentShell, DockerJavaBaseGeneratorTemplate.TEMPLATE_NAME, project, file);
   }
-  
+
   /**
    * Constructor with explicit template name parameter
    */
   public DockerJavaBaseGeneratorTemplate(final Shell parentShell, final String name, final IProject project, final IFile file) {
     super(ProcessorExecutableType.LOCAL_DOCKER_IMAGE, parentShell, name, project, file);
   }
-  
+
   /**
    * Extend the model processing configuration template initialized by the superclass
    */
@@ -114,7 +114,7 @@ public class DockerJavaBaseGeneratorTemplate extends AbstractJavaBaseGeneratorTe
     ((List<JavaBaseGeneratorParameters.GenletType>)Conversions.doWrapArray(JavaBaseGeneratorParameters.GenletType.values())).forEach(_function);
     return configuration;
   }
-  
+
   /**
    * Build an Argument instance that specifies the execution of a Genlet of the given type with
    * the Java Base Generator
@@ -122,7 +122,7 @@ public class DockerJavaBaseGeneratorTemplate extends AbstractJavaBaseGeneratorTe
   private Argument buildGenletArgument(final JavaBaseGeneratorParameters.GenletType genletType) {
     return Argument.newArgument().singleValued().stringPair().parameter(JavaBaseGeneratorParameters.GENLET_PARAMETER).value(JavaBaseGeneratorParameters.instance().getDockerGenletFilePath(genletType));
   }
-  
+
   /**
    * Return the dialog for template completion
    */

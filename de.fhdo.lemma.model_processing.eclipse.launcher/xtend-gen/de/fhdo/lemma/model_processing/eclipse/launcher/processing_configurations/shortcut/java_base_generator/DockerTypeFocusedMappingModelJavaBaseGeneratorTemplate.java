@@ -47,14 +47,14 @@ public final class DockerTypeFocusedMappingModelJavaBaseGeneratorTemplate extend
    */
   private static class TypeFocusedMappingModelTemplateCompletionDialog extends DockerJavaBaseGeneratorTemplate.TemplateCompletionDialog {
     private Argument alternativeIntermediateServiceModelArgument;
-    
+
     /**
      * Constructor
      */
     public TypeFocusedMappingModelTemplateCompletionDialog(final Shell parentShell, final IProject project, final IFile file) {
       super(parentShell, project, file);
     }
-    
+
     /**
      * Create the dialog area
      */
@@ -66,7 +66,7 @@ public final class DockerTypeFocusedMappingModelJavaBaseGeneratorTemplate extend
       _shell.setSize(_point);
       return area;
     }
-    
+
     /**
      * Add additional controls to the dialog
      */
@@ -75,7 +75,7 @@ public final class DockerTypeFocusedMappingModelJavaBaseGeneratorTemplate extend
       super.insertAdditionalControlsAfterDefaults(parent);
       this.addAlternativeIntermediateServiceModel(parent);
     }
-    
+
     /**
      * Add combo box for selecting the service model comprising the relevant microservices
      * including their technology-specific configurations
@@ -103,7 +103,7 @@ public final class DockerTypeFocusedMappingModelJavaBaseGeneratorTemplate extend
       this.alternativeIntermediateServiceModelArgument = comboWrapper.getArgument();
       this.alternativeIntermediateServiceModelArgument.addPropertyChangeListener(this);
     }
-    
+
     /**
      * Complete the template with the Argument instance representing the intermediate version
      * of the selected service model
@@ -112,7 +112,7 @@ public final class DockerTypeFocusedMappingModelJavaBaseGeneratorTemplate extend
     public final void completeProcessingConfigurationTemplate(final ProcessingConfigurationWithLaunchConfigurationName templateToComplete) {
       templateToComplete.getArguments().add(this.alternativeIntermediateServiceModelArgument);
     }
-    
+
     /**
      * Close the dialog
      */
@@ -126,7 +126,7 @@ public final class DockerTypeFocusedMappingModelJavaBaseGeneratorTemplate extend
       return _xblockexpression;
     }
   }
-  
+
   /**
    * Constructor
    */
@@ -141,7 +141,7 @@ public final class DockerTypeFocusedMappingModelJavaBaseGeneratorTemplate extend
       }
     }.apply(), project, file);
   }
-  
+
   /**
    * Return the dialog for template completion
    */
@@ -149,7 +149,7 @@ public final class DockerTypeFocusedMappingModelJavaBaseGeneratorTemplate extend
   public final AbstractJavaBaseGeneratorCompletionDialog getJavaBaseGeneratorCompletionDialog() {
     return new DockerTypeFocusedMappingModelJavaBaseGeneratorTemplate.TypeFocusedMappingModelTemplateCompletionDialog(this.parentShell, this.project, this.file);
   }
-  
+
   /**
    * The template is applicable when the source mapping model applies the Java technology to at
    * least one type

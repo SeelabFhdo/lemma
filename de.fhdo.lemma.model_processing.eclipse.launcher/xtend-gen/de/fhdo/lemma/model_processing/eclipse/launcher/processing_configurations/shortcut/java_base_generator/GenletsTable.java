@@ -68,9 +68,9 @@ public final class GenletsTable {
    */
   private static class PathColumnEditingSupport extends ObservableValueEditingSupport<Argument, String, String> {
     private final GenletsTable genletsTable;
-    
+
     private DataBindingContext dataBindingContext;
-    
+
     /**
      * Constructor
      */
@@ -79,7 +79,7 @@ public final class GenletsTable {
       this.genletsTable = genletsTable;
       this.dataBindingContext = dataBindingContext;
     }
-    
+
     /**
      * Get cell editor
      */
@@ -88,7 +88,7 @@ public final class GenletsTable {
       Table _table = this.genletsTable.viewer.getTable();
       return new TextCellEditor(_table);
     }
-    
+
     /**
      * Create the observable for the cell editor control
      */
@@ -96,7 +96,7 @@ public final class GenletsTable {
     public IObservableValue<String> doCreateCellEditorObservable(final CellEditor cellEditor) {
       return WidgetProperties.<Control>text(SWT.Modify).observe(cellEditor.getControl());
     }
-    
+
     /**
      * Create the observable for the element value
      */
@@ -104,7 +104,7 @@ public final class GenletsTable {
     public IObservableValue<String> doCreateElementObservable(final Argument argument, final ViewerCell cell) {
       return BeanProperties.<Argument, String>value(Argument.class, "value", null).observe(argument);
     }
-    
+
     /**
      * Bind the observable for the element value to the observable for the cell editor control
      */
@@ -114,39 +114,39 @@ public final class GenletsTable {
       return this.dataBindingContext.<String, String>bindValue(target, model, _updateValueStrategy, null);
     }
   }
-  
+
   private static final LocalResourceManager RESOURCE_MANAGER = new LocalResourceManager(JFaceResources.getResources());
-  
+
   private static final Image NEW_IMAGE = LemmaUiUtils.createImage(GenletsTable.RESOURCE_MANAGER, GenletsTable.class, "add.gif");
-  
+
   private static final Image REMOVE_IMAGE = LemmaUiUtils.createImage(GenletsTable.RESOURCE_MANAGER, GenletsTable.class, "remove.png");
-  
+
   private static final Image MOVE_UP_IMAGE = LemmaUiUtils.createImage(GenletsTable.RESOURCE_MANAGER, GenletsTable.class, 
     "moveUp.png");
-  
+
   private static final Image MOVE_DOWN_IMAGE = LemmaUiUtils.createImage(GenletsTable.RESOURCE_MANAGER, GenletsTable.class, 
     "moveDown.png");
-  
+
   private static final HashMap<Argument, Button> PATH_SELECTION_BUTTONS = CollectionLiterals.<Argument, Button>newHashMap();
-  
+
   private final Composite parent;
-  
+
   private final ProcessingConfiguration processingConfiguration;
-  
+
   private final TableViewer viewer;
-  
+
   private final Arguments currentArguments = new Arguments(CollectionLiterals.<Argument>newArrayList());
-  
+
   private final DataBindingContext dataBindingContext = new DataBindingContext();
-  
+
   private Button newButton;
-  
+
   private Button removeButton;
-  
+
   private Button moveUpButton;
-  
+
   private Button moveDownButton;
-  
+
   /**
    * Constructor
    */
@@ -173,7 +173,7 @@ public final class GenletsTable {
     this.createPathSelectionColumn();
     this.createButtonRow();
   }
-  
+
   /**
    * Create the column for specifying the path to a Genlet's JAR archive
    */
@@ -188,7 +188,7 @@ public final class GenletsTable {
       public String getElementText(final Argument element) {
         return element.getValue();
       }
-      
+
       @Override
       public void validate(final Argument element) {
         AbstractArgumentType _type = element.getType();
@@ -199,7 +199,7 @@ public final class GenletsTable {
     GenletsTable.PathColumnEditingSupport _pathColumnEditingSupport = new GenletsTable.PathColumnEditingSupport(this, this.dataBindingContext);
     pathColumn.setEditingSupport(_pathColumnEditingSupport);
   }
-  
+
   /**
    * Create the column with the button for supporting the specification of the path to a Genlet's
    * JAR archive via a file selection dialog
@@ -240,7 +240,7 @@ public final class GenletsTable {
         editor.setEditor(pathSelectionButton, item, cell.getColumnIndex());
         editor.layout();
       }
-      
+
       @Override
       public void dispose(final ColumnViewer viewer, final ViewerColumn column) {
         final Consumer<Button> _function = (Button it) -> {
@@ -251,7 +251,7 @@ public final class GenletsTable {
       }
     });
   }
-  
+
   /**
    * Open the file selection dialog for specifying a Genlet's path. The method returns the path to
    * the Genlet as a String or null in case the user aborted the file selection.
@@ -263,7 +263,7 @@ public final class GenletsTable {
     dialog.setFilterExtensions(new String[] { "*.jar" });
     return dialog.open();
   }
-  
+
   /**
    * Create the button row below the table
    */
@@ -276,7 +276,7 @@ public final class GenletsTable {
     this.createMoveUpButton(buttonRow);
     this.createMoveDownButton(buttonRow);
   }
-  
+
   /**
    * Create button for the specification of a new Genlet
    */
@@ -301,7 +301,7 @@ public final class GenletsTable {
     };
     this.newButton.addListener(SWT.Selection, _function);
   }
-  
+
   /**
    * Create button for Genlet removal
    */
@@ -333,7 +333,7 @@ public final class GenletsTable {
     };
     this.removeButton.addListener(SWT.Selection, _function);
   }
-  
+
   /**
    * Create button to move Genlet up in the table
    */
@@ -360,7 +360,7 @@ public final class GenletsTable {
     };
     this.moveUpButton.addListener(SWT.Selection, _function);
   }
-  
+
   /**
    * Create button to move Genlet down in the table
    */
@@ -387,28 +387,28 @@ public final class GenletsTable {
     };
     this.moveDownButton.addListener(SWT.Selection, _function);
   }
-  
+
   /**
    * Get all Argument instances created for the Genlets in the table
    */
   public final List<Argument> getGenletArguments() {
     return this.currentArguments.get();
   }
-  
+
   /**
    * Add property change listener for Genlet-specific Argument instances
    */
   public final void addPropertyChangeListener(final PropertyChangeListener listener) {
     this.currentArguments.addPropertyChangeListener(listener);
   }
-  
+
   /**
    * Remove property change listener for Genlet-specific Argument instances
    */
   public final void removePropertyChangeListener(final PropertyChangeListener listener) {
     this.currentArguments.removePropertyChangeListener(listener);
   }
-  
+
   /**
    * Dispose the table
    */

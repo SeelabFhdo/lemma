@@ -97,7 +97,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
         MappingPackage.Literals.TECHNOLOGY_MAPPING__TYPE_MAPPINGS);
     }
   }
-  
+
   /**
    * Check that imported file is imported exactly once
    */
@@ -114,7 +114,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     this.error("File is already being imported", duplicate, 
       ServicePackage.Literals.IMPORT__IMPORT_URI);
   }
-  
+
   /**
    * Check import aliases for uniqueness
    */
@@ -135,7 +135,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     this.error(_builder.toString(), duplicate, 
       ServicePackage.Literals.IMPORT__NAME);
   }
-  
+
   /**
    * Check that technology is assigned only once to a complex type mapping
    */
@@ -156,7 +156,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
         MappingPackage.Literals.COMPLEX_TYPE_MAPPING__TECHNOLOGY_REFERENCES, (duplicateIndex).intValue());
     }
   }
-  
+
   /**
    * Check that technology is assigned only once to a microservice
    */
@@ -176,7 +176,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
         MappingPackage.Literals.MICROSERVICE_MAPPING__TECHNOLOGY_REFERENCES, (duplicateIndex).intValue());
     }
   }
-  
+
   /**
    * Check that only one annotated technology of a microservice mapping contains type definitions
    */
@@ -184,7 +184,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
   public void checkUniqueTypeDefinitionTechnologyForMicroserviceMapping(final MicroserviceMapping mapping) {
     this.checkUniqueTypeDefinitionTechnology(mapping);
   }
-  
+
   /**
    * Check that only one annotated technology of a complex type mapping contains type definitions
    */
@@ -192,7 +192,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
   public void checkUniqueTypeDefinitionTechnologyForComplexTypeMapping(final ComplexTypeMapping mapping) {
     this.checkUniqueTypeDefinitionTechnology(mapping);
   }
-  
+
   /**
    * Helper for complex type and microservice mappings to check that only one annotated technology
    * contains type definitions or that one type definition technology is marked as the default one
@@ -252,7 +252,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     };
     typeDefinitionTechnologyReferences.forEach(_function_4);
   }
-  
+
   /**
    * Check that annotated technologies of complex type mappings define not only deployment-related
    * concepts
@@ -265,7 +265,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     this.checkTechnologiesForServiceConcepts(mapping, ListExtensions.<TechnologyReference, Import>map(mapping.getTechnologyReferences(), _function), 
       MappingPackage.Literals.COMPLEX_TYPE_MAPPING__TECHNOLOGY_REFERENCES);
   }
-  
+
   /**
    * Check that annotated technologies of microservice mappings define not only deployment-related
    * concepts
@@ -278,7 +278,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     this.checkTechnologiesForServiceConcepts(mapping, ListExtensions.<TechnologyReference, Import>map(mapping.getTechnologyReferences(), _function), 
       MappingPackage.Literals.MICROSERVICE_MAPPING__TECHNOLOGY_REFERENCES);
   }
-  
+
   /**
    * Helper to check that annotated technologies define not only deployment-related concepts
    */
@@ -298,7 +298,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
       }
     }
   }
-  
+
   /**
    * Check that a microservice specifies protocols that match its operation parameters'
    * communication types
@@ -308,7 +308,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     this.checkEffectiveProtocolsForCommunicationType(mapping, CommunicationType.ASYNCHRONOUS);
     this.checkEffectiveProtocolsForCommunicationType(mapping, CommunicationType.SYNCHRONOUS);
   }
-  
+
   /**
    * Helper to check if a microservice specifies protocols for its operation parameters'
    * communication types
@@ -370,7 +370,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
       this.error(_plus, mapping, MappingPackage.Literals.MICROSERVICE_MAPPING__MICROSERVICE);
     }
   }
-  
+
   /**
    * Helper to find the effective default protocol of a microservice
    */
@@ -394,7 +394,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     }
     return null;
   }
-  
+
   /**
    * Check technologies of a microservice mapping per communication type for unambiguous default
    * protocols
@@ -451,7 +451,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
       }
     }
   }
-  
+
   /**
    * Helper to check if default protocol of a microservice mapping is unique for a given
    * communication type
@@ -481,7 +481,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     }
     return true;
   }
-  
+
   /**
    * Check that service mappings are unique
    */
@@ -515,7 +515,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     }
     return _xblockexpression;
   }
-  
+
   /**
    * Check that complex type mappings are unique
    */
@@ -549,7 +549,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     }
     return _xblockexpression;
   }
-  
+
   /**
    * Helper to check that mappings of elements on the first level of the mapping model like
    * complex types and microservices are unique. This check considers duplicate mappings of
@@ -590,7 +590,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     }
     return _xblockexpression;
   }
-  
+
   /**
    * Check that data operation mappings are unique
    */
@@ -602,7 +602,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     return this.<DataOperationMapping>checkMappingUniqueness(typeMapping.getOperationMappings(), "Data operation", _function, 
       MappingPackage.Literals.DATA_OPERATION_MAPPING__DATA_OPERATION);
   }
-  
+
   /**
    * Check that data operation maps its return type only if the original data operation has a
    * return type
@@ -622,7 +622,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
         MappingPackage.Literals.DATA_OPERATION_MAPPING__RETURN_TYPE_MAPPING);
     }
   }
-  
+
   /**
    * Check that data operation parameter mappings are unique
    */
@@ -634,7 +634,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     return this.<DataOperationParameterMapping>checkMappingUniqueness(operationMapping.getParameterMappings(), "Parameter", _function, 
       MappingPackage.Literals.DATA_OPERATION_PARAMETER_MAPPING__PARAMETER);
   }
-  
+
   /**
    * Check that interface mappings are unique
    */
@@ -646,7 +646,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     return this.<InterfaceMapping>checkMappingUniqueness(microserviceMapping.getInterfaceMappings(), "Interface", _function, 
       MappingPackage.Literals.INTERFACE_MAPPING__INTERFACE);
   }
-  
+
   /**
    * Check that operation mappings are unique
    */
@@ -658,7 +658,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     return this.<OperationMapping>checkMappingUniqueness(microserviceMapping.getOperationMappings(), "Operation", _function, 
       MappingPackage.Literals.OPERATION_MAPPING__OPERATION);
   }
-  
+
   /**
    * Check that referred operation mappings are unique
    */
@@ -670,7 +670,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     return this.<ReferredOperationMapping>checkMappingUniqueness(microserviceMapping.getReferredOperationMappings(), "Referred operation", _function, 
       MappingPackage.Literals.REFERRED_OPERATION_MAPPING__OPERATION);
   }
-  
+
   /**
    * Check that communication types and endpoint protocols of technology-specific protocol
    * specifications of a microservice mapping are unique
@@ -680,7 +680,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     this.checkCommunicationTypeUniqueness(microserviceMapping.getProtocols());
     this.checkEndpointProtocolUniqueness(microserviceMapping.getEndpoints());
   }
-  
+
   /**
    * Check that communication types and endpoint protocols  of technology-specific protocol
    * specifications of an interface mapping are unique
@@ -690,7 +690,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     this.checkCommunicationTypeUniqueness(interfaceMapping.getProtocols());
     this.checkEndpointProtocolUniqueness(interfaceMapping.getEndpoints());
   }
-  
+
   /**
    * Check that communication types and endpoint protocols  of technology-specific protocol
    * specifications of an operation mapping are unique
@@ -700,7 +700,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     this.checkCommunicationTypeUniqueness(operationMapping.getProtocols());
     this.checkEndpointProtocolUniqueness(operationMapping.getEndpoints());
   }
-  
+
   /**
    * Check that communication types and endpoint protocols  of technology-specific protocol
    * specifications of a referred operation mapping are unique
@@ -710,7 +710,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     this.checkCommunicationTypeUniqueness(operationMapping.getProtocols());
     this.checkEndpointProtocolUniqueness(operationMapping.getEndpoints());
   }
-  
+
   /**
    * Helper to check that protocol/format combinations in endpoint mappings are unique
    */
@@ -759,7 +759,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     };
     endpoints.forEach(_function);
   }
-  
+
   /**
    * Check uniqueness of an endpoint's addresses
    */
@@ -778,7 +778,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
         MappingPackage.Literals.TECHNOLOGY_SPECIFIC_ENDPOINT__ADDRESSES, (duplicateIndex).intValue());
     }
   }
-  
+
   /**
    * Warn about non-unique microservice endpoints' addresses per protocol/data format combination
    */
@@ -834,7 +834,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     };
     this.warnUniqueEndpointAddresses(allMappedEndpoints, nonMappedEndpoints, "microservice", _function_7);
   }
-  
+
   /**
    * Warn about non-unique interface endpoints' addresses per protocol/data format combination
    */
@@ -874,7 +874,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     };
     this.warnUniqueEndpointAddresses(allMappedEndpoints, nonMappedEndpoints, "interface", _function_4);
   }
-  
+
   /**
    * Warn if operation and referred operation endpoints' addresses are not unique per
    * protocol/data format combination
@@ -989,7 +989,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     };
     mappedOperationsInterfaces.forEach(_function_2);
   }
-  
+
   /**
    * Helper to warn if addresses of mapped as well as non-mapped endpoints are not unique in the
    * context of a given container, e.g., a microservice
@@ -1119,7 +1119,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     };
     nonMappedEndpoints.forEach(_function_1);
   }
-  
+
   /**
    * Check and warn if types of a data operation mapping with primitive return type are not
    * compatible. Note that we just place a warning in case of (suspected) type incompatibility, as
@@ -1132,7 +1132,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
       this.warnPrimitiveTypeMappingCompatibility(mapping);
     }
   }
-  
+
   /**
    * Check and warn if types of a primitive parameter mapping are not compatible. Note that we
    * just place a warning in case of (suspected) type incompatibility, as we also do it in the
@@ -1146,7 +1146,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
       this.warnPrimitiveTypeMappingCompatibility(mapping);
     }
   }
-  
+
   /**
    * Check and warn if types of a data field mapping are not compatible. Note that we just place a
    * warning in case of (suspected) type incompatibility, as we also do it in the Service DSL.
@@ -1158,7 +1158,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
       this.warnPrimitiveTypeMappingCompatibility(mapping);
     }
   }
-  
+
   /**
    * Check and warn if types of a data operation parameter primitive type mapping are not
    * compatible. Note that we just place a warning in case of (suspected) type incompatibility, as
@@ -1171,7 +1171,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
       this.warnPrimitiveTypeMappingCompatibility(mapping);
     }
   }
-  
+
   /**
    * Convenience method for warning if primitive types within a mapping are not compatible with
    * each other
@@ -1254,7 +1254,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
       }
     }
   }
-  
+
   /**
    * Helper to check if a mapping is for a primitive type
    */
@@ -1288,7 +1288,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     }
     return _or;
   }
-  
+
   /**
    * Check for differing technology assignments to parameters
    */
@@ -1355,7 +1355,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
         MappingPackage.Literals.MICROSERVICE_MAPPING__MICROSERVICE);
     }
   }
-  
+
   /**
    * Check that interface mapping is not empty
    */
@@ -1369,7 +1369,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
         MappingPackage.Literals.INTERFACE_MAPPING__INTERFACE);
     }
   }
-  
+
   /**
    * Check that operation mapping is not empty
    */
@@ -1384,7 +1384,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
         MappingPackage.Literals.OPERATION_MAPPING__OPERATION);
     }
   }
-  
+
   /**
    * Check that referred operation mapping is not empty
    */
@@ -1398,7 +1398,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
         MappingPackage.Literals.REFERRED_OPERATION_MAPPING__OPERATION);
     }
   }
-  
+
   /**
    * Check that primitive parameter mapping is not empty
    */
@@ -1410,7 +1410,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
         MappingPackage.Literals.PARAMETER_MAPPING__PARAMETER);
     }
   }
-  
+
   /**
    * Check that complex parameter mapping is not empty
    */
@@ -1424,7 +1424,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
         MappingPackage.Literals.PARAMETER_MAPPING__PARAMETER);
     }
   }
-  
+
   /**
    * Check that a parameter is mapped only once in an operation mapping
    */
@@ -1444,7 +1444,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
       this.error(_builder.toString(), duplicateMapping, MappingPackage.Literals.PARAMETER_MAPPING__PARAMETER);
     }
   }
-  
+
   /**
    * Check that a field is mapped only once in a complex parameter mapping
    */
@@ -1454,7 +1454,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     this.checkFieldMappingUniqueness(((ComplexType) _type), 
       mapping.getFieldMappings());
   }
-  
+
   /**
    * Check that a field is mapped only once in a complex type mapping
    */
@@ -1462,7 +1462,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
   public void checkComplexTypeMappingUniqueFields(final ComplexTypeMapping mapping) {
     this.checkFieldMappingUniqueness(mapping.getType().getType(), mapping.getFieldMappings());
   }
-  
+
   /**
    * Helper to check that fields are mapped only once
    */
@@ -1500,7 +1500,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     _builder.append(duplicateFieldName);
     this.error(_builder.toString(), duplicateMapping, duplicateFieldReference);
   }
-  
+
   /**
    * Check that a technology-specific field mapping is not empty
    */
@@ -1516,7 +1516,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
         MappingPackage.Literals.TECHNOLOGY_SPECIFIC_FIELD_MAPPING__DATA_FIELD);
     }
   }
-  
+
   /**
    * Check that a data operation mapping is not empty
    */
@@ -1529,7 +1529,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
         MappingPackage.Literals.DATA_OPERATION_MAPPING__DATA_OPERATION);
     }
   }
-  
+
   /**
    * Check that a data operation return type mapping is not empty
    */
@@ -1540,7 +1540,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
         MappingPackage.Literals.DATA_OPERATION_MAPPING__RETURN_TYPE_MAPPING);
     }
   }
-  
+
   /**
    * Helper to check that communication types are unique
    */
@@ -1595,7 +1595,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
       }
     }
   }
-  
+
   /**
    * Helper to check that service-specific mappings are unique
    */
@@ -1605,7 +1605,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     _builder.append(" is already mapped");
     return this.<T>checkMappingUniqueness(mappingsToCheck, getMappingObjectName, mappingFeature, _builder.toString());
   }
-  
+
   /**
    * Helper to check that service-specific mappings are unique with a custom error message
    */
@@ -1618,7 +1618,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
     this.error(errorMessage, duplicate, mappingFeature);
     return true;
   }
-  
+
   /**
    * Check uniqueness of aspects
    */
@@ -1657,7 +1657,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
         MappingPackage.Literals.TECHNOLOGY_SPECIFIC_IMPORTED_SERVICE_ASPECT__ASPECT);
     }
   }
-  
+
   /**
    * Check that aspect has only one property, if only a single value is specified, and that the
    * specified value matches the property's type
@@ -1697,7 +1697,7 @@ public class MappingDslValidator extends AbstractMappingDslValidator {
       }
     }
   }
-  
+
   /**
    * Check that mandatory properties of aspects have values
    */

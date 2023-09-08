@@ -24,16 +24,16 @@ import org.eclipse.swt.widgets.Shell;
 @SuppressWarnings("all")
 public class AboutDialog extends TrayDialog {
   private static final int MIN_DIALOG_WIDTH = 250;
-  
+
   private static final int MIN_DIALOG_HEIGHT = 100;
-  
+
   /**
    * Constructor
    */
   public AboutDialog(final Shell parentShell) {
     super(parentShell);
   }
-  
+
   /**
    * Create buttons
    */
@@ -43,7 +43,7 @@ public class AboutDialog extends TrayDialog {
       true);
     okButton.setFocus();
   }
-  
+
   /**
    * Configure shell
    */
@@ -52,7 +52,7 @@ public class AboutDialog extends TrayDialog {
     super.configureShell(shell);
     shell.setText("About LEMMA");
   }
-  
+
   /**
    * Create dialog area
    */
@@ -115,7 +115,7 @@ public class AboutDialog extends TrayDialog {
     spacer.setLayoutData(containerData);
     return container;
   }
-  
+
   /**
    * Initial size
    */

@@ -56,14 +56,14 @@ public final class Util {
    */
   private enum COMPLEX_TYPE_DEFINITION_KIND {
     VERSION,
-    
+
     VERSION_CONTEXT,
-    
+
     CONTEXT,
-    
+
     TOP_LEVEL;
   }
-  
+
   /**
    * Get all visible fields of an IntermediateDataStructure
    */
@@ -74,7 +74,7 @@ public final class Util {
     };
     return IterableExtensions.<IntermediateDataField>toList(IterableExtensions.<IntermediateDataField>filter(structure.getDataFields(), _function));
   }
-  
+
   /**
    * Check if an EObject exhibits an aspect of the given qualifiedAspectName
    */
@@ -106,7 +106,7 @@ public final class Util {
     };
     return IterableExtensions.<IntermediateImportedAspect>exists(aspects, _function);
   }
-  
+
   /**
    * Get the count of qualifying levels from a qualified string. This count corresponds to the
    * number of qualifying parts of the qualified string.
@@ -119,7 +119,7 @@ public final class Util {
     }
     return _xblockexpression;
   }
-  
+
   /**
    * Helper to count how often a given String sub is comprised in a given String s.
    * 
@@ -144,7 +144,7 @@ public final class Util {
     }
     return count;
   }
-  
+
   /**
    * Convenience method to get the qualifying parts of a qualified string as list
    */
@@ -156,7 +156,7 @@ public final class Util {
     }
     return (List<String>)Conversions.doWrapArray(_split);
   }
-  
+
   /**
    * Split a given qualified string into its qualifying parts and simple name. Returns a pair
    * consisting of the qualifying parts and simple name.
@@ -166,7 +166,7 @@ public final class Util {
     String _simpleName = LemmaUtils.getSimpleName(qualifiedString);
     return Pair.<String, String>of(_qualifyingParts, _simpleName);
   }
-  
+
   /**
    * Load an intermediate data model in XMI format from the given file path
    */
@@ -191,7 +191,7 @@ public final class Util {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Add a value to a nested set inside a map. Suppose a map
    *      val map = {"key1" -> {"setValue1"}}
@@ -211,7 +211,7 @@ public final class Util {
     };
     return Util.<K, V, Set<V>>addToValueCollection(targetMap, targetKey, newValue, _function);
   }
-  
+
   /**
    * Generic function to add a value to a nested Collection of elements inside a map (cf.
    * addToValueSet). The newCollection function will be invoked to retrieve a new instance of the
@@ -234,7 +234,7 @@ public final class Util {
     final C targetCollection = _xifexpression;
     return targetCollection.add(newValue);
   }
-  
+
   /**
    * Generic function to remove a value from a nested Collection of elements inside a map
    */
@@ -249,7 +249,7 @@ public final class Util {
     }
     return targetList.remove(oldValue);
   }
-  
+
   /**
    * Add a value to a nested map inside a map. Suppose a map
    *      val map = {"key1" -> {"nestedKey1" -> "nestedValue1"}}
@@ -280,7 +280,7 @@ public final class Util {
     final Map<K2, V> nestedMap = _xifexpression;
     return nestedMap.put(nestedKey, newValue);
   }
-  
+
   /**
    * Remove a key from a nested map inside a map. Suppose a map
    *      val map = {"key1" -> {"nestedKey1" -> "nestedValue1"}}
@@ -312,7 +312,7 @@ public final class Util {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Check if the given LEMMA intermediate type is a primitive type with the given type name
    */
@@ -335,7 +335,7 @@ public final class Util {
     }
     return _xtrycatchfinallyexpression;
   }
-  
+
   /**
    * Get the qualified name of a LEMMA EObject instance. Throws an IllegalArgumentException, if
    * the EObject does not support having a qualified name.
@@ -412,7 +412,7 @@ public final class Util {
     }
     return _switchResult;
   }
-  
+
   /**
    * Get the error message of an Exception. If the exception's error message is null or empty,
    * return the simple name of the Exception class.
@@ -428,7 +428,7 @@ public final class Util {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Get the top level type containers of a data model. A top level type container is an EObject
    * instance at the top level of a data model that may hold complex type definitions.
@@ -464,7 +464,7 @@ public final class Util {
     }
     return _switchResult;
   }
-  
+
   /**
    * Get the complex type definition level of a data model. This is the level in the data model,
    * at which complex types may be defined (cf. the COMPLEX_TYPE_DEFINITION_KIND enumeration).
@@ -495,7 +495,7 @@ public final class Util {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Get all complex types defined in a data model
    */

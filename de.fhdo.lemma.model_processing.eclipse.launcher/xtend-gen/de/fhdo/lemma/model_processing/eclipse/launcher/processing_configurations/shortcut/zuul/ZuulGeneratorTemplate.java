@@ -26,7 +26,7 @@ public final class ZuulGeneratorTemplate extends AbstractZuulGeneratorTemplate {
       super(parentShell, project, file, ZuulGeneratorConstants.GENERATOR_LONG_NAME, 
         ZuulGeneratorConstants.GENERATOR_SHORT_NAME);
     }
-    
+
     /**
      * Addendum for generator long name as part of the label for the generator executable path's
      * text field
@@ -35,7 +35,7 @@ public final class ZuulGeneratorTemplate extends AbstractZuulGeneratorTemplate {
     public final String getGeneratorExecutableLabelTextAddendum() {
       return "path";
     }
-    
+
     /**
      * Create the dialog
      */
@@ -52,14 +52,14 @@ public final class ZuulGeneratorTemplate extends AbstractZuulGeneratorTemplate {
       this.setMessage(_plus);
     }
   }
-  
+
   /**
    * Constructor
    */
   public ZuulGeneratorTemplate(final Shell parentShell, final IProject project, final IFile file) {
     super(ProcessorExecutableType.LOCAL_JAVA_PROGRAM, parentShell, "Zuul artifact generation", project, file);
   }
-  
+
   /**
    * Return the dialog for template completion
    */

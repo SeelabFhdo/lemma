@@ -28,7 +28,7 @@ public final class OpenApiUtil {
    * Factory to actually create and manipulate a LEMMA DataModel
    */
   private static final DataFactory DATA_FACTORY = DataFactory.eINSTANCE;
-  
+
   public static String removeInvalidCharsFromName(final String s) {
     final String ret = s.replaceAll("[^a-zA-Z0-9_]", "");
     boolean _isNullOrEmpty = StringExtensions.isNullOrEmpty(s);
@@ -47,7 +47,7 @@ public final class OpenApiUtil {
       }
     }
   }
-  
+
   /**
    * Serialize a LEMMA data or mapping model to the given file path. Returns true if the file path
    * and the contents extracted from the model's root are not empty.
@@ -78,7 +78,7 @@ public final class OpenApiUtil {
     final String content = _switchResult;
     return OpenApiUtil.writeFile(filepath, content);
   }
-  
+
   /**
    * Write string contents to the given file path. Returns true if the file path and the contents
    * are not empty.
@@ -105,7 +105,7 @@ public final class OpenApiUtil {
     }
     return _xtrycatchfinallyexpression;
   }
-  
+
   /**
    * Derive a LEMMA integer type from the given OpenAPI type description. Note that this method
    * always returns a LEMMA PrimitiveInteger, except for "int64" type descriptions for which it
@@ -121,7 +121,7 @@ public final class OpenApiUtil {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Derive a LEMMA floating point type from the given OpenAPI type description. Note that this
    * method always returns a LEMMA PrimitiveDouble, except for "float" type descriptions for which
@@ -137,7 +137,7 @@ public final class OpenApiUtil {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Derive a LEMMA string type from the given OpenAPI type description. This also includes the
    * OpenAPI date and date-time formats which do not represent dedicated types but only formats of

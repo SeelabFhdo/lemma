@@ -19,11 +19,11 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 @SuppressWarnings("all")
 public abstract class AbstractArgumentTypeWithEnumValueSelection<T extends Enum<?>> extends AbstractArgumentType {
   private final List<String> literalDescriptionsSorted;
-  
+
   private final String enumClassName;
-  
+
   private final BiMap<String, String> literalNamesAndDescriptions;
-  
+
   /**
    * Constructor. Note that the descriptions in the map of literal descriptions must be unique to
    * allow unambiguous identification of a literal from its description (which is the user
@@ -52,14 +52,14 @@ public abstract class AbstractArgumentTypeWithEnumValueSelection<T extends Enum<
     this.literalNamesAndDescriptions = HashBiMap.<String, String>create(
       IterableExtensions.<T, String, String>toMap(literalsAndDescriptions.keySet(), _function, _function_1));
   }
-  
+
   /**
    * Get the description of the given literal
    */
   public final String getLiteralDescription(final T literal) {
     return this.getLiteralDescription(literal.name());
   }
-  
+
   /**
    * Convert the given literal description into its internal representation, i.e., the name of the
    * the literal, for this enumeration-based type
@@ -68,14 +68,14 @@ public abstract class AbstractArgumentTypeWithEnumValueSelection<T extends Enum<
   public final String convertValueToInternalRepresentation(final String literalDescription) {
     return this.getLiteralName(literalDescription);
   }
-  
+
   /**
    * Get the name of the literal from the given description
    */
   public final String getLiteralName(final String literalDescription) {
     return this.literalNamesAndDescriptions.inverse().get(literalDescription);
   }
-  
+
   /**
    * Validate the internal value, i.e., the name of the literal, of an argument of this
    * enumeration-based type
@@ -96,7 +96,7 @@ public abstract class AbstractArgumentTypeWithEnumValueSelection<T extends Enum<
       throw new IllegalArgumentException(_plus);
     }
   }
-  
+
   /**
    * Convert the given literal name into its user representation, i.e., the description of the
    * the literal, for this enumeration-based type
@@ -105,14 +105,14 @@ public abstract class AbstractArgumentTypeWithEnumValueSelection<T extends Enum<
   public final String convertValueToUserRepresentation(final String literalName) {
     return this.getLiteralDescription(literalName);
   }
-  
+
   /**
    * Get the description of the literal with the given name
    */
   public final String getLiteralDescription(final String literalName) {
     return this.literalNamesAndDescriptions.get(literalName);
   }
-  
+
   /**
    * Validate the user value, i.e., the description of the literal, of an argument of this
    * enumeration-based type. Implementers may override this method to accompany user validation
@@ -129,7 +129,7 @@ public abstract class AbstractArgumentTypeWithEnumValueSelection<T extends Enum<
       throw new IllegalArgumentException(_plus);
     }
   }
-  
+
   /**
    * Get the literal descriptions in alphabetic order
    */

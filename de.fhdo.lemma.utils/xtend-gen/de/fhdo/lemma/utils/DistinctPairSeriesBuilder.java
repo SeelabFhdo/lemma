@@ -1,9 +1,6 @@
 package de.fhdo.lemma.utils;
 
 import com.google.common.base.Objects;
-import de.fhdo.lemma.utils.Pair;
-import de.fhdo.lemma.utils.Pairs;
-import de.fhdo.lemma.utils.RotatingWindowList;
 import java.util.ArrayList;
 import java.util.List;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
@@ -69,14 +66,14 @@ public class DistinctPairSeriesBuilder<T extends Object> {
     }
     return distinctPairsSeries;
   }
-  
+
   /**
    * Build distinct pairs series without mandatory pairs
    */
   public ArrayList<Pairs<T>> buildPairSeries(final List<T> list1, final List<T> list2) {
     return this.buildPairSeries(list1, list2, null);
   }
-  
+
   /**
    * Check if a Pair is mandatory
    */
@@ -90,7 +87,7 @@ public class DistinctPairSeriesBuilder<T extends Object> {
     };
     return IterableExtensions.<Pair<T>>exists(mandatoryPairs, _function);
   }
-  
+
   /**
    * Create a series of cartesian Pairs from two lists. For lists [E1, E2, E3] and [E4, E5, E6]
    * this will produce a list of the following cartesian Pairs instances (each row is a Pairs
@@ -114,7 +111,7 @@ public class DistinctPairSeriesBuilder<T extends Object> {
     }
     return pairsList;
   }
-  
+
   /**
    * Calculate series of list indices, in which all indices are distinct. For a list with 3
    * elements this will produce the following list of index series:

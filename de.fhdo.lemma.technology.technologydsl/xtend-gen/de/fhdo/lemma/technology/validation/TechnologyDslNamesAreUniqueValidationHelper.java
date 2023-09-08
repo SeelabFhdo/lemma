@@ -35,7 +35,7 @@ public class TechnologyDslNamesAreUniqueValidationHelper extends NamesAreUniqueV
       TechnologyPackage.Literals.DEPLOYMENT_TECHNOLOGY, 
       TechnologyPackage.Literals.INFRASTRUCTURE_TECHNOLOGY);
   }
-  
+
   /**
    * Hook to perform the actual duplication check for a certain concept
    */
@@ -50,7 +50,7 @@ public class TechnologyDslNamesAreUniqueValidationHelper extends NamesAreUniqueV
     }
     super.checkDescriptionForDuplicatedName(description, clusterTypeToName, acceptor);
   }
-  
+
   /**
    * Build a custom error message for duplicated names of certain technology model concepts
    */

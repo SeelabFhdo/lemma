@@ -17,7 +17,7 @@ import org.junit.runner.RunWith;
 public class MappingDslParsingTest {
   @Inject
   private ParseHelper<TechnologyMapping> parseHelper;
-  
+
   @Test
   public void loadModel() {
   }

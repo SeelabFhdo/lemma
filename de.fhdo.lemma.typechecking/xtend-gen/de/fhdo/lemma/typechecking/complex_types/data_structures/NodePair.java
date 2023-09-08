@@ -80,39 +80,39 @@ public class NodePair {
    */
   @Accessors(AccessorType.PUBLIC_GETTER)
   private TypeGraphNode basicNode;
-  
+
   /**
    * "Node to check" if it's compatible, i.e., assignable, to the "basic node"
    */
   @Accessors(AccessorType.PUBLIC_GETTER)
   private TypeGraphNode nodeToCheck;
-  
+
   /**
    * Flag to indicate whether both nodes are compatible or not. Initially, the flag is null, which
    * communicates that the compatibility of the nodes has not been decided yet. Hence, it is of
    * the object type "Boolean" rather than the primitive type "boolean".
    */
   private Boolean compatible;
-  
+
   /**
    * Series to which this pair belongs. Might be null for root pairs.
    */
   @Accessors
   private NodeSeries parentSeries;
-  
+
   /**
    * The node's index in its parent series. Starts with 1. In case this is a root node, the index
    * is zero. The field will be set by the parent NodeSeries object of the pair.
    */
   @Accessors
   private int seriesIndex;
-  
+
   /**
    * Child node series
    */
   @Accessors(AccessorType.PUBLIC_GETTER)
   private final ArrayList<NodeSeries> childSeries = CollectionLiterals.<NodeSeries>newArrayList();
-  
+
   /**
    * Constructor
    */
@@ -120,7 +120,7 @@ public class NodePair {
     this.basicNode = basicNode;
     this.nodeToCheck = nodeToCheck;
   }
-  
+
   /**
    * Add a new child series to the pair
    */
@@ -133,7 +133,7 @@ public class NodePair {
     }
     return _xblockexpression;
   }
-  
+
   /**
    * Is this pair the last one in its parent series? Returns false for root node pairs.
    */
@@ -147,7 +147,7 @@ public class NodePair {
     int _minus = (_size - 1);
     return (this.seriesIndex == _minus);
   }
-  
+
   /**
    * Set compatibility of pair.
    * 
@@ -167,28 +167,28 @@ public class NodePair {
     }
     this.compatible = compatible;
   }
-  
+
   /**
    * Has node pair's compatibility been decided?
    */
   public boolean compatibilityUndecided() {
     return (this.compatible == null);
   }
-  
+
   /**
    * Has the node pair's compatibility been decided and is it compatible or not, eventually?
    */
   public boolean isCompatible() {
     return ((!this.compatibilityUndecided()) && (this.compatible == Boolean.valueOf(true)));
   }
-  
+
   /**
    * Is this a root node pair?
    */
   public boolean isRootPair() {
     return (this.parentSeries == null);
   }
-  
+
   /**
    * Check for equality with other object based on the types encapsulated by the pair's nodes
    */
@@ -244,7 +244,7 @@ public class NodePair {
     }
     return (thisBasicName.equals(otherBasicName) && thisToCheckName.equals(otherToCheckName));
   }
-  
+
   /**
    * Calculate hash code based on this node pair's types
    */
@@ -267,35 +267,35 @@ public class NodePair {
     }
     return hashCode;
   }
-  
+
   @Pure
   public TypeGraphNode getBasicNode() {
     return this.basicNode;
   }
-  
+
   @Pure
   public TypeGraphNode getNodeToCheck() {
     return this.nodeToCheck;
   }
-  
+
   @Pure
   public NodeSeries getParentSeries() {
     return this.parentSeries;
   }
-  
+
   public void setParentSeries(final NodeSeries parentSeries) {
     this.parentSeries = parentSeries;
   }
-  
+
   @Pure
   public int getSeriesIndex() {
     return this.seriesIndex;
   }
-  
+
   public void setSeriesIndex(final int seriesIndex) {
     this.seriesIndex = seriesIndex;
   }
-  
+
   @Pure
   public ArrayList<NodeSeries> getChildSeries() {
     return this.childSeries;

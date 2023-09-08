@@ -63,36 +63,36 @@ import org.eclipse.xtext.xbase.lib.Pure;
 @SuppressWarnings("all")
 public class SpecifyPathsDialog extends TitleAreaDialog {
   private static final int MIN_DIALOG_WIDTH = 500;
-  
+
   private static final int MIN_DIALOG_HEIGHT = 250;
-  
+
   private static final int UNSELECT_ALL = 2;
-  
+
   private static final int SELECT_ALL = 3;
-  
+
   private static final ResourceManager RESOURCE_MANAGER = new LocalResourceManager(JFaceResources.getResources());
-  
+
   private Shell parentShell;
-  
+
   private Map<String, List<ModelFile>> inputModelFiles;
-  
+
   private AbstractUiModelTransformationStrategy strategy;
-  
+
   private TableViewer tableViewer;
-  
+
   private Image checkboxActive;
-  
+
   private Image checkboxInactive;
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private List<ModelFile> selectedModelFiles = CollectionLiterals.<ModelFile>newArrayList();
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private boolean convertToRelativeUris;
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private boolean outputRefinementModels;
-  
+
   /**
    * Constructor
    */
@@ -115,7 +115,7 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
     this.checkboxActive = LemmaUiUtils.createImage(SpecifyPathsDialog.RESOURCE_MANAGER, this.getClass(), "checkboxActive.gif");
     this.checkboxInactive = LemmaUiUtils.createImage(SpecifyPathsDialog.RESOURCE_MANAGER, this.getClass(), "checkboxInactive.gif");
   }
-  
+
   /**
    * Create dialog (to be called after constructor and before open())
    */
@@ -141,7 +141,7 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
     final String message = _elvis_1;
     this.setMessage(message, IMessageProvider.INFORMATION);
   }
-  
+
   /**
    * Internal callback for dialog area creation
    */
@@ -159,7 +159,7 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
     this.createRefinementsOutputCheckbox(container);
     return area;
   }
-  
+
   /**
    * Create buttons for the button bar
    */
@@ -169,7 +169,7 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
     this.createButton(parent, SpecifyPathsDialog.SELECT_ALL, "Select all", false);
     super.createButtonsForButtonBar(parent);
   }
-  
+
   /**
    * Catch button press
    */
@@ -190,7 +190,7 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
         break;
     }
   }
-  
+
   /**
    * "Unselect all" was pressed
    */
@@ -201,7 +201,7 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
     Iterables.<ModelFile>concat(this.inputModelFiles.values()).forEach(_function);
     this.tableViewer.refresh();
   }
-  
+
   /**
    * "Select all" was pressed
    */
@@ -212,7 +212,7 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
     Iterables.<ModelFile>concat(this.inputModelFiles.values()).forEach(_function);
     this.tableViewer.refresh();
   }
-  
+
   /**
    * OK button was pressed
    */
@@ -232,7 +232,7 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
     this.distributeSpecifiedPaths(this.selectedModelFiles, childrenPaths);
     super.okPressed();
   }
-  
+
   /**
    * Helper for getting the paths for unselected children of selected model files from user
    * interaction
@@ -264,7 +264,7 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
     }
     return _switchResult;
   }
-  
+
   /**
    * Distribute specified paths across children of selected model files
    */
@@ -289,7 +289,7 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
     };
     Iterables.<ModelFile>concat(ListExtensions.<ModelFile, List<ModelFile>>map(selectedModelFiles, _function_3)).forEach(_function_4);
   }
-  
+
   /**
    * Helper to handle user decision of using the current paths for unselected children
    */
@@ -329,7 +329,7 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
     }
     return _xifexpression_1;
   }
-  
+
   /**
    * Enable user to manually specify a path for an imported model file that hasn't been selected
    * for transformation
@@ -392,7 +392,7 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
     }
     return manualPaths;
   }
-  
+
   /**
    * Helper method to get selected model files
    */
@@ -410,7 +410,7 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
     selectedModelFiles.forEach(_function_1);
     return selectedModelFiles;
   }
-  
+
   /**
    * Helper method to get unselected imported model files of selected model files, i.e., their
    * "children"
@@ -433,7 +433,7 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
     unselectedChildren.forEach(_function_1);
     return unselectedChildren;
   }
-  
+
   /**
    * Flag to indicate that dialog is resizable
    */
@@ -441,7 +441,7 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
   public boolean isResizable() {
     return true;
   }
-  
+
   /**
    * Initial size
    */
@@ -452,7 +452,7 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
     int _max_1 = Math.max(this.convertVerticalDLUsToPixels(SpecifyPathsDialog.MIN_DIALOG_HEIGHT), shellSize.y);
     return new Point(_max, _max_1);
   }
-  
+
   /**
    * Close dialog
    */
@@ -461,7 +461,7 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
     SpecifyPathsDialog.RESOURCE_MANAGER.dispose();
     super.closeTray();
   }
-  
+
   /**
    * Create table viewer for dialog area
    */
@@ -473,7 +473,7 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
     this.createTransformationTargetPathColumn();
     this.tableViewer.setInput(this.inputModelFiles);
   }
-  
+
   /**
    * Helper to create the dialog's table viewer
    */
@@ -506,7 +506,7 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
       }
     });
   }
-  
+
   /**
    * Helper to create the table's checkbox column
    */
@@ -518,7 +518,7 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
       public String getText(final Object element) {
         return null;
       }
-      
+
       @Override
       public Image getImage(final Object element) {
         Image _xifexpression = null;
@@ -563,7 +563,7 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
     ModelTableCheckboxColumnEditingSupport _modelTableCheckboxColumnEditingSupport = new ModelTableCheckboxColumnEditingSupport(this.tableViewer, checkboxValidator);
     tableViewerColumnCheckbox.setEditingSupport(_modelTableCheckboxColumnEditingSupport);
   }
-  
+
   /**
    * Helper to create the table's model file column
    */
@@ -575,7 +575,7 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
     DelegatingStyledCellLabelProvider _delegatingStyledCellLabelProvider = new DelegatingStyledCellLabelProvider(_modelFileStyledLabelProvider);
     tableViewerColumnModelFile.setLabelProvider(_delegatingStyledCellLabelProvider);
   }
-  
+
   /**
    * Helper to create the table's model type column
    */
@@ -590,7 +590,7 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
       }
     });
   }
-  
+
   /**
    * Helper to create the table's transformation target path column
    */
@@ -635,7 +635,7 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
     ModelTableTransformationTargetPathColumnEditingSupport _modelTableTransformationTargetPathColumnEditingSupport = new ModelTableTransformationTargetPathColumnEditingSupport(this.tableViewer, transformationTargetPathValidator);
     tableViewerColumnTransformationTargetPath.setEditingSupport(_modelTableTransformationTargetPathColumnEditingSupport);
   }
-  
+
   /**
    * Create checkbox for converting absolute import URIs in models to relative URIs
    */
@@ -648,14 +648,14 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
       public void widgetDefaultSelected(final SelectionEvent event) {
         SpecifyPathsDialog.this.convertToRelativeUris = checkbox.getSelection();
       }
-      
+
       @Override
       public void widgetSelected(final SelectionEvent event) {
         SpecifyPathsDialog.this.convertToRelativeUris = checkbox.getSelection();
       }
     });
   }
-  
+
   /**
    * Create checkbox for outputting generated models of refining transformations
    */
@@ -668,24 +668,24 @@ public class SpecifyPathsDialog extends TitleAreaDialog {
       public void widgetDefaultSelected(final SelectionEvent event) {
         SpecifyPathsDialog.this.outputRefinementModels = checkbox.getSelection();
       }
-      
+
       @Override
       public void widgetSelected(final SelectionEvent event) {
         SpecifyPathsDialog.this.outputRefinementModels = checkbox.getSelection();
       }
     });
   }
-  
+
   @Pure
   public List<ModelFile> getSelectedModelFiles() {
     return this.selectedModelFiles;
   }
-  
+
   @Pure
   public boolean isConvertToRelativeUris() {
     return this.convertToRelativeUris;
   }
-  
+
   @Pure
   public boolean isOutputRefinementModels() {
     return this.outputRefinementModels;

@@ -24,7 +24,7 @@ public class TechnologyDslExtractor {
    * Used as seperator to list, e.g., protocols and types
    */
   private static final String LINE_SEP = System.getProperty("line.separator");
-  
+
   /**
    * Extract TechnologyModel
    */
@@ -151,7 +151,7 @@ public class TechnologyDslExtractor {
     }
     return _xblockexpression;
   }
-  
+
   /**
    * Extract Protocol
    */
@@ -210,7 +210,7 @@ public class TechnologyDslExtractor {
     }
     return _xblockexpression;
   }
-  
+
   /**
    * Extract Aspect
    */
@@ -242,21 +242,21 @@ public class TechnologyDslExtractor {
     _builder.append(";");
     return _builder;
   }
-  
+
   /**
    * Extract DataFormat
    */
   public String extractToString(final DataFormat dataformat) {
     return dataformat.getFormatName();
   }
-  
+
   /**
    * Extract JointPointType
    */
   public String extractToString(final JoinPointType jpt) {
     return jpt.getName().toLowerCase();
   }
-  
+
   /**
    * Extract TechnologySpecificPrimitiveType
    */

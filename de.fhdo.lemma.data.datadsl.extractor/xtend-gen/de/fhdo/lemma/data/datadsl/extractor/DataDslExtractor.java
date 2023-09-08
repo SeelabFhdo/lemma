@@ -54,7 +54,7 @@ public class DataDslExtractor {
     this.<ComplexType>appendAsSeparatedLines(sb, dataModel.getComplexTypes(), _function_3, true);
     return sb.toString();
   }
-  
+
   /**
    * Helper to append a list of lines to a StringBuilder and separate them from already existing
    * lines in that StringBuilder by an empty line. If separateConvertedStrings is set to true,
@@ -86,7 +86,7 @@ public class DataDslExtractor {
     final String stringLines = IterableExtensions.join(ListExtensions.<T, String>map(lines, _function), stringSeparator);
     sb.append(stringLines);
   }
-  
+
   /**
    * Extract ComplexTypeImport
    */
@@ -104,7 +104,7 @@ public class DataDslExtractor {
     }
     return _xblockexpression;
   }
-  
+
   /**
    * Extract ComplexType
    */
@@ -129,7 +129,7 @@ public class DataDslExtractor {
     }
     return _switchResult;
   }
-  
+
   /**
    * Extract DataStructure
    */
@@ -183,7 +183,7 @@ public class DataDslExtractor {
     }
     return _xblockexpression;
   }
-  
+
   /**
    * Extract ComplexTypeFeatures
    */
@@ -203,7 +203,7 @@ public class DataDslExtractor {
     }
     return _builder.toString();
   }
-  
+
   /**
    * Extract ComplexTypeFeature
    */
@@ -260,7 +260,7 @@ public class DataDslExtractor {
     }
     return _switchResult;
   }
-  
+
   /**
    * Extract DataField
    */
@@ -298,7 +298,7 @@ public class DataDslExtractor {
     }
     return dataFieldString;
   }
-  
+
   /**
    * Extract DataFieldFeatures
    */
@@ -318,7 +318,7 @@ public class DataDslExtractor {
     }
     return _builder.toString();
   }
-  
+
   /**
    * Extract DataFieldFeature
    */
@@ -351,7 +351,7 @@ public class DataDslExtractor {
     }
     return _switchResult;
   }
-  
+
   /**
    * Get the type of a DataField
    */
@@ -374,7 +374,7 @@ public class DataDslExtractor {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Extract Type reference
    */
@@ -393,14 +393,14 @@ public class DataDslExtractor {
     }
     return _switchResult;
   }
-  
+
   /**
    * Extract PrimitiveType reference
    */
   public String extractTypeReferenceToString(final PrimitiveType primitiveType) {
     return primitiveType.getTypeName();
   }
-  
+
   /**
    * Extract ComplexType reference
    */
@@ -413,7 +413,7 @@ public class DataDslExtractor {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Extract ImportedComplexType reference
    */
@@ -432,7 +432,7 @@ public class DataDslExtractor {
     }
     return _xblockexpression;
   }
-  
+
   /**
    * Extract Enumeration
    */
@@ -475,14 +475,14 @@ public class DataDslExtractor {
     }
     return _xblockexpression;
   }
-  
+
   /**
    * Extract EnumerationField
    */
   private String extractToString(final EnumerationField field) {
     return Util.lemmaName(field.getName());
   }
-  
+
   /**
    * Extract CollectionType
    */
@@ -545,7 +545,7 @@ public class DataDslExtractor {
     }
     return _xblockexpression;
   }
-  
+
   /**
    * Extract Context
    */
@@ -588,7 +588,7 @@ public class DataDslExtractor {
     }
     return _xblockexpression;
   }
-  
+
   /**
    * Extract Version
    */

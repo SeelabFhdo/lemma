@@ -41,9 +41,9 @@ import org.eclipse.xtext.xbase.lib.Pair;
 @SuppressWarnings("all")
 public class IntermediateServiceModelTransformation extends AbstractAtlInputOutputIntermediateModelTransformationStrategy {
   private IFile inputModelFile;
-  
+
   private String absoluteInputModelFilePath;
-  
+
   /**
    * Specify reference name and transformation model type of input model
    */
@@ -53,7 +53,7 @@ public class IntermediateServiceModelTransformation extends AbstractAtlInputOutp
       ServiceModel.class);
     return Pair.<String, TransformationModelType>of("Service", _transformationModelType);
   }
-  
+
   /**
    * Specify reference name and transformation model type of output model
    */
@@ -63,7 +63,7 @@ public class IntermediateServiceModelTransformation extends AbstractAtlInputOutp
       IntermediatePackage.eINSTANCE, IntermediateServiceModel.class);
     return Pair.<String, TransformationModelType>of("Intermediate", _transformationModelType);
   }
-  
+
   /**
    * Specify path to the compiled ATL transformation file
    */
@@ -71,7 +71,7 @@ public class IntermediateServiceModelTransformation extends AbstractAtlInputOutp
   public String getCompiledModelTransformationFilePath() {
     return "/IntermediateServiceModelTransformation.asm";
   }
-  
+
   /**
    * Fetch input model file prior to transformation execution
    */
@@ -80,7 +80,7 @@ public class IntermediateServiceModelTransformation extends AbstractAtlInputOutp
     this.inputModelFile = ((IFile[])Conversions.unwrapArray(inputModelFiles.values(), IFile.class))[0];
     this.absoluteInputModelFilePath = LemmaUtils.getAbsolutePath(this.inputModelFile);
   }
-  
+
   /**
    * Prepare input model
    */
@@ -98,7 +98,7 @@ public class IntermediateServiceModelTransformation extends AbstractAtlInputOutp
     serviceModel.getImports().forEach(_function);
     this.linkTechnologyModels(serviceModel.getMicroservices());
   }
-  
+
   /**
    * Transformation preparation: Link technology models to service model to prevent continuous
    * disk accesses to model files during transformation. Note that this depends on absolute file
@@ -140,7 +140,7 @@ public class IntermediateServiceModelTransformation extends AbstractAtlInputOutp
     };
     microservices.forEach(_function);
   }
-  
+
   /**
    * Specify validator for input model
    */
@@ -148,7 +148,7 @@ public class IntermediateServiceModelTransformation extends AbstractAtlInputOutp
   public AbstractInputModelValidator getInputModelValidator(final TransformationModelDescription modelDescription) {
     return new ServiceModelTransformationValidator();
   }
-  
+
   /**
    * Add transformation target paths of imported model files to target model
    */
@@ -165,7 +165,7 @@ public class IntermediateServiceModelTransformation extends AbstractAtlInputOutp
     };
     targetPaths.forEach(_function);
   }
-  
+
   /**
    * Convert URIs in intermediate service models to relative ones
    */
@@ -173,7 +173,7 @@ public class IntermediateServiceModelTransformation extends AbstractAtlInputOutp
   public void makeUrisRelative(final AbstractIntermediateModelTransformationStrategy.TransformationResult result) {
     IntermediateServiceModelTransformation.performUriRelativization(result);
   }
-  
+
   /**
    * Reusable helper to convert URIs in intermediate service models to relative ones
    */

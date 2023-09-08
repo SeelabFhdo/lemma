@@ -75,7 +75,7 @@ public final class Util {
     }
     return _switchResult;
   }
-  
+
   /**
    * Calculate the relative qualifier of a full qualifier relative to another full qualifier. For
    * example, the relative qualifier of the full qualifier "org.example.lemma.data.Structure" in
@@ -100,7 +100,7 @@ public final class Util {
     }
     return Util.joinFromIndex(qualifierParts, ".", differenceIndex);
   }
-  
+
   /**
    * Join entries of an Iterable separated by an arbitrary String and starting from a given
    * (inclusive) index
@@ -116,12 +116,12 @@ public final class Util {
     final Iterable<Object> joinElements = IterableExtensions.<Pair<Integer, Object>, Object>map(IterableExtensions.<Pair<Integer, Object>>filter(IterableExtensions.<Object>indexed(iterable), _function), _function_1);
     return IterableExtensions.join(joinElements, separator);
   }
-  
+
   /**
    * List of reserved keywords of the Data DSL
    */
   private static final List<String> RESERVED_KEYWORDS = Collections.<String>unmodifiableList(CollectionLiterals.<String>newArrayList("as", "collection", "context", "datatypes", "enum", "from", "import", "structure", "version"));
-  
+
   /**
    * Escape Data DSL keyword
    */

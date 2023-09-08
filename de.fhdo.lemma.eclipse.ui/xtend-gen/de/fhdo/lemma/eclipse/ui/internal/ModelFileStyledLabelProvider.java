@@ -18,11 +18,11 @@ import org.eclipse.swt.graphics.Image;
 @SuppressWarnings("all")
 public class ModelFileStyledLabelProvider extends LabelProvider implements DelegatingStyledCellLabelProvider.IStyledLabelProvider {
   protected ResourceManager resourceManager;
-  
+
   protected Image errorIcon;
-  
+
   protected Image warningIcon;
-  
+
   /**
    * Constructor
    */
@@ -33,7 +33,7 @@ public class ModelFileStyledLabelProvider extends LabelProvider implements Deleg
     this.errorIcon = LemmaUiUtils.createImage(this.resourceManager, this.getClass(), "error.gif");
     this.warningIcon = LemmaUiUtils.createImage(this.resourceManager, this.getClass(), "warning.gif");
   }
-  
+
   /**
    * Get default styled text for element
    */
@@ -45,7 +45,7 @@ public class ModelFileStyledLabelProvider extends LabelProvider implements Deleg
     String _string = ((ModelFile) element).getFile().getFullPath().toString();
     return new StyledString(_string);
   }
-  
+
   /**
    * Get image for element
    */
@@ -56,7 +56,7 @@ public class ModelFileStyledLabelProvider extends LabelProvider implements Deleg
     }
     return this.getFileIcon(((ModelFile) element));
   }
-  
+
   /**
    * Garbage collector callback
    */
@@ -65,7 +65,7 @@ public class ModelFileStyledLabelProvider extends LabelProvider implements Deleg
     super.dispose();
     this.resourceManager.dispose();
   }
-  
+
   /**
    * Helper method to get the icon of a model file element
    */

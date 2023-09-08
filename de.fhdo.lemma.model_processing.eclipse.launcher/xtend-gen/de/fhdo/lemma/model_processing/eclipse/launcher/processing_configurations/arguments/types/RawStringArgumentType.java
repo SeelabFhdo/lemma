@@ -11,14 +11,14 @@ import de.fhdo.lemma.model_processing.eclipse.launcher.processing_configurations
 @SuppressWarnings("all")
 public final class RawStringArgumentType extends AbstractArgumentType {
   public static final ArgumentTypeIdentifier IDENTIFIER = ArgumentTypeIdentifier.RAW_STRING;
-  
+
   /**
    * Constructor
    */
   public RawStringArgumentType() {
     super(RawStringArgumentType.IDENTIFIER, "Raw string");
   }
-  
+
   /**
    * Validate the type-specific argument value in its internal representation which is a no-op for
    * raw strings

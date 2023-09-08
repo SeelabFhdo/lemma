@@ -22,7 +22,7 @@ public class OperationDslFormatter extends ServiceDslFormatter {
   @Inject
   @Extension
   private OperationDslGrammarAccess _operationDslGrammarAccess;
-  
+
   protected void _format(final OperationModel operationModel, @Extension final IFormattableDocument document) {
     EList<Import> _imports = operationModel.getImports();
     for (final Import _import : _imports) {
@@ -33,7 +33,7 @@ public class OperationDslFormatter extends ServiceDslFormatter {
       document.<Container>format(container);
     }
   }
-  
+
   public void format(final Object operationModel, final IFormattableDocument document) {
     if (operationModel instanceof XtextResource) {
       _format((XtextResource)operationModel, document);

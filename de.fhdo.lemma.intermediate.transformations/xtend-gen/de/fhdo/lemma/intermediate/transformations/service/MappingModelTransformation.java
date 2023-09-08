@@ -152,7 +152,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
       refinedModelsPerServiceModel.forEach(_function);
       return unrefinedIntermediateDataModels;
     }
-    
+
     /**
      * Parse an XMI file with from the given URI
      */
@@ -169,7 +169,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
         throw Exceptions.sneakyThrow(_e);
       }
     }
-    
+
     /**
      * Link technology models to MappedComplexType instances in service models. This would
      * normally be done by the transformation strategy implementation, i.e., the
@@ -193,7 +193,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
       };
       serviceModelRoot.getMappedComplexTypes().forEach(_function);
     }
-    
+
     /**
      * Helper to retrieve intermediate data models that are imported by intermediate service
      * models produced from the input mapping model. Note that the helper maps the original
@@ -244,7 +244,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
       mappedComplexTypesPerServiceModel.forEach(_function_4);
       return resultMap;
     }
-    
+
     /**
      * Helper to find the intermediate service model created from a service model in the list of
      * transformation results
@@ -265,7 +265,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
       }
       return _outputModel;
     }
-    
+
     /**
      * Helper to adapt import paths in an intermediate model to the paths of refined
      * intermediate data models. This helper also saves the resource of the intermediate model
@@ -316,7 +316,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
         throw Exceptions.sneakyThrow(_e);
       }
     }
-    
+
     /**
      * Run refining transformation on an intermediate data model
      */
@@ -342,7 +342,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
       }
       return refiningResult;
     }
-    
+
     /**
      * Helper to build the output path of an intermediate model's refining transformation. It
      * consists of the path to the input service model of the transformation with its extension
@@ -399,11 +399,11 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
       return LemmaUtils.joinPathSegments(refinedModelTargetFolder, prefixedRefinedModelName);
     }
   }
-  
+
   private String absoluteInputModelFilePath;
-  
+
   private TechnologyMapping inputMappingModel;
-  
+
   /**
    * Specify reference name and transformation model type of input model
    */
@@ -413,7 +413,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
       TechnologyMapping.class);
     return Pair.<String, TransformationModelType>of("Mapping", _transformationModelType);
   }
-  
+
   /**
    * Specify reference name and transformation model type of output model
    */
@@ -423,7 +423,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
       ServiceModel.class);
     return Pair.<String, TransformationModelType>of("Service", _transformationModelType);
   }
-  
+
   /**
    * Specify path to the compiled ATL transformation file
    */
@@ -431,7 +431,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
   public String getCompiledModelTransformationFilePath() {
     return "/MappingModelTransformation.asm";
   }
-  
+
   /**
    * Fetch input model and output model file prior to transformation execution
    */
@@ -439,7 +439,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
   public void beforeTransformationHook(final Map<TransformationModelDescription, IFile> inputModelFiles, final Map<TransformationModelDescription, String> outputModelPaths) {
     this.absoluteInputModelFilePath = LemmaUtils.getAbsolutePath(((IFile[])Conversions.unwrapArray(inputModelFiles.values(), IFile.class))[0]);
   }
-  
+
   /**
    * Prepare input model
    */
@@ -450,7 +450,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
     this.convertImportUrisToAbsoluteFileUris(this.inputMappingModel.getImports(), this.absoluteInputModelFilePath);
     this.setSourceModelUris(this.inputMappingModel);
   }
-  
+
   /**
    * Transformation preparation: Convert import URIs of imported model files to absolute file
    * URIs. Otherwise the transformation won't have access to them and the contained model
@@ -467,7 +467,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
     };
     imports.forEach(_function);
   }
-  
+
   /**
    * Transformation preparation: Set source model URIs on complex type and technology-specific
    * field mappings. They are later used to distinguish eponymous mapped fields defined in
@@ -498,14 +498,14 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
     };
     typeMappings.forEach(_function_1);
   }
-  
+
   /**
    * Get service model URI of complex type mapping
    */
   private String _getServiceModelUri(final ComplexTypeMapping complexTypeMapping) {
     return complexTypeMapping.getType().getServiceModelImport().getImportURI();
   }
-  
+
   /**
    * Get service model URI of technology-specific field mapping
    */
@@ -529,21 +529,21 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
     final Import serviceModelImport = _elvis;
     return serviceModelImport.getImportURI();
   }
-  
+
   /**
    * Get data model URI of complex type mapping
    */
   private String _getDataModelUri(final ComplexTypeMapping complexTypeMapping) {
     return complexTypeMapping.getType().getDataModelImport().getImportURI();
   }
-  
+
   /**
    * Get data model URI of technology-specific field mapping
    */
   private String _getDataModelUri(final TechnologySpecificFieldMapping mapping) {
     return mapping.getOriginalTypeOfMappedElement().eResource().getURI().toString();
   }
-  
+
   /**
    * Specify validator for input model
    */
@@ -551,7 +551,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
   public AbstractInputModelValidator getInputModelValidator(final TransformationModelDescription modelDescription) {
     return new MappingModelTransformationValidator();
   }
-  
+
   /**
    * Consider imports of imported service models to build import target paths. Otherwise the paths
    * of domain models imported by mapped service models will point to their original destination
@@ -562,7 +562,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
   public boolean considerChildrensChildrenForImportTargetPaths() {
     return true;
   }
-  
+
   /**
    * Add transformation target paths of imported model files to target model
    */
@@ -602,7 +602,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
     };
     IterableExtensions.<Import>filter(serviceModelRoot.getImports(), _function_1).forEach(_function_2);
   }
-  
+
   /**
    * Find URI of a data model via the import relationships service model --> intermediate service
    * model --> intermediate data model.
@@ -633,7 +633,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
       IntermediateDataModel.class);
     return intermediateDataModel.getSourceModelUri();
   }
-  
+
   /**
    * Register listener to be invoked after all transformations of a transformation run were
    * finished
@@ -646,7 +646,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
     };
     return _function;
   }
-  
+
   /**
    * Convert URIs in intermediate models that occurred from the transformation of a mapping model
    * to relative ones
@@ -666,7 +666,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
       }
     }
   }
-  
+
   /**
    * Helper to find the input model, which resulted in the given output model from the list of
    * transformation results
@@ -691,7 +691,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
     }
     return _get_1;
   }
-  
+
   private String getServiceModelUri(final EObject complexTypeMapping) {
     if (complexTypeMapping instanceof ComplexTypeMapping) {
       return _getServiceModelUri((ComplexTypeMapping)complexTypeMapping);
@@ -702,7 +702,7 @@ public class MappingModelTransformation extends AbstractAtlInputOutputIntermedia
         Arrays.<Object>asList(complexTypeMapping).toString());
     }
   }
-  
+
   private String getDataModelUri(final EObject complexTypeMapping) {
     if (complexTypeMapping instanceof ComplexTypeMapping) {
       return _getDataModelUri((ComplexTypeMapping)complexTypeMapping);

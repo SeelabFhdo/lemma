@@ -20,7 +20,7 @@ public class ValidationTestHelperInjectorProvider extends DataDslInjectorProvide
        */
       public abstract Class<? extends ValidationTestHelper> bindValidationTestHelper();
     }
-    
+
     final DataDslRuntimeModule runtimeModule = super.createRuntimeModule();
     return new __ValidationTestHelperInjectorProvider_1() {
       /**
@@ -29,7 +29,7 @@ public class ValidationTestHelperInjectorProvider extends DataDslInjectorProvide
       public Class<? extends ValidationTestHelper> bindValidationTestHelper() {
         return ExtendedValidationTestHelper.class;
       }
-      
+
       @Override
       public ClassLoader bindClassLoaderToInstance() {
         return runtimeModule.bindClassLoaderToInstance();

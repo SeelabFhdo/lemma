@@ -19,7 +19,7 @@ public class DataDslRuntimeModule extends AbstractDataDslRuntimeModule {
   public Class<? extends IScopeProvider> bindIScopeProvider() {
     return DataDslScopeProvider.class;
   }
-  
+
   public Class<? extends IDefaultResourceDescriptionStrategy> bindIDefaultResourceDescriptionStrategy() {
     return DataDslResourceDescriptionStrategy.class;
   }

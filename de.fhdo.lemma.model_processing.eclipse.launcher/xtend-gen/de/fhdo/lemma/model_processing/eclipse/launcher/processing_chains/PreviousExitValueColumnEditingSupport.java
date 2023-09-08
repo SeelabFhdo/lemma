@@ -29,9 +29,9 @@ import org.eclipse.xtext.xbase.lib.Exceptions;
 @SuppressWarnings("all")
 public final class PreviousExitValueColumnEditingSupport extends ObservableValueEditingSupport<ProcessingChainEntry, Integer, String> {
   private TableViewer tableViewer;
-  
+
   private DataBindingContext dataBindingContext;
-  
+
   /**
    * Constructor
    */
@@ -43,7 +43,7 @@ public final class PreviousExitValueColumnEditingSupport extends ObservableValue
     UpdatingColumnViewerEditorActivationListener _updatingColumnViewerEditorActivationListener = new UpdatingColumnViewerEditorActivationListener(tableViewer);
     _columnViewerEditor.addEditorActivationListener(_updatingColumnViewerEditorActivationListener);
   }
-  
+
   /**
    * Return the column's CellEditor
    */
@@ -52,7 +52,7 @@ public final class PreviousExitValueColumnEditingSupport extends ObservableValue
     Table _table = this.tableViewer.getTable();
     return new TextCellEditor(_table);
   }
-  
+
   /**
    * Return the IObservableValue of the column's CellEditor
    */
@@ -60,7 +60,7 @@ public final class PreviousExitValueColumnEditingSupport extends ObservableValue
   public final IObservableValue<String> doCreateCellEditorObservable(final CellEditor editor) {
     return WidgetProperties.<Control>text(SWT.Modify).observe(editor.getControl());
   }
-  
+
   /**
    * Return the IObservableValue of the Bean element
    */
@@ -68,7 +68,7 @@ public final class PreviousExitValueColumnEditingSupport extends ObservableValue
   public final IObservableValue<Integer> doCreateElementObservable(final ProcessingChainEntry entry, final ViewerCell cell) {
     return BeanProperties.<ProcessingChainEntry, Integer>value(ProcessingChainEntry.class, "previousExitValue", null).observe(entry);
   }
-  
+
   /**
    * Bind the CellEditor's and Bean element's IObservableValues
    */
@@ -106,7 +106,7 @@ public final class PreviousExitValueColumnEditingSupport extends ObservableValue
     targetToModelConverter.setConverter(IConverter.<String, Integer>create(_function_1));
     return this.dataBindingContext.<String, Integer>bindValue(target, model, targetToModelConverter, modelToTargetConverter);
   }
-  
+
   /**
    * Enable column-editing
    */

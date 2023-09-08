@@ -1,37 +1,22 @@
 package de.fhdo.lemma.service.openapi;
 
-import com.google.common.base.Objects;
 import de.fhdo.lemma.data.DataFactory;
 import de.fhdo.lemma.data.PrimitiveType;
 import de.fhdo.lemma.technology.AspectFeature;
-import de.fhdo.lemma.technology.DataFormat;
 import de.fhdo.lemma.technology.JoinPointType;
-import de.fhdo.lemma.technology.Protocol;
 import de.fhdo.lemma.technology.ServiceAspect;
 import de.fhdo.lemma.technology.Technology;
 import de.fhdo.lemma.technology.TechnologyFactory;
 import de.fhdo.lemma.technology.TechnologySpecificPrimitiveType;
-import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.Operation;
-import io.swagger.v3.oas.models.PathItem;
-import io.swagger.v3.oas.models.media.Content;
-import io.swagger.v3.oas.models.parameters.RequestBody;
-import io.swagger.v3.oas.models.responses.ApiResponse;
-import io.swagger.v3.oas.models.responses.ApiResponses;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 import org.eclipse.xtend.lib.annotations.AccessorType;
 import org.eclipse.xtend.lib.annotations.Accessors;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
-import org.eclipse.xtext.xbase.lib.Functions.Function1;
-import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.Pure;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This class is responsible for handling the generation of a LEMMA technology model for the OpenAPI
@@ -42,75 +27,74 @@ import org.slf4j.LoggerFactory;
 @SuppressWarnings("all")
 public class LemmaTechnologySubGenerator {
   public static final String HTTP_DELETE_ASPECT_NAME = "DeleteMapping";
-  
+
   public static final String HTTP_GET_ASPECT_NAME = "GetMapping";
-  
+
   public static final String HTTP_HEAD_ASPECT_NAME = "HeadMapping";
-  
+
   public static final String HTTP_OPTIONS_ASPECT_NAME = "OptionsMapping";
-  
+
   public static final String HTTP_PATCH_ASPECT_NAME = "PatchMapping";
-  
+
   public static final String HTTP_POST_ASPECT_NAME = "PostMapping";
-  
+
   public static final String HTTP_PUT_ASPECT_NAME = "PutMapping";
-  
+
   public static final String HTTP_REQUEST_BODY_ASPECT_NAME = "RequestBody";
-  
+
   public static final String HTTP_TRACE_ASPECT_NAME = "TraceMapping";
-  
+
   public static final String UNSPECIFIED_ASPECT_NAME = "Unspecified";
-  
+
   public static final String TECHNOLOGY_MODEL_NAME = "OpenApi";
-  
+
   private static final String DEFAULT_DATA_FORMAT = "application/json";
-  
+
   /**
    * SLF4j LOGGER
    */
-  private static final Logger LOGGER = LoggerFactory.getLogger(LemmaTechnologySubGenerator.class);
-  
+  private static final Logger LOGGER /* Skipped initializer because of errors */;
+
   /**
    * Factory to actually create and manipulate a LEMMA Technology
    */
   private final TechnologyFactory TECHNOLOGY_FACTORY = TechnologyFactory.eINSTANCE;
-  
+
   /**
    * Factory to actually create and manipulate a LEMMA DataModel
    */
   private final DataFactory dataFactory = DataFactory.eINSTANCE;
-  
+
   /**
    * Predefined instance of the TechnologyModel. This instance is populated with technology
    * information relevant to OpenAPI, e.g., media types.
    */
   private final Technology technology = this.TECHNOLOGY_FACTORY.createTechnology();
-  
+
   /**
    * OpenAPI schema which will be used as source for generation
    */
-  private OpenAPI openApi;
-  
+  private /* OpenAPI */Object openApi;
+
   /**
    * Log of all encountered exceptions during the data transformation
    */
   @Accessors(AccessorType.PUBLIC_GETTER)
   private final ArrayList<String> transMsgs = CollectionLiterals.<String>newArrayList();
-  
+
   /**
    * Location where the generated file is written
    */
   private String targetFile;
-  
+
   /**
    * Constructor
    */
-  public LemmaTechnologySubGenerator(final OpenAPI api, final String targetFile) {
-    LemmaTechnologySubGenerator.LOGGER.debug("Creating new Technology Sub Generator...");
-    this.openApi = api;
-    this.targetFile = targetFile;
+  public LemmaTechnologySubGenerator(final /* OpenAPI */Object api, final String targetFile) {
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe field LemmaTechnologySubGenerator.openApi refers to the missing type /* OpenAPI schema which will be used as source for generation */\n    OpenAPI");
   }
-  
+
   /**
    * Generate the LEMMA technology model for OpenAPI. This method returns the created model
    * instance and also serializes it to the user's harddrive.
@@ -138,7 +122,7 @@ public class LemmaTechnologySubGenerator {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Initialize the technology model instance
    */
@@ -147,7 +131,7 @@ public class LemmaTechnologySubGenerator {
     this.addPrimitiveTypes(this.technology);
     this.addAspects(this.technology);
   }
-  
+
   /**
    * Add "rest" protocol to the technology model and derive the protocol's data formats from the
    * media types of the given OpenAPI specification. The default format will be JSON if the
@@ -155,81 +139,41 @@ public class LemmaTechnologySubGenerator {
    * will be set as default.
    */
   private boolean addRestProtocol(final Technology technology) {
-    boolean _xblockexpression = false;
-    {
-      final Protocol rest = this.TECHNOLOGY_FACTORY.createProtocol();
-      rest.setName("rest");
-      final HashSet<String> mediaTypes = CollectionLiterals.<String>newHashSet();
-      final BiConsumer<String, PathItem> _function = (String path, PathItem pathSchema) -> {
-        mediaTypes.addAll(this.searchMediaTypes(pathSchema));
-      };
-      this.openApi.getPaths().forEach(_function);
-      final Consumer<String> _function_1 = (String type) -> {
-        final DataFormat dataFormat = this.TECHNOLOGY_FACTORY.createDataFormat();
-        dataFormat.setFormatName(type);
-        rest.getDataFormats().add(dataFormat);
-      };
-      mediaTypes.forEach(_function_1);
-      boolean _isEmpty = rest.getDataFormats().isEmpty();
-      if (_isEmpty) {
-        final DataFormat emptyFormat = this.TECHNOLOGY_FACTORY.createDataFormat();
-        emptyFormat.setFormatName("NO_FORMAT_ENCOUNTERED_DURING_PARSING");
-        rest.getDataFormats().add(emptyFormat);
-      }
-      DataFormat _elvis = null;
-      final Function1<DataFormat, Boolean> _function_2 = (DataFormat it) -> {
-        String _formatName = it.getFormatName();
-        return Boolean.valueOf(Objects.equal(_formatName, LemmaTechnologySubGenerator.DEFAULT_DATA_FORMAT));
-      };
-      DataFormat _findFirst = IterableExtensions.<DataFormat>findFirst(rest.getDataFormats(), _function_2);
-      if (_findFirst != null) {
-        _elvis = _findFirst;
-      } else {
-        DataFormat _get = rest.getDataFormats().get(0);
-        _elvis = _get;
-      }
-      rest.setDefaultFormat(_elvis);
-      _xblockexpression = technology.getProtocols().add(rest);
-    }
-    return _xblockexpression;
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe field LemmaTechnologySubGenerator.openApi refers to the missing type /* OpenAPI schema which will be used as source for generation */\n    OpenAPI"
+      + "\nThere is no context to infer the closure\'s argument types from. Consider typing the arguments or put the closures into a typed context."
+      + "\nThe method searchMediaTypes(PathItem) from the type LemmaTechnologySubGenerator refers to the missing type PathItem"
+      + "\npaths cannot be resolved"
+      + "\nforEach cannot be resolved");
   }
-  
+
   /**
    * Search media types in the requests and responses of the OpenAPI specification
    */
-  private HashSet<String> searchMediaTypes(final PathItem item) {
-    final Iterable<Operation> httpVerbs = IterableExtensions.<Operation>filterNull(CollectionLiterals.<Operation>newArrayList(item.getDelete(), item.getGet(), item.getHead(), item.getOptions(), item.getPatch(), 
-      item.getPost(), item.getPut()));
-    final HashSet<String> mediaTypes = CollectionLiterals.<String>newHashSet();
-    final Consumer<Operation> _function = (Operation verb) -> {
-      RequestBody _requestBody = verb.getRequestBody();
-      Content _content = null;
-      if (_requestBody!=null) {
-        _content=_requestBody.getContent();
-      }
-      boolean _tripleNotEquals = (_content != null);
-      if (_tripleNotEquals) {
-        mediaTypes.addAll(verb.getRequestBody().getContent().keySet());
-      }
-      ApiResponses _responses = verb.getResponses();
-      if (_responses!=null) {
-        final BiConsumer<String, ApiResponse> _function_1 = (String responseCode, ApiResponse responseSchema) -> {
-          Content _content_1 = null;
-          if (responseSchema!=null) {
-            _content_1=responseSchema.getContent();
-          }
-          boolean _tripleNotEquals_1 = (_content_1 != null);
-          if (_tripleNotEquals_1) {
-            mediaTypes.addAll(responseSchema.getContent().keySet());
-          }
-        };
-        _responses.forEach(_function_1);
-      }
-    };
-    httpVerbs.forEach(_function);
-    return mediaTypes;
+  private HashSet<String> searchMediaTypes(final /* PathItem */Object item) {
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method or field requestBody is undefined for the type Object"
+      + "\nThe method or field requestBody is undefined for the type Object"
+      + "\nThe method or field responses is undefined for the type Object"
+      + "\nThe method or field content is undefined for the type Object"
+      + "\nThe method or field content is undefined for the type Object"
+      + "\nThere is no context to infer the closure\'s argument types from. Consider typing the arguments or put the closures into a typed context."
+      + "\ndelete cannot be resolved"
+      + "\nget cannot be resolved"
+      + "\nhead cannot be resolved"
+      + "\noptions cannot be resolved"
+      + "\npatch cannot be resolved"
+      + "\npost cannot be resolved"
+      + "\nput cannot be resolved"
+      + "\ncontent cannot be resolved"
+      + "\n!== cannot be resolved"
+      + "\ncontent cannot be resolved"
+      + "\nkeySet cannot be resolved"
+      + "\nforEach cannot be resolved"
+      + "\n!== cannot be resolved"
+      + "\nkeySet cannot be resolved");
   }
-  
+
   /**
    * Add primitive types to the given LEMMA technology model following the OpenAPI 3.0.3
    * specification
@@ -268,7 +212,7 @@ public class LemmaTechnologySubGenerator {
     technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("Unspecified", true, 
       this.dataFactory.createPrimitiveUnspecified()));
   }
-  
+
   /**
    * Helper method to create a technology specific LEMMA type
    */
@@ -279,7 +223,7 @@ public class LemmaTechnologySubGenerator {
     type.getBasicBuiltinPrimitiveTypes().add(baseType);
     return type;
   }
-  
+
   /**
    * Add OpenAPI-related aspects to the technology model
    */
@@ -295,7 +239,7 @@ public class LemmaTechnologySubGenerator {
     technology.getServiceAspects().add(this.createOperationsAspect(LemmaTechnologySubGenerator.HTTP_TRACE_ASPECT_NAME));
     technology.getServiceAspects().add(this.createOperationsAspect(LemmaTechnologySubGenerator.UNSPECIFIED_ASPECT_NAME));
   }
-  
+
   /**
    * Create a single-valued LEMMA service aspect with microservice operations as join point type
    */
@@ -306,7 +250,7 @@ public class LemmaTechnologySubGenerator {
     aspect.getFeatures().add(AspectFeature.SINGLE_VALUED);
     return aspect;
   }
-  
+
   /**
    * Create a single-valued LEMMA service aspect with microservice operation parameters as join
    * point type
@@ -318,7 +262,7 @@ public class LemmaTechnologySubGenerator {
     aspect.getFeatures().add(AspectFeature.SINGLE_VALUED);
     return aspect;
   }
-  
+
   @Pure
   public ArrayList<String> getTransMsgs() {
     return this.transMsgs;

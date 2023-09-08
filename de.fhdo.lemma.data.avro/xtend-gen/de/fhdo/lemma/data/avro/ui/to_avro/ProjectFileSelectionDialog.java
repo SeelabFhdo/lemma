@@ -38,21 +38,21 @@ import org.eclipse.xtext.xbase.lib.Pure;
 @SuppressWarnings("all")
 public class ProjectFileSelectionDialog extends ElementTreeSelectionDialog {
   private String initialFilename = "";
-  
+
   private IProject project;
-  
+
   private String fileExtension;
-  
+
   private Text filenameInput;
-  
+
   private ControlDecoration filenameWarning;
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private IContainer targetContainer;
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private String targetFilepath;
-  
+
   /**
    * Constructor
    */
@@ -68,7 +68,7 @@ public class ProjectFileSelectionDialog extends ElementTreeSelectionDialog {
     }
     this.fileExtension = _xifexpression;
   }
-  
+
   /**
    * Create dialog (to be called after constructor and before open())
    */
@@ -77,7 +77,7 @@ public class ProjectFileSelectionDialog extends ElementTreeSelectionDialog {
     super.create();
     this.updateFilenameWarningDisplay();
   }
-  
+
   /**
    * Helper to update the warning sign on the filename input based on the tree viewer's selection
    * and the filename input
@@ -98,7 +98,7 @@ public class ProjectFileSelectionDialog extends ElementTreeSelectionDialog {
       this.filenameWarning.hide();
     }
   }
-  
+
   /**
    * Check if the given project-relative path to a file already exists in the current Eclipse
    * workspace
@@ -107,7 +107,7 @@ public class ProjectFileSelectionDialog extends ElementTreeSelectionDialog {
     return ((!projectRelativeFilepath.isEmpty()) && 
       (ResourcesPlugin.getWorkspace().getRoot().findMember(projectRelativeFilepath) != null));
   }
-  
+
   /**
    * Get file path of filename input relative to the given IContainer
    */
@@ -126,7 +126,7 @@ public class ProjectFileSelectionDialog extends ElementTreeSelectionDialog {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Get the selected IContainer from the tree viewer's ISelection
    */
@@ -140,7 +140,7 @@ public class ProjectFileSelectionDialog extends ElementTreeSelectionDialog {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Internal callback for dialog area creation
    */
@@ -180,7 +180,7 @@ public class ProjectFileSelectionDialog extends ElementTreeSelectionDialog {
     }
     return composite;
   }
-  
+
   /**
    * OK button was pressed
    */
@@ -215,7 +215,7 @@ public class ProjectFileSelectionDialog extends ElementTreeSelectionDialog {
     this.targetFilepath = this.abosluteFilepath(targetContainer);
     super.okPressed();
   }
-  
+
   /**
    * Get absolute file path of filename input based on the given IContainer
    */
@@ -236,12 +236,12 @@ public class ProjectFileSelectionDialog extends ElementTreeSelectionDialog {
     }
     return _xifexpression;
   }
-  
+
   @Pure
   public IContainer getTargetContainer() {
     return this.targetContainer;
   }
-  
+
   @Pure
   public String getTargetFilepath() {
     return this.targetFilepath;

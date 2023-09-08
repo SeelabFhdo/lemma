@@ -40,7 +40,7 @@ public class HighlightingCalculator implements ISemanticHighlightingCalculator {
     this.provideHighlightingForBooleanConstants(resource, acceptor);
     this.provideHighlightingForFeatures(resource, acceptor);
   }
-  
+
   /**
    * Provide highlighting for boolean values
    */
@@ -90,7 +90,7 @@ public class HighlightingCalculator implements ISemanticHighlightingCalculator {
     };
     IteratorExtensions.<EObject>forEach(resource.getAllContents(), _function_2);
   }
-  
+
   /**
    * Provide highlighting for features
    */
@@ -103,7 +103,7 @@ public class HighlightingCalculator implements ISemanticHighlightingCalculator {
     };
     IteratorExtensions.<EObject>forEach(resource.getAllContents(), _function);
   }
-  
+
   /**
    * Get feature nodes on EObjects that support feature specification
    */

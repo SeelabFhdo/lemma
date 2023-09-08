@@ -24,7 +24,7 @@ public final class AvroSchemaFactory {
     Shared.setLemmaName(schema, lemmaQualifiedName);
     return schema;
   }
-  
+
   /**
    * Split a LEMMA qualified name into the qualifying and the name part. Additionally, the
    * qualifying part is converted to an Avro-compatible namespace.
@@ -35,7 +35,7 @@ public final class AvroSchemaFactory {
     String _value = parts.getValue();
     return Pair.<String, String>of(avroNamespace, _value);
   }
-  
+
   /**
    * Create Avro Enum
    */
@@ -45,7 +45,7 @@ public final class AvroSchemaFactory {
     Shared.setLemmaName(schema, lemmaQualifiedName);
     return schema;
   }
-  
+
   /**
    * Create Avro Fixed
    */
@@ -55,7 +55,7 @@ public final class AvroSchemaFactory {
     Shared.setLemmaName(schema, lemmaQualifiedName);
     return schema;
   }
-  
+
   /**
    * Create Avro Map
    */
@@ -64,7 +64,7 @@ public final class AvroSchemaFactory {
     Shared.setLemmaName(schema, lemmaQualifiedName);
     return schema;
   }
-  
+
   /**
    * Create Avro Record
    */
@@ -74,7 +74,7 @@ public final class AvroSchemaFactory {
     Shared.setLemmaName(schema, lemmaQualifiedName);
     return schema;
   }
-  
+
   /**
    * Create Avro Union. Setting includeNullSchema to true, results in adding Avro's NULL schema
    * type to the union.

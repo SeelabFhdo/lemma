@@ -20,13 +20,13 @@ import org.eclipse.xtext.xbase.lib.Pure;
 public class ExpectedIssue {
   @Accessors(AccessorType.PUBLIC_GETTER)
   private EClass objectType;
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private Severity severity;
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private String message;
-  
+
   /**
    * Construct an ExpectedIssue instance from a pair of Ecore object/model element and expected
    * issue message for the given severity
@@ -34,7 +34,7 @@ public class ExpectedIssue {
   public ExpectedIssue(final Pair<EClass, String> objectTypeAndMessage, final Severity severity) {
     this(objectTypeAndMessage.getKey(), severity, objectTypeAndMessage.getValue());
   }
-  
+
   /**
    * Constructor
    */
@@ -43,7 +43,7 @@ public class ExpectedIssue {
     this.severity = severity;
     this.message = message;
   }
-  
+
   /**
    * Factory method to create a list of ExpectedIssue instances from a list of pairs of
    * Ecore objects/model elements and expected issue messages for the given severity
@@ -54,17 +54,17 @@ public class ExpectedIssue {
     };
     return IterableExtensions.<ExpectedIssue>toList(ListExtensions.<Pair<EClass, String>, ExpectedIssue>map(objectTypesAndMessages, _function));
   }
-  
+
   @Pure
   public EClass getObjectType() {
     return this.objectType;
   }
-  
+
   @Pure
   public Severity getSeverity() {
     return this.severity;
   }
-  
+
   @Pure
   public String getMessage() {
     return this.message;

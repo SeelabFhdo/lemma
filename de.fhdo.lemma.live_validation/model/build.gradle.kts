@@ -13,7 +13,7 @@ dependencies {
     implementation("org.eclipse.lsp4j:org.eclipse.lsp4j:$lsp4jVersion")
     implementation("org.eclipse.lsp4j:org.eclipse.lsp4j.jsonrpc:$lsp4jVersion")
 
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }
 

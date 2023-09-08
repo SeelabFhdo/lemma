@@ -78,7 +78,7 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
         TechnologyPackage.Literals.TECHNOLOGY__NAME);
     }
   }
-  
+
   /**
    * Check that imported file is imported exactly once
    */
@@ -100,7 +100,7 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
     this.error("File is already being imported", duplicate, 
       TechnologyPackage.Literals.TECHNOLOGY_IMPORT__IMPORT_URI);
   }
-  
+
   /**
    * Check if an imported file exists and if it is case sensitive
    */
@@ -122,7 +122,7 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
       }
     }
   }
-  
+
   /**
    * Check that imported file defines a technology model
    */
@@ -137,7 +137,7 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
         TechnologyPackage.Literals.TECHNOLOGY_IMPORT__IMPORT_URI);
     }
   }
-  
+
   /**
    * Check that technology does not import itself
    */
@@ -152,7 +152,7 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
         TechnologyPackage.Literals.TECHNOLOGY_IMPORT__IMPORT_URI);
     }
   }
-  
+
   /**
    * Check that there are not duplicates in the basic built-ins of a technology-specific primitive
    * type
@@ -194,7 +194,7 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
       this.error(_builder.toString(), primitiveType, TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PRIMITIVE_TYPE__BASIC_BUILTIN_PRIMITIVE_TYPES, (duplicateIndex).intValue());
     }
   }
-  
+
   /**
    * Check that there is only one technology-specific primitive type that is marked as the default
    * for a built-in primitive type. Otherwise, the code generator could not unambiguously decide
@@ -253,7 +253,7 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
       this.error(_plus, duplicateContainer, TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PRIMITIVE_TYPE__BASIC_BUILTIN_PRIMITIVE_TYPES, (duplicateIndex).intValue());
     }
   }
-  
+
   /**
    * Check that technology defines at least one default technology-specific primitive type for
    * each built-in primitive type. This ensures, that even if there is no mapping of a built-in
@@ -295,7 +295,7 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
         "primitive type"), technology, TechnologyPackage.Literals.TECHNOLOGY__NAME);
     }
   }
-  
+
   /**
    * Check that data formats are unique within a _protocol_ (which is the reason why we do not
    * consider data formats in the unique names validator, because we do not want them to be
@@ -324,7 +324,7 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
         TechnologyPackage.Literals.DATA_FORMAT__FORMAT_NAME);
     }
   }
-  
+
   /**
    * Check if compatibility entries exhibit ambiguous entries or duplicates
    */
@@ -386,7 +386,7 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
     };
     technology.getCompatibilityEntries().forEach(_function);
   }
-  
+
   /**
    * Check that self-compatibility of types is not explicitly described
    */
@@ -406,7 +406,7 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
         TechnologyPackage.Literals.COMPATIBILITY_MATRIX_ENTRY__TECHNOLOGY);
     }
   }
-  
+
   /**
    * For imported types, only the forms "imported compatible types -> local mapping type" or
    * "local compatible types <- imported mapping type" is allowed. That is, the compatibility
@@ -436,7 +436,7 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
       this.error("Compatibility entry must describe conversion from imported to local types", containingEntry, TechnologyPackage.Literals.COMPATIBILITY_MATRIX_ENTRY__DIRECTION);
     }
   }
-  
+
   /**
    * Warn, if an entry of the compatibility matrix, that maps two technology-specific primitive
    * types with basic built-in types, overrides built-in type conversion rules
@@ -498,7 +498,7 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
         TechnologyPackage.Literals.COMPATIBILITY_MATRIX_ENTRY__TECHNOLOGY);
     }
   }
-  
+
   /**
    * Helper method to build a map of a canonical representation for checking of a compatibility
    * matrix entry overrides a built-in type conversion rule
@@ -529,7 +529,7 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
     mappingTypes.forEach(_function);
     return canonicalCheckMap;
   }
-  
+
   /**
    * The unspecified primitive type is forbidden for technology-specific properties
    */
@@ -541,7 +541,7 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
         TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY__TYPE);
     }
   }
-  
+
   /**
    * Check that the assigned default value of a technology-specific property matches its type
    */
@@ -558,7 +558,7 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
         TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY__DEFAULT_VALUE);
     }
   }
-  
+
   /**
    * Check that mandatory technology-specific properties do not specify a default value
    */
@@ -569,7 +569,7 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
         TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY__DEFAULT_VALUE);
     }
   }
-  
+
   /**
    * Check that features on technology-specific properties are unique
    */
@@ -584,7 +584,7 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
         TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY__FEATURES, (duplicateIndex).intValue());
     }
   }
-  
+
   /**
    * Warn if aspect property exhibits single-valued feature
    */
@@ -601,7 +601,7 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
         TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY__FEATURES, singleValuedFeatureIndex);
     }
   }
-  
+
   /**
    * Check uniqueness of operation environments' names in an operation technology
    */
@@ -622,7 +622,7 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
         TechnologyPackage.Literals.OPERATION_ENVIRONMENT__ENVIRONMENT_NAME, (duplicateIndex).intValue());
     }
   }
-  
+
   /**
    * Check that there is exactly one default operation environment, if more than on environment
    * is specified for an operation technology
@@ -661,7 +661,7 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
       this.error(_builder_1.toString(), duplicateEnvironment, TechnologyPackage.Literals.OPERATION_ENVIRONMENT__DEFAULT, (duplicateDefaultIndex).intValue());
     }
   }
-  
+
   /**
    * Check uniqueness of service properties' names in an operation technology
    */
@@ -681,7 +681,7 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
       this.error(_builder.toString(), duplicateProperty, TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY__NAME);
     }
   }
-  
+
   /**
    * Check that per type only one pointcut exists in a service aspect selector
    */
@@ -701,7 +701,7 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
         TechnologyPackage.Literals.SERVICE_ASPECT_POINTCUT_SELECTOR__POINTCUTS, (duplicateIndex).intValue());
     }
   }
-  
+
   /**
    * Check that per type only one pointcut exists in an operation aspect selector
    */
@@ -721,7 +721,7 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
         TechnologyPackage.Literals.OPERATION_ASPECT_POINTCUT_SELECTOR__POINTCUTS, (duplicateIndex).intValue());
     }
   }
-  
+
   /**
    * Check aspect uniqueness considering different types of aspects and join points
    */
@@ -785,7 +785,7 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
       }
     }
   }
-  
+
   /**
    * Check that join points of an aspect are unique
    */
@@ -800,7 +800,7 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
         TechnologyPackage.Literals.TECHNOLOGY_ASPECT__JOIN_POINTS, (duplicateIndex).intValue());
     }
   }
-  
+
   /**
    * Check that features on technology aspects are unique
    */
@@ -815,7 +815,7 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
         TechnologyPackage.Literals.TECHNOLOGY_ASPECT__FEATURES, (duplicateIndex).intValue());
     }
   }
-  
+
   /**
    * Check that properties of an aspect are unique
    */
@@ -830,7 +830,7 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
         TechnologyPackage.Literals.TECHNOLOGY_ASPECT__PROPERTIES, (duplicateIndex).intValue());
     }
   }
-  
+
   /**
    * Check that selectors of a service aspect are unique
    */
@@ -845,7 +845,7 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
         TechnologyPackage.Literals.SERVICE_ASPECT__POINTCUT_SELECTORS, (duplicateIndex).intValue());
     }
   }
-  
+
   /**
    * Check that selectors of an operation aspect are unique
    */
@@ -860,7 +860,7 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
         TechnologyPackage.Literals.OPERATION_ASPECT__POINTCUT_SELECTORS, (duplicateIndex).intValue());
     }
   }
-  
+
   /**
    * Check that pointcut is applicable to at least one join point of the aspect
    */
@@ -882,7 +882,7 @@ public class TechnologyDslValidator extends AbstractTechnologyDslValidator {
         TechnologyPackage.Literals.SERVICE_ASPECT_POINTCUT__SELECTOR);
     }
   }
-  
+
   /**
    * Warn for pointcut selectors that do not apply to all join points of a service aspect
    */

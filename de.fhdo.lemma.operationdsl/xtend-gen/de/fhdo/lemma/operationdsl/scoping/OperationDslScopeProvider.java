@@ -136,7 +136,7 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
     }
     return null;
   }
-  
+
   /**
    * Build scope for operation model
    */
@@ -148,7 +148,7 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
     }
     return null;
   }
-  
+
   /**
    * Build scope for Container-specific features
    */
@@ -178,7 +178,7 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
     }
     return this.getScope(((OperationNode) container), reference);
   }
-  
+
   /**
    * Build scope for deployment technology references
    */
@@ -196,7 +196,7 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
     }
     return null;
   }
-  
+
   /**
    * Build scope for imported operation aspects used in containers and infrastructure nodes
    */
@@ -220,7 +220,7 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
     }
     return null;
   }
-  
+
   /**
    * Build scope for imported operation aspects
    */
@@ -285,7 +285,7 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
       Technology.class, 
       importedAspect.getTechnology().getImportURI(), _function, _function_1, _function_2);
   }
-  
+
   /**
    * Build scope for aspect properties
    */
@@ -318,7 +318,7 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
     }
     return null;
   }
-  
+
   /**
    * Build scope for InfrastructureNode-specific features
    */
@@ -360,7 +360,7 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
     }
     return this.getScope(((OperationNode) infrastructureNode), reference);
   }
-  
+
   /**
    * Build scope for infrastructure technology references
    */
@@ -378,7 +378,7 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
     }
     return null;
   }
-  
+
   /**
    * Build scope for operation nodes
    */
@@ -420,14 +420,14 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
     }
     return null;
   }
-  
+
   /**
    * Build scope that comprises annotated technologies of an annotatable concept instance
    */
   private IScope getScopeForAnnotatedTechnologies(final OperationNode operationNode) {
     return Scopes.scopeFor(operationNode.getTechnologies());
   }
-  
+
   /**
    * Build scope that comprises all nodes of the model except a given one
    */
@@ -444,7 +444,7 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
     Iterable<OperationNode> _plus = Iterables.<OperationNode>concat(_filter, _filter_1);
     return Scopes.scopeFor(_plus);
   }
-  
+
   /**
    * Get scope for deployment technology
    */
@@ -465,7 +465,7 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
       Technology.class, 
       reference.getImport().getImportURI(), _function, _function_1);
   }
-  
+
   /**
    * Get scope for infrastructure technology
    */
@@ -486,7 +486,7 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
       Technology.class, 
       reference.getImport().getImportURI(), _function, _function_1);
   }
-  
+
   /**
    * Get scope for operation environment
    */
@@ -510,7 +510,7 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
     };
     return Scopes.<OperationEnvironment>scopeFor(operationTechnology.getOperationEnvironments(), _function, IScope.NULLSCOPE);
   }
-  
+
   /**
    * Build scope for imported microservices
    */
@@ -528,7 +528,7 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
     }
     return null;
   }
-  
+
   /**
    * Build scope for the actual microservices if the import was already specified
    */
@@ -547,7 +547,7 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
       ServiceModel.class, 
       import_.getImportURI(), _function, _function_1);
   }
-  
+
   /**
    * Build scope for protocols and data formats
    */
@@ -571,7 +571,7 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
     }
     return null;
   }
-  
+
   /**
    * Build scope for endpoint protocols
    */
@@ -593,7 +593,7 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
       Technology.class, 
       protocol.getTechnology().getImportURI(), _function, _function_1);
   }
-  
+
   /**
    * Build scope for endpoint data formats
    */
@@ -618,7 +618,7 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
     return Scopes.<DataFormat>scopeFor(scopeElements, _function_1, 
       IScope.NULLSCOPE);
   }
-  
+
   /**
    * Build scope for service deployment specifications
    */
@@ -648,7 +648,7 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
     }
     return null;
   }
-  
+
   /**
    * Build scope for imports within service deployment specifications
    */
@@ -660,7 +660,7 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
     deployedServicesImports.addAll(ListExtensions.<ImportedMicroservice, Import>map(operationNode.getDeployedServices(), _function));
     return Scopes.scopeFor(deployedServicesImports);
   }
-  
+
   /**
    * Build scope for services within service deployment specifications
    */
@@ -674,7 +674,7 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
     return Scopes.<ImportedMicroservice>scopeFor(
       IterableExtensions.<ImportedMicroservice>filter(specification.getOperationNode().getDeployedServices(), _function), _function_1, IScope.NULLSCOPE);
   }
-  
+
   /**
    * Build scope for property values
    */
@@ -695,7 +695,7 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
     }
     return _switchResult;
   }
-  
+
   /**
    * Build scope for service properties
    */
@@ -733,7 +733,7 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
       }
     }
   }
-  
+
   /**
    * Convenience method to create a scope for imports of certain types
    */
@@ -745,7 +745,7 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
     final Iterable<Import> validImports = LemmaUtils.<Import>getImportsOfModelTypes(allImports, _function, types);
     return Scopes.scopeFor(validImports);
   }
-  
+
   /**
    * Build scope for possibly imported operation node and the given reference
    */
@@ -763,7 +763,7 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
     }
     return null;
   }
-  
+
   /**
    * Convenience method for building a scope for a possibly imported microservice without an
    * import specification
@@ -771,7 +771,7 @@ public class OperationDslScopeProvider extends AbstractOperationDslScopeProvider
   private IScope getScopeForPossiblyImportedOperationNode(final EObject context) {
     return this.getScopeForPossiblyImportedOperationNode(context, null);
   }
-  
+
   /**
    * Helper method to build a scope for possibly imported operation node, i.e., an operation node
    * with or without import specifications. Operation nodes required by another operation node may

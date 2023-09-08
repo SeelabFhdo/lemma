@@ -16,7 +16,7 @@ Require-Bundle: de.fhdo.lemma.technology.mappingdsl,
  de.fhdo.lemma.servicedsl,
  de.fhdo.lemma.servicedsl.ide,
  org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Export-Package: de.fhdo.lemma.technology.mappingdsl.ide.contentassist.antlr.internal,
  de.fhdo.lemma.technology.mappingdsl.ide.contentassist.antlr
 Automatic-Module-Name: de.fhdo.lemma.technology.mappingdsl.ide

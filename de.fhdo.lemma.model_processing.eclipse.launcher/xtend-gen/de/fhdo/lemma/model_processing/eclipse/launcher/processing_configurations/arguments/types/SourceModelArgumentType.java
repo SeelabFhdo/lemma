@@ -14,9 +14,9 @@ import org.eclipse.xtext.xbase.lib.Pair;
 @SuppressWarnings("all")
 public final class SourceModelArgumentType extends AbstractArgumentTypeWithEnumValueSelection<SourceModelKind> {
   public static final ArgumentTypeIdentifier IDENTIFIER = ArgumentTypeIdentifier.SOURCE_MODEL;
-  
+
   private static final Map<SourceModelKind, String> LITERAL_DESCRIPTIONS = Collections.<SourceModelKind, String>unmodifiableMap(CollectionLiterals.<SourceModelKind, String>newHashMap(Pair.<SourceModelKind, String>of(SourceModelKind.SELECTED_FILE, "Selected model file")));
-  
+
   /**
    * Constructor
    */

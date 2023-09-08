@@ -43,62 +43,62 @@ public class ProgrammaticIntermediateModelTransformation {
   public static class ProgrammaticIntermediateModelTransformationException extends Exception {
     @Accessors(AccessorType.PUBLIC_GETTER)
     private String intent;
-    
+
     @Accessors(AccessorType.PUBLIC_GETTER)
     private Object data;
-    
+
     public ProgrammaticIntermediateModelTransformationException(final Exception cause, final String intent, final Object data) {
       super(cause.getMessage(), cause);
       this.intent = intent;
       this.data = data;
     }
-    
+
     @Pure
     public String getIntent() {
       return this.intent;
     }
-    
+
     @Pure
     public Object getData() {
       return this.data;
     }
   }
-  
+
   /**
    * Class to bundle a transformation result with transformation intent and data
    */
   public static class ProgrammaticIntermediateModelTransformationResult extends Exception {
     @Accessors(AccessorType.PUBLIC_GETTER)
     private AbstractIntermediateModelTransformationStrategy.TransformationResult result;
-    
+
     @Accessors(AccessorType.PUBLIC_GETTER)
     private String intent;
-    
+
     @Accessors(AccessorType.PUBLIC_GETTER)
     private Object data;
-    
+
     public ProgrammaticIntermediateModelTransformationResult(final AbstractIntermediateModelTransformationStrategy.TransformationResult result, final String intent, final Object data) {
       this.result = result;
       this.intent = intent;
       this.data = data;
     }
-    
+
     @Pure
     public AbstractIntermediateModelTransformationStrategy.TransformationResult getResult() {
       return this.result;
     }
-    
+
     @Pure
     public String getIntent() {
       return this.intent;
     }
-    
+
     @Pure
     public Object getData() {
       return this.data;
     }
   }
-  
+
   private static final List<Function0<? extends AbstractUiModelTransformationStrategy>> AVAILABLE_TRANSFORMATION_STRATEGY_CONSTRUCTORS = Collections.<Function0<? extends AbstractUiModelTransformationStrategy>>unmodifiableList(CollectionLiterals.<Function0<? extends AbstractUiModelTransformationStrategy>>newArrayList(((Function0<AbstractUiModelTransformationStrategy>) () -> {
     return new DataModelTransformationStrategy();
   }), ((Function0<AbstractUiModelTransformationStrategy>) () -> {
@@ -106,31 +106,31 @@ public class ProgrammaticIntermediateModelTransformation {
   }), ((Function0<AbstractUiModelTransformationStrategy>) () -> {
     return new OperationModelTransformationStrategy();
   })));
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private final AbstractUiModelTransformationStrategy strategy;
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private final ModelFile rootModelFile;
-  
+
   private final Set<ModelFile> resolvedChildren;
-  
+
   private String intent;
-  
+
   private Object data;
-  
+
   private List<Predicate<ModelFile>> nextTransformationCallbacks;
-  
+
   private List<Predicate<ProgrammaticIntermediateModelTransformation.ProgrammaticIntermediateModelTransformationException>> transformationExceptionCallbacks;
-  
+
   private List<Predicate<List<ProgrammaticIntermediateModelTransformation.ProgrammaticIntermediateModelTransformationResult>>> transformationSuccessfulCallbacks;
-  
+
   private List<Function2<? super List<ProgrammaticIntermediateModelTransformation.ProgrammaticIntermediateModelTransformationResult>, ? super List<ProgrammaticIntermediateModelTransformation.ProgrammaticIntermediateModelTransformationException>, ? extends Boolean>> transformationsFinishedCallbacks;
-  
+
   private boolean exceptionInCurrentTransformation;
-  
+
   private List<ProgrammaticIntermediateModelTransformation.ProgrammaticIntermediateModelTransformationException> transformationExceptions;
-  
+
   /**
    * Constructor
    */
@@ -165,7 +165,7 @@ public class ProgrammaticIntermediateModelTransformation {
     }
     this.resolvedChildren = this.resolveTransitiveChildren(this.rootModelFile);
   }
-  
+
   /**
    * Retrieve a transformation strategy from a given model file extension
    */
@@ -181,7 +181,7 @@ public class ProgrammaticIntermediateModelTransformation {
     }
     return null;
   }
-  
+
   /**
    * Convert an IFile instance to a ModelFile instance if the given strategy permits it
    */
@@ -194,7 +194,7 @@ public class ProgrammaticIntermediateModelTransformation {
     modelFile.setTransformationTargetPath(ProgrammaticIntermediateModelTransformation.buildTransformationTargetPath(file, strategy));
     return modelFile;
   }
-  
+
   /**
    * Build the strategy-specific transformation target path of the given IFile. The target path
    * consists of the IFile's project path and the strategy-specific default transformation target
@@ -205,7 +205,7 @@ public class ProgrammaticIntermediateModelTransformation {
     IPath _fullPath = file.getProject().getFullPath();
     return (_fullPath + projectRelativePath);
   }
-  
+
   /**
    * Check if a model clustered in an IFile instance supports transformation
    */
@@ -221,14 +221,14 @@ public class ProgrammaticIntermediateModelTransformation {
     final AbstractUiModelTransformationStrategy strategy = _transformationStrategy;
     return ((strategy != null) && ProgrammaticIntermediateModelTransformation.supportsTransformation(ProgrammaticIntermediateModelTransformation.toModelFile(file, strategy)));
   }
-  
+
   /**
    * Helper to check if model represented by a ModelFile instance supports transformation
    */
   private static boolean supportsTransformation(final ModelFile modelFile) {
     return ((modelFile != null) && modelFile.getFileTypeDescription().canBeTransformed());
   }
-  
+
   /**
    * Resolve all transitive children of a ModelFile. The returned list will contain all transitive
    * children as ModelFile instances. The method takes care of their proper initialization which
@@ -256,7 +256,7 @@ public class ProgrammaticIntermediateModelTransformation {
     }
     return resolvedChildren;
   }
-  
+
   /**
    * Get the transformable model files imported by a given model file
    */
@@ -284,7 +284,7 @@ public class ProgrammaticIntermediateModelTransformation {
     }
     return importedModelFiles;
   }
-  
+
   /**
    * Run transformations on the root model file and its children.
    * 
@@ -313,7 +313,7 @@ public class ProgrammaticIntermediateModelTransformation {
       Collections.<Predicate<List<ProgrammaticIntermediateModelTransformation.ProgrammaticIntermediateModelTransformationResult>>>unmodifiableList(CollectionLiterals.<Predicate<List<ProgrammaticIntermediateModelTransformation.ProgrammaticIntermediateModelTransformationResult>>>newArrayList(transformationSuccessfulCallback)), 
       Collections.<Function2<? super List<ProgrammaticIntermediateModelTransformation.ProgrammaticIntermediateModelTransformationResult>, ? super List<ProgrammaticIntermediateModelTransformation.ProgrammaticIntermediateModelTransformationException>, ? extends Boolean>>unmodifiableList(CollectionLiterals.<Function2<? super List<ProgrammaticIntermediateModelTransformation.ProgrammaticIntermediateModelTransformationResult>, ? super List<ProgrammaticIntermediateModelTransformation.ProgrammaticIntermediateModelTransformationException>, ? extends Boolean>>newArrayList(transformationsFinishedCallback)));
   }
-  
+
   /**
    * Bulk version of run() that can take more than one callback per transformation event
    */
@@ -355,7 +355,7 @@ public class ProgrammaticIntermediateModelTransformation {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Get all model files to transform. The resulting list contains the root model file and its
    * transitive children ordered by their strategy-specific transformation order.
@@ -365,7 +365,7 @@ public class ProgrammaticIntermediateModelTransformation {
     modelFilesToTransform.addAll(this.resolvedChildren);
     return this.strategy.sortByTransformationOrder(modelFilesToTransform);
   }
-  
+
   /**
    * Invoke callbacks that the next transformation is about to begin
    */
@@ -373,7 +373,7 @@ public class ProgrammaticIntermediateModelTransformation {
     this.exceptionInCurrentTransformation = false;
     return this.<ModelFile>runTransformationCallbacks(this.nextTransformationCallbacks, modelFile);
   }
-  
+
   /**
    * Helper to run a list of transformation callbacks. The return value indicates whether a
    * transformation signaled to continue transformations or stop them.
@@ -392,7 +392,7 @@ public class ProgrammaticIntermediateModelTransformation {
     }
     return true;
   }
-  
+
   /**
    * Invoke callbacks that a transformation exception occurred
    */
@@ -404,7 +404,7 @@ public class ProgrammaticIntermediateModelTransformation {
     this.transformationExceptions.add(transformationException);
     return this.<ProgrammaticIntermediateModelTransformation.ProgrammaticIntermediateModelTransformationException>runTransformationCallbacks(this.transformationExceptionCallbacks, transformationException);
   }
-  
+
   /**
    * Invoke callbacks that the current transformation was finished successfully. In case there
    * occurred an exception before, the callbacks will not be invoked.
@@ -416,7 +416,7 @@ public class ProgrammaticIntermediateModelTransformation {
     final List<ProgrammaticIntermediateModelTransformation.ProgrammaticIntermediateModelTransformationResult> transformationResults = this.toProgrammaticTransformationResults(results);
     return this.<List<ProgrammaticIntermediateModelTransformation.ProgrammaticIntermediateModelTransformationResult>>runTransformationCallbacks(this.transformationSuccessfulCallbacks, transformationResults);
   }
-  
+
   /**
    * Convert a list of transformation results to ProgrammaticIntermediateModelTransformationResult
    * instances
@@ -427,7 +427,7 @@ public class ProgrammaticIntermediateModelTransformation {
     };
     return IterableExtensions.<ProgrammaticIntermediateModelTransformation.ProgrammaticIntermediateModelTransformationResult>toList(ListExtensions.<AbstractIntermediateModelTransformationStrategy.TransformationResult, ProgrammaticIntermediateModelTransformation.ProgrammaticIntermediateModelTransformationResult>map(results, _function));
   }
-  
+
   /**
    * Invoke callbacks that the current transformation finished
    */
@@ -436,7 +436,7 @@ public class ProgrammaticIntermediateModelTransformation {
     return this.<List<ProgrammaticIntermediateModelTransformation.ProgrammaticIntermediateModelTransformationResult>, List<ProgrammaticIntermediateModelTransformation.ProgrammaticIntermediateModelTransformationException>>runTransformationCallbacks(this.transformationsFinishedCallbacks, transformationResults, 
       this.transformationExceptions);
   }
-  
+
   /**
    * Helper to run a list of transformation callbacks of which each takes two arguments. The
    * return value indicates whether a transformation signaled to continue transformations or stop
@@ -456,12 +456,12 @@ public class ProgrammaticIntermediateModelTransformation {
     }
     return true;
   }
-  
+
   @Pure
   public AbstractUiModelTransformationStrategy getStrategy() {
     return this.strategy;
   }
-  
+
   @Pure
   public ModelFile getRootModelFile() {
     return this.rootModelFile;

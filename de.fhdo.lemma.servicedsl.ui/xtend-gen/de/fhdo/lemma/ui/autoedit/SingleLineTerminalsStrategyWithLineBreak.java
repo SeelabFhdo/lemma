@@ -32,14 +32,14 @@ import org.eclipse.xtext.xbase.lib.Exceptions;
 @SuppressWarnings("all")
 public class SingleLineTerminalsStrategyWithLineBreak extends SingleLineTerminalsStrategy {
   private final Pattern PRECEDING_WHITESPACES = Pattern.compile("(?<whitespaces>\\s*).*");
-  
+
   /**
    * Constructor
    */
   public SingleLineTerminalsStrategyWithLineBreak(final String left, final String right) {
     super(left, right, SingleLineTerminalsStrategy.DEFAULT);
   }
-  
+
   /**
    * Allow equal left and right terminals
    */
@@ -47,7 +47,7 @@ public class SingleLineTerminalsStrategyWithLineBreak extends SingleLineTerminal
   public boolean allowsEqualTerminals() {
     return true;
   }
-  
+
   /**
    * Handle insertion of the left terminal. Significant portions of the code originate from the
    * original method in the super class.
@@ -80,7 +80,7 @@ public class SingleLineTerminalsStrategyWithLineBreak extends SingleLineTerminal
       }
     }
   }
-  
+
   /**
    * Get length of line at offset in document
    */
@@ -91,7 +91,7 @@ public class SingleLineTerminalsStrategyWithLineBreak extends SingleLineTerminal
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Get content of document's line at offset
    */
@@ -104,7 +104,7 @@ public class SingleLineTerminalsStrategyWithLineBreak extends SingleLineTerminal
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Get preceding whitespaces of a string
    */
@@ -119,7 +119,7 @@ public class SingleLineTerminalsStrategyWithLineBreak extends SingleLineTerminal
     }
     return _xifexpression;
   }
-  
+
   /**
    * Precede a string with a line break if it is not already preceded by a line break
    */

@@ -39,12 +39,12 @@ import org.w3c.dom.NodeList;
 @SuppressWarnings("all")
 public class ProcessingChain extends ModelElementWithPropertyChangeSupport implements Cloneable {
   private static final String XML_CHAIN_ELEMENT = "processingChain";
-  
+
   private static final String XML_CHAIN_ENTRIES_ELEMENT = "entries";
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private List<ProcessingChainEntry> entries = CollectionLiterals.<ProcessingChainEntry>newArrayList();
-  
+
   /**
    * Two chains are equal if they have the same entries
    */
@@ -69,7 +69,7 @@ public class ProcessingChain extends ModelElementWithPropertyChangeSupport imple
     }
     return _xifexpression;
   }
-  
+
   /**
    * Clone the chain which also entails the cloning of its entries
    */
@@ -92,7 +92,7 @@ public class ProcessingChain extends ModelElementWithPropertyChangeSupport imple
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Deserialize the model processing chain from its XML representation stored in the given
    * ILaunchConfiguration
@@ -120,7 +120,7 @@ public class ProcessingChain extends ModelElementWithPropertyChangeSupport imple
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Initialize the entries of the given chain from the given root of the chain's XML
    * representation
@@ -140,7 +140,7 @@ public class ProcessingChain extends ModelElementWithPropertyChangeSupport imple
       }
     }
   }
-  
+
   /**
    * Assign the given chain to the String attribute of the given ILaunchConfigurationWorkingCopy
    * that is responsible for storing model processing chains. Note that this assignment also
@@ -169,7 +169,7 @@ public class ProcessingChain extends ModelElementWithPropertyChangeSupport imple
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Helper to get the ILaunchConfigurations of all chain entries
    */
@@ -179,7 +179,7 @@ public class ProcessingChain extends ModelElementWithPropertyChangeSupport imple
     };
     return IterableExtensions.<ILaunchConfiguration>filterNull(ListExtensions.<ProcessingChainEntry, ILaunchConfiguration>map(this.entries, _function));
   }
-  
+
   /**
    * Add a property change listener to the chain. Note that property change listeners on chains
    * are transitive, i.e., they are assigned to the chain but also all chain entries. Thus,
@@ -194,7 +194,7 @@ public class ProcessingChain extends ModelElementWithPropertyChangeSupport imple
     };
     this.entries.forEach(_function);
   }
-  
+
   /**
    * Remove a property change listener from the chain and all of its entries
    */
@@ -206,7 +206,7 @@ public class ProcessingChain extends ModelElementWithPropertyChangeSupport imple
     };
     this.entries.forEach(_function);
   }
-  
+
   /**
    * Add an entry to the chain and fire a corresponding property change event. Note that the entry
    * also gets all of the chain's property change listeners assigned.
@@ -218,21 +218,21 @@ public class ProcessingChain extends ModelElementWithPropertyChangeSupport imple
     ((List<PropertyChangeListener>)Conversions.doWrapArray(this.getPropertyChangeListeners())).forEach(_function);
     this.firePropertyChange("entries", Utils.<ProcessingChainEntry>flatCopy(this.entries), this.entries = Utils.<ProcessingChainEntry>addInPlace(this.entries, entry));
   }
-  
+
   /**
    * Move an entry up the chain and fire a corresponding property change event
    */
   public final void moveUp(final ProcessingChainEntry entry) {
     this.firePropertyChange("entries", Utils.<ProcessingChainEntry>flatCopy(this.entries), this.entries = Utils.<ProcessingChainEntry>moveUpInPlace(this.entries, entry));
   }
-  
+
   /**
    * Move an entry down the chain and fire a corresponding property change event
    */
   public final void moveDown(final ProcessingChainEntry entry) {
     this.firePropertyChange("entries", Utils.<ProcessingChainEntry>flatCopy(this.entries), this.entries = Utils.<ProcessingChainEntry>moveDownInPlace(this.entries, entry));
   }
-  
+
   /**
    * Remove an entry from the chain and fire a corresponding property change event
    */
@@ -243,7 +243,7 @@ public class ProcessingChain extends ModelElementWithPropertyChangeSupport imple
     ((List<PropertyChangeListener>)Conversions.doWrapArray(this.getPropertyChangeListeners())).forEach(_function);
     this.firePropertyChange("entries", Utils.<ProcessingChainEntry>flatCopy(this.entries), this.entries = Utils.<ProcessingChainEntry>removeInPlace(this.entries, entry));
   }
-  
+
   /**
    * Remove all given entries from the chain and fire a single corresponding property change event
    */
@@ -258,7 +258,7 @@ public class ProcessingChain extends ModelElementWithPropertyChangeSupport imple
     this.firePropertyChange("entries", Utils.<ProcessingChainEntry>flatCopy(this.entries), 
       this.entries = Utils.<ProcessingChainEntry>removeAllInPlace(this.entries, entriesToRemove));
   }
-  
+
   /**
    * Serialize the chain to XML
    */
@@ -276,7 +276,7 @@ public class ProcessingChain extends ModelElementWithPropertyChangeSupport imple
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Validate the chain and all of its entries
    */
@@ -291,7 +291,7 @@ public class ProcessingChain extends ModelElementWithPropertyChangeSupport imple
     };
     this.entries.forEach(_function);
   }
-  
+
   @Pure
   public List<ProcessingChainEntry> getEntries() {
     return this.entries;

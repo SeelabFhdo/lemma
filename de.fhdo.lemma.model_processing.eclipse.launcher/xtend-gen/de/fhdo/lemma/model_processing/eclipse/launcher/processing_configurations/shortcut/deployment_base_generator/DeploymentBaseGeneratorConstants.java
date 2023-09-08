@@ -9,8 +9,8 @@ package de.fhdo.lemma.model_processing.eclipse.launcher.processing_configuration
 @SuppressWarnings("all")
 public final class DeploymentBaseGeneratorConstants {
   protected static final String DEFAULT_DOCKER_IMAGE_NAME = "lemma/deployment_base_generator:latest";
-  
+
   protected static final String GENERATOR_LONG_NAME = "Deployment Base Generator";
-  
+
   protected static final String GENERATOR_SHORT_NAME = "DBG";
 }

@@ -36,21 +36,21 @@ import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 @SuppressWarnings("all")
 public abstract class AbstractCodeGeneratorCompletionDialog extends AbstractLaunchConfigurationTemplate.AbstractTemplateCompletionDialog {
   private static final ILaunchManager LAUNCH_MANAGER = DebugPlugin.getDefault().getLaunchManager();
-  
+
   private ProcessorExecutableType generatorExecutableType;
-  
+
   private Argument targetFolderArgument;
-  
+
   protected Text generatorExecutablePath;
-  
+
   protected Text basicGeneratorExecutionCommand;
-  
+
   protected Text targetFolder;
-  
+
   protected final String generatorLongName;
-  
+
   protected final String generatorShortName;
-  
+
   /**
    * Constructor
    */
@@ -59,14 +59,14 @@ public abstract class AbstractCodeGeneratorCompletionDialog extends AbstractLaun
     this.generatorLongName = generatorLongName;
     this.generatorShortName = generatorShortName;
   }
-  
+
   /**
    * Set the generator executable type for the dialog
    */
   protected final ProcessorExecutableType setGeneratorExecutableType(final ProcessorExecutableType generatorExecutableType) {
     return this.generatorExecutableType = generatorExecutableType;
   }
-  
+
   /**
    * Set the target folder Argument instance for the dialog
    */
@@ -74,7 +74,7 @@ public abstract class AbstractCodeGeneratorCompletionDialog extends AbstractLaun
     this.targetFolderArgument = targetFolderArgument;
     this.targetFolderArgument.addPropertyChangeListener(this);
   }
-  
+
   /**
    * Create the dialog
    */
@@ -110,7 +110,7 @@ public abstract class AbstractCodeGeneratorCompletionDialog extends AbstractLaun
     final String configurationNamePrefix = (_builder.toString() + _builder_1);
     this.configurationTemplate.setLaunchConfigurationName(AbstractCodeGeneratorCompletionDialog.LAUNCH_MANAGER.generateLaunchConfigurationName(configurationNamePrefix));
   }
-  
+
   /**
    * Enable dialog implementers to provide an addendum for the generator short name as part of the
    * launch configuration name
@@ -118,7 +118,7 @@ public abstract class AbstractCodeGeneratorCompletionDialog extends AbstractLaun
   public String getGeneratorNameAddendum() {
     return "";
   }
-  
+
   /**
    * Add additional controls to the dialog
    */
@@ -128,7 +128,7 @@ public abstract class AbstractCodeGeneratorCompletionDialog extends AbstractLaun
     this.addBasicGeneratorExecutionCommand(parent);
     this.addTargetFolder(parent);
   }
-  
+
   /**
    * Add text field to specify the path to the code generator executable
    */
@@ -185,7 +185,7 @@ public abstract class AbstractCodeGeneratorCompletionDialog extends AbstractLaun
       "processorExecutablePath", 
       this.configurationTemplate, _function_1);
   }
-  
+
   /**
    * Enable dialog implementers to provide an addendum for the generator long name as part of the
    * label for the generator executable path's text field
@@ -193,7 +193,7 @@ public abstract class AbstractCodeGeneratorCompletionDialog extends AbstractLaun
   public String getGeneratorExecutableLabelTextAddendum() {
     return "";
   }
-  
+
   /**
    * Add text field to specify the code generator's basic execution command
    */
@@ -215,7 +215,7 @@ public abstract class AbstractCodeGeneratorCompletionDialog extends AbstractLaun
       "basicProcessorExecutionCommand", 
       this.configurationTemplate, _function);
   }
-  
+
   /**
    * Add text field to specify the target folder for generated code
    */
@@ -248,7 +248,7 @@ public abstract class AbstractCodeGeneratorCompletionDialog extends AbstractLaun
       "value", 
       this.targetFolderArgument, _function_1);
   }
-  
+
   /**
    * Callback for property changes
    */
@@ -260,7 +260,7 @@ public abstract class AbstractCodeGeneratorCompletionDialog extends AbstractLaun
       Utils.triggerValidation(this.generatorExecutablePath);
     }
   }
-  
+
   /**
    * Close the dialog
    */

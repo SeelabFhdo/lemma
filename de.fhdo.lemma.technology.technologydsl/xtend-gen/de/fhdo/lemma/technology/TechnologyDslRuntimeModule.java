@@ -18,7 +18,7 @@ public class TechnologyDslRuntimeModule extends AbstractTechnologyDslRuntimeModu
   public Class<? extends INamesAreUniqueValidationHelper> bindINamesAreUniqueValidationHelper() {
     return TechnologyDslNamesAreUniqueValidationHelper.class;
   }
-  
+
   /**
    * Bind custom resource description strategy
    */

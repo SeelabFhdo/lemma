@@ -20,14 +20,14 @@ public class ServiceDslFormatter extends AbstractFormatter2 {
   @Inject
   @Extension
   private ServiceDslGrammarAccess _serviceDslGrammarAccess;
-  
+
   protected void _format(final ServiceModel serviceModel, @Extension final IFormattableDocument document) {
     EList<Microservice> _microservices = serviceModel.getMicroservices();
     for (final Microservice microservice : _microservices) {
       document.<Microservice>format(microservice);
     }
   }
-  
+
   public void format(final Object serviceModel, final IFormattableDocument document) {
     if (serviceModel instanceof XtextResource) {
       _format((XtextResource)serviceModel, document);

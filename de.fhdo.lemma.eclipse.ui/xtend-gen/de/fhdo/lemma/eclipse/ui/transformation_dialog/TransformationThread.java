@@ -47,31 +47,31 @@ public class TransformationThread extends Thread {
    */
   private static class TransformationResultsPerStrategy extends HashMap<AbstractIntermediateModelTransformationStrategy<?, ?>, List<AbstractIntermediateModelTransformationStrategy.TransformationResult>> {
   }
-  
+
   private List<ModelFile> modelFiles;
-  
+
   private boolean convertToRelativeUris;
-  
+
   private boolean outputRefinementModels;
-  
+
   private volatile boolean stopTransformations;
-  
+
   private volatile boolean continueTransformationAfterWarning;
-  
+
   private Predicate<ModelFile> nextTransformationCallback;
-  
+
   private Predicate<IntermediateTransformationException> transformationWarningCallback;
-  
+
   private Predicate<Exception> transformationExceptionCallback;
-  
+
   private Predicate<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>> currentTransformationFinishedCallback;
-  
+
   private Predicate<List<AbstractIntermediateModelTransformationStrategy.TransformationResult>> transformationsFinishedCallback;
-  
+
   private Display display;
-  
+
   private LinkedHashMap<AbstractIntermediateModelTransformationStrategy<?, ?>, Function2<? super List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, ? super Predicate<IntermediateTransformationException>, ? extends List<AbstractIntermediateModelTransformationStrategy.TransformationResult>>> transformationsFinishedListeners;
-  
+
   /**
    * Constructor
    */
@@ -90,7 +90,7 @@ public class TransformationThread extends Thread {
     this.transformationsFinishedCallback = transformationsFinishedCallback;
     this.display = display;
   }
-  
+
   /**
    * Run model transformations on given files
    */
@@ -142,7 +142,7 @@ public class TransformationThread extends Thread {
       allTransformationStrategiesAndResults.forEach(_function_1);
     }
   }
-  
+
   /**
    * Execute main and refining transformations on a model file
    */
@@ -188,7 +188,7 @@ public class TransformationThread extends Thread {
       }
     }
   }
-  
+
   /**
    * Build output paths for transformations by considering refining transformations
    */
@@ -212,7 +212,7 @@ public class TransformationThread extends Thread {
     outputPaths.add(initialOutputPath);
     return outputPaths;
   }
-  
+
   /**
    * Execute main transformation on a model file
    */
@@ -244,7 +244,7 @@ public class TransformationThread extends Thread {
       Collections.<String, Map<String, String>>unmodifiableMap(CollectionLiterals.<String, Map<String, String>>newHashMap(_mappedTo)));
     return Pair.<AbstractIntermediateModelTransformationStrategy<?, ?>, AbstractIntermediateModelTransformationStrategy.TransformationResult>of(strategy, _executeTransformation);
   }
-  
+
   /**
    * Execute a single transformation strategy on an input file
    */
@@ -270,7 +270,7 @@ public class TransformationThread extends Thread {
     }
     return transformationResult;
   }
-  
+
   /**
    * Execute refining transformations on a model file
    */
@@ -309,7 +309,7 @@ public class TransformationThread extends Thread {
     }
     return transformationResults;
   }
-  
+
   /**
    * Convert the paths of input and output models in the given set of transformation results to
    * absolute file URIs
@@ -325,7 +325,7 @@ public class TransformationThread extends Thread {
     };
     results.forEach(_function);
   }
-  
+
   /**
    * Execute transformation finished listeners
    */
@@ -362,7 +362,7 @@ public class TransformationThread extends Thread {
     }
     return additionalResultsPerStrategy;
   }
-  
+
   /**
    * Internal transformation warning callback
    */
@@ -382,7 +382,7 @@ public class TransformationThread extends Thread {
     }
     return this.continueTransformationAfterWarning;
   }
-  
+
   /**
    * Helper to invoke a callback function. In case a Display instance is available, i.e., we're in
    * a GUI thread, the function invocation will happen in sync with GUI thread.
@@ -406,7 +406,7 @@ public class TransformationThread extends Thread {
       this.stopTransformations = _not;
     }
   }
-  
+
   /**
    * Helper to invoke a callback function. In case a Display instance is available, i.e., we're in
    * a GUI thread, the function invocation will happen in sync with GUI thread.
@@ -430,7 +430,7 @@ public class TransformationThread extends Thread {
       this.stopTransformations = _not;
     }
   }
-  
+
   /**
    * Helper to invoke a callback function. In case a Display instance is available, i.e., we're in
    * a GUI thread, the function invocation will happen in sync with GUI thread.

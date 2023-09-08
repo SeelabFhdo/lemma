@@ -28,7 +28,7 @@ public class LiveValidationUiPropertyTester extends PropertyTester {
     }
     return _switchResult;
   }
-  
+
   /**
    * Test if the connection to the server has the expected state
    */

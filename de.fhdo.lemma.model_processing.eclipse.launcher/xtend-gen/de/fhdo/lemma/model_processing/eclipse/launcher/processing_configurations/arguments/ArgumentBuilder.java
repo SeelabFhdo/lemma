@@ -34,9 +34,9 @@ public final class ArgumentBuilder {
    */
   public static class ParameterWithoutValueBuilder {
     private final Argument argument;
-    
+
     private final ProcessingConfiguration processingConfiguration;
-    
+
     /**
      * Constructor
      */
@@ -44,7 +44,7 @@ public final class ArgumentBuilder {
       this.argument = argument;
       this.processingConfiguration = processingConfiguration;
     }
-    
+
     /**
      * Set the argument parameter and return the final Argument instance
      */
@@ -56,7 +56,7 @@ public final class ArgumentBuilder {
       return this.argument;
     }
   }
-  
+
   /**
    * Exception for expected, yet missing model processing configurations
    */
@@ -65,15 +65,15 @@ public final class ArgumentBuilder {
       super(message);
     }
   }
-  
+
   /**
    * Builder for single-valued arguments
    */
   public static class SingleValuedBuilder {
     private final Argument argument;
-    
+
     private final ProcessingConfiguration processingConfiguration;
-    
+
     /**
      * Constructor
      */
@@ -81,7 +81,7 @@ public final class ArgumentBuilder {
       this.argument = argument;
       this.processingConfiguration = processingConfiguration;
     }
-    
+
     /**
      * Let the single-valued argument represent a pair of arbitrary strings. Return a builder
      * for arguments with parameters and values. The parameter represents the first string and
@@ -91,7 +91,7 @@ public final class ArgumentBuilder {
       this.argument.setType(ArgumentTypeFactory.fromIdentifier(StringPairArgumentType.IDENTIFIER));
       return new ArgumentBuilder.ParameterBuilder(this.argument, this.processingConfiguration);
     }
-    
+
     /**
      * Let the single-valued argument represent a file. Return a builder for arguments with
      * parameters and values. The parameter represents the argument parameter and its value
@@ -101,7 +101,7 @@ public final class ArgumentBuilder {
       this.argument.setType(ArgumentTypeFactory.fromIdentifier(FileArgumentType.IDENTIFIER));
       return new ArgumentBuilder.ParameterBuilder(this.argument, this.processingConfiguration);
     }
-    
+
     /**
      * Let the single-valued argument represent a folder. Return a builder for arguments with
      * parameters and values. The parameter represents the argument parameter and its value
@@ -111,7 +111,7 @@ public final class ArgumentBuilder {
       this.argument.setType(ArgumentTypeFactory.fromIdentifier(FolderArgumentType.IDENTIFIER));
       return new ArgumentBuilder.ParameterBuilder(this.argument, this.processingConfiguration);
     }
-    
+
     /**
      * Let the single-valued argument represent a source LEMMA model file. Return a builder for
      * arguments with parameters but without values. The parameter represents the argument's
@@ -125,7 +125,7 @@ public final class ArgumentBuilder {
       this.argument.setValue(argumentType.getLiteralDescription(SourceModelKind.SELECTED_FILE));
       return new ArgumentBuilder.ParameterWithoutValueBuilder(this.argument, this.processingConfiguration);
     }
-    
+
     /**
      * Let the single-valued argument represent the intermediate representation of a source
      * LEMMA model file. Return a builder for arguments with parameters but without values. The
@@ -139,7 +139,7 @@ public final class ArgumentBuilder {
       this.argument.setValue(argumentType.getLiteralDescription(IntermediateModelKind.SELECTED_FILE));
       return new ArgumentBuilder.ParameterWithoutValueBuilder(this.argument, this.processingConfiguration);
     }
-    
+
     /**
      * Let the single-valued argument represent the intermediate representation of the first
      * LEMMA model of the given kind imported into another LEMMA model. Return a builder for
@@ -154,7 +154,7 @@ public final class ArgumentBuilder {
       this.argument.setValue(argumentType.getLiteralDescription(modelKind));
       return new ArgumentBuilder.ParameterWithoutValueBuilder(this.argument, this.processingConfiguration);
     }
-    
+
     /**
      * Build an argument that represents the intermediate representation of the LEMMA model
      * imported into another LEMMA model with the given alias
@@ -167,15 +167,15 @@ public final class ArgumentBuilder {
       return new ArgumentBuilder.ParameterWithoutValueBuilder(this.argument, this.processingConfiguration);
     }
   }
-  
+
   /**
    * Builder for argument parameters
    */
   public static class ParameterBuilder {
     private final Argument argument;
-    
+
     private final ProcessingConfiguration processingConfiguration;
-    
+
     /**
      * Constructor
      */
@@ -183,7 +183,7 @@ public final class ArgumentBuilder {
       this.argument = argument;
       this.processingConfiguration = processingConfiguration;
     }
-    
+
     /**
      * Set the parameter and return a builder to specify the parameter's value
      */
@@ -192,15 +192,15 @@ public final class ArgumentBuilder {
       return new ArgumentBuilder.ValueBuilder(this.argument, this.processingConfiguration);
     }
   }
-  
+
   /**
    * Builder for argument values
    */
   public static class ValueBuilder {
     private final Argument argument;
-    
+
     private final ProcessingConfiguration processingConfiguration;
-    
+
     /**
      * Constructor
      */
@@ -208,7 +208,7 @@ public final class ArgumentBuilder {
       this.argument = argument;
       this.processingConfiguration = processingConfiguration;
     }
-    
+
     /**
      * Set the value and return the final Argument instance
      */
@@ -220,18 +220,18 @@ public final class ArgumentBuilder {
       return this.argument;
     }
   }
-  
+
   private final Argument argument;
-  
+
   private ProcessingConfiguration processingConfiguration;
-  
+
   /**
    * Constructor with a preliminary Argument instance
    */
   public ArgumentBuilder(final Argument argument) {
     this.argument = argument;
   }
-  
+
   /**
    * Constructor with a preliminary Argument instance for a given ProcessingConfiguration
    */
@@ -239,7 +239,7 @@ public final class ArgumentBuilder {
     this(argument);
     this.processingConfiguration = processingConfiguration;
   }
-  
+
   /**
    * Start building a constant argument. Return a builder for arguments with parameters but
    * without values. The parameter represents the argument's constant.
@@ -249,7 +249,7 @@ public final class ArgumentBuilder {
     this.argument.setType(ArgumentTypeFactory.fromIdentifier(RawStringArgumentType.IDENTIFIER));
     return new ArgumentBuilder.ParameterWithoutValueBuilder(this.argument, this.processingConfiguration);
   }
-  
+
   /**
    * Validate an argument in the context of a model processing configuration
    */
@@ -265,7 +265,7 @@ public final class ArgumentBuilder {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Start building a multi-valued argument which is currently only supported for certain kinds of
    * intermediate representations of LEMMA models imported into other LEMMA models. Return a
@@ -280,7 +280,7 @@ public final class ArgumentBuilder {
     this.argument.setValue(argumentType.getLiteralDescription(modelKinds));
     return new ArgumentBuilder.ParameterWithoutValueBuilder(this.argument, this.processingConfiguration);
   }
-  
+
   /**
    * Start building a single-valued argument. Return a builder specific to such kinds of
    * arguments.

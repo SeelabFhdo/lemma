@@ -22,7 +22,7 @@ public abstract class AbstractIntermediateModelArgumentTypeWithEnumValue<T exten
   public AbstractIntermediateModelArgumentTypeWithEnumValue(final ArgumentTypeIdentifier identifier, final String name, final Map<T, String> validLiteralStringValues) {
     super(identifier, name, validLiteralStringValues);
   }
-  
+
   /**
    * Validate the user value, i.e., the description of the literal, of an argument of this
    * enumeration-based type. Implementers may override this method to accompany user validation

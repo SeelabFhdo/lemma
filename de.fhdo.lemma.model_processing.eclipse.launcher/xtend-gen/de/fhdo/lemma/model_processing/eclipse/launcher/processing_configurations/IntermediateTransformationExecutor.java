@@ -32,19 +32,19 @@ import org.eclipse.xtext.xbase.lib.Procedures.Procedure0;
 @SuppressWarnings("all")
 public final class IntermediateTransformationExecutor {
   private final ProcessingConfiguration configuration;
-  
+
   private final MessageConsoleStream infoStream;
-  
+
   private final MessageConsoleStream errorStream;
-  
+
   private final Procedure0 successfulCallback;
-  
+
   private final Procedure0 errorOrCancelCallback;
-  
+
   private IProgressMonitor monitor;
-  
+
   private boolean stopTransformations;
-  
+
   /**
    * Constructor. The successfulCallback will be invoked when all transformations were executed
    * without a single error and the user canceling transformation execution. The
@@ -58,7 +58,7 @@ public final class IntermediateTransformationExecutor {
     this.successfulCallback = successfulCallback;
     this.errorOrCancelCallback = errorOrCancelCallback;
   }
-  
+
   /**
    * Run the intermediate model transformation in a new Eclipse Job
    */
@@ -99,7 +99,7 @@ public final class IntermediateTransformationExecutor {
     };
     job.schedule();
   }
-  
+
   /**
    * Callback when the next intermediate transformation is about to start
    */
@@ -121,7 +121,7 @@ public final class IntermediateTransformationExecutor {
     boolean _canceledByUser = this.canceledByUser();
     return (!_canceledByUser);
   }
-  
+
   /**
    * Indicate whether all transformations shall be stopped which is the case when either the
    * stopTransformations flag was set or the user actively canceled the transformations
@@ -139,7 +139,7 @@ public final class IntermediateTransformationExecutor {
       }
     }
   }
-  
+
   /**
    * Check whether the user actively canceled the transformations. If so, also print a message to
    * the error stream.
@@ -152,7 +152,7 @@ public final class IntermediateTransformationExecutor {
     }
     return this.monitor.isCanceled();
   }
-  
+
   /**
    * Callback for transformation exceptions. The occurrence of an exception leads to a stop of all
    * transformations.
@@ -174,7 +174,7 @@ public final class IntermediateTransformationExecutor {
     this.errorOrCancelCallback.apply();
     return false;
   }
-  
+
   /**
    * Callback for a successful transformation
    */
@@ -188,7 +188,7 @@ public final class IntermediateTransformationExecutor {
     boolean _canceledByUser = this.canceledByUser();
     return (!_canceledByUser);
   }
-  
+
   /**
    * Callback after all transformations were finished
    */
@@ -258,7 +258,7 @@ public final class IntermediateTransformationExecutor {
     this.monitor.worked(1);
     return true;
   }
-  
+
   /**
    * Helper to filter duplicate output paths of intermediate models from a given list of
    * ProgrammaticIntermediateModelTransformationResult instances. The result will be a Set of

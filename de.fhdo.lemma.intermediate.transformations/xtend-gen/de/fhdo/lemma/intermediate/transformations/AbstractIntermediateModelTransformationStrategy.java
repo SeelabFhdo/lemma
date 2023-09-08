@@ -51,170 +51,170 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
   public static class TransformationResult {
     @Accessors
     private List<AbstractIntermediateModelTransformationStrategy.InputModel> inputModels;
-    
+
     @Accessors
     private AbstractIntermediateModelTransformationStrategy.OutputModel outputModel;
-    
+
     public TransformationResult(final List<AbstractIntermediateModelTransformationStrategy.InputModel> inputModels, final AbstractIntermediateModelTransformationStrategy.OutputModel outputModel) {
       this.inputModels = inputModels;
       this.outputModel = outputModel;
     }
-    
+
     @Pure
     public List<AbstractIntermediateModelTransformationStrategy.InputModel> getInputModels() {
       return this.inputModels;
     }
-    
+
     public void setInputModels(final List<AbstractIntermediateModelTransformationStrategy.InputModel> inputModels) {
       this.inputModels = inputModels;
     }
-    
+
     @Pure
     public AbstractIntermediateModelTransformationStrategy.OutputModel getOutputModel() {
       return this.outputModel;
     }
-    
+
     public void setOutputModel(final AbstractIntermediateModelTransformationStrategy.OutputModel outputModel) {
       this.outputModel = outputModel;
     }
   }
-  
+
   /**
    * Class representing an input model of a model-to-model transformation
    */
   public static class InputModel {
     @Accessors
     private String inputPath;
-    
+
     @Accessors
     private String namespaceUri;
-    
+
     @Accessors
     private IFile file;
-    
+
     public InputModel(final String inputPath, final String namespaceUri, final IFile file) {
       this.inputPath = inputPath;
       this.namespaceUri = namespaceUri;
       this.file = file;
     }
-    
+
     @Pure
     public String getInputPath() {
       return this.inputPath;
     }
-    
+
     public void setInputPath(final String inputPath) {
       this.inputPath = inputPath;
     }
-    
+
     @Pure
     public String getNamespaceUri() {
       return this.namespaceUri;
     }
-    
+
     public void setNamespaceUri(final String namespaceUri) {
       this.namespaceUri = namespaceUri;
     }
-    
+
     @Pure
     public IFile getFile() {
       return this.file;
     }
-    
+
     public void setFile(final IFile file) {
       this.file = file;
     }
   }
-  
+
   /**
    * Class representing an output model of a model-to-model transformation
    */
   public static class OutputModel {
     @Accessors
     private String outputPath;
-    
+
     @Accessors
     private String namespaceUri;
-    
+
     @Accessors
     private Resource resource;
-    
+
     public OutputModel(final String outputPath, final String namespaceUri, final Resource resource) {
       this.outputPath = outputPath;
       this.namespaceUri = namespaceUri;
       this.resource = resource;
     }
-    
+
     @Pure
     public String getOutputPath() {
       return this.outputPath;
     }
-    
+
     public void setOutputPath(final String outputPath) {
       this.outputPath = outputPath;
     }
-    
+
     @Pure
     public String getNamespaceUri() {
       return this.namespaceUri;
     }
-    
+
     public void setNamespaceUri(final String namespaceUri) {
       this.namespaceUri = namespaceUri;
     }
-    
+
     @Pure
     public Resource getResource() {
       return this.resource;
     }
-    
+
     public void setResource(final Resource resource) {
       this.resource = resource;
     }
   }
-  
+
   protected LinkedHashMap<TransformationModelDescription, TransformationModelType> modelTypes;
-  
+
   /**
    * Register model types, i.e., URIs, EPackages, and root classes, together with their
    * transformation-specific descriptions, i.e., names in model transformations and directions
    */
   public abstract LinkedHashMap<TransformationModelDescription, TransformationModelType> registerModelTypes();
-  
+
   /**
    * Before transformation hook (optional)
    */
   protected void beforeTransformationHook(final Map<TransformationModelDescription, IFile> inputModelFiles, final Map<TransformationModelDescription, String> outputModelPaths) {
   }
-  
+
   /**
    * Prepare an input model (optional)
    */
   protected void prepareInputModel(final TransformationModelDescription modelDescription, final EObject modelRoot) {
   }
-  
+
   /**
    * Get validator for input model (optional)
    */
   protected AbstractInputModelValidator getInputModelValidator(final TransformationModelDescription modelDescription) {
     return null;
   }
-  
+
   /**
    * Create transformation-technology-specific input model instance
    */
   protected abstract TIM_TYPE createTransformationInputModel(final TransformationModelDescription modelDescription, final Resource resource);
-  
+
   /**
    * Create transformation-technology-specific output model instance
    */
   protected abstract TOM_TYPE createTransformationOutputModel(final TransformationModelDescription modelDescription, final String outputPath);
-  
+
   /**
    * Execute transformation leveraging a certain transformation technology
    */
   protected abstract Map<TransformationModelDescription, Resource> transformation(final Map<TransformationModelDescription, TIM_TYPE> transformationInputModels, final Map<TransformationModelDescription, TOM_TYPE> transformationOutputModels);
-  
+
   /**
    * Flag to indicate if children's children of the current model file, i.e., models that are
    * imported by imported models of the current model, shall be considered when building the
@@ -223,25 +223,25 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
   public boolean considerChildrensChildrenForImportTargetPaths() {
     return false;
   }
-  
+
   /**
    * Add transformation target paths of imported model files to output model
    */
   protected void populateOutputModelWithImportTargetPaths(final TransformationModelDescription modelDescription, final EObject modelRoot, final Map<String, String> targetPaths) {
   }
-  
+
   /**
    * Modify an output model (optional)
    */
   protected void modifyOutputModel(final TransformationModelDescription modelDescription, final EObject modelRoot) {
   }
-  
+
   /**
    * After transformation hook (optional)
    */
   protected void afterTransformationHook(final Map<TransformationModelDescription, String> outputModelPaths) {
   }
-  
+
   /**
    * Register a listener to be invoked after all transformations of a transformation run triggered
    * by the user were done. This enables a transformation strategy to refer to all results of a
@@ -258,13 +258,13 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
   public Function2<? super List<AbstractIntermediateModelTransformationStrategy.TransformationResult>, ? super Predicate<IntermediateTransformationException>, ? extends List<AbstractIntermediateModelTransformationStrategy.TransformationResult>> registerTransformationsFinishedListener() {
     return null;
   }
-  
+
   /**
    * Convert URIs in a transformation result to relative ones (optional)
    */
   public void makeUrisRelative(final AbstractIntermediateModelTransformationStrategy.TransformationResult result) {
   }
-  
+
   /**
    * Constructor
    */
@@ -280,7 +280,7 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
     final List<TransformationModelType> outputModelTypes = IterableExtensions.<TransformationModelType>toList(MapExtensions.<TransformationModelDescription, TransformationModelType>filter(this.modelTypes, _function).values());
     this.registerEPackages(outputModelTypes);
   }
-  
+
   /**
    * Helper to register EPackages of a given list of model types
    */
@@ -294,7 +294,7 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
     };
     modelTypes.forEach(_function);
   }
-  
+
   /**
    * Get registered output model types
    */
@@ -305,7 +305,7 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
     };
     return IterableExtensions.<TransformationModelType>toList(MapExtensions.<TransformationModelDescription, TransformationModelType>filter(this.modelTypes, _function).values());
   }
-  
+
   /**
    * Run a model-to-model transformation on a list of input models expressed as instances of
    * org.eclipse.core.resources.IFile. To this end, the transformation model description for each
@@ -315,7 +315,7 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
     final Map<TransformationModelDescription, Resource> inputModelResources = this.loadModelResources(inputModelFiles);
     return this.doTransformation(inputModelFiles, inputModelResources, outputModelPaths, targetPathsOfImports, warningCallback);
   }
-  
+
   /**
    * Helper to load Resource instances of models being expressed as IFile instances
    */
@@ -353,7 +353,7 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
     models.forEach(_function);
     return loadedModels;
   }
-  
+
   /**
    * Helper to load a model Resource from an XMI file
    */
@@ -372,7 +372,7 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Helper to load a model Resource from a DSL file
    */
@@ -382,7 +382,7 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
     final IResourceServiceProvider resourceSetProvider = IResourceServiceProvider.Registry.INSTANCE.getResourceServiceProvider(inputDslFileUri);
     return resourceSetProvider.<ResourceSet>get(ResourceSet.class).getResource(inputDslFileUri, true);
   }
-  
+
   /**
    * Run a model-to-model transformation on a list of input models expressed as instances of
    * org.eclipse.core.resources.IFile and a list of output paths. The transformation model
@@ -396,7 +396,7 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
       "output model", TransformationModelDirection.OUT, TransformationModelDirection.INOUT);
     return this.doTransformationFromFiles(inputModelsWithDescriptions, outputModelsWithDescriptions, targetPathsOfImports, warningCallback);
   }
-  
+
   /**
    * Helper to assign input or output models/paths to registered transformation model descriptions
    * of a given set of directions
@@ -428,7 +428,7 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
     }
     return valuesToDescriptions;
   }
-  
+
   /**
    * Run a model-to-model transformation on a list of input models expressed as instances of
    * org.eclipse.emf.ecore.resource.Resource. To this end, the transformation model description
@@ -441,7 +441,7 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
     final Map<TransformationModelDescription, IFile> inputModelFiles = MapExtensions.<TransformationModelDescription, Resource, IFile>mapValues(inputModelResources, _function);
     return this.doTransformation(inputModelFiles, inputModelResources, outputModelPaths, targetPathsOfImports, warningCallback);
   }
-  
+
   /**
    * Generic method for running a model-to-model transformation. The input models are expressed
    * on the basis of two maps that assign the transformation model descriptions to the input model
@@ -465,7 +465,7 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
     this.saveOutputModels(transformationResultResources, outputModelPaths);
     return this.createTransformationResults(inputModelFiles, transformationResultResources, outputModelPaths);
   }
-  
+
   /**
    * Helper to perform generic checks on input and output models/paths
    */
@@ -486,7 +486,7 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
       }
     }
   }
-  
+
   /**
    * Helper to check that a set of transformation model descriptions contains a description for
    * each registered model type of a certain direction
@@ -507,7 +507,7 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
       throw new IllegalArgumentException(_plus);
     }
   }
-  
+
   /**
    * Helper to iteratively trigger preparation on a set of input models
    */
@@ -521,7 +521,7 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
     inputModels.forEach(_function);
     return preparedModels;
   }
-  
+
   /**
    * Helper to iteratively validate a set of input models
    */
@@ -545,7 +545,7 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
     }
     return continueTransformation;
   }
-  
+
   /**
    * Helper to execute a model-to-model-transformation
    */
@@ -593,7 +593,7 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Helper to add transformation target paths of imported model files to all output models
    */
@@ -607,7 +607,7 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
     };
     outputModelResources.forEach(_function);
   }
-  
+
   /**
    * Helper to iteratively trigger modifications of output models
    */
@@ -618,7 +618,7 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
     };
     outputModelResources.forEach(_function);
   }
-  
+
   /**
    * Serialize all output model resources into XMI files
    */
@@ -634,7 +634,7 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
     };
     outputModelResources.forEach(_function);
   }
-  
+
   /**
    * Create TransformationResult instances from transformation parameters. For each output model
    * resource, a TransformationResult is created.
@@ -649,7 +649,7 @@ public abstract class AbstractIntermediateModelTransformationStrategy<TIM_TYPE e
     outputModelResources.forEach(_function);
     return resultMap;
   }
-  
+
   /**
    * Helper to create a TransformationResult instance
    */

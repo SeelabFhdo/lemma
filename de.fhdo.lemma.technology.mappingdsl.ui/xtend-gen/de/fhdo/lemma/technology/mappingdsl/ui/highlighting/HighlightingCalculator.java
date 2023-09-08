@@ -47,7 +47,7 @@ public class HighlightingCalculator implements ISemanticHighlightingCalculator {
     this.provideHighlightingForDefaultTypeDefinitionFlag(resource, acceptor);
     this.provideHighlightingForBooleanConstants(resource, acceptor);
   }
-  
+
   /**
    * Provide highlighting for annotations
    */
@@ -81,7 +81,7 @@ public class HighlightingCalculator implements ISemanticHighlightingCalculator {
     };
     IteratorExtensions.<EObject>forEach(IteratorExtensions.<EObject>filter(resource.getAllContents(), _function), _function_1);
   }
-  
+
   /**
    * Provide highlighting for default type definition flag of built-in @technology annotation
    */
@@ -111,7 +111,7 @@ public class HighlightingCalculator implements ISemanticHighlightingCalculator {
       }
     }
   }
-  
+
   /**
    * Helper to return the value of a Keyword INode. Returns an empty string if the passed node is
    * not a Keyword.
@@ -126,7 +126,7 @@ public class HighlightingCalculator implements ISemanticHighlightingCalculator {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Provide highlighting for boolean values
    */

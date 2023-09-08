@@ -71,7 +71,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
     this.error(_builder.toString(), duplicate, 
       DataPackage.Literals.COMPLEX_TYPE_IMPORT__NAME);
   }
-  
+
   /**
    * Check that imported file is imported exactly once
    */
@@ -93,7 +93,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
     this.error("File is already being imported", duplicate, 
       DataPackage.Literals.COMPLEX_TYPE_IMPORT__IMPORT_URI);
   }
-  
+
   /**
    * Check that imported file defines a data model
    */
@@ -107,7 +107,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
         DataPackage.Literals.COMPLEX_TYPE_IMPORT__IMPORT_URI);
     }
   }
-  
+
   /**
    * Check versions for unique names
    */
@@ -122,7 +122,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
     this.<Version>checkUniqueNames(dataModel.getVersions(), "version", _function, _function_1, 
       DataPackage.Literals.VERSION__NAME);
   }
-  
+
   /**
    * Check top-level contexts for unique names
    */
@@ -137,7 +137,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
     this.<Context>checkUniqueNames(dataModel.getContexts(), "context", _function, _function_1, 
       DataPackage.Literals.CONTEXT__NAME);
   }
-  
+
   /**
    * Check top-level complex types for unique names
    */
@@ -152,7 +152,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
     this.<ComplexType>checkUniqueNames(dataModel.getComplexTypes(), "complex type", _function, _function_1, 
       DataPackage.Literals.COMPLEX_TYPE__NAME);
   }
-  
+
   /**
    * Check contexts defined in versions for unique names
    */
@@ -167,7 +167,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
     this.<Context>checkUniqueNames(version.getContexts(), "context", _function, _function_1, 
       DataPackage.Literals.CONTEXT__NAME);
   }
-  
+
   /**
    * Check complex types defined in versions for unique names
    */
@@ -182,7 +182,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
     this.<ComplexType>checkUniqueNames(version.getComplexTypes(), "complex type", _function, _function_1, 
       DataPackage.Literals.COMPLEX_TYPE__NAME);
   }
-  
+
   /**
    * Check complex types defined in contexts for unique names
    */
@@ -197,7 +197,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
     this.<ComplexType>checkUniqueNames(context.getComplexTypes(), "complex type", _function, _function_1, 
       DataPackage.Literals.COMPLEX_TYPE__NAME);
   }
-  
+
   /**
    * Check operation parameters for unique names
    */
@@ -212,7 +212,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
     this.<DataOperationParameter>checkUniqueNames(operation.getParameters(), "parameter", _function, _function_1, 
       DataPackage.Literals.DATA_OPERATION_PARAMETER__NAME);
   }
-  
+
   /**
    * Generic helper to check a list of EObjects for unique names
    */
@@ -230,7 +230,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
     _builder.append(_apply);
     this.error(_builder.toString(), duplicate, feature);
   }
-  
+
   /**
    * Check data structure for unique names
    */
@@ -262,7 +262,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
       }
     }
   }
-  
+
   /**
    * Check complex type for unique features
    */
@@ -277,7 +277,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
         DataPackage.Literals.COMPLEX_TYPE__FEATURES, (duplicateIndex).intValue());
     }
   }
-  
+
   /**
    * Check "aggregate" feature constraints
    */
@@ -318,7 +318,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
         DataPackage.Literals.COMPLEX_TYPE__FEATURES, featureIndex);
     }
   }
-  
+
   /**
    * Retrieve a DataStructure instance from a ComplexType. Returns null, if the ComplexType is not
    * a DataStructure.
@@ -333,7 +333,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Check "applicationService" feature constraints
    */
@@ -341,7 +341,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
   public void checkApplicationServiceFeatureConstraints(final ComplexType complexType) {
     this.checkServiceFeatureConstraints(complexType, ComplexTypeFeature.APPLICATION_SERVICE);
   }
-  
+
   /**
    * Generic helper to check constraints of a certain peculiarity of the "service" feature
    */
@@ -371,7 +371,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
         DataPackage.Literals.COMPLEX_TYPE__FEATURES, featureIndex);
     }
   }
-  
+
   /**
    * Helper to check if a complex type has also other domain-driven-design-related features than
    * a given one
@@ -385,7 +385,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
       return Boolean.valueOf(Objects.equal(it, feature));
     }))));
   }
-  
+
   /**
    * Check "domainEvent" feature constraints
    */
@@ -402,7 +402,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
         DataPackage.Literals.COMPLEX_TYPE__FEATURES, featureIndex);
     }
   }
-  
+
   /**
    * Check "domainService" feature constraints
    */
@@ -410,7 +410,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
   public void checkDomainServiceFeatureConstraints(final ComplexType complexType) {
     this.checkServiceFeatureConstraints(complexType, ComplexTypeFeature.DOMAIN_SERVICE);
   }
-  
+
   /**
    * Check "entity" feature constraints
    */
@@ -453,7 +453,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
         DataPackage.Literals.COMPLEX_TYPE__FEATURES, featureIndex);
     }
   }
-  
+
   /**
    * Check "factory" feature constraints
    */
@@ -508,7 +508,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
         DataPackage.Literals.COMPLEX_TYPE__FEATURES, featureIndex);
     }
   }
-  
+
   /**
    * Check "infrastructureService" feature constraints
    */
@@ -516,7 +516,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
   public void checkInfrastructureServiceFeatureConstraints(final DataStructure dataStructure) {
     this.checkServiceFeatureConstraints(dataStructure, ComplexTypeFeature.INFRASTRUCTURE_SERVICE);
   }
-  
+
   /**
    * Check "repository" feature constraints
    */
@@ -581,7 +581,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
         "value objects"), complexType, DataPackage.Literals.COMPLEX_TYPE__FEATURES, featureIndex);
     }
   }
-  
+
   /**
    * Check "service" feature constraints
    */
@@ -589,7 +589,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
   public void checkServiceFeatureConstraints(final DataStructure dataStructure) {
     this.checkServiceFeatureConstraints(dataStructure, ComplexTypeFeature.SERVICE);
   }
-  
+
   /**
    * Check "specification" feature constraints
    */
@@ -623,7 +623,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
         DataPackage.Literals.COMPLEX_TYPE__FEATURES, featureIndex);
     }
   }
-  
+
   /**
    * Check "valueObject" feature constraints
    */
@@ -665,7 +665,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
         DataPackage.Literals.COMPLEX_TYPE__FEATURES, featureIndex);
     }
   }
-  
+
   /**
    * Perform checks on data fields
    */
@@ -757,7 +757,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
       }
     }
   }
-  
+
   /**
    * Check "part" feature constraints
    */
@@ -809,7 +809,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
         DataPackage.Literals.DATA_FIELD__FEATURES, featureIndex);
     }
   }
-  
+
   /**
    * Perform checks on data operations
    */
@@ -883,7 +883,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
         DataPackage.Literals.DATA_OPERATION__NAME);
     }
   }
-  
+
   /**
    * Check "closure" feature constraints
    */
@@ -913,7 +913,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
       }
     }
   }
-  
+
   /**
    * Helper to check if type1 is equivalent with type2. In this context, equivalence means that
    * type1 is identical to type2, or that it is an extension of type2.
@@ -958,7 +958,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Check "sideEffectFree" feature constraints
    */
@@ -974,7 +974,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
         DataPackage.Literals.DATA_OPERATION__FEATURES, featureIndex);
     }
   }
-  
+
   /**
    * Check "validator" feature constraints
    */
@@ -1001,7 +1001,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
         DataPackage.Literals.DATA_OPERATION__FEATURES, featureIndex);
     }
   }
-  
+
   /**
    * Check "identifier" feature constraints
    */
@@ -1017,7 +1017,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
         DataPackage.Literals.DATA_OPERATION__FEATURES, featureIndex);
     }
   }
-  
+
   /**
    * Check if an imported file exists and if it is case sensitive
    */
@@ -1040,7 +1040,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
       }
     }
   }
-  
+
   /**
    * Check for cyclic inheritance relationships between data structures
    */
@@ -1055,7 +1055,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
         DataPackage.Literals.COMPLEX_TYPE__NAME);
     }
   }
-  
+
   /**
    * Detect if an import chain contains cycles
    */
@@ -1093,7 +1093,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
     DataModelManager.clear();
     return cycleChains;
   }
-  
+
   /**
    * Check for cyclic imports
    */
@@ -1109,7 +1109,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
     };
     detecedCycles.forEach(_function);
   }
-  
+
   /**
    * Checks which cycle type is present and outputs the corresponding error message for the
    * ComplexTypeImport
@@ -1129,7 +1129,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
     final String message = _xifexpression;
     this.error(message, complexTypeImport, DataPackage.Literals.COMPLEX_TYPE_IMPORT__IMPORT_URI);
   }
-  
+
   /**
    * Check versions for non-emptyness
    */
@@ -1140,7 +1140,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
         DataPackage.Literals.VERSION__NAME);
     }
   }
-  
+
   /**
    * Check contexts for non-emptyness
    */
@@ -1152,7 +1152,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
         DataPackage.Literals.CONTEXT__NAME);
     }
   }
-  
+
   /**
    * Check allowed features on enumerations
    */
@@ -1169,7 +1169,7 @@ public class DataDslValidator extends AbstractDataDslValidator {
         DataPackage.Literals.COMPLEX_TYPE__FEATURES);
     }
   }
-  
+
   /**
    * Check fields of collection types
    */

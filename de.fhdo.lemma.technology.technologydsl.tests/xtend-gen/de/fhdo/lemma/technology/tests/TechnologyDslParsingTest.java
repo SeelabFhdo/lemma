@@ -17,7 +17,7 @@ import org.junit.runner.RunWith;
 public class TechnologyDslParsingTest {
   @Inject
   private ParseHelper<Technology> parseHelper;
-  
+
   @Test
   public void loadModel() {
   }

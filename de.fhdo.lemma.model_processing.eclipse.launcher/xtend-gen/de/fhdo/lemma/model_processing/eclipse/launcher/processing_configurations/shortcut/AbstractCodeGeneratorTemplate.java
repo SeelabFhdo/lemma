@@ -16,15 +16,15 @@ import org.eclipse.swt.widgets.Shell;
 @SuppressWarnings("all")
 public abstract class AbstractCodeGeneratorTemplate extends AbstractLaunchConfigurationTemplate {
   protected final Shell parentShell;
-  
+
   protected final IProject project;
-  
+
   protected final IFile file;
-  
+
   private final ProcessorExecutableType generatorExecutableType;
-  
+
   private Argument targetFolderArgument;
-  
+
   /**
    * Get the dialog for completing the launch configuration template. Note that implementers of
    * concrete code generation templates must override the specialized method
@@ -38,12 +38,12 @@ public abstract class AbstractCodeGeneratorTemplate extends AbstractLaunchConfig
     dialog.setTargetFolderArgument(this.targetFolderArgument);
     return dialog;
   }
-  
+
   /**
    * Get the dialog for completing a concrete code generation template
    */
   public abstract AbstractCodeGeneratorCompletionDialog getCodeGeneratorCompletionDialog();
-  
+
   /**
    * Constructor
    */
@@ -54,7 +54,7 @@ public abstract class AbstractCodeGeneratorTemplate extends AbstractLaunchConfig
     this.project = project;
     this.file = file;
   }
-  
+
   /**
    * Extend the model processing configuration template initialized by the superclass
    */

@@ -1,31 +1,10 @@
 package de.fhdo.lemma.intermediate.transformations;
 
-import de.fhdo.lemma.utils.LemmaUtils;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-import org.eclipse.m2m.atl.emftvm.EmftvmFactory;
-import org.eclipse.m2m.atl.emftvm.ExecEnv;
-import org.eclipse.m2m.atl.emftvm.Metamodel;
-import org.eclipse.m2m.atl.emftvm.Model;
-import org.eclipse.m2m.atl.emftvm.impl.resource.EMFTVMResourceFactoryImpl;
-import org.eclipse.m2m.atl.emftvm.util.DefaultModuleResolver;
-import org.eclipse.m2m.atl.emftvm.util.TimingData;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
-import org.eclipse.xtext.xbase.lib.Functions.Function1;
-import org.eclipse.xtext.xbase.lib.Functions.Function2;
-import org.eclipse.xtext.xbase.lib.MapExtensions;
 
 /**
  * Abstract strategy for model-to-model transformations relying on ATL's EMFTVM.
@@ -33,179 +12,131 @@ import org.eclipse.xtext.xbase.lib.MapExtensions;
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 @SuppressWarnings("all")
-public abstract class AbstractEmftvmIntermediateModelTransformationStrategy extends AbstractIntermediateModelTransformationStrategy<Model, Model> {
-  private EmftvmFactory emftvmFactory;
-  
-  private ExecEnv executionEnvironment;
-  
+public abstract class AbstractEmftvmIntermediateModelTransformationStrategy /* extends /* AbstractIntermediateModelTransformationStrategy<Model, Model> */  */{
+  private /* EmftvmFactory */Object emftvmFactory;
+
+  private /* ExecEnv */Object executionEnvironment;
+
   private ResourceSet resourceSet;
-  
-  private Map<TransformationModelDescription, Model> potentialOutputModels = CollectionLiterals.<TransformationModelDescription, Model>newHashMap();
-  
+
+  private /* Map<TransformationModelDescription, Model> */Object potentialOutputModels = CollectionLiterals.<TransformationModelDescription, Model>newHashMap();
+
   /**
    * Get the platform path to the folder that holds the transformation model file
    */
   public abstract String getModelTransformationFilePlatformFolder();
-  
+
   /**
    * Get the name of the transformation model file
    */
   public abstract String getModelTransformationFileName();
-  
+
   /**
    * Constructor
    */
   public AbstractEmftvmIntermediateModelTransformationStrategy() {
-    super();
-    this.emftvmFactory = EmftvmFactory.eINSTANCE;
-    this.executionEnvironment = this.emftvmFactory.createExecEnv();
-    this.resourceSet = this.setupResourceSet();
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method or field EmftvmFactory is undefined"
+      + "\nThe field AbstractEmftvmIntermediateModelTransformationStrategy.emftvmFactory refers to the missing type EmftvmFactory"
+      + "\nThe field AbstractEmftvmIntermediateModelTransformationStrategy.executionEnvironment refers to the missing type ExecEnv"
+      + "\nThe field AbstractEmftvmIntermediateModelTransformationStrategy.emftvmFactory refers to the missing type EmftvmFactory"
+      + "\neINSTANCE cannot be resolved"
+      + "\ncreateExecEnv cannot be resolved");
   }
-  
+
   /**
    * Helper to create the resource set used by the transformation
    */
   private ResourceSet setupResourceSet() {
-    final ResourceSetImpl rs = new ResourceSetImpl();
-    final Map<String, Object> extensionToFactoryMap = rs.getResourceFactoryRegistry().getExtensionToFactoryMap();
-    XMIResourceFactoryImpl _xMIResourceFactoryImpl = new XMIResourceFactoryImpl();
-    extensionToFactoryMap.put("xmi", _xMIResourceFactoryImpl);
-    EMFTVMResourceFactoryImpl _eMFTVMResourceFactoryImpl = new EMFTVMResourceFactoryImpl();
-    extensionToFactoryMap.put("emftvm", _eMFTVMResourceFactoryImpl);
-    EcoreResourceFactoryImpl _ecoreResourceFactoryImpl = new EcoreResourceFactoryImpl();
-    extensionToFactoryMap.put("ecore", _ecoreResourceFactoryImpl);
-    return rs;
+    throw new Error("Unresolved compilation problems:"
+      + "\nEMFTVMResourceFactoryImpl cannot be resolved.");
   }
-  
+
   /**
    * Prepare model transformation
    */
   @Override
   protected void beforeTransformationHook(final Map<TransformationModelDescription, IFile> inputModelFiles, final Map<TransformationModelDescription, String> outputModelPaths) {
-    final Function1<IFile, String> _function = (IFile it) -> {
-      return LemmaUtils.getAbsolutePath(it);
-    };
-    final Map<TransformationModelDescription, String> absoluteInputModelPaths = MapExtensions.<TransformationModelDescription, IFile, String>mapValues(inputModelFiles, _function);
-    final Set<TransformationModelDescription> modelDescriptions = absoluteInputModelPaths.keySet();
-    final HashSet<String> registeredMetamodels = CollectionLiterals.<String>newHashSet();
-    final Consumer<TransformationModelDescription> _function_1 = (TransformationModelDescription it) -> {
-      final TransformationModelType modelType = this.modelTypes.get(it);
-      final String namespaceUri = modelType.getNamespaceUri();
-      boolean _contains = registeredMetamodels.contains(namespaceUri);
-      boolean _not = (!_contains);
-      if (_not) {
-        final Metamodel metamodel = EmftvmFactory.eINSTANCE.createMetamodel();
-        metamodel.setResource(modelType.getEcorePackage().eResource());
-        this.executionEnvironment.registerMetaModel(it.getReferenceModelName(), metamodel);
-        registeredMetamodels.add(namespaceUri);
-      }
-    };
-    modelDescriptions.forEach(_function_1);
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method or field EmftvmFactory is undefined"
+      + "\nThe field AbstractEmftvmIntermediateModelTransformationStrategy.executionEnvironment refers to the missing type ExecEnv"
+      + "\neINSTANCE cannot be resolved"
+      + "\ncreateMetamodel cannot be resolved"
+      + "\nresource cannot be resolved"
+      + "\nregisterMetaModel cannot be resolved");
   }
-  
+
   /**
    * Create transformation-technology-specific input model instance
    */
   @Override
   protected Model createTransformationInputModel(final TransformationModelDescription modelDescription, final Resource resource) {
-    final Model model = this.emftvmFactory.createModel();
-    model.setResource(resource);
-    TransformationModelDirection _direction = modelDescription.getDirection();
-    boolean _tripleEquals = (_direction == TransformationModelDirection.INOUT);
-    if (_tripleEquals) {
-      this.potentialOutputModels.put(modelDescription, model);
-    }
-    return model;
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe field AbstractEmftvmIntermediateModelTransformationStrategy.emftvmFactory refers to the missing type EmftvmFactory"
+      + "\nThe field AbstractEmftvmIntermediateModelTransformationStrategy.potentialOutputModels refers to the missing type Model"
+      + "\ncreateModel cannot be resolved"
+      + "\nsetResource cannot be resolved");
   }
-  
+
   /**
    * Create transformation-technology-specific output model instance
    */
   @Override
   protected Model createTransformationOutputModel(final TransformationModelDescription modelDescription, final String outputPath) {
-    Model _xifexpression = null;
-    boolean _containsKey = this.potentialOutputModels.containsKey(modelDescription);
-    boolean _not = (!_containsKey);
-    if (_not) {
-      Model _xblockexpression = null;
-      {
-        final Model model = EmftvmFactory.eINSTANCE.createModel();
-        model.setResource(this.resourceSet.createResource(URI.createURI(outputPath)));
-        this.potentialOutputModels.put(modelDescription, model);
-        _xblockexpression = model;
-      }
-      _xifexpression = _xblockexpression;
-    } else {
-      _xifexpression = null;
-    }
-    return _xifexpression;
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method or field EmftvmFactory is undefined"
+      + "\nThe field AbstractEmftvmIntermediateModelTransformationStrategy.potentialOutputModels refers to the missing type Model"
+      + "\nThe field AbstractEmftvmIntermediateModelTransformationStrategy.potentialOutputModels refers to the missing type Model"
+      + "\neINSTANCE cannot be resolved"
+      + "\ncreateModel cannot be resolved"
+      + "\nsetResource cannot be resolved");
   }
-  
+
   /**
    * Execute EMFTVM transformation
    */
   @Override
-  protected Map<TransformationModelDescription, Resource> transformation(final Map<TransformationModelDescription, Model> transformationInputModels, final Map<TransformationModelDescription, Model> transformationOutputModels) {
-    this.registerModels(transformationInputModels);
-    this.registerModels(transformationOutputModels);
-    String _modelTransformationFilePlatformFolder = this.getModelTransformationFilePlatformFolder();
-    final DefaultModuleResolver moduleResolver = new DefaultModuleResolver(_modelTransformationFilePlatformFolder, 
-      this.resourceSet);
-    final TimingData timingData = new TimingData();
-    this.executionEnvironment.loadModule(moduleResolver, this.getModelTransformationFileName());
-    timingData.finishLoading();
-    this.executionEnvironment.run(timingData);
-    timingData.finish();
-    final Function2<TransformationModelDescription, Model, Boolean> _function = (TransformationModelDescription description, Model model) -> {
-      boolean _xifexpression = false;
-      Resource _resource = model.getResource();
-      EList<EObject> _contents = null;
-      if (_resource!=null) {
-        _contents=_resource.getContents();
-      }
-      boolean _tripleNotEquals = (_contents != null);
-      if (_tripleNotEquals) {
-        boolean _isEmpty = model.getResource().getContents().isEmpty();
-        _xifexpression = (!_isEmpty);
-      } else {
-        _xifexpression = false;
-      }
-      return Boolean.valueOf(_xifexpression);
-    };
-    final Function1<Model, Resource> _function_1 = (Model it) -> {
-      return it.getResource();
-    };
-    return MapExtensions.<TransformationModelDescription, Model, Resource>mapValues(MapExtensions.<TransformationModelDescription, Model>filter(this.potentialOutputModels, _function), _function_1);
+  protected Map<TransformationModelDescription, Resource> transformation(final /* Map<TransformationModelDescription, Model> */Object transformationInputModels, final /* Map<TransformationModelDescription, Model> */Object transformationOutputModels) {
+    throw new Error("Unresolved compilation problems:"
+      + "\nDefaultModuleResolver cannot be resolved."
+      + "\nTimingData cannot be resolved."
+      + "\nThe method or field resource is undefined"
+      + "\nThe method registerModels(Map<TransformationModelDescription, Model>) from the type AbstractEmftvmIntermediateModelTransformationStrategy refers to the missing type Model"
+      + "\nThe method registerModels(Map<TransformationModelDescription, Model>) from the type AbstractEmftvmIntermediateModelTransformationStrategy refers to the missing type Model"
+      + "\nThe field AbstractEmftvmIntermediateModelTransformationStrategy.executionEnvironment refers to the missing type ExecEnv"
+      + "\nThe field AbstractEmftvmIntermediateModelTransformationStrategy.executionEnvironment refers to the missing type ExecEnv"
+      + "\nThe field AbstractEmftvmIntermediateModelTransformationStrategy.potentialOutputModels refers to the missing type Model"
+      + "\nloadModule cannot be resolved"
+      + "\nfinishLoading cannot be resolved"
+      + "\nrun cannot be resolved"
+      + "\nfinish cannot be resolved"
+      + "\nresource cannot be resolved"
+      + "\ncontents cannot be resolved"
+      + "\n!== cannot be resolved"
+      + "\nresource cannot be resolved"
+      + "\ncontents cannot be resolved"
+      + "\nempty cannot be resolved"
+      + "\n! cannot be resolved");
   }
-  
+
   /**
    * Helper to register models and their descriptions in EMFTVM's execution environment
    */
-  private void registerModels(final Map<TransformationModelDescription, Model> models) {
-    final BiConsumer<TransformationModelDescription, Model> _function = (TransformationModelDescription description, Model model) -> {
-      this.registerModel(description.getNameInModelTransformation(), description.getDirection(), model);
-    };
-    models.forEach(_function);
+  private void registerModels(final /* Map<TransformationModelDescription, Model> */Object models) {
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method registerModel(String, TransformationModelDirection, Model) from the type AbstractEmftvmIntermediateModelTransformationStrategy refers to the missing type Object");
   }
-  
+
   /**
    * Helper to register a single model in EMFTVM's execution environment
    */
-  private void registerModel(final String nameInModelTransformation, final TransformationModelDirection direction, final Model model) {
-    if (direction != null) {
-      switch (direction) {
-        case IN:
-          this.executionEnvironment.registerInputModel(nameInModelTransformation, model);
-          break;
-        case OUT:
-          this.executionEnvironment.registerOutputModel(nameInModelTransformation, model);
-          break;
-        case INOUT:
-          this.executionEnvironment.registerInOutModel(nameInModelTransformation, model);
-          break;
-        default:
-          break;
-      }
-    }
+  private Object registerModel(final String nameInModelTransformation, final TransformationModelDirection direction, final /* Model */Object model) {
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe field AbstractEmftvmIntermediateModelTransformationStrategy.executionEnvironment refers to the missing type ExecEnv"
+      + "\nThe field AbstractEmftvmIntermediateModelTransformationStrategy.executionEnvironment refers to the missing type ExecEnv"
+      + "\nThe field AbstractEmftvmIntermediateModelTransformationStrategy.executionEnvironment refers to the missing type ExecEnv"
+      + "\nregisterInputModel cannot be resolved"
+      + "\nregisterOutputModel cannot be resolved"
+      + "\nregisterInOutModel cannot be resolved");
   }
 }

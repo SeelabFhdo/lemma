@@ -23,10 +23,10 @@ import org.eclipse.xtext.xbase.lib.Pure;
 @SuppressWarnings("all")
 public final class ProcessingConfigurationWithLaunchConfigurationName extends ProcessingConfiguration implements Cloneable {
   private static final ILaunchManager LAUNCH_MANAGER = DebugPlugin.getDefault().getLaunchManager();
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private String launchConfigurationName;
-  
+
   /**
    * Clone the configuration
    */
@@ -34,7 +34,7 @@ public final class ProcessingConfigurationWithLaunchConfigurationName extends Pr
   public Object clone() {
     return super.clone();
   }
-  
+
   /**
    * Set the name of the launch configuration and fire a corresponding property change event
    */
@@ -42,7 +42,7 @@ public final class ProcessingConfigurationWithLaunchConfigurationName extends Pr
     this.firePropertyChange("launchConfigurationName", this.launchConfigurationName, 
       this.launchConfigurationName = launchConfigurationName);
   }
-  
+
   /**
    * Validate the model processing configuration in its user representation
    */
@@ -51,7 +51,7 @@ public final class ProcessingConfigurationWithLaunchConfigurationName extends Pr
     ProcessingConfigurationWithLaunchConfigurationName.validateLaunchConfigurationName(this.launchConfigurationName);
     super.validateInUserRepresentation();
   }
-  
+
   /**
    * Validate the given launch configuration name
    */
@@ -66,7 +66,7 @@ public final class ProcessingConfigurationWithLaunchConfigurationName extends Pr
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   @Pure
   public String getLaunchConfigurationName() {
     return this.launchConfigurationName;

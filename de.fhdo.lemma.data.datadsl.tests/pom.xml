@@ -20,6 +20,22 @@
             <version>${junit-version}</version>
             <scope>test</scope>
         </dependency>
+
+    <!-- This forces maven to explicitly resolve Google Guice and Google Guava for dependency injection -->
+    <!-- Without this, many tests will fail due to missing methods-->
+
+    <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>32.1.2-jre</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>7.0.0</version>
+        </dependency>
     </dependencies>
 
     <build>

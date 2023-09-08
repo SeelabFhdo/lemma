@@ -1,21 +1,9 @@
 package de.fhdo.lemma.intermediate.transformations;
 
-import java.io.InputStream;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.m2m.atl.core.IModel;
-import org.eclipse.m2m.atl.core.IReferenceModel;
-import org.eclipse.m2m.atl.core.emf.EMFInjector;
-import org.eclipse.m2m.atl.core.emf.EMFModel;
-import org.eclipse.m2m.atl.core.emf.EMFModelFactory;
-import org.eclipse.m2m.atl.core.launch.ILauncher;
-import org.eclipse.m2m.atl.engine.emfvm.launch.EMFVMLauncher;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
-import org.eclipse.xtext.xbase.lib.Conversions;
-import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Pair;
 
 /**
@@ -25,41 +13,41 @@ import org.eclipse.xtext.xbase.lib.Pair;
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
 @SuppressWarnings("all")
-public abstract class AbstractAtlInputOutputIntermediateModelTransformationStrategy extends AbstractIntermediateModelTransformationStrategy<IModel, EMFModel> {
-  private EMFInjector atlModelInjector;
-  
-  private EMFModelFactory atlModelFactory;
-  
+public abstract class AbstractAtlInputOutputIntermediateModelTransformationStrategy /* extends /* AbstractIntermediateModelTransformationStrategy<IModel, EMFModel> */  */{
+  private /* EMFInjector */Object atlModelInjector;
+
+  private /* EMFModelFactory */Object atlModelFactory;
+
   private Pair<TransformationModelDescription, TransformationModelType> inputModelTypeDescription;
-  
+
   private Pair<TransformationModelDescription, TransformationModelType> outputModelTypeDescription;
-  
+
   /**
    * Get reference name and transformation model type of input model
    */
   public abstract Pair<String, TransformationModelType> getInputModelReferenceNameAndType();
-  
+
   /**
    * Get reference name and transformation model type of output model
    */
   public abstract Pair<String, TransformationModelType> getOutputModelReferenceNameAndType();
-  
+
   /**
    * Get path to the compiled ATL transformation file
    */
   public abstract String getCompiledModelTransformationFilePath();
-  
+
   /**
    * Constructor
    */
   public AbstractAtlInputOutputIntermediateModelTransformationStrategy() {
-    super();
-    EMFModelFactory _eMFModelFactory = new EMFModelFactory();
-    this.atlModelFactory = _eMFModelFactory;
-    EMFInjector _eMFInjector = new EMFInjector();
-    this.atlModelInjector = _eMFInjector;
+    throw new Error("Unresolved compilation problems:"
+      + "\nEMFModelFactory cannot be resolved."
+      + "\nEMFInjector cannot be resolved."
+      + "\nThe field AbstractAtlInputOutputIntermediateModelTransformationStrategy.atlModelFactory refers to the missing type EMFModelFactory"
+      + "\nThe field AbstractAtlInputOutputIntermediateModelTransformationStrategy.atlModelInjector refers to the missing type EMFInjector");
   }
-  
+
   /**
    * Register input and output model types. This also creates the corresponding descriptions of
    * the model types with directions IN and OUT, respectively.
@@ -85,65 +73,51 @@ public abstract class AbstractAtlInputOutputIntermediateModelTransformationStrat
     descriptions.put(this.outputModelTypeDescription.getKey(), this.outputModelTypeDescription.getValue());
     return descriptions;
   }
-  
+
   /**
    * Create transformation-technology-specific input model instance
    */
   @Override
   protected IModel createTransformationInputModel(final TransformationModelDescription modelDescription, final Resource resource) {
-    try {
-      final String inputModelNamespaceUri = this.inputModelTypeDescription.getValue().getNamespaceUri();
-      final IReferenceModel inputMetamodel = this.atlModelFactory.newReferenceModel();
-      this.atlModelInjector.inject(inputMetamodel, inputModelNamespaceUri);
-      final IModel inputModel = this.atlModelFactory.newModel(inputMetamodel);
-      this.atlModelInjector.inject(inputModel, resource);
-      return inputModel;
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
-    }
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe field AbstractAtlInputOutputIntermediateModelTransformationStrategy.atlModelFactory refers to the missing type EMFModelFactory"
+      + "\nThe field AbstractAtlInputOutputIntermediateModelTransformationStrategy.atlModelInjector refers to the missing type EMFInjector"
+      + "\nThe field AbstractAtlInputOutputIntermediateModelTransformationStrategy.atlModelFactory refers to the missing type EMFModelFactory"
+      + "\nThe field AbstractAtlInputOutputIntermediateModelTransformationStrategy.atlModelInjector refers to the missing type EMFInjector"
+      + "\nnewReferenceModel cannot be resolved"
+      + "\ninject cannot be resolved"
+      + "\nnewModel cannot be resolved"
+      + "\ninject cannot be resolved");
   }
-  
+
   /**
    * Create transformation-technology-specific output model instance
    */
   @Override
   protected EMFModel createTransformationOutputModel(final TransformationModelDescription modelDescription, final String outputPath) {
-    try {
-      final String outputModelNamespaceUri = this.outputModelTypeDescription.getValue().getNamespaceUri();
-      final IReferenceModel outputMetamodel = this.atlModelFactory.newReferenceModel();
-      this.atlModelInjector.inject(outputMetamodel, outputModelNamespaceUri);
-      IModel _newModel = this.atlModelFactory.newModel(outputMetamodel);
-      return ((EMFModel) _newModel);
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
-    }
+    throw new Error("Unresolved compilation problems:"
+      + "\nEMFModel cannot be resolved to a type."
+      + "\nThe field AbstractAtlInputOutputIntermediateModelTransformationStrategy.atlModelFactory refers to the missing type EMFModelFactory"
+      + "\nThe field AbstractAtlInputOutputIntermediateModelTransformationStrategy.atlModelInjector refers to the missing type EMFInjector"
+      + "\nThe field AbstractAtlInputOutputIntermediateModelTransformationStrategy.atlModelFactory refers to the missing type EMFModelFactory"
+      + "\nnewReferenceModel cannot be resolved"
+      + "\ninject cannot be resolved"
+      + "\nnewModel cannot be resolved");
   }
-  
+
   /**
    * Execute ATL transformation
    */
   @Override
-  protected Map<TransformationModelDescription, Resource> transformation(final Map<TransformationModelDescription, IModel> transformationInputModels, final Map<TransformationModelDescription, EMFModel> transformationOutputModels) {
-    final EMFVMLauncher atlLauncher = new EMFVMLauncher();
-    atlLauncher.initialize(CollectionLiterals.<String, Object>emptyMap());
-    final IModel inputModel = ((IModel[])Conversions.unwrapArray(transformationInputModels.values(), IModel.class))[0];
-    final TransformationModelDescription inputModelDescription = this.inputModelTypeDescription.getKey();
-    atlLauncher.addInModel(inputModel, 
-      inputModelDescription.getNameInModelTransformation(), 
-      inputModelDescription.getReferenceModelName());
-    final EMFModel outputModel = ((EMFModel[])Conversions.unwrapArray(transformationOutputModels.values(), EMFModel.class))[0];
-    final TransformationModelDescription outputModelDescription = this.outputModelTypeDescription.getKey();
-    atlLauncher.addOutModel(outputModel, 
-      outputModelDescription.getNameInModelTransformation(), 
-      outputModelDescription.getReferenceModelName());
-    Pair<String, Object> _mappedTo = Pair.<String, Object>of("allowInterModelReferences", ((Object) Boolean.valueOf(true)));
-    final Map<String, Object> launchOptions = Collections.<String, Object>unmodifiableMap(CollectionLiterals.<String, Object>newHashMap(_mappedTo));
-    final InputStream compiledModelTransformation = AbstractAtlInputOutputIntermediateModelTransformationStrategy.class.getResourceAsStream(this.getCompiledModelTransformationFilePath());
-    NullProgressMonitor _nullProgressMonitor = new NullProgressMonitor();
-    atlLauncher.launch(
-      ILauncher.RUN_MODE, _nullProgressMonitor, launchOptions, compiledModelTransformation);
-    Resource _resource = outputModel.getResource();
-    Pair<TransformationModelDescription, Resource> _mappedTo_1 = Pair.<TransformationModelDescription, Resource>of(outputModelDescription, _resource);
-    return Collections.<TransformationModelDescription, Resource>unmodifiableMap(CollectionLiterals.<TransformationModelDescription, Resource>newHashMap(_mappedTo_1));
+  protected Map<TransformationModelDescription, Resource> transformation(final /* Map<TransformationModelDescription, IModel> */Object transformationInputModels, final /* Map<TransformationModelDescription, EMFModel> */Object transformationOutputModels) {
+    throw new Error("Unresolved compilation problems:"
+      + "\nEMFVMLauncher cannot be resolved."
+      + "\nThe method or field ILauncher is undefined"
+      + "\ninitialize cannot be resolved"
+      + "\naddInModel cannot be resolved"
+      + "\naddOutModel cannot be resolved"
+      + "\nlaunch cannot be resolved"
+      + "\nRUN_MODE cannot be resolved"
+      + "\nresource cannot be resolved");
   }
 }

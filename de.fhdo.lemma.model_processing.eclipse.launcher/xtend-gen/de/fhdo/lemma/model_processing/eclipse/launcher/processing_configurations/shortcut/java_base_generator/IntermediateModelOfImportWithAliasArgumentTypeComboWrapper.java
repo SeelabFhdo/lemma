@@ -35,13 +35,13 @@ import org.eclipse.xtext.xbase.lib.Pure;
 @SuppressWarnings("all")
 public final class IntermediateModelOfImportWithAliasArgumentTypeComboWrapper {
   private final ProcessingConfiguration processingConfiguration;
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private final Argument argument;
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private final Combo combo;
-  
+
   /**
    * Constructor
    */
@@ -52,7 +52,7 @@ public final class IntermediateModelOfImportWithAliasArgumentTypeComboWrapper {
     this.argument = Argument.newArgument().singleValued().intermediateModelOfImportWithAlias("").parameter(parameterName);
     this.addTransformableImportedModelsAsSelectionItems();
   }
-  
+
   /**
    * Make all models which are imported by the source model and for which an intermediate
    * transformation exists selectable from the Combo by their import aliases
@@ -82,12 +82,12 @@ public final class IntermediateModelOfImportWithAliasArgumentTypeComboWrapper {
       }
     }
   }
-  
+
   @Pure
   public Argument getArgument() {
     return this.argument;
   }
-  
+
   @Pure
   public Combo getCombo() {
     return this.combo;

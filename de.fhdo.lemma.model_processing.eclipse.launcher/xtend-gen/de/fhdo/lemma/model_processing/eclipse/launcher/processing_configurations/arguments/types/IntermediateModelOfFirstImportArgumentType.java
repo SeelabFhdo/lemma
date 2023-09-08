@@ -26,16 +26,16 @@ import org.eclipse.xtext.xbase.lib.Pair;
 @SuppressWarnings("all")
 public final class IntermediateModelOfFirstImportArgumentType extends AbstractIntermediateModelArgumentTypeWithEnumValue<ImportedIntermediateModelKind> {
   public static final ArgumentTypeIdentifier IDENTIFIER = ArgumentTypeIdentifier.INTERMEDIATE_MODEL_OF_IMPORT;
-  
+
   private static final Map<ImportedIntermediateModelKind, String> LITERAL_DESCRIPTIONS = Collections.<ImportedIntermediateModelKind, String>unmodifiableMap(CollectionLiterals.<ImportedIntermediateModelKind, String>newHashMap(Pair.<ImportedIntermediateModelKind, String>of(ImportedIntermediateModelKind.FIRST_DOMAIN_MODEL, "Intermediate representation of first imported data model"), Pair.<ImportedIntermediateModelKind, String>of(ImportedIntermediateModelKind.FIRST_OPERATION_MODEL, "Intermediate representation of first imported operation model"), Pair.<ImportedIntermediateModelKind, String>of(ImportedIntermediateModelKind.FIRST_SERVICE_MODEL, "Intermediate representation of first imported service model")));
-  
+
   /**
    * Constructor
    */
   public IntermediateModelOfFirstImportArgumentType() {
     super(IntermediateModelOfFirstImportArgumentType.IDENTIFIER, "Intermediate model of first import", IntermediateModelOfFirstImportArgumentType.LITERAL_DESCRIPTIONS);
   }
-  
+
   /**
    * Validate the user value. Next to the validation implemented by the superclass, this
    * validation method also checks if the source model kind of the given model processing

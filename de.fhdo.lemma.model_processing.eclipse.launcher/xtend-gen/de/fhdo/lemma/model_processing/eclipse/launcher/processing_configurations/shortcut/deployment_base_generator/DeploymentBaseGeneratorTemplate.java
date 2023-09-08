@@ -26,7 +26,7 @@ public final class DeploymentBaseGeneratorTemplate extends AbstractDeploymentBas
       super(parentShell, project, file, DeploymentBaseGeneratorConstants.GENERATOR_LONG_NAME, 
         DeploymentBaseGeneratorConstants.GENERATOR_SHORT_NAME);
     }
-    
+
     /**
      * Addendum for generator long name as part of the label for the generator executable path's
      * text field
@@ -35,7 +35,7 @@ public final class DeploymentBaseGeneratorTemplate extends AbstractDeploymentBas
     public final String getGeneratorExecutableLabelTextAddendum() {
       return "path";
     }
-    
+
     /**
      * Create the dialog
      */
@@ -52,7 +52,7 @@ public final class DeploymentBaseGeneratorTemplate extends AbstractDeploymentBas
       this.setMessage(_plus);
     }
   }
-  
+
   /**
    * Constructor
    */
@@ -60,7 +60,7 @@ public final class DeploymentBaseGeneratorTemplate extends AbstractDeploymentBas
     super(ProcessorExecutableType.LOCAL_JAVA_PROGRAM, parentShell, ("Deployment artifact " + 
       "generation"), project, file);
   }
-  
+
   /**
    * Return the dialog for template completion
    */

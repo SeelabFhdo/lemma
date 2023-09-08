@@ -69,47 +69,47 @@ import org.eclipse.xtext.xbase.lib.Pure;
 @SuppressWarnings("all")
 public final class ArgumentsTable {
   private static final AbstractArgumentKind DEFAULT_ARGUMENT_KIND = ArgumentKindFactory.fromIdentifier(SingleValuedParameterArgumentKind.IDENTIFIER);
-  
+
   private static final LocalResourceManager RESOURCE_MANAGER = new LocalResourceManager(JFaceResources.getResources());
-  
+
   private static final Image NEW_IMAGE = LemmaUiUtils.createImage(ArgumentsTable.RESOURCE_MANAGER, ArgumentsTable.class, "add.gif");
-  
+
   private static final Image REMOVE_IMAGE = LemmaUiUtils.createImage(ArgumentsTable.RESOURCE_MANAGER, ArgumentsTable.class, 
     "remove.png");
-  
+
   private static final Image MOVE_UP_IMAGE = LemmaUiUtils.createImage(ArgumentsTable.RESOURCE_MANAGER, ArgumentsTable.class, 
     "moveUp.png");
-  
+
   private static final Image MOVE_DOWN_IMAGE = LemmaUiUtils.createImage(ArgumentsTable.RESOURCE_MANAGER, ArgumentsTable.class, 
     "moveDown.png");
-  
+
   private static final HashMap<Argument, Button> INPUT_SUPPORT_BUTTONS = CollectionLiterals.<Argument, Button>newHashMap();
-  
+
   private final Composite parent;
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private final TableViewer viewer;
-  
+
   private Button newButton;
-  
+
   private Button removeButton;
-  
+
   private Button moveUpButton;
-  
+
   private Button moveDownButton;
-  
+
   private final List<AbstractArgumentKind> supportedArgumentKinds;
-  
+
   private final DataBindingContext dataBindingContext = new DataBindingContext();
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private boolean enabled = true;
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private ProcessingConfiguration currentConfiguration;
-  
+
   private Arguments currentArguments;
-  
+
   private final Map<Class<? extends AbstractArgumentType>, Consumer<Argument>> ARGUMENT_VALUE_INPUT_SUPPORT = Collections.<Class<? extends AbstractArgumentType>, Consumer<Argument>>unmodifiableMap(CollectionLiterals.<Class<? extends AbstractArgumentType>, Consumer<Argument>>newHashMap(Pair.<Class<FileArgumentType>, Consumer<Argument>>of(FileArgumentType.class, new Consumer<Argument>() {
     @Override
     public void accept(final Argument argument) {
@@ -133,7 +133,7 @@ public final class ArgumentsTable {
       }
     }
   })));
-  
+
   /**
    * Constructor
    */
@@ -173,7 +173,7 @@ public final class ArgumentsTable {
     _columnViewerEditor.addEditorActivationListener(_updatingColumnViewerEditorActivationListener);
     this.createButtonRow();
   }
-  
+
   /**
    * Create kind column
    */
@@ -193,7 +193,7 @@ public final class ArgumentsTable {
       this.supportedArgumentKinds);
     kindColumn.setEditingSupport(_kindColumnEditingSupport);
   }
-  
+
   /**
    * Create type column
    */
@@ -212,7 +212,7 @@ public final class ArgumentsTable {
     TypeColumnEditingSupport _typeColumnEditingSupport = new TypeColumnEditingSupport(this, this.dataBindingContext);
     typeColumn.setEditingSupport(_typeColumnEditingSupport);
   }
-  
+
   /**
    * Create parameter column
    */
@@ -227,7 +227,7 @@ public final class ArgumentsTable {
       public String getElementText(final Argument element) {
         return element.getParameter();
       }
-      
+
       @Override
       public void validate(final Argument element) {
         element.validateParameter();
@@ -236,7 +236,7 @@ public final class ArgumentsTable {
     ParameterColumnEditingSupport _parameterColumnEditingSupport = new ParameterColumnEditingSupport(this, this.dataBindingContext);
     parameterColumn.setEditingSupport(_parameterColumnEditingSupport);
   }
-  
+
   /**
    * Create value column
    */
@@ -251,7 +251,7 @@ public final class ArgumentsTable {
       public String getElementText(final Argument element) {
         return element.getValue();
       }
-      
+
       @Override
       public void validate(final Argument element) {
         element.getType().validateValueInUserRepresentation(ArgumentsTable.this.currentConfiguration, element.getValue());
@@ -260,7 +260,7 @@ public final class ArgumentsTable {
     ValueColumnEditingSupport _valueColumnEditingSupport = new ValueColumnEditingSupport(this, this.dataBindingContext);
     valueColumn.setEditingSupport(_valueColumnEditingSupport);
   }
-  
+
   /**
    * Create input support column
    */
@@ -289,7 +289,7 @@ public final class ArgumentsTable {
         editor.setEditor(inputSupportButton, item, cell.getColumnIndex());
         editor.layout();
       }
-      
+
       @Override
       public void dispose(final ColumnViewer viewer, final ViewerColumn column) {
         final Consumer<Button> _function = (Button it) -> {
@@ -300,7 +300,7 @@ public final class ArgumentsTable {
       }
     });
   }
-  
+
   /**
    * Put an input support button for the given argument to the given map if the argument's type
    * has input support
@@ -322,7 +322,7 @@ public final class ArgumentsTable {
     buttonsPerArgument.put(argument, inputSupportButton);
     return inputSupportButton;
   }
-  
+
   /**
    * Create the button row below the table
    */
@@ -335,7 +335,7 @@ public final class ArgumentsTable {
     this.createMoveUpButton(buttonRow);
     this.createMoveDownButton(buttonRow);
   }
-  
+
   /**
    * Create button for the specification of a new argument
    */
@@ -359,14 +359,14 @@ public final class ArgumentsTable {
     };
     this.newButton.addListener(SWT.Selection, _function);
   }
-  
+
   /**
    * Check if the table already contains the given argument
    */
   public final boolean containsArgument(final Argument argument) {
     return this.currentArguments.contains(argument);
   }
-  
+
   /**
    * Update the table viewer for all arguments of the given type
    */
@@ -377,7 +377,7 @@ public final class ArgumentsTable {
     };
     argumentsToUpdate.forEach(_function);
   }
-  
+
   /**
    * Add an argument to the table
    */
@@ -385,14 +385,14 @@ public final class ArgumentsTable {
     this.currentArguments.add(argument);
     this.syncInput();
   }
-  
+
   /**
    * Synchronize the viewer input with the domain object
    */
   private void syncInput() {
     this.viewer.setInput(this.currentArguments.get());
   }
-  
+
   /**
    * Create button for argument removal
    */
@@ -424,7 +424,7 @@ public final class ArgumentsTable {
     };
     this.removeButton.addListener(SWT.Selection, _function);
   }
-  
+
   /**
    * Create button to move argument up in the table
    */
@@ -451,7 +451,7 @@ public final class ArgumentsTable {
     };
     this.moveUpButton.addListener(SWT.Selection, _function);
   }
-  
+
   /**
    * Create button to move argument down in the table
    */
@@ -478,7 +478,7 @@ public final class ArgumentsTable {
     };
     this.moveDownButton.addListener(SWT.Selection, _function);
   }
-  
+
   /**
    * Set the given model processing configuration as input for the arguments table
    */
@@ -496,7 +496,7 @@ public final class ArgumentsTable {
     this.currentArguments = _arguments_1;
     this.syncInput();
   }
-  
+
   /**
    * Add property change listener to the arguments table
    */
@@ -505,7 +505,7 @@ public final class ArgumentsTable {
       this.currentArguments.addPropertyChangeListener(listener);
     }
   }
-  
+
   /**
    * Remove property change listener from the arguments table
    */
@@ -514,7 +514,7 @@ public final class ArgumentsTable {
       this.currentArguments.removePropertyChangeListener(listener);
     }
   }
-  
+
   /**
    * Dispose the table
    */
@@ -527,17 +527,17 @@ public final class ArgumentsTable {
     this.viewer.getControl().dispose();
     this.parent.dispose();
   }
-  
+
   @Pure
   public TableViewer getViewer() {
     return this.viewer;
   }
-  
+
   @Pure
   public boolean getEnabled() {
     return this.enabled;
   }
-  
+
   @Pure
   public ProcessingConfiguration getCurrentConfiguration() {
     return this.currentConfiguration;

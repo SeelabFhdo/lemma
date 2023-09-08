@@ -1,12 +1,9 @@
 package de.fhdo.lemma.eclipse.ui.specify_url_dialog;
 
-import de.fhdo.lemma.service.openapi.LemmaGenerator;
 import de.fhdo.lemma.service.openapi.LemmaTechnologySubGenerator;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.function.Consumer;
 import org.apache.commons.validator.routines.UrlValidator;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -64,42 +61,42 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
       return _xifexpression;
     }
   }
-  
+
   private static final int MIN_DIALOG_WIDTH = 500;
-  
+
   private static final int MIN_DIALOG_HEIGHT = 150;
-  
+
   private Text txtUrl;
-  
+
   private Text txtTargetFolder;
-  
+
   private Text txtDataModelName;
-  
+
   private Text txtTechnologyModelName;
-  
+
   private Text txtServiceModelName;
-  
+
   private Text txtServiceQualifier;
-  
+
   private Button btnBrowseFolder;
-  
+
   private Button btnUriWebLocation;
-  
+
   private Button btnUriFileLocation;
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private URL fetchUrl;
-  
+
   private String targetFolder;
-  
+
   private String dataModelName;
-  
+
   private String technologyModelName;
-  
+
   private String serviceModelName;
-  
+
   private String serviceQualifier;
-  
+
   /**
    * Constructor
    */
@@ -108,7 +105,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     TrayDialog.setDialogHelpAvailable(false);
     this.setHelpAvailable(false);
   }
-  
+
   /**
    * Create dialog (to be called after constructor and before open())
    */
@@ -119,7 +116,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     this.setMessage(("Specify the URL of the OpenAPI specification from which LEMMA models shall " + 
       "be extracted"), IMessageProvider.INFORMATION);
   }
-  
+
   /**
    * Create buttons for the button bar
    */
@@ -128,7 +125,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     this.createButton(parent, IDialogConstants.OK_ID, "Extract", true);
     this.createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
   }
-  
+
   /**
    * Catch button press
    */
@@ -143,94 +140,16 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
         break;
     }
   }
-  
+
   /**
    * OK button was pressed. Trigger generation.
    */
   @Override
   public void okPressed() {
-    boolean _syncInput = this.syncInput();
-    boolean _not = (!_syncInput);
-    if (_not) {
-      return;
-    }
-    boolean errorOccurred = false;
-    try {
-      final LemmaGenerator generator = new LemmaGenerator();
-      final LinkedList<String> parsingMessages = generator.parse(this.fetchUrl.toString());
-      boolean _isEmpty = parsingMessages.isEmpty();
-      boolean _not_1 = (!_isEmpty);
-      if (_not_1) {
-        Shell _shell = this.getShell();
-        StringConcatenation _builder = new StringConcatenation();
-        {
-          for(final String msg : parsingMessages) {
-            _builder.newLineIfNotEmpty();
-            _builder.append(msg);
-            _builder.newLineIfNotEmpty();
-            _builder.append("                    ");
-          }
-        }
-        MessageDialog.openInformation(_shell, "Parsing Report", _builder.toString());
-      }
-      boolean _isParsed = generator.isParsed();
-      if (_isParsed) {
-        StringConcatenation _builder_1 = new StringConcatenation();
-        _builder_1.append(this.dataModelName);
-        _builder_1.append(".data");
-        StringConcatenation _builder_2 = new StringConcatenation();
-        _builder_2.append(this.technologyModelName);
-        _builder_2.append(".technology");
-        StringConcatenation _builder_3 = new StringConcatenation();
-        _builder_3.append(this.serviceModelName);
-        _builder_3.append(".services");
-        generator.generateModels(
-          this.targetFolder, _builder_1.toString(), _builder_2.toString(), _builder_3.toString(), 
-          this.serviceQualifier);
-        boolean _isEmpty_1 = generator.getTransMsgs().isEmpty();
-        if (_isEmpty_1) {
-          MessageDialog.openInformation(this.getShell(), "Transformation Report", 
-            "Transformation completed successfully.");
-        } else {
-          errorOccurred = true;
-          Shell _shell_1 = this.getShell();
-          StringConcatenation _builder_4 = new StringConcatenation();
-          _builder_4.append("There were errors during the transformation:");
-          _builder_4.newLine();
-          {
-            List<String> _transMsgs = generator.getTransMsgs();
-            for(final String msg_1 : _transMsgs) {
-              _builder_4.append(("\t- " + msg_1));
-              _builder_4.newLineIfNotEmpty();
-            }
-          }
-          MessageDialog.openError(_shell_1, "Transformation Report", _builder_4.toString());
-        }
-      } else {
-        errorOccurred = true;
-        Shell _shell_2 = this.getShell();
-        String _string = this.fetchUrl.toString();
-        String _plus = (("Generation of in-memory " + 
-          "representation not possible for the OpenAPI specification URL ") + _string);
-        MessageDialog.openError(_shell_2, "Parsing Error", _plus);
-      }
-    } catch (final Throwable _t) {
-      if (_t instanceof Exception) {
-        final Exception ex = (Exception)_t;
-        errorOccurred = true;
-        Shell _shell_3 = this.getShell();
-        String _message = ex.getMessage();
-        String _plus_1 = ("Error during transformation: " + _message);
-        MessageDialog.openError(_shell_3, "Error", _plus_1);
-      } else {
-        throw Exceptions.sneakyThrow(_t);
-      }
-    }
-    if ((!errorOccurred)) {
-      super.okPressed();
-    }
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method isParsed() from the type LemmaGenerator refers to the missing type Object");
   }
-  
+
   /**
    * Synchronize user input with class state
    */
@@ -271,7 +190,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     }
     return (!missingValues);
   }
-  
+
   /**
    * Create the dialog area
    */
@@ -292,7 +211,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     this.createServiceQualifier(container);
     return container;
   }
-  
+
   /**
    * Create UI elements for URL/file specification
    */
@@ -352,7 +271,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     };
     this.btnUriFileLocation.addSelectionListener(SelectionListener.widgetSelectedAdapter(_function_1));
   }
-  
+
   /**
    * Create the UI elements for target folder selection
    */
@@ -379,7 +298,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     };
     this.btnBrowseFolder.addSelectionListener(SelectionListener.widgetSelectedAdapter(_function));
   }
-  
+
   /**
    * Create the UI elements for the data model name
    */
@@ -393,7 +312,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     layoutData.horizontalSpan = 2;
     this.txtDataModelName.setLayoutData(layoutData);
   }
-  
+
   /**
    * Create the UI elements for the technology model name
    */
@@ -407,7 +326,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     layoutData.horizontalSpan = 2;
     this.txtTechnologyModelName.setLayoutData(layoutData);
   }
-  
+
   /**
    * Create the UI elements for the service model name
    */
@@ -421,7 +340,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     layoutData.horizontalSpan = 2;
     this.txtServiceModelName.setLayoutData(layoutData);
   }
-  
+
   /**
    * Create the UI elements for the microservice qualifier
    */
@@ -435,7 +354,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     layoutData.horizontalSpan = 2;
     this.txtServiceQualifier.setLayoutData(layoutData);
   }
-  
+
   /**
    * Indicate that the dialog is resizable
    */
@@ -443,7 +362,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
   public boolean isResizable() {
     return true;
   }
-  
+
   /**
    * Set window size
    */
@@ -454,7 +373,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     int _max_1 = Math.max(this.convertVerticalDLUsToPixels(SpecifyUrlDialog.MIN_DIALOG_HEIGHT), shellSize.y);
     return new Point(_max, _max_1);
   }
-  
+
   @Pure
   public URL getFetchUrl() {
     return this.fetchUrl;

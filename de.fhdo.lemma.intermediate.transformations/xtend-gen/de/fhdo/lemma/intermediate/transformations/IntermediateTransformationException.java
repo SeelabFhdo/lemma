@@ -14,21 +14,21 @@ import org.eclipse.xtext.xbase.lib.Pure;
 public class IntermediateTransformationException extends Exception {
   @Accessors(AccessorType.PUBLIC_GETTER)
   private IntermediateTransformationExceptionKind kind;
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private IntermediateTransformationPhase phase;
-  
+
   public IntermediateTransformationException(final String message, final IntermediateTransformationExceptionKind kind, final IntermediateTransformationPhase phase) {
     super(message);
     this.kind = kind;
     this.phase = phase;
   }
-  
+
   @Pure
   public IntermediateTransformationExceptionKind getKind() {
     return this.kind;
   }
-  
+
   @Pure
   public IntermediateTransformationPhase getPhase() {
     return this.phase;

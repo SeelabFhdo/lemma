@@ -18,15 +18,15 @@ import org.eclipse.ui.PlatformUI;
 @SuppressWarnings("all")
 public class TransformationDialogHandler extends AbstractHandler {
   private final Shell SHELL = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-  
+
   private List<ModelFile> inputModelFiles;
-  
+
   private boolean convertToRelativeUris;
-  
+
   private boolean outputRefinementModels;
-  
+
   private AbstractUiModelTransformationStrategy strategy;
-  
+
   /**
    * Constructor
    */
@@ -48,7 +48,7 @@ public class TransformationDialogHandler extends AbstractHandler {
     this.outputRefinementModels = outputRefinementModels;
     this.strategy = strategy;
   }
-  
+
   /**
    * Execute handler
    */

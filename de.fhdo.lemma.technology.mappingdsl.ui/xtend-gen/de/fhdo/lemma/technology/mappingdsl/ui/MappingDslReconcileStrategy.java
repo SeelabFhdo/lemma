@@ -32,7 +32,7 @@ public class MappingDslReconcileStrategy extends XtextDocumentReconcileStrategy 
     this.reloadImportedModels(resource);
     super.postParse(resource, monitor);
   }
-  
+
   /**
    * Helper to reload models being imported by a given Xtext resource
    */
@@ -62,7 +62,7 @@ public class MappingDslReconcileStrategy extends XtextDocumentReconcileStrategy 
     };
     mappingModel.getImports().forEach(_function);
   }
-  
+
   /**
    * Helper to reload data models being imported into a mapping model transitively via a service
    * model

@@ -8,15 +8,15 @@ Bundle-ActivationPolicy: lazy
 Require-Bundle: de.fhdo.lemma.technology.technologydsl.metamodel,
  org.eclipse.xtext,
  org.eclipse.xtext.xbase,
- org.eclipse.equinox.common;bundle-version="3.14.100",
+ org.eclipse.equinox.common;bundle-version="3.18.0",
  de.fhdo.lemma.data.datadsl,
- org.eclipse.xtext.xbase.lib;bundle-version="2.25.0",
+ org.eclipse.xtext.xbase.lib;bundle-version="2.32.0",
  org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
  org.eclipse.xtext.util,
- org.eclipse.xtend.lib;bundle-version="2.25.0",
+ org.eclipse.xtend.lib;bundle-version="2.32.0",
  de.fhdo.lemma.typechecking,
  de.fhdo.lemma.utils
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Export-Package: de.fhdo.lemma.technology.parser.antlr,
  de.fhdo.lemma.technology.formatting2,
  de.fhdo.lemma.technology.scoping,
