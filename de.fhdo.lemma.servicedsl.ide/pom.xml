@@ -106,6 +106,13 @@
     		<version>${project.version}</version>
     	</dependency>
     	<dependency>
+    		<groupId>de.fhdo.lemma.technology.technologydsl</groupId>
+    		<artifactId>
+    			de.fhdo.lemma.technology.technologydsl.metamodel
+    		</artifactId>
+    		<version>${metamodel-version}</version>
+    	</dependency>
+    	<dependency>
 			<groupId>de.fhdo.lemma.data.datadsl</groupId>
 			<artifactId>de.fhdo.lemma.data.datadsl</artifactId>
 			<version>${project.version}</version>
