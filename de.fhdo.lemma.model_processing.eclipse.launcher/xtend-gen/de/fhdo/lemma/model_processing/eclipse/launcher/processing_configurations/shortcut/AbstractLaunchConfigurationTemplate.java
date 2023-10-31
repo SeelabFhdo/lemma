@@ -50,43 +50,43 @@ public abstract class AbstractLaunchConfigurationTemplate {
    */
   public static abstract class AbstractTemplateCompletionDialog extends TitleAreaDialog implements PropertyChangeListener {
     private static final int DEFAULT_COLUMN_COUNT = 2;
-    
+
     protected static final int DEFAULT_WIDTH = 800;
-    
+
     protected static final Point DEFAULT_SIZE = new Point(AbstractLaunchConfigurationTemplate.AbstractTemplateCompletionDialog.DEFAULT_WIDTH, 300);
-    
+
     protected final IProject project;
-    
+
     protected final IFile file;
-    
+
     protected final int columnCount;
-    
+
     @Accessors(AccessorType.PROTECTED_GETTER)
     protected ProcessingConfigurationWithLaunchConfigurationName configurationTemplate;
-    
+
     protected final DataBindingContext dataBindingContext = new DataBindingContext();
-    
+
     protected final ArrayList<Binding> bindings = CollectionLiterals.<Binding>newArrayList();
-    
+
     private final ArrayList<ControlDecoration> decorations = CollectionLiterals.<ControlDecoration>newArrayList();
-    
+
     private Procedure1<? super ProcessingConfigurationWithLaunchConfigurationName> runCallback;
-    
+
     private Procedure1<? super ProcessingConfigurationWithLaunchConfigurationName> storeCallback;
-    
+
     private Button showCommandLineButton;
-    
+
     private Button storeButton;
-    
+
     private Button runButton;
-    
+
     /**
      * Constructor
      */
     public AbstractTemplateCompletionDialog(final Shell parentShell, final IProject project, final IFile file) {
       this(parentShell, project, file, AbstractLaunchConfigurationTemplate.AbstractTemplateCompletionDialog.DEFAULT_COLUMN_COUNT);
     }
-    
+
     /**
      * Constructor to configure a non-default number of columns for the dialog's grid layout
      */
@@ -100,7 +100,7 @@ public abstract class AbstractLaunchConfigurationTemplate {
       this.columnCount = columnCount;
       this.setHelpAvailable(false);
     }
-    
+
     /**
      * Set the partially initialized model processing configuration as the actual template
      * domain object to be sufficiently completed for subsequent model processor execution. This
@@ -110,7 +110,7 @@ public abstract class AbstractLaunchConfigurationTemplate {
       this.configurationTemplate = configurationTemplate;
       this.configurationTemplate.addPropertyChangeListener(this);
     }
-    
+
     /**
      * Set the callback to be invoked when the user hit the store button. This method must not
      * be called by implementers.
@@ -118,7 +118,7 @@ public abstract class AbstractLaunchConfigurationTemplate {
     final Procedure1<? super ProcessingConfigurationWithLaunchConfigurationName> setStoreCallback(final Procedure1<? super ProcessingConfigurationWithLaunchConfigurationName> callback) {
       return this.storeCallback = callback;
     }
-    
+
     /**
      * Set the callback to be invoked when the user hit the run button. This method must not be
      * called by implementers.
@@ -126,7 +126,7 @@ public abstract class AbstractLaunchConfigurationTemplate {
     final Procedure1<? super ProcessingConfigurationWithLaunchConfigurationName> setRunCallback(final Procedure1<? super ProcessingConfigurationWithLaunchConfigurationName> callback) {
       return this.runCallback = callback;
     }
-    
+
     /**
      * Create the dialog area
      */
@@ -146,13 +146,13 @@ public abstract class AbstractLaunchConfigurationTemplate {
       _shell.setSize(AbstractLaunchConfigurationTemplate.AbstractTemplateCompletionDialog.DEFAULT_SIZE);
       return area;
     }
-    
+
     /**
      * Enable implementers to place additional controls before default controls
      */
     public void insertAdditionalControlsBeforeDefaults(final Composite parent) {
     }
-    
+
     /**
      * Add text field for launch configuration name
      */
@@ -174,7 +174,7 @@ public abstract class AbstractLaunchConfigurationTemplate {
         "launchConfigurationName", 
         this.configurationTemplate, _function);
     }
-    
+
     /**
      * Helper to bind a control and property including validation and decoration support in the
      * dialog's binding and decoration contexts
@@ -185,13 +185,13 @@ public abstract class AbstractLaunchConfigurationTemplate {
       this.bindings.add(bindingAndDecoration.getKey());
       this.decorations.add(bindingAndDecoration.getValue());
     }
-    
+
     /**
      * Enable implementers to place additional controls after default controls
      */
     public void insertAdditionalControlsAfterDefaults(final Composite parent) {
     }
-    
+
     /**
      * React to changes of template properties
      */
@@ -206,7 +206,7 @@ public abstract class AbstractLaunchConfigurationTemplate {
       this.runButton.setEnabled(configurationIsValid);
       this.reactToPropertyChange(event);
     }
-    
+
     /**
      * Enable implementers of concrete dialog's to complete the template, e.g., with additional
      * execution arguments. This callback gets invoked each time the user changes a template
@@ -217,7 +217,7 @@ public abstract class AbstractLaunchConfigurationTemplate {
      */
     public void completeProcessingConfigurationTemplate(final ProcessingConfigurationWithLaunchConfigurationName templateToComplete) {
     }
-    
+
     /**
      * Helper to check of the given model processing configuration is valid in its user
      * representation
@@ -240,7 +240,7 @@ public abstract class AbstractLaunchConfigurationTemplate {
       }
       return _xtrycatchfinallyexpression;
     }
-    
+
     /**
      * Generic callback to react to changes of template properties. This callback gets invoked
      * each time the user changes a template property, after
@@ -249,7 +249,7 @@ public abstract class AbstractLaunchConfigurationTemplate {
      */
     public void reactToPropertyChange(final PropertyChangeEvent evt) {
     }
-    
+
     /**
      * Create the dialog buttons
      */
@@ -262,7 +262,7 @@ public abstract class AbstractLaunchConfigurationTemplate {
         false);
       this.runButton = this.createButton(parent, IDialogConstants.OK_ID, "Run", true);
     }
-    
+
     /**
      * React to the user hitting a button
      */
@@ -280,7 +280,7 @@ public abstract class AbstractLaunchConfigurationTemplate {
           break;
       }
     }
-    
+
     /**
      * The user hit the show commandline button
      */
@@ -311,7 +311,7 @@ public abstract class AbstractLaunchConfigurationTemplate {
       final ShowCommandLineDialog commandLineDialog = new ShowCommandLineDialog(_shell, commandLine);
       commandLineDialog.open();
     }
-    
+
     /**
      * The user hit the store button
      */
@@ -330,7 +330,7 @@ public abstract class AbstractLaunchConfigurationTemplate {
       }
       return _xtrycatchfinallyexpression;
     }
-    
+
     /**
      * The user hit the run button
      */
@@ -347,7 +347,7 @@ public abstract class AbstractLaunchConfigurationTemplate {
         }
       }
     }
-    
+
     /**
      * Close the dialog
      */
@@ -371,7 +371,7 @@ public abstract class AbstractLaunchConfigurationTemplate {
       }
       return _xblockexpression;
     }
-    
+
     /**
      * Flag to indicate that the dialog is resizable
      */
@@ -379,22 +379,22 @@ public abstract class AbstractLaunchConfigurationTemplate {
     public final boolean isResizable() {
       return true;
     }
-    
+
     @Pure
     protected ProcessingConfigurationWithLaunchConfigurationName getConfigurationTemplate() {
       return this.configurationTemplate;
     }
   }
-  
+
   protected final Shell parentShell;
-  
+
   protected final IProject project;
-  
+
   protected final IFile file;
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private final String name;
-  
+
   /**
    * Enable implementers to decide whether the template is applicable to a LEMMA model. The map
    * of technology names to aliases can be used as an additional source of information whether the
@@ -403,12 +403,12 @@ public abstract class AbstractLaunchConfigurationTemplate {
    * technology with name "Eureka" at least.
    */
   public abstract Boolean isApplicable(final EObject modelRoot, final Map<String, String> technologyNamePerAlias);
-  
+
   /**
    * Get the template completion dialog
    */
   public abstract AbstractLaunchConfigurationTemplate.AbstractTemplateCompletionDialog getCompletionDialog();
-  
+
   /**
    * Constructor
    */
@@ -418,7 +418,7 @@ public abstract class AbstractLaunchConfigurationTemplate {
     this.project = project;
     this.file = file;
   }
-  
+
   /**
    * Enable implementers the extension of the partially initialized processing configuration
    * template
@@ -426,7 +426,7 @@ public abstract class AbstractLaunchConfigurationTemplate {
   public ProcessingConfigurationWithLaunchConfigurationName extendInitializedProcessingConfigurationTemplate(final ProcessingConfigurationWithLaunchConfigurationName initializedConfiguration) {
     return null;
   }
-  
+
   @Pure
   public String getName() {
     return this.name;

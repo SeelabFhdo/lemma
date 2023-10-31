@@ -16,14 +16,14 @@ import org.eclipse.jface.viewers.ViewerCell;
 @SuppressWarnings("all")
 public final class UpdatingColumnViewerEditorActivationListener extends ColumnViewerEditorActivationListener {
   private final ColumnViewer viewer;
-  
+
   /**
    * Constructor
    */
   public UpdatingColumnViewerEditorActivationListener(final ColumnViewer viewer) {
     this.viewer = viewer;
   }
-  
+
   /**
    * Editor was deactivated. Update the edited element.
    */
@@ -33,15 +33,15 @@ public final class UpdatingColumnViewerEditorActivationListener extends ColumnVi
     final ViewerCell cell = ((ViewerCell) _source);
     this.viewer.update(cell.getElement(), null);
   }
-  
+
   @Override
   public final void afterEditorActivated(final ColumnViewerEditorActivationEvent event) {
   }
-  
+
   @Override
   public final void beforeEditorActivated(final ColumnViewerEditorActivationEvent event) {
   }
-  
+
   @Override
   public final void beforeEditorDeactivated(final ColumnViewerEditorDeactivationEvent event) {
   }

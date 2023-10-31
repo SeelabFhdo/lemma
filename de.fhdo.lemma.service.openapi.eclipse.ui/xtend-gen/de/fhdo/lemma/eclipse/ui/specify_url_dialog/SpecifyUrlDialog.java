@@ -64,42 +64,42 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
       return _xifexpression;
     }
   }
-  
+
   private static final int MIN_DIALOG_WIDTH = 500;
-  
+
   private static final int MIN_DIALOG_HEIGHT = 150;
-  
+
   private Text txtUrl;
-  
+
   private Text txtTargetFolder;
-  
+
   private Text txtDataModelName;
-  
+
   private Text txtTechnologyModelName;
-  
+
   private Text txtServiceModelName;
-  
+
   private Text txtServiceQualifier;
-  
+
   private Button btnBrowseFolder;
-  
+
   private Button btnUriWebLocation;
-  
+
   private Button btnUriFileLocation;
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private URL fetchUrl;
-  
+
   private String targetFolder;
-  
+
   private String dataModelName;
-  
+
   private String technologyModelName;
-  
+
   private String serviceModelName;
-  
+
   private String serviceQualifier;
-  
+
   /**
    * Constructor
    */
@@ -108,7 +108,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     TrayDialog.setDialogHelpAvailable(false);
     this.setHelpAvailable(false);
   }
-  
+
   /**
    * Create dialog (to be called after constructor and before open())
    */
@@ -119,7 +119,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     this.setMessage(("Specify the URL of the OpenAPI specification from which LEMMA models shall " + 
       "be extracted"), IMessageProvider.INFORMATION);
   }
-  
+
   /**
    * Create buttons for the button bar
    */
@@ -128,7 +128,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     this.createButton(parent, IDialogConstants.OK_ID, "Extract", true);
     this.createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
   }
-  
+
   /**
    * Catch button press
    */
@@ -143,7 +143,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
         break;
     }
   }
-  
+
   /**
    * OK button was pressed. Trigger generation.
    */
@@ -230,7 +230,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
       super.okPressed();
     }
   }
-  
+
   /**
    * Synchronize user input with class state
    */
@@ -271,7 +271,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     }
     return (!missingValues);
   }
-  
+
   /**
    * Create the dialog area
    */
@@ -292,7 +292,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     this.createServiceQualifier(container);
     return container;
   }
-  
+
   /**
    * Create UI elements for URL/file specification
    */
@@ -352,7 +352,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     };
     this.btnUriFileLocation.addSelectionListener(SelectionListener.widgetSelectedAdapter(_function_1));
   }
-  
+
   /**
    * Create the UI elements for target folder selection
    */
@@ -379,7 +379,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     };
     this.btnBrowseFolder.addSelectionListener(SelectionListener.widgetSelectedAdapter(_function));
   }
-  
+
   /**
    * Create the UI elements for the data model name
    */
@@ -393,7 +393,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     layoutData.horizontalSpan = 2;
     this.txtDataModelName.setLayoutData(layoutData);
   }
-  
+
   /**
    * Create the UI elements for the technology model name
    */
@@ -407,7 +407,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     layoutData.horizontalSpan = 2;
     this.txtTechnologyModelName.setLayoutData(layoutData);
   }
-  
+
   /**
    * Create the UI elements for the service model name
    */
@@ -421,7 +421,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     layoutData.horizontalSpan = 2;
     this.txtServiceModelName.setLayoutData(layoutData);
   }
-  
+
   /**
    * Create the UI elements for the microservice qualifier
    */
@@ -435,7 +435,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     layoutData.horizontalSpan = 2;
     this.txtServiceQualifier.setLayoutData(layoutData);
   }
-  
+
   /**
    * Indicate that the dialog is resizable
    */
@@ -443,7 +443,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
   public boolean isResizable() {
     return true;
   }
-  
+
   /**
    * Set window size
    */
@@ -454,7 +454,7 @@ public class SpecifyUrlDialog extends TitleAreaDialog {
     int _max_1 = Math.max(this.convertVerticalDLUsToPixels(SpecifyUrlDialog.MIN_DIALOG_HEIGHT), shellSize.y);
     return new Point(_max, _max_1);
   }
-  
+
   @Pure
   public URL getFetchUrl() {
     return this.fetchUrl;

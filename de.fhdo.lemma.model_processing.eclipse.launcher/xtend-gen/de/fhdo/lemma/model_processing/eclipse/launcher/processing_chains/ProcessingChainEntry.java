@@ -23,23 +23,23 @@ import org.w3c.dom.Element;
 @SuppressWarnings("all")
 public final class ProcessingChainEntry extends ModelElementWithPropertyChangeSupport implements Cloneable {
   public static final String XML_PROCESSING_CHAIN_ENTRY = "processingChainEntry";
-  
+
   private static final int DEFAULT_PREVIOUS_EXIT_VALUE = 0;
-  
+
   private static final PreviousExitValueComparator.Comparator DEFAULT_PREVIOUS_EXIT_VALUE_COMPARATOR = PreviousExitValueComparator.Comparator.EQUAL;
-  
+
   private static final String XML_LAUNCH_CONFIGURATION_NAME_ATTR = "launchConfigurationName";
-  
+
   private static final String XML_PREVIOUS_EXIT_VALUE_COMPARATOR_ATTR = "previousExitValueComparator";
-  
+
   private static final String XML_PREVIOUS_EXIT_VALUE_ATTR = "previousExitValue";
-  
+
   @Accessors
   private ProcessingChain chain;
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private String launchConfigurationName;
-  
+
   /**
    * Set the name of the entry's model processing launch configuration and fire a corresponding
    * property change event
@@ -48,10 +48,10 @@ public final class ProcessingChainEntry extends ModelElementWithPropertyChangeSu
     this.firePropertyChange("launchConfigurationName", this.launchConfigurationName, 
       this.launchConfigurationName = launchConfigurationName);
   }
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private PreviousExitValueComparator.Comparator previousExitValueComparator;
-  
+
   /**
    * Set the entry's exit value comparator and fire a corresponding property change event
    */
@@ -59,10 +59,10 @@ public final class ProcessingChainEntry extends ModelElementWithPropertyChangeSu
     this.firePropertyChange("previousExitValueComparator", this.previousExitValueComparator, 
       this.previousExitValueComparator = previousExitValueComparator);
   }
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private Integer previousExitValue;
-  
+
   /**
    * Set the entry's exit value and fire a corresponding property change event
    */
@@ -70,7 +70,7 @@ public final class ProcessingChainEntry extends ModelElementWithPropertyChangeSu
     this.firePropertyChange("previousExitValue", this.previousExitValue, 
       this.previousExitValue = previousExitValue);
   }
-  
+
   /**
    * Clone the entry
    */
@@ -82,7 +82,7 @@ public final class ProcessingChainEntry extends ModelElementWithPropertyChangeSu
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Deserialize the entry from its XML representation stored in the given Element
    */
@@ -111,13 +111,13 @@ public final class ProcessingChainEntry extends ModelElementWithPropertyChangeSu
     entry.previousExitValue = _xifexpression_1;
     return entry;
   }
-  
+
   /**
    * Empty constructor
    */
   private ProcessingChainEntry() {
   }
-  
+
   /**
    * Constructor that takes the model processing configuration and chain of the entry
    */
@@ -127,7 +127,7 @@ public final class ProcessingChainEntry extends ModelElementWithPropertyChangeSu
     this.previousExitValueComparator = ProcessingChainEntry.DEFAULT_PREVIOUS_EXIT_VALUE_COMPARATOR;
     this.previousExitValue = Integer.valueOf(ProcessingChainEntry.DEFAULT_PREVIOUS_EXIT_VALUE);
   }
-  
+
   /**
    * Validate the entry
    */
@@ -136,14 +136,14 @@ public final class ProcessingChainEntry extends ModelElementWithPropertyChangeSu
     this.validatePreviousExitValueComparator();
     this.validatePreviousExitValue();
   }
-  
+
   /**
    * Validate the name of the model processing launch configuration assigned to the entry
    */
   public final void validateLaunchConfigurationName(final Map<String, ILaunchConfiguration> availableLaunchConfigurations) {
     ProcessingChainEntry.validateLaunchConfigurationName(this.launchConfigurationName, availableLaunchConfigurations);
   }
-  
+
   /**
    * Validate the given name of a model processing launch configuration
    */
@@ -160,14 +160,14 @@ public final class ProcessingChainEntry extends ModelElementWithPropertyChangeSu
       throw new IllegalArgumentException(_plus_1);
     }
   }
-  
+
   /**
    * Validate the exit value comparator assigned to the entry
    */
   public final void validatePreviousExitValueComparator() {
     ProcessingChainEntry.validatePreviousExitValueComparator(this.previousExitValueComparator, this);
   }
-  
+
   /**
    * Validate the given exit value comparator in the context of the given entry
    */
@@ -177,7 +177,7 @@ public final class ProcessingChainEntry extends ModelElementWithPropertyChangeSu
       Utils.notNull(previousExitValueComparator, "Exit value comparator must not be empty");
     }
   }
-  
+
   /**
    * Check if the entry is editable which is the case when it is not the first entry in the chain.
    * The check concerns the editability of all attributes of the entry besides the assigned model
@@ -188,14 +188,14 @@ public final class ProcessingChainEntry extends ModelElementWithPropertyChangeSu
     final boolean isFirstEntry = (_indexOf == 0);
     return (!isFirstEntry);
   }
-  
+
   /**
    * Validate the exit value assigned to the entry
    */
   public final void validatePreviousExitValue() {
     ProcessingChainEntry.validatePreviousExitValue(this.previousExitValue, this);
   }
-  
+
   /**
    * Validate the given exit value in the context of the given entry
    */
@@ -216,7 +216,7 @@ public final class ProcessingChainEntry extends ModelElementWithPropertyChangeSu
       }
     }
   }
-  
+
   /**
    * Serialize the entry to XML
    */
@@ -257,26 +257,26 @@ public final class ProcessingChainEntry extends ModelElementWithPropertyChangeSu
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   @Pure
   public ProcessingChain getChain() {
     return this.chain;
   }
-  
+
   public void setChain(final ProcessingChain chain) {
     this.chain = chain;
   }
-  
+
   @Pure
   public String getLaunchConfigurationName() {
     return this.launchConfigurationName;
   }
-  
+
   @Pure
   public PreviousExitValueComparator.Comparator getPreviousExitValueComparator() {
     return this.previousExitValueComparator;
   }
-  
+
   @Pure
   public Integer getPreviousExitValue() {
     return this.previousExitValue;

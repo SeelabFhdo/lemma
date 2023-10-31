@@ -26,7 +26,7 @@ public class ElementTreeContentProvider implements ITreeContentProvider {
   public Object[] getElements(final Object inputElement) {
     return ((Object[])Conversions.unwrapArray(this.sortByName(((List<? extends EObject>) inputElement)), Object.class));
   }
-  
+
   /**
    * Helper to sort a list of LEMMA EObjects by their simple, i.e., non fully-qualified, names
    */
@@ -40,7 +40,7 @@ public class ElementTreeContentProvider implements ITreeContentProvider {
       }
     });
   }
-  
+
   /**
    * Get children of parent element
    */
@@ -68,7 +68,7 @@ public class ElementTreeContentProvider implements ITreeContentProvider {
     }
     return ((Object[])Conversions.unwrapArray(_switchResult, Object.class));
   }
-  
+
   /**
    * Get parent of an element
    */
@@ -96,7 +96,7 @@ public class ElementTreeContentProvider implements ITreeContentProvider {
     }
     return _switchResult;
   }
-  
+
   /**
    * Determine if the given element has children
    */

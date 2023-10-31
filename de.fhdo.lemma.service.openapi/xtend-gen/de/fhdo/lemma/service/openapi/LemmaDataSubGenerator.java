@@ -38,55 +38,55 @@ public class LemmaDataSubGenerator {
    * SLF4j LOGGER
    */
   private static final Logger LOGGER = LoggerFactory.getLogger(LemmaDataSubGenerator.class);
-  
+
   /**
    * Separator is used to build the full qualified names during the generation
    */
   private static final String SEP = ".";
-  
+
   /**
    * Map of all created DataStructures during a generation. The key contains the fully-qualified
    * name while the value contains the actual data structure created.
    */
   private final HashMap<String, DataStructure> createdDataStructures = CollectionLiterals.<String, DataStructure>newHashMap();
-  
+
   /**
    * Map of all collection types created during a generation. The key contains the fully-qualified
    * name while the value contains the actual structured collection type created.
    */
   private final HashMap<String, CollectionType> createdStructuredCollectionTypes = CollectionLiterals.<String, CollectionType>newHashMap();
-  
+
   /**
    * Factory to actually create and manipulate a LEMMA DataModel
    */
   private final DataFactory dataFactory = DataFactory.eINSTANCE;
-  
+
   /**
    * Predefined instances of the data model, version, and context which are enriched with the data
    * structures from the OpenAPI source
    */
   private final DataModel targetDataModel = this.dataFactory.createDataModel();
-  
+
   private final Version targetVersion = this.dataFactory.createVersion();
-  
+
   private final Context targetContext = this.dataFactory.createContext();
-  
+
   /**
    * OpenAPI schema which will be used as source for generation
    */
   private final OpenAPI openAPI;
-  
+
   /**
    * Log of all encountered exceptions during the data transformation
    */
   @Accessors(AccessorType.PUBLIC_GETTER)
   private final ArrayList<String> transMsgs = CollectionLiterals.<String>newArrayList();
-  
+
   /**
    * Location where the generated file is written
    */
   private final String targetFile;
-  
+
   /**
    * Constructor
    */
@@ -94,7 +94,7 @@ public class LemmaDataSubGenerator {
     this.openAPI = openAPI;
     this.targetFile = targetFile;
   }
-  
+
   /**
    * Generate LEMMA data model from a previously parsed OpenAPI specification file. This method
    * returns the created model instance and also serializes it to the user's harddrive.
@@ -151,7 +151,7 @@ public class LemmaDataSubGenerator {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Initialize the data model instance
    */
@@ -162,7 +162,7 @@ public class LemmaDataSubGenerator {
     this.targetContext.setName(OpenApiUtil.removeInvalidCharsFromName(this.openAPI.getInfo().getTitle()));
     this.targetContext.setVersion(this.targetVersion);
   }
-  
+
   /**
    * Return a LEMMA data structure with the given name from an OpenAPI component object. In case a
    * data structure with the given name was already created, because OpenAPI allows the multiple
@@ -197,14 +197,14 @@ public class LemmaDataSubGenerator {
     LemmaDataSubGenerator.LOGGER.debug(_builder_2.toString());
     return newStructure;
   }
-  
+
   /**
    * Add fields to a given LEMMA data structure from information of a given OpenAPI schema
    */
   private void addDataFieldsFromSchema(final DataStructure structure, final Schema<?> structureSchema) {
     this.addDataFieldsFromSchema(structure, null, structureSchema);
   }
-  
+
   /**
    * Add field of the given name to the given LEMMA data structure based on the given OpenAPI
    * schema. This method recursively creates fields for inline-defined OpenAPI structures
@@ -237,7 +237,7 @@ public class LemmaDataSubGenerator {
       }
     }
   }
-  
+
   /**
    * Generate a LEMMA data field with the given name from the type of an OpenAPI schema. Primitive
    * schema types such as "boolean" or "integer" are mapped to the corresponding LEMMA primitive
@@ -304,7 +304,7 @@ public class LemmaDataSubGenerator {
     }
     return newDataField;
   }
-  
+
   /**
    * Throw an IllegalArgumentException in case an OpenAPI schema type cannot be transformed into a
    * corresponding LEMMA type
@@ -317,7 +317,7 @@ public class LemmaDataSubGenerator {
     _builder.append(" is not supported.");
     throw new IllegalArgumentException(_builder.toString());
   }
-  
+
   /**
    * Return a LEMMA collection type with the given name from an OpenAPI schema. In case a
    * collection type with the given name was already created, because OpenAPI allows the multiple
@@ -351,14 +351,14 @@ public class LemmaDataSubGenerator {
     LemmaDataSubGenerator.LOGGER.debug(_builder_1.toString());
     return newType;
   }
-  
+
   /**
    * Helper method to get the name of a LEMMA collection type from an OpenAPI array schema
    */
   public static String getCollectionTypeName(final ArraySchema schema) {
     return LemmaDataSubGenerator.getCollectionTypeName(schema.getType());
   }
-  
+
   /**
    * Helper method to derive the name of a LEMMA collection type from a given base name
    */
@@ -369,7 +369,7 @@ public class LemmaDataSubGenerator {
     _builder.append("Collection");
     return _builder.toString();
   }
-  
+
   @Pure
   public ArrayList<String> getTransMsgs() {
     return this.transMsgs;

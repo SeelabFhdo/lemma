@@ -49,15 +49,15 @@ public class TransformToLemmaHandler extends AbstractHandler {
    */
   private static class SchemasParsingResult {
     private List<Schema> schemas = CollectionLiterals.<Schema>emptyList();
-    
+
     private String name = "";
-    
+
     private String namespace = "";
-    
+
     private String documentation = "";
-    
+
     private Protocol protocol;
-    
+
     /**
      * Constructor from Schema instance
      */
@@ -82,7 +82,7 @@ public class TransformToLemmaHandler extends AbstractHandler {
         this.documentation = schema.getDoc();
       }
     }
-    
+
     /**
      * Constructor from Protocol instance
      */
@@ -97,12 +97,12 @@ public class TransformToLemmaHandler extends AbstractHandler {
       this.protocol = protocol;
     }
   }
-  
+
   /**
    * Current shell
    */
   private static final Shell SHELL = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-  
+
   /**
    * Execute handler
    */
@@ -187,7 +187,7 @@ public class TransformToLemmaHandler extends AbstractHandler {
     }
     return null;
   }
-  
+
   /**
    * Parse Avro schemas from IFile
    */
@@ -232,14 +232,14 @@ public class TransformToLemmaHandler extends AbstractHandler {
     }
     return _switchResult;
   }
-  
+
   /**
    * Check if the given IFile is expected to represent an Avro protocol depending on its extension
    */
   private boolean isProtocol(final IFile file) {
     return LemmaUiUtils.hasExtension(file, Util.PROTOCOL_FILE_EXTENSION);
   }
-  
+
   /**
    * Display Avro-to-LEMMA dialog to user and return the results
    */
@@ -266,7 +266,7 @@ public class TransformToLemmaHandler extends AbstractHandler {
     }
     return _switchResult;
   }
-  
+
   /**
    * Display LEMMA paths specification dialog to user and return the results
    */
@@ -286,7 +286,7 @@ public class TransformToLemmaHandler extends AbstractHandler {
     }
     return _switchResult;
   }
-  
+
   /**
    * Generate LEMMA models
    */
@@ -314,7 +314,7 @@ public class TransformToLemmaHandler extends AbstractHandler {
     }
     return writtenProjectRelativeFilepaths;
   }
-  
+
   /**
    * Retrieve the full path of a model kind from a list of model kind paths
    */
@@ -332,7 +332,7 @@ public class TransformToLemmaHandler extends AbstractHandler {
     }
     return _elvis;
   }
-  
+
   /**
    * Generate LEMMA models from the given source, which may either be a Protocol instance or a
    * list of Avro schemas
@@ -371,7 +371,7 @@ public class TransformToLemmaHandler extends AbstractHandler {
     }
     return _xtrycatchfinallyexpression;
   }
-  
+
   /**
    * Retrieve the project-relative path of a model kind from a list of model kind paths
    */
@@ -389,7 +389,7 @@ public class TransformToLemmaHandler extends AbstractHandler {
     }
     return _elvis;
   }
-  
+
   /**
    * Write string contents to the given file path. Returns true if the file path and the contents
    * are not empty.
@@ -405,7 +405,7 @@ public class TransformToLemmaHandler extends AbstractHandler {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Serialize a LEMMA data or mapping model to the given file path. Returns true if the file path
    * and the contents extracted from the model's root are not empty.

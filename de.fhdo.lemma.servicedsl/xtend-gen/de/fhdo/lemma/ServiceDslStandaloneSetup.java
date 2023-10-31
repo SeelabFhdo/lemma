@@ -3,6 +3,10 @@
  */
 package de.fhdo.lemma;
 
+import com.google.inject.Injector;
+import de.fhdo.lemma.service.ServicePackage;
+import org.eclipse.emf.ecore.EPackage;
+
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.
  */
@@ -10,5 +14,15 @@ package de.fhdo.lemma;
 public class ServiceDslStandaloneSetup extends ServiceDslStandaloneSetupGenerated {
   public static void doSetup() {
     new ServiceDslStandaloneSetup().createInjectorAndDoEMFRegistration();
+  }
+  
+  /**
+   * NOTE: This overwritten method is necessary in order to register stuff like "DataModel" etc. for the language server correctly. See
+   * https://www.eclipse.org/forums/index.php/t/1077902/
+   */
+  @Override
+  public void register(final Injector injector) {
+    EPackage.Registry.INSTANCE.put(ServicePackage.eINSTANCE.getNsURI(), ServicePackage.eINSTANCE);
+    super.register(injector);
   }
 }

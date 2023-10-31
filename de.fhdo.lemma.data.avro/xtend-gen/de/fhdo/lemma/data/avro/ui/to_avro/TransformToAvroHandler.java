@@ -59,25 +59,25 @@ public class TransformToAvroHandler extends AbstractHandler {
    */
   private static class SelectElementsDialogResult {
     private List<? extends EObject> elements;
-    
+
     private String protocolName;
-    
+
     private String protocolDocumentation;
-    
+
     public SelectElementsDialogResult(final LemmaToAvroDialog dialog) {
       this.elements = dialog.getSelectedElements();
       this.protocolName = dialog.getProtocolName();
       this.protocolDocumentation = dialog.getProtocolDocumentation();
     }
   }
-  
+
   /**
    * Current shell
    */
   private static final Shell SHELL = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-  
+
   private boolean intermediateDataModelTransformationExceptionOccurred;
-  
+
   /**
    * Execute handler
    */
@@ -105,7 +105,7 @@ public class TransformToAvroHandler extends AbstractHandler {
     }
     return null;
   }
-  
+
   /**
    * Trigger Avro generation from the given IFile which must comprise an intermediate data model
    * in the XMI format
@@ -113,7 +113,7 @@ public class TransformToAvroHandler extends AbstractHandler {
   private Object triggerAvroGeneration(final IFile intermediateDataModelFile) {
     return this.triggerAvroGeneration(intermediateDataModelFile, this.asXmiResource(intermediateDataModelFile));
   }
-  
+
   /**
    * Trigger Avro generation for the given IFile and intermediate data model XMI resource
    */
@@ -146,7 +146,7 @@ public class TransformToAvroHandler extends AbstractHandler {
     }
     return null;
   }
-  
+
   /**
    * Load given IFile as XMI resource
    */
@@ -177,7 +177,7 @@ public class TransformToAvroHandler extends AbstractHandler {
     }
     return _xtrycatchfinallyexpression;
   }
-  
+
   /**
    * Get root of given XMI resource as IntermediateDataModel
    */
@@ -201,7 +201,7 @@ public class TransformToAvroHandler extends AbstractHandler {
     }
     return _xtrycatchfinallyexpression;
   }
-  
+
   /**
    * Get the selection of source LEMMA elements to be transformed to Avro schemas as well as the
    * file path for the derived Avro schema specification file from the user
@@ -230,7 +230,7 @@ public class TransformToAvroHandler extends AbstractHandler {
     }
     return Pair.<TransformToAvroHandler.SelectElementsDialogResult, String>of(selectResult, avroSchemaFilepath);
   }
-  
+
   /**
    * Let the user select the source LEMMA elements to be transformed to Avro schemas
    */
@@ -247,7 +247,7 @@ public class TransformToAvroHandler extends AbstractHandler {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Let the user specify the file path for the target Avro schema specification file
    */
@@ -268,7 +268,7 @@ public class TransformToAvroHandler extends AbstractHandler {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Perform Avro schema generation from user input
    */
@@ -287,7 +287,7 @@ public class TransformToAvroHandler extends AbstractHandler {
     }
     return true;
   }
-  
+
   /**
    * Generate Avro schemas from a list of LEMMA model elements
    */
@@ -316,7 +316,7 @@ public class TransformToAvroHandler extends AbstractHandler {
     }
     return schemas;
   }
-  
+
   /**
    * Generate Avro schemas from single LEMMA model element
    */
@@ -353,7 +353,7 @@ public class TransformToAvroHandler extends AbstractHandler {
     };
     return IterableExtensions.<Schema>toList(IterableExtensions.<Schema>filter(schemas, _function));
   }
-  
+
   /**
    * Serialize a list of Avro schemas to a file
    */
@@ -379,7 +379,7 @@ public class TransformToAvroHandler extends AbstractHandler {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Generate an Avro protocol from the given list of Avro schemas
    */
@@ -388,7 +388,7 @@ public class TransformToAvroHandler extends AbstractHandler {
     final String namespace = LemmaUtils.getQualifyingParts(protocolName);
     return new AvroGenerator().toProtocol(schemas, name, protocolDocumentation, namespace);
   }
-  
+
   /**
    * Serialize Avro protocol to a file
    */
@@ -399,7 +399,7 @@ public class TransformToAvroHandler extends AbstractHandler {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Transform the given IFile which must comprise a LEMMA data model into the corresponding
    * intermediate representation and then trigger Avro generation for this representation
@@ -424,7 +424,7 @@ public class TransformToAvroHandler extends AbstractHandler {
       TransformToAvroHandler.SHELL.getDisplay(), 
       false, _function, _function_1, _function_2, _function_3);
   }
-  
+
   /**
    * Catch exceptions occurred during the intermediate transformation of the selected LEMMA data
    * model
@@ -440,7 +440,7 @@ public class TransformToAvroHandler extends AbstractHandler {
     Util.showError("Avro Schema Transformation Error", _plus);
     return false;
   }
-  
+
   /**
    * Trigger Avro generation for the successfully transformed intermediate LEMMA data model
    */

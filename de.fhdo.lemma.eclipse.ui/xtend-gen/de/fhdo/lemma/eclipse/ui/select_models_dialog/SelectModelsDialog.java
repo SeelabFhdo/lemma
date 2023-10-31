@@ -49,20 +49,20 @@ import org.eclipse.xtext.xbase.lib.Pure;
 @SuppressWarnings("all")
 public class SelectModelsDialog extends TitleAreaDialog {
   private static final int MIN_DIALOG_WIDTH = 500;
-  
+
   private static final int MIN_DIALOG_HEIGHT = 250;
-  
+
   private static final int CONTINUE_WITH_ALL = 2;
-  
+
   private AbstractUiModelTransformationStrategy strategy;
-  
+
   private Map<IProject, List<ModelFile>> inputModelFiles;
-  
+
   private TreeViewer treeViewer;
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private List<ModelFile> selectedModelFiles = CollectionLiterals.<ModelFile>newArrayList();
-  
+
   /**
    * Constructor
    */
@@ -77,7 +77,7 @@ public class SelectModelsDialog extends TitleAreaDialog {
     this.strategy = strategy;
     this.inputModelFiles = inputModelFiles;
   }
-  
+
   /**
    * OK button was pressed
    */
@@ -92,7 +92,7 @@ public class SelectModelsDialog extends TitleAreaDialog {
     }
     this.filterSelectedModelFilesForErrorsAndContinue();
   }
-  
+
   /**
    * Helper to filer selected model files for errors and leave the dialog for the next step if
    * there is at least one selected model without errors
@@ -112,7 +112,7 @@ public class SelectModelsDialog extends TitleAreaDialog {
       super.okPressed();
     }
   }
-  
+
   /**
    * Helper method to get selected files from tree viewer
    */
@@ -126,7 +126,7 @@ public class SelectModelsDialog extends TitleAreaDialog {
     };
     return IteratorExtensions.<ModelFile>toList(IteratorExtensions.<Object, ModelFile>map(IteratorExtensions.<Object>filter(iter, _function), _function_1));
   }
-  
+
   /**
    * Create dialog (to be called after constructor and before open())
    */
@@ -152,7 +152,7 @@ public class SelectModelsDialog extends TitleAreaDialog {
     final String message = _elvis_1;
     this.setMessage(message, IMessageProvider.INFORMATION);
   }
-  
+
   /**
    * Internal callback for dialog area creation
    */
@@ -172,7 +172,7 @@ public class SelectModelsDialog extends TitleAreaDialog {
     }
     return area;
   }
-  
+
   /**
    * Create buttons for the button bar
    */
@@ -182,7 +182,7 @@ public class SelectModelsDialog extends TitleAreaDialog {
     this.createButton(parent, SelectModelsDialog.CONTINUE_WITH_ALL, "Select all models and continue", false);
     this.createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
   }
-  
+
   /**
    * Catch button press
    */
@@ -200,7 +200,7 @@ public class SelectModelsDialog extends TitleAreaDialog {
         break;
     }
   }
-  
+
   /**
    * "Continue with all" was pressed
    */
@@ -208,7 +208,7 @@ public class SelectModelsDialog extends TitleAreaDialog {
     this.selectedModelFiles = IterableExtensions.<ModelFile>toList(Iterables.<ModelFile>concat(this.inputModelFiles.values()));
     this.filterSelectedModelFilesForErrorsAndContinue();
   }
-  
+
   /**
    * Flag to indicate that dialog is resizable
    */
@@ -216,7 +216,7 @@ public class SelectModelsDialog extends TitleAreaDialog {
   public boolean isResizable() {
     return true;
   }
-  
+
   /**
    * Initial size
    */
@@ -227,7 +227,7 @@ public class SelectModelsDialog extends TitleAreaDialog {
     int _max_1 = Math.max(this.convertVerticalDLUsToPixels(SelectModelsDialog.MIN_DIALOG_HEIGHT), shellSize.y);
     return new Point(_max, _max_1);
   }
-  
+
   /**
    * Create tree viewer for dialog area
    */
@@ -294,7 +294,7 @@ public class SelectModelsDialog extends TitleAreaDialog {
     });
     this.treeViewer.setInput(this.inputModelFiles);
   }
-  
+
   /**
    * Create key for tree viewer icons
    */
@@ -320,7 +320,7 @@ public class SelectModelsDialog extends TitleAreaDialog {
     };
     modelFileTypeDescriptions.forEach(_function);
   }
-  
+
   @Pure
   public List<ModelFile> getSelectedModelFiles() {
     return this.selectedModelFiles;

@@ -30,11 +30,11 @@ import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 @SuppressWarnings("all")
 public class SelectModelsHandler extends AbstractHandler {
   private final Shell SHELL = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-  
+
   private AbstractUiModelTransformationStrategy transformationStrategy;
-  
+
   private Map<IProject, List<IFile>> inputModelFiles;
-  
+
   /**
    * Constructor
    */
@@ -45,7 +45,7 @@ public class SelectModelsHandler extends AbstractHandler {
     this.transformationStrategy = transformationStrategy;
     this.inputModelFiles = inputModelFiles;
   }
-  
+
   /**
    * Execute handler
    */
@@ -79,7 +79,7 @@ public class SelectModelsHandler extends AbstractHandler {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Helper to convert the values of a map of source model files to ModelFile instances
    */

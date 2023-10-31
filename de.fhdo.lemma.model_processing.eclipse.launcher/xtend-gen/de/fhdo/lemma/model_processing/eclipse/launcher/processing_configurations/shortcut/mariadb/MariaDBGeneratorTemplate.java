@@ -26,7 +26,7 @@ public final class MariaDBGeneratorTemplate extends AbstractMariaDBGeneratorTemp
       super(parentShell, project, file, MariaDBGeneratorConstants.GENERATOR_LONG_NAME, 
         MariaDBGeneratorConstants.GENERATOR_SHORT_NAME);
     }
-    
+
     /**
      * Addendum for generator long name as part of the label for the generator executable path's
      * text field
@@ -35,7 +35,7 @@ public final class MariaDBGeneratorTemplate extends AbstractMariaDBGeneratorTemp
     public final String getGeneratorExecutableLabelTextAddendum() {
       return "path";
     }
-    
+
     /**
      * Create the dialog
      */
@@ -52,7 +52,7 @@ public final class MariaDBGeneratorTemplate extends AbstractMariaDBGeneratorTemp
       this.setMessage(_plus);
     }
   }
-  
+
   /**
    * Constructor
    */
@@ -60,7 +60,7 @@ public final class MariaDBGeneratorTemplate extends AbstractMariaDBGeneratorTemp
     super(ProcessorExecutableType.LOCAL_JAVA_PROGRAM, parentShell, ("MariaDB artifact " + 
       "generation"), project, file);
   }
-  
+
   /**
    * Return the dialog for template completion
    */

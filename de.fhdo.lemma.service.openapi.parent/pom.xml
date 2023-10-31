@@ -67,7 +67,7 @@
         <service-extractor-version>${project.version}</service-extractor-version>
         <technology-metamodel-version>${project.version}</technology-metamodel-version>
         <technology-extractor-version>${project.version}</technology-extractor-version>
-        <tycho-version>2.3.0</tycho-version>
+        <tycho-version>2.6.0</tycho-version>
         <junit-version>4.13</junit-version>
         <maven-site-plugin-version>3.9.1</maven-site-plugin-version>
         <xtext-version>2.25.0</xtext-version>

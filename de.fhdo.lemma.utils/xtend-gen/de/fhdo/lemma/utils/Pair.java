@@ -9,7 +9,7 @@ import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 @SuppressWarnings("all")
 public class Pair<T extends Object> {
   private List<T> elements = CollectionLiterals.<T>newArrayList();
-  
+
   /**
    * Constructor
    */
@@ -17,7 +17,7 @@ public class Pair<T extends Object> {
     this.elements.add(element1);
     this.elements.add(element2);
   }
-  
+
   /**
    * Get element at index
    */

@@ -37,13 +37,13 @@ import org.eclipse.xtext.xbase.lib.ListExtensions;
 public class LiveValidationCapableXtextEditor extends XtextEditor {
   @Inject
   private IResourceValidator resourceValidator;
-  
+
   @Inject
   private IssueResolutionProvider issueResolutionProvider;
-  
+
   @Inject
   private MarkerTypeProvider markerTypeProvider;
-  
+
   /**
    * Add markers for the received validation results (Live Validation issues)
    */
@@ -68,7 +68,7 @@ public class LiveValidationCapableXtextEditor extends XtextEditor {
     final AnnotationIssueProcessor annotationIssueProcessor = new AnnotationIssueProcessor(_document, _annotationModel, this.issueResolutionProvider);
     annotationIssueProcessor.processIssues(xtextIssues, this.getProgressMonitor());
   }
-  
+
   /**
    * Perform a regular validation based on validators built into modeling languages on the current
    * document
@@ -99,7 +99,7 @@ public class LiveValidationCapableXtextEditor extends XtextEditor {
       }
     }, _function);
   }
-  
+
   /**
    * Helper to transform a Live Validation issue of type IssueDiagnostic to an Xtext issue of type
    * Issue

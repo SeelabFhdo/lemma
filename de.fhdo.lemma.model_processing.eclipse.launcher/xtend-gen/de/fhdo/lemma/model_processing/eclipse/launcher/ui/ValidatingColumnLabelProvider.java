@@ -20,12 +20,12 @@ public abstract class ValidatingColumnLabelProvider<T extends Object> extends Co
   public final String getText(final Object element) {
     return this.getElementText(((T) element));
   }
-  
+
   /**
    * Get element text (typed form)
    */
   public abstract String getElementText(final T element);
-  
+
   /**
    * Get element image. Returns an Image instance for FieldDecorationRegistry.DEC_ERROR in case
    * validate() threw an IllegalArgumentException, thereby indicating that the validation failed.
@@ -50,13 +50,13 @@ public abstract class ValidatingColumnLabelProvider<T extends Object> extends Co
     }
     return _xtrycatchfinallyexpression;
   }
-  
+
   /**
    * Typed element validation. The method is expected to throw an IllegalArgumentException with a
    * descriptive error message in case the element is invalid.
    */
   public abstract void validate(final T element) throws IllegalArgumentException;
-  
+
   /**
    * Get element tooltip. Returns the exception message in case validate() threw an
    * IllegalArgumentException, thereby indicating that the validation failed. Returns null in case

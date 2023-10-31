@@ -56,7 +56,7 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 @SuppressWarnings("all")
 public final class LemmaUtils {
   private static final String PLATFORM_RESOURCE_SCHEME = "platform:/resource";
-  
+
   /**
    * Get the current version of LEMMA as a printable String
    */
@@ -97,7 +97,7 @@ public final class LemmaUtils {
       }
     }
   }
-  
+
   /**
    * Get direct contents, i.e., EObjects that are direct children on the first level, of a
    * resource represented by an import URI that points to a file
@@ -123,7 +123,7 @@ public final class LemmaUtils {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Get an Ecore Resource object from a given URI
    */
@@ -141,14 +141,14 @@ public final class LemmaUtils {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Get absolute file URI for a given relative URI based on the path of the given Ecore resource
    */
   public static String absoluteFileUriFromResourceBase(final String relativeUri, final Resource resource) {
     return LemmaUtils.convertToAbsoluteFileUri(relativeUri, LemmaUtils.absolutePath(resource));
   }
-  
+
   /**
    * Get absolute path for a given Ecore resource
    */
@@ -170,14 +170,14 @@ public final class LemmaUtils {
     }
     return _xtrycatchfinallyexpression;
   }
-  
+
   /**
    * Decode an URI
    */
   private static String decodeUri(final String uri) {
     return URLDecoder.decode(uri, StandardCharsets.UTF_8);
   }
-  
+
   /**
    * Get absolute path for a given Ecore resource when there is no Eclipse workspace available.
    */
@@ -189,7 +189,7 @@ public final class LemmaUtils {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Convert a platform URI to an absolute file path
    */
@@ -215,7 +215,7 @@ public final class LemmaUtils {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Get root of an imported model
    */
@@ -232,7 +232,7 @@ public final class LemmaUtils {
     }
     return ((T) modelRoot);
   }
-  
+
   /**
    * Remove extension from filename and return filename without extension. The extension starts at
    * the last occurrence of a dot (".") in the filename.
@@ -243,7 +243,7 @@ public final class LemmaUtils {
     }
     return filename.substring(0, filename.lastIndexOf("."));
   }
-  
+
   /**
    * Join segments to a path specifier separated by the OS-specific file separator. This method is
    * also capable of dealing with segments that themselves contain OS-specific file separators.
@@ -274,14 +274,14 @@ public final class LemmaUtils {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Check if a URI exhibits the "platform:/resource" scheme
    */
   public static boolean hasPlatformResourceScheme(final String uri) {
     return ((uri != null) && uri.startsWith(LemmaUtils.PLATFORM_RESOURCE_SCHEME));
   }
-  
+
   /**
    * Convert a relative file path or URI to an absolute file path that is based on an absolute
    * base path
@@ -305,7 +305,7 @@ public final class LemmaUtils {
     String _plus = (absoluteBaseFolder + File.separator);
     return (_plus + relativeFilePathWithoutScheme);
   }
-  
+
   /**
    * Convert a relative file path or URI to a canonical file path that is based on an absolute
    * base path
@@ -319,7 +319,7 @@ public final class LemmaUtils {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Check an import URI for correct case sensitivity
    */
@@ -339,21 +339,21 @@ public final class LemmaUtils {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Check if a path is absolute
    */
   public static boolean representsAbsolutePath(final String path) {
     return Paths.get(path).isAbsolute();
   }
-  
+
   /**
    * Check if a URI exhibits the "file" scheme
    */
   public static boolean isFileUri(final String uri) {
     return ((uri != null) && uri.startsWith("file://"));
   }
-  
+
   /**
    * Add "file" scheme to URI string. If the string already has a scheme, replace it with "file".
    */
@@ -386,7 +386,7 @@ public final class LemmaUtils {
     }
     return _xifexpression_1;
   }
-  
+
   /**
    * Determine scheme of a URI considering OS-specifics
    */
@@ -399,7 +399,7 @@ public final class LemmaUtils {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Helper to determine if a URI starts with a Windows drive letter
    */
@@ -409,7 +409,7 @@ public final class LemmaUtils {
     }
     return (uri.matches("[A-Z]:\\\\.*") || uri.matches("[A-Z]:/([^/].*)?"));
   }
-  
+
   /**
    * Helper to determine if we're on Windows
    */
@@ -417,7 +417,7 @@ public final class LemmaUtils {
     final String osName = System.getProperty("os.name");
     return osName.toLowerCase().startsWith("windows");
   }
-  
+
   /**
    * Remove "file" scheme from URI string, leaving any preceding slashes untouched
    */
@@ -445,7 +445,7 @@ public final class LemmaUtils {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Get IFile object from Resource
    */
@@ -492,7 +492,7 @@ public final class LemmaUtils {
     final IFile file = _xifexpression;
     return file;
   }
-  
+
   /**
    * Convenience method to convert a relative path or URI to an absolute "file" URI
    */
@@ -500,7 +500,7 @@ public final class LemmaUtils {
     final String absoluteFilePath = LemmaUtils.convertToAbsolutePath(LemmaUtils.removeFileUri(relativeFilePathOrUri), absoluteBaseFilePath);
     return LemmaUtils.convertToFileUri(absoluteFilePath);
   }
-  
+
   /**
    * Convert a path, which points to a file in a workspace's project, to an absolute file URI.
    * Besides the containing project, neither the file nor any of its parent paths need to exist.
@@ -567,7 +567,7 @@ public final class LemmaUtils {
     }
     return LemmaUtils.convertToFileUri(absolutePath);
   }
-  
+
   /**
    * Convert the path of a workspace resource into a file path with adapted separators. The
    * resource is considered to belong to the given project and the resulting file path is
@@ -580,7 +580,7 @@ public final class LemmaUtils {
     String _string = project.getLocation().makeAbsolute().toString();
     return (_string + resourceFilePath);
   }
-  
+
   /**
    * Relativize the given to-file from the given from-file. In fact, this utility method answers
    * the question "How do I get from the given from-file to the given to-file by means of a
@@ -607,7 +607,7 @@ public final class LemmaUtils {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Remove prefix from String. If allOccurrences is set to true, remove all occurrences of a
    * prefix from String.
@@ -627,14 +627,14 @@ public final class LemmaUtils {
     }
     return noPrefixes;
   }
-  
+
   /**
    * Retrieve the absolute path of an IFile
    */
   public static String getAbsolutePath(final IFile file) {
     return file.getRawLocation().makeAbsolute().toString();
   }
-  
+
   /**
    * Retrieve the absolute path of a ComplexTypeImport
    */
@@ -642,7 +642,7 @@ public final class LemmaUtils {
     return LemmaUtils.removeFileUri(LemmaUtils.absoluteFileUriFromResourceBase(
       complexTypeImport.getImportURI(), complexTypeImport.eResource()));
   }
-  
+
   /**
    * Check if an imported file represented by its URI exists. The URI may be project-relative or
    * absolute.
@@ -659,7 +659,7 @@ public final class LemmaUtils {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Detect cycles in inheritance relationships of arbitrary EObjects. The method takes a
    * functional argument to retrieve the next super concept.
@@ -679,7 +679,7 @@ public final class LemmaUtils {
     }
     return false;
   }
-  
+
   /**
    * Filter a list of imports by the types of the root models. It will collect and return all
    * imports from the list, whose resources' root models are of one of the given types.
@@ -709,7 +709,7 @@ public final class LemmaUtils {
     final Iterable<IMPORT_CONCEPT> validImports = IterableExtensions.<IMPORT_CONCEPT>filter(allImports, _function);
     return validImports;
   }
-  
+
   /**
    * Calculate parts of a concept's name relative to another concept's name. Take for example the
    * following excerpt in Data DSL:
@@ -766,7 +766,7 @@ public final class LemmaUtils {
       return CollectionLiterals.<String>newArrayList(IterableExtensions.<String>last(conceptToNameQualifyingParts));
     }
   }
-  
+
   /**
    * Build scope for possibly imported concepts with relative qualified names. Such a concept may
    * either originate from the model (it is then considered "local") or be imported into the model
@@ -821,7 +821,7 @@ public final class LemmaUtils {
     return LemmaUtils.<IMPORT_CONCEPT, CONTAINER, ROOT_CONCEPT>getScopeWithRelativeQualifiedNames(
       getImportedConcepts.apply(rootModelConcept), getConceptNameParts, container, containerNameParts, rootConceptClazz, predicates);
   }
-  
+
   /**
    * Convenience method to build a scope with relative qualified names if necessary. Predicates
    * may be used to exclude concepts from the scope. All predicates must apply on a concept to
@@ -869,7 +869,7 @@ public final class LemmaUtils {
     IterableExtensions.<CONCEPT_TO_NAME>filter(conceptsToName, _function).forEach(_function_1);
     return MapBasedScope.createScope(IScope.NULLSCOPE, scopeElements);
   }
-  
+
   /**
    * Get index of first duplicate entry from a list, or -1 if list does not contain duplicates
    */
@@ -914,7 +914,7 @@ public final class LemmaUtils {
     }
     return Integer.valueOf((-1));
   }
-  
+
   /**
    * Merge an arbitrary number of scopes by building a new scope that contains all elements of the
    * given scopes
@@ -933,7 +933,7 @@ public final class LemmaUtils {
     ((List<IScope>)Conversions.doWrapArray(scopes)).forEach(_function);
     return Scopes.scopeFor(mergedScopeElements);
   }
-  
+
   /**
    * Check that an imported resource is of a given type
    */
@@ -948,7 +948,7 @@ public final class LemmaUtils {
     }
     return ArrayExtensions.contains(rootElement.getClass().getInterfaces(), expectedRootType);
   }
-  
+
   /**
    * Get the simple name of a qualified string. This is the last name segment of the string. For
    * instance, the simple name of
@@ -966,7 +966,7 @@ public final class LemmaUtils {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Get the qualifying parts of a qualified string. These are all qualifier segments of the
    * string, without the last name segment. For instance, the qualifying parts of
@@ -984,7 +984,7 @@ public final class LemmaUtils {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Get the port of an address like a URI
    */

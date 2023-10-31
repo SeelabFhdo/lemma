@@ -1,7 +1,5 @@
 package de.fhdo.lemma.typechecking.complex_types.data_structures;
 
-import de.fhdo.lemma.typechecking.complex_types.data_structures.NodePair;
-import de.fhdo.lemma.typechecking.complex_types.data_structures.NodeSeriesBuilder;
 import java.util.ArrayList;
 import java.util.List;
 import org.eclipse.xtend.lib.annotations.AccessorType;
@@ -23,19 +21,19 @@ public class NodeSeries {
    */
   @Accessors
   private NodePair parentPair;
-  
+
   /**
    * Index of the series in the parent pair's child series
    */
   @Accessors
   private int childIndex;
-  
+
   /**
    * List of child pairs being part of the series
    */
   @Accessors(AccessorType.PUBLIC_GETTER)
   private final ArrayList<NodePair> childPairs = CollectionLiterals.<NodePair>newArrayList();
-  
+
   /**
    * Flag to indicate whether all child pairs of the series (and hence the series itself) are
    * compatible or not. Initially, the flag is null, which communicates that the compatibility of
@@ -43,7 +41,7 @@ public class NodeSeries {
    * the primitive type "boolean".
    */
   private Boolean compatible;
-  
+
   /**
    * Convenience method to build all node series for a node pair (wrapper for
    * {@link NodeSeriesBuilder})
@@ -51,13 +49,13 @@ public class NodeSeries {
   public static List<NodeSeries> buildAllSeriesFor(final NodePair nodePair) {
     return NodeSeriesBuilder.buildNodeSeries(nodePair);
   }
-  
+
   /**
    * Constructor
    */
   public NodeSeries() {
   }
-  
+
   /**
    * Constructor with initial pair
    */
@@ -65,7 +63,7 @@ public class NodeSeries {
     this.parentPair = parentPair;
     this.addChildPair(initialPair);
   }
-  
+
   /**
    * Add node pair to the series
    */
@@ -78,7 +76,7 @@ public class NodeSeries {
     }
     return _xblockexpression;
   }
-  
+
   /**
    * Is this series the last one in its parent node?
    */
@@ -88,7 +86,7 @@ public class NodeSeries {
     int _minus = (_size - 1);
     return (this.childIndex == _minus);
   }
-  
+
   /**
    * Set compatibility of series.
    * 
@@ -108,39 +106,39 @@ public class NodeSeries {
     }
     this.compatible = compatible;
   }
-  
+
   /**
    * Has node series's compatibility been decided?
    */
   public boolean compatibilityUndecided() {
     return (this.compatible == null);
   }
-  
+
   /**
    * Has the node series's compatibility been decided and is it compatible or not, eventually?
    */
   public boolean isCompatible() {
     return ((!this.compatibilityUndecided()) && (this.compatible == Boolean.valueOf(true)));
   }
-  
+
   @Pure
   public NodePair getParentPair() {
     return this.parentPair;
   }
-  
+
   public void setParentPair(final NodePair parentPair) {
     this.parentPair = parentPair;
   }
-  
+
   @Pure
   public int getChildIndex() {
     return this.childIndex;
   }
-  
+
   public void setChildIndex(final int childIndex) {
     this.childIndex = childIndex;
   }
-  
+
   @Pure
   public ArrayList<NodePair> getChildPairs() {
     return this.childPairs;

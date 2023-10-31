@@ -34,22 +34,22 @@ public class ServerConnection {
       LemmaUiUtils.<LiveValidationCapableXtextEditor>getOpenEditorsOfType(LiveValidationCapableXtextEditor.class).forEach(_function);
     }
   }
-  
+
   private static final String WORKSPACE_URI = ResourcesPlugin.getWorkspace().getRoot().getLocationURI().toString();
-  
+
   private static ServerConnection INSTANCE;
-  
+
   private ServerConnection.LiveValidationClient serverConnection;
-  
+
   private boolean isConnected;
-  
+
   private String connectedHostname = "";
-  
+
   private int connectedPort = (-1);
-  
+
   private ServerConnection() {
   }
-  
+
   /**
    * Get singleton instance
    */
@@ -60,7 +60,7 @@ public class ServerConnection {
     }
     return ServerConnection.INSTANCE;
   }
-  
+
   /**
    * Connect to server
    */
@@ -97,7 +97,7 @@ public class ServerConnection {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Send validation request to server
    */
@@ -105,7 +105,7 @@ public class ServerConnection {
     this.checkIsConnected();
     ServerConnection.INSTANCE.serverConnection.validate(documentUri, sourceCode);
   }
-  
+
   /**
    * Disconnect from server
    */
@@ -121,7 +121,7 @@ public class ServerConnection {
     }
     return _xblockexpression;
   }
-  
+
   /**
    * Convenience method to verify that a server connection wasn't already established
    */
@@ -131,7 +131,7 @@ public class ServerConnection {
         "already established"));
     }
   }
-  
+
   /**
    * Convenience method to verify that a server connection has been established
    */
@@ -141,15 +141,15 @@ public class ServerConnection {
         "established first"));
     }
   }
-  
+
   public boolean isConnected() {
     return ServerConnection.INSTANCE.isConnected;
   }
-  
+
   public String getConnectedHostname() {
     return ServerConnection.INSTANCE.connectedHostname;
   }
-  
+
   public int getConnectedPort() {
     return ServerConnection.INSTANCE.connectedPort;
   }

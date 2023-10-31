@@ -45,9 +45,9 @@ import org.eclipse.xtext.xbase.lib.Pair;
 @SuppressWarnings("all")
 public final class ValueColumnEditingSupport extends ObservableValueEditingSupport<Argument, String, String> {
   private final ArgumentsTable argumentsTable;
-  
+
   private DataBindingContext dataBindingContext;
-  
+
   /**
    * Constructor
    */
@@ -56,7 +56,7 @@ public final class ValueColumnEditingSupport extends ObservableValueEditingSuppo
     this.argumentsTable = argumentsTable;
     this.dataBindingContext = dataBindingContext;
   }
-  
+
   /**
    * Enable/disable column editing
    */
@@ -64,7 +64,7 @@ public final class ValueColumnEditingSupport extends ObservableValueEditingSuppo
   public final boolean canEdit(final Object element) {
     return this.argumentsTable.getEnabled();
   }
-  
+
   /**
    * Return the column's CellEditor depending on the type of the edited argument
    */
@@ -150,7 +150,7 @@ public final class ValueColumnEditingSupport extends ObservableValueEditingSuppo
     }
     return _switchResult;
   }
-  
+
   /**
    * Return the IObservableValue of the column's CellEditor
    */
@@ -171,7 +171,7 @@ public final class ValueColumnEditingSupport extends ObservableValueEditingSuppo
     }
     return _switchResult;
   }
-  
+
   /**
    * Return the IObservableValue of the Bean element
    */
@@ -179,7 +179,7 @@ public final class ValueColumnEditingSupport extends ObservableValueEditingSuppo
   public final IObservableValue<String> doCreateElementObservable(final Argument argument, final ViewerCell cell) {
     return BeanProperties.<Argument, String>value(Argument.class, "value", null).observe(argument);
   }
-  
+
   /**
    * Bind the CellEditor's and Bean element's IObservableValues
    */

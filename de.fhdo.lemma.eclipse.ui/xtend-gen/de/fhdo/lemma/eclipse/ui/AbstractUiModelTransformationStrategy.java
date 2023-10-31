@@ -19,7 +19,7 @@ import org.eclipse.xtext.xbase.lib.Pair;
 @SuppressWarnings("all")
 public abstract class AbstractUiModelTransformationStrategy {
   private AbstractIntermediateModelTransformationStrategy<?, ?> transformationStrategy;
-  
+
   /**
    * Return the transformation strategy of the concrete subclass. Note, that this method mimics
    * the behavior of a Singleton. That is, the instance of the transformation strategy is created
@@ -31,17 +31,17 @@ public abstract class AbstractUiModelTransformationStrategy {
     }
     return this.transformationStrategy;
   }
-  
+
   /**
    * Get string prefix of the model type, e.g., "service" or "operation"
    */
   public abstract String getModelTypePrefix();
-  
+
   /**
    * Get model types' ordering for displaying purposes
    */
   public abstract LinkedList<String> getModelTypeDisplayOrdering();
-  
+
   /**
    * Sort a list of model files according to their ordering intended for transformation. The
    * result will be a new list, i.e., the given list of model files will not be changed.
@@ -61,18 +61,18 @@ public abstract class AbstractUiModelTransformationStrategy {
     });
     return orderedModelFiles;
   }
-  
+
   /**
    * Get model types' ordering for transformation
    */
   public abstract LinkedList<String> getModelTypeTransformationOrdering();
-  
+
   /**
    * Get file extensions of the model type. Files being found in the workspace that exhibit one of
    * the extensions are treated as source files for the model transformations.
    */
   public abstract List<String> getModelFileTypeExtensions();
-  
+
   /**
    * Get descriptions of all relevant model file types including icon, description string, and
    * extensions. Note, that the descriptions may contain additional file types compared to the
@@ -80,47 +80,47 @@ public abstract class AbstractUiModelTransformationStrategy {
    * identifier (the map key).
    */
   public abstract LinkedHashMap<String, ModelFileTypeDescription> getModelFileTypeDescriptions();
-  
+
   /**
    * Get model file type identifier and description by extension
    */
   public abstract Pair<String, ModelFileTypeDescription> getModelFileTypeIdentifierAndDescription(final String fileExtension);
-  
+
   /**
    * Get model file type description by extension
    */
   public abstract ModelFileTypeDescription getModelFileTypeDescription(final String fileExtension);
-  
+
   /**
    * Get title of model selection dialog
    */
   public abstract String getModelSelectionDialogTitle();
-  
+
   /**
    * Get message of model selection dialog
    */
   public abstract String getModelSelectionDialogMessage();
-  
+
   /**
    * Get title of dialog for specifying transformation paths
    */
   public abstract String getSpecifyPathsDialogTitle();
-  
+
   /**
    * Get message of dialog for specifying transformation paths
    */
   public abstract String getSpecifyPathsDialogMessage();
-  
+
   /**
    * Get imported files of a model in their import order and mapped to their import aliases
    */
   public abstract LinkedHashMap<String, IFile> getImportedModelFiles(final ModelFile modelFile);
-  
+
   /**
    * Get default transformation target path for file
    */
   public abstract String getDefaultTransformationTargetPath(final IFile file);
-  
+
   /**
    * Get a new instance of the transformation strategy
    */

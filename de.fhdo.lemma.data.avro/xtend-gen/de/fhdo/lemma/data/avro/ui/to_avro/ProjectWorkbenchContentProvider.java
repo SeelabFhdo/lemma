@@ -16,14 +16,14 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 @SuppressWarnings("all")
 public class ProjectWorkbenchContentProvider extends BaseWorkbenchContentProvider {
   private IProject project;
-  
+
   /**
    * Constructor
    */
   public ProjectWorkbenchContentProvider(final IProject project) {
     this.project = project;
   }
-  
+
   /**
    * Get project elements from workbench
    */
@@ -36,7 +36,7 @@ public class ProjectWorkbenchContentProvider extends BaseWorkbenchContentProvide
     Object _findFirst = IterableExtensions.<Object>findFirst(((Iterable<Object>)Conversions.doWrapArray(elements)), _function);
     return new Object[] { _findFirst };
   }
-  
+
   /**
    * Get IContainer children of a parent workbench element
    */

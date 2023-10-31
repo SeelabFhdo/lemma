@@ -57,40 +57,40 @@ import org.eclipse.xtext.xbase.lib.Pure;
 @SuppressWarnings("all")
 public class FileContainerSelectionDialog extends TitleAreaDialog {
   public static final int NEXT = 2;
-  
+
   public static final int PREVIOUS = 3;
-  
+
   public static final int ABORT = 4;
-  
+
   public static final int RUN_TRANSFORMATIONS = 5;
-  
+
   private static final int MIN_DIALOG_WIDTH = 500;
-  
+
   private static final int MIN_DIALOG_HEIGHT = 250;
-  
+
   private String title;
-  
+
   private String message;
-  
+
   private ModelFile modelFile;
-  
+
   private IResource initialResource;
-  
+
   private IResource initialSelection;
-  
+
   private int currentFileIndex;
-  
+
   private boolean lastFile;
-  
+
   private TreeViewer containerSelectionTree;
-  
+
   private Text filepathField;
-  
+
   private Map<String, ModelFile> alreadySpecifiedPaths;
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private IFile selectedFile;
-  
+
   /**
    * Constructor
    */
@@ -129,7 +129,7 @@ public class FileContainerSelectionDialog extends TitleAreaDialog {
     }
     this.setShellStyle((this.getShellStyle() | SWT.SHEET));
   }
-  
+
   /**
    * Create dialog (to be called after constructor and before open())
    */
@@ -151,7 +151,7 @@ public class FileContainerSelectionDialog extends TitleAreaDialog {
     }
     this.setMessage(_elvis_1, IMessageProvider.INFORMATION);
   }
-  
+
   /**
    * Treat shell closing event like a press of the abort button
    */
@@ -159,7 +159,7 @@ public class FileContainerSelectionDialog extends TitleAreaDialog {
   public void handleShellCloseEvent() {
     this.abortPressed();
   }
-  
+
   /**
    * Create buttons for the button bar
    */
@@ -178,7 +178,7 @@ public class FileContainerSelectionDialog extends TitleAreaDialog {
     }
     _shell.setDefaultButton(_xifexpression);
   }
-  
+
   /**
    * Handle click on the abort button. A click on abort should stop the whole container selection
    * process.
@@ -192,7 +192,7 @@ public class FileContainerSelectionDialog extends TitleAreaDialog {
       this.setReturnCodeAndClose(FileContainerSelectionDialog.ABORT);
     }
   }
-  
+
   /**
    * Handle click on the cancel button
    */
@@ -222,7 +222,7 @@ public class FileContainerSelectionDialog extends TitleAreaDialog {
       this.setReturnCodeAndClose(Window.CANCEL);
     }
   }
-  
+
   /**
    * Handle click on the next or run transformations button
    */
@@ -232,7 +232,7 @@ public class FileContainerSelectionDialog extends TitleAreaDialog {
       this.setReturnCodeAndClose(buttonId);
     }
   }
-  
+
   /**
    * Helper method to set the return code and also close the dialog
    */
@@ -240,7 +240,7 @@ public class FileContainerSelectionDialog extends TitleAreaDialog {
     this.setReturnCode(buttonId);
     this.close();
   }
-  
+
   /**
    * Catch button press
    */
@@ -262,7 +262,7 @@ public class FileContainerSelectionDialog extends TitleAreaDialog {
         break;
     }
   }
-  
+
   /**
    * Get the selected IFile from the input being specified by the user
    */
@@ -375,7 +375,7 @@ public class FileContainerSelectionDialog extends TitleAreaDialog {
     }
     return selectedFile;
   }
-  
+
   /**
    * Create the dialog's content
    */
@@ -393,7 +393,7 @@ public class FileContainerSelectionDialog extends TitleAreaDialog {
     this.selectInitialResource(this.initialResource);
     return area;
   }
-  
+
   /**
    * Create the file container selection tree
    */
@@ -468,7 +468,7 @@ public class FileContainerSelectionDialog extends TitleAreaDialog {
     });
     this.containerSelectionTree.setInput(ResourcesPlugin.getWorkspace());
   }
-  
+
   /**
    * Create input text field for the file path and related labels
    */
@@ -489,7 +489,7 @@ public class FileContainerSelectionDialog extends TitleAreaDialog {
     final Label extensionLabel = new Label(inputContainer, SWT.NULL);
     extensionLabel.setText(".xmi");
   }
-  
+
   /**
    * Select initial resource after the dialog's startup
    */
@@ -515,7 +515,7 @@ public class FileContainerSelectionDialog extends TitleAreaDialog {
     StructuredSelection _structuredSelection = new StructuredSelection(selectionResource);
     this.containerSelectionTree.setSelection(_structuredSelection, true);
   }
-  
+
   /**
    * Flag to indicate that dialog is resizable
    */
@@ -523,7 +523,7 @@ public class FileContainerSelectionDialog extends TitleAreaDialog {
   public boolean isResizable() {
     return true;
   }
-  
+
   /**
    * Initial size
    */
@@ -534,7 +534,7 @@ public class FileContainerSelectionDialog extends TitleAreaDialog {
     int _max_1 = Math.max(this.convertVerticalDLUsToPixels(FileContainerSelectionDialog.MIN_DIALOG_HEIGHT), shellSize.y);
     return new Point(_max, _max_1);
   }
-  
+
   @Pure
   public IFile getSelectedFile() {
     return this.selectedFile;

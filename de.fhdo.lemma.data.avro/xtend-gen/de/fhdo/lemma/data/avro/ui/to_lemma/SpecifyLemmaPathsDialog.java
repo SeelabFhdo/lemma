@@ -65,23 +65,23 @@ public class SpecifyLemmaPathsDialog extends TitleAreaDialog {
   public static class LemmaModelKind {
     @Accessors(AccessorType.PUBLIC_GETTER)
     private Class<? extends EObject> kind;
-    
+
     @Accessors(AccessorType.PUBLIC_GETTER)
     private String name;
-    
+
     @Accessors(AccessorType.PUBLIC_GETTER)
     private String hint;
-    
+
     @Accessors(AccessorType.PUBLIC_GETTER)
     private Image icon;
-    
+
     @Accessors(AccessorType.PUBLIC_GETTER)
     private boolean pathShouldExist;
-    
+
     public String targetPath;
-    
+
     public boolean selectedForTransformation;
-    
+
     /**
      * Constructor
      */
@@ -100,7 +100,7 @@ public class SpecifyLemmaPathsDialog extends TitleAreaDialog {
       this.targetPath = targetPath;
       this.selectedForTransformation = true;
     }
-    
+
     /**
      * Compare with Object
      */
@@ -111,7 +111,7 @@ public class SpecifyLemmaPathsDialog extends TitleAreaDialog {
       }
       return Objects.equal(this.kind, ((SpecifyLemmaPathsDialog.LemmaModelKind) o).kind);
     }
-    
+
     /**
      * Get hash code
      */
@@ -119,58 +119,58 @@ public class SpecifyLemmaPathsDialog extends TitleAreaDialog {
     public int hashCode() {
       return this.kind.hashCode();
     }
-    
+
     @Pure
     public Class<? extends EObject> getKind() {
       return this.kind;
     }
-    
+
     @Pure
     public String getName() {
       return this.name;
     }
-    
+
     @Pure
     public String getHint() {
       return this.hint;
     }
-    
+
     @Pure
     public Image getIcon() {
       return this.icon;
     }
-    
+
     @Pure
     public boolean isPathShouldExist() {
       return this.pathShouldExist;
     }
   }
-  
+
   private static final int MIN_DIALOG_WIDTH = 500;
-  
+
   private static final int MIN_DIALOG_HEIGHT = 250;
-  
+
   private static final int DESELECT_ALL = 2;
-  
+
   private static final int SELECT_ALL = 3;
-  
+
   private static final ResourceManager RESOURCE_MANAGER = new LocalResourceManager(JFaceResources.getResources());
-  
+
   private static final Image CHECKBOX_ACTIVE_ICON = LemmaUiUtils.createImage(SpecifyLemmaPathsDialog.RESOURCE_MANAGER, SpecifyLemmaPathsDialog.class, 
     "checkboxActive.gif");
-  
+
   private static final Image CHECKBOX_INACTIVE_ICON = LemmaUiUtils.createImage(SpecifyLemmaPathsDialog.RESOURCE_MANAGER, SpecifyLemmaPathsDialog.class, 
     "checkboxInactive.gif");
-  
+
   private final ArrayList<SpecifyLemmaPathsDialog.LemmaModelKind> MODEL_KINDS = CollectionLiterals.<SpecifyLemmaPathsDialog.LemmaModelKind>newArrayList();
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private Map<Class<? extends EObject>, Pair<String, String>> modelKindPaths = CollectionLiterals.<Class<? extends EObject>, Pair<String, String>>newHashMap();
-  
+
   private TableViewer tableViewer;
-  
+
   private IProject project;
-  
+
   /**
    * Constructor
    */
@@ -192,14 +192,14 @@ public class SpecifyLemmaPathsDialog extends TitleAreaDialog {
       false, _withFile_3);
     this.MODEL_KINDS.add(_lemmaModelKind_3);
   }
-  
+
   /**
    * Add the given filename to the full path of an IContainer
    */
   private String withFile(final IContainer container, final String filename) {
     return container.getFullPath().append(filename).toString();
   }
-  
+
   /**
    * Create dialog (to be called after constructor and before open())
    */
@@ -210,7 +210,7 @@ public class SpecifyLemmaPathsDialog extends TitleAreaDialog {
     this.setMessage(("Specify target paths for the LEMMA models to be derived from the previously " + 
       "selected Avro schemas"));
   }
-  
+
   /**
    * Internal callback for dialog area creation
    */
@@ -226,7 +226,7 @@ public class SpecifyLemmaPathsDialog extends TitleAreaDialog {
     this.createModelKindTable(container);
     return area;
   }
-  
+
   /**
    * Create model kind table
    */
@@ -238,7 +238,7 @@ public class SpecifyLemmaPathsDialog extends TitleAreaDialog {
     this.createTargetPathColumn();
     this.tableViewer.setInput(this.MODEL_KINDS);
   }
-  
+
   /**
    * Create table viewer
    */
@@ -276,7 +276,7 @@ public class SpecifyLemmaPathsDialog extends TitleAreaDialog {
       }
     });
   }
-  
+
   /**
    * Create checkbox column
    */
@@ -289,7 +289,7 @@ public class SpecifyLemmaPathsDialog extends TitleAreaDialog {
       public String getText(final Object element) {
         return null;
       }
-      
+
       @Override
       public Image getImage(final Object element) {
         Image _xifexpression = null;
@@ -329,7 +329,7 @@ public class SpecifyLemmaPathsDialog extends TitleAreaDialog {
     ModelTableCheckboxColumnEditingSupport _modelTableCheckboxColumnEditingSupport = new ModelTableCheckboxColumnEditingSupport(this.tableViewer, checkboxValidator);
     column.setEditingSupport(_modelTableCheckboxColumnEditingSupport);
   }
-  
+
   /**
    * Create model kind column
    */
@@ -343,7 +343,7 @@ public class SpecifyLemmaPathsDialog extends TitleAreaDialog {
     DelegatingStyledCellLabelProvider _delegatingStyledCellLabelProvider = new DelegatingStyledCellLabelProvider(_modelKindStyledLabelProvider);
     column.setLabelProvider(_delegatingStyledCellLabelProvider);
   }
-  
+
   /**
    * Create hint column
    */
@@ -360,7 +360,7 @@ public class SpecifyLemmaPathsDialog extends TitleAreaDialog {
       }
     });
   }
-  
+
   /**
    * Create target path column
    */
@@ -403,7 +403,7 @@ public class SpecifyLemmaPathsDialog extends TitleAreaDialog {
     ModelTableTargetPathColumnEditingSupport _modelTableTargetPathColumnEditingSupport = new ModelTableTargetPathColumnEditingSupport(this.tableViewer, targetPathValidator);
     column.setEditingSupport(_modelTableTargetPathColumnEditingSupport);
   }
-  
+
   /**
    * Create buttons for the button bar
    */
@@ -413,7 +413,7 @@ public class SpecifyLemmaPathsDialog extends TitleAreaDialog {
     this.createButton(parent, SpecifyLemmaPathsDialog.SELECT_ALL, "Select all", false);
     super.createButtonsForButtonBar(parent);
   }
-  
+
   /**
    * Catch button press
    */
@@ -434,7 +434,7 @@ public class SpecifyLemmaPathsDialog extends TitleAreaDialog {
         break;
     }
   }
-  
+
   /**
    * "Deselect all" button was pressed
    */
@@ -445,7 +445,7 @@ public class SpecifyLemmaPathsDialog extends TitleAreaDialog {
     this.MODEL_KINDS.forEach(_function);
     this.tableViewer.refresh();
   }
-  
+
   /**
    * "Select all" button was pressed
    */
@@ -456,7 +456,7 @@ public class SpecifyLemmaPathsDialog extends TitleAreaDialog {
     this.MODEL_KINDS.forEach(_function);
     this.tableViewer.refresh();
   }
-  
+
   /**
    * OK button was pressed
    */
@@ -490,14 +490,14 @@ public class SpecifyLemmaPathsDialog extends TitleAreaDialog {
     this.modelKindPaths = modelKindFilepaths;
     super.okPressed();
   }
-  
+
   /**
    * Convert a project-relative path to an absolute file path
    */
   private String toAbsoluteFilepath(final String projectRelativePath) {
     return LemmaUtils.removeFileUri(LemmaUtils.convertProjectPathToAbsoluteFileUri(projectRelativePath));
   }
-  
+
   /**
    * Ask to overwrite existing files in the given list of file paths. Returns false if the user
    * does not agree to overwrite existing files and true otherwise.
@@ -533,7 +533,7 @@ public class SpecifyLemmaPathsDialog extends TitleAreaDialog {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Flag to indicate that dialog is resizable
    */
@@ -541,7 +541,7 @@ public class SpecifyLemmaPathsDialog extends TitleAreaDialog {
   public boolean isResizable() {
     return true;
   }
-  
+
   /**
    * Initial size
    */
@@ -552,7 +552,7 @@ public class SpecifyLemmaPathsDialog extends TitleAreaDialog {
     int _max_1 = Math.max(this.convertVerticalDLUsToPixels(SpecifyLemmaPathsDialog.MIN_DIALOG_HEIGHT), shellSize.y);
     return new Point(_max, _max_1);
   }
-  
+
   /**
    * Dispose resource manager
    */
@@ -561,7 +561,7 @@ public class SpecifyLemmaPathsDialog extends TitleAreaDialog {
     SpecifyLemmaPathsDialog.RESOURCE_MANAGER.dispose();
     super.closeTray();
   }
-  
+
   @Pure
   public Map<Class<? extends EObject>, Pair<String, String>> getModelKindPaths() {
     return this.modelKindPaths;

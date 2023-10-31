@@ -26,7 +26,7 @@ import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 @SuppressWarnings("all")
 public class LiveValidationJob extends ValidationJob {
   private ServerConnection liveValidationServerConnection;
-  
+
   /**
    * Constructor
    */
@@ -34,7 +34,7 @@ public class LiveValidationJob extends ValidationJob {
     super(xtextResourceChecker, xtextDocument, validationIssueProcessor, checkMode);
     this.liveValidationServerConnection = liveValidationServerConnection;
   }
-  
+
   /**
    * Callback for issue creation during the job's processing
    */

@@ -29,11 +29,11 @@ import org.eclipse.xtext.xbase.lib.Conversions;
 @SuppressWarnings("all")
 public final class LaunchConfigurationNameColumnEditingSupport extends ObservableValueEditingSupport<ProcessingChainEntry, String, String> {
   private TableViewer tableViewer;
-  
+
   private DataBindingContext dataBindingContext;
-  
+
   private final List<String> launchConfigurationNames;
-  
+
   /**
    * Constructor
    */
@@ -46,7 +46,7 @@ public final class LaunchConfigurationNameColumnEditingSupport extends Observabl
     UpdatingColumnViewerEditorActivationListener _updatingColumnViewerEditorActivationListener = new UpdatingColumnViewerEditorActivationListener(tableViewer);
     _columnViewerEditor.addEditorActivationListener(_updatingColumnViewerEditorActivationListener);
   }
-  
+
   /**
    * Return the column's CellEditor
    */
@@ -56,7 +56,7 @@ public final class LaunchConfigurationNameColumnEditingSupport extends Observabl
     return new ComboBoxCellEditor(_table, ((String[])Conversions.unwrapArray(this.launchConfigurationNames, String.class)), 
       (SWT.DROP_DOWN | SWT.READ_ONLY));
   }
-  
+
   /**
    * Return the IObservableValue of the column's CellEditor
    */
@@ -65,7 +65,7 @@ public final class LaunchConfigurationNameColumnEditingSupport extends Observabl
     Control _control = editor.getControl();
     return WidgetProperties.ccomboSelection().observe(((CCombo) _control));
   }
-  
+
   /**
    * Return the IObservableValue of the Bean element
    */
@@ -73,7 +73,7 @@ public final class LaunchConfigurationNameColumnEditingSupport extends Observabl
   public final IObservableValue<String> doCreateElementObservable(final ProcessingChainEntry entry, final ViewerCell cell) {
     return BeanProperties.<ProcessingChainEntry, String>value(ProcessingChainEntry.class, "launchConfigurationName", null).observe(entry);
   }
-  
+
   /**
    * Bind the CellEditor's and Bean element's IObservableValues
    */

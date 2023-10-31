@@ -23,9 +23,9 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 @SuppressWarnings("all")
 public class ModelTreeContentProvider implements ITreeContentProvider {
   private Map<IProject, List<ModelFile>> inputModelFilesWithProjects;
-  
+
   private AbstractUiModelTransformationStrategy strategy;
-  
+
   /**
    * Constructor
    */
@@ -40,7 +40,7 @@ public class ModelTreeContentProvider implements ITreeContentProvider {
     this.inputModelFilesWithProjects = inputModelFilesWithProjects;
     this.strategy = strategy;
   }
-  
+
   /**
    * Get children of parent element
    */
@@ -65,7 +65,7 @@ public class ModelTreeContentProvider implements ITreeContentProvider {
     }
     return ((Object[])Conversions.unwrapArray(_switchResult, Object.class));
   }
-  
+
   /**
    * Get root elements
    */
@@ -79,7 +79,7 @@ public class ModelTreeContentProvider implements ITreeContentProvider {
       }
     }), Object.class));
   }
-  
+
   /**
    * Get parent of an element
    */
@@ -93,7 +93,7 @@ public class ModelTreeContentProvider implements ITreeContentProvider {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Determine if the given element has children
    */
@@ -137,7 +137,7 @@ public class ModelTreeContentProvider implements ITreeContentProvider {
     }
     return _switchResult;
   }
-  
+
   /**
    * Helper to create a ModelFile instance
    */

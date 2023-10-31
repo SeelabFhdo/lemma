@@ -29,84 +29,84 @@ import org.eclipse.emf.common.util.EList;
  * @generated
  */
 public interface IntermediateCollectionType extends IntermediateComplexType {
-    /**
-     * Returns the value of the '<em><b>Primitive Collection</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Primitive Collection</em>' attribute.
-     * @see #setPrimitiveCollection(boolean)
-     * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateCollectionType_PrimitiveCollection()
-     * @model unique="false"
-     * @generated
-     */
-    boolean isPrimitiveCollection();
+	/**
+	 * Returns the value of the '<em><b>Primitive Collection</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Primitive Collection</em>' attribute.
+	 * @see #setPrimitiveCollection(boolean)
+	 * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateCollectionType_PrimitiveCollection()
+	 * @model unique="false"
+	 * @generated
+	 */
+	boolean isPrimitiveCollection();
 
-    /**
-     * Sets the value of the '{@link de.fhdo.lemma.data.intermediate.IntermediateCollectionType#isPrimitiveCollection <em>Primitive Collection</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Primitive Collection</em>' attribute.
-     * @see #isPrimitiveCollection()
-     * @generated
-     */
-    void setPrimitiveCollection(boolean value);
+	/**
+	 * Sets the value of the '{@link de.fhdo.lemma.data.intermediate.IntermediateCollectionType#isPrimitiveCollection <em>Primitive Collection</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Primitive Collection</em>' attribute.
+	 * @see #isPrimitiveCollection()
+	 * @generated
+	 */
+	void setPrimitiveCollection(boolean value);
 
-    /**
-     * Returns the value of the '<em><b>Structured Collection</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Structured Collection</em>' attribute.
-     * @see #setStructuredCollection(boolean)
-     * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateCollectionType_StructuredCollection()
-     * @model unique="false"
-     * @generated
-     */
-    boolean isStructuredCollection();
+	/**
+	 * Returns the value of the '<em><b>Structured Collection</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Structured Collection</em>' attribute.
+	 * @see #setStructuredCollection(boolean)
+	 * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateCollectionType_StructuredCollection()
+	 * @model unique="false"
+	 * @generated
+	 */
+	boolean isStructuredCollection();
 
-    /**
-     * Sets the value of the '{@link de.fhdo.lemma.data.intermediate.IntermediateCollectionType#isStructuredCollection <em>Structured Collection</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Structured Collection</em>' attribute.
-     * @see #isStructuredCollection()
-     * @generated
-     */
-    void setStructuredCollection(boolean value);
+	/**
+	 * Sets the value of the '{@link de.fhdo.lemma.data.intermediate.IntermediateCollectionType#isStructuredCollection <em>Structured Collection</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Structured Collection</em>' attribute.
+	 * @see #isStructuredCollection()
+	 * @generated
+	 */
+	void setStructuredCollection(boolean value);
 
-    /**
-     * Returns the value of the '<em><b>Primitive Type</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Primitive Type</em>' containment reference.
-     * @see #setPrimitiveType(IntermediatePrimitiveType)
-     * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateCollectionType_PrimitiveType()
-     * @model containment="true"
-     * @generated
-     */
-    IntermediatePrimitiveType getPrimitiveType();
+	/**
+	 * Returns the value of the '<em><b>Primitive Type</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Primitive Type</em>' containment reference.
+	 * @see #setPrimitiveType(IntermediatePrimitiveType)
+	 * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateCollectionType_PrimitiveType()
+	 * @model containment="true"
+	 * @generated
+	 */
+	IntermediatePrimitiveType getPrimitiveType();
 
-    /**
-     * Sets the value of the '{@link de.fhdo.lemma.data.intermediate.IntermediateCollectionType#getPrimitiveType <em>Primitive Type</em>}' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Primitive Type</em>' containment reference.
-     * @see #getPrimitiveType()
-     * @generated
-     */
-    void setPrimitiveType(IntermediatePrimitiveType value);
+	/**
+	 * Sets the value of the '{@link de.fhdo.lemma.data.intermediate.IntermediateCollectionType#getPrimitiveType <em>Primitive Type</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Primitive Type</em>' containment reference.
+	 * @see #getPrimitiveType()
+	 * @generated
+	 */
+	void setPrimitiveType(IntermediatePrimitiveType value);
 
-    /**
-     * Returns the value of the '<em><b>Data Fields</b></em>' containment reference list.
-     * The list contents are of type {@link de.fhdo.lemma.data.intermediate.IntermediateDataField}.
-     * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#getCollectionType <em>Collection Type</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Data Fields</em>' containment reference list.
-     * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateCollectionType_DataFields()
-     * @see de.fhdo.lemma.data.intermediate.IntermediateDataField#getCollectionType
-     * @model opposite="collectionType" containment="true"
-     * @generated
-     */
-    EList<IntermediateDataField> getDataFields();
+	/**
+	 * Returns the value of the '<em><b>Data Fields</b></em>' containment reference list.
+	 * The list contents are of type {@link de.fhdo.lemma.data.intermediate.IntermediateDataField}.
+	 * It is bidirectional and its opposite is '{@link de.fhdo.lemma.data.intermediate.IntermediateDataField#getCollectionType <em>Collection Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Data Fields</em>' containment reference list.
+	 * @see de.fhdo.lemma.data.intermediate.IntermediatePackage#getIntermediateCollectionType_DataFields()
+	 * @see de.fhdo.lemma.data.intermediate.IntermediateDataField#getCollectionType
+	 * @model opposite="collectionType" containment="true"
+	 * @generated
+	 */
+	EList<IntermediateDataField> getDataFields();
 
 } // IntermediateCollectionType

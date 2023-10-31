@@ -17,9 +17,9 @@ import org.eclipse.xtext.xbase.lib.Pair;
 @SuppressWarnings("all")
 public class ModelTableCheckboxColumnEditingSupport extends EditingSupport {
   private TableViewer tableViewer;
-  
+
   private Predicate<Pair<ModelFile, Boolean>> newValueValidator;
-  
+
   /**
    * Constructor
    */
@@ -28,7 +28,7 @@ public class ModelTableCheckboxColumnEditingSupport extends EditingSupport {
     this.tableViewer = tableViewer;
     this.newValueValidator = newValueValidator;
   }
-  
+
   /**
    * Flag to indicate if column is editable
    */
@@ -36,7 +36,7 @@ public class ModelTableCheckboxColumnEditingSupport extends EditingSupport {
   protected boolean canEdit(final Object element) {
     return true;
   }
-  
+
   /**
    * Create checkbox cell editor for column
    */
@@ -44,7 +44,7 @@ public class ModelTableCheckboxColumnEditingSupport extends EditingSupport {
   protected CellEditor getCellEditor(final Object element) {
     return new CheckboxCellEditor(null, SWT.CHECK);
   }
-  
+
   /**
    * Get checkbox value
    */
@@ -60,7 +60,7 @@ public class ModelTableCheckboxColumnEditingSupport extends EditingSupport {
     }
     return Boolean.valueOf(_xifexpression);
   }
-  
+
   /**
    * Set checkbox value
    */

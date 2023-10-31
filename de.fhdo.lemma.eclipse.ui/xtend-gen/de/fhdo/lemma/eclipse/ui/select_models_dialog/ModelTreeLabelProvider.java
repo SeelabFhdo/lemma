@@ -15,7 +15,7 @@ import org.eclipse.swt.graphics.Image;
 @SuppressWarnings("all")
 public class ModelTreeLabelProvider extends ModelFileStyledLabelProvider {
   private Image projectIcon;
-  
+
   /**
    * Constructor
    */
@@ -23,7 +23,7 @@ public class ModelTreeLabelProvider extends ModelFileStyledLabelProvider {
     super();
     this.projectIcon = LemmaUiUtils.createImage(this.resourceManager, this.getClass(), "project.gif");
   }
-  
+
   /**
    * Get styled text for element
    */
@@ -48,7 +48,7 @@ public class ModelTreeLabelProvider extends ModelFileStyledLabelProvider {
     }
     return _switchResult;
   }
-  
+
   /**
    * Get image for element
    */

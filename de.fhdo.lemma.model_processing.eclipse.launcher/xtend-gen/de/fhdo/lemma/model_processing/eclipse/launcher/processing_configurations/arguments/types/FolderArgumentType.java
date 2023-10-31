@@ -14,14 +14,14 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 @SuppressWarnings("all")
 public final class FolderArgumentType extends AbstractArgumentType {
   public static final ArgumentTypeIdentifier IDENTIFIER = ArgumentTypeIdentifier.FOLDER;
-  
+
   /**
    * Constructor
    */
   public FolderArgumentType() {
     super(FolderArgumentType.IDENTIFIER, "Folder");
   }
-  
+
   /**
    * Validate the type-specific argument value in its internal representation, i.e., the path to
    * the folder

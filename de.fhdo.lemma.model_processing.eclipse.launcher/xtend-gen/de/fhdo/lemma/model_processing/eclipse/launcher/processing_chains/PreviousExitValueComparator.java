@@ -30,10 +30,10 @@ public final class PreviousExitValueComparator {
   private static class ComparatorInfo {
     @Accessors(AccessorType.PROTECTED_GETTER)
     private final String userRepresentation;
-    
+
     @Accessors(AccessorType.PROTECTED_GETTER)
     private final Function2<? super Integer, ? super Integer, ? extends Boolean> comparatorFunction;
-    
+
     /**
      * Constructor
      */
@@ -41,33 +41,33 @@ public final class PreviousExitValueComparator {
       this.userRepresentation = userRepresentation;
       this.comparatorFunction = comparatorFunction;
     }
-    
+
     @Pure
     protected String getUserRepresentation() {
       return this.userRepresentation;
     }
-    
+
     @Pure
     protected Function2<? super Integer, ? super Integer, ? extends Boolean> getComparatorFunction() {
       return this.comparatorFunction;
     }
   }
-  
+
   /**
    * Enumeration of comparator identifiers
    */
   public enum Comparator {
     LOWER,
-    
+
     LOWER_OR_EQUAL,
-    
+
     EQUAL,
-    
+
     GREATER,
-    
+
     GREATER_OR_EQUAL;
   }
-  
+
   private static final Map<PreviousExitValueComparator.Comparator, PreviousExitValueComparator.ComparatorInfo> COMPARATORS = Collections.<PreviousExitValueComparator.Comparator, PreviousExitValueComparator.ComparatorInfo>unmodifiableMap(CollectionLiterals.<PreviousExitValueComparator.Comparator, PreviousExitValueComparator.ComparatorInfo>newHashMap(Pair.<PreviousExitValueComparator.Comparator, PreviousExitValueComparator.ComparatorInfo>of(PreviousExitValueComparator.Comparator.LOWER, new PreviousExitValueComparator.ComparatorInfo("<", 
     ((Function2<Integer, Integer, Boolean>) (Integer actualExitValue, Integer expectedExitValue) -> {
       return Boolean.valueOf((actualExitValue.compareTo(expectedExitValue) < 0));
@@ -84,21 +84,21 @@ public final class PreviousExitValueComparator {
     ((Function2<Integer, Integer, Boolean>) (Integer actualExitValue, Integer expectedExitValue) -> {
       return Boolean.valueOf((actualExitValue.compareTo(expectedExitValue) >= 0));
     })))));
-  
+
   /**
    * User representations of comparators
    */
   private static final HashBiMap<PreviousExitValueComparator.Comparator, String> COMPARATOR_USER_REPRESENTATIONS = HashBiMap.<PreviousExitValueComparator.Comparator, String>create(MapExtensions.<PreviousExitValueComparator.Comparator, PreviousExitValueComparator.ComparatorInfo, String>mapValues(PreviousExitValueComparator.COMPARATORS, ((Function1<PreviousExitValueComparator.ComparatorInfo, String>) (PreviousExitValueComparator.ComparatorInfo it) -> {
     return it.userRepresentation;
   })));
-  
+
   /**
    * Get the user representations of all comparators
    */
   public static Set<String> getUserRepresentationValues() {
     return PreviousExitValueComparator.COMPARATOR_USER_REPRESENTATIONS.values();
   }
-  
+
   /**
    * Get the user representation of a given comparator
    */
@@ -116,7 +116,7 @@ public final class PreviousExitValueComparator {
     }
     return userRepresentation;
   }
-  
+
   /**
    * Get the internal representation of a comparator from its user representation. An internal
    * comparator representation corresponds to the comparator's literal from the Comparator
@@ -138,7 +138,7 @@ public final class PreviousExitValueComparator {
     }
     return comparator;
   }
-  
+
   /**
    * Check if a given exit value matches an expected one in the sense of a given comparator
    */

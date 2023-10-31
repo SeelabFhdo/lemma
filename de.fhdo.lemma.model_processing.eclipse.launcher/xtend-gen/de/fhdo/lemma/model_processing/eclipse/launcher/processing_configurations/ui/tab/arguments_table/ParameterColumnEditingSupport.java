@@ -23,9 +23,9 @@ import org.eclipse.swt.widgets.Table;
 @SuppressWarnings("all")
 public final class ParameterColumnEditingSupport extends ObservableValueEditingSupport<Argument, String, String> {
   private final ArgumentsTable argumentsTable;
-  
+
   private DataBindingContext dataBindingContext;
-  
+
   /**
    * Constructor
    */
@@ -34,7 +34,7 @@ public final class ParameterColumnEditingSupport extends ObservableValueEditingS
     this.argumentsTable = argumentsTable;
     this.dataBindingContext = dataBindingContext;
   }
-  
+
   /**
    * Enable/disable column editing
    */
@@ -42,7 +42,7 @@ public final class ParameterColumnEditingSupport extends ObservableValueEditingS
   public final boolean canEdit(final Object element) {
     return this.argumentsTable.getEnabled();
   }
-  
+
   /**
    * Return the column's CellEditor
    */
@@ -51,7 +51,7 @@ public final class ParameterColumnEditingSupport extends ObservableValueEditingS
     Table _table = this.argumentsTable.getViewer().getTable();
     return new TextCellEditor(_table);
   }
-  
+
   /**
    * Return the IObservableValue of the column's CellEditor
    */
@@ -59,7 +59,7 @@ public final class ParameterColumnEditingSupport extends ObservableValueEditingS
   public final IObservableValue<String> doCreateCellEditorObservable(final CellEditor editor) {
     return WidgetProperties.<Control>text(SWT.Modify).observe(editor.getControl());
   }
-  
+
   /**
    * Return the IObservableValue of the Bean element
    */
@@ -67,7 +67,7 @@ public final class ParameterColumnEditingSupport extends ObservableValueEditingS
   public final IObservableValue<String> doCreateElementObservable(final Argument argument, final ViewerCell cell) {
     return BeanProperties.<Argument, String>value(Argument.class, "parameter", null).observe(argument);
   }
-  
+
   /**
    * Bind the CellEditor's and Bean element's IObservableValues
    */

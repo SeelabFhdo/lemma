@@ -21,18 +21,18 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 @SuppressWarnings("all")
 public class ComplexTypeCheckingIterator implements Iterator<NodePair> {
   private NodePair rootPair;
-  
+
   private NodePair currentPair;
-  
+
   private HashMap<NodePair, Boolean> decisionHistory = CollectionLiterals.<NodePair, Boolean>newHashMap();
-  
+
   /**
    * Constructor
    */
   public ComplexTypeCheckingIterator(final NodePair rootPair) {
     this.rootPair = rootPair;
   }
-  
+
   /**
    * Return whether there is a pair to be checked or not. In case the compatibility of the initial
    * root pair has been determined, this returns false.
@@ -51,7 +51,7 @@ public class ComplexTypeCheckingIterator implements Iterator<NodePair> {
     NodePair _nextUndecidedPair = this.nextUndecidedPair();
     return (_nextUndecidedPair != null);
   }
-  
+
   /**
    * Get next node pair whose compatibility is yet undecided. Throws NoSuchElementException in
    * case the compatibility of the initial root pair has been determined or if there exists no
@@ -79,7 +79,7 @@ public class ComplexTypeCheckingIterator implements Iterator<NodePair> {
     }
     return this.currentPair;
   }
-  
+
   /**
    * Helper method to find next undecided pair
    */
@@ -112,7 +112,7 @@ public class ComplexTypeCheckingIterator implements Iterator<NodePair> {
     }
     return null;
   }
-  
+
   /**
    * Return the compatibility of the current node pair's types if it was already decided or null
    * if it has not been decided yet
@@ -120,14 +120,14 @@ public class ComplexTypeCheckingIterator implements Iterator<NodePair> {
   public Boolean currentPairTypeCompatibilityAlreadyDecided() {
     return this.decisionHistory.get(this.currentPair);
   }
-  
+
   /**
    * Return the compatibility decision status of the currently iterated pair
    */
   public boolean currentPairCompatibilityUndecided() {
     return this.currentPair.compatibilityUndecided();
   }
-  
+
   /**
    * Mark the current node pair being compatible and propagate that decision through the
    * NodePair-NodeSeries graph.
@@ -176,7 +176,7 @@ public class ComplexTypeCheckingIterator implements Iterator<NodePair> {
       }
     } while((propagationPair != null));
   }
-  
+
   /**
    * Convenience method to mark the current node pair being compatible with taking its children's
    * compatibility into account
@@ -184,7 +184,7 @@ public class ComplexTypeCheckingIterator implements Iterator<NodePair> {
   public void markCurrentPairCompatible() {
     this.markCurrentPairCompatible(false);
   }
-  
+
   /**
    * Mark the current node pair being incompatible and propagate that decision through the
    * NodePair-NodeSeries graph.
@@ -222,7 +222,7 @@ public class ComplexTypeCheckingIterator implements Iterator<NodePair> {
       }
     }
   }
-  
+
   /**
    * Add node series to the current node pair to be eventually iterated if necessary, i.e., if the
    * root node pair doesn't get decided before
@@ -230,7 +230,7 @@ public class ComplexTypeCheckingIterator implements Iterator<NodePair> {
   public boolean addSeries(final NodeSeries series) {
     return this.currentPair.addChildSeries(series);
   }
-  
+
   /**
    * Convenience method to add a list of series all at once
    */
@@ -240,7 +240,7 @@ public class ComplexTypeCheckingIterator implements Iterator<NodePair> {
     };
     series.forEach(_function);
   }
-  
+
   /**
    * Add a decided node pair to the decision history
    */

@@ -20,7 +20,7 @@
 
         <atl-version>4.4.0</atl-version>
         <eclipse-version>2021-03</eclipse-version>
-        <tycho-version>2.3.0</tycho-version>
+        <tycho-version>2.6.0</tycho-version>
     </properties>
 
     <repositories>

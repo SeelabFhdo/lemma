@@ -22,7 +22,7 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 public abstract class AbstractArgumentKind {
   @Accessors(AccessorType.PUBLIC_GETTER)
   private final ArgumentKindIdentifier identifier;
-  
+
   /**
    * Two argument kinds are equal if they have the same identifier
    */
@@ -42,12 +42,12 @@ public abstract class AbstractArgumentKind {
     }
     return _xifexpression;
   }
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private final String name;
-  
+
   private final List<AbstractArgumentType> supportedArgumentTypes;
-  
+
   /**
    * Constructor
    */
@@ -69,14 +69,14 @@ public abstract class AbstractArgumentKind {
     this.name = name;
     this.supportedArgumentTypes = ((List<AbstractArgumentType>)Conversions.doWrapArray(supportedArgumentTypes));
   }
-  
+
   /**
    * Get the argument types supported by the kind
    */
   public final List<AbstractArgumentType> getSupportedArgumentTypes() {
     return Collections.<AbstractArgumentType>unmodifiableList(this.supportedArgumentTypes);
   }
-  
+
   /**
    * Get the first argument type supported by the kind. The method determines the first argument
    * by sorting the supported argument types by name and returning the argument type with the
@@ -88,7 +88,7 @@ public abstract class AbstractArgumentKind {
     };
     return IterableExtensions.<AbstractArgumentType, String>sortBy(this.supportedArgumentTypes, _function).get(0);
   }
-  
+
   /**
    * Validate if the argument kind supports the given argument type
    */
@@ -109,12 +109,12 @@ public abstract class AbstractArgumentKind {
       throw new IllegalArgumentException(_plus);
     }
   }
-  
+
   @Pure
   public ArgumentKindIdentifier getIdentifier() {
     return this.identifier;
   }
-  
+
   @Pure
   public String getName() {
     return this.name;

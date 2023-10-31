@@ -1,8 +1,6 @@
 package de.fhdo.lemma.eclipse.ui.editor.server;
 
 import com.google.common.base.Function;
-import de.fhdo.lemma.eclipse.ui.editor.server.ConnectThread;
-import de.fhdo.lemma.eclipse.ui.editor.server.ServerConnection;
 import de.fhdo.lemma.eclipse.ui.utils.LemmaUiUtils;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IMessageProvider;
@@ -32,21 +30,21 @@ import org.eclipse.xtext.xbase.lib.Functions.Function2;
 @SuppressWarnings("all")
 public class ConnectProgressDialog extends TitleAreaDialog {
   private static final ResourceManager RESOURCE_MANAGER = new LocalResourceManager(JFaceResources.getResources());
-  
+
   private static final int MIN_DIALOG_WIDTH = 200;
-  
+
   private static final int MIN_DIALOG_HEIGHT = 100;
-  
+
   private String hostname;
-  
+
   private int port;
-  
+
   private Function<ConnectProgressDialog, Void> connectedCallback;
-  
+
   private Function2<ConnectProgressDialog, Exception, Void> connectionErrorCallback;
-  
+
   private ConnectThread connectThread;
-  
+
   public ConnectProgressDialog(final Shell parentShell, final String hostname, final int port, final Function<ConnectProgressDialog, Void> connectedCallback, final Function2<ConnectProgressDialog, Exception, Void> connectionErrorCallback) {
     super(parentShell);
     this.setShellStyle((this.getShellStyle() | SWT.SHEET));
@@ -55,7 +53,7 @@ public class ConnectProgressDialog extends TitleAreaDialog {
     this.connectedCallback = connectedCallback;
     this.connectionErrorCallback = connectionErrorCallback;
   }
-  
+
   /**
    * Create dialog (to be called after constructor and before open())
    */
@@ -66,7 +64,7 @@ public class ConnectProgressDialog extends TitleAreaDialog {
     this.setMessage("Attempting to connect to a Live Validation server.", 
       IMessageProvider.INFORMATION);
   }
-  
+
   /**
    * Create buttons for the button bar
    */
@@ -74,7 +72,7 @@ public class ConnectProgressDialog extends TitleAreaDialog {
   public void createButtonsForButtonBar(final Composite parent) {
     this.createButton(parent, Window.CANCEL, IDialogConstants.CANCEL_LABEL, false);
   }
-  
+
   /**
    * Internal callback for dialog area creation
    */
@@ -103,7 +101,7 @@ public class ConnectProgressDialog extends TitleAreaDialog {
     progressBar.setLayoutData(_gridData_2);
     return area;
   }
-  
+
   /**
    * Open dialog and connect to server
    */
@@ -123,21 +121,21 @@ public class ConnectProgressDialog extends TitleAreaDialog {
     LemmaUiUtils.runEventLoop(this.getShell());
     return this.getReturnCode();
   }
-  
+
   /**
    * Internal callback when server connection was established successfully
    */
   private Void internalConnectedCallback() {
     return this.connectedCallback.apply(this);
   }
-  
+
   /**
    * Internal callback when server connection could not be established successfully
    */
   private Void internalConnectionErrorCallback(final Exception error) {
     return this.connectionErrorCallback.apply(this, error);
   }
-  
+
   /**
    * Catch button press
    */
@@ -149,7 +147,7 @@ public class ConnectProgressDialog extends TitleAreaDialog {
     }
     this.close();
   }
-  
+
   /**
    * Initial size
    */

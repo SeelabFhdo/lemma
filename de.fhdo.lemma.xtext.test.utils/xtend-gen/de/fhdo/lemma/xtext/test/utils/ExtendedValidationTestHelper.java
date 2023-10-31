@@ -58,7 +58,7 @@ public class ExtendedValidationTestHelper extends ValidationTestHelper {
     final List<ExpectedIssue> expectedIssues = this.unpackToExpectedIssues(IterableExtensions.<Object>toList(((Iterable<Object>)Conversions.doWrapArray(expectedIssueInformation))), severity);
     this.assertIssuesExactlyAndOrdered(model, failureMessage, issues, expectedIssues);
   }
-  
+
   /**
    * Attach a given addition string to a failure message. In case the addition string is null or
    * empty, return the failure message alone. In case the failure message is null or empty, return
@@ -87,7 +87,7 @@ public class ExtendedValidationTestHelper extends ValidationTestHelper {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Unpack objects to ExpectedIssue instances. An object may be (i) an ExpectedIssue instance;
    * (ii) a Pair of an EClass pointing to an Ecore concept and an issue message that can get
@@ -99,7 +99,7 @@ public class ExtendedValidationTestHelper extends ValidationTestHelper {
     };
     return IterableExtensions.<ExpectedIssue>toList(Iterables.<ExpectedIssue>concat(ListExtensions.<Object, List<ExpectedIssue>>map(expectedIssueInformation, _function)));
   }
-  
+
   /**
    * Convert an object to a list of ExpectedIssue instances with the given severity. The object
    * may cluster one of the specific class instances described for the unpackToExpectedIssues()
@@ -146,7 +146,7 @@ public class ExtendedValidationTestHelper extends ValidationTestHelper {
     }
     return expectedIssues;
   }
-  
+
   /**
    * Ensure that an ExpectedIssue instance has a certain severity. Otherwise, throw an
    * IllegalArgumentException.
@@ -173,7 +173,7 @@ public class ExtendedValidationTestHelper extends ValidationTestHelper {
       throw new IllegalArgumentException(_plus_1);
     }
   }
-  
+
   /**
    * Assert issues with a certain severity for the given model. In case the assertion fails, the
    * test will fail with the given failure message.
@@ -242,7 +242,7 @@ public class ExtendedValidationTestHelper extends ValidationTestHelper {
     };
     this.processAgainstIssues(expectedIssues, issues, model, _function);
   }
-  
+
   /**
    * Process a list of ExpectedIssue instances against a list of Issue instances in the context
    * of the given model and governed by the given predicate. The predicate identifies if a an
@@ -290,7 +290,7 @@ public class ExtendedValidationTestHelper extends ValidationTestHelper {
     };
     return ListExtensions.<Integer, ExpectedIssue>map(unmatchedIndices, _function_2);
   }
-  
+
   /**
    * Assert issues with a certain severity for the given model. In case the assertion fails, the
    * test will fail with the given failure message.
@@ -330,7 +330,7 @@ public class ExtendedValidationTestHelper extends ValidationTestHelper {
     Assert.assertTrue(_withAddition, _greaterEqualsThan);
     this.assertIssuesOrdered(model, failureMessage, issues, expectedIssuesCount, expectedIssues);
   }
-  
+
   /**
    * Assert issues with a certain severity for the given model. In case the assertion fails, the
    * test will fail with the given failure message.
@@ -399,7 +399,7 @@ public class ExtendedValidationTestHelper extends ValidationTestHelper {
     Assert.assertTrue(this.withAddition(failureMessage, _builder_4.toString()), 
       unmatchedIssues.isEmpty());
   }
-  
+
   /**
    * Assert issues with arbitrary severity for the given model. In case the assertion fails, the
    * test will fail with the given failure message.

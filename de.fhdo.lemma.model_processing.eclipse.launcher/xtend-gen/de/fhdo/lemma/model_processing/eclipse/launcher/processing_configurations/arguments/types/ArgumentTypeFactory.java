@@ -16,7 +16,7 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 @SuppressWarnings("all")
 public final class ArgumentTypeFactory {
   private static final HashMap<ArgumentTypeIdentifier, AbstractArgumentType> CREATED_TYPES = CollectionLiterals.<ArgumentTypeIdentifier, AbstractArgumentType>newHashMap();
-  
+
   /**
    * Create an argument type or return an already created argument type from the given identifier
    * string. Return null if the identifier string is null or empty.
@@ -32,7 +32,7 @@ public final class ArgumentTypeFactory {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Create an argument type or return an already created argument type from the given argument
    * type identifier. Return null if the identifier is null.

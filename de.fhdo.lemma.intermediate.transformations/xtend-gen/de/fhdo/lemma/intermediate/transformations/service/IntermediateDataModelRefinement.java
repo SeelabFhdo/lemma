@@ -20,9 +20,9 @@ import org.eclipse.xtext.xbase.lib.Pair;
 @SuppressWarnings("all")
 public class IntermediateDataModelRefinement extends AbstractEmftvmIntermediateModelTransformationStrategy {
   public static final TransformationModelDescription IN_MODEL_DESCRIPTION = new TransformationModelDescription("IN", "Intermediate", TransformationModelDirection.INOUT);
-  
+
   public static final TransformationModelDescription SERVICE_MODEL_DESCRIPTION = new TransformationModelDescription("SERVICE", "Service", TransformationModelDirection.IN);
-  
+
   /**
    * Get the platform path to the folder that holds the transformation model file
    */
@@ -30,7 +30,7 @@ public class IntermediateDataModelRefinement extends AbstractEmftvmIntermediateM
   public String getModelTransformationFilePlatformFolder() {
     return "platform:/plugin/de.fhdo.lemma.intermediate.transformations/transformation/";
   }
-  
+
   /**
    * Get the name of the transformation model file
    */
@@ -38,7 +38,7 @@ public class IntermediateDataModelRefinement extends AbstractEmftvmIntermediateM
   public String getModelTransformationFileName() {
     return "IntermediateDataModelRefinement";
   }
-  
+
   /**
    * Register model types
    */

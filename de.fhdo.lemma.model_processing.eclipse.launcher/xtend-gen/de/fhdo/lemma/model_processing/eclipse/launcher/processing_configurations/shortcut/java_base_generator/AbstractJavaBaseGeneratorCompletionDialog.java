@@ -34,16 +34,16 @@ import org.eclipse.xtext.xbase.lib.Conversions;
 @SuppressWarnings("all")
 public abstract class AbstractJavaBaseGeneratorCompletionDialog extends AbstractCodeGeneratorCompletionDialog {
   private Argument generationSerializerArgument;
-  
+
   protected Combo generationSerializer;
-  
+
   /**
    * Constructor
    */
   public AbstractJavaBaseGeneratorCompletionDialog(final Shell parentShell, final IProject project, final IFile file) {
     super(parentShell, project, file, "Java Base Generator", "JBG");
   }
-  
+
   /**
    * Assign the Argument that identifies the code generation serializer
    */
@@ -51,7 +51,7 @@ public abstract class AbstractJavaBaseGeneratorCompletionDialog extends Abstract
     this.generationSerializerArgument = generationSerializerArgument;
     this.generationSerializerArgument.addPropertyChangeListener(this);
   }
-  
+
   /**
    * Create the dialog area
    */
@@ -63,7 +63,7 @@ public abstract class AbstractJavaBaseGeneratorCompletionDialog extends Abstract
     _shell.setSize(_point);
     return area;
   }
-  
+
   /**
    * Add additional controls to the dialog
    */
@@ -72,7 +72,7 @@ public abstract class AbstractJavaBaseGeneratorCompletionDialog extends Abstract
     super.insertAdditionalControlsAfterDefaults(parent);
     this.addGenerationSerializer(parent);
   }
-  
+
   /**
    * Add combo box for code generation serializer selection
    */
@@ -106,7 +106,7 @@ public abstract class AbstractJavaBaseGeneratorCompletionDialog extends Abstract
     }
     return _xblockexpression;
   }
-  
+
   /**
    * Retrieve a printable representation of the source model's file type
    */
@@ -141,7 +141,7 @@ public abstract class AbstractJavaBaseGeneratorCompletionDialog extends Abstract
     }
     return _switchResult;
   }
-  
+
   /**
    * Close the dialog
    */

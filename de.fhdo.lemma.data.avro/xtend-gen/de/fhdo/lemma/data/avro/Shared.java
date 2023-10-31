@@ -2,33 +2,17 @@ package de.fhdo.lemma.data.avro;
 
 import com.google.common.base.Objects;
 import de.fhdo.lemma.data.DataFactory;
-import de.fhdo.lemma.data.PrimitiveBoolean;
-import de.fhdo.lemma.data.PrimitiveByte;
-import de.fhdo.lemma.data.PrimitiveCharacter;
-import de.fhdo.lemma.data.PrimitiveDate;
-import de.fhdo.lemma.data.PrimitiveDouble;
-import de.fhdo.lemma.data.PrimitiveFloat;
-import de.fhdo.lemma.data.PrimitiveInteger;
-import de.fhdo.lemma.data.PrimitiveLong;
-import de.fhdo.lemma.data.PrimitiveShort;
-import de.fhdo.lemma.data.PrimitiveString;
 import de.fhdo.lemma.data.PrimitiveType;
 import de.fhdo.lemma.data.PrimitiveTypeConstants;
 import de.fhdo.lemma.data.PrimitiveValue;
-import de.fhdo.lemma.utils.LemmaUtils;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.Map;
 import org.apache.avro.JsonProperties;
 import org.apache.avro.LogicalType;
 import org.apache.avro.Schema;
-import org.apache.commons.codec.binary.Hex;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
-import org.eclipse.xtext.xbase.lib.Conversions;
-import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function0;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
@@ -94,17 +78,17 @@ public final class Shared {
       return _builder.toString();
     }
   }
-  
+
   /**
    * Name of the Avro technology within the corresponding LEMMA technology model
    */
   public static final String AVRO_TECHNOLOGY_NAME = "Avro";
-  
+
   /**
    * Names of LEMMA technology aspects to identify Avro records that represent errors
    */
   public static final String ERROR_ASPECT = "AvroError";
-  
+
   public static final String ERROR_ASPECT_FULLY_QUALIFIED = new Function0<String>() {
     @Override
     public String apply() {
@@ -115,12 +99,12 @@ public final class Shared {
       return _builder.toString();
     }
   }.apply();
-  
+
   /**
    * Names of LEMMA technology aspects for Avro Fixed types
    */
   public static final String FIXED_ASPECT = "AvroFixed";
-  
+
   public static final String FIXED_ASPECT_FULLY_QUALIFIED = new Function0<String>() {
     @Override
     public String apply() {
@@ -131,9 +115,9 @@ public final class Shared {
       return _builder.toString();
     }
   }.apply();
-  
+
   public static final String FIXED_SIZE_ASPECT = "AvroFixedSize";
-  
+
   public static final String FIXED_SIZE_ASPECT_FULLY_QUALIFIED = new Function0<String>() {
     @Override
     public String apply() {
@@ -145,12 +129,12 @@ public final class Shared {
       return _plus;
     }
   }.apply();
-  
+
   /**
    * Names of LEMMA technology aspects for Avro Map types
    */
   public static final String MAP_ASPECT = "AvroMap";
-  
+
   public static final String MAP_ASPECT_FULLY_QUALIFIED = new Function0<String>() {
     @Override
     public String apply() {
@@ -161,9 +145,9 @@ public final class Shared {
       return _builder.toString();
     }
   }.apply();
-  
+
   public static final String MAP_KEY_ASPECT = "AvroMapKey";
-  
+
   public static final String MAP_KEY_ASPECT_FULLY_QUALIFIED = new Function0<String>() {
     @Override
     public String apply() {
@@ -174,9 +158,9 @@ public final class Shared {
       return _builder.toString();
     }
   }.apply();
-  
+
   public static final String MAP_VALUE_ASPECT = "AvroMapValue";
-  
+
   public static final String MAP_VALUE_ASPECT_FULLY_QUALIFIED = new Function0<String>() {
     @Override
     public String apply() {
@@ -188,12 +172,12 @@ public final class Shared {
       return _plus;
     }
   }.apply();
-  
+
   /**
    * Names of LEMMA technology aspects for Avro Union types
    */
   public static final String UNION_ASPECT = "AvroUnion";
-  
+
   public static final String UNION_ASPECT_FULLY_QUALIFIED = new Function0<String>() {
     @Override
     public String apply() {
@@ -204,7 +188,7 @@ public final class Shared {
       return _builder.toString();
     }
   }.apply();
-  
+
   /**
    * Convert the given qualified string to a LEMMA-compatible namespace
    */
@@ -215,7 +199,7 @@ public final class Shared {
     }
     return _replaceAll;
   }
-  
+
   /**
    * Convert the given qualified string to an Avro-compatible namespace
    */
@@ -226,7 +210,7 @@ public final class Shared {
     }
     return _replaceAll;
   }
-  
+
   /**
    * Convert a value in a primitive LEMMA type to the corresponding Avro primitive value
    */
@@ -350,7 +334,7 @@ public final class Shared {
     }
     return _switchResult;
   }
-  
+
   /**
    * Get the default value for a complex Avro type that represents the type-specific "empty"
    * value
@@ -360,14 +344,14 @@ public final class Shared {
     Shared.complexTypeVisitingStack.clear();
     return result;
   }
-  
+
   /**
    * Internal stack and helper to get the type-specific "empty" default value for a complex Avro
    * type. The stack is used in the traversal of Avro Record types, whose fields may again have
    * Avro Record types, to prevent infinite looping.
    */
   private static final ArrayList<String> complexTypeVisitingStack = CollectionLiterals.<String>newArrayList();
-  
+
   private static Object getEmptyComplexAvroValueInternal(final Schema complexType) {
     Object _switchResult = null;
     Schema.Type _type = complexType.getType();
@@ -412,7 +396,7 @@ public final class Shared {
     }
     return _switchResult;
   }
-  
+
   /**
    * Get the type-specific default value of the given Avro schema
    */
@@ -438,20 +422,20 @@ public final class Shared {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Avro Logical Type for LEMMA's built-in date primitive
    */
   private static final String PRIMITIVE_DATE_AVRO_SCHEMA_NAME = "timestamp-micros";
-  
+
   private static final Schema PRIMITIVE_DATE_AVRO_SCHEMA = Shared.logicalType("long", 
     Shared.PRIMITIVE_DATE_AVRO_SCHEMA_NAME);
-  
+
   /**
    * Map of Avro primitive schemas and instances of their corresponding default value
    */
   private static final Map<String, Pair<Schema, ?>> PRIMITIVE_AVRO_TYPE_SCHEMAS = Collections.<String, Pair<Schema, ?>>unmodifiableMap(CollectionLiterals.<String, Pair<Schema, ?>>newHashMap(Pair.<String, Pair<Schema, Boolean>>of("boolean", Pair.<Schema, Boolean>of(Schema.create(Schema.Type.BOOLEAN), new Boolean(false))), Pair.<String, Pair<Schema, String>>of("bytes", Pair.<Schema, String>of(Schema.create(Schema.Type.BYTES), new String("0"))), Pair.<String, Pair<Schema, Integer>>of("double", Pair.<Schema, Integer>of(Schema.create(Schema.Type.DOUBLE), new Integer(0))), Pair.<String, Pair<Schema, Integer>>of("float", Pair.<Schema, Integer>of(Schema.create(Schema.Type.FLOAT), new Integer(0))), Pair.<String, Pair<Schema, Integer>>of("int", Pair.<Schema, Integer>of(Schema.create(Schema.Type.INT), new Integer(0))), Pair.<String, Pair<Schema, Integer>>of("long", Pair.<Schema, Integer>of(Schema.create(Schema.Type.LONG), new Integer(0))), Pair.<String, Pair<Schema, JsonProperties.Null>>of("null", Pair.<Schema, JsonProperties.Null>of(Schema.create(Schema.Type.NULL), Schema.NULL_VALUE)), Pair.<String, Pair<Schema, String>>of("string", Pair.<Schema, String>of(Schema.create(Schema.Type.STRING), new String(""))), Pair.<String, Pair<Schema, Integer>>of(Shared.PRIMITIVE_DATE_AVRO_SCHEMA_NAME, Pair.<Schema, Integer>of(Shared.PRIMITIVE_DATE_AVRO_SCHEMA, new Integer(0)))));
-  
+
   /**
    * Helper to create an Avo Logical Type
    */
@@ -474,7 +458,7 @@ public final class Shared {
     _builder.newLine();
     return _parser.parse(_builder.toString());
   }
-  
+
   /**
    * Convert an Avro schema into a LEMMA PrimitiveType instance
    */
@@ -533,7 +517,7 @@ public final class Shared {
     }
     return _switchResult;
   }
-  
+
   /**
    * Check if the given Avro schema represents an Avro primitive type
    */
@@ -559,7 +543,7 @@ public final class Shared {
     }
     return _or;
   }
-  
+
   /**
    * Check if the given Avro schema represents an Avro complex type
    */
@@ -571,7 +555,7 @@ public final class Shared {
       Objects.equal(schema.getType(), Schema.Type.RECORD)) || 
       Objects.equal(schema.getType(), Schema.Type.UNION));
   }
-  
+
   /**
    * Retrieve the Avro primitive type for the given LEMMA primitive type identified by its name
    */
@@ -659,137 +643,15 @@ public final class Shared {
     }
     return _switchResult;
   }
-  
+
   /**
    * Convert an Avro value string to a LEMMA PrimitiveValue for the given LEMMA PrimitiveType
    */
   public static PrimitiveValue toPrimitiveLemmaValue(final String avroValue, final PrimitiveType primitiveType) {
-    if ((avroValue == null)) {
-      return null;
-    }
-    final PrimitiveValue lemmaValue = DataFactory.eINSTANCE.createPrimitiveValue();
-    boolean _matched = false;
-    if (primitiveType instanceof PrimitiveBoolean) {
-      _matched=true;
-      lemmaValue.setBooleanValue(Boolean.valueOf(Boolean.parseBoolean(avroValue)));
-    }
-    if (!_matched) {
-      if (primitiveType instanceof PrimitiveByte) {
-        _matched=true;
-        try {
-          final byte[] bytes = Hex.decodeHex(
-            LemmaUtils.removePrefix(avroValue, "\\\\u", false));
-          int _unsignedInt = Byte.toUnsignedInt((IterableExtensions.<Byte>last(((Iterable<Byte>)Conversions.doWrapArray(bytes)))).byteValue());
-          BigDecimal _bigDecimal = new BigDecimal(_unsignedInt);
-          lemmaValue.setNumericValue(_bigDecimal);
-          BigDecimal _bigDecimal_1 = new BigDecimal(255);
-          boolean _isInClosedSet = lemmaValue.isInClosedSet(BigDecimal.ZERO, _bigDecimal_1);
-          boolean _not = (!_isInClosedSet);
-          if (_not) {
-            throw new IllegalArgumentException("Not an unsigned byte value");
-          }
-        } catch (final Throwable _t) {
-          if (_t instanceof Exception) {
-            final Exception ex = (Exception)_t;
-            StringConcatenation _builder = new StringConcatenation();
-            _builder.append("Value ");
-            _builder.append(avroValue);
-            _builder.append(" cannot be converted");
-            StringConcatenation _builder_1 = new StringConcatenation();
-            _builder_1.append("to LEMMA byte value: ");
-            String _message = ex.getMessage();
-            _builder_1.append(_message);
-            String _plus = (_builder.toString() + _builder_1);
-            throw new IllegalArgumentException(_plus);
-          } else {
-            throw Exceptions.sneakyThrow(_t);
-          }
-        }
-      }
-    }
-    if (!_matched) {
-      if (primitiveType instanceof PrimitiveCharacter) {
-        _matched=true;
-      }
-      if (!_matched) {
-        if (primitiveType instanceof PrimitiveString) {
-          _matched=true;
-        }
-      }
-      if (_matched) {
-        lemmaValue.setStringValue(avroValue);
-      }
-    }
-    if (!_matched) {
-      if (primitiveType instanceof PrimitiveDate) {
-        _matched=true;
-        lemmaValue.setStringValue(avroValue);
-        Date _asDate = lemmaValue.asDate();
-        boolean _tripleEquals = (_asDate == null);
-        if (_tripleEquals) {
-          StringConcatenation _builder = new StringConcatenation();
-          _builder.append("Value ");
-          _builder.append(avroValue);
-          _builder.append(" cannot be converted");
-          String _plus = (_builder.toString() + 
-            "to LEMMA date value: Not an ISO-8601 date ");
-          throw new IllegalArgumentException(_plus);
-        }
-      }
-    }
-    if (!_matched) {
-      if (primitiveType instanceof PrimitiveDouble) {
-        _matched=true;
-        double _parseDouble = Double.parseDouble(avroValue);
-        BigDecimal _bigDecimal = new BigDecimal(_parseDouble);
-        lemmaValue.setNumericValue(_bigDecimal);
-      }
-    }
-    if (!_matched) {
-      if (primitiveType instanceof PrimitiveFloat) {
-        _matched=true;
-        float _parseFloat = Float.parseFloat(avroValue);
-        BigDecimal _bigDecimal = new BigDecimal(_parseFloat);
-        lemmaValue.setNumericValue(_bigDecimal);
-      }
-    }
-    if (!_matched) {
-      if (primitiveType instanceof PrimitiveInteger) {
-        _matched=true;
-        int _parseInt = Integer.parseInt(avroValue);
-        BigDecimal _bigDecimal = new BigDecimal(_parseInt);
-        lemmaValue.setNumericValue(_bigDecimal);
-      }
-    }
-    if (!_matched) {
-      if (primitiveType instanceof PrimitiveLong) {
-        _matched=true;
-        long _parseLong = Long.parseLong(avroValue);
-        BigDecimal _bigDecimal = new BigDecimal(_parseLong);
-        lemmaValue.setNumericValue(_bigDecimal);
-      }
-    }
-    if (!_matched) {
-      if (primitiveType instanceof PrimitiveShort) {
-        _matched=true;
-        short _parseShort = Short.parseShort(avroValue);
-        BigDecimal _bigDecimal = new BigDecimal(_parseShort);
-        lemmaValue.setNumericValue(_bigDecimal);
-      }
-    }
-    if (!_matched) {
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append("Avro value ");
-      _builder.append(avroValue);
-      _builder.append(" of type ");
-      String _simpleName = primitiveType.getClass().getSimpleName();
-      _builder.append(_simpleName);
-      String _plus = ("Unsupported LEMMA mapping of primitive " + _builder);
-      throw new IllegalArgumentException(_plus);
-    }
-    return lemmaValue;
+    throw new Error("Unresolved compilation problems:"
+      + "\nAccess restriction: The type Hex is not accessible due to restriction on required project de.fhdo.lemma.data.avro");
   }
-  
+
   /**
    * Helper to check if an Avro schema is a named schema
    */
@@ -798,14 +660,14 @@ public final class Shared {
       Objects.equal(schema.getType(), Schema.Type.FIXED)) || 
       Objects.equal(schema.getType(), Schema.Type.RECORD));
   }
-  
+
   /**
    * Name of JSON property for the original LEMMA qualified name of a derived schema. It is used,
    * e.g., to convert Avro schemas back to LEMMA models. In case the name is present, it will
    * become the name of the resulting LEMMA model element.
    */
   private static final String LEMMA_NAME_PROP = "lemmaName";
-  
+
   /**
    * Add original LEMMA qualified name to a given schema
    */
@@ -816,14 +678,14 @@ public final class Shared {
       schema.addProp(Shared.LEMMA_NAME_PROP, name);
     }
   }
-  
+
   /**
    * Check if an Avro schema has the JSON property for LEMMA qualified names
    */
   public static boolean hasProp(final Schema schema, final String name) {
     return schema.getObjectProps().keySet().contains(name);
   }
-  
+
   /**
    * Retrieve the original qualified LEMMA name from the given schema. Returns elseStr, if the
    * schema does not exhibit the JSON property for LEMMA qualified names.
@@ -839,7 +701,7 @@ public final class Shared {
     final String name = _elvis;
     return name;
   }
-  
+
   /**
    * Retrieve the original qualified LEMMA name from the given schema, which is the value of the
    * JSON property for LEMMA qualified names. Returns null, if the JSON property is not present

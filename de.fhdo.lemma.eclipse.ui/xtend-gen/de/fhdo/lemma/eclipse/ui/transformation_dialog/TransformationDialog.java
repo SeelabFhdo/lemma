@@ -40,45 +40,45 @@ import org.slf4j.LoggerFactory;
 @SuppressWarnings("all")
 public class TransformationDialog extends TitleAreaDialog {
   private static final int MIN_DIALOG_WIDTH = 200;
-  
+
   private static final int MIN_DIALOG_HEIGHT = 120;
-  
+
   private static final String PROGRESS_TITLE_TEXT = "Performing intermediate model transformations";
-  
+
   private static final Logger LOGGER = LoggerFactory.getLogger(TransformationDialog.class);
-  
+
   private LinkedList<ModelFile> filesToTransform;
-  
+
   private boolean convertToRelativeUris;
-  
+
   private boolean outputRefinementModels;
-  
+
   private ModelFile currentModelFile;
-  
+
   private static final ResourceManager RESOURCE_MANAGER = new LocalResourceManager(JFaceResources.getResources());
-  
+
   private TransformationThread transformationThread;
-  
+
   private Button cancelButton;
-  
+
   private int currentTransformationIndex;
-  
+
   private CLabel progressTitleLabel;
-  
+
   private ProgressBar progressBar;
-  
+
   private Label progressMessageLabel;
-  
+
   private StyledText progressMessageText;
-  
+
   private boolean stopTransformations;
-  
+
   private boolean cancelPressed;
-  
+
   private boolean shellClosed;
-  
+
   private boolean ignoreAllTransformationWarnings;
-  
+
   /**
    * Constructor
    */
@@ -99,7 +99,7 @@ public class TransformationDialog extends TitleAreaDialog {
     this.convertToRelativeUris = convertToRelativeUris;
     this.outputRefinementModels = outputRefinementModels;
   }
-  
+
   /**
    * Filter input files for transformable files and order those files as per the transformation
    * strategy
@@ -111,7 +111,7 @@ public class TransformationDialog extends TitleAreaDialog {
     return strategy.sortByTransformationOrder(
       IterableExtensions.<ModelFile>toList(IterableExtensions.<ModelFile>filter(inputModelFiles, _function)));
   }
-  
+
   /**
    * Open dialog and run transformations
    */
@@ -143,7 +143,7 @@ public class TransformationDialog extends TitleAreaDialog {
     LemmaUiUtils.runEventLoop(this.getShell());
     return this.getReturnCode();
   }
-  
+
   /**
    * Transformation thread callback: Next transformation starts
    */
@@ -177,7 +177,7 @@ public class TransformationDialog extends TitleAreaDialog {
     this.progressBar.setSelection(this.currentTransformationIndex);
     return (!this.stopTransformations);
   }
-  
+
   /**
    * Transformation thread callback: Warning occurred during transformation
    */
@@ -201,7 +201,7 @@ public class TransformationDialog extends TitleAreaDialog {
     }
     return _switchResult;
   }
-  
+
   /**
    * Handle source model validation warning
    */
@@ -254,7 +254,7 @@ public class TransformationDialog extends TitleAreaDialog {
     }
     return _switchResult;
   }
-  
+
   /**
    * Handle warnings that occur after a transformation was finished
    */
@@ -262,7 +262,7 @@ public class TransformationDialog extends TitleAreaDialog {
     MessageDialog.openWarning(this.getShell(), "Warning after transformation", warningMessage);
     return true;
   }
-  
+
   /**
    * Transformation thread callback: Exception occurred during transformation
    */
@@ -322,14 +322,14 @@ public class TransformationDialog extends TitleAreaDialog {
     }
     return _switchResult;
   }
-  
+
   /**
    * Transformation thread callback: Current transformation finished
    */
   private boolean currentTransformationFinished() {
     return (!this.stopTransformations);
   }
-  
+
   /**
    * Transformation thread callback: All transformations were finished
    */
@@ -346,7 +346,7 @@ public class TransformationDialog extends TitleAreaDialog {
     }
     return false;
   }
-  
+
   /**
    * Create dialog (to be called after constructor and before open())
    */
@@ -355,7 +355,7 @@ public class TransformationDialog extends TitleAreaDialog {
     super.create();
     this.setTitle("Performing Intermediate Model Transformations");
   }
-  
+
   /**
    * Close dialog
    */
@@ -364,7 +364,7 @@ public class TransformationDialog extends TitleAreaDialog {
     TransformationDialog.RESOURCE_MANAGER.dispose();
     super.closeTray();
   }
-  
+
   /**
    * Flag to indicate that dialog is resizable
    */
@@ -372,7 +372,7 @@ public class TransformationDialog extends TitleAreaDialog {
   public boolean isResizable() {
     return true;
   }
-  
+
   /**
    * Initial size
    */
@@ -383,7 +383,7 @@ public class TransformationDialog extends TitleAreaDialog {
     int _max_1 = Math.max(this.convertVerticalDLUsToPixels(TransformationDialog.MIN_DIALOG_HEIGHT), shellSize.y);
     return new Point(_max, _max_1);
   }
-  
+
   /**
    * Internal callback for dialog area creation
    */
@@ -426,7 +426,7 @@ public class TransformationDialog extends TitleAreaDialog {
     line.setLayoutData(_gridData_5);
     return area;
   }
-  
+
   /**
    * Create buttons for the button bar
    */
@@ -435,7 +435,7 @@ public class TransformationDialog extends TitleAreaDialog {
     this.cancelButton = this.createButton(parent, IDialogConstants.CANCEL_ID, 
       IDialogConstants.CANCEL_LABEL, false);
   }
-  
+
   /**
    * User clicked close icon in the window bar
    */
@@ -443,7 +443,7 @@ public class TransformationDialog extends TitleAreaDialog {
   public void handleShellCloseEvent() {
     this.userAborted(true);
   }
-  
+
   /**
    * "Cancel" was pressed
    */
@@ -451,7 +451,7 @@ public class TransformationDialog extends TitleAreaDialog {
   public void cancelPressed() {
     this.userAborted(false);
   }
-  
+
   /**
    * User clicked on "Cancel" or the close icon in the window bar
    */

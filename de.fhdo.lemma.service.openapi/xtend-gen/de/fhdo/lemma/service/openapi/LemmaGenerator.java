@@ -39,55 +39,55 @@ public class LemmaGenerator implements Runnable {
    * SLF4j LOGGER
    */
   private static final Logger LOGGER = LoggerFactory.getLogger(LemmaGenerator.class);
-  
+
   /**
    * CLI options for standalone execution
    */
   @CommandLine.Option(names = { "-u", "--url" }, description = ("URL pointing to the OpenAPI specification " + 
     "file (file:/ or https:// URI)"), required = true)
   private String fetchUrl;
-  
+
   @CommandLine.Option(names = { "-f", "--target_folder" }, description = ("Path to the folder where the " + 
     "generated LEMMA models shall be saved"), required = true)
   private String targetFolder;
-  
+
   @CommandLine.Option(names = { "-d", "--data_model_name" }, description = ("Name for the generated LEMMA " + 
     "data model"), required = true)
   private String dataModelName;
-  
+
   @CommandLine.Option(names = { "-s", "--service_model_name" }, description = ("Name for the generated LEMMA " + 
     "service model"), required = true)
   private String serviceModelName;
-  
+
   @CommandLine.Option(names = { "-t", "--technology_model_name" }, description = ("Name for the generated " + 
     "LEMMA technology model"), required = true)
   private String technologyModelName;
-  
+
   @CommandLine.Option(names = { "-p", "--service_qualifier" }, description = ("Qualifier for generated " + 
     "LEMMA microservice definitions in Java package notation"), required = true)
   private String serviceQualifier;
-  
+
   /**
    * OpenAPI schema which will be used as source for the generation
    */
   private OpenAPI openAPI;
-  
+
   /**
    * Log of all encountered exceptions during all transformations
    */
   private List<String> transMsgs = CollectionLiterals.<String>newArrayList();
-  
+
   public List<String> getTransMsgs() {
     return Collections.<String>unmodifiableList(this.transMsgs);
   }
-  
+
   /**
    * Checks whether there currently is a parsed in-memory to start the generation process
    */
   public boolean isParsed() {
     return (this.openAPI != null);
   }
-  
+
   /**
    * Take a URL pointing to an OpenAPI specification file (JSON or YAML) and parse it using the
    * Swagger OpenAPI parsing framework. Return a list of all encountered messages during the
@@ -123,7 +123,7 @@ public class LemmaGenerator implements Runnable {
     }
     return itemizedReturnMessages;
   }
-  
+
   /**
    * Central method which generates all models
    */
@@ -162,7 +162,7 @@ public class LemmaGenerator implements Runnable {
     }
     return _xblockexpression;
   }
-  
+
   /**
    * Entrypoint for CLI-based standalone execution of the OpenAPI2LEMMA generator
    */
@@ -170,7 +170,7 @@ public class LemmaGenerator implements Runnable {
     LemmaGenerator _lemmaGenerator = new LemmaGenerator();
     CommandLine.<LemmaGenerator>run(_lemmaGenerator, args);
   }
-  
+
   /**
    * Logic for the thread-based standalone execution of the OpenAPI2LEMMA generator
    */
@@ -245,7 +245,7 @@ public class LemmaGenerator implements Runnable {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Exit standalone execution with error return code
    */

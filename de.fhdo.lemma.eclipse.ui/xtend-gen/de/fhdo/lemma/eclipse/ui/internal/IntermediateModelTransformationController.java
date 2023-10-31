@@ -41,13 +41,13 @@ import org.eclipse.xtext.xbase.lib.Pair;
 @SuppressWarnings("all")
 public class IntermediateModelTransformationController extends AbstractHandler {
   private final Shell SHELL = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-  
+
   private AbstractUiModelTransformationStrategy modelTransformationStrategy;
-  
+
   private List<String> modelFileTypeExtensions;
-  
+
   private String modelTypePrefix;
-  
+
   /**
    * Execute controller handler
    */
@@ -106,7 +106,7 @@ public class IntermediateModelTransformationController extends AbstractHandler {
     transformationHandler.execute(event);
     return null;
   }
-  
+
   /**
    * Get input files for model transformations
    */
@@ -139,7 +139,7 @@ public class IntermediateModelTransformationController extends AbstractHandler {
     selectedResources.forEach(_function);
     return inputModelFiles;
   }
-  
+
   /**
    * Check if the transformation shall be executed for models in selected resources only
    */
@@ -148,7 +148,7 @@ public class IntermediateModelTransformationController extends AbstractHandler {
       ".selectedModelsOnly"));
     return ((parameterValue != null) && Objects.equal(parameterValue.toLowerCase(), "true"));
   }
-  
+
   /**
    * Get model files from all projects in the current workspace
    */
@@ -159,14 +159,14 @@ public class IntermediateModelTransformationController extends AbstractHandler {
     };
     return MapExtensions.<IProject, List<IFile>>filter(LemmaUiUtils.findFilesInWorkspaceProjects(((String[])Conversions.unwrapArray(this.modelFileTypeExtensions, String.class))), _function);
   }
-  
+
   /**
    * Dispatcher: Find model files from IResource
    */
   private Pair<IProject, List<IFile>> _findModelFiles(final IResource project) {
     return Pair.<IProject, List<IFile>>of(null, null);
   }
-  
+
   /**
    * Dispatcher: Find model files from IProject
    */
@@ -174,7 +174,7 @@ public class IntermediateModelTransformationController extends AbstractHandler {
     List<IFile> _findFilesInProject = LemmaUiUtils.findFilesInProject(project, ((String[])Conversions.unwrapArray(this.modelFileTypeExtensions, String.class)));
     return Pair.<IProject, List<IFile>>of(project, _findFilesInProject);
   }
-  
+
   /**
    * Dispatcher: Find model files from IFolder
    */
@@ -187,7 +187,7 @@ public class IntermediateModelTransformationController extends AbstractHandler {
     List<IFile> _list = IterableExtensions.<IFile>toList(IterableExtensions.<IFile>filter(projectFiles, _function));
     return Pair.<IProject, List<IFile>>of(_project, _list);
   }
-  
+
   /**
    * Dispatcher: Find model files from IFile
    */
@@ -202,7 +202,7 @@ public class IntermediateModelTransformationController extends AbstractHandler {
     }
     return Pair.<IProject, List<IFile>>of(_project, _xifexpression);
   }
-  
+
   private Pair<IProject, List<IFile>> findModelFiles(final IResource file) {
     if (file instanceof IFile) {
       return _findModelFiles((IFile)file);

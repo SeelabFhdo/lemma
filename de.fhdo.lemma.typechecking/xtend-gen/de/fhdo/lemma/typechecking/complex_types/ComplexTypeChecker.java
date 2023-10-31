@@ -74,7 +74,7 @@ public class ComplexTypeChecker implements TypeCheckerI<ComplexType> {
     }
     return rootNodePair.isCompatible();
   }
-  
+
   /**
    * Mark a current node pair as being compatible it this decision was already made in a previous
    * run. That is, further type checks are superfluous.
@@ -92,7 +92,7 @@ public class ComplexTypeChecker implements TypeCheckerI<ComplexType> {
       return false;
     }
   }
-  
+
   /**
    * Perform type checking of the current node pair and handle its results and directly mark its
    * compatibility
@@ -140,7 +140,7 @@ public class ComplexTypeChecker implements TypeCheckerI<ComplexType> {
       }
     }
   }
-  
+
   /**
    * Check if two types are equal
    */
@@ -166,7 +166,7 @@ public class ComplexTypeChecker implements TypeCheckerI<ComplexType> {
     }
     return false;
   }
-  
+
   /**
    * Check if two DataStructures are compatible
    */
@@ -197,7 +197,7 @@ public class ComplexTypeChecker implements TypeCheckerI<ComplexType> {
     }
     return true;
   }
-  
+
   /**
    * Check if two primitively typed collections are compatible
    */
@@ -206,7 +206,7 @@ public class ComplexTypeChecker implements TypeCheckerI<ComplexType> {
     final PrimitiveType primitiveTypeToCheck = collectionToCheck.getPrimitiveType();
     return basicPrimitiveType.isCompatibleWith(primitiveTypeToCheck);
   }
-  
+
   /**
    * Check if two structured collections are compatible
    */
@@ -233,7 +233,7 @@ public class ComplexTypeChecker implements TypeCheckerI<ComplexType> {
     }
     return true;
   }
-  
+
   /**
    * Check compatibility of primitive types of lists of primitively typed DataFields
    */
@@ -273,7 +273,7 @@ public class ComplexTypeChecker implements TypeCheckerI<ComplexType> {
     }
     return true;
   }
-  
+
   /**
    * Check if two enumerations are compatible
    */
@@ -299,7 +299,7 @@ public class ComplexTypeChecker implements TypeCheckerI<ComplexType> {
     }
     return true;
   }
-  
+
   /**
    * Helper to check if an enumeration contains all initialization values of another enumeration.
    * Note, that this helper does not consider the types of the values. That is, the
@@ -325,7 +325,7 @@ public class ComplexTypeChecker implements TypeCheckerI<ComplexType> {
     final Set<String> toCheckValues = IterableExtensions.<String>toSet(IterableExtensions.<EnumerationField, String>map(IterableExtensions.<EnumerationField>filter(enumToCheck.getFields(), _function_2), _function_3));
     return basicValues.containsAll(toCheckValues);
   }
-  
+
   /**
    * Get name of a ComplexType
    */

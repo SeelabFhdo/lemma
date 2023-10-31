@@ -20,7 +20,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 @SuppressWarnings("all")
 public class ModelTableContentProvider implements IStructuredContentProvider {
   private AbstractUiModelTransformationStrategy strategy;
-  
+
   /**
    * Constructor
    */
@@ -30,7 +30,7 @@ public class ModelTableContentProvider implements IStructuredContentProvider {
     }
     this.strategy = strategy;
   }
-  
+
   /**
    * Get elements
    */

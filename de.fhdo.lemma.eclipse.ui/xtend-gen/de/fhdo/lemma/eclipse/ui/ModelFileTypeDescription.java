@@ -19,22 +19,22 @@ import org.eclipse.xtext.xbase.lib.Pure;
 public class ModelFileTypeDescription {
   @Accessors
   private String fileType;
-  
+
   @Accessors
   private Image icon;
-  
+
   @Accessors
   private String description;
-  
+
   @Accessors
   private List<String> extensions;
-  
+
   private Class<? extends AbstractIntermediateModelTransformationStrategy<?, ?>> mainTransformationStrategy;
-  
+
   private List<TransformationModelType> outputModelTypes;
-  
+
   private LinkedList<Class<? extends AbstractIntermediateModelTransformationStrategy<?, ?>>> refiningTransformationStrategies;
-  
+
   /**
    * Constructor
    */
@@ -46,7 +46,7 @@ public class ModelFileTypeDescription {
     this.mainTransformationStrategy = mainTransformationStrategy;
     this.refiningTransformationStrategies = CollectionLiterals.<Class<? extends AbstractIntermediateModelTransformationStrategy<?, ?>>>newLinkedList(refiningTransformationStrategies);
   }
-  
+
   /**
    * Factory method to create a new instance of the main transformation strategy
    */
@@ -63,14 +63,14 @@ public class ModelFileTypeDescription {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Check if the model file type can be transformed to another file
    */
   public boolean canBeTransformed() {
     return (this.mainTransformationStrategy != null);
   }
-  
+
   /**
    * If the model file type can be transformed, get output model types
    */
@@ -89,7 +89,7 @@ public class ModelFileTypeDescription {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Factory method to create a new instance of a certain refining transformation strategy
    */
@@ -107,7 +107,7 @@ public class ModelFileTypeDescription {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Get count of refining strategies
    */
@@ -120,39 +120,39 @@ public class ModelFileTypeDescription {
     }
     return _xifexpression;
   }
-  
+
   @Pure
   public String getFileType() {
     return this.fileType;
   }
-  
+
   public void setFileType(final String fileType) {
     this.fileType = fileType;
   }
-  
+
   @Pure
   public Image getIcon() {
     return this.icon;
   }
-  
+
   public void setIcon(final Image icon) {
     this.icon = icon;
   }
-  
+
   @Pure
   public String getDescription() {
     return this.description;
   }
-  
+
   public void setDescription(final String description) {
     this.description = description;
   }
-  
+
   @Pure
   public List<String> getExtensions() {
     return this.extensions;
   }
-  
+
   public void setExtensions(final List<String> extensions) {
     this.extensions = extensions;
   }

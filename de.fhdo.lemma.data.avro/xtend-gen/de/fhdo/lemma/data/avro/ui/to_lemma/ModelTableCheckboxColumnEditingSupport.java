@@ -17,9 +17,9 @@ import org.eclipse.xtext.xbase.lib.Pair;
 @SuppressWarnings("all")
 public class ModelTableCheckboxColumnEditingSupport extends EditingSupport {
   private TableViewer tableViewer;
-  
+
   private Predicate<Pair<SpecifyLemmaPathsDialog.LemmaModelKind, Boolean>> newValueValidator;
-  
+
   /**
    * Constructor
    */
@@ -28,7 +28,7 @@ public class ModelTableCheckboxColumnEditingSupport extends EditingSupport {
     this.tableViewer = tableViewer;
     this.newValueValidator = newValueValidator;
   }
-  
+
   /**
    * Editable flag
    */
@@ -36,7 +36,7 @@ public class ModelTableCheckboxColumnEditingSupport extends EditingSupport {
   protected boolean canEdit(final Object element) {
     return true;
   }
-  
+
   /**
    * Return cell editor
    */
@@ -44,7 +44,7 @@ public class ModelTableCheckboxColumnEditingSupport extends EditingSupport {
   protected CellEditor getCellEditor(final Object element) {
     return new CheckboxCellEditor(null, SWT.CHECK);
   }
-  
+
   /**
    * Get value from element (LEMMA model kind selected for transformation?)
    */
@@ -52,7 +52,7 @@ public class ModelTableCheckboxColumnEditingSupport extends EditingSupport {
   protected Object getValue(final Object element) {
     return Boolean.valueOf(((SpecifyLemmaPathsDialog.LemmaModelKind) element).selectedForTransformation);
   }
-  
+
   /**
    * Set value for element (select/deselect LEMMA model kind transformation?)
    */

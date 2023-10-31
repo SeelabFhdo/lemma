@@ -25,14 +25,14 @@ public class PrimitiveTypeChecker implements TypeCheckerI<PrimitiveType> {
   public boolean compatible(final PrimitiveType basicType, final PrimitiveType typeToCheck) {
     return this.checkCompatibility(basicType, typeToCheck);
   }
-  
+
   /**
    * Dispatcher method to check compatibility of two PrimitiveType instances
    */
   private boolean _checkCompatibility(final PrimitiveType basicType, final PrimitiveType typeToCheck) {
     return basicType.isCompatibleWith(typeToCheck);
   }
-  
+
   /**
    * Dispatcher method to check if PrimitiveType instance is compatible with
    * TechnologySpecificPrimitiveType instance
@@ -52,7 +52,7 @@ public class PrimitiveTypeChecker implements TypeCheckerI<PrimitiveType> {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Dispatcher method to check if TechnologySpecificPrimitiveType instance is compatible with
    * PrimitiveType instance
@@ -72,7 +72,7 @@ public class PrimitiveTypeChecker implements TypeCheckerI<PrimitiveType> {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Dispatcher method to check compatibility of two TechnologySpecificPrimitiveType instances
    */
@@ -85,7 +85,7 @@ public class PrimitiveTypeChecker implements TypeCheckerI<PrimitiveType> {
     };
     return IterableExtensions.<PrimitiveType>exists(basicType.getBasicBuiltinPrimitiveTypes(), _function);
   }
-  
+
   /**
    * Get name of primitive or technology-specific primitive type
    */
@@ -93,7 +93,7 @@ public class PrimitiveTypeChecker implements TypeCheckerI<PrimitiveType> {
   public String typeName(final PrimitiveType type) {
     return TypecheckingUtils.getTypeName(type);
   }
-  
+
   private boolean checkCompatibility(final PrimitiveType basicType, final PrimitiveType typeToCheck) {
     if (basicType instanceof TechnologySpecificPrimitiveType
          && typeToCheck instanceof TechnologySpecificPrimitiveType) {

@@ -35,23 +35,23 @@ import org.eclipse.xtext.xbase.lib.MapExtensions;
 @SuppressWarnings("all")
 public abstract class AbstractEmftvmIntermediateModelTransformationStrategy extends AbstractIntermediateModelTransformationStrategy<Model, Model> {
   private EmftvmFactory emftvmFactory;
-  
+
   private ExecEnv executionEnvironment;
-  
+
   private ResourceSet resourceSet;
-  
+
   private Map<TransformationModelDescription, Model> potentialOutputModels = CollectionLiterals.<TransformationModelDescription, Model>newHashMap();
-  
+
   /**
    * Get the platform path to the folder that holds the transformation model file
    */
   public abstract String getModelTransformationFilePlatformFolder();
-  
+
   /**
    * Get the name of the transformation model file
    */
   public abstract String getModelTransformationFileName();
-  
+
   /**
    * Constructor
    */
@@ -61,7 +61,7 @@ public abstract class AbstractEmftvmIntermediateModelTransformationStrategy exte
     this.executionEnvironment = this.emftvmFactory.createExecEnv();
     this.resourceSet = this.setupResourceSet();
   }
-  
+
   /**
    * Helper to create the resource set used by the transformation
    */
@@ -76,7 +76,7 @@ public abstract class AbstractEmftvmIntermediateModelTransformationStrategy exte
     extensionToFactoryMap.put("ecore", _ecoreResourceFactoryImpl);
     return rs;
   }
-  
+
   /**
    * Prepare model transformation
    */
@@ -102,7 +102,7 @@ public abstract class AbstractEmftvmIntermediateModelTransformationStrategy exte
     };
     modelDescriptions.forEach(_function_1);
   }
-  
+
   /**
    * Create transformation-technology-specific input model instance
    */
@@ -117,7 +117,7 @@ public abstract class AbstractEmftvmIntermediateModelTransformationStrategy exte
     }
     return model;
   }
-  
+
   /**
    * Create transformation-technology-specific output model instance
    */
@@ -140,7 +140,7 @@ public abstract class AbstractEmftvmIntermediateModelTransformationStrategy exte
     }
     return _xifexpression;
   }
-  
+
   /**
    * Execute EMFTVM transformation
    */
@@ -177,7 +177,7 @@ public abstract class AbstractEmftvmIntermediateModelTransformationStrategy exte
     };
     return MapExtensions.<TransformationModelDescription, Model, Resource>mapValues(MapExtensions.<TransformationModelDescription, Model>filter(this.potentialOutputModels, _function), _function_1);
   }
-  
+
   /**
    * Helper to register models and their descriptions in EMFTVM's execution environment
    */
@@ -187,7 +187,7 @@ public abstract class AbstractEmftvmIntermediateModelTransformationStrategy exte
     };
     models.forEach(_function);
   }
-  
+
   /**
    * Helper to register a single model in EMFTVM's execution environment
    */

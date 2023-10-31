@@ -55,13 +55,13 @@ public class AvroToLemmaDialog extends TitleAreaDialog {
   public static class AvroNamespace {
     @Accessors(AccessorType.PUBLIC_GETTER)
     private String namespace;
-    
+
     @Accessors
     private AvroToLemmaDialog.AvroProtocol parent;
-    
+
     @Accessors(AccessorType.PUBLIC_GETTER)
     private List<AvroToLemmaDialog.AvroSchemaWithNamespace> children;
-    
+
     /**
      * Constructor
      */
@@ -69,7 +69,7 @@ public class AvroToLemmaDialog extends TitleAreaDialog {
       this.namespace = namespace;
       this.children = CollectionLiterals.<AvroToLemmaDialog.AvroSchemaWithNamespace>newArrayList();
     }
-    
+
     /**
      * Add child Avro schema
      */
@@ -77,7 +77,7 @@ public class AvroToLemmaDialog extends TitleAreaDialog {
       AvroToLemmaDialog.AvroSchemaWithNamespace _avroSchemaWithNamespace = new AvroToLemmaDialog.AvroSchemaWithNamespace(schema, this, null);
       return this.children.add(_avroSchemaWithNamespace);
     }
-    
+
     /**
      * Compare with Object
      */
@@ -104,7 +104,7 @@ public class AvroToLemmaDialog extends TitleAreaDialog {
       }
       return _xifexpression;
     }
-    
+
     /**
      * Get hash code
      */
@@ -118,43 +118,43 @@ public class AvroToLemmaDialog extends TitleAreaDialog {
       }
       return _xifexpression;
     }
-    
+
     @Pure
     public String getNamespace() {
       return this.namespace;
     }
-    
+
     @Pure
     public AvroToLemmaDialog.AvroProtocol getParent() {
       return this.parent;
     }
-    
+
     public void setParent(final AvroToLemmaDialog.AvroProtocol parent) {
       this.parent = parent;
     }
-    
+
     @Pure
     public List<AvroToLemmaDialog.AvroSchemaWithNamespace> getChildren() {
       return this.children;
     }
   }
-  
+
   /**
    * Intermediate class to represent an Avro schema inside the tree viewer
    */
   public static class AvroSchemaWithNamespace {
     @Accessors(AccessorType.PUBLIC_GETTER)
     private Schema schema;
-    
+
     @Accessors(AccessorType.PUBLIC_GETTER)
     private AvroToLemmaDialog.AvroNamespace namespace;
-    
+
     @Accessors(AccessorType.PUBLIC_GETTER)
     private AvroToLemmaDialog.AvroSchemaWithNamespace parentSchema;
-    
+
     @Accessors(AccessorType.PUBLIC_GETTER)
     private List<AvroToLemmaDialog.AvroSchemaWithNamespace> children;
-    
+
     /**
      * Constructor
      */
@@ -175,7 +175,7 @@ public class AvroToLemmaDialog extends TitleAreaDialog {
       }
       this.children = _xifexpression;
     }
-    
+
     /**
      * Get parent schema or namespace
      */
@@ -188,7 +188,7 @@ public class AvroToLemmaDialog extends TitleAreaDialog {
       }
       return _xifexpression;
     }
-    
+
     /**
      * Compare with Object (does not correspond to equals()-contract on purpose)
      */
@@ -196,7 +196,7 @@ public class AvroToLemmaDialog extends TitleAreaDialog {
     public boolean equals(final Object o) {
       return Objects.equal(this.schema, o);
     }
-    
+
     /**
      * Get hash code
      */
@@ -204,38 +204,38 @@ public class AvroToLemmaDialog extends TitleAreaDialog {
     public int hashCode() {
       return this.schema.hashCode();
     }
-    
+
     @Pure
     public Schema getSchema() {
       return this.schema;
     }
-    
+
     @Pure
     public AvroToLemmaDialog.AvroNamespace getNamespace() {
       return this.namespace;
     }
-    
+
     @Pure
     public AvroToLemmaDialog.AvroSchemaWithNamespace getParentSchema() {
       return this.parentSchema;
     }
-    
+
     @Pure
     public List<AvroToLemmaDialog.AvroSchemaWithNamespace> getChildren() {
       return this.children;
     }
   }
-  
+
   /**
    * Intermediate class to represent an Avro protocol inside the tree viewer
    */
   public static class AvroProtocol {
     @Accessors(AccessorType.PUBLIC_GETTER)
     private Protocol protocol;
-    
+
     @Accessors(AccessorType.PUBLIC_GETTER)
     private List<AvroToLemmaDialog.AvroNamespace> children;
-    
+
     /**
      * Constructor
      */
@@ -243,7 +243,7 @@ public class AvroToLemmaDialog extends TitleAreaDialog {
       this.protocol = protocol;
       this.children = children;
     }
-    
+
     /**
      * Add child Avro namespace
      */
@@ -255,44 +255,44 @@ public class AvroToLemmaDialog extends TitleAreaDialog {
       }
       return _xblockexpression;
     }
-    
+
     @Pure
     public Protocol getProtocol() {
       return this.protocol;
     }
-    
+
     @Pure
     public List<AvroToLemmaDialog.AvroNamespace> getChildren() {
       return this.children;
     }
   }
-  
+
   private static final int MIN_DIALOG_WIDTH = 500;
-  
+
   private static final int MIN_DIALOG_HEIGHT = 250;
-  
+
   private static final int CONTINUE_WITH_ALL = 2;
-  
+
   private TreeViewer treeViewer;
-  
+
   private String avroFilename;
-  
+
   private String schemaName;
-  
+
   private String schemaNamespace;
-  
+
   private String schemaDocumentation;
-  
+
   private List<Schema> initialSchemas;
-  
+
   private Protocol protocol;
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private Protocol selectedProtocol;
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private List<Schema> selectedSchemas = CollectionLiterals.<Schema>emptyList();
-  
+
   /**
    * Constructor
    */
@@ -305,7 +305,7 @@ public class AvroToLemmaDialog extends TitleAreaDialog {
     this.initialSchemas = initialSchemas;
     this.protocol = protocol;
   }
-  
+
   /**
    * Create dialog (to be called after constructor and before open())
    */
@@ -321,7 +321,7 @@ public class AvroToLemmaDialog extends TitleAreaDialog {
       "to be transformed to LEMMA models.");
     this.setMessage(_plus, IMessageProvider.INFORMATION);
   }
-  
+
   /**
    * Internal callback for dialog area creation
    */
@@ -339,7 +339,7 @@ public class AvroToLemmaDialog extends TitleAreaDialog {
     this.createBottomRow(container);
     return area;
   }
-  
+
   /**
    * Create top row in the dialog comprising schema information
    */
@@ -369,7 +369,7 @@ public class AvroToLemmaDialog extends TitleAreaDialog {
     this.createSchemaInformationLine(group, "Name", _xifexpression);
     this.createSchemaInformationLine(group, "Documentation", this.schemaDocumentation);
   }
-  
+
   /**
    * Create line for schema information output
    */
@@ -382,7 +382,7 @@ public class AvroToLemmaDialog extends TitleAreaDialog {
     final Label valueLabel = new Label(parent, SWT.NONE);
     valueLabel.setText(value);
   }
-  
+
   /**
    * Create the tree viewer
    */
@@ -417,7 +417,7 @@ public class AvroToLemmaDialog extends TitleAreaDialog {
     this.createTypeColumn();
     this.treeViewer.setInput(this.toTreeElements(this.initialSchemas));
   }
-  
+
   /**
    * Create schema name tree column
    */
@@ -431,7 +431,7 @@ public class AvroToLemmaDialog extends TitleAreaDialog {
     DelegatingStyledCellLabelProvider _delegatingStyledCellLabelProvider = new DelegatingStyledCellLabelProvider(_schemaTreeLabelProvider);
     column.setLabelProvider(_delegatingStyledCellLabelProvider);
   }
-  
+
   /**
    * Create schema type tree column
    */
@@ -454,7 +454,7 @@ public class AvroToLemmaDialog extends TitleAreaDialog {
       }
     });
   }
-  
+
   /**
    * Convert the given list of Avro schemas to elements as expected by the tree viewer
    */
@@ -481,7 +481,7 @@ public class AvroToLemmaDialog extends TitleAreaDialog {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Create bottom row of dialog
    */
@@ -501,7 +501,7 @@ public class AvroToLemmaDialog extends TitleAreaDialog {
     this.createKeyEntry(key, SchemaTreeLabelProvider.NAMESPACE_ICON, "Namespace");
     this.createKeyEntry(key, SchemaTreeLabelProvider.SCHEMA_ICON, "Schema");
   }
-  
+
   /**
    * Create key entry in the given group, and with the specified icon and description
    */
@@ -517,7 +517,7 @@ public class AvroToLemmaDialog extends TitleAreaDialog {
     _builder.append(description);
     textLabel.setText(_builder.toString());
   }
-  
+
   /**
    * Create buttons for the button bar
    */
@@ -527,7 +527,7 @@ public class AvroToLemmaDialog extends TitleAreaDialog {
     this.createButton(parent, AvroToLemmaDialog.CONTINUE_WITH_ALL, "Select all schemas and continue", false);
     this.createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
   }
-  
+
   /**
    * Catch button press
    */
@@ -545,7 +545,7 @@ public class AvroToLemmaDialog extends TitleAreaDialog {
         break;
     }
   }
-  
+
   /**
    * OK button was pressed
    */
@@ -564,7 +564,7 @@ public class AvroToLemmaDialog extends TitleAreaDialog {
         "Transformation aborted."));
     }
   }
-  
+
   /**
    * Get all selected schemas from the tree
    */
@@ -589,7 +589,7 @@ public class AvroToLemmaDialog extends TitleAreaDialog {
     };
     return IterableExtensions.<Schema>toList(Iterables.<Schema>concat(IterableExtensions.<Object, List<Schema>>map(this.treeViewer.getStructuredSelection(), _function)));
   }
-  
+
   /**
    * Check if an Avro protocol is in the set of selected tree elements
    */
@@ -600,7 +600,7 @@ public class AvroToLemmaDialog extends TitleAreaDialog {
     Object _findFirst = IterableExtensions.<Object>findFirst(this.treeViewer.getStructuredSelection(), _function);
     return (_findFirst != null);
   }
-  
+
   /**
    * Set the protocol as selected element for callers
    */
@@ -608,7 +608,7 @@ public class AvroToLemmaDialog extends TitleAreaDialog {
     this.selectedProtocol = this.protocol;
     super.okPressed();
   }
-  
+
   /**
    * Check if the given list of schemas corresponds to the list of all available schemas
    */
@@ -617,7 +617,7 @@ public class AvroToLemmaDialog extends TitleAreaDialog {
     int _size_1 = this.initialSchemas.size();
     return (_size == _size_1);
   }
-  
+
   /**
    * Set the given schemas as selected elements for callers
    */
@@ -625,7 +625,7 @@ public class AvroToLemmaDialog extends TitleAreaDialog {
     this.selectedSchemas = schemas;
     super.okPressed();
   }
-  
+
   /**
    * Button to continue with all transformable elements was pressed
    */
@@ -636,7 +636,7 @@ public class AvroToLemmaDialog extends TitleAreaDialog {
       this.returnSchemas(this.initialSchemas);
     }
   }
-  
+
   /**
    * Flag to indicate that dialog is resizable
    */
@@ -644,7 +644,7 @@ public class AvroToLemmaDialog extends TitleAreaDialog {
   public boolean isResizable() {
     return true;
   }
-  
+
   /**
    * Initial size
    */
@@ -655,12 +655,12 @@ public class AvroToLemmaDialog extends TitleAreaDialog {
     int _max_1 = Math.max(this.convertVerticalDLUsToPixels(AvroToLemmaDialog.MIN_DIALOG_HEIGHT), shellSize.y);
     return new Point(_max, _max_1);
   }
-  
+
   @Pure
   public Protocol getSelectedProtocol() {
     return this.selectedProtocol;
   }
-  
+
   @Pure
   public List<Schema> getSelectedSchemas() {
     return this.selectedSchemas;

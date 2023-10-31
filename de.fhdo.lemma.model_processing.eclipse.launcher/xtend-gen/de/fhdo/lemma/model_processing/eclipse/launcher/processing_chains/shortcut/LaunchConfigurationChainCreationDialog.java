@@ -61,43 +61,43 @@ import org.eclipse.xtext.xbase.lib.Procedures.Procedure2;
 @SuppressWarnings("all")
 public final class LaunchConfigurationChainCreationDialog extends TitleAreaDialog implements PropertyChangeListener {
   private static final LocalResourceManager RESOURCE_MANAGER = new LocalResourceManager(JFaceResources.getResources());
-  
+
   private static final Image MOVE_DOWN_IMAGE = LemmaUiUtils.createImage(
     LaunchConfigurationChainCreationDialog.RESOURCE_MANAGER, LaunchConfigurationChainCreationDialog.class, 
     "moveDown.png");
-  
+
   private static final Image MOVE_RIGHT_IMAGE = LemmaUiUtils.createImage(
     LaunchConfigurationChainCreationDialog.RESOURCE_MANAGER, LaunchConfigurationChainCreationDialog.class, 
     "moveRight.png");
-  
+
   private static final Image MOVE_UP_IMAGE = LemmaUiUtils.createImage(
     LaunchConfigurationChainCreationDialog.RESOURCE_MANAGER, LaunchConfigurationChainCreationDialog.class, 
     "moveUp.png");
-  
+
   private static final Image REMOVE_IMAGE = LemmaUiUtils.createImage(
     LaunchConfigurationChainCreationDialog.RESOURCE_MANAGER, LaunchConfigurationChainCreationDialog.class, 
     "remove.png");
-  
+
   private final Map<String, ILaunchConfiguration> availableLaunchConfigurations;
-  
+
   private final ProcessingChainWithLaunchConfigurationName chainTemplate;
-  
+
   private TableViewer launchConfigurationsTable;
-  
+
   private TableViewer chainTable;
-  
+
   private Button storeButton;
-  
+
   private Button runButton;
-  
+
   private final DataBindingContext dataBindingContext = new DataBindingContext();
-  
+
   private final ArrayList<ControlDecoration> currentDecorations = CollectionLiterals.<ControlDecoration>newArrayList();
-  
+
   private final Procedure2<? super ProcessingChainWithLaunchConfigurationName, ? super Map<String, ILaunchConfiguration>> runCallback;
-  
+
   private final Procedure2<? super ProcessingChainWithLaunchConfigurationName, ? super Map<String, ILaunchConfiguration>> storeCallback;
-  
+
   /**
    * Constructor
    */
@@ -111,7 +111,7 @@ public final class LaunchConfigurationChainCreationDialog extends TitleAreaDialo
     this.chainTemplate.setLaunchConfigurationName(LaunchConfigurationConstants.LAUNCH_MANAGER.generateLaunchConfigurationName("LEMMA_Model_Processor_Chain"));
     this.chainTemplate.addPropertyChangeListener(this);
   }
-  
+
   /**
    * Create the dialog
    */
@@ -122,7 +122,7 @@ public final class LaunchConfigurationChainCreationDialog extends TitleAreaDialo
     this.setMessage(("Use this dialog to assemble a LEMMA Model Processing Chain that executes " + 
       "launch configurations for LEMMA model processors in a given order"));
   }
-  
+
   /**
    * Create the dialog area
    */
@@ -140,7 +140,7 @@ public final class LaunchConfigurationChainCreationDialog extends TitleAreaDialo
     this.createChainTableAndButtons(container);
     return container;
   }
-  
+
   /**
    * Create the text field for the name of the model processing chain launch configuration
    */
@@ -172,7 +172,7 @@ public final class LaunchConfigurationChainCreationDialog extends TitleAreaDialo
     }
     return _xblockexpression;
   }
-  
+
   /**
    * Create the table of all available model processing launch configurations
    */
@@ -212,7 +212,7 @@ public final class LaunchConfigurationChainCreationDialog extends TitleAreaDialo
     });
     this.launchConfigurationsTable.setInput(this.availableLaunchConfigurations);
   }
-  
+
   /**
    * Create the button to move an available model processing launch configuration to the chain
    */
@@ -248,14 +248,14 @@ public final class LaunchConfigurationChainCreationDialog extends TitleAreaDialo
     };
     button.addListener(SWT.Selection, _function);
   }
-  
+
   /**
    * Synchronize the chain table with the chain's backing domain object
    */
   private void syncChainTable() {
     this.chainTable.setInput(this.chainTemplate.getEntries());
   }
-  
+
   /**
    * Create the chain table and the buttons for the manipulation of entries
    */
@@ -294,7 +294,7 @@ public final class LaunchConfigurationChainCreationDialog extends TitleAreaDialo
     });
     this.createChainTableButtons(group);
   }
-  
+
   /**
    * Create the buttons for the manipulation of chain table entries
    */
@@ -306,7 +306,7 @@ public final class LaunchConfigurationChainCreationDialog extends TitleAreaDialo
     this.createMoveUpButton(buttonRow);
     this.createMoveDownButton(buttonRow);
   }
-  
+
   /**
    * Create the button to remove selected entries from the chain table
    */
@@ -330,7 +330,7 @@ public final class LaunchConfigurationChainCreationDialog extends TitleAreaDialo
     };
     button.addListener(SWT.Selection, _function);
   }
-  
+
   /**
    * Create the button to move an entry up the chain table
    */
@@ -356,7 +356,7 @@ public final class LaunchConfigurationChainCreationDialog extends TitleAreaDialo
     };
     button.addListener(SWT.Selection, _function);
   }
-  
+
   /**
    * Create the button to move an entry down the chain table
    */
@@ -382,7 +382,7 @@ public final class LaunchConfigurationChainCreationDialog extends TitleAreaDialo
     };
     button.addListener(SWT.Selection, _function);
   }
-  
+
   /**
    * Create the buttons for the dialog's button bar
    */
@@ -394,7 +394,7 @@ public final class LaunchConfigurationChainCreationDialog extends TitleAreaDialo
     this.runButton = this.createButton(parent, IDialogConstants.OK_ID, "Run", true);
     this.updateDialogFromChainValidity();
   }
-  
+
   /**
    * React to the change of a property of the chain. This callback will be triggered, e.g., when
    * a user moves an entry up the chain.
@@ -403,7 +403,7 @@ public final class LaunchConfigurationChainCreationDialog extends TitleAreaDialo
   public final void propertyChange(final PropertyChangeEvent event) {
     this.updateDialogFromChainValidity();
   }
-  
+
   /**
    * Update the dialog's appearance from the chain's validity
    */
@@ -412,7 +412,7 @@ public final class LaunchConfigurationChainCreationDialog extends TitleAreaDialo
     this.storeButton.setEnabled(chainIsValid);
     this.runButton.setEnabled(chainIsValid);
   }
-  
+
   /**
    * Helper to check if the given chain is valid
    */
@@ -434,7 +434,7 @@ public final class LaunchConfigurationChainCreationDialog extends TitleAreaDialo
     }
     return _xtrycatchfinallyexpression;
   }
-  
+
   /**
    * Open the dialog
    */
@@ -448,7 +448,7 @@ public final class LaunchConfigurationChainCreationDialog extends TitleAreaDialo
     }
     return super.open();
   }
-  
+
   /**
    * Catch button press
    */
@@ -460,7 +460,7 @@ public final class LaunchConfigurationChainCreationDialog extends TitleAreaDialo
       super.buttonPressed(buttonId);
     }
   }
-  
+
   /**
    * React to "Store Without Running" button click
    */
@@ -468,7 +468,7 @@ public final class LaunchConfigurationChainCreationDialog extends TitleAreaDialo
     this.storeCallback.apply(this.chainTemplate, this.availableLaunchConfigurations);
     super.okPressed();
   }
-  
+
   /**
    * React to OK ("Run") button click
    */
@@ -477,7 +477,7 @@ public final class LaunchConfigurationChainCreationDialog extends TitleAreaDialo
     this.runCallback.apply(this.chainTemplate, this.availableLaunchConfigurations);
     super.okPressed();
   }
-  
+
   /**
    * Close the dialog
    */
@@ -495,7 +495,7 @@ public final class LaunchConfigurationChainCreationDialog extends TitleAreaDialo
     }
     return _xblockexpression;
   }
-  
+
   /**
    * Flag to indicate that the dialog is resizable
    */
@@ -503,7 +503,7 @@ public final class LaunchConfigurationChainCreationDialog extends TitleAreaDialo
   public final boolean isResizable() {
     return true;
   }
-  
+
   /**
    * Get dialog's initial size
    */

@@ -36,23 +36,23 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 public final class ProcessingChainLaunchesExecutor extends Thread implements ILaunchesListener2 {
   private static final String LAUNCHES_IDENTIFIER_ATTRIBUTE_NAME = (("lemma" + 
     ProcessingChainLaunchesExecutor.class.getName()) + "LaunchesIdentifier");
-  
+
   private final String chainName;
-  
+
   private final ProcessingChain chain;
-  
+
   private final Map<String, ILaunchConfiguration> processingLaunchConfigurations;
-  
+
   private final IProgressMonitor monitor;
-  
+
   private final String launchesIdentifier;
-  
+
   private int currentEntryIndex;
-  
+
   private MessageConsole console;
-  
+
   private MessageConsoleStream infoStream;
-  
+
   /**
    * Constructor
    */
@@ -63,7 +63,7 @@ public final class ProcessingChainLaunchesExecutor extends Thread implements ILa
     this.monitor = monitor;
     this.launchesIdentifier = UUID.randomUUID().toString();
   }
-  
+
   /**
    * Run the Thread
    */
@@ -75,7 +75,7 @@ public final class ProcessingChainLaunchesExecutor extends Thread implements ILa
     this.infoStream = this.console.newMessageStream();
     this.launch(this.chain, this.currentEntryIndex);
   }
-  
+
   /**
    * Launch the model processing configuration at the given index in the given chain
    */
@@ -105,7 +105,7 @@ public final class ProcessingChainLaunchesExecutor extends Thread implements ILa
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Callback for the termination of launches
    */
@@ -142,7 +142,7 @@ public final class ProcessingChainLaunchesExecutor extends Thread implements ILa
     this.currentEntryIndex++;
     this.launch(this.chain, this.currentEntryIndex);
   }
-  
+
   /**
    * Check if the next entry in the chain shall be executed based on the executor's state and the
    * outcome of the given ILaunch
@@ -196,7 +196,7 @@ public final class ProcessingChainLaunchesExecutor extends Thread implements ILa
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Terminate the execution of the chain and reset all resources
    */
@@ -209,15 +209,15 @@ public final class ProcessingChainLaunchesExecutor extends Thread implements ILa
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   @Override
   public final void launchesAdded(final ILaunch[] launches) {
   }
-  
+
   @Override
   public final void launchesChanged(final ILaunch[] launches) {
   }
-  
+
   @Override
   public final void launchesRemoved(final ILaunch[] launches) {
   }
