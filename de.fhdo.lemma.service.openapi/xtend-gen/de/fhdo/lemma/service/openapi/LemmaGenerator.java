@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.InputOutput;
-import org.slf4j.Logger;
 
 /**
  * Entrypoint for the generation of LEMMA models from an OpenAPI specification file (v3.0.3). The
@@ -19,7 +18,7 @@ public class LemmaGenerator implements Runnable {
   /**
    * SLF4j LOGGER
    */
-  private static final Logger LOGGER /* Skipped initializer because of errors */;
+  private static final Object LOGGER /* Skipped initializer because of errors */;
 
   /**
    * CLI options for standalone execution
@@ -91,12 +90,19 @@ public class LemmaGenerator implements Runnable {
    */
   public boolean generateModels(final String targetPath, final String dataFilename, final String technologyFilename, final String serviceFilename, final String serviceQualifier) {
     throw new Error("Unresolved compilation problems:"
+      + "\nThe field LemmaGenerator.LOGGER refers to the missing type Object"
       + "\nThe constructor LemmaDataSubGenerator(OpenAPI, String) refers to the missing type OpenAPI"
       + "\nThe field LemmaGenerator.openAPI refers to the missing type /* OpenAPI schema which will be used as source for the generation */\n    OpenAPI"
+      + "\nThe field LemmaGenerator.LOGGER refers to the missing type Object"
       + "\nThe constructor LemmaTechnologySubGenerator(OpenAPI, String) refers to the missing type OpenAPI"
       + "\nThe field LemmaGenerator.openAPI refers to the missing type /* OpenAPI schema which will be used as source for the generation */\n    OpenAPI"
+      + "\nThe field LemmaGenerator.LOGGER refers to the missing type Object"
       + "\nThe constructor LemmaServiceSubGenerator(OpenAPI, Pair<String, DataModel>, Pair<String, Technology>, String) refers to the missing type OpenAPI"
-      + "\nThe field LemmaGenerator.openAPI refers to the missing type /* OpenAPI schema which will be used as source for the generation */\n    OpenAPI");
+      + "\nThe field LemmaGenerator.openAPI refers to the missing type /* OpenAPI schema which will be used as source for the generation */\n    OpenAPI"
+      + "\nThe method generate(String) from the type LemmaServiceSubGenerator refers to the missing type Object"
+      + "\ninfo cannot be resolved"
+      + "\ninfo cannot be resolved"
+      + "\ninfo cannot be resolved");
   }
 
   /**
@@ -114,8 +120,22 @@ public class LemmaGenerator implements Runnable {
   @Override
   public void run() {
     throw new Error("Unresolved compilation problems:"
+      + "\nThe field LemmaGenerator.LOGGER refers to the missing type Object"
+      + "\nThe field LemmaGenerator.LOGGER refers to the missing type Object"
       + "\nThe method isParsed() from the type LemmaGenerator refers to the missing type Object"
-      + "\n! cannot be resolved");
+      + "\nThe field LemmaGenerator.LOGGER refers to the missing type Object"
+      + "\nThe field LemmaGenerator.LOGGER refers to the missing type Object"
+      + "\nThe field LemmaGenerator.LOGGER refers to the missing type Object"
+      + "\nThe field LemmaGenerator.LOGGER refers to the missing type Object"
+      + "\nThe field LemmaGenerator.LOGGER refers to the missing type Object"
+      + "\ninfo cannot be resolved"
+      + "\ninfo cannot be resolved"
+      + "\n! cannot be resolved"
+      + "\ninfo cannot be resolved"
+      + "\ninfo cannot be resolved"
+      + "\ninfo cannot be resolved"
+      + "\ninfo cannot be resolved"
+      + "\ninfo cannot be resolved");
   }
 
   /**

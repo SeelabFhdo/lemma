@@ -7,7 +7,7 @@ Automatic-Module-Name: de.fhdo.lemma.operationdsl.metamodel
 Bundle-Version: 0.8.6.qualifier
 Bundle-ClassPath: .
 Bundle-Localization: plugin
-Bundle-RequiredExecutionEnvironment: JavaSE-17
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: de.fhdo.lemma.operation,
  de.fhdo.lemma.operation.impl,
  de.fhdo.lemma.operation.util,

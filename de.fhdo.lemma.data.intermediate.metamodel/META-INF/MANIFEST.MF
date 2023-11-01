@@ -7,7 +7,7 @@ Bundle-Localization: plugin
 Bundle-Version: 0.8.6.qualifier
 Bundle-ClassPath: .
 Automatic-Module-Name: de.fhdo.lemma.data.intermediate.metamodel
-Bundle-RequiredExecutionEnvironment: JavaSE-17
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: de.fhdo.lemma.data.intermediate,
  de.fhdo.lemma.data.intermediate.impl,
  de.fhdo.lemma.data.intermediate.util

@@ -111,6 +111,7 @@ public class GeneratorsTest {
   @Test
   public void serviceTest() {
     throw new Error("Unresolved compilation problems:"
+      + "\nThe method generate(String) from the type LemmaServiceSubGenerator refers to the missing type Object"
       + "\nThe constructor LemmaServiceSubGenerator(Object, Pair<String, DataModel>, Pair<String, Technology>, String) refers to the missing type Object");
   }
 }

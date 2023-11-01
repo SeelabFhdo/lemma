@@ -1,6 +1,5 @@
 plugins {
     base
-    maven
     `maven-publish`
 }
 

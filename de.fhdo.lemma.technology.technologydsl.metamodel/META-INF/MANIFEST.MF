@@ -7,7 +7,7 @@ Automatic-Module-Name: de.fhdo.lemma.technology.technologydsl.metamodel
 Bundle-Version: 0.8.6.qualifier
 Bundle-ClassPath: .
 Bundle-Localization: plugin
-Bundle-RequiredExecutionEnvironment: JavaSE-17
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: de.fhdo.lemma.technology,
  de.fhdo.lemma.technology.impl,
  de.fhdo.lemma.technology.util

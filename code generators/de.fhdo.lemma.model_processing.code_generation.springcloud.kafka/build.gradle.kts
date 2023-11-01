@@ -1,6 +1,6 @@
 plugins {
     kotlin("jvm") version "1.3.72"
-    maven
+    `maven-publish`
 }
 
 group = "de.fhdo.lemma.model_processing.code_generation.springcloud.kafka"
@@ -11,18 +11,18 @@ repositories {
 }
 
 buildscript {
-    extra.set("commonsVersion", "3.5")
+    extra.set("commonsVersion", "3.13.0")
     extra.set("coroutinesVersion", "1.1.1")
-    extra.set("groovyVersion", "3.0.3")
-    extra.set("jansiVersion", "1.17.1")
+    extra.set("groovyVersion", "3.0.19")
+    extra.set("jansiVersion", "2.4.0")
     extra.set("javaBaseGeneratorVersion", version)
-    extra.set("javaParserVersion", "3.24.2")
+    extra.set("javaParserVersion", "3.25.5")
     extra.set("lemmaEclipsePluginsVersion", version)
-    extra.set("log4jVersion", "2.16.0")
+    extra.set("log4jVersion", "2.20.0")
     extra.set("loggingVersion", "1.7.9")
-    extra.set("lsp4jVersion", "0.10.0")
+    extra.set("lsp4jVersion", "0.21.1")
     extra.set("modelProcessingVersion", version)
-    extra.set("picocliVersion", "3.9.3")
+    extra.set("picocliVersion", "4.7.5")
     extra.set("xmlBuilderVersion", "1.7.2")
 }
 
@@ -85,12 +85,12 @@ dependencies {
 
 tasks {
     compileKotlin {
-        kotlinOptions.jvmTarget = "11"
+        kotlinOptions.jvmTarget = "17"
         // Java Base Generator uses @JvmDefault annotation
         kotlinOptions.freeCompilerArgs = listOf("-Xjvm-default=compatibility")
     }
     compileTestKotlin {
-        kotlinOptions.jvmTarget = "11"
+        kotlinOptions.jvmTarget = "17"
         // Java Base Generator uses @JvmDefault annotation
         kotlinOptions.freeCompilerArgs = listOf("-Xjvm-default=compatibility")
     }

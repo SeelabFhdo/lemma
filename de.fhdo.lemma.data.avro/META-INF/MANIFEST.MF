@@ -4,7 +4,7 @@ Bundle-Name: de.fhdo.lemma.data.avro
 Bundle-SymbolicName: de.fhdo.lemma.data.avro;singleton:=true
 Bundle-Version: 0.8.6.qualifier
 Automatic-Module-Name: de.fhdo.lemma.data.avro
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Require-Bundle: com.google.guava,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.xtend.lib,

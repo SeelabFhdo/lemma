@@ -1,4 +1,4 @@
-FROM maven:3.6.3-openjdk-11-slim
+FROM maven:3.9.4-eclipse-temurin-17
 ARG LEMMA_VERSION
 
 COPY build/libs/de.fhdo.lemma.analyzer-$LEMMA_VERSION-standalone.jar \

@@ -11,11 +11,11 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <java.version>11</java.version>
-        <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
-        <xtend.version>2.25.0</xtend.version>
+        <java.version>17</java.version>
+        <maven.compiler.plugin.version>3.11.0</maven.compiler.plugin.version>
+        <xtend.version>2.32.0</xtend.version>
         <snakeyaml.version>1.21</snakeyaml.version>
-        <maven-assembly.version>3.3.0</maven-assembly.version>
+        <maven-assembly.version>3.6.0</maven-assembly.version>
     </properties>
 
     <dependencies>

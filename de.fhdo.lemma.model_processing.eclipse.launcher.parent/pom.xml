@@ -41,18 +41,18 @@
     </profiles>
 
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <atl-version>4.4.0</atl-version>
-        <build-helper-maven-plugin-version>3.2.0</build-helper-maven-plugin-version>
-        <eclipse-version>2021-03</eclipse-version>
-        <maven-clean-plugin-version>3.1.0</maven-clean-plugin-version>
-        <maven-compiler-plugin-version>3.8.1</maven-compiler-plugin-version>
-        <maven-dependency-plugin-version>3.1.2</maven-dependency-plugin-version>
-        <tycho-version>2.3.0</tycho-version>
-        <xtext-version>2.26.0</xtext-version>
+        <atl-version>4.8.0</atl-version>
+        <build-helper-maven-plugin-version>3.4.0</build-helper-maven-plugin-version>
+        <eclipse-version>2023-06</eclipse-version>
+        <maven-clean-plugin-version>3.3.1</maven-clean-plugin-version>
+        <maven-compiler-plugin-version>3.11.0</maven-compiler-plugin-version>
+        <maven-dependency-plugin-version>3.6.0</maven-dependency-plugin-version>
+        <tycho-version>4.0.2</tycho-version>
+        <xtext-version>2.32.0</xtext-version>
     </properties>
 
     <repositories>

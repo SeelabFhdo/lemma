@@ -42,36 +42,35 @@
     </profiles>
 
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <build-helper-maven-plugin-version>3.2.0</build-helper-maven-plugin-version>
+        <build-helper-maven-plugin-version>3.4.0</build-helper-maven-plugin-version>
         <data-extractor-version>${project.version}</data-extractor-version>
         <data-metamodel-version>${project.version}</data-metamodel-version>
-        <eclipse-version>2021-03</eclipse-version>
+        <eclipse-version>2023-06</eclipse-version>
         <intermediate-data-metamodel-version>${project.version}</intermediate-data-metamodel-version>
         <lemma-utils-version>${project.version}</lemma-utils-version>
         <lemma-ui-utils-version>${project.version}</lemma-ui-utils-version>
-        <lsp4j-version>0.10.0</lsp4j-version>
+        <lsp4j-version>0.21.1</lsp4j-version>
         <mapping-extractor-version>${project.version}</mapping-extractor-version>
         <mapping-metamodel-version>${project.version}</mapping-metamodel-version>
-        <maven-assembly-plugin-version>3.3.0</maven-assembly-plugin-version>
-        <maven-clean-plugin-version>3.1.0</maven-clean-plugin-version>
-        <maven-compiler-plugin-version>3.8.1</maven-compiler-plugin-version>
-        <maven-site-plugin-version>3.9.1</maven-site-plugin-version>
-        <maven-surefire-plugin-version>3.0.0-M5</maven-surefire-plugin-version>
+        <maven-assembly-plugin-version>3.6.0</maven-assembly-plugin-version>
+        <maven-clean-plugin-version>3.3.1</maven-clean-plugin-version>
+        <maven-compiler-plugin-version>3.11.0</maven-compiler-plugin-version>
+        <maven-site-plugin-version>4.0.0-M9</maven-site-plugin-version>
+        <maven-surefire-plugin-version>3.1.2</maven-surefire-plugin-version>
         <maven-surefire-report-plugin-version>${maven-surefire-plugin-version}</maven-surefire-report-plugin-version>
         <maven-assembly-plugin-version>3.3.0</maven-assembly-plugin-version>
         <service-metamodel-version>${project.version}</service-metamodel-version>
         <service-extractor-version>${project.version}</service-extractor-version>
         <technology-metamodel-version>${project.version}</technology-metamodel-version>
         <technology-extractor-version>${project.version}</technology-extractor-version>
-        <tycho-version>2.3.0</tycho-version>
-        <junit-version>4.13</junit-version>
-        <maven-site-plugin-version>3.9.1</maven-site-plugin-version>
-        <xtext-version>2.25.0</xtext-version>
-        <versions-maven-plugin-version>2.8.1</versions-maven-plugin-version>
+        <tycho-version>4.0.2</tycho-version>
+        <junit-version>4.13.2</junit-version>
+        <xtext-version>2.32.0</xtext-version>
+        <versions-maven-plugin-version>2.16.0</versions-maven-plugin-version>
     </properties>
 
     <repositories>

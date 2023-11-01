@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import org.eclipse.jface.text.source.IAnnotationModel;
-import org.eclipse.lsp4j.DiagnosticSeverity;
-import org.eclipse.xtext.diagnostics.Severity;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
@@ -19,7 +17,6 @@ import org.eclipse.xtext.ui.validation.MarkerTypeProvider;
 import org.eclipse.xtext.util.CancelIndicator;
 import org.eclipse.xtext.util.concurrent.CancelableUnitOfWork;
 import org.eclipse.xtext.validation.CheckMode;
-import org.eclipse.xtext.validation.CheckType;
 import org.eclipse.xtext.validation.IResourceValidator;
 import org.eclipse.xtext.validation.Issue;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
@@ -105,36 +102,9 @@ public class LiveValidationCapableXtextEditor extends XtextEditor {
    * Issue
    */
   private Issue xtextIssue(final IssueDiagnostic issue) {
-    final Issue.IssueImpl xtextIssue = new Issue.IssueImpl();
-    Severity _switchResult = null;
-    DiagnosticSeverity _severity = issue.getSeverity();
-    if (_severity != null) {
-      switch (_severity) {
-        case Error:
-          _switchResult = Severity.ERROR;
-          break;
-        case Information:
-          _switchResult = Severity.INFO;
-          break;
-        case Warning:
-          _switchResult = Severity.WARNING;
-          break;
-        default:
-          _switchResult = Severity.INFO;
-          break;
-      }
-    } else {
-      _switchResult = Severity.INFO;
-    }
-    xtextIssue.setSeverity(_switchResult);
-    xtextIssue.setLineNumber(Integer.valueOf(issue.getRange().getLineNumber()));
-    xtextIssue.setColumn(Integer.valueOf(issue.getRange().getColumn()));
-    xtextIssue.setOffset(Integer.valueOf(issue.getRange().getOffset()));
-    xtextIssue.setLength(Integer.valueOf(issue.getRange().getLength()));
-    String _message = issue.getMessage();
-    String _plus = ("Live Validation: " + _message);
-    xtextIssue.setMessage(_plus);
-    xtextIssue.setType(CheckType.FAST);
-    return xtextIssue;
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method or field severity is undefined for the type IssueDiagnostic"
+      + "\nThe method or field Information is undefined"
+      + "\nThe method or field Warning is undefined");
   }
 }

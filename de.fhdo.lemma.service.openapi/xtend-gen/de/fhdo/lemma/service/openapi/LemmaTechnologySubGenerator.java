@@ -12,11 +12,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import org.eclipse.xtend.lib.annotations.AccessorType;
 import org.eclipse.xtend.lib.annotations.Accessors;
-import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
-import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Pure;
-import org.slf4j.Logger;
 
 /**
  * This class is responsible for handling the generation of a LEMMA technology model for the OpenAPI
@@ -53,7 +50,7 @@ public class LemmaTechnologySubGenerator {
   /**
    * SLF4j LOGGER
    */
-  private static final Logger LOGGER /* Skipped initializer because of errors */;
+  private static final Object LOGGER /* Skipped initializer because of errors */;
 
   /**
    * Factory to actually create and manipulate a LEMMA Technology
@@ -92,7 +89,9 @@ public class LemmaTechnologySubGenerator {
    */
   public LemmaTechnologySubGenerator(final /* OpenAPI */Object api, final String targetFile) {
     throw new Error("Unresolved compilation problems:"
-      + "\nThe field LemmaTechnologySubGenerator.openApi refers to the missing type /* OpenAPI schema which will be used as source for generation */\n    OpenAPI");
+      + "\nThe field LemmaTechnologySubGenerator.LOGGER refers to the missing type Object"
+      + "\nThe field LemmaTechnologySubGenerator.openApi refers to the missing type /* OpenAPI schema which will be used as source for generation */\n    OpenAPI"
+      + "\ndebug cannot be resolved");
   }
 
   /**
@@ -100,27 +99,19 @@ public class LemmaTechnologySubGenerator {
    * instance and also serializes it to the user's harddrive.
    */
   public Technology generate() {
-    try {
-      LemmaTechnologySubGenerator.LOGGER.debug("Initializing model instance...");
-      this.initialize();
-      LemmaTechnologySubGenerator.LOGGER.debug("... technology model initialized");
-      LemmaTechnologySubGenerator.LOGGER.debug("Creating protocols...");
-      this.addRestProtocol(this.technology);
-      LemmaTechnologySubGenerator.LOGGER.debug("... protocols created");
-      boolean _writeModel = OpenApiUtil.writeModel(this.technology, this.targetFile);
-      if (_writeModel) {
-        LemmaTechnologySubGenerator.LOGGER.info("Technology model generation successful");
-        StringConcatenation _builder = new StringConcatenation();
-        _builder.append("Model written to ");
-        _builder.append(this.targetFile);
-        LemmaTechnologySubGenerator.LOGGER.info(_builder.toString());
-      } else {
-        throw new Exception("Generated technology model could not be written to hard disk");
-      }
-      return this.technology;
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
-    }
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe field LemmaTechnologySubGenerator.LOGGER refers to the missing type Object"
+      + "\nThe field LemmaTechnologySubGenerator.LOGGER refers to the missing type Object"
+      + "\nThe field LemmaTechnologySubGenerator.LOGGER refers to the missing type Object"
+      + "\nThe field LemmaTechnologySubGenerator.LOGGER refers to the missing type Object"
+      + "\nThe field LemmaTechnologySubGenerator.LOGGER refers to the missing type Object"
+      + "\nThe field LemmaTechnologySubGenerator.LOGGER refers to the missing type Object"
+      + "\ndebug cannot be resolved"
+      + "\ndebug cannot be resolved"
+      + "\ndebug cannot be resolved"
+      + "\ndebug cannot be resolved"
+      + "\ninfo cannot be resolved"
+      + "\ninfo cannot be resolved");
   }
 
   /**

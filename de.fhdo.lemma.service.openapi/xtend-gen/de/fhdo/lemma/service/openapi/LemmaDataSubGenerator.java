@@ -15,7 +15,6 @@ import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Pure;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
-import org.slf4j.Logger;
 
 /**
  * This class is responsible for handling the generation of a LEMMA data model from an OpenAPI file
@@ -28,7 +27,7 @@ public class LemmaDataSubGenerator {
   /**
    * SLF4j LOGGER
    */
-  private static final Logger LOGGER /* Skipped initializer because of errors */;
+  private static final Object LOGGER /* Skipped initializer because of errors */;
 
   /**
    * Separator is used to build the full qualified names during the generation
@@ -92,12 +91,26 @@ public class LemmaDataSubGenerator {
    */
   public DataModel generate() {
     throw new Error("Unresolved compilation problems:"
+      + "\nThe field LemmaDataSubGenerator.LOGGER refers to the missing type Object"
+      + "\nThe field LemmaDataSubGenerator.LOGGER refers to the missing type Object"
+      + "\nThe field LemmaDataSubGenerator.LOGGER refers to the missing type Object"
       + "\nThe field LemmaDataSubGenerator.openAPI refers to the missing type OpenAPI"
       + "\nThere is no context to infer the closure\'s argument types from. Consider typing the arguments or put the closures into a typed context."
       + "\nThe method getOrCreateDataStructure(Context, String, Schema) from the type LemmaDataSubGenerator refers to the missing type Schema"
+      + "\nThe field LemmaDataSubGenerator.LOGGER refers to the missing type Object"
+      + "\nThe field LemmaDataSubGenerator.LOGGER refers to the missing type Object"
+      + "\nThe field LemmaDataSubGenerator.LOGGER refers to the missing type Object"
+      + "\nThe field LemmaDataSubGenerator.LOGGER refers to the missing type Object"
+      + "\ndebug cannot be resolved"
+      + "\ndebug cannot be resolved"
+      + "\ndebug cannot be resolved"
       + "\ncomponents cannot be resolved"
       + "\nschemas cannot be resolved"
-      + "\nforEach cannot be resolved");
+      + "\nforEach cannot be resolved"
+      + "\ndebug cannot be resolved"
+      + "\ndebug cannot be resolved"
+      + "\ndebug cannot be resolved"
+      + "\ndebug cannot be resolved");
   }
 
   /**
@@ -121,7 +134,11 @@ public class LemmaDataSubGenerator {
    */
   private DataStructure getOrCreateDataStructure(final Context context, final String name, final /* Schema<?> */Object schema) {
     throw new Error("Unresolved compilation problems:"
-      + "\nThe method addDataFieldsFromSchema(DataStructure, Schema) from the type LemmaDataSubGenerator refers to the missing type Schema");
+      + "\nThe field LemmaDataSubGenerator.LOGGER refers to the missing type Object"
+      + "\nThe method addDataFieldsFromSchema(DataStructure, Schema) from the type LemmaDataSubGenerator refers to the missing type Schema"
+      + "\nThe field LemmaDataSubGenerator.LOGGER refers to the missing type Object"
+      + "\ndebug cannot be resolved"
+      + "\ndebug cannot be resolved");
   }
 
   /**
@@ -164,6 +181,7 @@ public class LemmaDataSubGenerator {
       + "\nThe method throwUnsupportedSchemaType(Schema) from the type LemmaDataSubGenerator refers to the missing type Schema"
       + "\nThe field LemmaDataSubGenerator.openAPI refers to the missing type OpenAPI"
       + "\nThe method getOrCreateDataStructure(Context, String, Schema) from the type LemmaDataSubGenerator refers to the missing type Schema"
+      + "\nThe field LemmaDataSubGenerator.LOGGER refers to the missing type Object"
       + "\nThe method throwUnsupportedSchemaType(Schema) from the type LemmaDataSubGenerator refers to the missing type Schema"
       + "\ntype cannot be resolved"
       + "\nitems cannot be resolved"
@@ -181,7 +199,8 @@ public class LemmaDataSubGenerator {
       + "\nget cannot be resolved"
       + "\n!== cannot be resolved"
       + "\n&& cannot be resolved"
-      + "\n!== cannot be resolved");
+      + "\n!== cannot be resolved"
+      + "\ninfo cannot be resolved");
   }
 
   /**
@@ -201,7 +220,11 @@ public class LemmaDataSubGenerator {
    */
   private CollectionType getOrCreateStructuredCollectionType(final Context context, final String name, final /* Schema<?> */Object schema) {
     throw new Error("Unresolved compilation problems:"
-      + "\nThe method generateDataField(String, Schema) from the type LemmaDataSubGenerator refers to the missing type Schema");
+      + "\nThe field LemmaDataSubGenerator.LOGGER refers to the missing type Object"
+      + "\nThe method generateDataField(String, Schema) from the type LemmaDataSubGenerator refers to the missing type Schema"
+      + "\nThe field LemmaDataSubGenerator.LOGGER refers to the missing type Object"
+      + "\ndebug cannot be resolved"
+      + "\ndebug cannot be resolved");
   }
 
   /**
