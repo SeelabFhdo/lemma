@@ -1,0 +1,25 @@
+{
+  "name": "lemma-extension-pack",
+  "displayName": "LEMMA Extension Pack",
+  "description": "Extension Pack to support the DSL's of the LEMMA ecosystem.",
+  "version": "0.8.6",
+  "publisher": "LEMMAExtensionTestingArea",
+  "icon": "SEELAB_Logo.jpg",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SeelabFhdo/lemma"
+  },
+  "engines": {
+    "vscode": "^1.79.1"
+  },
+  "categories": [
+    "Extension Packs"
+  ],
+  "extensionPack": [ 
+    "LEMMAExtensionTestingArea.lemma-data",
+    "LEMMAExtensionTestingArea.lemma-technology",
+    "LEMMAExtensionTestingArea.lemma-service",
+    "LEMMAExtensionTestingArea.lemma-operation",
+    "LEMMAExtensionTestingArea.lemma-technology-mapping"
+  ]
+}

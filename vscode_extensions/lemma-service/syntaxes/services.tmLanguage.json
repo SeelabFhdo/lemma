@@ -1,0 +1,89 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "LEMMA Service Modeling Language",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#openapi"
+		},
+		{
+			"include": "#annotations"
+		},
+		{
+			"include": "#single-line-comment"
+		},
+		{
+			"include": "#multi-line-comment"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [{
+				"name": "keyword.control.services",
+				"match": "\\b(import|from|as|datatypes|technology|microservices|internal|architecture|public|endpoints|microservice|required|interfaces|operations|typedef|noimpl|interface|version|fault|functional|utility|infrastructure|sync|in|out|inout)\\b"
+			}]
+		},
+		"strings": {
+			"name": "string.quoted.double.services",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.services",
+					"match": "\\\\."
+				}
+			]
+		},
+		"annotations": {
+			"patterns": [{
+				"name": "meta.type.annotation.serviceAnnotation",
+				"match": "@([a-z])+(?=(\\([^\\(]+\\)))"
+			},
+			{
+				"name": "meta.type.annotation.serviceAnnotation.noClosingParen",
+				"match": "@([a-z])+\\(([a-z]|[A-Z]|:|_|\\.)+"
+			},
+			{
+				"name": "meta.type.annotation.serviceAnnotation.technologyAspect",
+				"match": "@([a-z]|[A-Z])+::([a-z]|[A-Z]|_|\\.|:)*"
+			}
+		]
+		},
+		"openapi": {
+			"begin": "---",
+			"end": "---",
+			"name": "comment.block.openApi",
+			"patterns": [
+				{
+					"name": "meta.type.annotation.openApiAnnotation",
+					"match": "@(required|requires|returned|returns)"
+				},
+				{
+					"name": "markup.italic.openApi.parameter",
+					"match": "(?<=@(required|requires|returned|returns)) ([a-z]|[A-Z]|_)+"
+				},
+				{
+					"name": "comment.block.openApi",
+					"match": "(?<=@(required|requires|returned|returns)) ([a-z]|[A-Z]|_)+ .*"
+				}
+			]
+		},
+		"single-line-comment": {
+			"patterns": [{
+				"match": "\/\/.*\n?$",
+				"name": "comment.line"
+			}]
+		},
+		"multi-line-comment": {
+			"begin": "\/[*]",
+			"end": "[*]\/",
+			"name": "comment.block"
+		}
+	},
+	"scopeName": "source.services"
+}

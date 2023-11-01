@@ -1,0 +1,80 @@
+{
+  "name": "lemma-data",
+  "displayName": "LEMMA Domain Data Modeling Language",
+  "description": "Support for the Domain Data Modeling Language of the LEMMA ecosystem to create domain models",
+  "version": "0.8.6",
+  "publisher": "LEMMAExtensionTestingArea",
+  "icon": "SEELAB_Logo.jpg",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SeelabFhdo/lemma"
+  },
+  "engines": {
+    "vscode": "^1.79.1"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "main": "./out/extension",
+  "contributes": {
+    "languages": [
+      {
+        "id": "data",
+        "aliases": [
+          "LEMMA Domain Data Modeling Language",
+          "data"
+        ],
+        "extensions": [
+          ".data"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "themes": [
+      {
+        "label": "LEMMA Domain Data Modeling Language Theme",
+        "uiTheme": "vs-dark",
+        "path": "./themes/lemma-data-theme-color-theme.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "data",
+        "scopeName": "source.data",
+        "path": "./syntaxes/data.tmLanguage.json"
+      }
+    ],
+    "configuration": {
+      "title": "LEMMA Domain Data Modeling Language",
+      "properties": {
+        "data.languageServerHost": {
+          "type": ["string", "null"],
+          "default": "localhost",
+          "description": "The host the language server should listen to."
+        },
+        "data.languageServerPort": {
+          "type": ["integer", "null"],
+          "default": 5007,
+          "description": "The port the language server should listen to."
+        }
+      }
+    }
+    
+  },
+  "dependencies": {
+    "java-caller": "^3.0.0",
+    "vscode-languageclient": "^8.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.3.2",
+    "@types/vscode": "^1.79.1",
+    "@vscode/test-electron": "^2.3.3",
+    "typescript": "^5.1.3",
+    "vscode-test": "^1.6.1"
+  },
+  "scripts": {
+    "prepublish": "tsc -p ./",
+    "compile": "tsc -p ./",
+    "watch": "tsc -w -p ./"
+  }
+}
