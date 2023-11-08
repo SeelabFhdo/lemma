@@ -173,50 +173,91 @@ class LemmaDataSubGenerator {
     private def DataField generateDataField(String name, Schema<?> structureSchema) {
         val newDataField = dataFactory.createDataField
         newDataField.name = name
-
-        switch (structureSchema.type) {
-            case "array":
-                newDataField.complexType = getOrCreateStructuredCollectionType(targetContext, name,
-                    (structureSchema as ArraySchema).items)
-
-            case "boolean":
-                newDataField.primitiveType = dataFactory.createPrimitiveBoolean
-
-            case "integer":
-                newDataField.primitiveType = OpenApiUtil.deriveIntType(structureSchema.format)
-
-            case "number":
-                newDataField.primitiveType = OpenApiUtil.deriveFloatType(structureSchema.format)
-
-            case "string":
-                newDataField.primitiveType = OpenApiUtil.deriveStringType(structureSchema.format)
-
-            case null: {
-                // Currently, we only support references for untyped schemas
-                if (structureSchema.get$ref === null)
-                    throwUnsupportedSchemaType(structureSchema)
-
-                val ref = structureSchema.get$ref
-                val refName = ref.substring(ref.lastIndexOf("/") + 1)
-                val refSchema = openAPI.components.schemas.get(refName)
-                if (refName !== null && refSchema !== null)
-                    newDataField.complexType = getOrCreateDataStructure(targetContext, refName,
-                        refSchema)
-                else
-                    LOGGER.info("Encountered reference without a parseable name and/or schema. " +
-                        "The generated LEMMA data model may be incomplete.")
+        
+        // Due to the change from OpenAPI3.0 to OpenAPI3.1, the type field may or may not be
+        // filled. In some cases, the 'type' is null but the 'types' array is filled and viceversa.
+        // Unfortunately, it can also happen, that the type field is null and 'types' only has
+        // one entry. And/or that the 'properties' attribute is used instead.
+        // For more info check this:
+        // https://github.com/swagger-api/swagger-core/wiki/Swagger-2.X---OpenAPI-3.1
+        // 
+        // the following is an ugly way to deal with this mess :-/
+		if(structureSchema.properties !== null) {
+			structureSchema.types.forEach[it |
+				switch(it) {
+	 			case "array":
+	                newDataField.complexType = getOrCreateStructuredCollectionType(targetContext, name,
+	                    (structureSchema.items))
+	
+	            case "boolean":
+	                newDataField.primitiveType = dataFactory.createPrimitiveBoolean
+	
+	            case "integer":
+	                newDataField.primitiveType = OpenApiUtil.deriveIntType(structureSchema.format)
+	
+	            case "number":
+	                newDataField.primitiveType = OpenApiUtil.deriveFloatType(structureSchema.format)
+	
+	            case "string":
+	                newDataField.primitiveType = OpenApiUtil.deriveStringType(structureSchema.format)
+	
+	            default:
+	                throwUnsupportedSchemaType(structureSchema)				
+				}
+			]					
+		} else if(!structureSchema.types.isNullOrEmpty) {
+			structureSchema.types.forEach[it |
+				switch(it) {
+	 			case "array":
+	                newDataField.complexType = getOrCreateStructuredCollectionType(targetContext, name,
+	                    (structureSchema.items))
+	
+	            case "boolean":
+	                newDataField.primitiveType = dataFactory.createPrimitiveBoolean
+	
+	            case "integer":
+	                newDataField.primitiveType = OpenApiUtil.deriveIntType(structureSchema.format)
+	
+	            case "number":
+	                newDataField.primitiveType = OpenApiUtil.deriveFloatType(structureSchema.format)
+	
+	            case "string":
+	                newDataField.primitiveType = OpenApiUtil.deriveStringType(structureSchema.format)
+	
+	            default:
+	                throwUnsupportedSchemaType(structureSchema)				
+				}
+			]						
+		} else {
+            // Currently, we only support references for untyped schemas
+            if (structureSchema.get$ref === null)
+                 throwUnsupportedSchemaType(structureSchema)
+            val ref = structureSchema.get$ref
+            var refName = ref.substring(ref.lastIndexOf("/") + 1)
+            
+            //Name fix for cases where the parser generates names in lower
+            //lower case. E.g. 'PetDetails' is refed as 'petdetails' in the PetStore Example 
+            for(component : openAPI.components.schemas.entrySet) {
+				if(component.key.toLowerCase.equals(refName.toLowerCase))
+					refName = component.key
             }
-
-            default:
-                throwUnsupportedSchemaType(structureSchema)
-        }
+                                
+            val refSchema = openAPI.components.schemas.get(refName)
+                              
+            if (refName !== null && refSchema !== null)
+                newDataField.complexType = getOrCreateDataStructure(targetContext, refName,
+                    refSchema)
+            else
+                LOGGER.info("Encountered reference without a parseable name and/or schema. " +
+                    "The generated LEMMA data model may be incomplete.")			
+		}
 
         return newDataField
     }
 
     /**
-     * Throw an IllegalArgumentException in case an OpenAPI schema type cannot be transformed into a
-     * corresponding LEMMA type
+     * Throw an IllegalArgumentException in case an OpenAPI schema type cannot be transformed into 
+     * a corresponding LEMMA type
      */
     private def throwUnsupportedSchemaType(Schema<?> schema) {
         throw new IllegalArgumentException('''Schema type «schema.type» is not supported.''')

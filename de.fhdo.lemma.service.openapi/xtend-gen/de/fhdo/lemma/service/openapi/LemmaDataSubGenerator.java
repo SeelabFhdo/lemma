@@ -1,6 +1,5 @@
 package de.fhdo.lemma.service.openapi;
 
-import com.google.common.base.Objects;
 import de.fhdo.lemma.data.CollectionType;
 import de.fhdo.lemma.data.Context;
 import de.fhdo.lemma.data.DataFactory;
@@ -15,12 +14,15 @@ import io.swagger.v3.oas.models.media.Schema;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import org.eclipse.xtend.lib.annotations.AccessorType;
 import org.eclipse.xtend.lib.annotations.Accessors;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
+import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.Pure;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
 import org.slf4j.Logger;
@@ -247,40 +249,68 @@ public class LemmaDataSubGenerator {
   private DataField generateDataField(final String name, final Schema<?> structureSchema) {
     final DataField newDataField = this.dataFactory.createDataField();
     newDataField.setName(name);
-    String _type = structureSchema.getType();
-    boolean _matched = false;
-    if (Objects.equal(_type, "array")) {
-      _matched=true;
-      newDataField.setComplexType(this.getOrCreateStructuredCollectionType(this.targetContext, name, 
-        ((ArraySchema) structureSchema).getItems()));
-    }
-    if (!_matched) {
-      if (Objects.equal(_type, "boolean")) {
-        _matched=true;
-        newDataField.setPrimitiveType(this.dataFactory.createPrimitiveBoolean());
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(_type, "integer")) {
-        _matched=true;
-        newDataField.setPrimitiveType(OpenApiUtil.deriveIntType(structureSchema.getFormat()));
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(_type, "number")) {
-        _matched=true;
-        newDataField.setPrimitiveType(OpenApiUtil.deriveFloatType(structureSchema.getFormat()));
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(_type, "string")) {
-        _matched=true;
-        newDataField.setPrimitiveType(OpenApiUtil.deriveStringType(structureSchema.getFormat()));
-      }
-    }
-    if (!_matched) {
-      if (Objects.equal(_type, null)) {
-        _matched=true;
+    Map<String, Schema> _properties = structureSchema.getProperties();
+    boolean _tripleNotEquals = (_properties != null);
+    if (_tripleNotEquals) {
+      final Consumer<String> _function = (String it) -> {
+        if (it != null) {
+          switch (it) {
+            case "array":
+              newDataField.setComplexType(this.getOrCreateStructuredCollectionType(this.targetContext, name, structureSchema.getItems()));
+              break;
+            case "boolean":
+              newDataField.setPrimitiveType(this.dataFactory.createPrimitiveBoolean());
+              break;
+            case "integer":
+              newDataField.setPrimitiveType(OpenApiUtil.deriveIntType(structureSchema.getFormat()));
+              break;
+            case "number":
+              newDataField.setPrimitiveType(OpenApiUtil.deriveFloatType(structureSchema.getFormat()));
+              break;
+            case "string":
+              newDataField.setPrimitiveType(OpenApiUtil.deriveStringType(structureSchema.getFormat()));
+              break;
+            default:
+              this.throwUnsupportedSchemaType(structureSchema);
+              break;
+          }
+        } else {
+          this.throwUnsupportedSchemaType(structureSchema);
+        }
+      };
+      structureSchema.getTypes().forEach(_function);
+    } else {
+      boolean _isNullOrEmpty = IterableExtensions.isNullOrEmpty(structureSchema.getTypes());
+      boolean _not = (!_isNullOrEmpty);
+      if (_not) {
+        final Consumer<String> _function_1 = (String it) -> {
+          if (it != null) {
+            switch (it) {
+              case "array":
+                newDataField.setComplexType(this.getOrCreateStructuredCollectionType(this.targetContext, name, structureSchema.getItems()));
+                break;
+              case "boolean":
+                newDataField.setPrimitiveType(this.dataFactory.createPrimitiveBoolean());
+                break;
+              case "integer":
+                newDataField.setPrimitiveType(OpenApiUtil.deriveIntType(structureSchema.getFormat()));
+                break;
+              case "number":
+                newDataField.setPrimitiveType(OpenApiUtil.deriveFloatType(structureSchema.getFormat()));
+                break;
+              case "string":
+                newDataField.setPrimitiveType(OpenApiUtil.deriveStringType(structureSchema.getFormat()));
+                break;
+              default:
+                this.throwUnsupportedSchemaType(structureSchema);
+                break;
+            }
+          } else {
+            this.throwUnsupportedSchemaType(structureSchema);
+          }
+        };
+        structureSchema.getTypes().forEach(_function_1);
+      } else {
         String _$ref = structureSchema.get$ref();
         boolean _tripleEquals = (_$ref == null);
         if (_tripleEquals) {
@@ -289,7 +319,14 @@ public class LemmaDataSubGenerator {
         final String ref = structureSchema.get$ref();
         int _lastIndexOf = ref.lastIndexOf("/");
         int _plus = (_lastIndexOf + 1);
-        final String refName = ref.substring(_plus);
+        String refName = ref.substring(_plus);
+        Set<Map.Entry<String, Schema>> _entrySet = this.openAPI.getComponents().getSchemas().entrySet();
+        for (final Map.Entry<String, Schema> component : _entrySet) {
+          boolean _equals = component.getKey().toLowerCase().equals(refName.toLowerCase());
+          if (_equals) {
+            refName = component.getKey();
+          }
+        }
         final Schema refSchema = this.openAPI.getComponents().getSchemas().get(refName);
         if (((refName != null) && (refSchema != null))) {
           newDataField.setComplexType(this.getOrCreateDataStructure(this.targetContext, refName, refSchema));
@@ -299,15 +336,12 @@ public class LemmaDataSubGenerator {
         }
       }
     }
-    if (!_matched) {
-      this.throwUnsupportedSchemaType(structureSchema);
-    }
     return newDataField;
   }
 
   /**
-   * Throw an IllegalArgumentException in case an OpenAPI schema type cannot be transformed into a
-   * corresponding LEMMA type
+   * Throw an IllegalArgumentException in case an OpenAPI schema type cannot be transformed into
+   * a corresponding LEMMA type
    */
   private void throwUnsupportedSchemaType(final Schema<?> schema) {
     StringConcatenation _builder = new StringConcatenation();
