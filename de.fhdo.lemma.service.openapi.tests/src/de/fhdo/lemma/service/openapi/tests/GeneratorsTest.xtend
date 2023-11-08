@@ -17,8 +17,10 @@ import org.apache.commons.io.FileUtils
 import org.junit.AfterClass
 
 /**
- * This class tests the the generation of LEMMA models from an OpenAPI specification file (v3.0.3).
+ * This class tests the the generation of LEMMA models from an OpenAPI specification file (v3.1.0).
  * The class provides one test for each sub-generator of the OpenAPI-bundle.
+ * Currently, tests are not very sophisticated as it is only tested, if the generators
+ * produce an output file and not whether the files contain correct content
  *
  * @author <a href="mailto:jonas.sorgalla@fh-dortmund.de">Jonas Sorgalla</a>
  */
@@ -26,7 +28,7 @@ class GeneratorsTest {
     static val TEST_MODEL_BASEPATH = Paths.get(System.getProperty("user.dir"), "test-model-gen")
         .toString
     static val DATA_MODEL_FILE = Paths.get(TEST_MODEL_BASEPATH, "test.data").toFile
-    static val LOCAL_SCHEMA_PATH = Paths.get("test-schemas", "openapi.json").toString
+    static val LOCAL_SCHEMA_PATH = Paths.get("test-schemas", "openapi31.json").toString
     static val SERVICE_MODEL_FILE = Paths.get(TEST_MODEL_BASEPATH, "test.services").toFile
     static val TECHNOLOGY_MODEL_FILE = Paths.get(TEST_MODEL_BASEPATH, "test.technology").toFile
     static OpenAPI parsedSchema

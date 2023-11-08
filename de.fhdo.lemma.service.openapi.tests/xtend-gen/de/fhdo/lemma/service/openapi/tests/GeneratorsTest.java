@@ -20,8 +20,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
- * This class tests the the generation of LEMMA models from an OpenAPI specification file (v3.0.3).
+ * This class tests the the generation of LEMMA models from an OpenAPI specification file (v3.1.0).
  * The class provides one test for each sub-generator of the OpenAPI-bundle.
+ * Currently, tests are not very sophisticated as it is only tested, if the generators
+ * produce an output file and not whether the files contain correct content
  * 
  * @author <a href="mailto:jonas.sorgalla@fh-dortmund.de">Jonas Sorgalla</a>
  */
@@ -31,7 +33,7 @@ public class GeneratorsTest {
 
   private static final File DATA_MODEL_FILE = Paths.get(GeneratorsTest.TEST_MODEL_BASEPATH, "test.data").toFile();
 
-  private static final String LOCAL_SCHEMA_PATH = Paths.get("test-schemas", "openapi.json").toString();
+  private static final String LOCAL_SCHEMA_PATH = Paths.get("test-schemas", "openapi31.json").toString();
 
   private static final File SERVICE_MODEL_FILE = Paths.get(GeneratorsTest.TEST_MODEL_BASEPATH, "test.services").toFile();
 
