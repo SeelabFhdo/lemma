@@ -72,6 +72,7 @@
         <maven-site-plugin-version>3.9.1</maven-site-plugin-version>
         <xtext-version>2.25.0</xtext-version>
         <versions-maven-plugin-version>2.8.1</versions-maven-plugin-version>
+        <swagger-parser-version>2.1.18</swagger-parser-version>
     </properties>
 
     <repositories>
