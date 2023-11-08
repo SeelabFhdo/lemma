@@ -42,66 +42,66 @@ import org.slf4j.LoggerFactory;
 @SuppressWarnings("all")
 public class LemmaTechnologySubGenerator {
   public static final String HTTP_DELETE_ASPECT_NAME = "DeleteMapping";
-  
+
   public static final String HTTP_GET_ASPECT_NAME = "GetMapping";
-  
+
   public static final String HTTP_HEAD_ASPECT_NAME = "HeadMapping";
-  
+
   public static final String HTTP_OPTIONS_ASPECT_NAME = "OptionsMapping";
-  
+
   public static final String HTTP_PATCH_ASPECT_NAME = "PatchMapping";
-  
+
   public static final String HTTP_POST_ASPECT_NAME = "PostMapping";
-  
+
   public static final String HTTP_PUT_ASPECT_NAME = "PutMapping";
-  
+
   public static final String HTTP_REQUEST_BODY_ASPECT_NAME = "RequestBody";
-  
+
   public static final String HTTP_TRACE_ASPECT_NAME = "TraceMapping";
-  
+
   public static final String UNSPECIFIED_ASPECT_NAME = "Unspecified";
-  
+
   public static final String TECHNOLOGY_MODEL_NAME = "OpenApi";
-  
+
   private static final String DEFAULT_DATA_FORMAT = "application/json";
-  
+
   /**
    * SLF4j LOGGER
    */
   private static final Logger LOGGER = LoggerFactory.getLogger(LemmaTechnologySubGenerator.class);
-  
+
   /**
    * Factory to actually create and manipulate a LEMMA Technology
    */
   private final TechnologyFactory TECHNOLOGY_FACTORY = TechnologyFactory.eINSTANCE;
-  
+
   /**
    * Factory to actually create and manipulate a LEMMA DataModel
    */
   private final DataFactory dataFactory = DataFactory.eINSTANCE;
-  
+
   /**
    * Predefined instance of the TechnologyModel. This instance is populated with technology
    * information relevant to OpenAPI, e.g., media types.
    */
   private final Technology technology = this.TECHNOLOGY_FACTORY.createTechnology();
-  
+
   /**
    * OpenAPI schema which will be used as source for generation
    */
   private OpenAPI openApi;
-  
+
   /**
    * Log of all encountered exceptions during the data transformation
    */
   @Accessors(AccessorType.PUBLIC_GETTER)
   private final ArrayList<String> transMsgs = CollectionLiterals.<String>newArrayList();
-  
+
   /**
    * Location where the generated file is written
    */
   private String targetFile;
-  
+
   /**
    * Constructor
    */
@@ -110,7 +110,7 @@ public class LemmaTechnologySubGenerator {
     this.openApi = api;
     this.targetFile = targetFile;
   }
-  
+
   /**
    * Generate the LEMMA technology model for OpenAPI. This method returns the created model
    * instance and also serializes it to the user's harddrive.
@@ -138,7 +138,7 @@ public class LemmaTechnologySubGenerator {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Initialize the technology model instance
    */
@@ -147,7 +147,7 @@ public class LemmaTechnologySubGenerator {
     this.addPrimitiveTypes(this.technology);
     this.addAspects(this.technology);
   }
-  
+
   /**
    * Add "rest" protocol to the technology model and derive the protocol's data formats from the
    * media types of the given OpenAPI specification. The default format will be JSON if the
@@ -193,7 +193,7 @@ public class LemmaTechnologySubGenerator {
     }
     return _xblockexpression;
   }
-  
+
   /**
    * Search media types in the requests and responses of the OpenAPI specification
    */
@@ -229,7 +229,7 @@ public class LemmaTechnologySubGenerator {
     httpVerbs.forEach(_function);
     return mediaTypes;
   }
-  
+
   /**
    * Add primitive types to the given LEMMA technology model following the OpenAPI 3.0.3
    * specification
@@ -268,7 +268,7 @@ public class LemmaTechnologySubGenerator {
     technology.getPrimitiveTypes().add(this.createTechnologySpecificPrimitiveType("Unspecified", true, 
       this.dataFactory.createPrimitiveUnspecified()));
   }
-  
+
   /**
    * Helper method to create a technology specific LEMMA type
    */
@@ -279,7 +279,7 @@ public class LemmaTechnologySubGenerator {
     type.getBasicBuiltinPrimitiveTypes().add(baseType);
     return type;
   }
-  
+
   /**
    * Add OpenAPI-related aspects to the technology model
    */
@@ -295,7 +295,7 @@ public class LemmaTechnologySubGenerator {
     technology.getServiceAspects().add(this.createOperationsAspect(LemmaTechnologySubGenerator.HTTP_TRACE_ASPECT_NAME));
     technology.getServiceAspects().add(this.createOperationsAspect(LemmaTechnologySubGenerator.UNSPECIFIED_ASPECT_NAME));
   }
-  
+
   /**
    * Create a single-valued LEMMA service aspect with microservice operations as join point type
    */
@@ -306,7 +306,7 @@ public class LemmaTechnologySubGenerator {
     aspect.getFeatures().add(AspectFeature.SINGLE_VALUED);
     return aspect;
   }
-  
+
   /**
    * Create a single-valued LEMMA service aspect with microservice operation parameters as join
    * point type
@@ -318,7 +318,7 @@ public class LemmaTechnologySubGenerator {
     aspect.getFeatures().add(AspectFeature.SINGLE_VALUED);
     return aspect;
   }
-  
+
   @Pure
   public ArrayList<String> getTransMsgs() {
     return this.transMsgs;

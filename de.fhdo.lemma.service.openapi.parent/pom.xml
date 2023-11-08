@@ -49,7 +49,7 @@
         <build-helper-maven-plugin-version>3.2.0</build-helper-maven-plugin-version>
         <data-extractor-version>${project.version}</data-extractor-version>
         <data-metamodel-version>${project.version}</data-metamodel-version>
-        <eclipse-version>2021-03</eclipse-version>
+        <eclipse-version>2022-06</eclipse-version>
         <intermediate-data-metamodel-version>${project.version}</intermediate-data-metamodel-version>
         <lemma-utils-version>${project.version}</lemma-utils-version>
         <lemma-ui-utils-version>${project.version}</lemma-ui-utils-version>
@@ -67,7 +67,7 @@
         <service-extractor-version>${project.version}</service-extractor-version>
         <technology-metamodel-version>${project.version}</technology-metamodel-version>
         <technology-extractor-version>${project.version}</technology-extractor-version>
-        <tycho-version>2.3.0</tycho-version>
+        <tycho-version>2.7.5</tycho-version>
         <junit-version>4.13</junit-version>
         <maven-site-plugin-version>3.9.1</maven-site-plugin-version>
         <xtext-version>2.25.0</xtext-version>
@@ -206,11 +206,29 @@
                 <artifactId>tycho-versions-plugin</artifactId>
                 <version>${tycho-version}</version>
             </plugin>
+            <!-- 
+            	For future reference.
+            	This is added to resolve dependencies that are only specified in the pom, 
+            	i.e., are managed by maven. It should be able to replace the somewhat dirty 
+            	.jar-copy-hack we are currently using with the assembly plugin.
+            	However this requires Tycho version >2.7 and is, currently, not usable.  
+            -->
+	        <!--
+	            <plugin>
+					<groupId>org.eclipse.tycho</groupId>
+					<artifactId>target-platform-configuration</artifactId>
+					<version>${tycho-version}</version>
+					<configuration>
+					    <pomDependencies>consider</pomDependencies>
+					</configuration>
+				</plugin>
+			-->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
                 <version>${versions-maven-plugin-version}</version>
             </plugin>
+
         </plugins>
     </build>
 </project>

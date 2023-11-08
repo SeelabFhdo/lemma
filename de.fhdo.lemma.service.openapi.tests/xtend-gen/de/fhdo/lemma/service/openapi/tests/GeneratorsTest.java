@@ -28,17 +28,17 @@ import org.junit.Test;
 @SuppressWarnings("all")
 public class GeneratorsTest {
   private static final String TEST_MODEL_BASEPATH = Paths.get(System.getProperty("user.dir"), "test-model-gen").toString();
-  
+
   private static final File DATA_MODEL_FILE = Paths.get(GeneratorsTest.TEST_MODEL_BASEPATH, "test.data").toFile();
-  
+
   private static final String LOCAL_SCHEMA_PATH = Paths.get("test-schemas", "openapi.json").toString();
-  
+
   private static final File SERVICE_MODEL_FILE = Paths.get(GeneratorsTest.TEST_MODEL_BASEPATH, "test.services").toFile();
-  
+
   private static final File TECHNOLOGY_MODEL_FILE = Paths.get(GeneratorsTest.TEST_MODEL_BASEPATH, "test.technology").toFile();
-  
+
   private static OpenAPI parsedSchema;
-  
+
   @BeforeClass
   public static void setup() {
     final ParseOptions parseOptions = new ParseOptions();
@@ -48,12 +48,12 @@ public class GeneratorsTest {
       new File(GeneratorsTest.LOCAL_SCHEMA_PATH).toURI().toString(), 
       null, parseOptions).getOpenAPI();
   }
-  
+
   @Before
   public void prepareNextTest() {
     GeneratorsTest.removeTestModelBaseFolder();
   }
-  
+
   public static void removeTestModelBaseFolder() {
     try {
       File _file = new File(GeneratorsTest.TEST_MODEL_BASEPATH);
@@ -62,56 +62,56 @@ public class GeneratorsTest {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   @AfterClass
   public static void cleanup() {
     GeneratorsTest.removeTestModelBaseFolder();
   }
-  
+
   @Test
   public void dataTest() {
     this.assertDataModelDoesNotExist();
     this.generateDataModel();
     this.assertDataModelExists();
   }
-  
+
   private void assertDataModelDoesNotExist() {
     boolean _exists = GeneratorsTest.DATA_MODEL_FILE.exists();
     boolean _not = (!_exists);
     Assert.assertTrue(_not);
   }
-  
+
   private DataModel generateDataModel() {
     String _path = GeneratorsTest.DATA_MODEL_FILE.getPath();
     return new LemmaDataSubGenerator(GeneratorsTest.parsedSchema, _path).generate();
   }
-  
+
   private void assertDataModelExists() {
     Assert.assertTrue(GeneratorsTest.DATA_MODEL_FILE.exists());
   }
-  
+
   @Test
   public void technologyTest() {
     this.assertTechnologyModelDoesNotExist();
     this.generateTechnologyModel();
     this.assertTechnologyModelExists();
   }
-  
+
   private void assertTechnologyModelDoesNotExist() {
     boolean _exists = GeneratorsTest.TECHNOLOGY_MODEL_FILE.exists();
     boolean _not = (!_exists);
     Assert.assertTrue(_not);
   }
-  
+
   private Technology generateTechnologyModel() {
     String _path = GeneratorsTest.TECHNOLOGY_MODEL_FILE.getPath();
     return new LemmaTechnologySubGenerator(GeneratorsTest.parsedSchema, _path).generate();
   }
-  
+
   private void assertTechnologyModelExists() {
     Assert.assertTrue(GeneratorsTest.TECHNOLOGY_MODEL_FILE.exists());
   }
-  
+
   @Test
   public void serviceTest() {
     this.assertDataModelDoesNotExist();
