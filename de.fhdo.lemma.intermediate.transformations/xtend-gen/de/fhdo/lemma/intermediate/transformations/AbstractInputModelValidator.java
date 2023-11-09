@@ -16,14 +16,14 @@ import org.eclipse.xtext.xbase.lib.Exceptions;
 @SuppressWarnings("all")
 public abstract class AbstractInputModelValidator<T extends EObject> {
   protected String absoluteModelPath;
-  
+
   /**
    * Validate input model
    */
   public boolean validateInputModel(final String absoluteModelPath, final T modelRoot) {
     return this.validateInputModel(absoluteModelPath, modelRoot, null);
   }
-  
+
   /**
    * Validate input model with warning callback
    */
@@ -54,14 +54,14 @@ public abstract class AbstractInputModelValidator<T extends EObject> {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Check input model for errors. May be overridden by sub-classes to perform custom error checks
    * on input model.
    */
   protected void checkInputModelForErrors(final T modelRoot) throws IntermediateTransformationException {
   }
-  
+
   /**
    * Get functions to check input model and issue warnings. May be overridden by sub-classes to
    * register warning functions.
@@ -69,7 +69,7 @@ public abstract class AbstractInputModelValidator<T extends EObject> {
   protected List<Function<T, Void>> registerWarningFunctions() {
     return Collections.EMPTY_LIST;
   }
-  
+
   /**
    * Throw a validation warning
    */
@@ -82,7 +82,7 @@ public abstract class AbstractInputModelValidator<T extends EObject> {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Throw a validation error
    */

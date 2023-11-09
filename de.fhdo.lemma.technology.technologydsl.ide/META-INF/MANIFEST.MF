@@ -12,7 +12,7 @@ Require-Bundle: de.fhdo.lemma.technology.technologydsl,
  de.fhdo.lemma.data.datadsl,
  de.fhdo.lemma.data.datadsl.ide,
  org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Export-Package: de.fhdo.lemma.technology.ide.contentassist.antlr,
  de.fhdo.lemma.technology.ide.contentassist.antlr.internal
 Automatic-Module-Name: de.fhdo.lemma.technology.technologydsl.ide

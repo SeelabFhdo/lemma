@@ -183,7 +183,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Build scope for microservices and the given reference
    */
@@ -231,7 +231,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Build scope for technology references and the given reference
    */
@@ -243,7 +243,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Build scope for interfaces and the given reference
    */
@@ -255,7 +255,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Build scope for operations and the given reference
    */
@@ -267,7 +267,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Build scope for possibly imported microservices and the given reference
    */
@@ -285,7 +285,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Build scope for possibly imported interface and the given reference
    */
@@ -303,7 +303,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Build scope for possibly imported operation and the given reference
    */
@@ -321,7 +321,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Build scope for parameters of operations
    */
@@ -345,7 +345,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Build scope for referred operations in interfaces
    */
@@ -363,7 +363,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Build scope for operation to refer to
    */
@@ -394,7 +394,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     final Iterable<IEObjectDescription> scopeElements = IterableExtensions.<Operation, IEObjectDescription>map(IterableExtensions.<Operation>filter(Iterables.<Operation>concat(ListExtensions.<Interface, EList<Operation>>map(EcoreUtil2.<Interface>getSiblingsOfType(operation.getInterface(), Interface.class), _function)), _function_1), _function_2);
     return MapBasedScope.createScope(IScope.NULLSCOPE, scopeElements);
   }
-  
+
   /**
    * Build scope for imported types of operation parameters
    */
@@ -412,7 +412,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Build scope for allowed imports of imported types of operation parameters
    */
@@ -425,7 +425,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
       return dataModelImports;
     }
   }
-  
+
   /**
    * Build scope for imported types of operation parameters
    */
@@ -449,7 +449,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     }
     return IScope.NULLSCOPE;
   }
-  
+
   /**
    * Build scope for imported protocols used to annotate microservices, interfaces, or
    * operations
@@ -474,7 +474,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Build scope for imported service aspects used to annotate microservices, interfaces,
    * operations, or parameters
@@ -499,7 +499,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Build scope for technology-specific value assignment
    */
@@ -511,7 +511,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Build scope for aspect properties
    */
@@ -541,7 +541,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
       }
     }
   }
-  
+
   /**
    * Build scope for aspect of imported service aspect
    */
@@ -657,7 +657,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     final Iterable<IEObjectDescription> scopeElements = IterableExtensions.<ServiceAspect, IEObjectDescription>map(scopeAspects, _function_1);
     return MapBasedScope.createScope(IScope.NULLSCOPE, scopeElements);
   }
-  
+
   /**
    * Helper to determine scope aspects from pointcut selector values
    */
@@ -672,7 +672,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     }
     return uniqueMatchingAspects;
   }
-  
+
   /**
    * Filter a list of service aspects for those for which either the passed pointcut selector
    * values are not applicable or, in case they are applicable, for those that match the given
@@ -696,7 +696,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     aspects.forEach(_function);
     return matchingAspects;
   }
-  
+
   /**
    * Helper to determine if an aspect is to be annotated on an interface or the first operation
    * _within_ an interface
@@ -719,7 +719,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     boolean _find = interfaceKeywordInText.matcher(textBeforeAspect).find();
     return (!_find);
   }
-  
+
   /**
    * Get the annotated technologies of a microservice, that is the container of the given context,
    * as scopes
@@ -734,7 +734,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     };
     return Scopes.scopeFor(ListExtensions.<TechnologyReference, Import>map(microservice.getTechnologyReferences(), _function));
   }
-  
+
   /**
    * Convenience method for building a scope for a possibly imported microservice without an
    * import specification
@@ -742,7 +742,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
   private IScope getScopeForPossiblyImportedMicroservice(final EObject context) {
     return this.getScopeForPossiblyImportedMicroservice(context, null);
   }
-  
+
   /**
    * Helper method to build a scope for possibly imported microservices, i.e., a microservice
    * with or without import specifications. Microservices required by another microservice may
@@ -786,7 +786,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
       microservice.getQualifiedNameParts(), 
       ServiceModel.class, importUri, _function, _function_1, _function_2);
   }
-  
+
   /**
    * Convenience method to build a scope for a possibly imported interface without an import
    * specification
@@ -794,7 +794,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
   private IScope getScopeForPossiblyImportedInterface(final EObject context) {
     return this.getScopeForPossiblyImportedInterface(context, null);
   }
-  
+
   /**
    * Build scope for possibly imported interfaces, i.e., interfaces with or without import
    * specifications. Interfaces required by a microservice may possibly be imported.
@@ -837,7 +837,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
       microservice.getQualifiedNameParts(), 
       ServiceModel.class, importUri, _function, _function_1, _function_2);
   }
-  
+
   /**
    * Convenience method to build a scope for a possibly imported operation without an import
    * specification
@@ -845,7 +845,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
   private IScope getScopeForPossiblyImportedOperation(final EObject context) {
     return this.getScopeForPossiblyImportedOperation(context, null);
   }
-  
+
   /**
    * Build scope for possibly imported operations, i.e., operations with or without import
    * specifications. Operations required by a microservice or used to initialize parameters of
@@ -918,7 +918,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     return LemmaUtils.<EObject, ServiceModel, Operation>getScopeForPossiblyImportedConcept(scopeContainer, scopeContainerNameParts, 
       ServiceModel.class, importUri, _function, _function_1, ((Predicate<Operation>[])Conversions.unwrapArray(predicates, Predicate.class)));
   }
-  
+
   /**
    * Build scope for imports of possibly imported Operations
    */
@@ -926,7 +926,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     final Microservice containingMicroservice = EcoreUtil2.<Microservice>getContainerOfType(parameter, Microservice.class);
     return Scopes.scopeFor(containingMicroservice.getRequiredImports());
   }
-  
+
   /**
    * Build scope for initializing operations
    */
@@ -951,7 +951,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
       operation.getQualifiedNameParts(), 
       ServiceModel.class, _function_1);
   }
-  
+
   /**
    * Build scope for imported protocols
    */
@@ -984,7 +984,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     final Iterable<IEObjectDescription> scopeElements = IterableExtensions.<Protocol, IEObjectDescription>map(IterableExtensions.<Protocol>filter(resourceRoot.getProtocols(), _function), _function_1);
     return MapBasedScope.createScope(IScope.NULLSCOPE, scopeElements);
   }
-  
+
   /**
    * Build scope for data formats of imported protocols
    */
@@ -1011,7 +1011,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     return Scopes.<DataFormat>scopeFor(scopeElements, _function_1, 
       IScope.NULLSCOPE);
   }
-  
+
   /**
    * Build scope for complex types imported from a data model
    */
@@ -1027,7 +1027,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     final List<IEObjectDescription> scopeElements = ListExtensions.<ComplexType, IEObjectDescription>map(dataModel.getContainedComplexTypes(), _function);
     return MapBasedScope.createScope(IScope.NULLSCOPE, scopeElements);
   }
-  
+
   /**
    * Build scope for primitive and complex types imported from technology
    */
@@ -1065,7 +1065,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
       ListExtensions.<TechnologySpecificDataStructure, IEObjectDescription>map(technology.getDataStructures(), _function_2));
     return MapBasedScope.createScope(IScope.NULLSCOPE, scopeElements);
   }
-  
+
   /**
    * Convenience method to create a scope for imports of certain types
    */
@@ -1077,7 +1077,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     final Iterable<Import> validImports = LemmaUtils.<Import>getImportsOfModelTypes(allImports, _function, types);
     return Scopes.scopeFor(validImports);
   }
-  
+
   /**
    * Build scope for protocol specifications on microservices, interfaces, and operations
    */
@@ -1087,7 +1087,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     }
     return this.getServiceTechnologyImportAliasesAsScope(protocolSpecification);
   }
-  
+
   /**
    * Helper method to determine effective protocols and data formats of a microservice
    */
@@ -1139,7 +1139,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     ListExtensions.<TechnologyReference, Import>map(microservice.getTechnologyReferences(), _function).forEach(_function_1);
     return results;
   }
-  
+
   /**
    * Helper method to determine effective protocols and data formats of an interface
    */
@@ -1149,7 +1149,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     };
     return this.<Microservice>getEffectiveProtocolsAndDataFormats(interface_.getProtocols(), interface_.getMicroservice(), _function);
   }
-  
+
   /**
    * Helper method to determine effective protocols and data formats of an operation
    */
@@ -1159,7 +1159,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     };
     return this.<Interface>getEffectiveProtocolsAndDataFormats(operation.getProtocols(), operation.getInterface(), _function);
   }
-  
+
   /**
    * Helper method to determine effective protocols and data formats of a referred operation
    */
@@ -1170,7 +1170,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     return this.<Interface>getEffectiveProtocolsAndDataFormats(referredOperation.getProtocols(), 
       referredOperation.getInterface(), _function);
   }
-  
+
   /**
    * Helper method to determine effective protocol and data format for a parameter with
    * consideration of its communication type
@@ -1179,7 +1179,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     final Map<CommunicationType, Pair<Protocol, DataFormat>> operationProtocolsAndDataFormats = this.getEffectiveProtocolsAndDataFormats(parameter.getOperation());
     return operationProtocolsAndDataFormats.get(parameter.getCommunicationType());
   }
-  
+
   /**
    * Helper method to determine effective protocols and data formats from protocol specifications
    * and possibly the containing concept, if protocol and data format couldn't be determined for a
@@ -1249,7 +1249,7 @@ public class ServiceDslScopeProvider extends AbstractServiceDslScopeProvider {
     }
     return results;
   }
-  
+
   /**
    * Build scope for API operation parameter comments
    */

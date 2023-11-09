@@ -15,16 +15,16 @@ import org.eclipse.xtext.xbase.lib.Pure;
 class ProcessedIssue {
   @Accessors(AccessorType.PACKAGE_GETTER)
   private int index;
-  
+
   @Accessors(AccessorType.PACKAGE_GETTER)
   private ExpectedIssue expectedIssue;
-  
+
   @Accessors(AccessorType.PACKAGE_GETTER)
   private Issue issue;
-  
+
   @Accessors(AccessorType.PACKAGE_GETTER)
   private EObject issueObject;
-  
+
   /**
    * Constructor
    */
@@ -34,22 +34,22 @@ class ProcessedIssue {
     this.issue = issue;
     this.issueObject = issueObject;
   }
-  
+
   @Pure
   int getIndex() {
     return this.index;
   }
-  
+
   @Pure
   ExpectedIssue getExpectedIssue() {
     return this.expectedIssue;
   }
-  
+
   @Pure
   Issue getIssue() {
     return this.issue;
   }
-  
+
   @Pure
   EObject getIssueObject() {
     return this.issueObject;

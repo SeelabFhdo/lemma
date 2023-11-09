@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.4.10"
-    maven
+    `maven-publish`
 }
 
 group = "de.fhdo.lemma.analyzer"
@@ -13,17 +13,17 @@ repositories {
 }
 
 buildscript {
-    extra.set("classgraphVersion", "4.8.35")
-    extra.set("groovyVersion", "3.0.3")
-    extra.set("jansiVersion", "1.17.1")
-    extra.set("jgraphtVersion", "1.5.0")
+    extra.set("classgraphVersion", "4.8.162")
+    extra.set("groovyVersion", "3.0.19")
+    extra.set("jansiVersion", "2.4.0")
+    extra.set("jgraphtVersion", "1.5.2")
     extra.set("lemmaEclipsePluginsVersion", version)
-    extra.set("log4jVersion", "2.16.0")
+    extra.set("log4jVersion", "2.20.0")
     extra.set("loggingVersion", "1.7.9")
-    extra.set("lsp4jVersion", "0.10.0")
+    extra.set("lsp4jVersion", "0.21.1")
     extra.set("modelProcessingVersion", version)
-    extra.set("picocliVersion", "3.9.3")
-    extra.set("xtextVersion", "2.26.0")
+    extra.set("picocliVersion", "4.7.5")
+    extra.set("xtextVersion", "2.32.0")
 }
 
 dependencies {
@@ -66,7 +66,7 @@ dependencies {
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "11"
+    kotlinOptions.jvmTarget = "17"
 }
 
 tasks.withType<Jar> {

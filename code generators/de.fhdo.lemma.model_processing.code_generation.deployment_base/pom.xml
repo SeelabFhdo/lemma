@@ -10,13 +10,13 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>11</java.version>
-        <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
-        <xtend.version>2.25.0</xtend.version>
+        <java.version>17</java.version>
+        <maven.compiler.plugin.version>3.11.0</maven.compiler.plugin.version>
+        <xtend.version>2.32.0</xtend.version>
         <snakeyaml.version>1.21</snakeyaml.version>
-        <maven-assembly.version>3.3.0</maven-assembly.version>
-        <jackson.dataformat.version>2.12.3</jackson.dataformat.version>
-        <groovy.version>3.0.3</groovy.version> 
+        <maven-assembly.version>3.6.0</maven-assembly.version>
+        <jackson.dataformat.version>2.15.2</jackson.dataformat.version>
+        <groovy.version>3.0.19</groovy.version> 
         <kotlin.version>1.3.72</kotlin.version>
     </properties>
 

@@ -90,7 +90,7 @@ public class TechnologyDslScopeProvider extends AbstractTechnologyDslScopeProvid
     }
     return null;
   }
-  
+
   /**
    * Build scope for possibly imported technology-specific types
    */
@@ -109,7 +109,7 @@ public class TechnologyDslScopeProvider extends AbstractTechnologyDslScopeProvid
     final String importUri = _xifexpression;
     return this.getScopeForPossiblyImportedType(type, importUri);
   }
-  
+
   /**
    * Build scope for possibly imported technology-specific types with the containing compatibility
    * matrix as context. Note that the matrix is passed as context, if there is not import given.
@@ -117,7 +117,7 @@ public class TechnologyDslScopeProvider extends AbstractTechnologyDslScopeProvid
   private IScope getScope(final CompatibilityMatrixEntry entry, final EReference reference) {
     return this.getScopeForPossiblyImportedType(entry, null);
   }
-  
+
   /**
    * Build scope for service aspect pointcuts
    */
@@ -135,7 +135,7 @@ public class TechnologyDslScopeProvider extends AbstractTechnologyDslScopeProvid
     }
     return null;
   }
-  
+
   /**
    * Build scope for protocols of aspects pointcuts
    */
@@ -166,7 +166,7 @@ public class TechnologyDslScopeProvider extends AbstractTechnologyDslScopeProvid
     Iterable<Protocol> scopeElements = _xifexpression;
     return Scopes.scopeFor(scopeElements);
   }
-  
+
   /**
    * Build scope for data formats of aspects pointcuts
    */
@@ -208,7 +208,7 @@ public class TechnologyDslScopeProvider extends AbstractTechnologyDslScopeProvid
     return Scopes.<DataFormat>scopeFor(scopeElements, _function_3, 
       IScope.NULLSCOPE);
   }
-  
+
   /**
    * Build scope for operation aspect pointcuts
    */
@@ -220,7 +220,7 @@ public class TechnologyDslScopeProvider extends AbstractTechnologyDslScopeProvid
     }
     return null;
   }
-  
+
   /**
    * Build scope for technologies of operation aspects pointcuts
    */
@@ -241,7 +241,7 @@ public class TechnologyDslScopeProvider extends AbstractTechnologyDslScopeProvid
     }
     return Scopes.scopeFor(scopeElements);
   }
-  
+
   /**
    * Build scope for possibly imported technology-specific types w.r.t. the import's URI
    */
@@ -265,7 +265,7 @@ public class TechnologyDslScopeProvider extends AbstractTechnologyDslScopeProvid
       Technology.class, importUri, _function, _function_1);
     return scopedElements;
   }
-  
+
   /**
    * Build scope for protocol default formats
    */

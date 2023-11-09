@@ -27,7 +27,7 @@ public final class DockerMariaDBGeneratorTemplate extends AbstractMariaDBGenerat
       super(parentShell, project, file, MariaDBGeneratorConstants.GENERATOR_LONG_NAME, 
         MariaDBGeneratorConstants.GENERATOR_SHORT_NAME);
     }
-    
+
     /**
      * Addendum for the generator short name as part of the launch configuration name
      */
@@ -35,7 +35,7 @@ public final class DockerMariaDBGeneratorTemplate extends AbstractMariaDBGenerat
     public final String getGeneratorNameAddendum() {
       return "Docker";
     }
-    
+
     /**
      * Addendum for generator long name as part of the label for the generator executable path's
      * text field
@@ -44,7 +44,7 @@ public final class DockerMariaDBGeneratorTemplate extends AbstractMariaDBGenerat
     public final String getGeneratorExecutableLabelTextAddendum() {
       return "Docker image";
     }
-    
+
     /**
      * Create the dialog
      */
@@ -61,7 +61,7 @@ public final class DockerMariaDBGeneratorTemplate extends AbstractMariaDBGenerat
       this.setMessage(_plus);
     }
   }
-  
+
   /**
    * Constructor
    */
@@ -69,7 +69,7 @@ public final class DockerMariaDBGeneratorTemplate extends AbstractMariaDBGenerat
     super(ProcessorExecutableType.LOCAL_DOCKER_IMAGE, parentShell, ("Docker-based MariaDB " + 
       "artifact generation"), project, file);
   }
-  
+
   /**
    * Extend the model processing configuration template initialized by the superclass
    */
@@ -79,7 +79,7 @@ public final class DockerMariaDBGeneratorTemplate extends AbstractMariaDBGenerat
     initializedConfiguration.setProcessorExecutablePath(MariaDBGeneratorConstants.DEFAULT_DOCKER_IMAGE_NAME);
     return configuration;
   }
-  
+
   /**
    * Return the dialog for template completion
    */

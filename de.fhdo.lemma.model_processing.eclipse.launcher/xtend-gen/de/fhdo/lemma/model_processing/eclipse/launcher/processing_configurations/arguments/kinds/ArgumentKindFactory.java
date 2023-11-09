@@ -16,7 +16,7 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 @SuppressWarnings("all")
 public final class ArgumentKindFactory {
   private static final HashMap<ArgumentKindIdentifier, AbstractArgumentKind> CREATED_KINDS = CollectionLiterals.<ArgumentKindIdentifier, AbstractArgumentKind>newHashMap();
-  
+
   /**
    * Create an argument kind or return an already created argument kind from the given identifier
    * string. Return null if the identifier string is null or empty.
@@ -32,7 +32,7 @@ public final class ArgumentKindFactory {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Create an argument kind or return an already created argument kind from the given argument
    * kind identifier. Return null if the identifier is null.

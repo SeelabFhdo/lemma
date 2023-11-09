@@ -18,9 +18,9 @@ import org.eclipse.xtext.xbase.lib.Pair;
 @SuppressWarnings("all")
 public class ModelTableTransformationTargetPathColumnEditingSupport extends EditingSupport {
   private TableViewer tableViewer;
-  
+
   private Predicate<Pair<ModelFile, String>> newValueValidator;
-  
+
   /**
    * Constructor
    */
@@ -29,7 +29,7 @@ public class ModelTableTransformationTargetPathColumnEditingSupport extends Edit
     this.tableViewer = tableViewer;
     this.newValueValidator = newValueValidator;
   }
-  
+
   /**
    * Flag to indicate if column is editable
    */
@@ -37,7 +37,7 @@ public class ModelTableTransformationTargetPathColumnEditingSupport extends Edit
   protected boolean canEdit(final Object element) {
     return true;
   }
-  
+
   /**
    * Create cell editor for column
    */
@@ -46,7 +46,7 @@ public class ModelTableTransformationTargetPathColumnEditingSupport extends Edit
     Control _control = this.tableViewer.getControl();
     return new TextCellEditor(((Composite) _control));
   }
-  
+
   /**
    * Get checkbox value
    */
@@ -54,7 +54,7 @@ public class ModelTableTransformationTargetPathColumnEditingSupport extends Edit
   protected Object getValue(final Object element) {
     return ((ModelFile) element).getTransformationTargetPath();
   }
-  
+
   /**
    * Set checkbox value
    */

@@ -10,6 +10,6 @@ import de.fhdo.lemma.data.Type;
 @SuppressWarnings("all")
 public interface TypeCheckerI<T extends Type> {
   boolean compatible(final T basicType, final T typeToCheck);
-  
+
   String typeName(final T type);
 }

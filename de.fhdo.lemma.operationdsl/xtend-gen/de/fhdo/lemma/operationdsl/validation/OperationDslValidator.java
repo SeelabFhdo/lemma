@@ -68,7 +68,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
       this.error("Model must contain at least one container or infrastructure node", operationModel, OperationPackage.Literals.OPERATION_MODEL__CONTAINERS);
     }
   }
-  
+
   /**
    * Check that imported file is imported exactly once
    */
@@ -90,7 +90,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
     this.error("File is already being imported", duplicate, 
       ServicePackage.Literals.IMPORT__IMPORT_URI);
   }
-  
+
   /**
    * Check import aliases for uniqueness
    */
@@ -111,7 +111,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
     this.error(_builder.toString(), duplicate, 
       ServicePackage.Literals.IMPORT__NAME);
   }
-  
+
   /**
    * Check that imported file defines a model that fits the given import type
    */
@@ -152,7 +152,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
         ServicePackage.Literals.IMPORT__IMPORT_URI);
     }
   }
-  
+
   /**
    * Check that annotated technologies define not only service-related concepts
    */
@@ -175,7 +175,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
       }
     }
   }
-  
+
   /**
    * Check that the assigned value of a service property matches its type
    */
@@ -199,7 +199,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
         TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__VALUE);
     }
   }
-  
+
   /**
    * Check that technology is assigned only once to an operation node
    */
@@ -218,7 +218,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
         OperationPackage.Literals.OPERATION_NODE__TECHNOLOGIES, (duplicateIndex).intValue());
     }
   }
-  
+
   /**
    * Check multiplicities of service property values on containers
    */
@@ -226,7 +226,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
   public void checkServicePropertyMultiplicities(final Container container) {
     this.checkMultiplicities(container.getDefaultServicePropertyValues());
   }
-  
+
   /**
    * Check multiplicities of service property values on service deployment specifications
    */
@@ -234,7 +234,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
   public void checkServicePropertyMultiplicities(final ServiceDeploymentSpecification deploymentSpecification) {
     this.checkMultiplicities(deploymentSpecification.getServicePropertyValues());
   }
-  
+
   /**
    * Convenience method to multiplicities of property values
    */
@@ -262,7 +262,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
       }
     }
   }
-  
+
   /**
    * Check unique endpoints on containers
    */
@@ -270,7 +270,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
   public void checkUniqueEndpoints(final Container container) {
     this.checkUniqueEndpoints(container.getDefaultBasicEndpoints());
   }
-  
+
   /**
    * Check unique endpoints on infrastructure nodes
    */
@@ -278,7 +278,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
   public void checkUniqueEndpoints(final InfrastructureNode infrastructureNode) {
     this.checkUniqueEndpoints(infrastructureNode.getEndpoints());
   }
-  
+
   /**
    * Check unique endpoints on service deployment specification
    */
@@ -286,7 +286,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
   public void checkUniqueEndpoints(final ServiceDeploymentSpecification deploymentSpecification) {
     this.checkUniqueEndpoints(deploymentSpecification.getBasicEndpoints());
   }
-  
+
   /**
    * Convenience method to check endpoint uniqueness in a list of endpoints
    */
@@ -332,7 +332,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
     };
     endpoints.forEach(_function);
   }
-  
+
   /**
    * Check uniqueness of an endpoint's addresses
    */
@@ -351,7 +351,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
         OperationPackage.Literals.BASIC_ENDPOINT__ADDRESSES, (duplicateIndex).intValue());
     }
   }
-  
+
   /**
    * Warn if endpoint addresses occur more than once when the same microservice is deployed to
    * different containers. Node that containers may exhibit the same endpoint addresses for
@@ -418,7 +418,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
     };
     this.getAddressesAndEndpoints(containerToCheck).forEach(_function_1);
   }
-  
+
   /**
    * Check if addresses occur more than once for between infrastructure nodes and other
    * infrastructure nodes or containers
@@ -468,7 +468,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
     };
     model.getContainers().forEach(_function_1);
   }
-  
+
   /**
    * Helper to get all addresses, their endpoints, and endpoint indexes of an operation node
    */
@@ -517,7 +517,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
     node.getDeploymentSpecifications().forEach(_function_2);
     return addressesAndEndpoint;
   }
-  
+
   /**
    * Check that mandatory service properties have values assigned
    */
@@ -596,7 +596,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
       this.error(_builder_2.toString(), operationNode, OperationPackage.Literals.OPERATION_NODE__NAME);
     }
   }
-  
+
   /**
    * Warn in case not each service deployed to a container has a basic endpoint assigned for each
    * protocol/format combination from each assigned technology of the container
@@ -611,7 +611,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
     };
     container.getTechnologies().forEach(_function);
   }
-  
+
   /**
    * Helper to warn if a service deployed to a given container does not have a basic endpoint
    * for each protocol/format combination in the given technology of the container
@@ -710,7 +710,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
     };
     protocolsWithoutDefaultEndpoint.forEach(_function_2);
   }
-  
+
   /**
    * Check uniqueness of service deployment specifications
    */
@@ -729,7 +729,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
         OperationPackage.Literals.OPERATION_NODE__DEPLOYMENT_SPECIFICATIONS, (duplicateIndex).intValue());
     }
   }
-  
+
   /**
    * Check uniqueness of deployed services
    */
@@ -748,7 +748,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
         OperationPackage.Literals.OPERATION_NODE__DEPLOYED_SERVICES, (duplicateIndex).intValue());
     }
   }
-  
+
   /**
    * Warn if an infrastructure node does seemingly not fulfill an actual purpose, i.e., when it
    * does not have deployed services assigned, is not used by other nodes, and no other nodes
@@ -770,7 +770,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
       this.warning("Node is not used by services or nodes, and no other node depends on it", infrastructureNode, OperationPackage.Literals.OPERATION_NODE__NAME);
     }
   }
-  
+
   /**
    * Check that node is used by unique nodes
    */
@@ -785,7 +785,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
         OperationPackage.Literals.OPERATION_NODE__USED_BY_NODES, (duplicateIndex).intValue());
     }
   }
-  
+
   /**
    * Check that node depends on unique nodes
    */
@@ -800,7 +800,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
         OperationPackage.Literals.OPERATION_NODE__DEPENDS_ON_NODES, (duplicateIndex).intValue());
     }
   }
-  
+
   /**
    * Warn, if required microservices are not deployed in the same model
    */
@@ -861,7 +861,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
     };
     Iterables.<ImportedMicroservice>concat(ListExtensions.<Container, EList<ImportedMicroservice>>map(operationModel.getContainers(), _function_2)).forEach(_function_3);
   }
-  
+
   /**
    * Warn, if services deployed to infrastructure nodes are not also deployed to containers
    */
@@ -902,7 +902,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
     };
     infrastructureServices.forEach(_function_4);
   }
-  
+
   /**
    * Check uniqueness of aspects
    */
@@ -927,7 +927,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
         OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__ASPECT);
     }
   }
-  
+
   /**
    * Check uniqueness of aspect properties in value assignments
    */
@@ -945,7 +945,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
         OperationPackage.Literals.IMPORTED_OPERATION_ASPECT__VALUES, (duplicateIndex).intValue());
     }
   }
-  
+
   /**
    * Check that aspect has only one property, if only a single value is specified, and that the
    * specified value matches the property's type
@@ -988,7 +988,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
       }
     }
   }
-  
+
   /**
    * Check that mandatory properties of aspects have values
    */
@@ -1036,7 +1036,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
       }
     }
   }
-  
+
   /**
    * Check if node is either used by or dependent on the same node
    */
@@ -1065,7 +1065,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
     };
     node.getDependsOnNodes().forEach(_function);
   }
-  
+
   /**
    * Check cyclic depends on relationships between operation nodes
    */
@@ -1091,7 +1091,7 @@ public class OperationDslValidator extends AbstractOperationDslValidator {
     };
     node.getDependsOnNodes().forEach(_function);
   }
-  
+
   /**
    * Check cyclic used by relationships between operation nodes
    */

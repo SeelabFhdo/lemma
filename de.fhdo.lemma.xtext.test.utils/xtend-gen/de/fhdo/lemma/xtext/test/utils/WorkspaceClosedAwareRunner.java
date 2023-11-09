@@ -23,9 +23,9 @@ public class WorkspaceClosedAwareRunner extends XtextRunner {
    */
   public static class WorkspaceClosedAwareInvokeMethod extends Statement {
     private final FrameworkMethod testMethod;
-    
+
     private final Object target;
-    
+
     /**
      * Constructor
      */
@@ -33,7 +33,7 @@ public class WorkspaceClosedAwareRunner extends XtextRunner {
       this.testMethod = testMethod;
       this.target = target;
     }
-    
+
     /**
      * Statement logic
      */
@@ -61,7 +61,7 @@ public class WorkspaceClosedAwareRunner extends XtextRunner {
       throw _xifexpression;
     }
   }
-  
+
   /**
    * Specialized exception for closed workspaces
    */
@@ -90,16 +90,16 @@ public class WorkspaceClosedAwareRunner extends XtextRunner {
       }.apply(), cause);
     }
   }
-  
+
   private static final String WORKSPACE_CLOSED_ERROR_MESSAGE = "Workspace is closed";
-  
+
   /**
    * Constructor
    */
   public WorkspaceClosedAwareRunner(final Class<?> clazz) throws InitializationError {
     super(clazz);
   }
-  
+
   /**
    * Set workspace-closed-aware Statement to be invoked by JUnit upon test invocation
    */

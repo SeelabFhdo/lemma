@@ -13,9 +13,9 @@ import org.eclipse.xtext.xbase.lib.Pair;
 @SuppressWarnings("all")
 public final class IntermediateModelArgumentType extends AbstractIntermediateModelArgumentTypeWithEnumValue<IntermediateModelKind> {
   public static final ArgumentTypeIdentifier IDENTIFIER = ArgumentTypeIdentifier.INTERMEDIATE_MODEL;
-  
+
   private static final Map<IntermediateModelKind, String> LITERAL_DESCRIPTIONS = Collections.<IntermediateModelKind, String>unmodifiableMap(CollectionLiterals.<IntermediateModelKind, String>newHashMap(Pair.<IntermediateModelKind, String>of(IntermediateModelKind.SELECTED_FILE, "Intermediate representation of selected model file")));
-  
+
   /**
    * Constructor
    */

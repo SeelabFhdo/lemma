@@ -21,7 +21,7 @@ public class ModelKindStyledLabelProvider extends LabelProvider implements Deleg
     String _name = ((SpecifyLemmaPathsDialog.LemmaModelKind) element).getName();
     return new StyledString(_name);
   }
-  
+
   /**
    * Get image for element
    */

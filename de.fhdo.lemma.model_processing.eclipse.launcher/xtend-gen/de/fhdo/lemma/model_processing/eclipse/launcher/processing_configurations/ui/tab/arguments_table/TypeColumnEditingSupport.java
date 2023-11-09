@@ -49,16 +49,16 @@ public final class TypeColumnEditingSupport extends ObservableValueEditingSuppor
    */
   private static class EditorActivationListener extends ColumnViewerEditorActivationListener {
     private final ArgumentsTable argumentsTable;
-    
+
     private AbstractArgumentType currentArgumentType;
-    
+
     /**
      * Constructor
      */
     public EditorActivationListener(final ArgumentsTable argumentsTable) {
       this.argumentsTable = argumentsTable;
     }
-    
+
     /**
      * React to the begin of an editor's activation
      */
@@ -66,7 +66,7 @@ public final class TypeColumnEditingSupport extends ObservableValueEditingSuppor
     public final void beforeEditorActivated(final ColumnViewerEditorActivationEvent event) {
       this.currentArgumentType = this.getArgumentType(event);
     }
-    
+
     /**
      * Get the AbstractArgumentType instance from the given editor activation event
      */
@@ -76,7 +76,7 @@ public final class TypeColumnEditingSupport extends ObservableValueEditingSuppor
       Object _element = cell.getElement();
       return ((Argument) _element).getType();
     }
-    
+
     /**
      * React to the end of an editor's deactivation
      */
@@ -132,24 +132,24 @@ public final class TypeColumnEditingSupport extends ObservableValueEditingSuppor
       }
       this.argumentsTable.getViewer().update(argument, null);
     }
-    
+
     @Override
     public void afterEditorActivated(final ColumnViewerEditorActivationEvent event) {
     }
-    
+
     @Override
     public void beforeEditorDeactivated(final ColumnViewerEditorDeactivationEvent event) {
     }
   }
-  
+
   private final ArgumentsTable argumentsTable;
-  
+
   private final DataBindingContext dataBindingContext;
-  
+
   private List<AbstractArgumentType> supportedArgumentTypes;
-  
+
   private List<String> supportedArgumentTypesNames;
-  
+
   /**
    * Constructor
    */
@@ -158,7 +158,7 @@ public final class TypeColumnEditingSupport extends ObservableValueEditingSuppor
     this.argumentsTable = argumentsTable;
     this.dataBindingContext = dataBindingContext;
   }
-  
+
   /**
    * Enable/disable column editing
    */
@@ -166,7 +166,7 @@ public final class TypeColumnEditingSupport extends ObservableValueEditingSuppor
   public final boolean canEdit(final Object element) {
     return this.argumentsTable.getEnabled();
   }
-  
+
   /**
    * Return the column's CellEditor
    */
@@ -184,7 +184,7 @@ public final class TypeColumnEditingSupport extends ObservableValueEditingSuppor
     return new ComboBoxCellEditor(_table, ((String[])Conversions.unwrapArray(this.supportedArgumentTypesNames, String.class)), 
       (SWT.DROP_DOWN | SWT.READ_ONLY));
   }
-  
+
   /**
    * Return the IObservableValue of the column's CellEditor
    */
@@ -193,7 +193,7 @@ public final class TypeColumnEditingSupport extends ObservableValueEditingSuppor
     Control _control = editor.getControl();
     return WidgetProperties.ccomboSelection().observe(((CCombo) _control));
   }
-  
+
   /**
    * Return the IObservableValue of the Bean element
    */
@@ -201,7 +201,7 @@ public final class TypeColumnEditingSupport extends ObservableValueEditingSuppor
   public final IObservableValue<AbstractArgumentType> doCreateElementObservable(final Argument argument, final ViewerCell cell) {
     return BeanProperties.<Argument, AbstractArgumentType>value(Argument.class, "type", null).observe(argument);
   }
-  
+
   /**
    * Bind the CellEditor's and Bean element's IObservableValues
    */

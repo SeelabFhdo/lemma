@@ -8,18 +8,18 @@ Bundle-ActivationPolicy: lazy
 Require-Bundle: de.fhdo.lemma.technology.mappingdsl.metamodel,
  org.eclipse.xtext,
  org.eclipse.xtext.xbase,
- org.eclipse.equinox.common;bundle-version="3.14.100",
+ org.eclipse.equinox.common;bundle-version="3.18.0",
  de.fhdo.lemma.servicedsl,
  de.fhdo.lemma.technology.technologydsl,
  de.fhdo.lemma.data.datadsl,
- org.eclipse.xtext.xbase.lib;bundle-version="2.25.0",
+ org.eclipse.xtext.xbase.lib;bundle-version="2.32.0",
  org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
  org.eclipse.xtext.util,
- org.eclipse.xtend.lib;bundle-version="2.25.0",
+ org.eclipse.xtend.lib;bundle-version="2.32.0",
  de.fhdo.lemma.utils,
  de.fhdo.lemma.typechecking,
- org.eclipse.core.resources;bundle-version="3.14.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+ org.eclipse.core.resources;bundle-version="3.19.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Export-Package: de.fhdo.lemma.technology.mappingdsl.serializer,
  de.fhdo.lemma.technology.mappingdsl.generator,
  de.fhdo.lemma.technology.mappingdsl.parser.antlr,

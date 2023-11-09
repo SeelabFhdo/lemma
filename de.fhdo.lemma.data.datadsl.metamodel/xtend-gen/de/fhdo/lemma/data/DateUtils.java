@@ -95,7 +95,7 @@ public class DateUtils {
     }
     return _xtrycatchfinallyexpression;
   }
-  
+
   /**
    * Determine the date format of a date string from all of LEMMA's supported date formats
    */
@@ -115,7 +115,7 @@ public class DateUtils {
     };
     return IterableExtensions.<DateTimeFormatter>findFirst(supportedDateFormats, _function);
   }
-  
+
   /**
    * Check if a date string is of a given date format
    */

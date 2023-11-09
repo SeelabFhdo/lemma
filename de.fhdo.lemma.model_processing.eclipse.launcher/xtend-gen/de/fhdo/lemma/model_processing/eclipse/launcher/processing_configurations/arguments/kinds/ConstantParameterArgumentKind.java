@@ -11,7 +11,7 @@ import de.fhdo.lemma.model_processing.eclipse.launcher.processing_configurations
 @SuppressWarnings("all")
 public final class ConstantParameterArgumentKind extends AbstractArgumentKind {
   public static final ArgumentKindIdentifier IDENTIFIER = ArgumentKindIdentifier.CONSTANT_PARAMETER;
-  
+
   /**
    * Constructor
    */

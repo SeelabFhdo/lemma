@@ -14,7 +14,7 @@ import org.eclipse.xtext.ui.editor.utils.TextStyle;
 @SuppressWarnings("all")
 public class HighlightingConfiguration extends DefaultHighlightingConfiguration {
   public static final String FEATURE_ID = "feature";
-  
+
   /**
    * Configure available highlighting styles
    */
@@ -23,7 +23,7 @@ public class HighlightingConfiguration extends DefaultHighlightingConfiguration 
     super.configure(acceptor);
     acceptor.acceptDefaultHighlighting(HighlightingConfiguration.FEATURE_ID, "Feature", this.featureTextStyle());
   }
-  
+
   /**
    * Feature style
    */

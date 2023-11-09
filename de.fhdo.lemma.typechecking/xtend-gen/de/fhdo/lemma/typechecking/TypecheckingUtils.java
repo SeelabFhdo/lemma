@@ -29,7 +29,7 @@ public class TypecheckingUtils {
   public static String getTypeName(final Type type) {
     return TypecheckingUtils.getTypeName(type, false);
   }
-  
+
   /**
    * Get name of a type, possibly without qualifying parts
    */
@@ -40,7 +40,7 @@ public class TypecheckingUtils {
     }
     return QualifiedName.create(nameParts).toString();
   }
-  
+
   /**
    * Get full qualifying name parts of a type
    */
@@ -81,7 +81,7 @@ public class TypecheckingUtils {
       return nameParts;
     }
   }
-  
+
   /**
    * Determine if a type is technology-specific
    */
@@ -93,7 +93,7 @@ public class TypecheckingUtils {
       (type instanceof TechnologySpecificDataStructure)) || 
       (type instanceof TechnologySpecificCollectionType));
   }
-  
+
   /**
    * Get technology of technology-specific type
    */
@@ -125,7 +125,7 @@ public class TypecheckingUtils {
     }
     return _xblockexpression;
   }
-  
+
   /**
    * Find default technology-specific primitive type for builtin primitive type
    */

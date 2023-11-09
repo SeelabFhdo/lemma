@@ -14,14 +14,14 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 @SuppressWarnings("all")
 public final class FileArgumentType extends AbstractArgumentType {
   public static final ArgumentTypeIdentifier IDENTIFIER = ArgumentTypeIdentifier.FILE;
-  
+
   /**
    * Constructor
    */
   public FileArgumentType() {
     super(FileArgumentType.IDENTIFIER, "File");
   }
-  
+
   /**
    * Validate the type-specific argument value in its internal representation, i.e., the path to
    * the file

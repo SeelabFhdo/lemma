@@ -52,7 +52,7 @@ public class MappingModelTransformationValidator extends AbstractInputModelValid
     }
     this.checkImportsInServiceModelsForDuplicateAliases(mappingModel);
   }
-  
+
   /**
    * Check imported service models for duplicate aliases of imported data and service models
    */
@@ -104,7 +104,7 @@ public class MappingModelTransformationValidator extends AbstractInputModelValid
       }
     }
   }
-  
+
   /**
    * Register warning functions
    */
@@ -118,7 +118,7 @@ public class MappingModelTransformationValidator extends AbstractInputModelValid
     };
     return Collections.<Function<TechnologyMapping, Void>>unmodifiableList(CollectionLiterals.<Function<TechnologyMapping, Void>>newArrayList(_function, _function_1));
   }
-  
+
   /**
    * Warn if microservices with technologies refer to microservices without technologies
    */
@@ -143,7 +143,7 @@ public class MappingModelTransformationValidator extends AbstractInputModelValid
     }
     return _xblockexpression;
   }
-  
+
   /**
    * Warn about duplicate microservice endpoint addresses across service models
    */

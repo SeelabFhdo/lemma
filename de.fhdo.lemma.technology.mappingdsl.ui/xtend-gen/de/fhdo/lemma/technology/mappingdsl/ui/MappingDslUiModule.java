@@ -8,8 +8,6 @@ import de.fhdo.lemma.eclipse.ui.editor.LiveValidationXtextDocumentProvider;
 import de.fhdo.lemma.eclipse.ui.editor.server.ServerConnection;
 import de.fhdo.lemma.technology.mappingdsl.ui.highlighting.HighlightingCalculator;
 import de.fhdo.lemma.technology.mappingdsl.ui.highlighting.HighlightingConfiguration;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor;
 import org.eclipse.xtext.ide.editor.syntaxcoloring.ISemanticHighlightingCalculator;
 import org.eclipse.xtext.service.SingletonBinding;
 import org.eclipse.xtext.ui.editor.XtextEditor;
@@ -22,35 +20,30 @@ import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration;
  * 
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de>Florian Rademacher</a>
  */
-@FinalFieldsConstructor
-@SuppressWarnings("all")
+/* @FinalFieldsConstructor */@SuppressWarnings("all")
 public class MappingDslUiModule extends AbstractMappingDslUiModule {
   public Class<? extends XtextEditor> bindXtextEditor() {
     return LiveValidationCapableXtextEditor.class;
   }
-  
+
   public Class<? extends XtextDocumentProvider> bindXtextDocumentProvider() {
     return LiveValidationXtextDocumentProvider.class;
   }
-  
+
   @SingletonBinding(eager = true)
   public ServerConnection bindServerConnection() {
     return ServerConnection.instance();
   }
-  
+
   public Class<? extends IHighlightingConfiguration> bindIHighlightingConfiguration() {
     return HighlightingConfiguration.class;
   }
-  
+
   public Class<? extends ISemanticHighlightingCalculator> bindISemanticHighlightingCalculator() {
     return HighlightingCalculator.class;
   }
-  
+
   public Class<? extends XtextDocumentReconcileStrategy> bindXtextDocumentReconcileStrategy() {
     return MappingDslReconcileStrategy.class;
-  }
-  
-  public MappingDslUiModule(final AbstractUIPlugin arg0) {
-    super(arg0);
   }
 }

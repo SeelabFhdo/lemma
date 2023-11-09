@@ -76,7 +76,7 @@ import org.eclipse.xtext.xbase.lib.ListExtensions;
 public class ServiceDslValidator extends AbstractServiceDslValidator {
   @Inject
   private ServiceDslQualifiedNameProvider nameProvider;
-  
+
   /**
    * Check if an imported file exists and if it is case sensitive
    */
@@ -99,7 +99,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
       }
     }
   }
-  
+
   /**
    * Check import aliases for uniqueness
    */
@@ -120,7 +120,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
     this.error(_builder.toString(), duplicate, 
       ServicePackage.Literals.IMPORT__NAME);
   }
-  
+
   /**
    * Check that imported file defines a model that fits the given import type
    */
@@ -160,7 +160,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
         ServicePackage.Literals.IMPORT__IMPORT_URI);
     }
   }
-  
+
   /**
    * Check that model does not import itself
    */
@@ -180,7 +180,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
     };
     importedServiceModels.forEach(_function_1);
   }
-  
+
   /**
    * Check that imported file is imported exactly once
    */
@@ -202,7 +202,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
     this.error("File is already being imported", duplicate, 
       ServicePackage.Literals.IMPORT__IMPORT_URI);
   }
-  
+
   /**
    * Warn about non-unique microservice endpoints' addresses per protocol/data format combination
    */
@@ -217,7 +217,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
     };
     this.warnUniqueEndpointAddresses(microserviceEndpoints, "microservice", _function_1);
   }
-  
+
   /**
    * Warn about non-unique interface endpoints' addresses per protocol/data format combination
    */
@@ -232,7 +232,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
     };
     this.warnUniqueEndpointAddresses(interfaceEndpoints, "interface", _function_1);
   }
-  
+
   /**
    * Warn about non-unique operation endpoints' addresses per protocol/data format combination
    */
@@ -266,7 +266,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
     };
     this.warnUniqueEndpointAddresses(operationEndpoints, "operation", _function_2);
   }
-  
+
   /**
    * Check that technology is assigned only once to a microservice
    */
@@ -285,7 +285,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
         ServicePackage.Literals.MICROSERVICE__TECHNOLOGY_REFERENCES, (duplicateIndex).intValue());
     }
   }
-  
+
   /**
    * Check that only one annotated technology contains type definitions
    */
@@ -325,7 +325,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
     };
     typeDefinitionTechnologyReference.forEach(_function_4);
   }
-  
+
   /**
    * Check that annotated technologies define not only deployment-related concepts
    */
@@ -347,7 +347,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
       }
     }
   }
-  
+
   /**
    * Check that a microservice specifies protocols that match its operation parameters'
    * communication types
@@ -361,7 +361,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
     this.checkEffectiveProtocolsForCommunicationType(microservice, CommunicationType.ASYNCHRONOUS);
     this.checkEffectiveProtocolsForCommunicationType(microservice, CommunicationType.SYNCHRONOUS);
   }
-  
+
   /**
    * Helper to check if a microservice specifies protocols for its operation parameters'
    * communication types
@@ -422,7 +422,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
       this.error(_plus, microservice, ServicePackage.Literals.MICROSERVICE__NAME);
     }
   }
-  
+
   /**
    * Helper to find the effective default protocol of a microservice
    */
@@ -446,7 +446,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
     }
     return null;
   }
-  
+
   /**
    * Check technologies of a microservice per communication type for unambiguous default protocols
    */
@@ -501,7 +501,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
       }
     }
   }
-  
+
   /**
    * Helper to check if default protocol of a microservice is unique for a given communication
    * type
@@ -531,7 +531,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
     }
     return true;
   }
-  
+
   /**
    * Check that default type definition technology can be marked as such
    */
@@ -553,7 +553,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
         ServicePackage.Literals.TECHNOLOGY_REFERENCE__IS_TYPE_DEFINITION_TECHNOLOGY);
     }
   }
-  
+
   /**
    * Check that interfaces are not empty, i.e., that they define or refer to at least one
    * operation
@@ -568,7 +568,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
         ServicePackage.Literals.INTERFACE__NAME);
     }
   }
-  
+
   /**
    * Check interface visibility
    */
@@ -620,7 +620,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
     this.error(_plus, interface_, 
       ServicePackage.Literals.INTERFACE__VISIBILITY);
   }
-  
+
   /**
    * Warn, if a required interface is already marked as being required by its containing
    * microservice
@@ -639,7 +639,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
         ServicePackage.Literals.POSSIBLY_IMPORTED_INTERFACE__INTERFACE);
     }
   }
-  
+
   /**
    * Warn, if a required interface does not define any implemented methods
    */
@@ -650,7 +650,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
         ServicePackage.Literals.POSSIBLY_IMPORTED_INTERFACE__INTERFACE);
     }
   }
-  
+
   /**
    * Warn, if a required microservice does not define any implemented methods
    */
@@ -663,7 +663,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
         ServicePackage.Literals.POSSIBLY_IMPORTED_MICROSERVICE__MICROSERVICE);
     }
   }
-  
+
   /**
    * Check operation visibility
    */
@@ -715,7 +715,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
     this.error(_plus, operation, 
       ServicePackage.Literals.OPERATION__VISIBILITY);
   }
-  
+
   /**
    * Warn, if the interface of an operation, that is marked as being not implemented, is also
    * marked as being not implemented. That is, the operation is already implicitly marked as being
@@ -735,7 +735,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
       this.warning(_plus, operation, ServicePackage.Literals.OPERATION__NOT_IMPLEMENTED);
     }
   }
-  
+
   /**
    * Warn, if an internal operation is already implicitly internal because its containing
    * interface is internal
@@ -755,7 +755,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
         ServicePackage.Literals.OPERATION__VISIBILITY);
     }
   }
-  
+
   /**
    * Warn, if a required operation is already required because its containing interface or
    * microservice are required
@@ -807,7 +807,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
       }
     }
   }
-  
+
   /**
    * Check that there is at most one protocol per communication type annotated on microservices,
    * interfaces, operations, or referred operations
@@ -926,7 +926,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
       }
     }
   }
-  
+
   /**
    * The unspecified primitive type is forbidden for parameters
    */
@@ -942,7 +942,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
     this.error("Type unspecified is only allowed in combination with noimpl modifier", parameter, 
       ServicePackage.Literals.PARAMETER__PRIMITIVE_TYPE);
   }
-  
+
   /**
    * Warn if initializing operation's parameters' output communication types do not match
    * initialized parameter's communication type
@@ -990,7 +990,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
         ServicePackage.Literals.PARAMETER__INITIALIZED_BY_OPERATION);
     }
   }
-  
+
   /**
    * Warn if an API parameter has already been commented
    */
@@ -1010,7 +1010,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
         ServicePackage.Literals.API_PARAMETER_COMMENT__PARAMETER);
     }
   }
-  
+
   /**
    * Warn if an incoming API parameter has not been commented yet
    */
@@ -1052,7 +1052,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
         ServicePackage.Literals.API_OPERATION_COMMENT__COMMENT);
     }
   }
-  
+
   /**
    * Warn if an API parameter has been commented as being required/not required when it is modeled
    * as being optional/not optional
@@ -1099,7 +1099,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
         ServicePackage.Literals.API_PARAMETER_COMMENT__PARAMETER);
     }
   }
-  
+
   /**
    * Check type compatibility of parameter and initializing operation, and warn if incompatible
    */
@@ -1154,7 +1154,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
     }
     this.warnInitializingTypeCompatibility(importedOperation, outputTypesOfParametersCommunicationType, parameterType);
   }
-  
+
   /**
    * Helper method to determine if a technology-specific primitive type lacks underlying
    * built-in primitive types
@@ -1190,7 +1190,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
       ServicePackage.Literals.PARAMETER__INITIALIZED_BY_OPERATION);
     return true;
   }
-  
+
   /**
    * Helper method to perform full type checks of a parameter and its initializing operation
    */
@@ -1256,7 +1256,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
     this.warning(_plus_3, importedOperation, 
       ServicePackage.Literals.POSSIBLY_IMPORTED_OPERATION__OPERATION);
   }
-  
+
   /**
    * Check unique endpoints on microservice
    */
@@ -1264,7 +1264,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
   public void checkUniqueEndpoints(final Microservice microservice) {
     this.checkUniqueEndpoints(microservice.getEndpoints());
   }
-  
+
   /**
    * Check unique endpoints on interface
    */
@@ -1272,7 +1272,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
   public void checkUniqueEndpoints(final Interface interface_) {
     this.checkUniqueEndpoints(interface_.getEndpoints());
   }
-  
+
   /**
    * Check unique endpoints on operation
    */
@@ -1280,7 +1280,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
   public void checkUniqueEndpoints(final Operation operation) {
     this.checkUniqueEndpoints(operation.getEndpoints());
   }
-  
+
   /**
    * Check uniqueness of an endpoint's addresses
    */
@@ -1299,7 +1299,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
         ServicePackage.Literals.ENDPOINT__ADDRESSES, (duplicateIndex).intValue());
     }
   }
-  
+
   /**
    * Check uniqueness of aspects
    */
@@ -1324,7 +1324,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
         ServicePackage.Literals.IMPORTED_SERVICE_ASPECT__IMPORTED_ASPECT);
     }
   }
-  
+
   /**
    * Check that aspect has only one property, if only a single value is specified, and that the
    * specified value matches the property's type
@@ -1367,7 +1367,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
       }
     }
   }
-  
+
   /**
    * Check uniqueness of aspect properties in value assignments
    */
@@ -1385,7 +1385,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
         ServicePackage.Literals.IMPORTED_SERVICE_ASPECT__VALUES, (duplicateIndex).intValue());
     }
   }
-  
+
   /**
    * Check that mandatory properties of aspects have values
    */
@@ -1434,7 +1434,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
       }
     }
   }
-  
+
   /**
    * Check that the assigned value of a service aspect property matches its type
    */
@@ -1457,7 +1457,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
         TechnologyPackage.Literals.TECHNOLOGY_SPECIFIC_PROPERTY_VALUE_ASSIGNMENT__VALUE);
     }
   }
-  
+
   /**
    * Convenience method to check endpoint uniqueness in a list of endpoints
    */
@@ -1506,7 +1506,7 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
     };
     endpoints.forEach(_function);
   }
-  
+
   /**
    * Convenience method to warn about non-unique endpoint addresses within a list of endpoints
    */

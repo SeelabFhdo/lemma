@@ -1,7 +1,6 @@
 package de.fhdo.lemma.eclipse.ui.editor;
 
 import com.google.inject.Inject;
-import de.fhdo.lemma.eclipse.ui.editor.LiveValidationJob;
 import de.fhdo.lemma.eclipse.ui.editor.server.ServerConnection;
 import org.eclipse.ui.texteditor.AbstractDocumentProvider;
 import org.eclipse.xtext.ui.editor.model.XtextDocument;
@@ -21,13 +20,13 @@ import org.eclipse.xtext.validation.IResourceValidator;
 public class LiveValidationXtextDocumentProvider extends XtextDocumentProvider {
   @Inject
   private IResourceValidator resourceValidator;
-  
+
   @Inject
   private IssueResolutionProvider issueResolutionProvider;
-  
+
   @Inject
   private ServerConnection languageServerConnection;
-  
+
   /**
    * Set up the annotation issue processor and the Live Validation job
    */

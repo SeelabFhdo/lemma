@@ -40,13 +40,13 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 @SuppressWarnings("all")
 public class DataModelTransformationStrategy extends AbstractUiModelTransformationStrategy {
   public static final String DATA_MODEL_FILE_TYPE_ID = "DATA";
-  
+
   public static final List<String> DATA_MODEL_FILE_EXTENSIONS = LemmaUiUtils.getFileExtensions(LemmaUiUtils.DATA_DSL_EDITOR_ID);
-  
+
   private static final String MODEL_TYPE_PREFIX = "data";
-  
+
   private final LinkedHashMap<String, ModelFileTypeDescription> modelFileTypeDescriptions;
-  
+
   public DataModelTransformationStrategy() {
     LocalResourceManager _xifexpression = null;
     Display _current = Display.getCurrent();
@@ -67,7 +67,7 @@ public class DataModelTransformationStrategy extends AbstractUiModelTransformati
     Pair<String, ModelFileTypeDescription> _mappedTo = Pair.<String, ModelFileTypeDescription>of(DataModelTransformationStrategy.DATA_MODEL_FILE_TYPE_ID, _modelFileTypeDescription);
     this.modelFileTypeDescriptions = CollectionLiterals.<String, ModelFileTypeDescription>newLinkedHashMap(_mappedTo);
   }
-  
+
   /**
    * Helper to load an image file if a resource manager is available
    */
@@ -80,7 +80,7 @@ public class DataModelTransformationStrategy extends AbstractUiModelTransformati
     }
     return _xifexpression;
   }
-  
+
   /**
    * Get string prefix of model type
    */
@@ -88,7 +88,7 @@ public class DataModelTransformationStrategy extends AbstractUiModelTransformati
   public String getModelTypePrefix() {
     return DataModelTransformationStrategy.MODEL_TYPE_PREFIX;
   }
-  
+
   /**
    * Get model types' ordering for displaying purposes
    */
@@ -97,7 +97,7 @@ public class DataModelTransformationStrategy extends AbstractUiModelTransformati
     return CollectionLiterals.<String>newLinkedList(
       DataModelTransformationStrategy.DATA_MODEL_FILE_TYPE_ID);
   }
-  
+
   /**
    * Get model types' ordering for transformation
    */
@@ -106,7 +106,7 @@ public class DataModelTransformationStrategy extends AbstractUiModelTransformati
     return CollectionLiterals.<String>newLinkedList(
       DataModelTransformationStrategy.DATA_MODEL_FILE_TYPE_ID);
   }
-  
+
   /**
    * Get file extensions of the model type
    */
@@ -116,7 +116,7 @@ public class DataModelTransformationStrategy extends AbstractUiModelTransformati
     modelTypeFileExtensions.addAll(DataModelTransformationStrategy.DATA_MODEL_FILE_EXTENSIONS);
     return modelTypeFileExtensions;
   }
-  
+
   /**
    * Get descriptions of all relevant model file types
    */
@@ -124,7 +124,7 @@ public class DataModelTransformationStrategy extends AbstractUiModelTransformati
   public LinkedHashMap<String, ModelFileTypeDescription> getModelFileTypeDescriptions() {
     return this.modelFileTypeDescriptions;
   }
-  
+
   /**
    * Get model file type description by extension
    */
@@ -136,7 +136,7 @@ public class DataModelTransformationStrategy extends AbstractUiModelTransformati
     }
     return typeIdentifierAndDescription.getValue();
   }
-  
+
   /**
    * Get model file type identifier and description by extension
    */
@@ -155,7 +155,7 @@ public class DataModelTransformationStrategy extends AbstractUiModelTransformati
     }
     return null;
   }
-  
+
   /**
    * Get title of model selection dialog
    */
@@ -169,7 +169,7 @@ public class DataModelTransformationStrategy extends AbstractUiModelTransformati
     return (_builder.toString() + 
       "Transformation");
   }
-  
+
   /**
    * Get message of model selection dialog
    */
@@ -190,7 +190,7 @@ public class DataModelTransformationStrategy extends AbstractUiModelTransformati
     _builder_3.append("continue\" to use all models for intermediate model transformation.");
     return (_plus_1 + _builder_3);
   }
-  
+
   /**
    * Get title of dialog for specifying transformation paths
    */
@@ -203,7 +203,7 @@ public class DataModelTransformationStrategy extends AbstractUiModelTransformati
     _builder.append(" Models");
     return _builder.toString();
   }
-  
+
   /**
    * Get message of dialog for specifying transformation paths
    */
@@ -219,7 +219,7 @@ public class DataModelTransformationStrategy extends AbstractUiModelTransformati
     return (_plus + 
       "transformations.");
   }
-  
+
   /**
    * Get transformation strategy
    */
@@ -227,7 +227,7 @@ public class DataModelTransformationStrategy extends AbstractUiModelTransformati
   public AbstractIntermediateModelTransformationStrategy<?, ?> getTransformationStrategyInternal() {
     return new IntermediateServiceModelTransformation();
   }
-  
+
   /**
    * Get imported files of a given model file in the form of IFile instances
    */
@@ -260,7 +260,7 @@ public class DataModelTransformationStrategy extends AbstractUiModelTransformati
     importAliasesAndUris.forEach(_function_1);
     return importedModelFiles;
   }
-  
+
   /**
    * Return default target path for intermediate model transformation for a given file
    */

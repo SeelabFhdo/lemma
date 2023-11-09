@@ -14,11 +14,11 @@ import org.eclipse.xtext.ui.editor.utils.TextStyle;
 @SuppressWarnings("all")
 public class HighlightingConfiguration extends DefaultHighlightingConfiguration {
   public static final String ANNOTATION_ID = "annotation";
-  
+
   public static final String API_OPERATION_ID = "apiOperation";
-  
+
   public static final String API_PARAMETER_ID = "apiParameter";
-  
+
   /**
    * Configure available highlighting styles
    */
@@ -29,7 +29,7 @@ public class HighlightingConfiguration extends DefaultHighlightingConfiguration 
     acceptor.acceptDefaultHighlighting(HighlightingConfiguration.API_OPERATION_ID, "API Operation", this.apiOperationTextStyle());
     acceptor.acceptDefaultHighlighting(HighlightingConfiguration.API_PARAMETER_ID, "API Parameter", this.apiParameterTextStyle());
   }
-  
+
   /**
    * Annotation style
    */
@@ -39,7 +39,7 @@ public class HighlightingConfiguration extends DefaultHighlightingConfiguration 
     textStyle.setColor(_rGB);
     return textStyle;
   }
-  
+
   /**
    * API operation style
    */
@@ -49,7 +49,7 @@ public class HighlightingConfiguration extends DefaultHighlightingConfiguration 
     textStyle.setColor(_rGB);
     return textStyle;
   }
-  
+
   /**
    * API parameter style
    */

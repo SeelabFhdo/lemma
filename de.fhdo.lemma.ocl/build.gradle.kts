@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm") version "1.3.72"
     id("com.diffplug.p2.asmaven") version "3.27.0"
-    maven
+    `maven-publish`
 }
 
 group = "de.fhdo.lemma.ocl"
@@ -73,7 +73,7 @@ dependencies {
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "11"
+    kotlinOptions.jvmTarget = "17"
 
     // On every compile, extract downloaded Eclipse JARs into a sub-directory of the build directory
     dependsOn("extractEclipseDependencies")

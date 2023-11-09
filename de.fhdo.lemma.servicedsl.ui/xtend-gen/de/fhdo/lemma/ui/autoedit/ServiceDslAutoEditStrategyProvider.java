@@ -19,7 +19,7 @@ public class ServiceDslAutoEditStrategyProvider extends DefaultAutoEditStrategyP
     super.configure(acceptor);
     this.configureApiOperationComment(acceptor);
   }
-  
+
   /**
    * Custom autoedit configuration for API operation comments
    */

@@ -32,7 +32,7 @@ public class ServiceModelTransformationValidator extends AbstractInputModelValid
       this.error("Service model is empty");
     }
   }
-  
+
   /**
    * Register warning functions
    */
@@ -43,7 +43,7 @@ public class ServiceModelTransformationValidator extends AbstractInputModelValid
     };
     return Collections.<Function<ServiceModel, Void>>unmodifiableList(CollectionLiterals.<Function<ServiceModel, Void>>newArrayList(_function));
   }
-  
+
   /**
    * Warn if microservices with technologies refer to microservices without technologies
    */

@@ -26,7 +26,7 @@ public final class EurekaGeneratorTemplate extends AbstractEurekaGeneratorTempla
       super(parentShell, project, file, EurekaGeneratorConstants.GENERATOR_LONG_NAME, 
         EurekaGeneratorConstants.GENERATOR_SHORT_NAME);
     }
-    
+
     /**
      * Addendum for generator long name as part of the label for the generator executable path's
      * text field
@@ -35,7 +35,7 @@ public final class EurekaGeneratorTemplate extends AbstractEurekaGeneratorTempla
     public final String getGeneratorExecutableLabelTextAddendum() {
       return "path";
     }
-    
+
     /**
      * Create the dialog
      */
@@ -52,7 +52,7 @@ public final class EurekaGeneratorTemplate extends AbstractEurekaGeneratorTempla
       this.setMessage(_plus);
     }
   }
-  
+
   /**
    * Constructor
    */
@@ -60,7 +60,7 @@ public final class EurekaGeneratorTemplate extends AbstractEurekaGeneratorTempla
     super(ProcessorExecutableType.LOCAL_JAVA_PROGRAM, parentShell, ("Eureka artifact " + 
       "generation"), project, file);
   }
-  
+
   /**
    * Return the dialog for template completion
    */

@@ -37,13 +37,13 @@ import org.eclipse.xtext.xbase.lib.Pair;
 @SuppressWarnings("all")
 public class MarkdownToStyledTextConverter {
   private final String VERSION_MARK = "\\$VERSION\\$";
-  
+
   private final Pattern LINK = Pattern.compile("\\[(?<text>[^\\]]*)\\]\\((?<link>[^\\)]*)\\)");
-  
+
   private final Pattern BOLDFACE = Pattern.compile("\\*\\*(?<text>.*)\\*\\*");
-  
+
   private final Pattern ITALIC = Pattern.compile("\\*(?<text>.*)\\*");
-  
+
   /**
    * Assignment of actions to patterns. The actions are responsible for creating the text, which
    * replaces a matched markup pattern in the styled text, and its style.
@@ -68,13 +68,13 @@ public class MarkdownToStyledTextConverter {
       String _group = m.group("text");
       return Pair.<String, StyleRange>of(_group, styleRange);
     })));
-  
+
   private Composite parent;
-  
+
   private int style;
-  
+
   private Set<Integer> linkOffsets = CollectionLiterals.<Integer>newHashSet();
-  
+
   /**
    * Constructor
    */
@@ -82,14 +82,14 @@ public class MarkdownToStyledTextConverter {
     this.parent = parent;
     this.style = style;
   }
-  
+
   /**
    * Convert a Markdown input stream
    */
   public StyledText convert(final InputStream in) {
     return this.convert(this.readAll(in));
   }
-  
+
   /**
    * Helper to convert an InputStream to a String
    */
@@ -106,7 +106,7 @@ public class MarkdownToStyledTextConverter {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Convert a Markdown string
    */
@@ -135,7 +135,7 @@ public class MarkdownToStyledTextConverter {
     this.addLinkClickListener(styledText);
     return styledText;
   }
-  
+
   /**
    * Add listener to styled text that changes the cursor to a "Hand" symbol if it hovers over a
    * styled link
@@ -165,7 +165,7 @@ public class MarkdownToStyledTextConverter {
       }
     });
   }
-  
+
   /**
    * Add listener to styled text that forwards clicks on styled links to the OS's default
    * application, e.g., a web browser
@@ -193,7 +193,7 @@ public class MarkdownToStyledTextConverter {
       }
     });
   }
-  
+
   /**
    * Convert a Java regex Matcher to a basic SWT StyledRange instance
    */
@@ -203,7 +203,7 @@ public class MarkdownToStyledTextConverter {
     styleRange.length = m.group(replacementGroupName).length();
     return styleRange;
   }
-  
+
   /**
    * Find earliest match of one of the markup patterns in a given text. The earliest match is the
    * match with the lowest offset of all markup patterns' matches.
@@ -233,7 +233,7 @@ public class MarkdownToStyledTextConverter {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Helper to execute a pattern action on a result of findEarliestMatch()
    */
@@ -243,7 +243,7 @@ public class MarkdownToStyledTextConverter {
     final Function1<Matcher, Pair<String, StyleRange>> patternAction = this.PATTERN_ACTIONS.get(matchPattern);
     return patternAction.apply(matcher);
   }
-  
+
   /**
    * Helper to replace a match found by findEarliestMatch() with a pattern action's result
    * replacement text. This also adds the action's returned StyleRange to the passed list of
@@ -256,7 +256,7 @@ public class MarkdownToStyledTextConverter {
     ranges.add(styleRange);
     return matcher.replaceFirst(replacementText);
   }
-  
+
   /**
    * Helper to collect all ranges comprised by a StyledRange that points to a clickable link
    */
@@ -266,7 +266,7 @@ public class MarkdownToStyledTextConverter {
       this.linkOffsets.add(Integer.valueOf((styleRange.start + (o).intValue())));
     }
   }
-  
+
   /**
    * Helper to check if an offset corresponds to a clickable link
    */

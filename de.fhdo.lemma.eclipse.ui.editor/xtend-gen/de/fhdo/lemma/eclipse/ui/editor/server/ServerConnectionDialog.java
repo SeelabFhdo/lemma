@@ -30,15 +30,15 @@ public class ServerConnectionDialog extends TitleAreaDialog {
   private static final String HOSTNAME_REGEX = (("^(" + 
     "([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*") + 
     "([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\\-]*[A-Za-z0-9])");
-  
+
   private static final int MIN_DIALOG_WIDTH = 240;
-  
+
   private static final int MIN_DIALOG_HEIGHT = 120;
-  
+
   private Text hostnameField;
-  
+
   private Text portField;
-  
+
   /**
    * Constructor
    */
@@ -46,7 +46,7 @@ public class ServerConnectionDialog extends TitleAreaDialog {
     super(parentShell);
     this.setShellStyle((this.getShellStyle() | SWT.SHEET));
   }
-  
+
   /**
    * Create dialog (to be called after constructor and before open())
    */
@@ -57,7 +57,7 @@ public class ServerConnectionDialog extends TitleAreaDialog {
     this.setMessage("Enter data needed to connect to a running Live Validation server instance:", 
       IMessageProvider.INFORMATION);
   }
-  
+
   /**
    * Create buttons for the button bar
    */
@@ -66,7 +66,7 @@ public class ServerConnectionDialog extends TitleAreaDialog {
     this.createButton(parent, Window.CANCEL, IDialogConstants.CANCEL_LABEL, false);
     this.createButton(parent, Window.OK, "Connect", true);
   }
-  
+
   /**
    * Create the dialog's content
    */
@@ -83,7 +83,7 @@ public class ServerConnectionDialog extends TitleAreaDialog {
     this.portField = this.createTextField(container, "Port:", Integer.valueOf(LiveValidationServer.DEFAULT_PORT));
     return area;
   }
-  
+
   /**
    * Catch button press
    */
@@ -98,7 +98,7 @@ public class ServerConnectionDialog extends TitleAreaDialog {
         break;
     }
   }
-  
+
   /**
    * Handle click on the connect button
    */
@@ -117,7 +117,7 @@ public class ServerConnectionDialog extends TitleAreaDialog {
       }
     }
   }
-  
+
   /**
    * Attempt to connect to Live Validation server
    */
@@ -137,7 +137,7 @@ public class ServerConnectionDialog extends TitleAreaDialog {
     }
     return _xblockexpression;
   }
-  
+
   /**
    * Connect thread callback: Connection was established
    */
@@ -146,7 +146,7 @@ public class ServerConnectionDialog extends TitleAreaDialog {
     this.close();
     return null;
   }
-  
+
   /**
    * Connect thread callback: Error occurred during connection approach
    */
@@ -171,7 +171,7 @@ public class ServerConnectionDialog extends TitleAreaDialog {
     connectDialog.close();
     return null;
   }
-  
+
   /**
    * Check entered hostname for correctness
    */
@@ -203,7 +203,7 @@ public class ServerConnectionDialog extends TitleAreaDialog {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Check entered port for correctness
    */
@@ -230,14 +230,14 @@ public class ServerConnectionDialog extends TitleAreaDialog {
     }
     return true;
   }
-  
+
   /**
    * Convenience method to show an error message
    */
   private void showError(final String title, final String message) {
     MessageDialog.openError(this.getShell(), title, message);
   }
-  
+
   /**
    * Helper method to set the return code and also close the dialog
    */
@@ -245,7 +245,7 @@ public class ServerConnectionDialog extends TitleAreaDialog {
     this.setReturnCode(buttonId);
     this.close();
   }
-  
+
   /**
    * Create input text field for the file path and related labels
    */
@@ -266,7 +266,7 @@ public class ServerConnectionDialog extends TitleAreaDialog {
     textField.setText(_xifexpression);
     return textField;
   }
-  
+
   /**
    * Flag to indicate that dialog is resizable
    */
@@ -274,7 +274,7 @@ public class ServerConnectionDialog extends TitleAreaDialog {
   public boolean isResizable() {
     return true;
   }
-  
+
   /**
    * Initial size
    */

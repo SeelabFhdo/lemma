@@ -18,7 +18,7 @@ public class ServiceDslQualifiedNameProvider extends DefaultDeclarativeQualified
   public QualifiedName qualifiedName(final Microservice microservice) {
     return QualifiedName.create(microservice.getQualifiedNameParts());
   }
-  
+
   /**
    * Consider possible version as prefix of an interface's name
    */

@@ -1,6 +1,6 @@
 plugins {
-    java
-    maven
+     java
+    `maven-publish`
 }
 
 repositories {
@@ -9,12 +9,12 @@ repositories {
 }
 
 buildscript {
-    extra.set("commonsIoVersion", "2.6")
-    extra.set("commonsLangVersion", "3.12.0")
-    extra.set("groovyVersion", "3.0.8")
-    extra.set("log4jVersion", "2.16.0")
-    extra.set("lsp4jVersion", "0.10.0")
-    extra.set("picocliVersion", "4.6.1")
+    extra.set("commonsIoVersion", "2.13.0")
+    extra.set("commonsLangVersion", "3.13.0")
+    extra.set("groovyVersion", "3.0.19")
+    extra.set("log4jVersion", "2.20.0")
+    extra.set("lsp4jVersion", "0.21.1")
+    extra.set("picocliVersion", "4.7.5")
 }
 
 allprojects {
@@ -28,11 +28,11 @@ allprojects {
     }
 
     java {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
 
 subprojects {
-    apply(plugin = "maven")
+    apply(plugin = "maven-publish")
 }

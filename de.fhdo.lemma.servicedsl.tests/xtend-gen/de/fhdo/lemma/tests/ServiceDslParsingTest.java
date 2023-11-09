@@ -17,7 +17,7 @@ import org.junit.runner.RunWith;
 public class ServiceDslParsingTest {
   @Inject
   private ParseHelper<ServiceModel> parseHelper;
-  
+
   @Test
   public void loadModel() {
   }

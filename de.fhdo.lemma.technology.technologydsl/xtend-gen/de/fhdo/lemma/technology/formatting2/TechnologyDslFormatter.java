@@ -25,7 +25,7 @@ public class TechnologyDslFormatter extends DataDslFormatter {
   @Inject
   @Extension
   private TechnologyDslGrammarAccess _technologyDslGrammarAccess;
-  
+
   protected void _format(final Technology technology, @Extension final IFormattableDocument document) {
     EList<TechnologySpecificPrimitiveType> _primitiveTypes = technology.getPrimitiveTypes();
     for (final TechnologySpecificPrimitiveType technologySpecificPrimitiveType : _primitiveTypes) {
@@ -40,14 +40,14 @@ public class TechnologyDslFormatter extends DataDslFormatter {
       document.<TechnologySpecificDataStructure>format(technologySpecificDataStructureType);
     }
   }
-  
+
   protected void _format(final TechnologySpecificPrimitiveType technologySpecificPrimitiveType, @Extension final IFormattableDocument document) {
     EList<PrimitiveType> _basicBuiltinPrimitiveTypes = technologySpecificPrimitiveType.getBasicBuiltinPrimitiveTypes();
     for (final PrimitiveType primitiveType : _basicBuiltinPrimitiveTypes) {
       document.<PrimitiveType>format(primitiveType);
     }
   }
-  
+
   public void format(final Object technologySpecificPrimitiveType, final IFormattableDocument document) {
     if (technologySpecificPrimitiveType instanceof TechnologySpecificPrimitiveType) {
       _format((TechnologySpecificPrimitiveType)technologySpecificPrimitiveType, document);

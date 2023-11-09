@@ -13,7 +13,7 @@ import org.eclipse.xtext.ui.editor.utils.TextStyle;
 @SuppressWarnings("all")
 public class HighlightingConfiguration extends DefaultHighlightingConfiguration {
   public static final String ANNOTATION_ID = "annotation";
-  
+
   /**
    * Configure available highlighting styles
    */
@@ -22,7 +22,7 @@ public class HighlightingConfiguration extends DefaultHighlightingConfiguration 
     super.configure(acceptor);
     acceptor.acceptDefaultHighlighting(HighlightingConfiguration.ANNOTATION_ID, "Annotation", this.annotationTextStyle());
   }
-  
+
   /**
    * Annotation style
    */

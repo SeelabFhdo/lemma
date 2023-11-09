@@ -27,7 +27,7 @@ dependencies {
     implementation(project(":${rootProject.name}.model"))
     implementation(project(":${rootProject.name}.protocol"))
 
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }
 

@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.3.72"
-    maven
+    `maven-publish`
 }
 
 group = "de.fhdo.lemma.model_processing.code_generation.springcloud"
@@ -13,10 +13,10 @@ repositories {
 }
 
 buildscript {
-    extra.set("classgraphVersion", "4.8.35")
-    extra.set("commonsVersion", "3.5")
+    extra.set("classgraphVersion", "4.8.162")
+    extra.set("commonsVersion", "3.13.0")
     extra.set("javaBaseGeneratorVersion", version)
-    extra.set("javaParserVersion", "3.24.2")
+    extra.set("javaParserVersion", "3.25.5")
     extra.set("lemmaEclipsePluginsVersion", version)
     extra.set("modelProcessingVersion", version)
     extra.set("xmlBuilderVersion", "1.7.2")
@@ -54,7 +54,7 @@ dependencies {
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "11"
+    kotlinOptions.jvmTarget = "17"
     // Java Base Generator uses @JvmDefault annotation
     kotlinOptions.freeCompilerArgs = listOf("-Xjvm-default=compatibility")
 }

@@ -1,7 +1,6 @@
 package de.fhdo.lemma.eclipse.ui.editor.server;
 
 import com.google.common.base.Function;
-import de.fhdo.lemma.eclipse.ui.editor.server.ServerConnection;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 
@@ -13,15 +12,15 @@ import org.eclipse.xtext.xbase.lib.Exceptions;
 @SuppressWarnings("all")
 public class ConnectThread extends Thread {
   private String hostname;
-  
+
   private int port;
-  
+
   private Display display;
-  
+
   private Function<Void, Void> connectedCallback;
-  
+
   private Function<Exception, Void> errorOccurredCallback;
-  
+
   /**
    * Constructor
    */
@@ -33,7 +32,7 @@ public class ConnectThread extends Thread {
     this.connectedCallback = connectedCallback;
     this.errorOccurredCallback = errorOccurredCallback;
   }
-  
+
   /**
    * Connect to server
    */
@@ -51,7 +50,7 @@ public class ConnectThread extends Thread {
       }
     }
   }
-  
+
   /**
    * Helper to invoke a callback function in sync with the current display, i.e., the GUI
    */
@@ -66,7 +65,7 @@ public class ConnectThread extends Thread {
       }
     });
   }
-  
+
   /**
    * Helper to invoke a callback function in sync with the current display, i.e., the GUI
    */

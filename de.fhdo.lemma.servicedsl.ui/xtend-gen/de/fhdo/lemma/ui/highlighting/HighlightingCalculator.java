@@ -54,7 +54,7 @@ public class HighlightingCalculator implements ISemanticHighlightingCalculator {
     this.provideHighlightingForBooleanConstants(resource, acceptor);
     this.provideHighlightingForApiComments(resource, acceptor);
   }
-  
+
   /**
    * Provide highlighting for annotations
    */
@@ -106,21 +106,21 @@ public class HighlightingCalculator implements ISemanticHighlightingCalculator {
     };
     annotatableConcepts.forEach(_function);
   }
-  
+
   /**
    * Check if the given node has a next sibling
    */
   private boolean hasNextNode(final INode node) {
     return ((node != null) && (node.getNextSibling() != null));
   }
-  
+
   /**
    * Check if the next sibling of the given node is the opening bracket of an aspect string
    */
   private boolean nextNodeIsOpeningAspectBracket(final INode node) {
     return (Objects.equal(node.getNextSibling().getText(), "(") || Objects.equal(node.getNextSibling().getText(), "({"));
   }
-  
+
   /**
    * Provide highlighting for default type definition flag of built-in @technology annotation
    */
@@ -150,7 +150,7 @@ public class HighlightingCalculator implements ISemanticHighlightingCalculator {
       }
     }
   }
-  
+
   /**
    * Helper to return the value of a Keyword INode. Returns an empty string if the passed node is
    * not a Keyword.
@@ -165,7 +165,7 @@ public class HighlightingCalculator implements ISemanticHighlightingCalculator {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Provide highlighting for boolean values
    */
@@ -220,7 +220,7 @@ public class HighlightingCalculator implements ISemanticHighlightingCalculator {
     };
     IteratorExtensions.<EObject>forEach(resource.getAllContents(), _function_3);
   }
-  
+
   /**
    * Provide highlighting for API operation comments
    */
@@ -261,7 +261,7 @@ public class HighlightingCalculator implements ISemanticHighlightingCalculator {
     };
     IteratorExtensions.<EObject>forEach(resource.getAllContents(), _function);
   }
-  
+
   /**
    * Helper to iteratively highlight nodes until a node with a certain text was reached
    */

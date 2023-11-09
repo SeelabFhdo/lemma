@@ -19,14 +19,14 @@ import org.eclipse.xtext.xbase.lib.Pair;
 @SuppressWarnings("all")
 public final class IntermediateModelOfImportWithAliasArgumentType extends AbstractArgumentType {
   public static final ArgumentTypeIdentifier IDENTIFIER = ArgumentTypeIdentifier.INTERMEDIATE_MODEL_WITH_IMPORT_ALIAS;
-  
+
   /**
    * Constructor
    */
   public IntermediateModelOfImportWithAliasArgumentType() {
     super(IntermediateModelOfImportWithAliasArgumentType.IDENTIFIER, "Intermediate model of import with alias");
   }
-  
+
   /**
    * Validate the type-specific argument value in its internal representation, i.e., the import
    * alias. Specifically, check that the import with the alias points to a LEMMA model for which

@@ -15,43 +15,43 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 @SuppressWarnings("all")
 public class ImportChain {
   private final ArrayList<String> entries = new ArrayList<String>();
-  
+
   private boolean isImportedCycle = false;
-  
+
   /**
    * Initializes an empty ImportChain
    */
   public ImportChain() {
   }
-  
+
   /**
    * Initializes an ImportChain with a list of paths of imported files
    */
   public ImportChain(final List<String> entries) {
     this.entries.addAll(entries);
   }
-  
+
   /**
    * Returns a copy of the ImportChain
    */
   public static ImportChain copy(final ImportChain sourceImportChain) {
     return new ImportChain(sourceImportChain.entries);
   }
-  
+
   /**
    * Marks the ImportChain in which an imported cycle was found
    */
   public boolean foundImportedCycle() {
     return this.isImportedCycle = true;
   }
-  
+
   /**
    * Returns whether a cyclic import is present
    */
   public boolean getIsImportedCycle() {
     return this.isImportedCycle;
   }
-  
+
   /**
    * Add a DataModel to the entries list
    */
@@ -62,7 +62,7 @@ public class ImportChain {
           dataModel.eResource())));
     return this;
   }
-  
+
   /**
    * Checks if there is a cycle
    */
@@ -71,7 +71,7 @@ public class ImportChain {
     int _size_1 = this.entries.size();
     return (_size < _size_1);
   }
-  
+
   /**
    * Return the entries list
    */

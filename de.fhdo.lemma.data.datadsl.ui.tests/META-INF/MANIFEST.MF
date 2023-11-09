@@ -7,21 +7,22 @@ Bundle-SymbolicName: de.fhdo.lemma.data.datadsl.ui.tests;singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: de.fhdo.lemma.data.datadsl.ui,
  de.fhdo.lemma.data.datadsl.metamodel,
- org.junit;bundle-version="4.13.0",
+ org.junit;bundle-version="4.13.2",
  org.eclipse.xtext.testing,
  org.eclipse.xtext.xbase.testing,
  org.eclipse.xtext.junit4,
  org.eclipse.xtext.xbase.junit,
  org.eclipse.core.runtime,
  org.eclipse.ui.workbench;resolution:=optional,
- org.eclipse.xtext.ui.testing
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+ org.eclipse.xtext.ui.testing,
+ org.eclipse.xtext.xbase.ui.testing
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Export-Package: de.fhdo.lemma.data.ui.tests;x-internal=true
 Import-Package: org.hamcrest.core,
- org.junit;version="4.13.0",
- org.junit.runners.model;version="4.13.0",
- org.junit.runner;version="4.13.0",
- org.junit.runners;version="4.13.0",
- org.junit.runner.manipulation;version="4.13.0",
- org.junit.runner.notification;version="4.13.0"
+ org.junit;version="4.13.2",
+ org.junit.runners.model;version="4.13.2",
+ org.junit.runner;version="4.13.2",
+ org.junit.runners;version="4.13.2",
+ org.junit.runner.manipulation;version="4.13.2",
+ org.junit.runner.notification;version="4.13.2"
 Automatic-Module-Name: de.fhdo.lemma.data.datadsl.ui.tests

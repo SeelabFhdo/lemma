@@ -38,16 +38,16 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
 
-        <build-helper-maven-plugin-version>3.2.0</build-helper-maven-plugin-version>
-        <eclipse-version>2021-03</eclipse-version>
-        <eclipse-core-resources-version>3.14.0</eclipse-core-resources-version>
-        <emf-version>2.22.0</emf-version>
-        <maven-compiler-plugin-version>3.8.1</maven-compiler-plugin-version>
-        <tycho-version>2.3.0</tycho-version>
-        <xtext-version>2.26.0</xtext-version>
+        <build-helper-maven-plugin-version>3.4.0</build-helper-maven-plugin-version>
+        <eclipse-version>2023-06</eclipse-version>
+        <eclipse-core-resources-version>3.19.0</eclipse-core-resources-version>
+        <emf-version>2.29.0</emf-version>
+        <maven-compiler-plugin-version>3.11.0</maven-compiler-plugin-version>
+        <tycho-version>4.0.2</tycho-version>
+        <xtext-version>2.32.0</xtext-version>
     </properties>
 
     <repositories>

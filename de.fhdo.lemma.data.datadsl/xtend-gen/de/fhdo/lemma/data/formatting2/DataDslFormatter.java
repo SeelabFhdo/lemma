@@ -22,7 +22,7 @@ public class DataDslFormatter extends AbstractFormatter2 {
   @Inject
   @Extension
   private DataDslGrammarAccess _dataDslGrammarAccess;
-  
+
   protected void _format(final DataModel dataModel, @Extension final IFormattableDocument document) {
     EList<Version> _versions = dataModel.getVersions();
     for (final Version version : _versions) {
@@ -37,7 +37,7 @@ public class DataDslFormatter extends AbstractFormatter2 {
       document.<ComplexType>format(complexType);
     }
   }
-  
+
   protected void _format(final Version version, @Extension final IFormattableDocument document) {
     EList<ComplexType> _complexTypes = version.getComplexTypes();
     for (final ComplexType complexType : _complexTypes) {
@@ -48,7 +48,7 @@ public class DataDslFormatter extends AbstractFormatter2 {
       document.<Context>format(context);
     }
   }
-  
+
   public void format(final Object dataModel, final IFormattableDocument document) {
     if (dataModel instanceof XtextResource) {
       _format((XtextResource)dataModel, document);

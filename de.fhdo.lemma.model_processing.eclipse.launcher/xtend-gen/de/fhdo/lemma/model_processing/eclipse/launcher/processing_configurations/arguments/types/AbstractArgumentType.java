@@ -20,7 +20,7 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 public abstract class AbstractArgumentType {
   @Accessors(AccessorType.PUBLIC_GETTER)
   private final ArgumentTypeIdentifier identifier;
-  
+
   /**
    * Two argument types are equal if they have the same identifier
    */
@@ -40,19 +40,19 @@ public abstract class AbstractArgumentType {
     }
     return _xifexpression;
   }
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private final String name;
-  
+
   private final List<String> possibleValues;
-  
+
   /**
    * Constructor argument types without constrained possible values
    */
   public AbstractArgumentType(final ArgumentTypeIdentifier identifier, final String name) {
     this(identifier, name, CollectionLiterals.<String>emptyList());
   }
-  
+
   /**
    * Constructor
    */
@@ -74,7 +74,7 @@ public abstract class AbstractArgumentType {
     this.possibleValues = CollectionLiterals.<String>newArrayList(((String[])Conversions.unwrapArray(possibleValues, String.class)));
     Collections.<String>sort(this.possibleValues);
   }
-  
+
   /**
    * Convert the given value into its internal representation. By default, the given value will be
    * returned. Implementers can override this method to provide argument-type-specific conversion
@@ -83,13 +83,13 @@ public abstract class AbstractArgumentType {
   public String convertValueToInternalRepresentation(final String value) {
     return value;
   }
-  
+
   /**
    * Validate the given value in its internal representation w.r.t. a concrete argument type
    * implementation and in the context of the given model processing configuration
    */
   public abstract void validateValueInInternalRepresentation(final ProcessingConfiguration processingConfiguration, final String value);
-  
+
   /**
    * Convert the given value into its user representation. By default, the given value will be
    * returned. Implementers can override this method to provide argument-type-specific conversion
@@ -98,7 +98,7 @@ public abstract class AbstractArgumentType {
   public String convertValueToUserRepresentation(final String value) {
     return value;
   }
-  
+
   /**
    * Validate the given value in user representation w.r.t. a concrete argument type
    * implementation and in the context of the given model processing configuration. By default,
@@ -113,19 +113,19 @@ public abstract class AbstractArgumentType {
   public void validateValueInUserRepresentation(final ProcessingConfiguration processingConfiguration, final String value) {
     this.validateValueInInternalRepresentation(processingConfiguration, value);
   }
-  
+
   /**
    * Get the list of the type's possible values
    */
   public final List<String> getPossibleValues() {
     return Collections.<String>unmodifiableList(this.possibleValues);
   }
-  
+
   @Pure
   public ArgumentTypeIdentifier getIdentifier() {
     return this.identifier;
   }
-  
+
   @Pure
   public String getName() {
     return this.name;

@@ -84,19 +84,19 @@ public final class LaunchShortcut implements ILaunchShortcut2 {
    */
   private static class TemplateSelectionDialog extends TitleAreaDialog {
     private final IProject project;
-    
+
     private final IFile file;
-    
+
     private final List<? extends AbstractLaunchConfigurationTemplate> allTemplates;
-    
+
     private List<? extends AbstractLaunchConfigurationTemplate> applicableTemplates;
-    
+
     private List<? extends AbstractLaunchConfigurationTemplate> currentTemplates;
-    
+
     private org.eclipse.swt.widgets.List templateSelectionList;
-    
+
     private Button continueButton;
-    
+
     /**
      * Constructor
      */
@@ -114,7 +114,7 @@ public final class LaunchShortcut implements ILaunchShortcut2 {
       this.currentTemplates = this.allTemplates;
       this.setHelpAvailable(false);
     }
-    
+
     /**
      * Instantiate an AbstractLaunchConfigurationTemplate instance from the given class
      */
@@ -156,7 +156,7 @@ public final class LaunchShortcut implements ILaunchShortcut2 {
         throw Exceptions.sneakyThrow(_e);
       }
     }
-    
+
     /**
      * Create the dialog
      */
@@ -166,7 +166,7 @@ public final class LaunchShortcut implements ILaunchShortcut2 {
       this.setTitle("Select quick launch configuration");
       this.setMessage("Please select a quick launch configuration from the list below");
     }
-    
+
     /**
      * Create the dialog area
      */
@@ -183,7 +183,7 @@ public final class LaunchShortcut implements ILaunchShortcut2 {
       this.addFilterNonApplicableTemplates(container);
       return area;
     }
-    
+
     /**
      * Add template selection list to the dialog
      */
@@ -195,7 +195,7 @@ public final class LaunchShortcut implements ILaunchShortcut2 {
       this.templateSelectionList.setLayoutData(_gridData);
       this.updateTemplateSelectionList();
     }
-    
+
     /**
      * Update the template selection list from the domain object representing the list of
      * current templates
@@ -207,7 +207,7 @@ public final class LaunchShortcut implements ILaunchShortcut2 {
       };
       this.currentTemplates.forEach(_function);
     }
-    
+
     /**
      * Add checkbox to filter non-applicable templates to the dialog
      */
@@ -233,7 +233,7 @@ public final class LaunchShortcut implements ILaunchShortcut2 {
         }
       });
     }
-    
+
     /**
      * Helper to get the list of templates that are applicable to the source model file
      */
@@ -251,7 +251,7 @@ public final class LaunchShortcut implements ILaunchShortcut2 {
       };
       return IterableExtensions.toList(IterableExtensions.filter(this.allTemplates, _function));
     }
-    
+
     /**
      * Helper to retrieve the aliases and absolute paths of LEMMA technology models imported by
      * the given LEMMA source model root
@@ -280,28 +280,28 @@ public final class LaunchShortcut implements ILaunchShortcut2 {
       };
       return IterableExtensions.<Import, String, String>toMap(IterableExtensions.<Import>filter(imports, _function), _function_1, _function_2);
     }
-    
+
     /**
      * Retrieve all imports of the given ServiceModel
      */
     private EList<Import> _getImports(final ServiceModel modelRoot) {
       return modelRoot.getImports();
     }
-    
+
     /**
      * Retrieve all imports of the given TechnologyMapping
      */
     private EList<Import> _getImports(final TechnologyMapping modelRoot) {
       return modelRoot.getImports();
     }
-    
+
     /**
      * Retrieve all imports of the given OperationModel
      */
     private EList<Import> _getImports(final OperationModel modelRoot) {
       return modelRoot.getImports();
     }
-    
+
     /**
      * Retrieve all imports of a generic EObject
      */
@@ -316,7 +316,7 @@ public final class LaunchShortcut implements ILaunchShortcut2 {
       String _plus = (_builder.toString() + _builder_1);
       throw new IllegalArgumentException(_plus);
     }
-    
+
     /**
      * Parse LEMMA technology models to retrieve the names of the modeled technologies per alias
      * in the model which imports the technology models. The given map is expected to state per
@@ -351,7 +351,7 @@ public final class LaunchShortcut implements ILaunchShortcut2 {
       }
       return resultMap;
     }
-    
+
     /**
      * Update continue button from the dialog's state
      */
@@ -360,7 +360,7 @@ public final class LaunchShortcut implements ILaunchShortcut2 {
       boolean _not = (!_isEmpty);
       this.continueButton.setEnabled(_not);
     }
-    
+
     /**
      * Create the dialog buttons
      */
@@ -370,7 +370,7 @@ public final class LaunchShortcut implements ILaunchShortcut2 {
       this.updateContinueButton();
       this.createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
     }
-    
+
     /**
      * Continue button was pressed
      */
@@ -399,7 +399,7 @@ public final class LaunchShortcut implements ILaunchShortcut2 {
       super.okPressed();
       completionDialog.open();
     }
-    
+
     /**
      * Initialize a model processing configuration to act as the domain object of a completable
      * model processing template
@@ -410,7 +410,7 @@ public final class LaunchShortcut implements ILaunchShortcut2 {
       configuration.setSourceModelFilePath(this.file.getProjectRelativePath().toString());
       return configuration;
     }
-    
+
     /**
      * Store the given model processing configuration if it is valid
      */
@@ -442,14 +442,14 @@ public final class LaunchShortcut implements ILaunchShortcut2 {
         throw Exceptions.sneakyThrow(_e);
       }
     }
-    
+
     /**
      * Store the given model processing configuration if it is valid and run it afterwards
      */
     private void storeAndRun(final ProcessingConfigurationWithLaunchConfigurationName completedProcessingConfiguration) {
       DebugUITools.launch(this.store(completedProcessingConfiguration), ILaunchManager.RUN_MODE);
     }
-    
+
     /**
      * Flag to indicate that the dialog is resizable
      */
@@ -457,7 +457,7 @@ public final class LaunchShortcut implements ILaunchShortcut2 {
     public boolean isResizable() {
       return true;
     }
-    
+
     private EList<Import> getImports(final EObject modelRoot) {
       if (modelRoot instanceof OperationModel) {
         return _getImports((OperationModel)modelRoot);
@@ -473,9 +473,9 @@ public final class LaunchShortcut implements ILaunchShortcut2 {
       }
     }
   }
-  
+
   private static final ILaunchManager LAUNCH_MANAGER = DebugPlugin.getDefault().getLaunchManager();
-  
+
   private static final Map<String, ArrayList<Class<? extends AbstractLaunchConfigurationTemplate>>> SUPPORTED_LAUNCH_CONFIGURATION_TEMPLATES = Collections.<String, ArrayList<Class<? extends AbstractLaunchConfigurationTemplate>>>unmodifiableMap(CollectionLiterals.<String, ArrayList<Class<? extends AbstractLaunchConfigurationTemplate>>>newHashMap(Pair.<String, ArrayList<Class<? extends AbstractLaunchConfigurationTemplate>>>of("mapping", CollectionLiterals.<Class<? extends AbstractLaunchConfigurationTemplate>>newArrayList(
     DockerJavaBaseGeneratorTemplate.class, 
     DockerTypeFocusedMappingModelJavaBaseGeneratorTemplate.class, 
@@ -493,7 +493,7 @@ public final class LaunchShortcut implements ILaunchShortcut2 {
     DockerZuulGeneratorTemplate.class)), Pair.<String, ArrayList<Class<? extends AbstractLaunchConfigurationTemplate>>>of("services", CollectionLiterals.<Class<? extends AbstractLaunchConfigurationTemplate>>newArrayList(
     JavaBaseGeneratorTemplate.class, 
     DockerJavaBaseGeneratorTemplate.class))));
-  
+
   /**
    * Get the launch configurations associated with a selected file
    */
@@ -508,7 +508,7 @@ public final class LaunchShortcut implements ILaunchShortcut2 {
     }
     return ((ILaunchConfiguration[])Conversions.unwrapArray(_xifexpression, ILaunchConfiguration.class));
   }
-  
+
   /**
    * Get the launch configurations applicable to the given IFile as a mapped resource
    */
@@ -517,7 +517,7 @@ public final class LaunchShortcut implements ILaunchShortcut2 {
       LaunchShortcut.LAUNCH_MANAGER, 
       LaunchConfigurationConstants.PROCESSING_CONFIGURATION_LAUNCH_CONFIGURATION_TYPE, file);
   }
-  
+
   /**
    * Get launchable resource associated with a selected file
    */
@@ -525,7 +525,7 @@ public final class LaunchShortcut implements ILaunchShortcut2 {
   public final IResource getLaunchableResource(final ISelection selection) {
     return null;
   }
-  
+
   /**
    * Execute the shortcut for the selected file in the given mode
    */
@@ -533,7 +533,7 @@ public final class LaunchShortcut implements ILaunchShortcut2 {
   public final void launch(final ISelection selection, final String mode) {
     this.launch(Utils.getSelectedFile(selection), mode);
   }
-  
+
   /**
    * Execute the shortcut on the given file in the given mode
    */
@@ -564,7 +564,7 @@ public final class LaunchShortcut implements ILaunchShortcut2 {
       MessageDialog.openInformation(_activeShell_1, "Quick launch not supported", _plus_1);
     }
   }
-  
+
   /**
    * Helper to the Eclipse project for the given IFile or display an error in case the project is
    * not determinable
@@ -595,7 +595,7 @@ public final class LaunchShortcut implements ILaunchShortcut2 {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Helper to retrieve completable launch configuration templates from the extension of the given
    * IFile
@@ -610,7 +610,7 @@ public final class LaunchShortcut implements ILaunchShortcut2 {
     }
     return _elvis;
   }
-  
+
   /**
    * Get the launch configurations associated with the currently edited file
    */
@@ -625,7 +625,7 @@ public final class LaunchShortcut implements ILaunchShortcut2 {
     }
     return ((ILaunchConfiguration[])Conversions.unwrapArray(_xifexpression, ILaunchConfiguration.class));
   }
-  
+
   /**
    * Get launchable resource associated with the currently edited file
    */
@@ -633,7 +633,7 @@ public final class LaunchShortcut implements ILaunchShortcut2 {
   public final IResource getLaunchableResource(final IEditorPart editorpart) {
     return null;
   }
-  
+
   /**
    * Execute the shortcut for the currently edited file in the given mode
    */

@@ -23,7 +23,7 @@ public class MappingDslFormatter extends ServiceDslFormatter {
   @Inject
   @Extension
   private MappingDslGrammarAccess _mappingDslGrammarAccess;
-  
+
   protected void _format(final TechnologyMapping technologyMapping, @Extension final IFormattableDocument document) {
     EList<Import> _imports = technologyMapping.getImports();
     for (final Import _import : _imports) {
@@ -34,11 +34,11 @@ public class MappingDslFormatter extends ServiceDslFormatter {
       document.<MicroserviceMapping>format(microserviceMapping);
     }
   }
-  
+
   protected void _format(final MicroserviceMapping microserviceMapping, @Extension final IFormattableDocument document) {
     document.<ImportedMicroservice>format(microserviceMapping.getMicroservice());
   }
-  
+
   public void format(final Object microserviceMapping, final IFormattableDocument document) {
     if (microserviceMapping instanceof XtextResource) {
       _format((XtextResource)microserviceMapping, document);

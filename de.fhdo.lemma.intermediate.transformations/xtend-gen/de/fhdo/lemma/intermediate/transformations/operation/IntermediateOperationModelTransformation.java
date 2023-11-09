@@ -31,9 +31,9 @@ import org.eclipse.xtext.xbase.lib.Pair;
 @SuppressWarnings("all")
 public class IntermediateOperationModelTransformation extends AbstractAtlInputOutputIntermediateModelTransformationStrategy {
   private IFile inputModelFile;
-  
+
   private String absoluteInputModelFilePath;
-  
+
   /**
    * Specify reference name and transformation model type of input model
    */
@@ -43,7 +43,7 @@ public class IntermediateOperationModelTransformation extends AbstractAtlInputOu
       OperationModel.class);
     return Pair.<String, TransformationModelType>of("Operation", _transformationModelType);
   }
-  
+
   /**
    * Specify reference name and transformation model type of output model
    */
@@ -53,7 +53,7 @@ public class IntermediateOperationModelTransformation extends AbstractAtlInputOu
       IntermediatePackage.eINSTANCE, IntermediateOperationModel.class);
     return Pair.<String, TransformationModelType>of("Intermediate", _transformationModelType);
   }
-  
+
   /**
    * Specify path to the compiled ATL transformation file
    */
@@ -61,7 +61,7 @@ public class IntermediateOperationModelTransformation extends AbstractAtlInputOu
   public String getCompiledModelTransformationFilePath() {
     return "/IntermediateOperationModelTransformation.asm";
   }
-  
+
   /**
    * Fetch input model file prior to transformation execution
    */
@@ -70,7 +70,7 @@ public class IntermediateOperationModelTransformation extends AbstractAtlInputOu
     this.inputModelFile = ((IFile[])Conversions.unwrapArray(inputModelFiles.values(), IFile.class))[0];
     this.absoluteInputModelFilePath = LemmaUtils.getAbsolutePath(this.inputModelFile);
   }
-  
+
   /**
    * Prepare input model
    */
@@ -83,7 +83,7 @@ public class IntermediateOperationModelTransformation extends AbstractAtlInputOu
     };
     operationModel.getImports().forEach(_function);
   }
-  
+
   /**
    * Add transformation target paths of imported model files to target model
    */
@@ -100,7 +100,7 @@ public class IntermediateOperationModelTransformation extends AbstractAtlInputOu
     };
     targetPaths.forEach(_function);
   }
-  
+
   /**
    * Convert URIs in intermediate operation models to relative ones
    */

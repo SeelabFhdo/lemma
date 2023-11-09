@@ -48,7 +48,7 @@ public class MatrixBasedTypeChecker implements TypeCheckerI<Type> {
     };
     return IterableExtensions.<CompatibilityMatrixEntry>exists(compatibilityEntries, _function);
   }
-  
+
   /**
    * Check if an entry in a compatibility matrix describes the compatibility between the given
    * basic type and the type to check
@@ -74,7 +74,7 @@ public class MatrixBasedTypeChecker implements TypeCheckerI<Type> {
     }
     return false;
   }
-  
+
   /**
    * Get type name
    */

@@ -43,13 +43,13 @@ import org.junit.runner.RunWith;
 public class DataDslParsingTest {
   @Inject
   private Provider<XtextResourceSet> resourceSetProvider;
-  
+
   @Inject
   private ParseHelper<DataModel> parseHelper;
-  
+
   @Inject
   private ExtendedValidationTestHelper validationTestHelper;
-  
+
   /**
    * Register EPackages required for model parsing and language testing
    */
@@ -57,13 +57,13 @@ public class DataDslParsingTest {
   public static void registerEcorePackages() {
     EPackage.Registry.INSTANCE.put(DataPackage.eNS_URI, DataPackage.eINSTANCE);
   }
-  
+
   @Test
   public void duplicateImportAlias() {
     final DataModel model = this.parseTestModel("DuplicateImportAlias.data");
     this.validationTestHelper.assertError(model, DataPackage.Literals.COMPLEX_TYPE_IMPORT, null, "Duplicate import alias");
   }
-  
+
   /**
    * Helper to parse a test model from the "models" package of the test project
    */
@@ -94,136 +94,136 @@ public class DataDslParsingTest {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   @Test
   public void duplicateImportFile() {
     final DataModel model = this.parseTestModel("DuplicateImportFile.data");
     this.validationTestHelper.assertError(model, DataPackage.Literals.COMPLEX_TYPE_IMPORT, null, ("File is already " + 
       "being imported"));
   }
-  
+
   @Test
   public void wrongImportModelKind() {
     final DataModel model = this.parseTestModel("WrongImportModelKind.data");
     this.validationTestHelper.assertError(model, DataPackage.Literals.COMPLEX_TYPE_IMPORT, null, ("File does not " + 
       "contain a data model definition"));
   }
-  
+
   @Test
   public void validImports() {
     this.validationTestHelper.assertNoIssues(this.parseTestModel("ValidImports.data"));
   }
-  
+
   @Test
   public void duplicateVersion() {
     final DataModel model = this.parseTestModel("DuplicateVersion.data");
     this.validationTestHelper.assertError(model, DataPackage.Literals.VERSION, null, "Duplicate version");
   }
-  
+
   @Test
   public void duplicateTopLevelContext() {
     final DataModel model = this.parseTestModel("DuplicateTopLevelContext.data");
     this.validationTestHelper.assertError(model, DataPackage.Literals.CONTEXT, null, "Duplicate context");
   }
-  
+
   @Test
   public void duplicateTopLevelType() {
     final DataModel model = this.parseTestModel("DuplicateTopLevelType.data");
     this.validationTestHelper.assertError(model, DataPackage.Literals.COMPLEX_TYPE, null, "Duplicate complex type");
   }
-  
+
   @Test
   public void duplicateVersionContext() {
     final DataModel model = this.parseTestModel("DuplicateVersionContext.data");
     this.validationTestHelper.assertError(model, DataPackage.Literals.CONTEXT, null, "Duplicate context");
   }
-  
+
   @Test
   public void duplicateVersionType() {
     final DataModel model = this.parseTestModel("DuplicateVersionType.data");
     this.validationTestHelper.assertError(model, DataPackage.Literals.COMPLEX_TYPE, null, "Duplicate complex type");
   }
-  
+
   @Test
   public void duplicateContextType() {
     final DataModel model = this.parseTestModel("DuplicateContextType.data");
     this.validationTestHelper.assertError(model, DataPackage.Literals.COMPLEX_TYPE, null, "Duplicate complex type");
   }
-  
+
   @Test
   public void duplicateFunctionParameter() {
     final DataModel model = this.parseTestModel("DuplicateFunctionParameter.data");
     this.validationTestHelper.assertError(model, DataPackage.Literals.DATA_OPERATION_PARAMETER, null, ("Duplicate " + 
       "parameter"));
   }
-  
+
   @Test
   public void duplicateProcedureParameter() {
     final DataModel model = this.parseTestModel("DuplicateProcedureParameter.data");
     this.validationTestHelper.assertError(model, DataPackage.Literals.DATA_OPERATION_PARAMETER, null, ("Duplicate " + 
       "parameter"));
   }
-  
+
   @Test
   public void validNesting_ContextType() {
     this.validationTestHelper.assertNoIssues(this.parseTestModel("ValidNesting_ContextType.data"));
   }
-  
+
   @Test
   public void validNesting_VersionContextType() {
     this.validationTestHelper.assertNoIssues(this.parseTestModel("ValidNesting_VersionContextType.data"));
   }
-  
+
   @Test
   public void validNesting_VersionType() {
     this.validationTestHelper.assertNoIssues(this.parseTestModel("ValidNesting_VersionType.data"));
   }
-  
+
   @Test
   public void validNesting_Type() {
     this.validationTestHelper.assertNoIssues(this.parseTestModel("ValidNesting_Type.data"));
   }
-  
+
   @Test
   public void duplicateStructureField() {
     final DataModel model = this.parseTestModel("DuplicateStructureField.data");
     this.validationTestHelper.assertError(model, DataPackage.Literals.DATA_STRUCTURE, null, ("Duplicate structure " + 
       "component"));
   }
-  
+
   @Test
   public void duplicateStructureOperation() {
     final DataModel model = this.parseTestModel("DuplicateStructureOperation.data");
     this.validationTestHelper.assertError(model, DataPackage.Literals.DATA_STRUCTURE, null, ("Duplicate structure " + 
       "component"));
   }
-  
+
   @Test
   public void duplicateStructureOperationDueToField() {
     final DataModel model = this.parseTestModel("DuplicateStructureOperationDueToField.data");
     this.validationTestHelper.assertError(model, DataPackage.Literals.DATA_STRUCTURE, null, ("Duplicate structure " + 
       "component"));
   }
-  
+
   @Test
   public void duplicateStructureFieldDueToOperation() {
     final DataModel model = this.parseTestModel("DuplicateStructureFieldDueToOperation.data");
     this.validationTestHelper.assertError(model, DataPackage.Literals.DATA_STRUCTURE, null, ("Duplicate structure " + 
       "component"));
   }
-  
+
   @Test
   public void duplicateFeaturesEnumeration() {
     final DataModel model = this.parseTestModel("DuplicateFeaturesEnumeration.data");
     this.validationTestHelper.assertError(model, DataPackage.Literals.COMPLEX_TYPE, null, "Duplicate feature");
   }
-  
+
   @Test
   public void duplicateFeaturesStructure() {
     final DataModel model = this.parseTestModel("DuplicateFeaturesStructure.data");
     this.validationTestHelper.assertError(model, DataPackage.Literals.COMPLEX_TYPE, null, "Duplicate feature");
   }
-  
+
   @Test
   public void aggregateFeatureConstraints() {
     DataModel _parseTestModel = this.parseTestModel("AggregateFeatureConstraints.data");
@@ -234,7 +234,7 @@ public class DataDslParsingTest {
         "violations"), 
       Severity.WARNING, _mappedTo, _mappedTo_1);
   }
-  
+
   @Test
   public void serviceFeatureConstraints() {
     DataModel _parseTestModel = this.parseTestModel("ServiceFeatureConstraints.data");
@@ -247,7 +247,7 @@ public class DataDslParsingTest {
       Severity.WARNING, 
       8, _mappedTo, _mappedTo_1, _mappedTo_2);
   }
-  
+
   @Test
   public void domainEventFeatureConstraints() {
     DataModel _parseTestModel = this.parseTestModel("DomainEventFeatureConstraints.data");
@@ -257,7 +257,7 @@ public class DataDslParsingTest {
         "violations"), 
       Severity.WARNING, _mappedTo);
   }
-  
+
   @Test
   public void entityFeatureConstraints() {
     DataModel _parseTestModel = this.parseTestModel("EntityFeatureConstraints.data");
@@ -271,7 +271,7 @@ public class DataDslParsingTest {
         "violations"), 
       Severity.WARNING, _mappedTo, _mappedTo_1, _mappedTo_2);
   }
-  
+
   @Test
   public void factoryFeatureConstraints() {
     DataModel _parseTestModel = this.parseTestModel("FactoryFeatureConstraints.data");
@@ -284,7 +284,7 @@ public class DataDslParsingTest {
       Severity.WARNING, 
       4, _mappedTo, _mappedTo_1, _mappedTo_2);
   }
-  
+
   @Test
   public void repositoryFeatureConstraints() {
     DataModel _parseTestModel = this.parseTestModel("RepositoryFeatureConstraints.data");
@@ -299,7 +299,7 @@ public class DataDslParsingTest {
       Severity.WARNING, 
       4, _mappedTo, _mappedTo_1, _mappedTo_2);
   }
-  
+
   @Test
   public void specificationFeatureConstraints() {
     DataModel _parseTestModel = this.parseTestModel("SpecificationFeatureConstraints.data");
@@ -314,7 +314,7 @@ public class DataDslParsingTest {
       Severity.WARNING, 
       6, _mappedTo, _mappedTo_1, _mappedTo_2, _mappedTo_3, _mappedTo_4);
   }
-  
+
   @Test
   public void valueObjectFeatureConstraints() {
     DataModel _parseTestModel = this.parseTestModel("ValueObjectFeatureConstraints.data");
@@ -328,7 +328,7 @@ public class DataDslParsingTest {
       this.ofCount(Pair.<EClass, String>of(DataPackage.Literals.COMPLEX_TYPE, ("A value object should not be an aggregate, entity, repository, " + 
         "service, or specification")), 8));
   }
-  
+
   private List<Pair<EClass, String>> ofCount(final Pair<EClass, String> pair, final int n) {
     final ArrayList<Pair<EClass, String>> resultList = CollectionLiterals.<Pair<EClass, String>>newArrayList();
     ExclusiveRange _doubleDotLessThan = new ExclusiveRange(0, n, true);
@@ -340,7 +340,7 @@ public class DataDslParsingTest {
     }
     return resultList;
   }
-  
+
   @Test
   public void dataFieldConstraints() {
     DataModel _parseTestModel = this.parseTestModel("DataFieldConstraints.data");
@@ -372,7 +372,7 @@ public class DataDslParsingTest {
       this.ofCount(Pair.<EClass, String>of(DataPackage.Literals.DATA_FIELD, "Value is not of type string"), 4), 
       this.ofCount(Pair.<EClass, String>of(DataPackage.Literals.DATA_FIELD, "Value is not of type unspecified"), 9));
   }
-  
+
   @Test
   public void partFeatureConstraints() {
     StringConcatenation _builder = new StringConcatenation();
@@ -399,7 +399,7 @@ public class DataDslParsingTest {
       "Domain model does not yield expected issues for Part feature constraint violations", 
       6, Collections.<ExpectedIssue>unmodifiableList(CollectionLiterals.<ExpectedIssue>newArrayList(_expectedIssue, _expectedIssue_1, _expectedIssue_2, _expectedIssue_3, _expectedIssue_4)));
   }
-  
+
   @Test
   public void operationConstraints() {
     DataModel _parseTestModel = this.parseTestModel("OperationConstraints.data");
@@ -415,7 +415,7 @@ public class DataDslParsingTest {
       null, 
       Severity.ERROR, _ofCount, _ofCount_1, _mappedTo, _mappedTo_1, _ofCount_2, _mappedTo_2, _mappedTo_3);
   }
-  
+
   @Test
   public void closureFeatureConstraints() {
     DataModel _parseTestModel = this.parseTestModel("ClosureFeatureConstraints.data");
@@ -435,7 +435,7 @@ public class DataDslParsingTest {
       this.ofCount(Pair.<EClass, String>of(DataPackage.Literals.DATA_OPERATION, "A closure should return a value of the same type as its parameter"), 4), 
       this.ofCount(Pair.<EClass, String>of(DataPackage.Literals.DATA_OPERATION, "A closure should return a value of the same type as its parameter"), 2));
   }
-  
+
   @Test
   public void sideEffectFreeFeatureConstraints() {
     this.validationTestHelper.assertIssuesExactlyAndOrdered(
@@ -445,7 +445,7 @@ public class DataDslParsingTest {
       Severity.WARNING, 
       this.ofCount(Pair.<EClass, String>of(DataPackage.Literals.DATA_OPERATION, "A side effect free operation should be a function"), 2));
   }
-  
+
   @Test
   public void validatorFeatureConstraints() {
     DataModel _parseTestModel = this.parseTestModel("ValidatorFeatureConstraints.data");
@@ -464,7 +464,7 @@ public class DataDslParsingTest {
       Severity.WARNING, _mappedTo, _mappedTo_1, _mappedTo_2, _mappedTo_3, _mappedTo_4, _mappedTo_5, _mappedTo_6, _mappedTo_7, _mappedTo_8, _mappedTo_9, 
       this.ofCount(Pair.<EClass, String>of(DataPackage.Literals.DATA_OPERATION, "A validator operation should return a value of type boolean"), 4));
   }
-  
+
   @Test
   public void cyclicImports1() {
     this.validationTestHelper.assertIssuesExactlyAndOrdered(
@@ -473,14 +473,14 @@ public class DataDslParsingTest {
       Severity.ERROR, 
       this.ofCount(Pair.<EClass, String>of(DataPackage.Literals.COMPLEX_TYPE_IMPORT, "Import introduces a cycle"), 2));
   }
-  
+
   @Test
   public void cyclicImports2() {
     final DataModel model = this.parseTestModel("CyclicImports3.data");
     this.validationTestHelper.assertError(model, DataPackage.Literals.COMPLEX_TYPE_IMPORT, null, ("Import introduces a " + 
       "cycle"));
   }
-  
+
   @Test
   public void caseSensitiveImports() {
     File _file = new File("a");
@@ -494,14 +494,14 @@ public class DataDslParsingTest {
       "case sensitive, but the case sensitivity of this import path does not match its ") + 
       "appearance in the filesystem"));
   }
-  
+
   @Test
   public void identifierFeatureConstraints() {
     final DataModel model = this.parseTestModel("IdentifierFeatureConstraints.data");
     this.validationTestHelper.assertWarning(model, DataPackage.Literals.DATA_OPERATION, null, ("An identifier should " + 
       "not be a validator"));
   }
-  
+
   @Test
   public void cyclicInheritance() {
     this.validationTestHelper.assertIssuesExactlyAndOrdered(
@@ -510,21 +510,21 @@ public class DataDslParsingTest {
       Severity.ERROR, 
       this.ofCount(Pair.<EClass, String>of(DataPackage.Literals.DATA_STRUCTURE, "Cyclic inheritance detected"), 4));
   }
-  
+
   @Test
   public void emptyContext() {
     final DataModel model = this.parseTestModel("EmptyContext.data");
     this.validationTestHelper.assertError(model, DataPackage.Literals.CONTEXT, null, ("A context must define at least " + 
       "one complex type"));
   }
-  
+
   @Test
   public void emptyVersion() {
     final DataModel model = this.parseTestModel("EmptyVersion.data");
     this.validationTestHelper.assertError(model, DataPackage.Literals.VERSION, null, ("A version must define at least " + 
       "one context or complex type"));
   }
-  
+
   @Test
   public void enumerationFeatureConstraints() {
     this.validationTestHelper.assertIssuesOrdered(
@@ -535,13 +535,13 @@ public class DataDslParsingTest {
       10, 
       this.ofCount(Pair.<EClass, String>of(DataPackage.Literals.COMPLEX_TYPE, "An enumeration should only be a domain event or value object"), 9));
   }
-  
+
   @Test
   public void duplicateCollectionField() {
     final DataModel model = this.parseTestModel("DuplicateCollectionField.data");
     this.validationTestHelper.assertError(model, DataPackage.Literals.DATA_FIELD, null, "Duplicate field field1");
   }
-  
+
   @Test
   public void importedComplexTypeScoping() {
     DataModel _parseTestModel = this.parseTestModel("ImportedComplexTypeScoping2.data");
@@ -559,7 +559,7 @@ public class DataDslParsingTest {
       "Domain model does not yield expected errors for imported complex type scoping", 
       Severity.ERROR, _mappedTo, _mappedTo_1, _mappedTo_2, _mappedTo_3, _mappedTo_4, _mappedTo_5, _mappedTo_6, _mappedTo_7);
   }
-  
+
   @Test
   public void superStructureScoping() {
     DataModel _parseTestModel = this.parseTestModel("SuperStructureScoping1.data");

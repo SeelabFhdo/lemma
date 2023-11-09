@@ -38,7 +38,7 @@ public class MappingDslExtractor {
     this.<ComplexTypeMapping>appendAsSeparatedLines(sb, mappingModel.getTypeMappings(), _function_1);
     return sb.toString();
   }
-  
+
   /**
    * Helper to append a list of lines to a StringBuilder and separate them from already existing
    * lines in that StringBuilder by an empty line
@@ -62,7 +62,7 @@ public class MappingDslExtractor {
     final String stringLines = IterableExtensions.join(ListExtensions.<T, String>map(lines, _function), "\n");
     sb.append(stringLines);
   }
-  
+
   /**
    * Extract Import
    */
@@ -100,7 +100,7 @@ public class MappingDslExtractor {
     }
     return _xblockexpression;
   }
-  
+
   /**
    * Extract ComplexTypeMapping
    */
@@ -209,7 +209,7 @@ public class MappingDslExtractor {
     _builder_4.append("}");
     return _builder_4.toString();
   }
-  
+
   /**
    * Extract TechnologyReference
    */
@@ -229,7 +229,7 @@ public class MappingDslExtractor {
     return (_plus + 
       ")");
   }
-  
+
   /**
    * Extract ImportedComplexTypeToMap
    */
@@ -246,7 +246,7 @@ public class MappingDslExtractor {
     String _buildQualifiedName = mappedType.getType().buildQualifiedName(".");
     return (_plus + _buildQualifiedName);
   }
-  
+
   /**
    * Extract TechnologySpecificImportedServiceAspect
    */
@@ -261,7 +261,7 @@ public class MappingDslExtractor {
     _builder_1.append(";");
     return (_builder.toString() + _builder_1);
   }
-  
+
   /**
    * Extract TechnologySpecificFieldMapping
    */

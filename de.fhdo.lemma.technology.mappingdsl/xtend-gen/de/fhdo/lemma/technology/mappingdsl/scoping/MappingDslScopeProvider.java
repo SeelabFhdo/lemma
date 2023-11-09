@@ -215,7 +215,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Build scope for imported complex types to map
    */
@@ -239,7 +239,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Build scope for complex type mappings and the given reference
    */
@@ -269,7 +269,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Build scope for data operation mappings and the given reference
    */
@@ -293,7 +293,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Build scope for data operation parameter mappings and the given reference
    */
@@ -317,7 +317,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Build scope for data operation parameter mappings and the given reference
    */
@@ -347,7 +347,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Build scope for microservice mappings and the given reference
    */
@@ -371,7 +371,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Build scope for technology references and the given reference
    */
@@ -383,7 +383,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Build scope for interface mappings and the given reference
    */
@@ -407,7 +407,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Build scope for operation mappings and the given reference
    */
@@ -431,7 +431,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Build scope for referred operation mappings and the given reference
    */
@@ -455,7 +455,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Build scope for imported microservices
    */
@@ -473,7 +473,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Build scope for technology-specific protocols and the given reference
    */
@@ -485,7 +485,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Build scope that comprises annotated technologies of a technology-annotatable concept
    * instance or its technology-annotatable container
@@ -521,7 +521,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Build scope for technology protocols and the given reference
    */
@@ -539,7 +539,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Build scope for technology-specific endpoints and the given reference
    */
@@ -551,7 +551,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Build scope for primitive parameter mappings and the given reference
    */
@@ -581,7 +581,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Build scope for complex parameter mappings and the given reference
    */
@@ -617,7 +617,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Build scope for technology-specific field mappings and the given reference
    */
@@ -654,7 +654,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Build scope for domain model imports of imported complex types
    */
@@ -679,7 +679,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Build scope for complex types to be imported
    */
@@ -701,7 +701,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
       DataModel.class, 
       type.getDataModelImport().getImportURI(), _function, _function_1);
   }
-  
+
   /**
    * Build scope for interfaces
    */
@@ -723,7 +723,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
       microservice.getInterfaces(), _function, 
       IScope.NULLSCOPE);
   }
-  
+
   /**
    * Build scope for operations
    */
@@ -751,7 +751,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     return Scopes.<Operation>scopeFor(operations, _function_1, 
       IScope.NULLSCOPE);
   }
-  
+
   /**
    * Build scope for primitive parameters of operations
    */
@@ -768,7 +768,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
       IterableExtensions.<Parameter>filter(mapping.getOperationMapping().getOperation().getParameters(), _function_1));
     return Scopes.scopeFor(primitiveParameters);
   }
-  
+
   /**
    * Build scope for complex parameters of operations
    */
@@ -779,7 +779,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     final Iterable<Parameter> complexParameters = IterableExtensions.<Parameter>filter(mapping.getOperationMapping().getOperation().getParameters(), _function);
     return Scopes.scopeFor(complexParameters);
   }
-  
+
   /**
    * Build scope for technology-specific types
    */
@@ -894,7 +894,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
       Technology.class, 
       technology.getImportURI(), getImportedConcepts, getConceptNameParts);
   }
-  
+
   /**
    * Build scope for microservice mapping technology that defines types
    */
@@ -962,7 +962,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     }
     return Scopes.scopeFor(Collections.<EObject>unmodifiableList(CollectionLiterals.<EObject>newArrayList(typeDefinitionTechnology)));
   }
-  
+
   /**
    * Build scope for data fields in complex type and parameter mappings
    */
@@ -1008,7 +1008,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     }
     return _xifexpression_3;
   }
-  
+
   /**
    * Build scope for enumeration fields in complex type mappings
    */
@@ -1032,7 +1032,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     }
     return _xifexpression_2;
   }
-  
+
   /**
    * Build scope for data operations in complex type mappings
    */
@@ -1047,7 +1047,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Build scope for referred operations
    */
@@ -1072,7 +1072,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     return Scopes.<ReferredOperation>scopeFor(operations, _function_1, 
       IScope.NULLSCOPE);
   }
-  
+
   /**
    * Build scope for technology-specific protocols
    */
@@ -1110,7 +1110,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
       Technology.class, 
       protocol.getTechnology().getImportURI(), _function_1, _function_2, ((Predicate<Protocol>[])Conversions.unwrapArray(_converted_communicationTypeFilter, Predicate.class)));
   }
-  
+
   /**
    * Build scope for protocol data formats
    */
@@ -1135,7 +1135,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     return Scopes.<DataFormat>scopeFor(scopeElements, _function_1, 
       IScope.NULLSCOPE);
   }
-  
+
   /**
    * Build scope for the actual microservices if the import was already specified
    */
@@ -1154,7 +1154,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
       ServiceModel.class, 
       import_.getImportURI(), _function, _function_1);
   }
-  
+
   /**
    * Build scope for imported service aspects used to annotate several modeled elements
    */
@@ -1178,7 +1178,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Build scope for technology-specific value assignment
    */
@@ -1191,14 +1191,14 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     }
     return null;
   }
-  
+
   /**
    * Build scope for aspect properties
    */
   private IScope getScopeForAspectProperty(final TechnologySpecificImportedServiceAspect importedAspect) {
     return Scopes.scopeFor(importedAspect.getAspect().getProperties());
   }
-  
+
   /**
    * Build scope for aspect of imported service aspect
    */
@@ -1346,7 +1346,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     return Scopes.<ServiceAspect>scopeFor(scopeAspects, _function_1, 
       IScope.NULLSCOPE);
   }
-  
+
   /**
    * Convenience method to create a scope for imports of certain types
    */
@@ -1358,7 +1358,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     final Iterable<Import> validImports = LemmaUtils.<Import>getImportsOfModelTypes(allImports, _function, types);
     return Scopes.scopeFor(validImports);
   }
-  
+
   /**
    * Helper method to determine effective protocols and data formats of a microservice mapping
    */
@@ -1417,7 +1417,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     ListExtensions.<TechnologyReference, Import>map(mapping.getTechnologyReferences(), _function).forEach(_function_1);
     return results;
   }
-  
+
   /**
    * Helper method to determine effective protocols and data formats of an interface mapping
    */
@@ -1427,7 +1427,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     };
     return this.<MicroserviceMapping>getEffectiveProtocolsAndDataFormats(mapping.getProtocols(), mapping.getMicroserviceMapping(), _function);
   }
-  
+
   /**
    * Helper method to determine effective protocols and data formats of an operation mapping
    */
@@ -1437,7 +1437,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     };
     return this.<MicroserviceMapping>getEffectiveProtocolsAndDataFormats(mapping.getProtocols(), mapping.getMicroserviceMapping(), _function);
   }
-  
+
   /**
    * Helper method to determine effective protocols and data formats of a referred operation
    * mapping
@@ -1449,7 +1449,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     return this.<MicroserviceMapping>getEffectiveProtocolsAndDataFormats(mapping.getProtocols(), 
       mapping.getMicroserviceMapping(), _function);
   }
-  
+
   /**
    * Helper method to determine effective protocol and data format for a parameter mapping with
    * consideration of its communication type
@@ -1458,7 +1458,7 @@ public class MappingDslScopeProvider extends AbstractMappingDslScopeProvider {
     final Map<CommunicationType, Pair<Protocol, DataFormat>> operationProtocolsAndDataFormats = this.getEffectiveProtocolsAndDataFormats(mapping.getOperationMapping());
     return operationProtocolsAndDataFormats.get(mapping.getParameter().getCommunicationType());
   }
-  
+
   /**
    * Helper method to determine effective protocols and data formats from technology-specific
    * protocol specifications and possibly the containing concept, if protocol and data format

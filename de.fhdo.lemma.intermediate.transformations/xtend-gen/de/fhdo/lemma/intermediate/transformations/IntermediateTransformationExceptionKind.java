@@ -8,6 +8,6 @@ package de.fhdo.lemma.intermediate.transformations;
 @SuppressWarnings("all")
 public enum IntermediateTransformationExceptionKind {
   WARNING,
-  
+
   ERROR;
 }

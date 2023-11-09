@@ -19,7 +19,7 @@ import org.eclipse.xtend2.lib.StringConcatenation;
 @SuppressWarnings("all")
 public class LiveValidationController extends AbstractHandler {
   private final Shell SHELL = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-  
+
   /**
    * Execute commands
    */
@@ -42,7 +42,7 @@ public class LiveValidationController extends AbstractHandler {
     PlatformUI.getWorkbench().<IEvaluationService>getService(IEvaluationService.class).requestEvaluation("de.fhdo.lemma.eclipse.ui.editor.isConnectedToServer");
     return null;
   }
-  
+
   /**
    * Trigger Live Validation server connect
    */
@@ -55,7 +55,7 @@ public class LiveValidationController extends AbstractHandler {
     }
     return _xblockexpression;
   }
-  
+
   /**
    * Display information about Live Validation server connection
    */

@@ -26,7 +26,7 @@ public final class MongoDBGeneratorTemplate extends AbstractMongoDBGeneratorTemp
       super(parentShell, project, file, MongoDBGeneratorConstants.GENERATOR_LONG_NAME, 
         MongoDBGeneratorConstants.GENERATOR_SHORT_NAME);
     }
-    
+
     /**
      * Addendum for generator long name as part of the label for the generator executable path's
      * text field
@@ -35,7 +35,7 @@ public final class MongoDBGeneratorTemplate extends AbstractMongoDBGeneratorTemp
     public final String getGeneratorExecutableLabelTextAddendum() {
       return "path";
     }
-    
+
     /**
      * Create the dialog
      */
@@ -52,7 +52,7 @@ public final class MongoDBGeneratorTemplate extends AbstractMongoDBGeneratorTemp
       this.setMessage(_plus);
     }
   }
-  
+
   /**
    * Constructor
    */
@@ -60,7 +60,7 @@ public final class MongoDBGeneratorTemplate extends AbstractMongoDBGeneratorTemp
     super(ProcessorExecutableType.LOCAL_JAVA_PROGRAM, parentShell, ("MongoDB artifact " + 
       "generation"), project, file);
   }
-  
+
   /**
    * Return the dialog for template completion
    */

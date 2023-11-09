@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 @SuppressWarnings("all")
 public class DataModelManager {
   private static final HashMap<String, DataModel> loadedResources = new HashMap<String, DataModel>();
-  
+
   /**
    * Returns a DataModel for a ComplexTypeImport and caches it
    */
@@ -41,7 +41,7 @@ public class DataModelManager {
     }
     return dataModel;
   }
-  
+
   /**
    * Remove all loaded DataModels from the cache
    */

@@ -64,15 +64,15 @@ import org.osgi.framework.FrameworkUtil;
 @SuppressWarnings("all")
 public final class LemmaUiUtils {
   public static final String DATA_DSL_EDITOR_ID = "de.fhdo.lemma.data.DataDsl";
-  
+
   public static final String MAPPING_DSL_EDITOR_ID = "de.fhdo.lemma.technology.mappingdsl.MappingDsl";
-  
+
   public static final String OPERATION_DSL_EDITOR_ID = "de.fhdo.lemma.operationdsl.OperationDsl";
-  
+
   public static final String SERVICE_DSL_EDITOR_ID = "de.fhdo.lemma.ServiceDsl";
-  
+
   public static final String TECHNOLOGY_DSL_EDITOR_ID = "de.fhdo.lemma.technology.technologydsl";
-  
+
   /**
    * Helper to get file extensions for registered DSL editors
    */
@@ -93,7 +93,7 @@ public final class LemmaUiUtils {
     };
     return IterableExtensions.<String>toList(IterableExtensions.<IFileEditorMapping, String>map(editorDescriptions, _function_1));
   }
-  
+
   /**
    * Walk through workspace projects and find files with given extensions. If no extensions are
    * specified, all files of all projects will be retrieved.
@@ -112,7 +112,7 @@ public final class LemmaUiUtils {
     ((List<IProject>)Conversions.doWrapArray(projects)).forEach(_function);
     return resultFiles;
   }
-  
+
   /**
    * Find files in project with the given extensions. If no extensions are specified, all files
    * will be retrieved.
@@ -165,7 +165,7 @@ public final class LemmaUiUtils {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Check if a file has one of the given extensions
    */
@@ -179,14 +179,14 @@ public final class LemmaUiUtils {
     };
     return ListExtensions.<String, String>map(((List<String>)Conversions.doWrapArray(fileExtensions)), _function).contains(extensionLowerCase);
   }
-  
+
   /**
    * Create an Image for the given filename with the given resource manager
    */
   public static Image createImage(final ResourceManager resourceManager, final Class<?> clazz, final String filename) {
     return resourceManager.createImage(LemmaUiUtils.createImageDescriptor(clazz, filename));
   }
-  
+
   /**
    * Create an ImageDescriptor for the given filename and the bundle of this class
    */
@@ -196,7 +196,7 @@ public final class LemmaUiUtils {
     final URL url = FileLocator.find(bundle, _path, null);
     return ImageDescriptor.createFromURL(url);
   }
-  
+
   /**
    * Load an Xtext resource from an Eclipse workspace
    */
@@ -210,7 +210,7 @@ public final class LemmaUiUtils {
     }
     return _loadXtextResource;
   }
-  
+
   /**
    * Helper to create an XtextResourceSet from a given file path
    */
@@ -224,7 +224,7 @@ public final class LemmaUiUtils {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Helper to create a ResourceSet from a given file path
    */
@@ -234,7 +234,7 @@ public final class LemmaUiUtils {
     final IResourceServiceProvider resourceSetProvider = resourceSetProviderRegistry.getResourceServiceProvider(fileUri);
     return resourceSetProvider.<ResourceSet>get(ResourceSet.class);
   }
-  
+
   /**
    * Helper to load an XtextResource from a URI using the given XtextResourceSet
    */
@@ -253,7 +253,7 @@ public final class LemmaUiUtils {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Load an Xtext resource from a local file
    */
@@ -266,7 +266,7 @@ public final class LemmaUiUtils {
     }
     return _loadXtextResource;
   }
-  
+
   /**
    * Load an XMI file
    */
@@ -281,7 +281,7 @@ public final class LemmaUiUtils {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Store file in XMI interchange format
    */
@@ -297,7 +297,7 @@ public final class LemmaUiUtils {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Validate an Xtext resource
    */
@@ -306,7 +306,7 @@ public final class LemmaUiUtils {
     final List<Issue> issues = validator.validate(resource, CheckMode.ALL, CancelIndicator.NullImpl);
     return issues;
   }
-  
+
   /**
    * Remove extension from filename and return filename without extension
    */
@@ -323,7 +323,7 @@ public final class LemmaUiUtils {
     final String basePath = getBasePath.apply(file);
     return LemmaUiUtils.removeExtension(basePath);
   }
-  
+
   /**
    * Remove extension from filename and return filename without extension. The extension starts at
    * the last occurrence of a dot (".") in the filename.
@@ -334,7 +334,7 @@ public final class LemmaUiUtils {
     }
     return filename.substring(0, filename.lastIndexOf("."));
   }
-  
+
   /**
    * Get extension of filename. The extension starts at the last occurrence of a dot (".") in the
    * filename.
@@ -353,7 +353,7 @@ public final class LemmaUiUtils {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Run UI event loop
    */
@@ -372,7 +372,7 @@ public final class LemmaUiUtils {
       display.update();
     }
   }
-  
+
   /**
    * Get all open editor instances of the current Eclipse workbench
    */
@@ -398,7 +398,7 @@ public final class LemmaUiUtils {
     };
     return IterableExtensions.<IEditorReference, T>map(IterableExtensions.<IEditorReference>filter(allOpenEditorReferences, _function_2), _function_3);
   }
-  
+
   /**
    * Get selected IResources from ExecutionEvent
    */

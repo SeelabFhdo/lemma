@@ -59,37 +59,37 @@ public final class CommandLineGenerator {
    */
   public static class CoherentCommandLineParts {
     private final ArrayList<List<String>> executionCommandParts = CollectionLiterals.<List<String>>newArrayList();
-    
+
     private final ArrayList<List<String>> argumentParameters = CollectionLiterals.<List<String>>newArrayList();
-    
+
     /**
      * Add an execution command part consisting of a single String element
      */
     protected boolean addExecutionCommandPart(final String part) {
       return this.addExecutionCommandPart(Collections.<String>unmodifiableList(CollectionLiterals.<String>newArrayList(part)));
     }
-    
+
     /**
      * Add an execution command part consisting of coherent String elements
      */
     protected boolean addExecutionCommandPart(final List<String> part) {
       return this.executionCommandParts.add(part);
     }
-    
+
     /**
      * Add execution command parts consisting of a list of coherent String elements
      */
     protected boolean addExecutionCommandParts(final List<List<String>> parts) {
       return this.executionCommandParts.addAll(parts);
     }
-    
+
     /**
      * Add argument parameters consisting of a list of coherent String elements
      */
     protected boolean addParameterValues(final CommandLineGenerator.ParameterValues parameterValues) {
       return this.argumentParameters.addAll(parameterValues.unfoldWithoutNullValues());
     }
-    
+
     /**
      * Merge all coherent commandline parts in their List forms in a single List instance
      */
@@ -99,7 +99,7 @@ public final class CommandLineGenerator {
       result.addAll(this.argumentParameters);
       return Collections.<List<String>>unmodifiableList(result);
     }
-    
+
     /**
      * Merge the Strings of all coherent commandline parts in a single List instance
      */
@@ -107,7 +107,7 @@ public final class CommandLineGenerator {
       return Collections.<String>unmodifiableList(IterableExtensions.<String>toList(Iterables.<String>concat(this.mergeParts())));
     }
   }
-  
+
   /**
    * Exception to signal that information about the current user was not determinable
    */
@@ -116,48 +116,48 @@ public final class CommandLineGenerator {
       super(message);
     }
   }
-  
+
   /**
    * Class representing values for the parameters of the arguments of a model processing
    * configuration's execution
    */
   private static class ParameterValues {
     private final ArrayList<Pair<String, String>> pairs = CollectionLiterals.<Pair<String, String>>newArrayList();
-    
+
     /**
      * Empty constructor
      */
     public ParameterValues() {
     }
-    
+
     /**
      * Constructor for an argument parameter without a value
      */
     public ParameterValues(final Argument argument) {
       this.add(argument);
     }
-    
+
     /**
      * Constructor for an argument parameter with a value
      */
     public ParameterValues(final Argument argument, final String value) {
       this.add(argument, value);
     }
-    
+
     /**
      * Add an argument parameter without a value
      */
     public boolean add(final Argument argument) {
       return this.add(argument, null);
     }
-    
+
     /**
      * Add an argument parameter with a value
      */
     public boolean add(final Argument argument, final String value) {
       return this.add(argument.getParameter(), value);
     }
-    
+
     /**
      * Add an argument parameter in its String form with a value
      */
@@ -176,7 +176,7 @@ public final class CommandLineGenerator {
       }
       return _xblockexpression;
     }
-    
+
     /**
      * Return collected parameter values as a List of String Lists. Each nested List comprises
      * at most two String values: The first String is the parameter name, the second String is
@@ -201,21 +201,21 @@ public final class CommandLineGenerator {
       return ListExtensions.<Pair<String, String>, List<String>>map(this.pairs, _function);
     }
   }
-  
+
   private static final String NO_VALUE_STRING = "<NO VALUE GIVEN>";
-  
+
   private final ProcessingConfiguration configuration;
-  
+
   private final ProgrammaticIntermediateModelTransformation programmaticIntermediateTransformation;
-  
+
   private final String domainModelFileTypeId;
-  
+
   private final String serviceModelFileTypeId;
-  
+
   private final String operationModelFileTypeId;
-  
+
   private final ArrayList<String> collectedWarnings = CollectionLiterals.<String>newArrayList();
-  
+
   /**
    * Constructor
    */
@@ -234,7 +234,7 @@ public final class CommandLineGenerator {
     this.serviceModelFileTypeId = _serviceModelFileTypeId;
     this.operationModelFileTypeId = OperationModelTransformationStrategy.OPERATION_MODEL_FILE_TYPE_ID;
   }
-  
+
   /**
    * Get the programmatic intermediate transformation applicable to the source model file of the
    * given processing configuration
@@ -263,7 +263,7 @@ public final class CommandLineGenerator {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Get the file type ID for LEMMA service models from the kind of the given transformation
    * strategy
@@ -292,7 +292,7 @@ public final class CommandLineGenerator {
     }
     return _switchResult;
   }
-  
+
   /**
    * Get the coherent parts of the commandline and related warnings
    */
@@ -327,7 +327,7 @@ public final class CommandLineGenerator {
     this.determineArgumentParameterValues(this.configuration).forEach(_function);
     return Pair.<CommandLineGenerator.CoherentCommandLineParts, List<String>>of(commandLineParts, this.collectedWarnings);
   }
-  
+
   /**
    * Quote the given String if it contains spaces. In case the String is null or empty, return an
    * unquoted placeholder String like "<NO VALUE GIVEN>".
@@ -353,7 +353,7 @@ public final class CommandLineGenerator {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Generate the execution command parts for the given model processing configuration
    */
@@ -398,7 +398,7 @@ public final class CommandLineGenerator {
     }
     return _switchResult;
   }
-  
+
   /**
    * Generate the execution command parts for local Docker images. Note that the method will also
    * add potential warnings to the state of the CommandLineGenerator object.
@@ -455,14 +455,14 @@ public final class CommandLineGenerator {
     volumePaths.forEach(_function_1);
     return Pair.<ArrayList<String>, ArrayList<List<String>>>of(commandParts, additionalCommandParameters);
   }
-  
+
   /**
    * Get the ID of the current user via the "id -u" command
    */
   private String getUserId() {
     return this.getUserInfo("u", "User ID");
   }
-  
+
   /**
    * Get information about the current user via the "id" command. The idCommandFlag parameter
    * determines the flag (without a preceding dash) to invoke the "id" command, e.g., "u" for the
@@ -525,14 +525,14 @@ public final class CommandLineGenerator {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Get the ID of the current user via the "id -g" command
    */
   private String getUserGroupId() {
     return this.getUserInfo("g", "User group ID");
   }
-  
+
   /**
    * Add the given path as a Docker volume parameter to the given list of coherent parameters
    */
@@ -556,7 +556,7 @@ public final class CommandLineGenerator {
     }
     return _xblockexpression;
   }
-  
+
   /**
    * Determine the values for the arguments of the execution of a model processing configuration
    */
@@ -627,7 +627,7 @@ public final class CommandLineGenerator {
     configuration.getArguments().forEach(_function);
     return argumentParameterValues;
   }
-  
+
   /**
    * Generate parameter values for an Argument that represents a filesystem element. The result
    * will be a ParameterValues instance that consists of the Argument and its value, which is
@@ -646,7 +646,7 @@ public final class CommandLineGenerator {
     }
     return new CommandLineGenerator.ParameterValues(argument, _valueForCommandLine);
   }
-  
+
   /**
    * Helper to map the given String to a value applicable on the commandline. If the String is not
    * null or empty, the result will be the String itself. Otherwise, the helper returns a
@@ -663,7 +663,7 @@ public final class CommandLineGenerator {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Generate parameter values for an Argument that represents the intermediate representation of
    * the model processing configuration's source model file. The result will be a ParameterValues
@@ -675,7 +675,7 @@ public final class CommandLineGenerator {
     final String value = this.quoteIfContainsSpaces(this.getAbsoluteTransformationTargetPath(this.programmaticIntermediateTransformation.getRootModelFile()));
     return new CommandLineGenerator.ParameterValues(argument, value);
   }
-  
+
   /**
    * Helper to get the absolute target path of an intermediate transformation of the given model
    * file. The target path consists of the path to the folder storing the model file (which, by
@@ -724,7 +724,7 @@ public final class CommandLineGenerator {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Generate parameter values for an Argument that represents the intermediate representation of
    * the model first imported by the model processing configuration's source model file. The
@@ -776,7 +776,7 @@ public final class CommandLineGenerator {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Helper to get the first imported model of the model processing configuration's source model
    * file with the given model file type ID and as a ModeFile instance
@@ -788,7 +788,7 @@ public final class CommandLineGenerator {
     };
     return IterableExtensions.<ModelFile>findFirst(this.programmaticIntermediateTransformation.getRootModelFile().getChildren(), _function);
   }
-  
+
   /**
    * Generate parameter values for an Argument that represents the intermediate versions of all
    * models imported by the model processing configuration's source model file. The result will be
@@ -833,7 +833,7 @@ public final class CommandLineGenerator {
     importedModels.forEach(_function);
     return parameterValues;
   }
-  
+
   /**
    * Helper to get the children of the model processing configuration's source model file with the
    * given model file type ID and as ModeFile instances
@@ -845,7 +845,7 @@ public final class CommandLineGenerator {
     };
     return IterableExtensions.<ModelFile>filter(this.programmaticIntermediateTransformation.getRootModelFile().getChildren(), _function);
   }
-  
+
   /**
    * Generate parameter values for an Argument that represents the intermediate representation of
    * the model imported by the model processing configuration's source model file with a specified
@@ -873,7 +873,7 @@ public final class CommandLineGenerator {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Generate parameter values for an Argument that represents a raw string. The result will be a
    * ParameterValues instance that solely consists of the Argument.
@@ -881,7 +881,7 @@ public final class CommandLineGenerator {
   private CommandLineGenerator.ParameterValues generateRawStringParameterValues(final Argument argument) {
     return new CommandLineGenerator.ParameterValues(argument);
   }
-  
+
   /**
    * Generate parameter values for an Argument that represents the model processing
    * configuration's source model file. The result will be a ParameterValues instance that
@@ -909,7 +909,7 @@ public final class CommandLineGenerator {
     final String absoluteSourceModelPath = _quoteIfContainsSpaces;
     return new CommandLineGenerator.ParameterValues(argument, absoluteSourceModelPath);
   }
-  
+
   /**
    * Generate parameter values for an Argument that represents a string pair. The result will be a
    * ParameterValues instance that consists of the Argument and its value, which will be quoted if
@@ -927,7 +927,7 @@ public final class CommandLineGenerator {
     }
     return new CommandLineGenerator.ParameterValues(argument, _valueForCommandLine);
   }
-  
+
   /**
    * Get a printable representation of the coherent commandline parts joined by the given
    * delimiter
@@ -938,7 +938,7 @@ public final class CommandLineGenerator {
     };
     return IterableExtensions.join(ListExtensions.<List<String>, String>map(coherentCommandLineParts.mergeParts(), _function), delimiter);
   }
-  
+
   /**
    * Get a representation of the coherent commandline parts that is executable. By contrast to a
    * printable representation, an executable representation is a List consisting of Strings that
@@ -950,7 +950,7 @@ public final class CommandLineGenerator {
     };
     return IterableExtensions.<String>toList(ListExtensions.<String, String>map(coherentCommandLineParts.mergeAndFlattenParts(), _function));
   }
-  
+
   /**
    * Remove quotes around a given String
    */

@@ -55,34 +55,34 @@ import org.eclipse.xtext.xbase.lib.Pure;
 @SuppressWarnings("all")
 public class LemmaToAvroDialog extends TitleAreaDialog {
   private static final int MIN_DIALOG_WIDTH = 500;
-  
+
   private static final int MIN_DIALOG_HEIGHT = 250;
-  
+
   private static final int CONTINUE_WITH_ALL = 2;
-  
+
   private TreeViewer treeViewer;
-  
+
   private Button protocolCheckbox;
-  
+
   private Text protocolNameInput;
-  
+
   private Text protocolDocumentationInput;
-  
+
   private final ArrayList<Control> inputRowControls = CollectionLiterals.<Control>newArrayList();
-  
+
   private String modelFilename;
-  
+
   private List<? extends EObject> initialElements;
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private List<? extends EObject> selectedElements = CollectionLiterals.<EObject>emptyList();
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private String protocolName = "";
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private String protocolDocumentation = "";
-  
+
   /**
    * Constructor
    */
@@ -91,7 +91,7 @@ public class LemmaToAvroDialog extends TitleAreaDialog {
     this.initialElements = topLevelTypeContainers;
     this.modelFilename = modelFilename;
   }
-  
+
   /**
    * Create dialog (to be called after constructor and before open())
    */
@@ -107,7 +107,7 @@ public class LemmaToAvroDialog extends TitleAreaDialog {
       "transformed to Avro schemas.");
     this.setMessage(_plus, IMessageProvider.INFORMATION);
   }
-  
+
   /**
    * Internal callback for dialog area creation
    */
@@ -124,7 +124,7 @@ public class LemmaToAvroDialog extends TitleAreaDialog {
     this.createBottomRow(container);
     return area;
   }
-  
+
   /**
    * Create TreeViewer for LEMMA EObjects that can be transformed to Avro schemas
    */
@@ -170,7 +170,7 @@ public class LemmaToAvroDialog extends TitleAreaDialog {
     this.createTypeKindColumn();
     this.treeViewer.setInput(this.allTransformableElements());
   }
-  
+
   /**
    * Helper to update the text field for the Avro protocol name based on its "enabled" state
    */
@@ -190,7 +190,7 @@ public class LemmaToAvroDialog extends TitleAreaDialog {
       this.protocolNameInput.setText("");
     }
   }
-  
+
   /**
    * Get selected LEMMA EObject from tree viewer ISelection object
    */
@@ -204,7 +204,7 @@ public class LemmaToAvroDialog extends TitleAreaDialog {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Create element name column in tree viewer
    */
@@ -218,7 +218,7 @@ public class LemmaToAvroDialog extends TitleAreaDialog {
     DelegatingStyledCellLabelProvider _delegatingStyledCellLabelProvider = new DelegatingStyledCellLabelProvider(_elementTreeLabelProvider);
     column.setLabelProvider(_delegatingStyledCellLabelProvider);
   }
-  
+
   /**
    * Create type kind column in tree viewer
    */
@@ -256,7 +256,7 @@ public class LemmaToAvroDialog extends TitleAreaDialog {
       }
     });
   }
-  
+
   /**
    * Get all LEMMA EObjects from the initial elements of this dialog, which may be transformed to
    * Avro schemas
@@ -271,7 +271,7 @@ public class LemmaToAvroDialog extends TitleAreaDialog {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Create bottom row of dialog
    */
@@ -286,7 +286,7 @@ public class LemmaToAvroDialog extends TitleAreaDialog {
     GridData _gridData_1 = new GridData(SWT.FILL, SWT.FILL, true, false);
     protocolGroup.setLayoutData(_gridData_1);
   }
-  
+
   /**
    * Create key in bottom row
    */
@@ -301,7 +301,7 @@ public class LemmaToAvroDialog extends TitleAreaDialog {
     this.createKeyEntry(key, ElementTreeLabelProvider.CONTEXT_ICON, "Context");
     this.createKeyEntry(key, ElementTreeLabelProvider.COMPLEX_TYPE_ICON, "Complex Type");
   }
-  
+
   /**
    * Create key entry in the given group, and with the specified icon and description
    */
@@ -317,7 +317,7 @@ public class LemmaToAvroDialog extends TitleAreaDialog {
     _builder.append(description);
     textLabel.setText(_builder.toString());
   }
-  
+
   /**
    * Create group for Avro protocol specification
    */
@@ -356,7 +356,7 @@ public class LemmaToAvroDialog extends TitleAreaDialog {
     this.protocolDocumentationInput = protocolDocumentation.getValue();
     return group;
   }
-  
+
   /**
    * Create an input row consisting of a Text input and its Label
    */
@@ -370,7 +370,7 @@ public class LemmaToAvroDialog extends TitleAreaDialog {
     input.setEnabled(false);
     return Pair.<Label, Text>of(label, input);
   }
-  
+
   /**
    * Create buttons for the button bar
    */
@@ -380,7 +380,7 @@ public class LemmaToAvroDialog extends TitleAreaDialog {
     this.createButton(parent, LemmaToAvroDialog.CONTINUE_WITH_ALL, "Select all elements and continue", false);
     this.createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
   }
-  
+
   /**
    * Catch button press
    */
@@ -398,7 +398,7 @@ public class LemmaToAvroDialog extends TitleAreaDialog {
         break;
     }
   }
-  
+
   /**
    * OK button was pressed
    */
@@ -423,7 +423,7 @@ public class LemmaToAvroDialog extends TitleAreaDialog {
     this.protocolDocumentation = this.protocolDocumentationInput.getText();
     super.okPressed();
   }
-  
+
   /**
    * Helper to check the inputs related to the Avro protocol for validity
    */
@@ -442,7 +442,7 @@ public class LemmaToAvroDialog extends TitleAreaDialog {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Button to continue with all transformable elements was pressed
    */
@@ -458,7 +458,7 @@ public class LemmaToAvroDialog extends TitleAreaDialog {
     this.selectedElements = this.allTransformableElements();
     super.okPressed();
   }
-  
+
   /**
    * Flag to indicate that dialog is resizable
    */
@@ -466,7 +466,7 @@ public class LemmaToAvroDialog extends TitleAreaDialog {
   public boolean isResizable() {
     return true;
   }
-  
+
   /**
    * Initial size
    */
@@ -477,17 +477,17 @@ public class LemmaToAvroDialog extends TitleAreaDialog {
     int _max_1 = Math.max(this.convertVerticalDLUsToPixels(LemmaToAvroDialog.MIN_DIALOG_HEIGHT), shellSize.y);
     return new Point(_max, _max_1);
   }
-  
+
   @Pure
   public List<? extends EObject> getSelectedElements() {
     return this.selectedElements;
   }
-  
+
   @Pure
   public String getProtocolName() {
     return this.protocolName;
   }
-  
+
   @Pure
   public String getProtocolDocumentation() {
     return this.protocolDocumentation;

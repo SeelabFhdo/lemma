@@ -32,7 +32,7 @@ public final class Activator extends AbstractUIPlugin {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Register the types of processor executables
    */

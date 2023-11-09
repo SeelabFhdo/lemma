@@ -21,7 +21,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 @SuppressWarnings("all")
 public final class Arguments extends ModelElementWithPropertyChangeSupport {
   private List<Argument> arguments = CollectionLiterals.<Argument>newArrayList();
-  
+
   /**
    * Constructor. The creation of an Arguments instance will also fire a corresponding property
    * change event with a flat copy of the given list of Argument instances.
@@ -29,7 +29,7 @@ public final class Arguments extends ModelElementWithPropertyChangeSupport {
   public Arguments(final List<Argument> arguments) {
     this.firePropertyChange("arguments", Utils.<Argument>flatCopy(this.arguments), this.arguments = arguments);
   }
-  
+
   /**
    * Add a property change listener to the list of arguments. Note that property change listeners
    * on argument lists are transitive, i.e., they are assigned to the list but also all Argument
@@ -44,7 +44,7 @@ public final class Arguments extends ModelElementWithPropertyChangeSupport {
     };
     this.arguments.forEach(_function);
   }
-  
+
   /**
    * Remove a property change listener from the arguments list and all of its entries
    */
@@ -56,7 +56,7 @@ public final class Arguments extends ModelElementWithPropertyChangeSupport {
     };
     this.arguments.forEach(_function);
   }
-  
+
   /**
    * Add a new Argument instance to the end of the list and fire a corresponding property change
    * event. Note that before firing the event, the argument also receives all previously added
@@ -70,7 +70,7 @@ public final class Arguments extends ModelElementWithPropertyChangeSupport {
     this.firePropertyChange("arguments", Utils.<Argument>flatCopy(this.arguments), 
       this.arguments = Utils.<Argument>addInPlace(this.arguments, argument));
   }
-  
+
   /**
    * Check if the given Argument instance is part of the list. Checking is based on the equality
    * of the given argument's kind, type, parameter, and value with at least one entry in the list.
@@ -84,14 +84,14 @@ public final class Arguments extends ModelElementWithPropertyChangeSupport {
     };
     return IterableExtensions.<Argument>exists(this.arguments, _function);
   }
-  
+
   /**
    * Get all Argument instances
    */
   public final List<Argument> get() {
     return Collections.<Argument>unmodifiableList(this.arguments);
   }
-  
+
   /**
    * Get all Argument instances whose types are of the given class
    */
@@ -101,7 +101,7 @@ public final class Arguments extends ModelElementWithPropertyChangeSupport {
     };
     return Collections.<Argument>unmodifiableList(IterableExtensions.<Argument>toList(IterableExtensions.<Argument>filter(this.arguments, _function)));
   }
-  
+
   /**
    * Move the given Argument instance one index up the list and fire a corresponding property
    * change event
@@ -110,7 +110,7 @@ public final class Arguments extends ModelElementWithPropertyChangeSupport {
     this.firePropertyChange("arguments", Utils.<Argument>flatCopy(this.arguments), 
       this.arguments = Utils.<Argument>moveUpInPlace(this.arguments, argument));
   }
-  
+
   /**
    * Move the given Argument instance one index down the list and fire a corresponding property
    * change event
@@ -119,7 +119,7 @@ public final class Arguments extends ModelElementWithPropertyChangeSupport {
     this.firePropertyChange("arguments", Utils.<Argument>flatCopy(this.arguments), 
       this.arguments = Utils.<Argument>moveDownInPlace(this.arguments, argument));
   }
-  
+
   /**
    * Remove the given Argument instance from the list and fire a corresponding property change
    * event
@@ -132,7 +132,7 @@ public final class Arguments extends ModelElementWithPropertyChangeSupport {
     this.firePropertyChange("arguments", Utils.<Argument>flatCopy(this.arguments), 
       this.arguments = Utils.<Argument>removeInPlace(this.arguments, argument));
   }
-  
+
   /**
    * Remove all given Argument instances from the list and fire a corresponding property change
    * event

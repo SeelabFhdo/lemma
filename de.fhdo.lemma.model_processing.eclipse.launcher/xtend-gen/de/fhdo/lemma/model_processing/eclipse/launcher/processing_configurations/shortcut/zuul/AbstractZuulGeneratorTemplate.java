@@ -31,7 +31,7 @@ public abstract class AbstractZuulGeneratorTemplate extends AbstractCodeGenerato
   public AbstractZuulGeneratorTemplate(final ProcessorExecutableType generatorExecutableType, final Shell parentShell, final String name, final IProject project, final IFile file) {
     super(generatorExecutableType, parentShell, name, project, file);
   }
-  
+
   /**
    * The template is applicable when the source operation model applies the Zuul technology to one
    * of its infrastructure nodes

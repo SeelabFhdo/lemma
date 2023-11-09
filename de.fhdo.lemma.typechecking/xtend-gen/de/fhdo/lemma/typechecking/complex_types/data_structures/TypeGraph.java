@@ -39,20 +39,20 @@ public class TypeGraph {
    */
   public static class BreadthFirstTypeGraphIterator implements Iterator<TypeGraphNode> {
     private TypeGraph typeGraph;
-    
+
     private final ArrayList<TypeGraphNode> nodesToVisit = CollectionLiterals.<TypeGraphNode>newArrayList();
-    
+
     public BreadthFirstTypeGraphIterator(final TypeGraph typeGraph) {
       this.typeGraph = typeGraph;
       this.nodesToVisit.add(typeGraph.rootNode);
     }
-    
+
     @Override
     public boolean hasNext() {
       boolean _isEmpty = this.nodesToVisit.isEmpty();
       return (!_isEmpty);
     }
-    
+
     @Override
     public TypeGraphNode next() {
       boolean _hasNext = this.hasNext();
@@ -65,18 +65,18 @@ public class TypeGraph {
       return next;
     }
   }
-  
+
   /**
    * Root node
    */
   @Accessors(AccessorType.PUBLIC_GETTER)
   private TypeGraphNode rootNode;
-  
+
   /**
    * Height of the graph
    */
   private int height = 0;
-  
+
   /**
    * Constructor with the root type as parameter. The constructor will traverse the complex type
    * and directly build the graph.
@@ -121,7 +121,7 @@ public class TypeGraph {
       }
     } while((!nodesToVisit.isEmpty()));
   }
-  
+
   /**
    * Add a new type node to the graph
    */
@@ -142,7 +142,7 @@ public class TypeGraph {
     }
     return newNode;
   }
-  
+
   /**
    * Check if a node is recursive, i.e., if a complex type refers to itself
    */
@@ -161,7 +161,7 @@ public class TypeGraph {
     }
     return false;
   }
-  
+
   /**
    * Flag parents of a recursive node, that have the same type as the node (i.e. are recursive),
    * as being recursive
@@ -192,14 +192,14 @@ public class TypeGraph {
       parentNodesTodo.get((i).intValue()).setRecursive(true);
     }
   }
-  
+
   /**
    * Return an Iterator for the graph
    */
   public TypeGraph.BreadthFirstTypeGraphIterator iterator() {
     return new TypeGraph.BreadthFirstTypeGraphIterator(this);
   }
-  
+
   /**
    * Build string representation of graph
    */
@@ -289,7 +289,7 @@ public class TypeGraph {
     buffer.append("\n");
     return buffer.toString();
   }
-  
+
   @Pure
   public TypeGraphNode getRootNode() {
     return this.rootNode;

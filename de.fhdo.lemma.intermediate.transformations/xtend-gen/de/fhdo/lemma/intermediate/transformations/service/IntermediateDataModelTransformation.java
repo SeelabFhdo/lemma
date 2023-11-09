@@ -32,7 +32,7 @@ import org.eclipse.xtext.xbase.lib.Pair;
 @SuppressWarnings("all")
 public class IntermediateDataModelTransformation extends AbstractAtlInputOutputIntermediateModelTransformationStrategy {
   private String absoluteInputModelFilePath;
-  
+
   /**
    * Specify reference name and transformation model type of input model
    */
@@ -41,7 +41,7 @@ public class IntermediateDataModelTransformation extends AbstractAtlInputOutputI
     TransformationModelType _transformationModelType = new TransformationModelType(DataPackage.eNS_URI, DataPackage.eINSTANCE, DataModel.class);
     return Pair.<String, TransformationModelType>of("Data", _transformationModelType);
   }
-  
+
   /**
    * Specify reference name and transformation model type of output model
    */
@@ -51,7 +51,7 @@ public class IntermediateDataModelTransformation extends AbstractAtlInputOutputI
       IntermediatePackage.eINSTANCE, IntermediateDataModel.class);
     return Pair.<String, TransformationModelType>of("Intermediate", _transformationModelType);
   }
-  
+
   /**
    * Specify path to the compiled ATL transformation file
    */
@@ -59,7 +59,7 @@ public class IntermediateDataModelTransformation extends AbstractAtlInputOutputI
   public String getCompiledModelTransformationFilePath() {
     return "/IntermediateDataModelTransformation.asm";
   }
-  
+
   /**
    * Fetch input model file prior to transformation execution
    */
@@ -68,7 +68,7 @@ public class IntermediateDataModelTransformation extends AbstractAtlInputOutputI
     final IFile inputModelFile = ((IFile[])Conversions.unwrapArray(inputModelFiles.values(), IFile.class))[0];
     this.absoluteInputModelFilePath = LemmaUtils.getAbsolutePath(inputModelFile);
   }
-  
+
   /**
    * Prepare input model
    */
@@ -90,7 +90,7 @@ public class IntermediateDataModelTransformation extends AbstractAtlInputOutputI
     };
     dataModel.getComplexTypeImports().forEach(_function);
   }
-  
+
   /**
    * Specify validator for input model
    */
@@ -98,7 +98,7 @@ public class IntermediateDataModelTransformation extends AbstractAtlInputOutputI
   public AbstractInputModelValidator getInputModelValidator(final TransformationModelDescription modelDescription) {
     return new DataModelTransformationValidator();
   }
-  
+
   /**
    * Add transformation target paths of imported model files to target model
    */
@@ -115,7 +115,7 @@ public class IntermediateDataModelTransformation extends AbstractAtlInputOutputI
     };
     targetPaths.forEach(_function);
   }
-  
+
   /**
    * Convert URIs in intermediate data models to relative ones
    */
@@ -123,7 +123,7 @@ public class IntermediateDataModelTransformation extends AbstractAtlInputOutputI
   public void makeUrisRelative(final AbstractIntermediateModelTransformationStrategy.TransformationResult result) {
     IntermediateDataModelTransformation.performUriRelativization(result);
   }
-  
+
   /**
    * Reusable helper to convert URIs in intermediate data models to relative ones
    */

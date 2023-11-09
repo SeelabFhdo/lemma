@@ -31,7 +31,7 @@ public class DataDslReconcileStrategy extends XtextDocumentReconcileStrategy {
     this.reloadImportedModels(resource);
     super.postParse(resource, monitor);
   }
-  
+
   /**
    * Helper to reload models being imported by a given Xtext resource
    */

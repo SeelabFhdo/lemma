@@ -23,7 +23,7 @@ public class ServiceDslRuntimeModule extends AbstractServiceDslRuntimeModule {
   public Class<? extends IScopeProvider> bindIScopeProvider() {
     return ServiceDslScopeProvider.class;
   }
-  
+
   /**
    * Bind custom qualified name provider
    */
@@ -31,7 +31,7 @@ public class ServiceDslRuntimeModule extends AbstractServiceDslRuntimeModule {
   public Class<? extends IQualifiedNameProvider> bindIQualifiedNameProvider() {
     return ServiceDslQualifiedNameProvider.class;
   }
-  
+
   /**
    * Bind custom resource description strategy
    */

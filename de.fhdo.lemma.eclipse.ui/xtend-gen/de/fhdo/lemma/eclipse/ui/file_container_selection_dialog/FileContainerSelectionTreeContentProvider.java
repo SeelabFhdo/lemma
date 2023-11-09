@@ -25,14 +25,14 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 @SuppressWarnings("all")
 public class FileContainerSelectionTreeContentProvider implements ITreeContentProvider {
   private Class<? extends EObject> intermediateModelClass;
-  
+
   /**
    * Constructor
    */
   public FileContainerSelectionTreeContentProvider(final Class<? extends EObject> intermediateModelClass) {
     this.intermediateModelClass = intermediateModelClass;
   }
-  
+
   /**
    * Get children of parent element
    */
@@ -77,7 +77,7 @@ public class FileContainerSelectionTreeContentProvider implements ITreeContentPr
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Get root elements
    */
@@ -85,7 +85,7 @@ public class FileContainerSelectionTreeContentProvider implements ITreeContentPr
   public Object[] getElements(final Object inputElement) {
     return this.getChildren(inputElement);
   }
-  
+
   /**
    * Get parent of an element
    */
@@ -99,7 +99,7 @@ public class FileContainerSelectionTreeContentProvider implements ITreeContentPr
     }
     return _xifexpression;
   }
-  
+
   /**
    * Determine if the given element has children
    */
