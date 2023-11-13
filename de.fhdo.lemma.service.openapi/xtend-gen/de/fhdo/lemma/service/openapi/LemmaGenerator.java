@@ -96,6 +96,7 @@ public class LemmaGenerator implements Runnable {
   public LinkedList<String> parse(final String location) {
     final ParseOptions parseOptions = new ParseOptions();
     parseOptions.setResolve(true);
+    parseOptions.setResolveFully(false);
     parseOptions.setFlatten(true);
     final SwaggerParseResult result = new OpenAPIParser().readLocation(location, null, parseOptions);
     final ArrayList<String> returnMessages = CollectionLiterals.<String>newArrayList();
@@ -167,8 +168,40 @@ public class LemmaGenerator implements Runnable {
    * Entrypoint for CLI-based standalone execution of the OpenAPI2LEMMA generator
    */
   public static void main(final String[] args) {
-    LemmaGenerator _lemmaGenerator = new LemmaGenerator();
-    CommandLine.<LemmaGenerator>run(_lemmaGenerator, args);
+    LemmaGenerator.LOGGER.info("Starting test generation of LEMMA data model...");
+    final ParseOptions parseOptions = new ParseOptions();
+    parseOptions.setResolve(true);
+    parseOptions.setFlatten(true);
+    final SwaggerParseResult result = new OpenAPIParser().readLocation("/Users/jonas/dev/lemma-openapi-update/lemma/de.fhdo.lemma.service.openapi.tests/test-schemas/openapi31.json", null, parseOptions);
+    final ArrayList<String> returnMessages = CollectionLiterals.<String>newArrayList();
+    List<String> _messages = result.getMessages();
+    boolean _tripleNotEquals = (_messages != null);
+    if (_tripleNotEquals) {
+      returnMessages.addAll(result.getMessages());
+    }
+    OpenAPI _openAPI = result.getOpenAPI();
+    boolean _tripleEquals = (_openAPI == null);
+    if (_tripleEquals) {
+      returnMessages.add(("There were errors generating the in-memory model for the given " + 
+        "OpenAPI specification URL"));
+    }
+    final String dataModelPath = "/Users/jonas/dev/lemma-openapi-update/lemma/de.fhdo.lemma.service.openapi/target/test.data";
+    OpenAPI _openAPI_1 = result.getOpenAPI();
+    final LemmaDataSubGenerator dataGenerator = new LemmaDataSubGenerator(_openAPI_1, dataModelPath);
+    final String technologyModelPath = "/Users/jonas/dev/lemma-openapi-update/lemma/de.fhdo.lemma.service.openapi/target/test.technology";
+    OpenAPI _openAPI_2 = result.getOpenAPI();
+    final LemmaTechnologySubGenerator technologyGenerator = new LemmaTechnologySubGenerator(_openAPI_2, technologyModelPath);
+    DataModel _generate = dataGenerator.generate();
+    final Pair<String, DataModel> dataModel = Pair.<String, DataModel>of("myDataModel", _generate);
+    Technology _generate_1 = technologyGenerator.generate();
+    final Pair<String, Technology> technologyModel = Pair.<String, Technology>of("myTechnologyModel", _generate_1);
+    final String serviceModelPath = "/Users/jonas/dev/lemma-openapi-update/lemma/de.fhdo.lemma.service.openapi/target/test.services";
+    OpenAPI _openAPI_3 = result.getOpenAPI();
+    final LemmaServiceSubGenerator serviceGenerator = new LemmaServiceSubGenerator(_openAPI_3, dataModel, technologyModel, serviceModelPath);
+    serviceGenerator.generate("de.example");
+    LemmaGenerator.LOGGER.info(dataModel.toString());
+    LemmaGenerator.LOGGER.info(technologyModel.toString());
+    LemmaGenerator.LOGGER.info(dataGenerator.getTransMsgs().toString());
   }
 
   /**

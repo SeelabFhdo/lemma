@@ -74,6 +74,7 @@ class LemmaGenerator implements Runnable {
     def parse(String location) {
         val parseOptions = new ParseOptions()
         parseOptions.setResolve(true)
+        parseOptions.setResolveFully(false)
         parseOptions.setFlatten(true)
         val result = new OpenAPIParser().readLocation(location, null, parseOptions)
 
@@ -128,7 +129,42 @@ class LemmaGenerator implements Runnable {
      * Entrypoint for CLI-based standalone execution of the OpenAPI2LEMMA generator
      */
     def static void main(String[] args) {
-        CommandLine.run(new LemmaGenerator(), args);
+        //CommandLine.run(new LemmaGenerator(), args);
+        
+        //ALL THIS IS JUST ADDED FOR TEST +++DO NOT COMMIT +++//
+        LOGGER.info("Starting test generation of LEMMA data model...")
+        
+        val parseOptions = new ParseOptions()
+        parseOptions.setResolve(true)
+        parseOptions.setFlatten(true)
+        val result = new OpenAPIParser().readLocation("/Users/jonas/dev/lemma-openapi-update/lemma/de.fhdo.lemma.service.openapi.tests/test-schemas/openapi31.json", null, parseOptions)
+
+        val returnMessages = newArrayList()
+        if (result.messages !== null)
+            returnMessages.addAll(result.messages)
+
+        if (result.openAPI === null)
+            returnMessages.add("There were errors generating the in-memory model for the given " +
+                "OpenAPI specification URL")
+        
+        val dataModelPath = "/Users/jonas/dev/lemma-openapi-update/lemma/de.fhdo.lemma.service.openapi/target/test.data"
+        val dataGenerator = new LemmaDataSubGenerator(result.getOpenAPI(), dataModelPath)
+        val technologyModelPath = "/Users/jonas/dev/lemma-openapi-update/lemma/de.fhdo.lemma.service.openapi/target/test.technology"
+        val technologyGenerator = new LemmaTechnologySubGenerator(result.getOpenAPI(), technologyModelPath)
+        
+        val dataModel = "myDataModel" -> dataGenerator.generate
+        val technologyModel = "myTechnologyModel" -> technologyGenerator.generate
+        
+        val serviceModelPath = "/Users/jonas/dev/lemma-openapi-update/lemma/de.fhdo.lemma.service.openapi/target/test.services"
+        val serviceGenerator = new LemmaServiceSubGenerator(result.getOpenAPI(), dataModel, technologyModel,
+            serviceModelPath)
+        serviceGenerator.generate("de.example")
+        
+        LOGGER.info(dataModel.toString)
+        
+        LOGGER.info(technologyModel.toString)
+        
+        LOGGER.info(dataGenerator.transMsgs.toString)
     }
 
     /**
