@@ -23,28 +23,28 @@ import org.eclipse.swt.graphics.Image;
 @SuppressWarnings("all")
 public class ElementTreeLabelProvider extends LabelProvider implements DelegatingStyledCellLabelProvider.IStyledLabelProvider {
   private static final ResourceManager RESOURCE_MANAGER = new LocalResourceManager(JFaceResources.getResources());
-  
+
   /**
    * Icon for LEMMA Versions
    */
   public static final Image VERSION_ICON = LemmaUiUtils.createImage(
     ElementTreeLabelProvider.RESOURCE_MANAGER, ElementTreeLabelProvider.class, 
     "version.png");
-  
+
   /**
    * Icon for LEMMA Contexts
    */
   public static final Image CONTEXT_ICON = LemmaUiUtils.createImage(
     ElementTreeLabelProvider.RESOURCE_MANAGER, ElementTreeLabelProvider.class, 
     "context.gif");
-  
+
   /**
    * Icon for LEMMA ComplexTypes
    */
   public static final Image COMPLEX_TYPE_ICON = LemmaUiUtils.createImage(
     ElementTreeLabelProvider.RESOURCE_MANAGER, ElementTreeLabelProvider.class, 
     "complexType.gif");
-  
+
   /**
    * Get styled text for element
    */
@@ -53,7 +53,7 @@ public class ElementTreeLabelProvider extends LabelProvider implements Delegatin
     String _simpleName = LemmaUtils.getSimpleName(Util.qualifiedName(((EObject) element)));
     return new StyledString(_simpleName);
   }
-  
+
   /**
    * Get image for element
    */

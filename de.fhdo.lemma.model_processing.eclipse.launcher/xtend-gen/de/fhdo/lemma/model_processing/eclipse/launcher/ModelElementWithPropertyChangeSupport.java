@@ -13,28 +13,28 @@ import java.beans.PropertyChangeSupport;
 @SuppressWarnings("all")
 public class ModelElementWithPropertyChangeSupport {
   private final PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
-  
+
   /**
    * Register a property change listener
    */
   public void addPropertyChangeListener(final PropertyChangeListener listener) {
     this.changeSupport.addPropertyChangeListener(listener);
   }
-  
+
   /**
    * Remove a property change listener
    */
   public void removePropertyChangeListener(final PropertyChangeListener listener) {
     this.changeSupport.removePropertyChangeListener(listener);
   }
-  
+
   /**
    * Inform listeners about a property change
    */
   protected void firePropertyChange(final String propertyName, final Object oldValue, final Object newValue) {
     this.changeSupport.firePropertyChange(propertyName, oldValue, newValue);
   }
-  
+
   /**
    * Get all registered property change listeners
    */

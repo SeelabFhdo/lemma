@@ -53,20 +53,20 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 @SuppressWarnings("all")
 public final class LaunchConfigurationDelegate implements ILaunchConfigurationDelegate {
   public static final String CONSOLE_NAME = "LEMMA Model Processor Run";
-  
+
   public static final String DISABLE_CONSOLE_CLEARING_LAUNCH_ATTRIBUTE = (("lemma" + 
     LaunchConfigurationDelegate.class.getName()) + "DisableConsoleClearing");
-  
+
   private static final String INDENT = "  ";
-  
+
   private static final String MODEL_PROCESSOR_EXECUTION_ABORTED_MESSAGE = "Model processor execution aborted";
-  
+
   private MessageConsoleStream infoStream;
-  
+
   private MessageConsoleStream errorStream;
-  
+
   private int headlineLength;
-  
+
   /**
    * Show the commandline of the given ILaunchConfiguration which must be a valid model processing
    * launch configuration
@@ -105,7 +105,7 @@ public final class LaunchConfigurationDelegate implements ILaunchConfigurationDe
     }
     return _xtrycatchfinallyexpression;
   }
-  
+
   /**
    * Helper to display an error message from an exception occurred during commandline generation
    */
@@ -125,7 +125,7 @@ public final class LaunchConfigurationDelegate implements ILaunchConfigurationDe
     String message = _xifexpression;
     MessageDialog.openError(Utils.getActiveShell(), "Error during commandline generation", message);
   }
-  
+
   /**
    * Launch the given ILaunchConfiguration which must be a valid model processing launch
    * configuration
@@ -195,7 +195,7 @@ public final class LaunchConfigurationDelegate implements ILaunchConfigurationDe
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Open all relevant console streams
    */
@@ -207,7 +207,7 @@ public final class LaunchConfigurationDelegate implements ILaunchConfigurationDe
     }
     return _xblockexpression;
   }
-  
+
   /**
    * Helper to check if the given IFile is a LEMMA model with errors or (possibly transitively)
    * imports LEMMA models with errors. This method will also print all direct and transitive
@@ -264,7 +264,7 @@ public final class LaunchConfigurationDelegate implements ILaunchConfigurationDe
     boolean _isEmpty_2 = erroneousModels.isEmpty();
     return (!_isEmpty_2);
   }
-  
+
   /**
    * Helper to perform a validation of the LEMMA model located at the given file path together
    * with a validation of all directly or indirectly (i.e., transitively) imported models.
@@ -338,7 +338,7 @@ public final class LaunchConfigurationDelegate implements ILaunchConfigurationDe
     }
     return erroneousModels;
   }
-  
+
   /**
    * Helper to convert a list of Issues resulting from a programmatic Xtext model validation to a
    * printable list of strings. The result list will only cover those Issues with an ERROR
@@ -363,7 +363,7 @@ public final class LaunchConfigurationDelegate implements ILaunchConfigurationDe
     };
     return IterableExtensions.<String>toList(IterableExtensions.<Issue, String>map(IterableExtensions.<Issue>filter(issues, _function), _function_1));
   }
-  
+
   /**
    * Helper to convert the paths of all models imported by the given XtextResource (which must
    * represent a LEMMA model) to absolute paths based on the given absolute basepath
@@ -380,7 +380,7 @@ public final class LaunchConfigurationDelegate implements ILaunchConfigurationDe
     };
     return IterableExtensions.<String>toSet(ListExtensions.map(Utils.typedImports(modelRoot), _function));
   }
-  
+
   /**
    * Close all relevant console streams
    */
@@ -392,7 +392,7 @@ public final class LaunchConfigurationDelegate implements ILaunchConfigurationDe
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Check if the given model processing launch configuration requires intermediate model
    * transformations
@@ -404,7 +404,7 @@ public final class LaunchConfigurationDelegate implements ILaunchConfigurationDe
     };
     return IterableExtensions.<Argument>exists(configuration.getArguments(), _function);
   }
-  
+
   /**
    * Print a line of separating dashes and with the length of the current headline to the given
    * console stream. In case the current headline has a length less or equal zerp, nothing will
@@ -416,7 +416,7 @@ public final class LaunchConfigurationDelegate implements ILaunchConfigurationDe
     }
     stream.println("-".repeat(this.headlineLength));
   }
-  
+
   /**
    * Display a message that the model processor execution was aborted (e.g., due to the occurrence
    * of errors during an intermediate transformation or the preparation of a model processor's
@@ -426,7 +426,7 @@ public final class LaunchConfigurationDelegate implements ILaunchConfigurationDe
     this.errorStream.println(("\n" + LaunchConfigurationDelegate.MODEL_PROCESSOR_EXECUTION_ABORTED_MESSAGE));
     this.closeStreams();
   }
-  
+
   /**
    * Run a LEMMA model processor for the given model processing launch configuration and its
    * ILaunch instantiation
@@ -536,7 +536,7 @@ public final class LaunchConfigurationDelegate implements ILaunchConfigurationDe
       }
     }
   }
-  
+
   /**
    * Helper to ask the user for a continuation of the current action in the event of a previously
    * occurred warning
@@ -545,7 +545,7 @@ public final class LaunchConfigurationDelegate implements ILaunchConfigurationDe
     abstract class __LaunchConfigurationDelegate_2 implements Runnable {
       boolean continuationConfirmed;
     }
-    
+
     final __LaunchConfigurationDelegate_2 continuationDialogRunnable = new __LaunchConfigurationDelegate_2() {
       @Override
       public void run() {

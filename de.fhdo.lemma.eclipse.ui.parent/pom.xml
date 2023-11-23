@@ -54,7 +54,7 @@
         <maven-clean-plugin-version>3.1.0</maven-clean-plugin-version>
         <maven-compiler-plugin-version>3.8.1</maven-compiler-plugin-version>
         <maven-dependency-plugin-version>3.1.2</maven-dependency-plugin-version>
-        <tycho-version>2.3.0</tycho-version>
+        <tycho-version>2.6.0</tycho-version>
         <xtext-version>2.26.0</xtext-version>
     </properties>
 

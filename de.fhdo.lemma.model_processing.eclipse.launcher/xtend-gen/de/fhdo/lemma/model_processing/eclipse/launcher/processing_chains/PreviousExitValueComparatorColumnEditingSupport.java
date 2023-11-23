@@ -31,9 +31,9 @@ import org.eclipse.xtext.xbase.lib.Conversions;
 @SuppressWarnings("all")
 public final class PreviousExitValueComparatorColumnEditingSupport extends ObservableValueEditingSupport<ProcessingChainEntry, PreviousExitValueComparator.Comparator, String> {
   private TableViewer tableViewer;
-  
+
   private DataBindingContext dataBindingContext;
-  
+
   /**
    * Constructor
    */
@@ -45,7 +45,7 @@ public final class PreviousExitValueComparatorColumnEditingSupport extends Obser
     UpdatingColumnViewerEditorActivationListener _updatingColumnViewerEditorActivationListener = new UpdatingColumnViewerEditorActivationListener(tableViewer);
     _columnViewerEditor.addEditorActivationListener(_updatingColumnViewerEditorActivationListener);
   }
-  
+
   /**
    * Return the column's CellEditor
    */
@@ -56,7 +56,7 @@ public final class PreviousExitValueComparatorColumnEditingSupport extends Obser
     return new ComboBoxCellEditor(_table, ((String[])Conversions.unwrapArray(_userRepresentationValues, String.class)), 
       (SWT.DROP_DOWN | SWT.READ_ONLY));
   }
-  
+
   /**
    * Return the IObservableValue of the column's CellEditor
    */
@@ -65,7 +65,7 @@ public final class PreviousExitValueComparatorColumnEditingSupport extends Obser
     Control _control = editor.getControl();
     return WidgetProperties.ccomboSelection().observe(((CCombo) _control));
   }
-  
+
   /**
    * Return the IObservableValue of the Bean element
    */
@@ -73,7 +73,7 @@ public final class PreviousExitValueComparatorColumnEditingSupport extends Obser
   public final IObservableValue<PreviousExitValueComparator.Comparator> doCreateElementObservable(final ProcessingChainEntry entry, final ViewerCell cell) {
     return BeanProperties.<ProcessingChainEntry, PreviousExitValueComparator.Comparator>value(ProcessingChainEntry.class, "previousExitValueComparator", null).observe(entry);
   }
-  
+
   /**
    * Bind the CellEditor's and Bean element's IObservableValues
    */
@@ -91,7 +91,7 @@ public final class PreviousExitValueComparatorColumnEditingSupport extends Obser
     targetToModelConverter.setConverter(IConverter.<String, PreviousExitValueComparator.Comparator>create(_function_1));
     return this.dataBindingContext.<String, PreviousExitValueComparator.Comparator>bindValue(target, model, targetToModelConverter, modelToTargetConverter);
   }
-  
+
   /**
    * Enable column-editing
    */

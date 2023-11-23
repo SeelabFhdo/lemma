@@ -1,0 +1,71 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "LEMMA Operation Modeling Language",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#annotations"
+		},
+		{
+			"include": "#deploy-scripts"
+		},
+		{
+			"include": "#single-line-comment"
+		},
+		{
+			"include": "#multi-line-comment"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [{
+				"name": "keyword.control.operation",
+				"match": "\\b(technology|microservices|nodes|@|container|deployment|technology|with|operation|environment|deploys|depends|on|used|by|aspects|default|values|basic|endpoints|is)\\b"
+			}]
+		},
+		"strings": {
+			"name": "string.quoted.double.operation",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.operation",
+					"match": "\\\\."
+				}
+			]
+		},
+		"annotations": {
+			"patterns": [{
+				"name": "meta.type.annotation.operationAnnotation",
+				"match": "@([a-z])+(?=(\\([^\\(]+\\)))"
+			},
+			{
+				"name": "meta.type.annotation.operationAnnotation.noClosingParen",
+				"match": "@([a-z])+\\(([a-z]|[A-Z]|:|_|\\.)+"
+			}
+		]
+		},
+		"deploy-scripts": {
+			"begin": "'",
+			"end": "'",
+			"name": "string.quoted.single"
+		},
+		"single-line-comment": {
+			"patterns": [{
+				"match": "\/\/.*\n?$",
+				"name": "comment.line"
+			}]
+		},
+		"multi-line-comment": {
+			"begin": "\/[*]",
+			"end": "[*]\/",
+			"name": "comment.block"
+		}
+	},
+	"scopeName": "source.operation"
+}

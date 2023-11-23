@@ -37,41 +37,41 @@ public class SpecifyPathsHandler extends AbstractHandler {
   public static class SpecifyPathsDialogResult {
     @Accessors(AccessorType.PUBLIC_GETTER)
     private List<ModelFile> selectedModelFiles;
-    
+
     @Accessors(AccessorType.PUBLIC_GETTER)
     private boolean convertToRelativeUris;
-    
+
     @Accessors(AccessorType.PUBLIC_GETTER)
     private boolean outputRefinementModels;
-    
+
     public SpecifyPathsDialogResult(final List<ModelFile> selectedModelFiles, final boolean convertToRelativeUris, final boolean outputRefinementModels) {
       this.selectedModelFiles = selectedModelFiles;
       this.convertToRelativeUris = convertToRelativeUris;
       this.outputRefinementModels = outputRefinementModels;
     }
-    
+
     @Pure
     public List<ModelFile> getSelectedModelFiles() {
       return this.selectedModelFiles;
     }
-    
+
     @Pure
     public boolean isConvertToRelativeUris() {
       return this.convertToRelativeUris;
     }
-    
+
     @Pure
     public boolean isOutputRefinementModels() {
       return this.outputRefinementModels;
     }
   }
-  
+
   private final Shell SHELL = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-  
+
   private List<ModelFile> inputModelFiles;
-  
+
   private AbstractUiModelTransformationStrategy strategy;
-  
+
   /**
    * Constructor
    */
@@ -91,7 +91,7 @@ public class SpecifyPathsHandler extends AbstractHandler {
     this.inputModelFiles = inputModelFiles;
     this.strategy = strategy;
   }
-  
+
   /**
    * Execute handler
    */
@@ -112,7 +112,7 @@ public class SpecifyPathsHandler extends AbstractHandler {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Create entries for the dialog's model file table. The result is a map that assigns model file
    * instances to their type identifiers. Thus, the dialog is able to display the model files in
@@ -151,7 +151,7 @@ public class SpecifyPathsHandler extends AbstractHandler {
     }
     return result;
   }
-  
+
   /**
    * Get model files being imported by a given model file and prepare them for the model table
    */
@@ -180,7 +180,7 @@ public class SpecifyPathsHandler extends AbstractHandler {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Prepare model file for the table of model files
    */

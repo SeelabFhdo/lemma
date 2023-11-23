@@ -58,17 +58,17 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 @SuppressWarnings("all")
 public class LemmaGenerator {
   private static final String DOMAIN_MODEL_IMPORT_ALIAS = "Domain";
-  
+
   private static final String SERVICE_MODEL_IMPORT_ALIAS = "Services";
-  
+
   private static final DataFactory DATA_FACTORY = DataFactory.eINSTANCE;
-  
+
   private static final MappingFactory MAPPING_FACTORY = MappingFactory.eINSTANCE;
-  
+
   private static final ServiceFactory SERVICE_FACTORY = ServiceFactory.eINSTANCE;
-  
+
   private static final TechnologyFactory TECHNOLOGY_FACTORY = TechnologyFactory.eINSTANCE;
-  
+
   /**
    * Generate LEMMA models from Avro protocol. Returns a pair consisting of the generated domain
    * and possibly generated mapping model.
@@ -77,7 +77,7 @@ public class LemmaGenerator {
     return this.generateModelsFrom(protocol, LemmaGenerator.DOMAIN_MODEL_IMPORT_ALIAS, serviceModelPath, 
       LemmaGenerator.SERVICE_MODEL_IMPORT_ALIAS, avroModelPath, Shared.AVRO_TECHNOLOGY_NAME);
   }
-  
+
   /**
    * Generate LEMMA models from Avro protocol. Returns a pair consisting of the generated domain
    * and possibly generated mapping model. This method allows for specifying import aliases of
@@ -87,7 +87,7 @@ public class LemmaGenerator {
   public Pair<DataModel, TechnologyMapping> generateModelsFrom(final Protocol protocol, final String domainImportAlias, final String serviceModelPath, final String serviceImportAlias, final String avroModelPath, final String avroImportAlias) {
     return this.generateModelsFrom(IterableExtensions.<Schema>toList(protocol.getTypes()), domainImportAlias, serviceModelPath, serviceImportAlias, avroModelPath, avroImportAlias);
   }
-  
+
   /**
    * Generate LEMMA models from several Avro schemas. Returns a pair consisting of the generated
    * domain and possibly generated mapping model.
@@ -96,7 +96,7 @@ public class LemmaGenerator {
     return this.generateModelsFrom(schemas, LemmaGenerator.DOMAIN_MODEL_IMPORT_ALIAS, serviceModelPath, 
       LemmaGenerator.SERVICE_MODEL_IMPORT_ALIAS, avroModelPath, Shared.AVRO_TECHNOLOGY_NAME);
   }
-  
+
   /**
    * Generate LEMMA models from several Avro schemas. Returns a pair consisting of the generated
    * domain and possibly generated mapping model. This method allows for specifying import aliases
@@ -134,7 +134,7 @@ public class LemmaGenerator {
     final TechnologyMapping mappingModel = this.toMappingModel(mappingModelElements, domainImportAlias, serviceModelPath, serviceImportAlias, avroModelPath, avroImportAlias);
     return Pair.<DataModel, TechnologyMapping>of(dataModel, mappingModel);
   }
-  
+
   /**
    * Generate LEMMA EObjects from Avro named schema. Returns a pair consisting of the EObject
    * specifically derived from the passed schema and all other EObjects that were derived during
@@ -184,7 +184,7 @@ public class LemmaGenerator {
     }
     return _switchResult;
   }
-  
+
   /**
    * Generate LEMMA EObjects from Avro Enum. Returns a pair consisting of the EObject (LEMMA
    * Enumeration) specifically derived from the passed schema and all other EObjects that were
@@ -202,7 +202,7 @@ public class LemmaGenerator {
     Map<Class<? extends EObject>, List<EObject>> _allCreatedEObjects = this.allCreatedEObjects();
     return Pair.<EObject, Map<Class<? extends EObject>, List<EObject>>>of(enumeration, _allCreatedEObjects);
   }
-  
+
   /**
    * Helper to ensure that an Avro schema is one of the expected types. Throws an
    * IllegalArgumentException if that is not the case.
@@ -224,7 +224,7 @@ public class LemmaGenerator {
       throw new IllegalArgumentException(_plus);
     }
   }
-  
+
   /**
    * Return the simple LEMMA name from this schema. If a LEMMA name is not present, return the
    * simple name of the schema.
@@ -232,7 +232,7 @@ public class LemmaGenerator {
   private String lemmaNameElseSchemaName(final Schema schema) {
     return LemmaUtils.getSimpleName(Shared.lemmaNameOrElse(schema, schema.getName()));
   }
-  
+
   /**
    * Create a LEMMA Enumeration instance
    */
@@ -243,7 +243,7 @@ public class LemmaGenerator {
     enumeration.setContext(this.getOrCreateContext(avroNamespace));
     return enumeration;
   }
-  
+
   /**
    * Helper to retrieve a LEMMA Version from an Avro namespace. In case a corresponding Version
    * instance was already created, return it. If no version information could be extracted from
@@ -262,7 +262,7 @@ public class LemmaGenerator {
     }
     return version;
   }
-  
+
   /**
    * Helper to retrieve a LEMMA Context from an Avro namespace. In case a corresponding Context
    * instance was already created, return it. If no context information could be extracted from
@@ -296,27 +296,27 @@ public class LemmaGenerator {
     }
     return context;
   }
-  
+
   /**
    * Map of all EObjects that were successfully created during generation. The key of the map
    * identifies the model type. The value of the map is a nested map, whose key is the qualified
    * name of the value EObject under creation.
    */
   private final HashMap<Class<? extends EObject>, Map<String, EObject>> createdEObjects = CollectionLiterals.<Class<? extends EObject>, Map<String, EObject>>newHashMap();
-  
+
   /**
    * Map of all fully-qualified names of all EObjects discovered during a generation run for a
    * given model type. Note, that this map is never deleted.
    */
   private final HashMap<Class<? extends EObject>, Set<String>> eObjectNames = CollectionLiterals.<Class<? extends EObject>, Set<String>>newHashMap();
-  
+
   /**
    * Add an EObject to the map of created EObjects for the given model type
    */
   private void addCreatedEObject(final Class<? extends EObject> modelType, final EObject eObject) {
     this.addCreatedEObject(modelType, eObject, Util.qualifiedName(eObject));
   }
-  
+
   /**
    * Add an EObject to the map of created EObjects for the given model type and qualified name
    */
@@ -324,7 +324,7 @@ public class LemmaGenerator {
     Util.<Class<? extends EObject>, String, EObject>addToValueMap(this.createdEObjects, modelType, qualifiedName, eObject);
     Util.<Class<? extends EObject>, String>addToValueSet(this.eObjectNames, modelType, qualifiedName);
   }
-  
+
   /**
    * Get an EObject with the given qualified name for the given model type from the cache of
    * created EObjects
@@ -337,7 +337,7 @@ public class LemmaGenerator {
     }
     return _eObject;
   }
-  
+
   /**
    * Generic helper to retrieve an EObject with a certain type from a map of EObjects by the
    * specified qualified name
@@ -362,7 +362,7 @@ public class LemmaGenerator {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Check if an EObject with the given qualified name got already created
    */
@@ -376,7 +376,7 @@ public class LemmaGenerator {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Helper to return all EObjects that were created
    */
@@ -386,28 +386,28 @@ public class LemmaGenerator {
     };
     return MapExtensions.<Class<? extends EObject>, Map<String, EObject>, List<EObject>>mapValues(this.createdEObjects, _function);
   }
-  
+
   /**
    * Map of all EObjects, whose creation is not finished yet, e.g., because nested EObjects are
    * currently generated. An entry is removed from the stack, as soon as the corresponding EObject
    * for a model got fully created. The structure of the map is the same as for "createdEObjects".
    */
   private final HashMap<Class<? extends EObject>, Map<String, EObject>> eObjectCreationStack = CollectionLiterals.<Class<? extends EObject>, Map<String, EObject>>newHashMap();
-  
+
   /**
    * Signal the start of the creation of a new EObject
    */
   private void startedEObjectCreation(final Class<? extends EObject> modelType, final EObject eObject) {
     this.addToCreationStack(modelType, eObject);
   }
-  
+
   /**
    * Add an EObject to the creation stack for the given model type
    */
   private void addToCreationStack(final Class<? extends EObject> modelType, final EObject eObject) {
     this.addToCreationStack(modelType, eObject, Util.qualifiedName(eObject));
   }
-  
+
   /**
    * Add an EObject to the creation stack for the given model type and fully-qualified name
    */
@@ -415,7 +415,7 @@ public class LemmaGenerator {
     Util.<Class<? extends EObject>, String, EObject>addToValueMap(this.eObjectCreationStack, modelType, qualifiedName, eObject);
     Util.<Class<? extends EObject>, String>addToValueSet(this.eObjectNames, modelType, qualifiedName);
   }
-  
+
   /**
    * Check if an EObject with the given qualified name exists on the EObject creation stack for
    * the given model type
@@ -430,7 +430,7 @@ public class LemmaGenerator {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Get EObject with the given qualified name and for the given model type from the EObject
    * creation stack
@@ -443,14 +443,14 @@ public class LemmaGenerator {
     }
     return _eObject;
   }
-  
+
   /**
    * Remove EObject for the given model type from the EObject creation stack
    */
   private void removeFromCreationStack(final Class<? extends EObject> modelType, final EObject eObject) {
     Util.<Class<? extends EObject>, String, EObject>removeFromValueMap(this.eObjectCreationStack, modelType, Util.qualifiedName(eObject));
   }
-  
+
   /**
    * Create a LEMMA EnumerationField instance
    */
@@ -459,7 +459,7 @@ public class LemmaGenerator {
     enumerationField.setName(name);
     return enumerationField;
   }
-  
+
   /**
    * Signal the finishing of the creation of a new EObject
    */
@@ -467,7 +467,7 @@ public class LemmaGenerator {
     this.addCreatedEObject(modelType, eObject);
     this.removeFromCreationStack(modelType, eObject);
   }
-  
+
   /**
    * Create a new LEMMA DataModel from the given EObject instances
    */
@@ -511,7 +511,7 @@ public class LemmaGenerator {
     }
     return dataModel;
   }
-  
+
   /**
    * Create a new LEMMA TechnologyMapping model from the given EObject instances. The domain
    * import alias must correspond to the alias of the domain model in a service model. The service
@@ -560,7 +560,7 @@ public class LemmaGenerator {
     mappingModel.getTypeMappings().addAll(typeMappings.values());
     return mappingModel;
   }
-  
+
   /**
    * Generate LEMMA EObjects from Avro Fixed or Record schema. Returns a pair consisting of the
    * EObject (LEMMA DataStructure) specifically derived from the passed schema and all other
@@ -572,7 +572,7 @@ public class LemmaGenerator {
       Schema.Type.RECORD);
     return this.toDataStructure(schema, schema.getNamespace());
   }
-  
+
   /**
    * Generate LEMMA EObjects from Avro Fixed, Map, Record, or Union schema in the given namespace.
    * Returns a pair consisting of the EObject (LEMMA DataStructure) specifically derived from the
@@ -622,7 +622,7 @@ public class LemmaGenerator {
     Map<Class<? extends EObject>, List<EObject>> _allCreatedEObjects = this.allCreatedEObjects();
     return Pair.<EObject, Map<Class<? extends EObject>, List<EObject>>>of(dataStructure, _allCreatedEObjects);
   }
-  
+
   /**
    * Check if an EObject with the given name and Avro namespace was already created or is under
    * creation in the context of the given model type
@@ -642,7 +642,7 @@ public class LemmaGenerator {
     return (this.existsCreatedEObject(modelType, qualifiedName) || 
       this.existsOnCreationStack(modelType, qualifiedName));
   }
-  
+
   /**
    * Create a LEMMA DataStructure with the given name, and a version and context corresponding to
    * the given Avro namespace
@@ -654,7 +654,7 @@ public class LemmaGenerator {
     structure.setContext(this.getOrCreateContext(avroNamespace));
     return structure;
   }
-  
+
   /**
    * Create a LEMMA DataField with the given name and type derived from the given Avro schema.
    * The data field may receive an initialization value and is part of a concrete ComplexType.
@@ -683,7 +683,7 @@ public class LemmaGenerator {
     }
     return dataField;
   }
-  
+
   /**
    * Derive LEMMA Type from the given Avro schema
    */
@@ -739,7 +739,7 @@ public class LemmaGenerator {
     }
     return type;
   }
-  
+
   /**
    * Generate LEMMA EObjects from an Avro unnamed schema (Arrays, Maps, Unions). Returns a pair
    * consisting of the LEMMA EObject specifically derived from the passed schema and all other
@@ -788,7 +788,7 @@ public class LemmaGenerator {
     }
     return _switchResult;
   }
-  
+
   /**
    * Generate LEMMA EObjects from Avro Array schema in the given namespace. Returns a pair
    * consisting of the EObject (LEMMA CollectionType) specifically derived from the passed schema
@@ -824,7 +824,7 @@ public class LemmaGenerator {
     Map<Class<? extends EObject>, List<EObject>> _allCreatedEObjects = this.allCreatedEObjects();
     return Pair.<EObject, Map<Class<? extends EObject>, List<EObject>>>of(collectionType, _allCreatedEObjects);
   }
-  
+
   /**
    * Create LEMMA CollectionType with the given name and in the LEMMA namespace corresponding to
    * the given Avro namespace. A unique name for the CollectionType may be generated, e.g., when
@@ -840,7 +840,7 @@ public class LemmaGenerator {
     }
     return collectionType;
   }
-  
+
   /**
    * Adapt a LEMMA DataStructure to represent an Avro Error. Avro Errors are represented in LEMMA
    * by means of structures with the AvroError aspect.
@@ -853,7 +853,7 @@ public class LemmaGenerator {
     this.addAspect(complexTypeMapping, avroImport, Shared.ERROR_ASPECT);
     this.finishedEObjectCreation(TechnologyMapping.class, complexTypeMapping);
   }
-  
+
   /**
    * Create a LEMMA ComplexTypeMapping for the given LEMMA DataStructure based on the Avro
    * technology model. The mapping takes default values for the Avro technology name, and service
@@ -870,7 +870,7 @@ public class LemmaGenerator {
     ComplexTypeMapping _createComplexTypeMapping = this.createComplexTypeMapping(preliminaryAvroImport, preliminaryServiceModelImport, preliminaryDomainModelImport, structure);
     return Pair.<ComplexTypeMapping, Import>of(_createComplexTypeMapping, preliminaryAvroImport);
   }
-  
+
   /**
    * Helper to get or create an Import instance with the given name, URI and type, and for the
    * given model type
@@ -890,7 +890,7 @@ public class LemmaGenerator {
     }
     return _import;
   }
-  
+
   /**
    * Create a LEMMA ComplexTypeMapping for the given LEMMA ComplexType using the specified
    * technology, service, and domain model Imports
@@ -901,7 +901,7 @@ public class LemmaGenerator {
     mapping.setType(this.createImportedComplexTypeToMap(serviceModelImport, domainModelImport, complexType));
     return mapping;
   }
-  
+
   /**
    * Create a LEMMA TechnologyReference for the given technology Import
    */
@@ -910,7 +910,7 @@ public class LemmaGenerator {
     technologyReference.setTechnology(technologyImport);
     return technologyReference;
   }
-  
+
   /**
    * Create a LEMMA ImportedComplexTypeToMap for the given ComplexType with the specified service
    * and domain model Imports
@@ -922,7 +922,7 @@ public class LemmaGenerator {
     importedComplexTypeToMap.setType(complexType);
     return importedComplexTypeToMap;
   }
-  
+
   /**
    * Add an aspect with the specified name from the given technology Import to the given
    * ComplexTypeMapping
@@ -930,7 +930,7 @@ public class LemmaGenerator {
   private void addAspect(final ComplexTypeMapping mapping, final Import technologyImport, final String aspectName) {
     mapping.getAspects().add(this.createImportedAspect(technologyImport, aspectName));
   }
-  
+
   /**
    * Create a LEMMA TechnologySpecificImportedServiceAspect for the aspect with the given name
    * from the specified technology Import
@@ -943,7 +943,7 @@ public class LemmaGenerator {
     _aspect.setName(aspectName);
     return aspect;
   }
-  
+
   /**
    * Adapt a LEMMA DataStructure to represent an Avro Fixed type. Avro Fixed types are represented
    * in LEMMA by means of structures with a single integer data field, whose initialization value
@@ -1039,7 +1039,7 @@ public class LemmaGenerator {
     this.addAspect(complexTypeMapping, sizeField, avroImport, Shared.FIXED_SIZE_ASPECT);
     this.finishedEObjectCreation(TechnologyMapping.class, complexTypeMapping);
   }
-  
+
   /**
    * Add an aspect with the specified name from the given technology Import and for the given data
    * field to the passed ComplexTypeMapping
@@ -1051,7 +1051,7 @@ public class LemmaGenerator {
     fieldMapping.getAspects().add(this.createImportedAspect(technologyImport, aspectName));
     mapping.getFieldMappings().add(fieldMapping);
   }
-  
+
   /**
    * Adapt a LEMMA DataStructure to represent an Avro Map type. Avro Map types are represented
    * in LEMMA by means of structures with a single data field for storing the map's values. The
@@ -1100,7 +1100,7 @@ public class LemmaGenerator {
     this.addAspect(complexTypeMapping, keyField, avroImport, Shared.MAP_KEY_ASPECT);
     this.finishedEObjectCreation(TechnologyMapping.class, complexTypeMapping);
   }
-  
+
   /**
    * Derive a unique name based on the given qualified name and in the context of the given LEMMA
    * model type. If the given qualified name is not unique already, the derived unique name will
@@ -1125,7 +1125,7 @@ public class LemmaGenerator {
     }
     return uniqueName;
   }
-  
+
   /**
    * Adapt a LEMMA DataStructure to represent an Avro Union. Avro Unions are represented in LEMMA
    * by means of structures with the AvroUnion aspect.

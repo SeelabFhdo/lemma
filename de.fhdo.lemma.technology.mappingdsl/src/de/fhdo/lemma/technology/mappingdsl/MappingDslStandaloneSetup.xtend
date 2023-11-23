@@ -3,6 +3,9 @@
  */
 package de.fhdo.lemma.technology.mappingdsl
 
+import com.google.inject.Injector
+import org.eclipse.emf.ecore.EPackage
+import de.fhdo.lemma.technology.mapping.MappingPackage
 
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.
@@ -12,4 +15,12 @@ class MappingDslStandaloneSetup extends MappingDslStandaloneSetupGenerated {
     def static void doSetup() {
         new MappingDslStandaloneSetup().createInjectorAndDoEMFRegistration()
     }
+        
+    /* NOTE: This overwritten method is necessary in order to register stuff like "DataModel" etc. for the language server correctly. See 
+     * https://www.eclipse.org/forums/index.php/t/1077902/
+	 */
+    override void register(Injector injector) {
+      EPackage.Registry.INSTANCE.put(MappingPackage.eINSTANCE.getNsURI(), MappingPackage.eINSTANCE);
+      super.register(injector);
+  }
 }

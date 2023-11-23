@@ -34,14 +34,14 @@ public final class ProjectFileSelectionDialog extends ElementTreeSelectionDialog
    */
   public static final class ProjectWorkbenchContentProvider extends BaseWorkbenchContentProvider {
     private IProject project;
-    
+
     /**
      * Constructor
      */
     public ProjectWorkbenchContentProvider(final IProject project) {
       this.project = project;
     }
-    
+
     /**
      * Get project elements from workbench
      */
@@ -54,7 +54,7 @@ public final class ProjectFileSelectionDialog extends ElementTreeSelectionDialog
       Object _findFirst = IterableExtensions.<Object>findFirst(((Iterable<Object>)Conversions.doWrapArray(elements)), _function);
       return new Object[] { _findFirst };
     }
-    
+
     /**
      * Get IContainer children of a parent workbench element
      */
@@ -67,12 +67,12 @@ public final class ProjectFileSelectionDialog extends ElementTreeSelectionDialog
       return ((Object[])Conversions.unwrapArray(IterableExtensions.<Object>filter(((Iterable<Object>)Conversions.doWrapArray(children)), _function), Object.class));
     }
   }
-  
+
   private IProject project;
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private IFile selectedFile;
-  
+
   /**
    * Constructor
    */
@@ -82,7 +82,7 @@ public final class ProjectFileSelectionDialog extends ElementTreeSelectionDialog
     this.setInput(ResourcesPlugin.getWorkspace().getRoot());
     this.setMessage("Please select a file from the project tree:");
   }
-  
+
   /**
    * Internal callback for dialog area creation
    */
@@ -94,7 +94,7 @@ public final class ProjectFileSelectionDialog extends ElementTreeSelectionDialog
     _treeViewer.setExpandedElements(this.project);
     return composite;
   }
-  
+
   /**
    * OK button was pressed
    */
@@ -108,7 +108,7 @@ public final class ProjectFileSelectionDialog extends ElementTreeSelectionDialog
     }
     super.okPressed();
   }
-  
+
   /**
    * Get the selected IFile from the tree viewer's ISelection
    */
@@ -125,7 +125,7 @@ public final class ProjectFileSelectionDialog extends ElementTreeSelectionDialog
     }
     return _xifexpression;
   }
-  
+
   @Pure
   public IFile getSelectedFile() {
     return this.selectedFile;

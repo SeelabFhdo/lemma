@@ -13,21 +13,21 @@ import java.util.Comparator;
 public class DataFieldComparator implements Comparator<DataField> {
   public enum ORDERING {
     ASCENDING,
-    
+
     DESCENDING,
-    
+
     NONE;
   }
-  
+
   private DataFieldComparator.ORDERING ordering;
-  
+
   /**
    * Constructor
    */
   public DataFieldComparator(final DataFieldComparator.ORDERING ordering) {
     this.ordering = ordering;
   }
-  
+
   /**
    * Compare two data fields. The comparison is based on the types of the fields. If one or both
    * data fields are primitively typed, comparison is based on type sizes. Otherwise it is based
@@ -48,7 +48,7 @@ public class DataFieldComparator implements Comparator<DataField> {
       return comparisonResult;
     }
   }
-  
+
   /**
    * Do the actual comparison
    */

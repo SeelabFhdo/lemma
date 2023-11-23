@@ -3,6 +3,9 @@
  */
 package de.fhdo.lemma.data;
 
+import com.google.inject.Injector;
+import org.eclipse.emf.ecore.EPackage;
+
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.
  */
@@ -10,5 +13,15 @@ package de.fhdo.lemma.data;
 public class DataDslStandaloneSetup extends DataDslStandaloneSetupGenerated {
   public static void doSetup() {
     new DataDslStandaloneSetup().createInjectorAndDoEMFRegistration();
+  }
+  
+  /**
+   * NOTE: This overwritten method is necessary in order to register stuff like "DataModel" etc. for the language server correctly. See
+   * https://www.eclipse.org/forums/index.php/t/1077902/
+   */
+  @Override
+  public void register(final Injector injector) {
+    EPackage.Registry.INSTANCE.put(DataPackage.eINSTANCE.getNsURI(), DataPackage.eINSTANCE);
+    super.register(injector);
   }
 }

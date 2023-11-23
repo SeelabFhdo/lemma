@@ -46,16 +46,16 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 @SuppressWarnings("all")
 public final class LocalDockerImageSelectionDialog extends Dialog {
   private static final String IMAGE_TAG_SEPARATOR = ":";
-  
+
   private final List<Pair<String, String>> imagesAndTags;
-  
+
   private final List<String> invalidImages;
-  
+
   private TableViewer viewer;
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private String selectedImage = null;
-  
+
   /**
    * Constructor
    */
@@ -71,7 +71,7 @@ public final class LocalDockerImageSelectionDialog extends Dialog {
     this.imagesAndTags = splitResult.getKey();
     this.invalidImages = splitResult.getValue();
   }
-  
+
   /**
    * Query local Docker images leveraging the basic Docker command. Returns the list of available
    * images including their tags. Throws an exception in case the executed query command, i.e.,
@@ -118,7 +118,7 @@ public final class LocalDockerImageSelectionDialog extends Dialog {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Split the given list of images with tags into a list of pairs with the image name as key and
    * the respective tag as value. Splitting assumes that each entry in the list of images with
@@ -144,7 +144,7 @@ public final class LocalDockerImageSelectionDialog extends Dialog {
     imagesWithTags.forEach(_function);
     return Pair.<ArrayList<Pair<String, String>>, ArrayList<String>>of(splitImagesAndTags, unparseableImages);
   }
-  
+
   /**
    * Create dialog area
    */
@@ -185,7 +185,7 @@ public final class LocalDockerImageSelectionDialog extends Dialog {
     this.viewer.setInput(this.imagesAndTags);
     return container;
   }
-  
+
   /**
    * Trigger click on OK for the given image and tag as dialog selection
    */
@@ -199,7 +199,7 @@ public final class LocalDockerImageSelectionDialog extends Dialog {
     this.selectedImage = _builder.toString();
     super.okPressed();
   }
-  
+
   /**
    * Create image column for the table viewer
    */
@@ -216,7 +216,7 @@ public final class LocalDockerImageSelectionDialog extends Dialog {
       }
     });
   }
-  
+
   /**
    * Create tag column for the table viewer
    */
@@ -233,7 +233,7 @@ public final class LocalDockerImageSelectionDialog extends Dialog {
       }
     });
   }
-  
+
   /**
    * Flag to indicate that the dialog is resizable
    */
@@ -241,7 +241,7 @@ public final class LocalDockerImageSelectionDialog extends Dialog {
   public final boolean isResizable() {
     return true;
   }
-  
+
   /**
    * Determine the initial dialog size
    */
@@ -249,7 +249,7 @@ public final class LocalDockerImageSelectionDialog extends Dialog {
   public final Point getInitialSize() {
     return new Point(600, 700);
   }
-  
+
   /**
    * Configure the shell
    */
@@ -258,7 +258,7 @@ public final class LocalDockerImageSelectionDialog extends Dialog {
     super.configureShell(shell);
     shell.setText("Docker Image Selection");
   }
-  
+
   /**
    * Open the dialog
    */
@@ -289,7 +289,7 @@ public final class LocalDockerImageSelectionDialog extends Dialog {
     }
     return super.open();
   }
-  
+
   /**
    * OK button was pressed
    */
@@ -305,7 +305,7 @@ public final class LocalDockerImageSelectionDialog extends Dialog {
       this.okPressedFor(selectedRow);
     }
   }
-  
+
   /**
    * Cancel button was pressed
    */
@@ -314,7 +314,7 @@ public final class LocalDockerImageSelectionDialog extends Dialog {
     this.selectedImage = null;
     super.cancelPressed();
   }
-  
+
   @Pure
   public String getSelectedImage() {
     return this.selectedImage;

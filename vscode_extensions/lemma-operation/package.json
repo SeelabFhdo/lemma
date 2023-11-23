@@ -1,0 +1,82 @@
+{
+  "name": "lemma-operation",
+  "displayName": "LEMMA Operation Modeling Language",
+  "description": "Support for the Operation Modeling Language of the LEMMA ecosystem to describe deployment specifications for microservices and infrastructure nodes",
+  "version": "0.8.6",
+  "publisher": "LEMMAExtensionTestingArea",
+  "icon": "SEELAB_Logo.jpg",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SeelabFhdo/lemma"
+  },
+  "engines": {
+    "vscode": "^1.79.1"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "main": "./out/extension",
+  "contributes": {
+    "languages": [
+      {
+        "id": "operation",
+        "aliases": [
+          "LEMMA Operation Modeling Language",
+          "operation"
+        ],
+        "extensions": [
+          ".operation"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "operation",
+        "scopeName": "source.operation",
+        "path": "./syntaxes/operation.tmLanguage.json"
+      }
+    ],
+    "themes": [
+      {
+        "label": "LEMMA Operation Modeling Language Theme",
+        "uiTheme": "vs-dark",
+        "path": "./themes/LEMMA Operation Modeling Language Theme-color-theme.json"
+      }
+    ],
+    "configuration": {
+      "title": "LEMMA Operation Modeling Language",
+      "properties": {
+        "operation.languageServerHost": {
+          "type": ["string", "null"],
+          "default": "localhost",
+          "description": "The host the language server should listen to."
+        },
+        "operation.languageServerPort": {
+          "type": ["integer", "null"],
+          "default": 5010,
+          "description": "The port the language server should listen to."
+        }
+      }
+    }
+  },
+  "dependencies": {
+    "@microsoft/compose-language-service": "^0.2.0",
+    "java-caller": "^3.0.0",
+    "vscode-languageclient": "^8.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.3.2",
+    "@types/vscode": "^1.79.1",
+    "@vscode/test-electron": "^2.3.3",
+    "dockerfile-language-service": "0.11.0",
+    "typescript": "^5.1.3",
+    "vscode-languageserver-textdocument": "^1.0.11",
+    "vscode-test": "^1.6.1"
+  },
+  "scripts": {
+    "prepublish": "tsc -p ./",
+    "compile": "tsc -p ./",
+    "watch": "tsc -w -p ./"
+  }
+}

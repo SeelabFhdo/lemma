@@ -28,9 +28,9 @@ import org.osgi.framework.FrameworkUtil;
 @SuppressWarnings("all")
 public final class ShowCommandLineDialog extends Dialog {
   private final String commandLine;
-  
+
   private Text commandLineTextField;
-  
+
   /**
    * Constructor
    */
@@ -39,7 +39,7 @@ public final class ShowCommandLineDialog extends Dialog {
     this.setShellStyle((SWT.RESIZE | this.getShellStyle()));
     this.commandLine = commandLine;
   }
-  
+
   /**
    * Configure the shell
    */
@@ -48,7 +48,7 @@ public final class ShowCommandLineDialog extends Dialog {
     super.configureShell(newShell);
     newShell.setText("Command Line");
   }
-  
+
   /**
    * Create the dialog's buttons
    */
@@ -57,7 +57,7 @@ public final class ShowCommandLineDialog extends Dialog {
     this.createButton(parent, IDialogConstants.CANCEL_ID, "Close", true);
     this.createButton(parent, IDialogConstants.OK_ID, "Copy && Close", true);
   }
-  
+
   /**
    * Create the dialog area
    */
@@ -84,7 +84,7 @@ public final class ShowCommandLineDialog extends Dialog {
     this.commandLineTextField.setEditable(false);
     return container;
   }
-  
+
   /**
    * Catch button press
    */
@@ -105,7 +105,7 @@ public final class ShowCommandLineDialog extends Dialog {
       clipboard.dispose();
     }
   }
-  
+
   /**
    * Get the dialog's bounds settings
    */
@@ -123,7 +123,7 @@ public final class ShowCommandLineDialog extends Dialog {
     }
     return _elvis;
   }
-  
+
   /**
    * Get the dialog's section name
    */

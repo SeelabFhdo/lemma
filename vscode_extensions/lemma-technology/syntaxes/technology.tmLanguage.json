@@ -1,0 +1,69 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "LEMMA Technology Modeling Language",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#technology-features"
+		},
+		{
+			"include": "#single-line-comment"
+		},
+		{
+			"include": "#multi-line-comment"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [{
+				"name": "keyword.control.technology",
+				"match": "\\b(technology|types|compatibility|matrix|protocols|service|aspects|deployment|technologies|infrastructure|operation|import|from|as|data|formats|default|with|format|in|out|inout|sync|async|primitive|type|based|on|collection|structure|<-|->|<->|environments|properties|mandatory|singleval|types|fields|domainOperations|domainParameters|microservices|interfaces|operations|parameters|exchange_pattern|communication_type|protocol|data_format|selector|aspect|for|containers|selector)\\b"
+			}]
+		},
+		"strings": {
+			"name": "string.quoted.double.technology",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.technology",
+					"match": "\\\\."
+				}
+			]
+		},
+		"technology-features": {
+			"begin": "\\<",
+			"end": "\\>",
+			"beginCaptures": {
+			  "0": { "name": "punctuation.paren.open" }
+			},
+			"endCaptures": {
+			  "0": { "name": "punctuation.paren.close" }
+			},
+			"name": "markup.italic.technology.feature",
+			"patterns": [
+				{
+					"name": "variable.other",
+					"match": ","
+				}
+			]
+		},
+		"single-line-comment": {
+			"patterns": [{
+				"match": "\/\/.*\n?$",
+				"name": "comment.line"
+			}]
+		},
+		"multi-line-comment": {
+			"begin": "\/[*]",
+			"end": "[*]\/",
+			"name": "comment.block"
+		}
+	},
+	"scopeName": "source.technology"
+}

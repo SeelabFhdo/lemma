@@ -26,16 +26,16 @@ public final class ProcessorExecutableTypesInformationManager {
   public static class ProcessorExecutableTypeInformation {
     @Accessors(AccessorType.PUBLIC_GETTER)
     private ProcessorExecutableType processorExecutableType;
-    
+
     @Accessors(AccessorType.PUBLIC_GETTER)
     private String label;
-    
+
     @Accessors(AccessorType.PUBLIC_GETTER)
     private String printableInSentenceString;
-    
+
     @Accessors(AccessorType.PUBLIC_GETTER)
     private Function2<? super Shell, ? super ProcessingConfiguration, ? extends String> inputSupportFunction;
-    
+
     /**
      * Constructor
      */
@@ -45,32 +45,32 @@ public final class ProcessorExecutableTypesInformationManager {
       this.printableInSentenceString = printableInSentenceString;
       this.inputSupportFunction = inputSupportFunction;
     }
-    
+
     @Pure
     public ProcessorExecutableType getProcessorExecutableType() {
       return this.processorExecutableType;
     }
-    
+
     @Pure
     public String getLabel() {
       return this.label;
     }
-    
+
     @Pure
     public String getPrintableInSentenceString() {
       return this.printableInSentenceString;
     }
-    
+
     @Pure
     public Function2<? super Shell, ? super ProcessingConfiguration, ? extends String> getInputSupportFunction() {
       return this.inputSupportFunction;
     }
   }
-  
+
   private static final HashMap<ProcessorExecutableType, ProcessorExecutableTypesInformationManager.ProcessorExecutableTypeInformation> MANAGED_INFO = CollectionLiterals.<ProcessorExecutableType, ProcessorExecutableTypesInformationManager.ProcessorExecutableTypeInformation>newHashMap();
-  
+
   private static final BiMap<ProcessorExecutableType, String> LABEL_VIEW = HashBiMap.<ProcessorExecutableType, String>create();
-  
+
   /**
    * Register new information about model processor executables
    */
@@ -81,7 +81,7 @@ public final class ProcessorExecutableTypesInformationManager {
     };
     ((List<ProcessorExecutableTypesInformationManager.ProcessorExecutableTypeInformation>)Conversions.doWrapArray(info)).forEach(_function);
   }
-  
+
   /**
    * Get the text label of the given ProcessorExecutableType. Throw an IllegalArgumentException in
    * case no label was registered for the type.
@@ -96,7 +96,7 @@ public final class ProcessorExecutableTypesInformationManager {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Get the literal from the ProcessorExecutableType enumeration matching the given executable
    * type label. Throw an IllegalArgumentException in case no label was registered for the type.
@@ -111,7 +111,7 @@ public final class ProcessorExecutableTypesInformationManager {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Get the string representation of the given ProcessorExecutableType which allows printing the
    * executable type within a sentence
@@ -124,7 +124,7 @@ public final class ProcessorExecutableTypesInformationManager {
     }
     return _printableInSentenceString;
   }
-  
+
   /**
    * Check if the given ProcessorExecutableType has an input support function
    */
@@ -132,7 +132,7 @@ public final class ProcessorExecutableTypesInformationManager {
     final ProcessorExecutableTypesInformationManager.ProcessorExecutableTypeInformation info = ProcessorExecutableTypesInformationManager.MANAGED_INFO.get(literal);
     return ((info != null) && (info.inputSupportFunction != null));
   }
-  
+
   /**
    * Get the input support function of the given ProcessorExecutableType. Throw an
    * IllegalArgumentException in case no input support function was registered for the type.

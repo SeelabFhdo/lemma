@@ -76,11 +76,11 @@ import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 @SuppressWarnings("all")
 public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab implements PropertyChangeListener {
   private static final ProcessorExecutableType DEFAULT_PROCESSOR_EXECUTABLE_TYPE = ProcessorExecutableType.LOCAL_JAVA_PROGRAM;
-  
+
   private static final Argument DEFAULT_SOURCE_MODEL_FILE_ARGUMENT = Argument.newArgument().singleValued().sourceModel().parameter("-s");
-  
+
   private static final Set<AbstractArgumentKind> SUPPORTED_ARGUMENT_KINDS = Collections.<AbstractArgumentKind>unmodifiableSet(CollectionLiterals.<AbstractArgumentKind>newHashSet(ArgumentKindFactory.fromIdentifier(ConstantParameterArgumentKind.IDENTIFIER), ArgumentKindFactory.fromIdentifier(MultiValuedParameterArgumentKind.IDENTIFIER), ArgumentKindFactory.fromIdentifier(SingleValuedParameterArgumentKind.IDENTIFIER)));
-  
+
   private final List<Supplier<ControlDecoration>> CONFIGURATION_BINDERS = Collections.<Supplier<ControlDecoration>>unmodifiableList(CollectionLiterals.<Supplier<ControlDecoration>>newArrayList(
     ((Supplier<ControlDecoration>) () -> {
       return this.bindSourceModelProjectName();
@@ -97,37 +97,37 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
     ((Supplier<ControlDecoration>) () -> {
       return this.bindBasicProcessorExecutionCommand();
     })));
-  
+
   private final DataBindingContext dataBindingContext = new DataBindingContext();
-  
+
   private final ArrayList<ControlDecoration> currentDecorations = CollectionLiterals.<ControlDecoration>newArrayList();
-  
+
   private Composite mainComposite;
-  
+
   private Text sourceModelProjectName;
-  
+
   private Text sourceModelFilePath;
-  
+
   private Combo processorExecutableType;
-  
+
   private Text basicProcessorExecutionCommand;
-  
+
   private Text processorExecutablePath;
-  
+
   private ControlDecoration processorExecutablePathDecorator;
-  
+
   private ArgumentsTable argumentsTable;
-  
+
   private boolean initializationDone = false;
-  
+
   private boolean sourceModelArgumentWasAddedOnce = false;
-  
+
   private ProcessingConfiguration originalConfiguration;
-  
+
   private ProcessingConfiguration currentConfiguration;
-  
+
   private ProcessorExecutableType previousProcessorExecutableType;
-  
+
   /**
    * Create the control
    */
@@ -144,7 +144,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
     this.addProcessorInputs(this.mainComposite);
     this.addArgumentsTable(this.mainComposite);
   }
-  
+
   /**
    * Add input fields for filesystem resources
    */
@@ -157,7 +157,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
     this.addSourceModelProject(resourceInputsGrid);
     this.addSourceModelFile(resourceInputsGrid);
   }
-  
+
   /**
    * Add text field and button for specifying the name of the source model project
    */
@@ -175,7 +175,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
     };
     projectSelectionButton.addListener(SWT.Selection, _function);
   }
-  
+
   /**
    * Handler for a click on the button for selecting the name of the source model project
    */
@@ -203,7 +203,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
       }
     }
   }
-  
+
   /**
    * Bind the text field for specifying the name of the source model project
    */
@@ -216,7 +216,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
       "sourceModelProjectName", 
       this.currentConfiguration, _function);
   }
-  
+
   /**
    * Helper to bind a text field with validation support to the tab's data binding context
    */
@@ -224,7 +224,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
     return Utils.<T>bindWithValidationDecorationSupport(field, 
       this.dataBindingContext, beanClass, propertyName, source, validationProcedure).getValue();
   }
-  
+
   /**
    * Add text field and button for specifying the path to the source model file
    */
@@ -242,7 +242,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
     };
     fileSelectionButton.addListener(SWT.Selection, _function);
   }
-  
+
   /**
    * Handler for a click on the button for selecting the path to the source model file
    */
@@ -273,7 +273,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
     }
     this.sourceModelFilePath.setText(selectedFile.getProjectRelativePath().toString());
   }
-  
+
   /**
    * Bind the text field for specifying the path to the source model file
    */
@@ -287,7 +287,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
       "sourceModelFilePath", 
       this.currentConfiguration, _function);
   }
-  
+
   /**
    * Add input fields for model processor specification
    */
@@ -302,7 +302,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
     this.addPathToProcessorExecutable(inputGroup);
     this.addBasicProcessorExecutionCommand(inputGroup);
   }
-  
+
   /**
    * Add combo field for selecting the type of the processor executable
    */
@@ -325,7 +325,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
       public void widgetDefaultSelected(final SelectionEvent e) {
         this.widgetSelected(e);
       }
-      
+
       @Override
       public void widgetSelected(final SelectionEvent e) {
         LaunchConfigurationTab.this.toggleProcessorExecutablePathDecorator();
@@ -337,7 +337,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
       }
     });
   }
-  
+
   /**
    * Toggle the decorator on the text field for the path to the model processor executable
    * depending on whether the type of the processor executable provides support for specifying the
@@ -351,7 +351,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
       this.processorExecutablePathDecorator.hide();
     }
   }
-  
+
   /**
    * In case the type of the processor executable was changed, set the basic execution command to
    * the type's default if certain conditions of user interaction are met. Return true in case a
@@ -368,7 +368,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
     this.currentConfiguration.setBasicProcessorExecutionCommand(newDefaultCommand);
     return true;
   }
-  
+
   /**
    * Bind the combo field for selecting the type of the processor executable
    */
@@ -394,7 +394,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
     this.dataBindingContext.<String, ProcessorExecutableType>bindValue(target, model, targetToModelConverter, modelToTargetConverter);
     return null;
   }
-  
+
   /**
    * Add text field and decorator for specifying the path to the model processor executable
    */
@@ -417,7 +417,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
       public void widgetDefaultSelected(final SelectionEvent e) {
         this.widgetDefaultSelected(e);
       }
-      
+
       @Override
       public void widgetSelected(final SelectionEvent e) {
         String _xtrycatchfinallyexpression = null;
@@ -448,7 +448,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
       }
     });
   }
-  
+
   /**
    * Bind the text field for specifying the path to the model processor executable
    */
@@ -463,7 +463,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
       "processorExecutablePath", 
       this.currentConfiguration, _function);
   }
-  
+
   /**
    * Add text field and decorator for specifying the basic model processor execution command
    */
@@ -482,7 +482,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
     executionCommandHint.setDescriptionText(_plus);
     executionCommandHint.setImage(FieldDecorationRegistry.getDefault().getFieldDecoration(FieldDecorationRegistry.DEC_INFORMATION).getImage());
   }
-  
+
   /**
    * Bind the text field for specifying the basic model processor execution command
    */
@@ -496,7 +496,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
       "basicProcessorExecutionCommand", 
       this.currentConfiguration, _function);
   }
-  
+
   /**
    * Add arguments table
    */
@@ -514,7 +514,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
     }
     return _xblockexpression;
   }
-  
+
   /**
    * Initialize the tab from the given ILaunchConfiguration
    */
@@ -533,7 +533,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
     this.toggleProcessorExecutablePathDecorator();
     this.initializationDone = true;
   }
-  
+
   /**
    * Helper to prepare a new ProcessingConfiguration instance with default values
    */
@@ -545,7 +545,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
       LaunchConfigurationTab.DEFAULT_PROCESSOR_EXECUTABLE_TYPE, 
       "", _get);
   }
-  
+
   /**
    * Set the current ProcessingConfiguration instance handled by the tab
    */
@@ -565,7 +565,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
     this.establishCurrentConfigurationBindingsAndDecorations();
     this.currentConfiguration.addPropertyChangeListener(this);
   }
-  
+
   /**
    * Remove all bindings from the current data binding context including control decorations
    */
@@ -581,7 +581,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
     this.currentDecorations.forEach(_function_1);
     this.currentDecorations.clear();
   }
-  
+
   /**
    * Establish bindings and add control decorations for the current configuration
    */
@@ -594,7 +594,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
     };
     this.CONFIGURATION_BINDERS.forEach(_function);
   }
-  
+
   /**
    * React to a property change event
    */
@@ -615,7 +615,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
     }
     this.updateLaunchConfigurationDialog();
   }
-  
+
   /**
    * Add argument for the source model file to the arguments table
    */
@@ -644,7 +644,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
     this.argumentsTable.addArgument(LaunchConfigurationTab.DEFAULT_SOURCE_MODEL_FILE_ARGUMENT);
     this.sourceModelArgumentWasAddedOnce = true;
   }
-  
+
   /**
    * Validate the given ILaunchConfiguration
    */
@@ -667,7 +667,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
     }
     return _xtrycatchfinallyexpression;
   }
-  
+
   /**
    * Check if the tab's domain object is dirty
    */
@@ -675,7 +675,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
   public final boolean isDirty() {
     return (!Objects.equal(this.originalConfiguration, this.currentConfiguration));
   }
-  
+
   /**
    * Apply the changes transported by the given ILaunchConfigurationWorkingCopy
    */
@@ -685,7 +685,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
       this.currentConfiguration);
     this.currentConfiguration.convertToUserRepresentation();
   }
-  
+
   /**
    * Get tab's name
    */
@@ -693,7 +693,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
   public final String getName() {
     return LaunchConfigurationConstants.COMMON_LAUNCH_CONFIGURATION_TAB_NAME;
   }
-  
+
   /**
    * Get tab's image
    */
@@ -701,14 +701,14 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
   public final Image getImage() {
     return LaunchConfigurationConstants.COMMON_LAUNCH_CONFIGURATION_TAB_IMAGE;
   }
-  
+
   /**
    * Set the tab's defaults
    */
   @Override
   public final void setDefaults(final ILaunchConfigurationWorkingCopy configuration) {
   }
-  
+
   /**
    * Dispose the tab
    */

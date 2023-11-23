@@ -77,66 +77,66 @@ public class LemmaServiceSubGenerator {
    * Default name if no tags are encountered in the OpenAPI description
    */
   private static final String DEFAULT_INTERFACE_NAME = "defaultInterface";
-  
+
   private static final Map<String, String> HTTP_METHOD_TO_ASPECT = Collections.<String, String>unmodifiableMap(CollectionLiterals.<String, String>newHashMap(Pair.<String, String>of("DELETE", LemmaTechnologySubGenerator.HTTP_DELETE_ASPECT_NAME), Pair.<String, String>of("GET", LemmaTechnologySubGenerator.HTTP_GET_ASPECT_NAME), Pair.<String, String>of("HEAD", LemmaTechnologySubGenerator.HTTP_HEAD_ASPECT_NAME), Pair.<String, String>of("OPTIONS", LemmaTechnologySubGenerator.HTTP_OPTIONS_ASPECT_NAME), Pair.<String, String>of("PATCH", LemmaTechnologySubGenerator.HTTP_PATCH_ASPECT_NAME), Pair.<String, String>of("POST", LemmaTechnologySubGenerator.HTTP_POST_ASPECT_NAME), Pair.<String, String>of("PUT", LemmaTechnologySubGenerator.HTTP_PUT_ASPECT_NAME), Pair.<String, String>of("TRACE", LemmaTechnologySubGenerator.HTTP_TRACE_ASPECT_NAME)));
-  
+
   /**
    * SLF4j LOGGER
    */
   private static final Logger LOGGER = LoggerFactory.getLogger(LemmaTechnologySubGenerator.class);
-  
+
   /**
    * Name of the protocol which is used as default for endpoint generation
    */
   private static final String REST_PROTOCOL = "rest";
-  
+
   /**
    * Factory to actually create and manipulate a LEMMA DataModel
    */
   private final DataFactory dataFactory = DataFactory.eINSTANCE;
-  
+
   /**
    * Factory to actually create and manipulate a LEMMA ServiceModel
    */
   private final ServiceFactory serviceFactory = ServiceFactory.eINSTANCE;
-  
+
   /**
    * Predefined instance of the <strong>ServiceModel</strong>. This instance is populated with the
    * various services and interfaces from the OpenAPI model. It is the central artifact which gets
    * serialized as a ".services" file.
    */
   private final ServiceModel serviceModel = this.serviceFactory.createServiceModel();
-  
+
   /**
    * OpenAPI schema which will be used as source for generation.
    */
   private OpenAPI openApi;
-  
+
   /**
    * Log of all encountered exceptions during the data transformation
    */
   @Accessors(AccessorType.PUBLIC_GETTER)
   private final ArrayList<String> transMsgs = CollectionLiterals.<String>newArrayList();
-  
+
   /**
    * Contains the previous generated OpenApi LEMMA DataModel which is handed over by the
    * LemmaGenerator
    */
   private Pair<String, DataModel> dataModel;
-  
+
   /**
    * Contains the previous generated OpenApi LEMMA Technology which is handed over by the
    * LemmaGenerator
    */
   private Pair<String, Technology> technology;
-  
+
   /**
    * Location where the generated file is written
    */
   private String targetFile;
-  
+
   private String dataModelLoc;
-  
+
   /**
    * Constructor
    */
@@ -148,7 +148,7 @@ public class LemmaServiceSubGenerator {
     this.technology = technology;
     this.dataModelLoc = Paths.get(new File(targetFile).getParent(), dataModel.getKey()).toString();
   }
-  
+
   /**
    * Generate LEMMA service model from a previously parsed OpenAPI specification file. This method
    * returns the created model instance and also serializes it to the user's harddrive.
@@ -218,7 +218,7 @@ public class LemmaServiceSubGenerator {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Create an Import instance for the given URI and within the context of the given data model.
    * The import is added to the current serviceModel.
@@ -260,7 +260,7 @@ public class LemmaServiceSubGenerator {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Create an Import instance for the given URI and within the context of the given technology
    * model. The import is added to the current serviceModel.
@@ -274,7 +274,7 @@ public class LemmaServiceSubGenerator {
     LemmaServiceSubGenerator.LOGGER.debug("Technology import added");
     return techImport;
   }
-  
+
   /**
    * Create a functional Microservice instance with the given name. The microservice is added to
    * the current serviceModel.
@@ -293,7 +293,7 @@ public class LemmaServiceSubGenerator {
     LemmaServiceSubGenerator.LOGGER.debug("Functional microservice added");
     return functionalService;
   }
-  
+
   /**
    * Create an Interface instance for the given microservice and with the given name. The import
    * is added to the current serviceModel.
@@ -305,7 +305,7 @@ public class LemmaServiceSubGenerator {
     microservice.getInterfaces().add(interface_);
     return interface_;
   }
-  
+
   /**
    * Create Operation instances for the OpenAPI operations in the given path item within an
    * interface of the given LEMMA microservice. The target interface depends on the first tag of
@@ -356,7 +356,7 @@ public class LemmaServiceSubGenerator {
       this.toLemmaOperation(_trace, microservice, "TRACE", path);
     }
   }
-  
+
   /**
    * Transform an OpenAPI operation to a LEMMA operation and add the operation to the
    * corresponding interface of the given LEMMA microservice
@@ -386,7 +386,7 @@ public class LemmaServiceSubGenerator {
     }
     return _xblockexpression;
   }
-  
+
   /**
    * Create a LEMMA Operation instances from the given HTTP verb, e.g., GET, PUT, or POST, the
    * given URI path, and OpenAPI Operation
@@ -400,7 +400,7 @@ public class LemmaServiceSubGenerator {
     this.addParameters(lemmaOperation, openApiOperation);
     return lemmaOperation;
   }
-  
+
   /**
    * Add a LEMMA Endpoint for the "rest" protocol from the OpenAPI technology model with the given
    * path to the given LEMMA Operation
@@ -417,7 +417,7 @@ public class LemmaServiceSubGenerator {
     endpoint.getAddresses().add(path);
     lemmaOperation.getEndpoints().add(endpoint);
   }
-  
+
   /**
    * Add a LEMMA ImportedServiceAspect for the given HTTP verb from the OpenAPI technology model
    * to the given LEMMA Operation
@@ -443,7 +443,7 @@ public class LemmaServiceSubGenerator {
     aspect.setImportedAspect(_xifexpression);
     lemmaOperation.getAspects().add(aspect);
   }
-  
+
   /**
    * Add a LEMMA ApiOperationComment that identifies the HTTP verb, path, summary, and description
    * of the given OpenAPI Operation on the corresponding LEMMA Operation
@@ -466,7 +466,7 @@ public class LemmaServiceSubGenerator {
     comment.setComment(_builder.toString());
     comment.setOperation(lemmaOperation);
   }
-  
+
   /**
    * Derive LEMMA Parameters from the given OpenAPI Operation. According to OpenAPI 3.0.3, either
    * the "parameters" field is used as input for deriving the LEMMA Parameters or, in case the
@@ -513,7 +513,7 @@ public class LemmaServiceSubGenerator {
       _responses.forEach(_function_1);
     }
   }
-  
+
   /**
    * Create an incoming synchronous LEMMA Parameter from an OpenAPI Parameter
    */
@@ -543,7 +543,7 @@ public class LemmaServiceSubGenerator {
     }
     return lemmaParameter;
   }
-  
+
   /**
    * Create a LEMMA ImportedType instance from an OpenAPI "ref" string
    */
@@ -581,7 +581,7 @@ public class LemmaServiceSubGenerator {
     }
     return _xtrycatchfinallyexpression;
   }
-  
+
   /**
    * Find a previously created LEMMA ComplexType for the given OpenAPI "ref" string in the current
    * data model. Throws an IllegalArgumentException in case no matching ComplexType was found.
@@ -604,7 +604,7 @@ public class LemmaServiceSubGenerator {
     };
     return IterableExtensions.<ComplexType>findFirst(this.dataModel.getValue().getVersions().get(0).getContexts().get(0).getComplexTypes(), _function);
   }
-  
+
   /**
    * Create an incoming synchronous LEMMA Parameter from a given OpenAPI Schema
    */
@@ -630,7 +630,7 @@ public class LemmaServiceSubGenerator {
     }
     return lemmaParameter;
   }
-  
+
   /**
    * Set the primitive or array type of the given LEMMA parameter based on the given OpenAPI
    * Schema
@@ -678,7 +678,7 @@ public class LemmaServiceSubGenerator {
       throw new IllegalArgumentException(_plus);
     }
   }
-  
+
   /**
    * Creates a LEMMA ImportedType instance for a domain concept of the given name in the current
    * data model
@@ -700,7 +700,7 @@ public class LemmaServiceSubGenerator {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Create or retrieve a previously created CollectionType from an OpenAPI ArraySchema in the
    * current data model
@@ -798,7 +798,7 @@ public class LemmaServiceSubGenerator {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Create an outgoing synchronous LEMMA Parameter from the given OpenAPI ApiResponse
    */
@@ -831,7 +831,7 @@ public class LemmaServiceSubGenerator {
     }
     return lemmaParameter;
   }
-  
+
   @Pure
   public ArrayList<String> getTransMsgs() {
     return this.transMsgs;

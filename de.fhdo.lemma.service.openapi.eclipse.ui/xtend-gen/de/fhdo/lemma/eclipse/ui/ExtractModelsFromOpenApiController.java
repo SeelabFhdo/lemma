@@ -14,7 +14,7 @@ import org.eclipse.ui.PlatformUI;
 @SuppressWarnings("all")
 public class ExtractModelsFromOpenApiController extends AbstractHandler {
   private final Shell SHELL = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-  
+
   /**
    * Execute handler
    */

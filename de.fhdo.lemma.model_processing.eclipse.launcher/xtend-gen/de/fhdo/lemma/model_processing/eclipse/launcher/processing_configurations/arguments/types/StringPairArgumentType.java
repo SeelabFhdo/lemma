@@ -12,14 +12,14 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 @SuppressWarnings("all")
 public final class StringPairArgumentType extends AbstractArgumentType {
   public static final ArgumentTypeIdentifier IDENTIFIER = ArgumentTypeIdentifier.STRING_PAIR;
-  
+
   /**
    * Constructor
    */
   public StringPairArgumentType() {
     super(StringPairArgumentType.IDENTIFIER, "String pair");
   }
-  
+
   /**
    * Validate the type-specific argument value in its internal representation, i.e., the parameter
    * value

@@ -65,7 +65,7 @@ public class NodeSeriesBuilder {
     } while((windowNumber <= nodesToRotate.size()));
     return builtNodeSeries;
   }
-  
+
   /**
    * Build all possible node series from the lists of basic nodes and nodes to check
    */
@@ -102,7 +102,7 @@ public class NodeSeriesBuilder {
     distinctPairSeries.forEach(_function_3);
     return nodeSeries;
   }
-  
+
   /**
    * Helper method to build distinct pair series with type-filtering the given lists of nodes
    */
@@ -123,7 +123,7 @@ public class NodeSeriesBuilder {
       return CollectionLiterals.<Pairs<TypeGraphNode>>newArrayList();
     }
   }
-  
+
   /**
    * Build mandatory node pairs for nodes that represent DataStructures
    */

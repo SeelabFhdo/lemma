@@ -29,38 +29,38 @@ public class TypeGraphNode {
    */
   @Accessors(AccessorType.PUBLIC_GETTER)
   private ComplexType type;
-  
+
   /**
    * Full-qualified name of the field of the node's type
    */
   @Accessors(AccessorType.PUBLIC_GETTER)
   private String fieldName;
-  
+
   /**
    * Parent node (null for root nodes)
    */
   @Accessors(AccessorType.PUBLIC_GETTER)
   private TypeGraphNode parent;
-  
+
   /**
    * Node depth beginning with 1
    */
   @Accessors(AccessorType.PUBLIC_GETTER)
   private int depth;
-  
+
   /**
    * Flag to indicate that the type refers to itself
    */
   @Accessors
   private boolean recursive;
-  
+
   /**
    * The node's children, i.e., the nodes representing the complex types that this complex type
    * refers to. Empty for recursive nodes.
    */
   @Accessors(AccessorType.PUBLIC_GETTER)
   private final List<TypeGraphNode> children = CollectionLiterals.<TypeGraphNode>newLinkedList();
-  
+
   /**
    * Constructor
    */
@@ -74,14 +74,14 @@ public class TypeGraphNode {
       this.depth = 1;
     }
   }
-  
+
   /**
    * Is this node the root node of the graph?
    */
   public boolean isRoot() {
     return (this.depth == 1);
   }
-  
+
   /**
    * Get information about primitive types, depending on the node type, in the form of a map of
    * fields' names to their primitive types.
@@ -125,14 +125,14 @@ public class TypeGraphNode {
     primitiveDataFields.forEach(_function_1);
     return primitiveTypeFieldInfo;
   }
-  
+
   /**
    * Convenience method that returns primitively typed fields of the node type without an ordering
    */
   public HashMap<String, PrimitiveType> getPrimitiveTypeFields() {
     return this.getPrimitiveTypeFields(DataFieldComparator.ORDERING.NONE);
   }
-  
+
   /**
    * Add a new child node if this node is not recursive
    */
@@ -143,36 +143,36 @@ public class TypeGraphNode {
     }
     return this.children.add(newChild);
   }
-  
+
   @Pure
   public ComplexType getType() {
     return this.type;
   }
-  
+
   @Pure
   public String getFieldName() {
     return this.fieldName;
   }
-  
+
   @Pure
   public TypeGraphNode getParent() {
     return this.parent;
   }
-  
+
   @Pure
   public int getDepth() {
     return this.depth;
   }
-  
+
   @Pure
   public boolean isRecursive() {
     return this.recursive;
   }
-  
+
   public void setRecursive(final boolean recursive) {
     this.recursive = recursive;
   }
-  
+
   @Pure
   public List<TypeGraphNode> getChildren() {
     return this.children;

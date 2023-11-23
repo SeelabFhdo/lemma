@@ -1,0 +1,67 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "LEMMA Technology Mapping Modeling Language",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#annotations"
+		},
+		{
+			"include": "#single-line-comment"
+		},
+		{
+			"include": "#multi-line-comment"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [{
+				"name": "keyword.control.mapping",
+				"match": "\\b(technology|microservices|type|import|aspects|protocols|endpoints|aspects|interface|operation|parameters|referref|primitive|complex|->|op|return|type)\\b"
+			}]
+		},
+		"strings": {
+			"name": "string.quoted.double.mapping",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.mapping",
+					"match": "\\\\."
+				}
+			]
+		},
+		"annotations": {
+			"patterns": [{
+				"name": "meta.type.annotation.mappingAnnotation",
+				"match": "@([a-z])+(?=(\\([^\\(]+\\)))"
+			},
+			{
+				"name": "meta.type.annotation.mappingAnnotation.noClosingParen",
+				"match": "@([a-z])+\\(([a-z]|[A-Z]|:|_|\\.)+"
+			},
+			{
+				"name": "meta.type.annotation.mappingAnnotation.technologyAspect",
+				"match": "@([a-z]|[A-Z])+::([a-z]|[A-Z]|_|\\.|:)*"
+			}
+		]
+		},
+		"single-line-comment": {
+			"patterns": [{
+				"match": "\/\/.*\n?$",
+				"name": "comment.line"
+			}]
+		},
+		"multi-line-comment": {
+			"begin": "\/[*]",
+			"end": "[*]\/",
+			"name": "comment.block"
+		}
+	},
+	"scopeName": "source.mapping"
+}

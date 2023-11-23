@@ -32,14 +32,14 @@ import org.eclipse.xtext.xbase.lib.ListExtensions;
 @SuppressWarnings("all")
 public abstract class AbstractJavaBaseGeneratorTemplate extends AbstractCodeGeneratorTemplate {
   private Argument generationSerializerArgument;
-  
+
   /**
    * Constructor
    */
   public AbstractJavaBaseGeneratorTemplate(final ProcessorExecutableType generatorExecutableType, final Shell parentShell, final String name, final IProject project, final IFile file) {
     super(generatorExecutableType, parentShell, name, project, file);
   }
-  
+
   /**
    * Extend the model processing configuration template initialized by the superclass
    */
@@ -50,7 +50,7 @@ public abstract class AbstractJavaBaseGeneratorTemplate extends AbstractCodeGene
     configuration.getArguments().add(this.generationSerializerArgument);
     return configuration;
   }
-  
+
   /**
    * Return the dialog for template completion
    */
@@ -60,14 +60,14 @@ public abstract class AbstractJavaBaseGeneratorTemplate extends AbstractCodeGene
     dialog.setGenerationSerializerArgument(this.generationSerializerArgument);
     return dialog;
   }
-  
+
   /**
    * Implementers must provide a specialized completion dialog. getCodeGeneratorCompletionDialog()
    * invokes this method to retrieve the specialized dialog and assign it the argument for the
    * selected code generation serializer.
    */
   public abstract AbstractJavaBaseGeneratorCompletionDialog getJavaBaseGeneratorCompletionDialog();
-  
+
   /**
    * The template is applicable when the source service or mapping model applies the Java
    * technology to at least one microservice

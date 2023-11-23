@@ -8,8 +8,8 @@ package de.fhdo.lemma.intermediate.transformations;
 @SuppressWarnings("all")
 public enum TransformationModelDirection {
   IN,
-  
+
   OUT,
-  
+
   INOUT;
 }

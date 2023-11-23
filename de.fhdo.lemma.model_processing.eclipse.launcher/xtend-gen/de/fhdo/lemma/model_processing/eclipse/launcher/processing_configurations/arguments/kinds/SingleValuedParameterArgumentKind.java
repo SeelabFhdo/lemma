@@ -17,7 +17,7 @@ import de.fhdo.lemma.model_processing.eclipse.launcher.processing_configurations
 @SuppressWarnings("all")
 public final class SingleValuedParameterArgumentKind extends AbstractArgumentKind {
   public static final ArgumentKindIdentifier IDENTIFIER = ArgumentKindIdentifier.SINGLE_VALUED_PARAMETER;
-  
+
   /**
    * Constructor
    */

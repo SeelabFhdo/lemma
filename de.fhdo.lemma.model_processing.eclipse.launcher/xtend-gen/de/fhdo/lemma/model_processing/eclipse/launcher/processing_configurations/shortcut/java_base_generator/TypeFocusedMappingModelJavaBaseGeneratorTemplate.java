@@ -42,14 +42,14 @@ public final class TypeFocusedMappingModelJavaBaseGeneratorTemplate extends Java
    */
   private static class TypeFocusedMappingModelTemplateCompletionDialog extends JavaBaseGeneratorTemplate.TemplateCompletionDialog {
     private Argument alternativeIntermediateServiceModelArgument;
-    
+
     /**
      * Constructor
      */
     public TypeFocusedMappingModelTemplateCompletionDialog(final Shell parentShell, final IProject project, final IFile file) {
       super(parentShell, project, file);
     }
-    
+
     /**
      * Create the dialog area
      */
@@ -61,7 +61,7 @@ public final class TypeFocusedMappingModelJavaBaseGeneratorTemplate extends Java
       _shell.setSize(_point);
       return area;
     }
-    
+
     /**
      * Add additional controls to the dialog
      */
@@ -69,7 +69,7 @@ public final class TypeFocusedMappingModelJavaBaseGeneratorTemplate extends Java
     public final void insertAdditionalControlsBeforeGenletsGroup(final Composite parent) {
       this.addAlternativeIntermediateServiceModel(parent);
     }
-    
+
     /**
      * Add combo box for selecting the service model comprising the relevant microservices
      * including their technology-specific configurations
@@ -97,7 +97,7 @@ public final class TypeFocusedMappingModelJavaBaseGeneratorTemplate extends Java
       this.alternativeIntermediateServiceModelArgument = comboWrapper.getArgument();
       this.alternativeIntermediateServiceModelArgument.addPropertyChangeListener(this);
     }
-    
+
     /**
      * Complete the template with the Argument instance representing the intermediate version
      * of the selected service model
@@ -107,7 +107,7 @@ public final class TypeFocusedMappingModelJavaBaseGeneratorTemplate extends Java
       super.completeProcessingConfigurationTemplate(templateToComplete);
       templateToComplete.getArguments().add(this.alternativeIntermediateServiceModelArgument);
     }
-    
+
     /**
      * Close the dialog
      */
@@ -121,14 +121,14 @@ public final class TypeFocusedMappingModelJavaBaseGeneratorTemplate extends Java
       return _xblockexpression;
     }
   }
-  
+
   /**
    * Constructor
    */
   public TypeFocusedMappingModelJavaBaseGeneratorTemplate(final Shell parentShell, final IProject project, final IFile file) {
     super(parentShell, "Type-focused mapping model: Java microservice generation", project, file);
   }
-  
+
   /**
    * Return the dialog for template completion
    */
@@ -136,7 +136,7 @@ public final class TypeFocusedMappingModelJavaBaseGeneratorTemplate extends Java
   public final AbstractJavaBaseGeneratorCompletionDialog getJavaBaseGeneratorCompletionDialog() {
     return new TypeFocusedMappingModelJavaBaseGeneratorTemplate.TypeFocusedMappingModelTemplateCompletionDialog(this.parentShell, this.project, this.file);
   }
-  
+
   /**
    * The template is applicable when the source mapping model applies the Java technology to at
    * least one type

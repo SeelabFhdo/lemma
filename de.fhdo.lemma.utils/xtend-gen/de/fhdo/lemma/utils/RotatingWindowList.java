@@ -15,9 +15,9 @@ import org.eclipse.xtext.xbase.lib.ExclusiveRange;
 @SuppressWarnings("all")
 public class RotatingWindowList<T extends Object> {
   private List<T> list;
-  
+
   private int windowSize;
-  
+
   /**
    * Constructor
    */
@@ -36,7 +36,7 @@ public class RotatingWindowList<T extends Object> {
     this.list = list;
     this.windowSize = windowSize;
   }
-  
+
   /**
    * Get window with given number. Window numbers start at 1 and may theoretically be as big
    * as Integer.MAX_VALUE as the number will be calculated relatively to the list's upper
@@ -59,7 +59,7 @@ public class RotatingWindowList<T extends Object> {
     }
     return resultList;
   }
-  
+
   /**
    * Create a sub-list from a list as a shallow copy of its elements, i.e., don't create a
    * sub-list view that reflects changes to the original list

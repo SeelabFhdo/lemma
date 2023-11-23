@@ -48,54 +48,54 @@ public class ProcessingConfiguration extends ModelElementWithPropertyChangeSuppo
   private static class ProcessorInformation {
     @Accessors(AccessorType.PUBLIC_GETTER)
     private final ProcessorExecutableType processorExecutableType;
-    
+
     @Accessors(AccessorType.PUBLIC_GETTER)
     private final String basicProcessorExecutionCommand;
-    
+
     @Accessors(AccessorType.PUBLIC_GETTER)
     private final String processorExecutablePath;
-    
+
     public ProcessorInformation(final ProcessorExecutableType processorExecutableType, final String basicProcessorExecutionCommand, final String processorExecutablePath) {
       this.processorExecutableType = processorExecutableType;
       this.basicProcessorExecutionCommand = basicProcessorExecutionCommand;
       this.processorExecutablePath = processorExecutablePath;
     }
-    
+
     @Pure
     public ProcessorExecutableType getProcessorExecutableType() {
       return this.processorExecutableType;
     }
-    
+
     @Pure
     public String getBasicProcessorExecutionCommand() {
       return this.basicProcessorExecutionCommand;
     }
-    
+
     @Pure
     public String getProcessorExecutablePath() {
       return this.processorExecutablePath;
     }
   }
-  
+
   private static final String XML_CONFIGURATION_ELEMENT = "processingConfiguration";
-  
+
   private static final String XML_CONFIGURATION_ATTR_SOURCE_MODEL_PROJECT_NAME = "sourceModelProjectName";
-  
+
   private static final String XML_CONFIGURATION_ATTR_SOURCE_MODEL_FILE_PATH = "sourceModelFilePath";
-  
+
   private static final String XML_PROCESSOR_ELEMENT = "processor";
-  
+
   private static final String XML_PROCESSOR_TYPE_ELEMENT = "type";
-  
+
   private static final String XML_PROCESSOR_BASIC_EXECUTION_COMMAND_ELEMENT = "basicExecutionCommand";
-  
+
   private static final String XML_PROCESSOR_PATH_ELEMENT = "path";
-  
+
   private static final String XML_ARGUMENTS_ELEMENT = "arguments";
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private String sourceModelProjectName;
-  
+
   /**
    * Set the name of the source model project and fire a corresponding property change event
    */
@@ -103,10 +103,10 @@ public class ProcessingConfiguration extends ModelElementWithPropertyChangeSuppo
     this.firePropertyChange("sourceModelProjectName", this.sourceModelProjectName, 
       this.sourceModelProjectName = sourceModelProjectName);
   }
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private String sourceModelFilePath;
-  
+
   /**
    * Set the path of the source model file and fire a corresponding property change event
    */
@@ -114,7 +114,7 @@ public class ProcessingConfiguration extends ModelElementWithPropertyChangeSuppo
     this.firePropertyChange("sourceModelFilePath", this.sourceModelFilePath, 
       this.sourceModelFilePath = sourceModelFilePath);
   }
-  
+
   /**
    * Get the source model file as an IFile in the current Eclipse workspace. Return null in case
    * the name of the source model project or the path to the source model are invalid.
@@ -132,10 +132,10 @@ public class ProcessingConfiguration extends ModelElementWithPropertyChangeSuppo
     }
     return Utils.findFileInWorkspaceProject(this.sourceModelProjectName, this.sourceModelFilePath);
   }
-  
+
   @Accessors
   private ProcessorExecutableType processorExecutableType;
-  
+
   /**
    * Set the type of the model processor executable and fire a corresponding property change event
    */
@@ -143,10 +143,10 @@ public class ProcessingConfiguration extends ModelElementWithPropertyChangeSuppo
     this.firePropertyChange("processorExecutableType", this.processorExecutableType, 
       this.processorExecutableType = processorExecutableType);
   }
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private String basicProcessorExecutionCommand;
-  
+
   /**
    * Set the basic model processor execution command and fire a corresponding property change
    * event
@@ -155,10 +155,10 @@ public class ProcessingConfiguration extends ModelElementWithPropertyChangeSuppo
     this.firePropertyChange("basicProcessorExecutionCommand", this.basicProcessorExecutionCommand, 
       this.basicProcessorExecutionCommand = basicProcessorExecutionCommand);
   }
-  
+
   @Accessors
   private String processorExecutablePath;
-  
+
   /**
    * Set the path to the model processor executable and fire a corresponding property change event
    */
@@ -166,10 +166,10 @@ public class ProcessingConfiguration extends ModelElementWithPropertyChangeSuppo
     this.firePropertyChange("processorExecutablePath", this.processorExecutablePath, 
       this.processorExecutablePath = processorExecutablePath);
   }
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private ArrayList<Argument> arguments = CollectionLiterals.<Argument>newArrayList();
-  
+
   /**
    * Two model processing configurations are equal when they point to the same source model, have
    * the same model processor configuration, and the same entries in their execution arguments
@@ -200,7 +200,7 @@ public class ProcessingConfiguration extends ModelElementWithPropertyChangeSuppo
     }
     return _xifexpression;
   }
-  
+
   /**
    * Clone the configuration which also entails the cloning of its execution arguments
    */
@@ -219,7 +219,7 @@ public class ProcessingConfiguration extends ModelElementWithPropertyChangeSuppo
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Deserialize the model processing configuration from its XML representation stored in the
    * given ILaunchConfiguration
@@ -257,7 +257,7 @@ public class ProcessingConfiguration extends ModelElementWithPropertyChangeSuppo
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Helper to initialize a List of ProcessingConfigurationItem instances that are stored as XML
    * sub-elements of an XML parent element which itself is a sub-element of a given XML root
@@ -279,7 +279,7 @@ public class ProcessingConfiguration extends ModelElementWithPropertyChangeSuppo
     }
     return items;
   }
-  
+
   /**
    * Helper to deserialize information related to the model processor from the given root Element
    * of a model processing configuration's XML representation
@@ -318,7 +318,7 @@ public class ProcessingConfiguration extends ModelElementWithPropertyChangeSuppo
     final String processorExecutablePath = _textContent_1;
     return new ProcessingConfiguration.ProcessorInformation(processorExecutableType, basicProcessorExecutionCommand, processorExecutablePath);
   }
-  
+
   /**
    * Set a model processing configuration as a String attribute of the given
    * ILaunchConfigurationWorkingCopy. The String attribute receives as value the configuration's
@@ -344,7 +344,7 @@ public class ProcessingConfiguration extends ModelElementWithPropertyChangeSuppo
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Serialize the model processing configuration to XML
    */
@@ -366,7 +366,7 @@ public class ProcessingConfiguration extends ModelElementWithPropertyChangeSuppo
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Helper to serialize information related to the configuration's model processor to XML
    */
@@ -406,13 +406,13 @@ public class ProcessingConfiguration extends ModelElementWithPropertyChangeSuppo
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Empty constructor
    */
   public ProcessingConfiguration() {
   }
-  
+
   /**
    * Constructor
    */
@@ -423,7 +423,7 @@ public class ProcessingConfiguration extends ModelElementWithPropertyChangeSuppo
     this.processorExecutablePath = processorExecutablePath;
     this.basicProcessorExecutionCommand = basicProcessorExecutionCommand;
   }
-  
+
   /**
    * Convert the configuration to its internal representation
    */
@@ -433,7 +433,7 @@ public class ProcessingConfiguration extends ModelElementWithPropertyChangeSuppo
     };
     this.arguments.forEach(_function);
   }
-  
+
   /**
    * Validate the model processing configuration in its user representation
    */
@@ -446,7 +446,7 @@ public class ProcessingConfiguration extends ModelElementWithPropertyChangeSuppo
       this.processorExecutablePath);
     ProcessingConfiguration.validateArgumentsInUserRepresentation(this, this.arguments);
   }
-  
+
   /**
    * Validate the given source model project name
    */
@@ -456,7 +456,7 @@ public class ProcessingConfiguration extends ModelElementWithPropertyChangeSuppo
     Utils.notNull(Utils.findProjectInCurrentWorkspace(sourceModelProjectName), ("Source model project " + 
       "does not exist in workspace"));
   }
-  
+
   /**
    * Validate the given source model file path w.r.t. the source model project with the given name
    */
@@ -467,7 +467,7 @@ public class ProcessingConfiguration extends ModelElementWithPropertyChangeSuppo
     Utils.notNull(Utils.findFileInWorkspaceProject(sourceModelProjectName, sourceModelFilePath), ("Source " + 
       "model file does not exist in source model project"));
   }
-  
+
   /**
    * Validate the given type of the model processor executable
    */
@@ -475,7 +475,7 @@ public class ProcessingConfiguration extends ModelElementWithPropertyChangeSuppo
     Utils.notNull(processorExecutableType, ("Processing configuration must specify type of " + 
       "processor executable"));
   }
-  
+
   /**
    * Validate the given basic model processor execution command w.r.t. the given model processor
    * executable type
@@ -489,7 +489,7 @@ public class ProcessingConfiguration extends ModelElementWithPropertyChangeSuppo
         "specify a basic execution command"));
     }
   }
-  
+
   /**
    * Validate the given path to the model processor executable w.r.t. the given model processor
    * executable type and execution command
@@ -507,7 +507,7 @@ public class ProcessingConfiguration extends ModelElementWithPropertyChangeSuppo
       }
     }
   }
-  
+
   /**
    * Validate the given path to the model processor executable that is a local Java program
    */
@@ -518,7 +518,7 @@ public class ProcessingConfiguration extends ModelElementWithPropertyChangeSuppo
       throw new IllegalArgumentException("Executable processor file does not exist");
     }
   }
-  
+
   /**
    * Validate the given path to the model processor executable that is a local Docker image
    */
@@ -565,7 +565,7 @@ public class ProcessingConfiguration extends ModelElementWithPropertyChangeSuppo
       }
     }
   }
-  
+
   /**
    * Validate model processor execution arguments in user representation
    */
@@ -577,7 +577,7 @@ public class ProcessingConfiguration extends ModelElementWithPropertyChangeSuppo
       arguments.forEach(_function);
     }
   }
-  
+
   /**
    * Convert the model processing configuration to its user representation
    */
@@ -587,32 +587,32 @@ public class ProcessingConfiguration extends ModelElementWithPropertyChangeSuppo
     };
     this.arguments.forEach(_function);
   }
-  
+
   @Pure
   public String getSourceModelProjectName() {
     return this.sourceModelProjectName;
   }
-  
+
   @Pure
   public String getSourceModelFilePath() {
     return this.sourceModelFilePath;
   }
-  
+
   @Pure
   public ProcessorExecutableType getProcessorExecutableType() {
     return this.processorExecutableType;
   }
-  
+
   @Pure
   public String getBasicProcessorExecutionCommand() {
     return this.basicProcessorExecutionCommand;
   }
-  
+
   @Pure
   public String getProcessorExecutablePath() {
     return this.processorExecutablePath;
   }
-  
+
   @Pure
   public ArrayList<Argument> getArguments() {
     return this.arguments;

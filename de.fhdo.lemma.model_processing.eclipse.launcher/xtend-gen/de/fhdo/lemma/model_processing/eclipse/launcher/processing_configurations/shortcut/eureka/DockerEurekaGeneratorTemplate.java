@@ -27,7 +27,7 @@ public class DockerEurekaGeneratorTemplate extends AbstractEurekaGeneratorTempla
       super(parentShell, project, file, EurekaGeneratorConstants.GENERATOR_LONG_NAME, 
         EurekaGeneratorConstants.GENERATOR_SHORT_NAME);
     }
-    
+
     /**
      * Addendum for the generator short name as part of the launch configuration name
      */
@@ -35,7 +35,7 @@ public class DockerEurekaGeneratorTemplate extends AbstractEurekaGeneratorTempla
     public final String getGeneratorNameAddendum() {
       return "Docker";
     }
-    
+
     /**
      * Addendum for generator long name as part of the label for the generator executable path's
      * text field
@@ -44,7 +44,7 @@ public class DockerEurekaGeneratorTemplate extends AbstractEurekaGeneratorTempla
     public final String getGeneratorExecutableLabelTextAddendum() {
       return "Docker image";
     }
-    
+
     /**
      * Create the dialog
      */
@@ -61,7 +61,7 @@ public class DockerEurekaGeneratorTemplate extends AbstractEurekaGeneratorTempla
       this.setMessage(_plus);
     }
   }
-  
+
   /**
    * Constructor
    */
@@ -69,7 +69,7 @@ public class DockerEurekaGeneratorTemplate extends AbstractEurekaGeneratorTempla
     super(ProcessorExecutableType.LOCAL_DOCKER_IMAGE, parentShell, ("Docker-based Eureka " + 
       "artifact generation"), project, file);
   }
-  
+
   /**
    * Extend the model processing configuration template initialized by the superclass
    */
@@ -79,7 +79,7 @@ public class DockerEurekaGeneratorTemplate extends AbstractEurekaGeneratorTempla
     initializedConfiguration.setProcessorExecutablePath(EurekaGeneratorConstants.DEFAULT_DOCKER_IMAGE_NAME);
     return configuration;
   }
-  
+
   /**
    * Return the dialog for template completion
    */

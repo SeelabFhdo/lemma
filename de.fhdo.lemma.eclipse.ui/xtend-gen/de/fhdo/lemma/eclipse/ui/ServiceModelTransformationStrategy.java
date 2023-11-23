@@ -47,21 +47,21 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 @SuppressWarnings("all")
 public class ServiceModelTransformationStrategy extends AbstractUiModelTransformationStrategy {
   public static final String DATA_MODEL_FILE_TYPE_ID = "DATA";
-  
+
   public static final String MAPPING_MODEL_FILE_TYPE_ID = "MAPPING";
-  
+
   public static final String SERVICE_MODEL_FILE_TYPE_ID = "SERVICE";
-  
+
   public static final List<String> DATA_MODEL_FILE_EXTENSIONS = LemmaUiUtils.getFileExtensions(LemmaUiUtils.DATA_DSL_EDITOR_ID);
-  
+
   public static final List<String> SERVICE_MODEL_FILE_EXTENSIONS = LemmaUiUtils.getFileExtensions(LemmaUiUtils.SERVICE_DSL_EDITOR_ID);
-  
+
   public static final List<String> MAPPING_MODEL_FILE_EXTENSIONS = LemmaUiUtils.getFileExtensions(LemmaUiUtils.MAPPING_DSL_EDITOR_ID);
-  
+
   private static final String MODEL_TYPE_PREFIX = "service";
-  
+
   private final LinkedHashMap<String, ModelFileTypeDescription> modelFileTypeDescriptions;
-  
+
   public ServiceModelTransformationStrategy() {
     LocalResourceManager _xifexpression = null;
     Display _current = Display.getCurrent();
@@ -97,7 +97,7 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
     Pair<String, ModelFileTypeDescription> _mappedTo_2 = Pair.<String, ModelFileTypeDescription>of(ServiceModelTransformationStrategy.SERVICE_MODEL_FILE_TYPE_ID, _modelFileTypeDescription_2);
     this.modelFileTypeDescriptions = CollectionLiterals.<String, ModelFileTypeDescription>newLinkedHashMap(_mappedTo, _mappedTo_1, _mappedTo_2);
   }
-  
+
   /**
    * Helper to load an image file if a resource manager is available
    */
@@ -110,7 +110,7 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
     }
     return _xifexpression;
   }
-  
+
   /**
    * Get string prefix of model type
    */
@@ -118,7 +118,7 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
   public String getModelTypePrefix() {
     return ServiceModelTransformationStrategy.MODEL_TYPE_PREFIX;
   }
-  
+
   /**
    * Get model types' ordering for displaying purposes
    */
@@ -129,7 +129,7 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
       ServiceModelTransformationStrategy.MAPPING_MODEL_FILE_TYPE_ID, 
       ServiceModelTransformationStrategy.SERVICE_MODEL_FILE_TYPE_ID);
   }
-  
+
   /**
    * Get model types' ordering for transformation
    */
@@ -140,7 +140,7 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
       ServiceModelTransformationStrategy.SERVICE_MODEL_FILE_TYPE_ID, 
       ServiceModelTransformationStrategy.MAPPING_MODEL_FILE_TYPE_ID);
   }
-  
+
   /**
    * Get file extensions of the model type
    */
@@ -151,7 +151,7 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
     modelTypeFileExtensions.addAll(ServiceModelTransformationStrategy.MAPPING_MODEL_FILE_EXTENSIONS);
     return modelTypeFileExtensions;
   }
-  
+
   /**
    * Get descriptions of all relevant model file types
    */
@@ -159,7 +159,7 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
   public LinkedHashMap<String, ModelFileTypeDescription> getModelFileTypeDescriptions() {
     return this.modelFileTypeDescriptions;
   }
-  
+
   /**
    * Get model file type description by extension
    */
@@ -171,7 +171,7 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
     }
     return typeIdentifierAndDescription.getValue();
   }
-  
+
   /**
    * Get model file type identifier and description by extension
    */
@@ -190,7 +190,7 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
     }
     return null;
   }
-  
+
   /**
    * Get title of model selection dialog
    */
@@ -204,7 +204,7 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
     return (_builder.toString() + 
       "Transformation");
   }
-  
+
   /**
    * Get message of model selection dialog
    */
@@ -225,7 +225,7 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
     _builder_3.append("continue\" to use all models for intermediate model transformation.");
     return (_plus_1 + _builder_3);
   }
-  
+
   /**
    * Get title of dialog for specifying transformation paths
    */
@@ -238,7 +238,7 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
     _builder.append(" Models");
     return _builder.toString();
   }
-  
+
   /**
    * Get message of dialog for specifying transformation paths
    */
@@ -254,7 +254,7 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
     return (_plus + 
       "transformations.");
   }
-  
+
   /**
    * Get transformation strategy
    */
@@ -262,7 +262,7 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
   public AbstractIntermediateModelTransformationStrategy<?, ?> getTransformationStrategyInternal() {
     return new IntermediateServiceModelTransformation();
   }
-  
+
   /**
    * Get imported files of a given model file in the form of IFile instances
    */
@@ -326,7 +326,7 @@ public class ServiceModelTransformationStrategy extends AbstractUiModelTransform
     importAliasesAndUris.forEach(_function_5);
     return importedModelFiles;
   }
-  
+
   /**
    * Return default target path for intermediate model transformation for a given file
    */

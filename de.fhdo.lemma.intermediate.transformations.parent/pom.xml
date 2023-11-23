@@ -58,7 +58,7 @@
         <maven-compiler-plugin-version>3.8.1</maven-compiler-plugin-version>
         <service-viewpoint-metamodel-version>${project.version}</service-viewpoint-metamodel-version>
         <technology-definition-metamodel-version>${project.version}</technology-definition-metamodel-version>
-        <tycho-version>2.3.0</tycho-version>
+        <tycho-version>2.6.0</tycho-version>
         <xtext-version>2.26.0</xtext-version>
     </properties>
 

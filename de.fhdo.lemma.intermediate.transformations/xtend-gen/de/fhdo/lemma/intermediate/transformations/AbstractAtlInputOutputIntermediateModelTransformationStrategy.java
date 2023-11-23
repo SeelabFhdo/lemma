@@ -27,28 +27,28 @@ import org.eclipse.xtext.xbase.lib.Pair;
 @SuppressWarnings("all")
 public abstract class AbstractAtlInputOutputIntermediateModelTransformationStrategy extends AbstractIntermediateModelTransformationStrategy<IModel, EMFModel> {
   private EMFInjector atlModelInjector;
-  
+
   private EMFModelFactory atlModelFactory;
-  
+
   private Pair<TransformationModelDescription, TransformationModelType> inputModelTypeDescription;
-  
+
   private Pair<TransformationModelDescription, TransformationModelType> outputModelTypeDescription;
-  
+
   /**
    * Get reference name and transformation model type of input model
    */
   public abstract Pair<String, TransformationModelType> getInputModelReferenceNameAndType();
-  
+
   /**
    * Get reference name and transformation model type of output model
    */
   public abstract Pair<String, TransformationModelType> getOutputModelReferenceNameAndType();
-  
+
   /**
    * Get path to the compiled ATL transformation file
    */
   public abstract String getCompiledModelTransformationFilePath();
-  
+
   /**
    * Constructor
    */
@@ -59,7 +59,7 @@ public abstract class AbstractAtlInputOutputIntermediateModelTransformationStrat
     EMFInjector _eMFInjector = new EMFInjector();
     this.atlModelInjector = _eMFInjector;
   }
-  
+
   /**
    * Register input and output model types. This also creates the corresponding descriptions of
    * the model types with directions IN and OUT, respectively.
@@ -85,7 +85,7 @@ public abstract class AbstractAtlInputOutputIntermediateModelTransformationStrat
     descriptions.put(this.outputModelTypeDescription.getKey(), this.outputModelTypeDescription.getValue());
     return descriptions;
   }
-  
+
   /**
    * Create transformation-technology-specific input model instance
    */
@@ -102,7 +102,7 @@ public abstract class AbstractAtlInputOutputIntermediateModelTransformationStrat
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Create transformation-technology-specific output model instance
    */
@@ -118,7 +118,7 @@ public abstract class AbstractAtlInputOutputIntermediateModelTransformationStrat
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Execute ATL transformation
    */

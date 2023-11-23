@@ -28,14 +28,14 @@ public class JavaBaseGeneratorTemplate extends AbstractJavaBaseGeneratorTemplate
    */
   public static class TemplateCompletionDialog extends AbstractJavaBaseGeneratorCompletionDialog {
     private GenletsTable genletsTable;
-    
+
     /**
      * Constructor
      */
     public TemplateCompletionDialog(final Shell parentShell, final IProject project, final IFile file) {
       super(parentShell, project, file);
     }
-    
+
     /**
      * Addendum for generator long name as part of the label for the generator executable path's
      * text field
@@ -44,7 +44,7 @@ public class JavaBaseGeneratorTemplate extends AbstractJavaBaseGeneratorTemplate
     public final String getGeneratorExecutableLabelTextAddendum() {
       return "path";
     }
-    
+
     /**
      * Create the dialog
      */
@@ -64,7 +64,7 @@ public class JavaBaseGeneratorTemplate extends AbstractJavaBaseGeneratorTemplate
       String _plus = (_builder.toString() + _builder_1);
       this.setMessage(_plus);
     }
-    
+
     /**
      * Create the dialog area
      */
@@ -76,7 +76,7 @@ public class JavaBaseGeneratorTemplate extends AbstractJavaBaseGeneratorTemplate
       _shell.setSize(_point);
       return area;
     }
-    
+
     /**
      * Add additional controls to the dialog
      */
@@ -96,19 +96,19 @@ public class JavaBaseGeneratorTemplate extends AbstractJavaBaseGeneratorTemplate
       this.genletsTable.addPropertyChangeListener(this);
       this.insertAdditionalControlsAfterGenletsGroup(parent);
     }
-    
+
     /**
      * Insert additional controls before the group with the Genlet table
      */
     public void insertAdditionalControlsBeforeGenletsGroup(final Composite parent) {
     }
-    
+
     /**
      * Insert additional controls after the group with the Genlet table
      */
     public void insertAdditionalControlsAfterGenletsGroup(final Composite parent) {
     }
-    
+
     /**
      * Complete the template with the Argument instances for the specified Genlets
      */
@@ -116,7 +116,7 @@ public class JavaBaseGeneratorTemplate extends AbstractJavaBaseGeneratorTemplate
     public void completeProcessingConfigurationTemplate(final ProcessingConfigurationWithLaunchConfigurationName templateToComplete) {
       templateToComplete.getArguments().addAll(this.genletsTable.getGenletArguments());
     }
-    
+
     /**
      * Close the dialog
      */
@@ -131,21 +131,21 @@ public class JavaBaseGeneratorTemplate extends AbstractJavaBaseGeneratorTemplate
       return _xblockexpression;
     }
   }
-  
+
   /**
    * Constructor
    */
   public JavaBaseGeneratorTemplate(final Shell parentShell, final IProject project, final IFile file) {
     this(parentShell, "Java microservice generation", project, file);
   }
-  
+
   /**
    * Constructor with explicit template name parameter
    */
   public JavaBaseGeneratorTemplate(final Shell parentShell, final String name, final IProject project, final IFile file) {
     super(ProcessorExecutableType.LOCAL_JAVA_PROGRAM, parentShell, name, project, file);
   }
-  
+
   /**
    * Get template completion dialog
    */

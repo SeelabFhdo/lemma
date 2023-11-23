@@ -46,7 +46,7 @@
         <eclipse-core-resources-version>3.14.0</eclipse-core-resources-version>
         <emf-version>2.22.0</emf-version>
         <maven-compiler-plugin-version>3.8.1</maven-compiler-plugin-version>
-        <tycho-version>2.3.0</tycho-version>
+        <tycho-version>2.6.0</tycho-version>
         <xtext-version>2.26.0</xtext-version>
     </properties>
 
@@ -74,6 +74,11 @@
             <groupId>org.eclipse.emf</groupId>
             <artifactId>org.eclipse.emf.common</artifactId>
             <version>${emf-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>30.1-jre</version>
         </dependency>
     </dependencies>
 

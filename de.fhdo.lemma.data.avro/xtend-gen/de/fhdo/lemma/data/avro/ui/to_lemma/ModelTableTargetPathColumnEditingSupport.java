@@ -19,9 +19,9 @@ import org.eclipse.xtext.xbase.lib.Pair;
 @SuppressWarnings("all")
 public class ModelTableTargetPathColumnEditingSupport extends EditingSupport {
   private TableViewer tableViewer;
-  
+
   private Predicate<Pair<SpecifyLemmaPathsDialog.LemmaModelKind, String>> newValueValidator;
-  
+
   /**
    * Constructor
    */
@@ -30,7 +30,7 @@ public class ModelTableTargetPathColumnEditingSupport extends EditingSupport {
     this.tableViewer = tableViewer;
     this.newValueValidator = newValueValidator;
   }
-  
+
   /**
    * Editable flag
    */
@@ -38,7 +38,7 @@ public class ModelTableTargetPathColumnEditingSupport extends EditingSupport {
   protected boolean canEdit(final Object element) {
     return true;
   }
-  
+
   /**
    * Return cell editor
    */
@@ -47,7 +47,7 @@ public class ModelTableTargetPathColumnEditingSupport extends EditingSupport {
     Control _control = this.tableViewer.getControl();
     return new TextCellEditor(((Composite) _control));
   }
-  
+
   /**
    * Get value from element (target path for LEMMA model kind)
    */
@@ -55,7 +55,7 @@ public class ModelTableTargetPathColumnEditingSupport extends EditingSupport {
   protected Object getValue(final Object element) {
     return ((SpecifyLemmaPathsDialog.LemmaModelKind) element).targetPath;
   }
-  
+
   /**
    * Set value for element (target path for LEMMA model kind)
    */

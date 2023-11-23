@@ -18,28 +18,28 @@ import org.eclipse.swt.graphics.Image;
 @SuppressWarnings("all")
 public class SchemaTreeLabelProvider extends LabelProvider implements DelegatingStyledCellLabelProvider.IStyledLabelProvider {
   private static final ResourceManager RESOURCE_MANAGER = new LocalResourceManager(JFaceResources.getResources());
-  
+
   /**
    * Icon for Avro protocols
    */
   public static final Image PROTOCOL_ICON = LemmaUiUtils.createImage(
     SchemaTreeLabelProvider.RESOURCE_MANAGER, SchemaTreeLabelProvider.class, 
     "protocol.gif");
-  
+
   /**
    * Icon for Avro namespaces
    */
   public static final Image NAMESPACE_ICON = LemmaUiUtils.createImage(
     SchemaTreeLabelProvider.RESOURCE_MANAGER, SchemaTreeLabelProvider.class, 
     "namespace.gif");
-  
+
   /**
    * Icon for Avro schemas
    */
   public static final Image SCHEMA_ICON = LemmaUiUtils.createImage(
     SchemaTreeLabelProvider.RESOURCE_MANAGER, SchemaTreeLabelProvider.class, 
     "schema.gif");
-  
+
   /**
    * Get styled text for element
    */
@@ -73,7 +73,7 @@ public class SchemaTreeLabelProvider extends LabelProvider implements Delegating
     }
     return new StyledString(_switchResult);
   }
-  
+
   /**
    * Get image for element
    */

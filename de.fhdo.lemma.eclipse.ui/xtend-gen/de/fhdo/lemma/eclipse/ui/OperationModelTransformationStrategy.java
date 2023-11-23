@@ -47,21 +47,21 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 @SuppressWarnings("all")
 public class OperationModelTransformationStrategy extends AbstractUiModelTransformationStrategy {
   public static final String OPERATION_MODEL_FILE_TYPE_ID = "OPERATION";
-  
+
   public static final String SERVICE_MODEL_FILE_TYPE_ID = "SERVICE";
-  
+
   public static final String DATA_MODEL_FILE_TYPE_ID = "DATA";
-  
+
   public static final List<String> DATA_MODEL_FILE_EXTENSIONS = LemmaUiUtils.getFileExtensions(LemmaUiUtils.DATA_DSL_EDITOR_ID);
-  
+
   public static final List<String> OPERATION_MODEL_FILE_EXTENSIONS = LemmaUiUtils.getFileExtensions(LemmaUiUtils.OPERATION_DSL_EDITOR_ID);
-  
+
   public static final List<String> SERVICE_MODEL_FILE_EXTENSIONS = LemmaUiUtils.getFileExtensions(LemmaUiUtils.SERVICE_DSL_EDITOR_ID);
-  
+
   private static final String MODEL_TYPE_PREFIX = "operation";
-  
+
   private final LinkedHashMap<String, ModelFileTypeDescription> modelFileTypeDescriptions;
-  
+
   public OperationModelTransformationStrategy() {
     LocalResourceManager _xifexpression = null;
     Display _current = Display.getCurrent();
@@ -96,7 +96,7 @@ public class OperationModelTransformationStrategy extends AbstractUiModelTransfo
     Pair<String, ModelFileTypeDescription> _mappedTo_2 = Pair.<String, ModelFileTypeDescription>of(OperationModelTransformationStrategy.DATA_MODEL_FILE_TYPE_ID, _modelFileTypeDescription_2);
     this.modelFileTypeDescriptions = CollectionLiterals.<String, ModelFileTypeDescription>newLinkedHashMap(_mappedTo, _mappedTo_1, _mappedTo_2);
   }
-  
+
   /**
    * Helper to load an image file if a resource manager is available
    */
@@ -109,7 +109,7 @@ public class OperationModelTransformationStrategy extends AbstractUiModelTransfo
     }
     return _xifexpression;
   }
-  
+
   /**
    * Get string prefix of model type
    */
@@ -117,7 +117,7 @@ public class OperationModelTransformationStrategy extends AbstractUiModelTransfo
   public String getModelTypePrefix() {
     return OperationModelTransformationStrategy.MODEL_TYPE_PREFIX;
   }
-  
+
   /**
    * Get model types' ordering for displaying purposes
    */
@@ -128,7 +128,7 @@ public class OperationModelTransformationStrategy extends AbstractUiModelTransfo
       OperationModelTransformationStrategy.SERVICE_MODEL_FILE_TYPE_ID, 
       OperationModelTransformationStrategy.DATA_MODEL_FILE_TYPE_ID);
   }
-  
+
   /**
    * Get model types' ordering for transformation
    */
@@ -139,7 +139,7 @@ public class OperationModelTransformationStrategy extends AbstractUiModelTransfo
       OperationModelTransformationStrategy.SERVICE_MODEL_FILE_TYPE_ID, 
       OperationModelTransformationStrategy.OPERATION_MODEL_FILE_TYPE_ID);
   }
-  
+
   /**
    * Get file extensions of the model type
    */
@@ -149,7 +149,7 @@ public class OperationModelTransformationStrategy extends AbstractUiModelTransfo
     modelTypeFileExtensions.addAll(OperationModelTransformationStrategy.OPERATION_MODEL_FILE_EXTENSIONS);
     return modelTypeFileExtensions;
   }
-  
+
   /**
    * Get descriptions of all relevant model file types
    */
@@ -157,7 +157,7 @@ public class OperationModelTransformationStrategy extends AbstractUiModelTransfo
   public LinkedHashMap<String, ModelFileTypeDescription> getModelFileTypeDescriptions() {
     return this.modelFileTypeDescriptions;
   }
-  
+
   /**
    * Get model file type description by extension
    */
@@ -169,7 +169,7 @@ public class OperationModelTransformationStrategy extends AbstractUiModelTransfo
     }
     return typeIdentifierAndDescription.getValue();
   }
-  
+
   /**
    * Get model file type identifier and description by extension
    */
@@ -188,7 +188,7 @@ public class OperationModelTransformationStrategy extends AbstractUiModelTransfo
     }
     return null;
   }
-  
+
   /**
    * Get title of model selection dialog
    */
@@ -202,7 +202,7 @@ public class OperationModelTransformationStrategy extends AbstractUiModelTransfo
     return (_builder.toString() + 
       "Transformation");
   }
-  
+
   /**
    * Get message of model selection dialog
    */
@@ -223,7 +223,7 @@ public class OperationModelTransformationStrategy extends AbstractUiModelTransfo
     _builder_3.append("continue\" to use all models for intermediate model transformation.");
     return (_plus_1 + _builder_3);
   }
-  
+
   /**
    * Get title of dialog for specifying transformation paths
    */
@@ -236,7 +236,7 @@ public class OperationModelTransformationStrategy extends AbstractUiModelTransfo
     _builder.append(" Models");
     return _builder.toString();
   }
-  
+
   /**
    * Get message of dialog for specifying transformation paths
    */
@@ -252,7 +252,7 @@ public class OperationModelTransformationStrategy extends AbstractUiModelTransfo
     return (_plus + 
       "transformations.");
   }
-  
+
   /**
    * Get transformation strategy
    */
@@ -260,7 +260,7 @@ public class OperationModelTransformationStrategy extends AbstractUiModelTransfo
   public AbstractIntermediateModelTransformationStrategy<?, ?> getTransformationStrategyInternal() {
     return new IntermediateOperationModelTransformation();
   }
-  
+
   /**
    * Get imported files of a given model file in the form of IFile instances
    */
@@ -324,7 +324,7 @@ public class OperationModelTransformationStrategy extends AbstractUiModelTransfo
     importAliasesAndUris.forEach(_function_5);
     return importedModelFiles;
   }
-  
+
   /**
    * Return default target path for intermediate model transformation for a given file
    */

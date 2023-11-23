@@ -22,7 +22,7 @@ public class SchemaTreeContentProvider implements ITreeContentProvider {
   public Object[] getElements(final Object inputElement) {
     return ((Object[])Conversions.unwrapArray(this.sortByName(((List<?>) inputElement)), Object.class));
   }
-  
+
   /**
    * Helper to sort Avro protocols, namespaces, and schemas in the form of elements as expected by
    * the tree viewer by their names
@@ -55,7 +55,7 @@ public class SchemaTreeContentProvider implements ITreeContentProvider {
       }
     });
   }
-  
+
   /**
    * Get sortable string from Avro protocols, namespaces, and schemas
    */
@@ -80,7 +80,7 @@ public class SchemaTreeContentProvider implements ITreeContentProvider {
     }
     return _switchResult;
   }
-  
+
   /**
    * Get children of parent element
    */
@@ -109,7 +109,7 @@ public class SchemaTreeContentProvider implements ITreeContentProvider {
     }
     return ((Object[])Conversions.unwrapArray(_switchResult, Object.class));
   }
-  
+
   /**
    * Get parent of an element
    */
@@ -132,7 +132,7 @@ public class SchemaTreeContentProvider implements ITreeContentProvider {
     }
     return _switchResult;
   }
-  
+
   /**
    * Determine if the given element has children
    */

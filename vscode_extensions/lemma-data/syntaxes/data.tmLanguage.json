@@ -1,0 +1,69 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "LEMMA Domain Data Modeling Language",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#ddd-patterns"
+		},
+		{
+			"include": "#single-line-comment"
+		},
+		{
+			"include": "#multi-line-comment"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [{
+				"name": "keyword.control.data",
+				"match": "\\b(import|datatypes|from|as|version|context|aggregate|applicationService|domainEvent|domainService|entity|factory|infrastructureService|repository|service|specification|valueObject|structure|extends|collection|identifier|neverEmpty|part|hide|immutable|enum|closure|identifier|sideEffectFree|validator|procedure|function|boolean|byte|char|date|double|float|int|long|short|string|unspecified|true|false)\\b"
+			}]
+		},
+		"strings": {
+			"name": "string.quoted.double.data",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.data",
+					"match": "\\\\."
+				}
+			]
+		},
+		"ddd-patterns": {
+			"begin": "\\<",
+			"end": "\\>",
+			"beginCaptures": {
+			  "0": { "name": "punctuation.paren.open" }
+			},
+			"endCaptures": {
+			  "0": { "name": "punctuation.paren.close" }
+			},
+			"name": "markup.italic.ddd",
+			"patterns": [
+				{
+					"name": "variable.other",
+					"match": ","
+				}
+			]
+		},
+		"single-line-comment": {
+			"patterns": [{
+				"match": "\/\/.*\n?$",
+				"name": "comment.line"
+			}]
+		},
+		"multi-line-comment": {
+			"begin": "\/[*]",
+			"end": "[*]\/",
+			"name": "comment.block"
+		}
+	},
+	"scopeName": "source.data"
+}

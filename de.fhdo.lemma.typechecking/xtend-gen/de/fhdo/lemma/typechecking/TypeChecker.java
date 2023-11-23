@@ -56,7 +56,7 @@ public class TypeChecker {
     this.performTypeCheck(typeChecker, basicType, typeToCheck);
     return null;
   }
-  
+
   /**
    * Perform the actual type checking with the given type checker
    */

@@ -46,39 +46,39 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 @SuppressWarnings("all")
 public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab implements PropertyChangeListener {
   private static final LocalResourceManager RESOURCE_MANAGER = new LocalResourceManager(JFaceResources.getResources());
-  
+
   private static final Image NEW_IMAGE = LemmaUiUtils.createImage(LaunchConfigurationTab.RESOURCE_MANAGER, LaunchConfigurationTab.class, 
     "add.gif");
-  
+
   private static final Image REMOVE_IMAGE = LemmaUiUtils.createImage(LaunchConfigurationTab.RESOURCE_MANAGER, ArgumentsTable.class, 
     "remove.png");
-  
+
   private static final Image MOVE_UP_IMAGE = LemmaUiUtils.createImage(LaunchConfigurationTab.RESOURCE_MANAGER, ArgumentsTable.class, 
     "moveUp.png");
-  
+
   private static final Image MOVE_DOWN_IMAGE = LemmaUiUtils.createImage(LaunchConfigurationTab.RESOURCE_MANAGER, ArgumentsTable.class, 
     "moveDown.png");
-  
+
   private final DataBindingContext dataBindingContext = new DataBindingContext();
-  
+
   private final Map<String, ILaunchConfiguration> availableLaunchConfigurations = Utils.getModelProcessingLaunchConfigurations();
-  
+
   private Composite mainComposite;
-  
+
   private ProcessingChain originalChain;
-  
+
   private ProcessingChain currentChain;
-  
+
   private TableViewer tableViewer;
-  
+
   private Button newButton;
-  
+
   private Button removeButton;
-  
+
   private Button moveUpButton;
-  
+
   private Button moveDownButton;
-  
+
   /**
    * Create the control
    */
@@ -94,7 +94,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
     this.createTable(this.mainComposite);
     this.createButtonRow(this.mainComposite);
   }
-  
+
   /**
    * Create the table to configure the entries of a model processing chain
    */
@@ -118,7 +118,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
     this.createExitValueComparatorColumn();
     this.createExitValueColumn();
   }
-  
+
   /**
    * Create the column for selecting the model processing launch configurations of a model
    * processing chain
@@ -134,7 +134,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
       public String getElementText(final ProcessingChainEntry element) {
         return element.getLaunchConfigurationName();
       }
-      
+
       @Override
       public void validate(final ProcessingChainEntry element) {
         element.validateLaunchConfigurationName(LaunchConfigurationTab.this.availableLaunchConfigurations);
@@ -149,7 +149,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
       this.dataBindingContext, _sortBy);
     column.setEditingSupport(_launchConfigurationNameColumnEditingSupport);
   }
-  
+
   /**
    * Create the exit value comparator column
    */
@@ -164,7 +164,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
       public String getElementText(final ProcessingChainEntry element) {
         return PreviousExitValueComparator.getUserRepresentation(element.getPreviousExitValueComparator());
       }
-      
+
       @Override
       public void validate(final ProcessingChainEntry element) {
         element.validatePreviousExitValueComparator();
@@ -174,7 +174,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
       this.dataBindingContext);
     column.setEditingSupport(_previousExitValueComparatorColumnEditingSupport);
   }
-  
+
   /**
    * Create the exit value column
    */
@@ -200,7 +200,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
         }
         return _elvis;
       }
-      
+
       @Override
       public void validate(final ProcessingChainEntry element) {
         element.validatePreviousExitValue();
@@ -210,7 +210,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
       this.dataBindingContext);
     column.setEditingSupport(_previousExitValueColumnEditingSupport);
   }
-  
+
   /**
    * Create the button row for manipulating the entries of the model processing chain table
    */
@@ -223,7 +223,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
     this.createMoveUpButton(buttonRow);
     this.createMoveDownButton(buttonRow);
   }
-  
+
   /**
    * Create the button for the creation of a new chain entry
    */
@@ -244,7 +244,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
     };
     this.newButton.addListener(SWT.Selection, _function);
   }
-  
+
   /**
    * Synchronize the chain's domain object with the displayed table rows
    */
@@ -258,7 +258,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
     }
     this.tableViewer.setInput(this.currentChain.getEntries());
   }
-  
+
   /**
    * Create the button for the removal of a selected chain entry
    */
@@ -283,7 +283,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
     };
     this.removeButton.addListener(SWT.Selection, _function);
   }
-  
+
   /**
    * Create the button for moving up a selected chain entry
    */
@@ -310,7 +310,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
     };
     this.moveUpButton.addListener(SWT.Selection, _function);
   }
-  
+
   /**
    * Create the button for moving down a selected chain entry
    */
@@ -337,7 +337,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
     };
     this.moveDownButton.addListener(SWT.Selection, _function);
   }
-  
+
   /**
    * Initialize the launch configuration tab from the given ILaunchConfiguration
    */
@@ -355,7 +355,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
     this.setCurrentChain(chain);
     this.syncInput();
   }
-  
+
   /**
    * Set the current chain's domain object
    */
@@ -369,7 +369,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
     this.currentChain = ((ProcessingChain) _clone);
     this.currentChain.addPropertyChangeListener(this);
   }
-  
+
   /**
    * Remove all Bean bindings of the tab from the data binding context
    */
@@ -380,7 +380,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
     };
     this.dataBindingContext.getBindings().forEach(_function);
   }
-  
+
   /**
    * Check if the given ILaunchConfiguration (which always is the current model processing chain
    * launch configuration) is valid
@@ -404,7 +404,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
     }
     return _xtrycatchfinallyexpression;
   }
-  
+
   /**
    * Return an error message when the current model processing configuration chain is invalid
    */
@@ -428,7 +428,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
     }
     return _xtrycatchfinallyexpression;
   }
-  
+
   /**
    * Check if the current model processing chain is dirty
    */
@@ -436,7 +436,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
   public final boolean isDirty() {
     return (!Objects.equal(this.originalChain, this.currentChain));
   }
-  
+
   /**
    * Handle "Apply" click
    */
@@ -444,7 +444,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
   public final void performApply(final ILaunchConfigurationWorkingCopy launchConfiguration) {
     ProcessingChain.setProcessingChainAsAttribute(launchConfiguration, this.currentChain);
   }
-  
+
   /**
    * Handle the change of a domain object property's value
    */
@@ -452,7 +452,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
   public final void propertyChange(final PropertyChangeEvent event) {
     this.updateLaunchConfigurationDialog();
   }
-  
+
   /**
    * Get the name of the launch configuration tab
    */
@@ -460,7 +460,7 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
   public final String getName() {
     return "Chained LEMMA Model Processing Configurations";
   }
-  
+
   /**
    * Get the image of the launch configuration tab
    */
@@ -468,14 +468,14 @@ public final class LaunchConfigurationTab extends AbstractLaunchConfigurationTab
   public final Image getImage() {
     return LaunchConfigurationConstants.COMMON_LAUNCH_CONFIGURATION_TAB_IMAGE;
   }
-  
+
   /**
    * Set the defaults of the current launch configuration
    */
   @Override
   public final void setDefaults(final ILaunchConfigurationWorkingCopy configuration) {
   }
-  
+
   /**
    * Dispose the tab
    */

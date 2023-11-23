@@ -15,21 +15,21 @@ public abstract class ProcessingConfigurationItem extends ModelElementWithProper
    * Serialize the item to its XML representation using the given XMLStreamWriter
    */
   public abstract void serializeTo(final XMLStreamWriter writer);
-  
+
   /**
    * Convert the item to its user representation
    */
   public Object convertToUserRepresentation() {
     return null;
   }
-  
+
   /**
    * Convert the item to its internal representation
    */
   public Object convertToInternalRepresentation() {
     return null;
   }
-  
+
   /**
    * Deserialize the item from its XML Element representation
    */

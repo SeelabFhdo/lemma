@@ -21,12 +21,12 @@ public final class Util {
    * Extension of Avro protocol files
    */
   public static final String PROTOCOL_FILE_EXTENSION = "avpr";
-  
+
   /**
    * Extension of Avro schema specification files
    */
   public static final String SCHEMA_FILE_EXTENSION = "avsc";
-  
+
   /**
    * Get selected IFile from an ExecutionEvent
    */
@@ -41,21 +41,21 @@ public final class Util {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Show error message dialog in the current Shell
    */
   public static void showError(final String title, final String message) {
     MessageDialog.openError(Display.getCurrent().getActiveShell(), title, message);
   }
-  
+
   /**
    * Show information message dialog in the current Shell
    */
   public static void showInfo(final String title, final String message) {
     MessageDialog.openInformation(Display.getCurrent().getActiveShell(), title, message);
   }
-  
+
   /**
    * Show question message dialog in the current Shell
    */

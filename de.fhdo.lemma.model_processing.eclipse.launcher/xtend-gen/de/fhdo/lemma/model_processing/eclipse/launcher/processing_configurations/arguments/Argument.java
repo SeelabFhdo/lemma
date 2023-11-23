@@ -24,55 +24,55 @@ import org.w3c.dom.Element;
 @SuppressWarnings("all")
 public final class Argument extends ProcessingConfigurationItem {
   public static final String XML_ARGUMENT_ELEMENT = "argument";
-  
+
   private static final String XML_ARGUMENT_ATTR_KIND = "kind";
-  
+
   private static final String XML_ARGUMENT_ATTR_TYPE = "type";
-  
+
   private static final String XML_PARAMETER_ELEMENT = "parameter";
-  
+
   private static final String XML_VALUE_ELEMENT = "value";
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private AbstractArgumentKind kind;
-  
+
   /**
    * Set the argument kind and fire a corresponding property change event
    */
   public final void setKind(final AbstractArgumentKind kind) {
     this.firePropertyChange("kind", this.kind, this.kind = kind);
   }
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private AbstractArgumentType type;
-  
+
   /**
    * Set the argument type and fire a corresponding property change event
    */
   public final void setType(final AbstractArgumentType type) {
     this.firePropertyChange("type", this.type, this.type = type);
   }
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private String parameter;
-  
+
   /**
    * Set the argument parameter and fire a corresponding property change event
    */
   public final void setParameter(final String parameter) {
     this.firePropertyChange("parameter", this.parameter, this.parameter = parameter);
   }
-  
+
   @Accessors(AccessorType.PUBLIC_GETTER)
   private String value;
-  
+
   /**
    * Set the argument value and fire a corresponding property change event
    */
   public final void setValue(final String value) {
     this.firePropertyChange("value", this.value, this.value = value);
   }
-  
+
   /**
    * Clone the Argument
    */
@@ -84,13 +84,13 @@ public final class Argument extends ProcessingConfigurationItem {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Empty constructor
    */
   public Argument() {
   }
-  
+
   /**
    * Constructor
    */
@@ -100,7 +100,7 @@ public final class Argument extends ProcessingConfigurationItem {
     this.parameter = parameter;
     this.value = value;
   }
-  
+
   /**
    * Factory method to create a new Argument instance
    */
@@ -108,7 +108,7 @@ public final class Argument extends ProcessingConfigurationItem {
     Argument _argument = new Argument();
     return new ArgumentBuilder(_argument);
   }
-  
+
   /**
    * Factory method to create a new Argument instance for the given model processing configuration
    */
@@ -116,7 +116,7 @@ public final class Argument extends ProcessingConfigurationItem {
     Argument _argument = new Argument();
     return new ArgumentBuilder(_argument, processingConfiguration);
   }
-  
+
   /**
    * Convert the argument into its user representation
    */
@@ -134,7 +134,7 @@ public final class Argument extends ProcessingConfigurationItem {
     }
     return this.value = _elvis;
   }
-  
+
   /**
    * Validate the argument in its user representation
    */
@@ -144,14 +144,14 @@ public final class Argument extends ProcessingConfigurationItem {
     this.validateParameter();
     this.validateValueInUserRepresentation(configuration);
   }
-  
+
   /**
    * Validate the argument kind
    */
   private void validateKind() {
     Utils.notNull(this.kind, "Processing argument kind must not be empty");
   }
-  
+
   /**
    * Validate the argument type
    */
@@ -159,21 +159,21 @@ public final class Argument extends ProcessingConfigurationItem {
     Utils.notNull(this.type, "Processing argument type must not be empty");
     this.kind.validateTypeSupport(this.type);
   }
-  
+
   /**
    * Validate the argument parameter
    */
   public final void validateParameter() {
     Utils.notNullOrEmpty(this.parameter, "Processing argument parameter must not be empty");
   }
-  
+
   /**
    * Validate the argument value in its user representation
    */
   private void validateValueInUserRepresentation(final ProcessingConfiguration configuration) {
     this.type.validateValueInUserRepresentation(configuration, this.value);
   }
-  
+
   /**
    * Convert the argument into its internal representation
    */
@@ -191,7 +191,7 @@ public final class Argument extends ProcessingConfigurationItem {
     }
     return this.value = _elvis;
   }
-  
+
   /**
    * Serialize the argument to XML
    */
@@ -246,7 +246,7 @@ public final class Argument extends ProcessingConfigurationItem {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Deserialize the argument from its XML representation
    */
@@ -267,22 +267,22 @@ public final class Argument extends ProcessingConfigurationItem {
     }
     this.value = _textContent_1;
   }
-  
+
   @Pure
   public AbstractArgumentKind getKind() {
     return this.kind;
   }
-  
+
   @Pure
   public AbstractArgumentType getType() {
     return this.type;
   }
-  
+
   @Pure
   public String getParameter() {
     return this.parameter;
   }
-  
+
   @Pure
   public String getValue() {
     return this.value;

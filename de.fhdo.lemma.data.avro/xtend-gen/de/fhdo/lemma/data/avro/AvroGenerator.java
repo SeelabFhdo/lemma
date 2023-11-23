@@ -63,7 +63,7 @@ public class AvroGenerator {
     };
     return this.withoutDuplicates(IterableExtensions.<Schema>toList(Iterables.<Schema>concat(IterableExtensions.<IntermediateComplexType, List<Schema>>map(complexTypes, _function_1))));
   }
-  
+
   /**
    * Helper to remove duplicate schemas from a given list of schemas. Duplicate schemas are
    * identified by their LEMMA name (based on the custom helper JSON property LEMMA_NAME_PROP).
@@ -76,7 +76,7 @@ public class AvroGenerator {
     schemas.forEach(_function);
     return IterableExtensions.<Schema>toList(uniqueSchemas.values());
   }
-  
+
   /**
    * Generate schemas from IntermediateContext
    */
@@ -86,7 +86,7 @@ public class AvroGenerator {
     };
     return this.withoutDuplicates(IterableExtensions.<Schema>toList(Iterables.<Schema>concat(ListExtensions.<IntermediateComplexType, List<Schema>>map(context.getComplexTypes(), _function))));
   }
-  
+
   /**
    * Generate schemas from IntermediateComplexType. The return value is a pair consisting of the
    * schema specifically derived from the passed complex type and all other schemas that were
@@ -122,7 +122,7 @@ public class AvroGenerator {
     }
     return _switchResult;
   }
-  
+
   /**
    * Generate schemas from IntermediateDataStructure. The return value is a pair consisting of the
    * schema specifically derived from the passed structure and all other schemas that were derived
@@ -153,7 +153,7 @@ public class AvroGenerator {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Helper to determine if an IntermediateDataStructure represents an Avro Fixed type. This is
    * the case, if the structure has the "AvroFixed" aspect, and the first visible data field is an
@@ -170,7 +170,7 @@ public class AvroGenerator {
       (sizeField.getInitializationValue() != null)) && 
       (Integer.parseInt(sizeField.getInitializationValue()) > 0));
   }
-  
+
   /**
    * Internal helper to generate schemas from an IntermediateDataStructure, which represents an
    * Avro Fixed type. By contrast to the public toFixed(IntermediateDataStructure) method for
@@ -199,7 +199,7 @@ public class AvroGenerator {
     List<Schema> _createdSchemasForModel = this.createdSchemasForModel(modelUri);
     return Pair.<Schema, List<Schema>>of(fixed, _createdSchemasForModel);
   }
-  
+
   /**
    * Handle finishing of schema creation for IntermediateComplexTypes
    */
@@ -207,7 +207,7 @@ public class AvroGenerator {
     Util.<String, String, Schema>addToValueMap(this.createdSchemas, modelUri, Shared.lemmaName(schema), schema);
     Util.<String, String, Schema>removeFromValueMap(this.schemasCreationStack, modelUri, Shared.lemmaName(schema));
   }
-  
+
   /**
    * Map of all Avro schemas created by this instance of AvroGenerator. Note, that the map is not
    * reset after a schema generation run. The key of the map is the URI of the LEMMA model, for
@@ -215,7 +215,7 @@ public class AvroGenerator {
    * of the schema and whose value is the schema itself.
    */
   private final LinkedHashMap<String, Map<String, Schema>> createdSchemas = CollectionLiterals.<String, Map<String, Schema>>newLinkedHashMap();
-  
+
   /**
    * Map of all Avro schemas, whose creation is not finished yet, e.g., because nested schemas are
    * currently generated. An entry is removed from the stack, as soon as the corresponding schema
@@ -223,7 +223,7 @@ public class AvroGenerator {
    * "createdSchemas" map.
    */
   private final LinkedHashMap<String, Map<String, Schema>> schemasCreationStack = CollectionLiterals.<String, Map<String, Schema>>newLinkedHashMap();
-  
+
   /**
    * Get all created schemas for the given modelUri
    */
@@ -235,7 +235,7 @@ public class AvroGenerator {
     }
     return IterableExtensions.<Schema>toList(_values);
   }
-  
+
   /**
    * Generate schemas from IntermediateDataStructure, which represents an Avro Fixed type. Returns
    * a pair consisting of the schema for the IntermediateDataStructure and all schemas that were
@@ -246,7 +246,7 @@ public class AvroGenerator {
     List<Schema> _allCreatedSchemas = this.allCreatedSchemas();
     return Pair.<Schema, List<Schema>>of(fixed, _allCreatedSchemas);
   }
-  
+
   /**
    * Get all fully created schemas across all models
    */
@@ -256,7 +256,7 @@ public class AvroGenerator {
     };
     return IterableExtensions.<Schema>toList(Iterables.<Schema>concat(IterableExtensions.<Map<String, Schema>, Collection<Schema>>map(this.createdSchemas.values(), _function)));
   }
-  
+
   /**
    * Helper to determine if an IntermediateDataStructure represents an Avro Map type. This is the
    * case, if the structure has the "AvroMap" aspect and exactly two visible data fields. The
@@ -275,7 +275,7 @@ public class AvroGenerator {
       Util.isPrimitiveType(firstField.getOriginalType(), PrimitiveTypeConstants.STRING.getLiteral())) && 
       Util.hasAspect(secondField, Shared.MAP_VALUE_ASPECT_FULLY_QUALIFIED));
   }
-  
+
   /**
    * Helper to determine if an IntermediateDataStructure represents an Avro Union type. This is
    * the case, if the structure has the "AvroUnion" aspect and visible data fields.
@@ -284,7 +284,7 @@ public class AvroGenerator {
     return (Util.hasAspect(structure, Shared.UNION_ASPECT_FULLY_QUALIFIED) && 
       (!Util.visibleFields(structure).isEmpty()));
   }
-  
+
   /**
    * Generate schemas from IntermediateDataStructure, which represents an Avro Map type. Returns
    * a pair consisting of the schema for the IntermediateDataStructure and all schemas that were
@@ -295,7 +295,7 @@ public class AvroGenerator {
     List<Schema> _allCreatedSchemas = this.allCreatedSchemas();
     return Pair.<Schema, List<Schema>>of(map, _allCreatedSchemas);
   }
-  
+
   /**
    * Internal helper to generate schemas from an IntermediateDataStructure, which represents an
    * Avro Map type. By contrast to the public toMap(IntermediateDataStructure) method for external
@@ -324,7 +324,7 @@ public class AvroGenerator {
     List<Schema> _createdSchemasForModel = this.createdSchemasForModel(modelUri);
     return Pair.<Schema, List<Schema>>of(avroMap, _createdSchemasForModel);
   }
-  
+
   /**
    * Create an Avro Record type from a list of IntermediateDataFields. Convenience method, which
    * creates Avro records that do not represent errors.
@@ -332,7 +332,7 @@ public class AvroGenerator {
   private Schema toRecord(final List<IntermediateDataField> dataFields, final String modelUri, final String qualifiedName) {
     return this.toRecord(dataFields, modelUri, qualifiedName, false);
   }
-  
+
   /**
    * Create an Avro Record type from a list of IntermediateDataFields for model with the given URI
    * and with the qualifiedName. isError may be set to true, if the created Avro record shall
@@ -348,7 +348,7 @@ public class AvroGenerator {
     this.finishedComplexTypeSchemaCreation(record, modelUri);
     return record;
   }
-  
+
   /**
    * Create an Avro Schema Field from an IntermediateDataField
    */
@@ -371,7 +371,7 @@ public class AvroGenerator {
     String _name = field.getName();
     return new Schema.Field(_name, type, "", defaultValue);
   }
-  
+
   /**
    * Create an Avro Schema from the type of an IntermediateDataField
    */
@@ -422,7 +422,7 @@ public class AvroGenerator {
     }
     return _switchResult;
   }
-  
+
   /**
    * Helper to resolve a type reference inside an intermediate LEMMA model to the referenced
    * type's definition and return the corresponding Avro schema
@@ -501,7 +501,7 @@ public class AvroGenerator {
     }
     return _elvis;
   }
-  
+
   /**
    * Helper to resolve a type reference inside an intermediate LEMMA model to the referenced
    * type's definition. The helper returns a pair consisting of the URI of the model, which
@@ -548,12 +548,12 @@ public class AvroGenerator {
     IntermediateComplexType _value = modelUriAndResolvedType.getValue();
     return Pair.<String, RT>of(_key, ((RT) _value));
   }
-  
+
   /**
    * Cache for searched and found type definitions
    */
   private final HashMap<String, IntermediateComplexType> foundTypeDefinitionsCache = CollectionLiterals.<String, IntermediateComplexType>newHashMap();
-  
+
   /**
    * Helper to find a complex type's definition from a given data model and reference to the type
    */
@@ -590,12 +590,12 @@ public class AvroGenerator {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Cache for all complex type definitions contained in traversed data models
    */
   private final HashMap<String, List<IntermediateComplexType>> complexTypeDefinitionsCache = CollectionLiterals.<String, List<IntermediateComplexType>>newHashMap();
-  
+
   /**
    * Get all complex type definitions from a data model
    */
@@ -608,7 +608,7 @@ public class AvroGenerator {
     this.complexTypeDefinitionsCache.put(modelUri, complexTypeDefinitions);
     return complexTypeDefinitions;
   }
-  
+
   /**
    * Helper to resolve a reference to an imported complex type. The helper returns a pair
    * consisting of the import URI of the model, which defines the complex type, and the complex
@@ -629,12 +629,12 @@ public class AvroGenerator {
     }
     return Pair.<String, IntermediateComplexType>of(importUri, complexType);
   }
-  
+
   /**
    * Cache for loaded external models
    */
   private final HashMap<String, IntermediateDataModel> loadedExternalModelsCache = CollectionLiterals.<String, IntermediateDataModel>newHashMap();
-  
+
   /**
    * Load a data model from the given absolute model URI
    */
@@ -654,7 +654,7 @@ public class AvroGenerator {
     this.loadedExternalModelsCache.put(absoluteModelUri, externalModel);
     return externalModel;
   }
-  
+
   /**
    * Get an already created Avro schema specification for the given model URI and EObject. Returns
    * null if the EObject was not handled by the Avro generator thus far.
@@ -691,7 +691,7 @@ public class AvroGenerator {
     }
     return null;
   }
-  
+
   /**
    * Generate schemas from IntermediateDataStructure, which represents an Avro Union type. Returns
    * a pair consisting of the schema for the IntermediateDataStructure and all schemas that were
@@ -702,7 +702,7 @@ public class AvroGenerator {
     List<Schema> _allCreatedSchemas = this.allCreatedSchemas();
     return Pair.<Schema, List<Schema>>of(union, _allCreatedSchemas);
   }
-  
+
   /**
    * Internal helper to generate schemas from an IntermediateDataStructure, which represents an
    * Avro Union type. By contrast to the public toUnion(IntermediateDataStructure) method for
@@ -730,7 +730,7 @@ public class AvroGenerator {
     List<Schema> _createdSchemasForModel = this.createdSchemasForModel(modelUri);
     return Pair.<Schema, List<Schema>>of(union, _createdSchemasForModel);
   }
-  
+
   /**
    * Generate schemas from IntermediateDataStructure, which represents an Avro Record type.
    * Returns a pair consisting of the schema for the IntermediateDataStructure and all schemas
@@ -741,7 +741,7 @@ public class AvroGenerator {
     List<Schema> _allCreatedSchemas = this.allCreatedSchemas();
     return Pair.<Schema, List<Schema>>of(record, _allCreatedSchemas);
   }
-  
+
   /**
    * Internal helper to generate schemas from an IntermediateDataStructure, which represents an
    * Avro Record type. By contrast to the public toUnion(IntermediateDataStructure) method for
@@ -753,7 +753,7 @@ public class AvroGenerator {
     List<Schema> _createdSchemasForModel = this.createdSchemasForModel(modelUri);
     return Pair.<Schema, List<Schema>>of(record, _createdSchemasForModel);
   }
-  
+
   /**
    * Generate schemas from IntermediateEnumeration. The return value is a pair consisting of the
    * schema specifically derived from the passed enumeration and all other schemas that were
@@ -764,7 +764,7 @@ public class AvroGenerator {
     List<Schema> _allCreatedSchemas = this.allCreatedSchemas();
     return Pair.<Schema, List<Schema>>of(enum_, _allCreatedSchemas);
   }
-  
+
   /**
    * Internal helper to generate schemas from an IntermediateEnumeration, which represents an Avro
    * Enum type. By contrast to the public generateSchemasFrom(IntermediateEnumeration) method for
@@ -780,7 +780,7 @@ public class AvroGenerator {
     List<Schema> _createdSchemasForModel = this.createdSchemasForModel(modelUri);
     return Pair.<Schema, List<Schema>>of(avroEnum, _createdSchemasForModel);
   }
-  
+
   /**
    * Generate schemas from IntermediateCollectionType. The return value is a pair consisting of
    * the schema specifically derived from the passed collection type and all other schemas that
@@ -791,7 +791,7 @@ public class AvroGenerator {
     List<Schema> _allCreatedSchemas = this.allCreatedSchemas();
     return Pair.<Schema, List<Schema>>of(array, _allCreatedSchemas);
   }
-  
+
   /**
    * Internal helper to generate schemas from an IntermediateCollectionType, which represents an
    * Avro Array type. By contrast to the public generateSchemasFrom(IntermediateCollectionType)
@@ -811,7 +811,7 @@ public class AvroGenerator {
     List<Schema> _createdSchemasForModel = this.createdSchemasForModel(modelUri);
     return Pair.<Schema, List<Schema>>of(array, _createdSchemasForModel);
   }
-  
+
   /**
    * Cluster all schemas derived for the given IntermediateDataModel in an Avro protocol with the
    * specified name and namespace
@@ -819,7 +819,7 @@ public class AvroGenerator {
   public Protocol toProtocol(final IntermediateDataModel dataModel, final String name, final String namespace) {
     return this.toProtocol(dataModel, name, "", namespace);
   }
-  
+
   /**
    * Cluster all schemas derived for the given IntermediateDataModel in an Avro protocol with the
    * specified name, docstring, and namespace
@@ -853,7 +853,7 @@ public class AvroGenerator {
     final List<List<Schema>> schemas = _xifexpression;
     return this.toProtocol(this.withoutDuplicates(IterableExtensions.<Schema>toList(Iterables.<Schema>concat(schemas))), name, doc, namespace);
   }
-  
+
   /**
    * Cluster all schemas derived for the given IntermediateVersion in an Avro protocol with the
    * specified name and namespace
@@ -861,7 +861,7 @@ public class AvroGenerator {
   public Protocol toProtocol(final IntermediateVersion version, final String name, final String namespace) {
     return this.toProtocol(version, name, "", namespace);
   }
-  
+
   /**
    * Cluster all schemas derived for the given IntermediateVersion in an Avro protocol with the
    * specified name, docstring, and namespace
@@ -873,7 +873,7 @@ public class AvroGenerator {
     final List<Schema> schemas = this.withoutDuplicates(IterableExtensions.<Schema>toList(Iterables.<Schema>concat(ListExtensions.<IntermediateContext, List<Schema>>map(version.getContexts(), _function))));
     return this.toProtocol(schemas, name, doc, namespace);
   }
-  
+
   /**
    * Cluster all schemas derived for the given IntermediateContext in an Avro protocol with the
    * specified name and namespace
@@ -881,7 +881,7 @@ public class AvroGenerator {
   public Protocol toProtocol(final IntermediateContext context, final String name, final String namespace) {
     return this.toProtocol(context, name, "", namespace);
   }
-  
+
   /**
    * Cluster all schemas derived for the given IntermediateContext in an Avro protocol with the
    * specified name, docstring, and namespace
@@ -889,14 +889,14 @@ public class AvroGenerator {
   public Protocol toProtocol(final IntermediateContext context, final String name, final String doc, final String namespace) {
     return this.toProtocol(this.generateSchemasFrom(context), name, doc, namespace);
   }
-  
+
   /**
    * Cluster the given Avro schemas in an Avro protocol with the given name and namespace
    */
   public Protocol toProtocol(final List<Schema> types, final String name, final String namespace) {
     return this.toProtocol(types, name, "", namespace);
   }
-  
+
   /**
    * Cluster the given Avro schemas in an Avro protocol with the given name, docstring, and
    * namespace

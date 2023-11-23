@@ -18,14 +18,14 @@ import org.eclipse.xtext.xbase.lib.Conversions;
 @SuppressWarnings("all")
 public final class ProjectSelectionDialog extends ResourceListSelectionDialog {
   private boolean initializePattern = true;
-  
+
   /**
    * Constructor
    */
   public ProjectSelectionDialog(final Shell parentShell) {
     super(parentShell, ResourcesPlugin.getWorkspace().getRoot(), IResource.PROJECT);
   }
-  
+
   /**
    * Create the dialog area
    */
@@ -35,7 +35,7 @@ public final class ProjectSelectionDialog extends ResourceListSelectionDialog {
     this.refresh(false);
     return dialogArea;
   }
-  
+
   /**
    * Get the pattern for project selection
    */
@@ -54,7 +54,7 @@ public final class ProjectSelectionDialog extends ResourceListSelectionDialog {
     }
     return _xifexpression;
   }
-  
+
   /**
    * Get the selected project or null if no project was selected
    */

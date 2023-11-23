@@ -29,7 +29,7 @@ import org.eclipse.xtext.xbase.lib.Procedures.Procedure2;
 @SuppressWarnings("all")
 public final class LaunchShortcut implements ILaunchShortcut2 {
   private static final ILaunchManager LAUNCH_MANAGER = DebugPlugin.getDefault().getLaunchManager();
-  
+
   /**
    * Get the launch configurations associated with a selected file
    */
@@ -44,7 +44,7 @@ public final class LaunchShortcut implements ILaunchShortcut2 {
     }
     return ((ILaunchConfiguration[])Conversions.unwrapArray(_xifexpression, ILaunchConfiguration.class));
   }
-  
+
   /**
    * Get the launch configurations applicable to the given IFile as a mapped resource
    */
@@ -53,7 +53,7 @@ public final class LaunchShortcut implements ILaunchShortcut2 {
       LaunchShortcut.LAUNCH_MANAGER, 
       LaunchConfigurationConstants.PROCESSING_CHAIN_LAUNCH_CONFIGURATION_TYPE, file);
   }
-  
+
   /**
    * Get launchable resource associated with a selected file
    */
@@ -61,7 +61,7 @@ public final class LaunchShortcut implements ILaunchShortcut2 {
   public final IResource getLaunchableResource(final ISelection selection) {
     return null;
   }
-  
+
   /**
    * Execute the shortcut for the selected file in the given mode
    */
@@ -69,7 +69,7 @@ public final class LaunchShortcut implements ILaunchShortcut2 {
   public final void launch(final ISelection selection, final String mode) {
     this.launch(Utils.getSelectedFile(selection), mode);
   }
-  
+
   /**
    * Execute the shortcut on the given file in the given mode
    */
@@ -89,7 +89,7 @@ public final class LaunchShortcut implements ILaunchShortcut2 {
     final LaunchConfigurationChainCreationDialog dialog = new LaunchConfigurationChainCreationDialog(_activeShell, _modelProcessingLaunchConfigurations, _processingChainWithLaunchConfigurationName, _function, _function_1);
     dialog.open();
   }
-  
+
   /**
    * Store and run the given the model processing chain
    */
@@ -97,7 +97,7 @@ public final class LaunchShortcut implements ILaunchShortcut2 {
     DebugUITools.launch(this.store(completedProcessingChain, availableLaunchConfigurations), 
       ILaunchManager.RUN_MODE);
   }
-  
+
   /**
    * Store the given model processing chain
    */
@@ -128,7 +128,7 @@ public final class LaunchShortcut implements ILaunchShortcut2 {
       throw Exceptions.sneakyThrow(_e);
     }
   }
-  
+
   /**
    * Get the launch configurations associated with the currently edited file
    */
@@ -143,7 +143,7 @@ public final class LaunchShortcut implements ILaunchShortcut2 {
     }
     return ((ILaunchConfiguration[])Conversions.unwrapArray(_xifexpression, ILaunchConfiguration.class));
   }
-  
+
   /**
    * Get launchable resource associated with the currently edited file
    */
@@ -151,7 +151,7 @@ public final class LaunchShortcut implements ILaunchShortcut2 {
   public final IResource getLaunchableResource(final IEditorPart editor) {
     return null;
   }
-  
+
   /**
    * Execute the shortcut for the currently edited file in the given mode
    */
