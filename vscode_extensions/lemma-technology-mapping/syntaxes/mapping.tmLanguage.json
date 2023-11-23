@@ -22,7 +22,7 @@
 		"keywords": {
 			"patterns": [{
 				"name": "keyword.control.mapping",
-				"match": "\\b(technology|microservices|type|aspects|protocols|endpoints|aspects|interface|operation|parameters|referref|primitive|complex|->|op|return|type)\\b"
+				"match": "\\b(technology|microservices|type|import|aspects|protocols|endpoints|aspects|interface|operation|parameters|referref|primitive|complex|->|op|return|type)\\b"
 			}]
 		},
 		"strings": {

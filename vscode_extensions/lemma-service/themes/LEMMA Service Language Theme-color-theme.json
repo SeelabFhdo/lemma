@@ -83,7 +83,8 @@
 				"keyword.other.substitution"
 			],
 			"settings": {
-				"foreground": "#D03B67"
+				"foreground": "#D03B67",
+				"fontStyle": "bold"
 			}
 		},
 		{
@@ -652,27 +653,29 @@
 			}
 		},
 		{
-			"name": "OpenAPI Comment Color",
+			"name": "API Comment Color",
 			"scope": [
-				"comment.block.openApi"
+				"comment.block.apiComment"
 			],
 			"settings": {
-				"foreground": "#ce5c00"
+				"foreground": "#ce5c00",
+				"fontStyle": ""
 			}
 		},
 		{
-			"name": "OpenAPI Annotation Color",
+			"name": "API Comment Annotation Color",
 			"scope": [
-				"meta.type.annotation.openApiAnnotation"
+				"meta.type.annotation.apiCommentAnnotation"
 			],
 			"settings": {
-				"foreground": "#869abc"
+				"foreground": "#9a8c7c",
+				"fontStyle": "bold"
 			}
 		},
 		{
-			"name": "OpenAPI Annotation Parameter Color",
+			"name": "API Comment Annotation Parameter Color",
 			"scope": [
-				"markup.italic.openApi.parameter"
+				"markup.italic.apiComment.parameter"
 			],
 			"settings": {
 				"foreground": "#7f7f9f"

@@ -9,7 +9,7 @@
 			"include": "#strings"
 		},
 		{
-			"include": "#openapi"
+			"include": "#apiComment"
 		},
 		{
 			"include": "#annotations"
@@ -54,22 +54,22 @@
 			}
 		]
 		},
-		"openapi": {
+		"apiComment": {
 			"begin": "---",
 			"end": "---",
-			"name": "comment.block.openApi",
+			"name": "comment.block.apiComment",
 			"patterns": [
 				{
-					"name": "meta.type.annotation.openApiAnnotation",
-					"match": "@(required|requires|returned|returns)"
+					"name": "meta.type.annotation.apiCommentAnnotation",
+					"match": "@(required|requires|returned|returns|param)"
 				},
 				{
-					"name": "markup.italic.openApi.parameter",
-					"match": "(?<=@(required|requires|returned|returns)) ([a-z]|[A-Z]|_)+"
+					"name": "markup.italic.apiComment.parameter",
+					"match": "(?<=@(required|requires|returned|returns|param)) (\\^)?([a-z]|[A-Z]|_)+"
 				},
 				{
-					"name": "comment.block.openApi",
-					"match": "(?<=@(required|requires|returned|returns)) ([a-z]|[A-Z]|_)+ .*"
+					"name": "comment.block.apiComment",
+					"match": "(?<=@(required|requires|returned|returns|param)) (\\^)?([a-z]|[A-Z]|_)+ .*"
 				}
 			]
 		},

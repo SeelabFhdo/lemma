@@ -83,7 +83,8 @@
 				"keyword.other.substitution"
 			],
 			"settings": {
-				"foreground": "#D03B67"
+				"foreground": "#D03B67",
+				"fontStyle": "bold"
 			}
 		},
 		{
