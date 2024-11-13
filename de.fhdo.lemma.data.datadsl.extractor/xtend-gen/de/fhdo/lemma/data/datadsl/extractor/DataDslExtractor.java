@@ -285,9 +285,7 @@ public class DataDslExtractor {
     String _lemmaName = Util.lemmaName(dataField.getName());
     _builder.append(_lemmaName);
     String dataFieldString = _builder.toString();
-    boolean _isEmpty = dataField.getFeatures().isEmpty();
-    boolean _not = (!_isEmpty);
-    if (_not) {
+    if (((!dataField.getFeatures().isEmpty()) && (dataField.getFeatures() == null))) {
       String _dataFieldString = dataFieldString;
       StringConcatenation _builder_1 = new StringConcatenation();
       _builder_1.append("<");
