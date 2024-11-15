@@ -11,7 +11,6 @@ Require-Bundle: de.fhdo.lemma.technology.technologydsl.ui,
  org.eclipse.xtext.testing,
  org.eclipse.xtext.xbase.testing,
  org.eclipse.xtext.junit4,
- org.eclipse.xtext.xbase.junit,
  org.eclipse.core.runtime,
  org.eclipse.ui.workbench;resolution:=optional,
  org.eclipse.xtext.ui.testing
