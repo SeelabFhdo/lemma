@@ -138,7 +138,7 @@ class DataDslExtractor {
             ImportedComplexType: directFieldType.extractTypeReferenceToString
         }
         var dataFieldString = '''«type» «lemmaName(dataField.name)»'''
-        if (!dataField.features.empty && dataField.features === null)
+        if (!dataField.features.empty && dataField.features !== null)
             dataFieldString +='''<«dataField.features.extractDataFieldFeaturesToString»>'''
         return dataFieldString
     }

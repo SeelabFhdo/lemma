@@ -1,6 +1,5 @@
 package de.fhdo.lemma.data.datadsl.extractor;
 
-import com.google.common.base.Objects;
 import de.fhdo.lemma.data.ComplexType;
 import de.fhdo.lemma.data.Context;
 import de.fhdo.lemma.data.DataField;
@@ -9,6 +8,7 @@ import de.fhdo.lemma.data.DataOperationParameter;
 import de.fhdo.lemma.data.EnumerationField;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
@@ -75,7 +75,7 @@ public final class Util {
     }
     return _switchResult;
   }
-  
+
   /**
    * Calculate the relative qualifier of a full qualifier relative to another full qualifier. For
    * example, the relative qualifier of the full qualifier "org.example.lemma.data.Structure" in
@@ -91,7 +91,7 @@ public final class Util {
       {
         String _get = qualifierParts.get(index);
         Object _get_1 = relativeToParts[index];
-        boolean _notEquals = (!Objects.equal(_get, _get_1));
+        boolean _notEquals = (!Objects.equals(_get, _get_1));
         if (_notEquals) {
           differenceIndex = index;
         }
@@ -100,7 +100,7 @@ public final class Util {
     }
     return Util.joinFromIndex(qualifierParts, ".", differenceIndex);
   }
-  
+
   /**
    * Join entries of an Iterable separated by an arbitrary String and starting from a given
    * (inclusive) index
@@ -116,12 +116,12 @@ public final class Util {
     final Iterable<Object> joinElements = IterableExtensions.<Pair<Integer, Object>, Object>map(IterableExtensions.<Pair<Integer, Object>>filter(IterableExtensions.<Object>indexed(iterable), _function), _function_1);
     return IterableExtensions.join(joinElements, separator);
   }
-  
+
   /**
    * List of reserved keywords of the Data DSL
    */
   private static final List<String> RESERVED_KEYWORDS = Collections.<String>unmodifiableList(CollectionLiterals.<String>newArrayList("as", "collection", "context", "datatypes", "enum", "from", "import", "structure", "version"));
-  
+
   /**
    * Escape Data DSL keyword
    */
