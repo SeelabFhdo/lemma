@@ -1,6 +1,8 @@
 <h1 align="center">LEMMA</h1>
-
 <div align="center">
+  
+  -[Active development in a fork, merge will follow soon](https://github.com/pwizenty/lemma)
+  
   <strong>A Language Ecosystem for Modeling Microservice Architecture</strong>
 </div>
 <div align="center">
