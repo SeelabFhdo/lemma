@@ -1,0 +1,68 @@
+import technology from "../technology/spring.technology" as javaWithSpring
+import datatypes from "../domain/CustomerCore.data" as CustomerCore
+
+@technology(javaWithSpring)
+public functional microservice com.lakesidemutual.customercore.CustomerCore {
+    @endpoints(javaWithSpring::_protocols.rest:"/customers";)
+    interface CustomerInformationHolder {
+        @javaWithSpring::_aspects.GetMapping
+        getCustomers(
+            @javaWithSpring::_aspects.RequestParam(value = "filter", defaultValue = "") sync in filter : string,
+            @javaWithSpring::_aspects.RequestParam(value = "limit", defaultValue = "10") sync in limit : int,
+            @javaWithSpring::_aspects.RequestParam(value = "offset", defaultValue = "0") sync in offset : int,
+            @javaWithSpring::_aspects.RequestParam(value = "fields", defaultValue = "") sync in ^fields : string,
+            sync out paginatedCustomerResponseDto : CustomerCore::CustomerCore.PaginatedCustomerResponseDto
+        );
+
+        @endpoints(javaWithSpring::_protocols.rest:"/{ids}";)
+        @javaWithSpring::_aspects.GetMapping
+        getCustomer(
+            @javaWithSpring::_aspects.PathVariable sync in ids : string,
+            @javaWithSpring::_aspects.RequestParam(value = "fields", defaultValue = "") sync in ^fields : string,
+            sync out customersResponseDto : CustomerCore::CustomerCore.CustomersResponseDto
+        );
+
+        @endpoints(javaWithSpring::_protocols.rest:"/{customerId}";)
+        @javaWithSpring::_aspects.PutMapping
+        updateCustomer(
+            @javaWithSpring::_aspects.PathVariable sync in customerId : CustomerCore::CustomerCore.CustomerId,
+            @javaWithSpring::_aspects.Valid @javaWithSpring::_aspects.RequestBody sync in requestDto : CustomerCore::CustomerCore.CustomerProfileUpdateRequestDto,
+            sync out customerResponseDto : CustomerCore::CustomerCore.CustomerResponseDto
+        );
+
+        @endpoints(javaWithSpring::_protocols.rest:"/{customerId}/address";)
+        @javaWithSpring::_aspects.PutMapping
+        changeAddress(
+            @javaWithSpring::_aspects.PathVariable sync in customerId : CustomerCore::CustomerCore.CustomerId,
+            @javaWithSpring::_aspects.Valid @javaWithSpring::_aspects.RequestBody sync in requestDto : CustomerCore::CustomerCore.AddressDto,
+            sync out addressDto : CustomerCore::CustomerCore.AddressDto
+        );
+
+        @javaWithSpring::_aspects.PostMapping
+        createCustomer(
+            @javaWithSpring::_aspects.Valid @javaWithSpring::_aspects.RequestBody sync in requestDto : CustomerCore::CustomerCore.CustomerProfileUpdateRequestDto,
+            sync out customerResponseDto : CustomerCore::CustomerCore.CustomerResponseDto
+        );
+    }
+
+    @endpoints(javaWithSpring::_protocols.rest:"/cities";)
+    interface CityReferenceDataHolder {
+        @endpoints(javaWithSpring::_protocols.rest:"/{postalCode}";)
+        @javaWithSpring::_aspects.GetMapping
+        getCitiesForPostalCode(
+            @javaWithSpring::_aspects.PathVariable sync in postalCode : string,
+            sync out citiesResponseDto : CustomerCore::CustomerCore.CitiesResponseDto
+        );
+    }
+
+    @endpoints(javaWithSpring::_protocols.rest:"getCustomers";)
+    interface OldCustomerInformationHolder {
+        @endpoints(javaWithSpring::_protocols.rest:"/{ids}";)
+        @javaWithSpring::_aspects.GetMapping
+        getCustomer(
+            @javaWithSpring::_aspects.PathVariable sync in ids : string,
+            @javaWithSpring::_aspects.RequestParam(value = "fields", defaultValue = "") sync in ^fields : string,
+            sync out responseEntity : javaWithSpring::_types.ResponseEntity
+        );
+    }
+}

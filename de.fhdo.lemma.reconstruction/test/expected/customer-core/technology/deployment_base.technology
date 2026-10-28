@@ -1,0 +1,76 @@
+technology DeploymentBase {
+    deployment technologies {
+        Kubernetes {
+            // An operation environment can only be referenced by an operation
+            // node when it is declared here. These are the base images the
+            // reconstruction reads from the Dockerfiles of Lakeside Mutual;
+            // a base image that is missing from this list cannot be carried
+            // over into the operation model.
+            operation environments = "openjdk:11-jdk-slim" default,
+                // openjdk was deprecated as a Docker Official Image and its
+                // tags withdrawn, so a system that still names one cannot be
+                // built - but a model reconstructed before that remains valid,
+                // and an undeclared environment does not resolve. Both stay.
+                "openjdk:21-slim-buster",
+                "eclipse-temurin:21-jdk",
+                "eclipse-temurin:21-jre",
+                "node:16",
+                // The runtime stage of the frontends, which the Docker plugin
+                // reports since it began reading the final FROM rather than the
+                // first - it used to say node:16, their build stage.
+                //
+                // Declared pre-emptively: the frontends are reconstructed into
+                // the database but are deliberately kept out of generated
+                // operation models, so nothing references this today. It is
+                // here so that including them later does not fail to resolve.
+                "nginx:stable-alpine",
+                "nginx";
+
+            service properties {
+                // General Spring Boot configurations
+                string springApplicationName<mandatory>;
+                int serverPort<mandatory>;
+
+                // MariaDB database configuration
+                string springDatasourceUsername;
+                string springDatasourcePassword;
+                string springDatasourceUrl;
+
+                // MongoDB database configuration
+                string springDataMongodbHost;
+                int springDataMongodbPort;
+                string springDataMongodbUri;
+                string springDataMongodbDatabase;
+                string springDataMongodbUsername;
+                string stringDataMongodbPassword;
+
+                //Eureka configuration
+                string eurekaUri;
+            }
+        }
+    }
+
+    operation aspects {
+        // Operation aspect for the configuration of custom dockerfiles
+        aspect Dockerfile<singleval> for containers, infrastructure {
+            string contents <mandatory>;
+        }
+
+        // Operation aspect for the configuration of custom Kubernetes files
+        aspect KubernetesDeployment<singleval> for containers, infrastructure {
+            string contents <mandatory>;
+        }
+
+        // Operation aspect for the configuration of custom docker-compose parts
+        aspect ComposePart<singleval> for containers, infrastructure {
+            string contents <mandatory>;
+        }
+
+        // Operation aspect for the configuration of Maven-based microservices
+        aspect MavenBuildConfiguration for containers, infrastructure {
+            string artifactId;
+            string ^version;
+            string name;
+        }
+    }
+}

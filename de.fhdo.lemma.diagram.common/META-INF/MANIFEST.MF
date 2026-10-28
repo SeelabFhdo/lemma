@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: de.fhdo.lemma.diagram.common
+Bundle-SymbolicName: de.fhdo.lemma.diagram.common;singleton:=true
+Bundle-Version: 0.8.6.qualifier
+Automatic-Module-Name: de.fhdo.lemma.diagram.common
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Require-Bundle: com.google.guava,
+ org.eclipse.xtext.xbase.lib,
+ org.eclipse.xtend.lib,
+ org.eclipse.xtend.lib.macro
+Export-Package: de.fhdo.lemma.diagram.common

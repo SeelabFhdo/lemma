@@ -52,7 +52,7 @@ class TypecheckingUtils {
             return null
 
         if (withoutQualifyingParts) {
-            val namePartsWithoutQualifyingParts = <String> newArrayList(nameParts.last)
+            val namePartsWithoutQualifyingParts = <String> newArrayList(nameParts.lastOrNull)
             return namePartsWithoutQualifyingParts
         } else
             return nameParts

@@ -1,0 +1,13 @@
+import microservices from "a.services" as a
+
+public functional microservice com.example.cycle.B {
+    required microservices {
+        a::com.example.cycle.A
+    }
+
+    interface Pong {
+        pong(
+            sync out result : string
+        );
+    }
+}

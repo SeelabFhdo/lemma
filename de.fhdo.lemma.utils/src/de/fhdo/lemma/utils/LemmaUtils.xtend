@@ -211,7 +211,7 @@ final class LemmaUtils {
         if (relativeFilePathWithoutScheme.representsAbsolutePath)
             return relativeFilePathWithoutScheme
 
-        val absoluteBaseFile = new File(absoluteBaseFilePath)
+	        val absoluteBaseFile = new File(absoluteBaseFilePath)
         val absoluteBaseFolder = new File(absoluteBaseFile.getParent())
         return absoluteBaseFolder + File.separator + relativeFilePathWithoutScheme
     }
@@ -653,7 +653,7 @@ final class LemmaUtils {
             // If no difference could be found, i.e. the concept to name shall be named relatively
             // to itself, we return the last part of its qualifying name, of which we assume that
             // it is always, by convention, the name of the concept instance itself
-            return newArrayList(conceptToNameQualifyingParts.last)
+            return newArrayList(conceptToNameQualifyingParts.lastOrNull)
     }
 
     /**

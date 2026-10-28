@@ -1,0 +1,72 @@
+// A version prefixes a microservice's name in a reference, and a reference
+// inside one model may abbreviate the name to a suffix of it - as
+// examples/e-vehicle-charging does.
+public infrastructure microservice de.fhdo.DiscoveryService version v01 {
+    // Declared before Lookup on purpose: a dependency on Lookup must be
+    // matched by name, and "the first interface" would give this one.
+    interface Health {
+        ping(
+            sync out ok : boolean
+        );
+    }
+
+    interface Lookup {
+        find(
+            sync in name : string,
+            sync out address : string
+        );
+    }
+}
+
+public infrastructure microservice de.fhdo.Gateway version v01 {
+    // Named by a suffix of "v01.de.fhdo.DiscoveryService".
+    required microservices {
+        DiscoveryService
+    }
+
+    interface Route {
+        route(
+            sync out ok : boolean
+        );
+    }
+}
+
+public functional microservice de.fhdo.Caller version v01 {
+    // Named in full, version included.
+    required operations {
+        v01.de.fhdo.DiscoveryService.Lookup.find
+    }
+
+    interface Trigger {
+        run(
+            sync out ok : boolean
+        );
+    }
+}
+
+// required interfaces, which no model of this repository uses - so without
+// this the whole interface level of the resolution went unexercised.
+public functional microservice de.fhdo.InterfaceCaller version v01 {
+    required interfaces {
+        v01.de.fhdo.DiscoveryService.Lookup
+    }
+
+    interface Trigger {
+        run(
+            sync out ok : boolean
+        );
+    }
+}
+
+// An interface the target does not declare.
+public functional microservice de.fhdo.WrongInterface version v01 {
+    required interfaces {
+        v01.de.fhdo.DiscoveryService.Missing
+    }
+
+    interface Trigger {
+        run(
+            sync out ok : boolean
+        );
+    }
+}

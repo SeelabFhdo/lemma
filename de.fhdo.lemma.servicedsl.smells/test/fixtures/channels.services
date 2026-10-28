@@ -1,0 +1,37 @@
+import technology from "tech.technology" as tech
+
+// A plaintext broker: the smell, reported from the producer's end only.
+@technology(tech)
+@tech::_aspects.MessageChannel(role = "producer", queue = "orders", target = "Consumer", broker = "activemq", scheme = "tcp", transport = "plaintext")
+public functional microservice com.example.Producer {
+    interface Trigger {
+        run(sync out ok : boolean);
+    }
+}
+
+@technology(tech)
+@tech::_aspects.MessageChannel(role = "consumer", queue = "orders", target = "Producer", broker = "activemq", scheme = "tcp", transport = "plaintext")
+@tech::_aspects.MessageChannel(role = "consumer", queue = "reports", broker = "activemq", scheme = "tcp", transport = "plaintext")
+public functional microservice com.example.Consumer {
+    interface Trigger {
+        run(sync out ok : boolean);
+    }
+}
+
+// A TLS broker: secured.
+@technology(tech)
+@tech::_aspects.MessageChannel(role = "producer", queue = "secure-events", target = "Consumer", broker = "activemq", scheme = "ssl", transport = "tls")
+public functional microservice com.example.SecureProducer {
+    interface Trigger {
+        run(sync out ok : boolean);
+    }
+}
+
+// A broker whose transport could not be determined: undecided.
+@technology(tech)
+@tech::_aspects.MessageChannel(role = "producer", queue = "unknown-events", target = "Consumer", broker = "activemq", scheme = "failover", transport = "unresolved")
+public functional microservice com.example.UnknownProducer {
+    interface Trigger {
+        run(sync out ok : boolean);
+    }
+}

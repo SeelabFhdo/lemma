@@ -1,0 +1,173 @@
+{
+  "context": [
+    {
+      "name": "RiskManagement",
+      "qualified_name": "riskmanagement.RiskManagement",
+      "data_structures": [
+        {
+          "name": "TriggerRequest",
+          "qualified_name": "riskmanagement.RiskManagement.TriggerRequest",
+          "data": [],
+          "fields": []
+        },
+        {
+          "name": "TriggerReply",
+          "qualified_name": "riskmanagement.RiskManagement.TriggerReply",
+          "data": [],
+          "fields": [
+            {
+              "name": "report",
+              "primitive_field_type": null,
+              "complex_field_type": {
+                "name": "Report",
+                "qualified_name": "riskmanagement.RiskManagement.Report",
+                "class_type": "DATA_STRUCTURE"
+              },
+              "data": [
+                {
+                  "name": "ProtoField",
+                  "values": {
+                    "protoType": "Report",
+                    "oneof": "report_or_progress"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "progress",
+              "primitive_field_type": {
+                "name": "int"
+              },
+              "complex_field_type": null,
+              "data": [
+                {
+                  "name": "ProtoField",
+                  "values": {
+                    "protoType": "int32",
+                    "oneof": "report_or_progress"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Report",
+          "qualified_name": "riskmanagement.RiskManagement.Report",
+          "data": [],
+          "fields": [
+            {
+              "name": "csv",
+              "primitive_field_type": {
+                "name": "string"
+              },
+              "complex_field_type": null,
+              "data": [
+                {
+                  "name": "ProtoField",
+                  "values": {
+                    "protoType": "string"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "collections": [],
+      "enums": [],
+      "data": []
+    }
+  ],
+  "microservice": [
+    {
+      "qualified_name": "riskmanagement.RiskManagement",
+      "name": "RiskManagement",
+      "data": [
+        {
+          "name": "public",
+          "values": {}
+        },
+        {
+          "name": "functional",
+          "values": {}
+        },
+        {
+          "name": "GrpcServer",
+          "values": {
+            "host": "0.0.0.0",
+            "port": "50051",
+            "transportSecurity": "plaintext",
+            "valueSource": "risk-management-server/index.js"
+          }
+        },
+        {
+          "name": "MessageQueue",
+          "values": {
+            "host": "localhost",
+            "port": "61613",
+            "broker": "activemq",
+            "queue": "newpolicies",
+            "scheme": "stomp",
+            "credentialsConfigured": "true",
+            "transportSecurity": "plaintext",
+            "valueSource": "risk-management-server/index.js"
+          }
+        }
+      ],
+      "interfaces": [
+        {
+          "qualified_name": "riskmanagement.RiskManagement.RiskManagement",
+          "name": "RiskManagement",
+          "data": [
+            {
+              "name": "ProtoService",
+              "values": {
+                "address": "riskmanagement.RiskManagement"
+              }
+            }
+          ],
+          "operations": [
+            {
+              "name": "Trigger",
+              "data": [
+                {
+                  "name": "ProtoRpc",
+                  "values": {
+                    "stream": "response"
+                  }
+                }
+              ],
+              "parameters": [
+                {
+                  "name": "TriggerRequest",
+                  "communication_type": "Synchronous",
+                  "exchange_pattern": "In",
+                  "primitive_parameter_type": null,
+                  "complex_parameter_type": {
+                    "name": "TriggerRequest",
+                    "qualified_name": "riskmanagement.RiskManagement.TriggerRequest",
+                    "class_type": "DATA_STRUCTURE"
+                  },
+                  "data": []
+                },
+                {
+                  "name": "TriggerReply",
+                  "communication_type": "Asynchronous",
+                  "exchange_pattern": "Out",
+                  "primitive_parameter_type": null,
+                  "complex_parameter_type": {
+                    "name": "TriggerReply",
+                    "qualified_name": "riskmanagement.RiskManagement.TriggerReply",
+                    "class_type": "DATA_STRUCTURE"
+                  },
+                  "data": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

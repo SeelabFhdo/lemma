@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="4.15"?>
+<plugin>
+    <extension
+         point="org.eclipse.ui.commands">
+      <category
+            id="de.fhdo.lemma.reconstruction.commands.category"
+            name="Lemma Reconstruction">
+      </category>
+      <command
+            categoryId="de.fhdo.lemma.reconstruction.commands.category"
+            id="de.fhdo.lemma.reconstruction.commands.transformToLemma"
+            name="Reconstruct to LEMMA models">
+      </command>
+    </extension>
+    <extension
+         point="org.eclipse.ui.handlers">
+         <handler
+            class="de.fhdo.lemma.reconstruction.ui.LemmaReconstructionHandler"
+            commandId="de.fhdo.lemma.reconstruction.commands.transformToLemma">
+         </handler>
+    </extension>
+    <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+        <command
+              commandId="de.fhdo.lemma.reconstruction.commands.transformToLemma"
+              mnemonic="M"
+              id="de.fhdo.lemma.eclipse.ui.menus.lemmaReconstruction"
+              icon="icons/reconstruction.png"
+              label="Reconstruct LEMMA models from MongoDB">
+        </command>
+      </menuContribution>
+       <menuContribution
+            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+         <toolbar
+               id="de.fhdo.lemma.eclipse.ui.lemmaToolbar">
+            <command
+                  commandId="de.fhdo.lemma.reconstruction.commands.transformToLemma"
+                  icon="icons/reconstruction.png"
+                  tooltip="Reconstruct LEMMA models from MongoDB"
+                  id="de.fhdo.lemma.eclipse.ui.toolbars.lemmaReconstruction">
+            </command>
+         </toolbar>
+      </menuContribution>
+   </extension>
+</plugin>

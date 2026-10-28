@@ -1,0 +1,59 @@
+import technology from "../technology/spring.technology" as javaWithSpring
+import datatypes from "../domain/StationService.data" as StationService
+
+@technology(javaWithSpring)
+public functional microservice de.dmsa.parkandcharge.station.StationService {
+    interface StationEvent {
+        @javaWithSpring::_aspects.PostMapping
+        receive(
+            sync in event : StationService::StationService.BookingEventMessage
+        );
+    }
+
+    interface Station {
+        @javaWithSpring::_aspects.PostMapping
+        create(
+            sync in request : StationService::StationService.CreateStationRequest,
+            sync out stationResponse : StationService::StationService.StationResponse
+        );
+
+        @javaWithSpring::_aspects.GetMapping
+        list(
+            sync in ownerId : long,
+            sync in city : string,
+            sync in connectorType : StationService::StationService.ConnectorType,
+            sync in activeOnly : boolean,
+            sync out dataList : StationService::StationService.StationResponseList
+        );
+
+        @javaWithSpring::_aspects.GetMapping
+        byIds(
+            sync in ids : StationService::StationService.LongList,
+            sync out dataList : StationService::StationService.StationResponseList
+        );
+
+        @javaWithSpring::_aspects.GetMapping
+        get(
+            sync in id : long,
+            sync out stationResponse : StationService::StationService.StationResponse
+        );
+
+        @javaWithSpring::_aspects.GetMapping
+        status(
+            sync in id : long,
+            sync out stationStatusResponse : StationService::StationService.StationStatusResponse
+        );
+
+        @javaWithSpring::_aspects.PutMapping
+        update(
+            sync in id : long,
+            sync in request : StationService::StationService.UpdateStationRequest,
+            sync out stationResponse : StationService::StationService.StationResponse
+        );
+
+        @javaWithSpring::_aspects.DeleteMapping
+        delete(
+            sync in id : long
+        );
+    }
+}

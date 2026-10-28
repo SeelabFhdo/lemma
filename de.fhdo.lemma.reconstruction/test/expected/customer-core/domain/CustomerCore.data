@@ -1,0 +1,84 @@
+context CustomerCore {
+    structure CustomerProfileEntity<entity> {
+        long serialVersionUID,
+        long id<identifier>,
+        string firstname,
+        string lastname,
+        date birthday,
+        string email,
+        string phoneNumber,
+        Address currentAddress,
+        MoveHistory moveHistory
+    }
+    
+    structure Address<entity> {
+        long id<identifier>,
+        string streetAddress,
+        string postalCode,
+        string city
+    }
+    
+    structure CustomerId {
+        long serialVersionUID,
+        string id
+    }
+    
+    structure CustomerAggregateRoot<entity> {
+        CustomerId id<identifier>,
+        CustomerProfileEntity customerProfile
+    }
+    
+    structure CustomerResponseDto {
+        string customerId,
+        string firstname,
+        string lastname,
+        date birthday,
+        string streetAddress,
+        string postalCode,
+        string city,
+        string email,
+        string phoneNumber,
+        MoveHistory moveHistory
+    }
+    
+    structure PaginatedCustomerResponseDto {
+        string filter,
+        int limit,
+        int offset,
+        int size,
+        CustomersList CustomersList
+    }
+    
+    structure CustomersResponseDto {
+        CustomersList CustomersList
+    }
+    
+    structure CustomerProfileUpdateRequestDto {
+        string firstname,
+        string lastname,
+        date birthday,
+        string streetAddress,
+        string postalCode,
+        string city,
+        string email,
+        string phoneNumber
+    }
+    
+    structure AddressDto {
+        string streetAddress,
+        string postalCode,
+        string city
+    }
+    
+    structure CitiesResponseDto {
+        string CitiesList
+    }
+    
+    collection CustomersList { unspecified }
+    
+    collection CitiesList { unspecified }
+    
+    structure MoveHistory {
+        unspecified moveHistory
+    }
+}

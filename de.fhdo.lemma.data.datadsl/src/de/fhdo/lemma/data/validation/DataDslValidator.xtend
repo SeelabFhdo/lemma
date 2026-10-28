@@ -896,7 +896,7 @@ class DataDslValidator extends AbstractDataDslValidator {
         }
         // Check the ImportChain for a cycle
         cycleChains.forEach[chain |
-            if(isInvokingModel && chain.entries.get(0) != chain.entries.last)
+            if(isInvokingModel && chain.entries.get(0) != chain.entries.lastOrNull)
                 chain.foundImportedCycle
         ]
         DataModelManager.clear

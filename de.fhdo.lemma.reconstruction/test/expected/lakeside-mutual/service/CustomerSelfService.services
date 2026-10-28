@@ -1,0 +1,126 @@
+import technology from "../technology/spring.technology" as javaWithSpring
+import datatypes from "../domain/CustomerSelfService.data" as CustomerSelfService
+import microservices from "CustomerCore.services" as CustomerCore
+
+@technology(javaWithSpring)
+@javaWithSpring::_aspects.ServiceCall(target = "CustomerCore", targetKind = "SERVICE", scheme = "http", ^technology = "RestTemplate")
+@javaWithSpring::_aspects.ServiceCommunicationTransport(transport = "plaintext")
+@javaWithSpring::_aspects.ServerEndpoint(connector = "server", port = "8080", ^protocol = "http", tlsEnabled = false)
+@javaWithSpring::_aspects.MessageChannel(role = "producer", queue = "insurance-quote-request-event-queue", target = "PolicyManagement", broker = "activemq", scheme = "tcp", transport = "plaintext")
+@javaWithSpring::_aspects.MessageChannel(role = "producer", queue = "customer-decision-event-queue", target = "PolicyManagement", broker = "activemq", scheme = "tcp", transport = "plaintext")
+@javaWithSpring::_aspects.MessageChannel(role = "consumer", queue = "insurance-quote-expired-event-queue", target = "PolicyManagement", broker = "activemq", scheme = "tcp", transport = "plaintext")
+@javaWithSpring::_aspects.MessageChannel(role = "consumer", queue = "policy-created-event-queue", target = "PolicyManagement", broker = "activemq", scheme = "tcp", transport = "plaintext")
+@javaWithSpring::_aspects.MessageChannel(role = "consumer", queue = "insurance-quote-response-event-queue", target = "PolicyManagement", broker = "activemq", scheme = "tcp", transport = "plaintext")
+public functional microservice com.lakesidemutual.customerselfservice.CustomerSelfService {
+    required microservices {
+        CustomerCore::com.lakesidemutual.customercore.CustomerCore
+    }
+
+    @endpoints(javaWithSpring::_protocols.rest:"/user";)
+    interface UserInformationHolder {
+        @javaWithSpring::_aspects.PreAuthorize(value = "isAuthenticated()")
+        @javaWithSpring::_aspects.GetMapping
+        getCurrentUser(
+            sync in authentication : javaWithSpring::_types.Authentication,
+            sync out userResponseDto : CustomerSelfService::CustomerSelfService.UserResponseDto
+        );
+    }
+
+    @endpoints(javaWithSpring::_protocols.rest:"/auth";)
+    interface Authentication {
+        @javaWithSpring::_aspects.PostMapping
+        authenticationRequest(
+            @javaWithSpring::_aspects.RequestBody sync in authenticationRequest : CustomerSelfService::CustomerSelfService.AuthenticationRequestDto,
+            sync out authenticationResponseDto : CustomerSelfService::CustomerSelfService.AuthenticationResponseDto
+        );
+
+        @endpoints(javaWithSpring::_protocols.rest:"/signup";)
+        @javaWithSpring::_aspects.PostMapping
+        signupUser(
+            @javaWithSpring::_aspects.Valid @javaWithSpring::_aspects.RequestBody sync in registration : CustomerSelfService::CustomerSelfService.SignupRequestDto,
+            sync out userResponseDto : CustomerSelfService::CustomerSelfService.UserResponseDto
+        );
+    }
+
+    @endpoints(javaWithSpring::_protocols.rest:"/insurance-quote-requests";)
+    interface InsuranceQuoteRequestCoordinator {
+        @javaWithSpring::_aspects.GetMapping
+        getInsuranceQuoteRequests(
+            sync out insuranceQuoteRequestDtoList : CustomerSelfService::CustomerSelfService.InsuranceQuoteRequestDtoList
+        );
+
+        @endpoints(javaWithSpring::_protocols.rest:"/{insuranceQuoteRequestId}";)
+        @javaWithSpring::_aspects.PreAuthorize(value = "isAuthenticated()")
+        @javaWithSpring::_aspects.GetMapping
+        getInsuranceQuoteRequest(
+            sync in authentication : javaWithSpring::_types.Authentication,
+            @javaWithSpring::_aspects.PathVariable sync in insuranceQuoteRequestId : long,
+            sync out insuranceQuoteRequestDto : CustomerSelfService::CustomerSelfService.InsuranceQuoteRequestDto
+        );
+
+        @javaWithSpring::_aspects.PreAuthorize(value = "isAuthenticated()")
+        @javaWithSpring::_aspects.PostMapping
+        createInsuranceQuoteRequest(
+            sync in authentication : javaWithSpring::_types.Authentication,
+            @javaWithSpring::_aspects.Valid @javaWithSpring::_aspects.RequestBody sync in requestDto : CustomerSelfService::CustomerSelfService.InsuranceQuoteRequestDto,
+            sync out insuranceQuoteRequestDto : CustomerSelfService::CustomerSelfService.InsuranceQuoteRequestDto
+        );
+
+        @endpoints(javaWithSpring::_protocols.rest:"/{id}";)
+        @javaWithSpring::_aspects.PreAuthorize(value = "isAuthenticated()")
+        @javaWithSpring::_aspects.PatchMapping
+        respondToInsuranceQuote(
+            sync in authentication : javaWithSpring::_types.Authentication,
+            @javaWithSpring::_aspects.PathVariable sync in id : long,
+            @javaWithSpring::_aspects.Valid @javaWithSpring::_aspects.RequestBody sync in insuranceQuoteResponseDto : CustomerSelfService::CustomerSelfService.InsuranceQuoteResponseDto,
+            sync out insuranceQuoteRequestDto : CustomerSelfService::CustomerSelfService.InsuranceQuoteRequestDto
+        );
+    }
+
+    @endpoints(javaWithSpring::_protocols.rest:"/customers";)
+    interface CustomerInformationHolder {
+        @endpoints(javaWithSpring::_protocols.rest:"/{customerId}/address";)
+        @javaWithSpring::_aspects.PreAuthorize(value = "isAuthenticated()")
+        @javaWithSpring::_aspects.PutMapping
+        changeAddress(
+            @javaWithSpring::_aspects.PathVariable sync in customerId : CustomerSelfService::CustomerSelfService.CustomerId,
+            @javaWithSpring::_aspects.Valid @javaWithSpring::_aspects.RequestBody sync in requestDto : CustomerSelfService::CustomerSelfService.AddressDto,
+            sync out addressDto : CustomerSelfService::CustomerSelfService.AddressDto
+        );
+
+        @endpoints(javaWithSpring::_protocols.rest:"/{customerId}";)
+        @javaWithSpring::_aspects.PreAuthorize(value = "isAuthenticated()")
+        @javaWithSpring::_aspects.GetMapping
+        getCustomer(
+            sync in authentication : javaWithSpring::_types.Authentication,
+            @javaWithSpring::_aspects.PathVariable sync in customerId : CustomerSelfService::CustomerSelfService.CustomerId,
+            sync out customerDto : CustomerSelfService::CustomerSelfService.CustomerDto
+        );
+
+        @javaWithSpring::_aspects.PreAuthorize(value = "isAuthenticated()")
+        @javaWithSpring::_aspects.PostMapping
+        registerCustomer(
+            sync in authentication : javaWithSpring::_types.Authentication,
+            @javaWithSpring::_aspects.Valid @javaWithSpring::_aspects.RequestBody sync in requestDto : CustomerSelfService::CustomerSelfService.CustomerRegistrationRequestDto,
+            sync out customerDto : CustomerSelfService::CustomerSelfService.CustomerDto
+        );
+
+        @endpoints(javaWithSpring::_protocols.rest:"/{customerId}/insurance-quote-requests";)
+        @javaWithSpring::_aspects.PreAuthorize(value = "isAuthenticated()")
+        @javaWithSpring::_aspects.GetMapping
+        getInsuranceQuoteRequests(
+            @javaWithSpring::_aspects.PathVariable sync in customerId : CustomerSelfService::CustomerSelfService.CustomerId,
+            sync out insuranceQuoteRequestDtoList : CustomerSelfService::CustomerSelfService.InsuranceQuoteRequestDtoList
+        );
+    }
+
+    @endpoints(javaWithSpring::_protocols.rest:"/cities";)
+    interface CityReferenceDataHolder {
+        @endpoints(javaWithSpring::_protocols.rest:"/{postalCode}";)
+        @javaWithSpring::_aspects.GetMapping
+        getCitiesForPostalCode(
+            @javaWithSpring::_aspects.PathVariable sync in postalCode : string,
+            sync out citiesResponseDto : CustomerSelfService::CustomerSelfService.CitiesResponseDto
+        );
+    }
+}

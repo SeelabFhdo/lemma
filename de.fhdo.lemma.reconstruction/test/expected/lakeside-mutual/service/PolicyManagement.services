@@ -1,0 +1,120 @@
+import technology from "../technology/spring.technology" as javaWithSpring
+import datatypes from "../domain/PolicyManagement.data" as PolicyManagement
+import microservices from "CustomerCore.services" as CustomerCore
+
+@technology(javaWithSpring)
+@javaWithSpring::_aspects.ServiceCall(target = "CustomerCore", targetKind = "SERVICE", scheme = "http", ^technology = "RestTemplate")
+@javaWithSpring::_aspects.ServiceCommunicationTransport(transport = "plaintext")
+@javaWithSpring::_aspects.ServerEndpoint(connector = "server", port = "8090", ^protocol = "http", tlsEnabled = false)
+@javaWithSpring::_aspects.MessageChannel(role = "producer", queue = "newpolicies", target = "RiskManagement", broker = "activemq", scheme = "tcp", transport = "plaintext")
+@javaWithSpring::_aspects.MessageChannel(role = "producer", queue = "insurance-quote-response-event-queue", target = "CustomerSelfService", broker = "activemq", scheme = "tcp", transport = "plaintext")
+@javaWithSpring::_aspects.MessageChannel(role = "producer", queue = "insurance-quote-expired-event-queue", target = "CustomerSelfService", broker = "activemq", scheme = "tcp", transport = "plaintext")
+@javaWithSpring::_aspects.MessageChannel(role = "producer", queue = "policy-created-event-queue", target = "CustomerSelfService", broker = "activemq", scheme = "tcp", transport = "plaintext")
+@javaWithSpring::_aspects.MessageChannel(role = "consumer", queue = "insurance-quote-request-event-queue", target = "CustomerSelfService", broker = "activemq", scheme = "tcp", transport = "plaintext")
+@javaWithSpring::_aspects.MessageChannel(role = "consumer", queue = "customer-decision-event-queue", target = "CustomerSelfService", broker = "activemq", scheme = "tcp", transport = "plaintext")
+public functional microservice com.lakesidemutual.policymanagement.PolicyManagement {
+    required microservices {
+        CustomerCore::com.lakesidemutual.customercore.CustomerCore
+    }
+
+    @endpoints(javaWithSpring::_protocols.rest:"/insurance-quote-requests";)
+    interface InsuranceQuoteRequestProcessingResource {
+        @javaWithSpring::_aspects.GetMapping
+        getInsuranceQuoteRequests(
+            sync out insuranceQuoteRequestDtoList : PolicyManagement::PolicyManagement.InsuranceQuoteRequestDtoList
+        );
+
+        @endpoints(javaWithSpring::_protocols.rest:"/{id}";)
+        @javaWithSpring::_aspects.GetMapping
+        getInsuranceQuoteRequest(
+            @javaWithSpring::_aspects.PathVariable sync in id : long,
+            sync out insuranceQuoteRequestDto : PolicyManagement::PolicyManagement.InsuranceQuoteRequestDto
+        );
+
+        @endpoints(javaWithSpring::_protocols.rest:"/{id}";)
+        @javaWithSpring::_aspects.PatchMapping
+        respondToInsuranceQuoteRequest(
+            @javaWithSpring::_aspects.PathVariable sync in id : long,
+            @javaWithSpring::_aspects.Valid @javaWithSpring::_aspects.RequestBody sync in insuranceQuoteResponseDto : PolicyManagement::PolicyManagement.InsuranceQuoteResponseDto,
+            sync out insuranceQuoteRequestDto : PolicyManagement::PolicyManagement.InsuranceQuoteRequestDto
+        );
+    }
+
+    @endpoints(javaWithSpring::_protocols.rest:"/riskfactor";)
+    interface RiskComputationService {
+        @endpoints(javaWithSpring::_protocols.rest:"/compute";)
+        @javaWithSpring::_aspects.PostMapping
+        computeRiskFactor(
+            @javaWithSpring::_aspects.Valid @javaWithSpring::_aspects.RequestBody sync in riskFactorRequest : PolicyManagement::PolicyManagement.RiskFactorRequestDto,
+            sync out riskFactorResponseDto : PolicyManagement::PolicyManagement.RiskFactorResponseDto
+        );
+    }
+
+    @endpoints(javaWithSpring::_protocols.rest:"/customers";)
+    interface CustomerInformationHolder {
+        @javaWithSpring::_aspects.GetMapping
+        getCustomers(
+            @javaWithSpring::_aspects.RequestParam(value = "filter", defaultValue = "") sync in filter : string,
+            @javaWithSpring::_aspects.RequestParam(value = "limit", defaultValue = "10") sync in limit : int,
+            @javaWithSpring::_aspects.RequestParam(value = "offset", defaultValue = "0") sync in offset : int,
+            sync out paginatedCustomerResponseDto : PolicyManagement::PolicyManagement.PaginatedCustomerResponseDto
+        );
+
+        @endpoints(javaWithSpring::_protocols.rest:"/{customerIdDto}";)
+        @javaWithSpring::_aspects.GetMapping
+        getCustomer(
+            @javaWithSpring::_aspects.PathVariable sync in customerIdDto : PolicyManagement::PolicyManagement.CustomerIdDto,
+            sync out customerDto : PolicyManagement::PolicyManagement.CustomerDto
+        );
+
+        @endpoints(javaWithSpring::_protocols.rest:"/{customerIdDto}/policies";)
+        @javaWithSpring::_aspects.GetMapping
+        getPolicies(
+            @javaWithSpring::_aspects.PathVariable sync in customerIdDto : PolicyManagement::PolicyManagement.CustomerIdDto,
+            @javaWithSpring::_aspects.RequestParam(value = "expand", defaultValue = "") sync in expand : string,
+            sync out policyDtoList : PolicyManagement::PolicyManagement.PolicyDtoList
+        );
+    }
+
+    @endpoints(javaWithSpring::_protocols.rest:"/policies";)
+    interface PolicyInformationHolder {
+        @javaWithSpring::_aspects.PostMapping
+        createPolicy(
+            @javaWithSpring::_aspects.Valid @javaWithSpring::_aspects.RequestBody sync in createPolicyDto : PolicyManagement::PolicyManagement.CreatePolicyRequestDto,
+            sync in request : javaWithSpring::_types.HttpServletRequest,
+            sync out policyDto : PolicyManagement::PolicyManagement.PolicyDto
+        );
+
+        @endpoints(javaWithSpring::_protocols.rest:"/{policyId}";)
+        @javaWithSpring::_aspects.PutMapping
+        updatePolicy(
+            @javaWithSpring::_aspects.PathVariable sync in policyId : PolicyManagement::PolicyManagement.PolicyId,
+            @javaWithSpring::_aspects.Valid @javaWithSpring::_aspects.RequestBody sync in createPolicyDto : PolicyManagement::PolicyManagement.CreatePolicyRequestDto,
+            sync in request : javaWithSpring::_types.HttpServletRequest,
+            sync out policyDto : PolicyManagement::PolicyManagement.PolicyDto
+        );
+
+        @endpoints(javaWithSpring::_protocols.rest:"/{policyId}";)
+        @javaWithSpring::_aspects.DeleteMapping
+        deletePolicy(
+            @javaWithSpring::_aspects.PathVariable sync in policyId : PolicyManagement::PolicyManagement.PolicyId,
+            sync in request : javaWithSpring::_types.HttpServletRequest
+        );
+
+        @javaWithSpring::_aspects.GetMapping
+        getPolicies(
+            @javaWithSpring::_aspects.RequestParam(value = "limit", defaultValue = "10") sync in limit : int,
+            @javaWithSpring::_aspects.RequestParam(value = "offset", defaultValue = "0") sync in offset : int,
+            @javaWithSpring::_aspects.RequestParam(value = "expand", defaultValue = "") sync in expand : string,
+            sync out paginatedPolicyResponseDto : PolicyManagement::PolicyManagement.PaginatedPolicyResponseDto
+        );
+
+        @endpoints(javaWithSpring::_protocols.rest:"/{policyId}";)
+        @javaWithSpring::_aspects.GetMapping
+        getPolicy(
+            @javaWithSpring::_aspects.PathVariable sync in policyId : PolicyManagement::PolicyManagement.PolicyId,
+            @javaWithSpring::_aspects.RequestParam(value = "expand", defaultValue = "") sync in expand : string,
+            sync out policyDto : PolicyManagement::PolicyManagement.PolicyDto
+        );
+    }
+}

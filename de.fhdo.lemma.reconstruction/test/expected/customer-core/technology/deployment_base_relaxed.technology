@@ -1,0 +1,95 @@
+/*
+ * Relaxed twin of deployment_base.technology, for reconstructed operation
+ * models that carry containers but not yet the values of their services.
+ *
+ * The only difference is that springApplicationName and serverPort are not
+ * mandatory here. OperationDslValidator rejects a container that deploys a
+ * microservice without a value for every mandatory service property:
+ *
+ *     hasMissingSpecifications =
+ *         deploymentSpecifications.size < deployedServices.size
+ *
+ * which is 0 < 1 for a reconstructed container, so with the strict model every
+ * such container is an error until the reconstruction reads the values out of
+ * the application.properties of its service.
+ *
+ * Reference this model while the reconstruction emits containers only, and
+ * move to DeploymentBase once the service values are reconstructed. The
+ * deployment technology is named Kubernetes in both, so switching is a change
+ * of the import, not of the references into it.
+ */
+technology DeploymentBaseRelaxed {
+    deployment technologies {
+        Kubernetes {
+            // Kept identical to deployment_base.technology: these are the base
+            // images the reconstruction reads from the Dockerfiles of Lakeside
+            // Mutual.
+            operation environments = "openjdk:11-jdk-slim" default,
+                // openjdk was deprecated as a Docker Official Image and its
+                // tags withdrawn, so a system that still names one cannot be
+                // built - but a model reconstructed before that remains valid,
+                // and an undeclared environment does not resolve. Both stay.
+                "openjdk:21-slim-buster",
+                "eclipse-temurin:21-jdk",
+                "eclipse-temurin:21-jre",
+                "node:16",
+                // The runtime stage of the frontends, which the Docker plugin
+                // reports since it began reading the final FROM rather than the
+                // first - it used to say node:16, their build stage.
+                //
+                // Declared pre-emptively: the frontends are reconstructed into
+                // the database but are deliberately kept out of generated
+                // operation models, so nothing references this today. It is
+                // here so that including them later does not fail to resolve.
+                "nginx:stable-alpine",
+                "nginx";
+
+            service properties {
+                // General Spring Boot configurations. Not mandatory here, see
+                // the note above.
+                string springApplicationName;
+                int serverPort;
+
+                // MariaDB database configuration
+                string springDatasourceUsername;
+                string springDatasourcePassword;
+                string springDatasourceUrl;
+
+                // MongoDB database configuration
+                string springDataMongodbHost;
+                int springDataMongodbPort;
+                string springDataMongodbUri;
+                string springDataMongodbDatabase;
+                string springDataMongodbUsername;
+                string stringDataMongodbPassword;
+
+                //Eureka configuration
+                string eurekaUri;
+            }
+        }
+    }
+
+    operation aspects {
+        // Operation aspect for the configuration of custom dockerfiles
+        aspect Dockerfile<singleval> for containers, infrastructure {
+            string contents <mandatory>;
+        }
+
+        // Operation aspect for the configuration of custom Kubernetes files
+        aspect KubernetesDeployment<singleval> for containers, infrastructure {
+            string contents <mandatory>;
+        }
+
+        // Operation aspect for the configuration of custom docker-compose parts
+        aspect ComposePart<singleval> for containers, infrastructure {
+            string contents <mandatory>;
+        }
+
+        // Operation aspect for the configuration of Maven-based microservices
+        aspect MavenBuildConfiguration for containers, infrastructure {
+            string artifactId;
+            string ^version;
+            string name;
+        }
+    }
+}

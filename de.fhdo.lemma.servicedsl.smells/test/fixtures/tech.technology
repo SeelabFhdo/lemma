@@ -1,0 +1,44 @@
+technology smellTech {
+    service aspects {
+        aspect ServiceCall for microservices {
+            string target;
+            string targetKind;
+            string scheme;
+            string technology;
+        }
+
+        aspect MessageChannel for microservices {
+            string role;
+            string queue;
+            string target;
+            string broker;
+            string scheme;
+            string transport;
+        }
+
+        aspect ServerEndpoint for microservices {
+            string connector;
+            string port;
+            string protocol;
+            boolean tlsEnabled;
+            string clientAuth;
+        }
+
+        aspect GrpcServer for microservices {
+            string host;
+            string port;
+            string transportSecurity;
+            string clientAuth;
+        }
+
+        aspect MessageQueue for microservices {
+            string broker;
+            string host;
+            string port;
+            string queue;
+            string scheme;
+            string credentialsConfigured;
+            string transportSecurity;
+        }
+    }
+}

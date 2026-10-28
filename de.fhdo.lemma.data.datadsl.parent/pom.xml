@@ -13,6 +13,8 @@
         <module>../de.fhdo.lemma.data.datadsl</module>
         <module>../de.fhdo.lemma.data.datadsl.ide</module>
         <module>../de.fhdo.lemma.data.datadsl.extractor</module>
+        <module>../de.fhdo.lemma.diagram.common</module>
+        <module>../de.fhdo.lemma.data.datadsl.diagram</module>
         <!--
             Exclude unnecessary UI from build, which also prevents transitive dependencies to
             other UI projects.

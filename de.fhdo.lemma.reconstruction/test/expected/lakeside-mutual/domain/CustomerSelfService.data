@@ -1,0 +1,189 @@
+context CustomerSelfService {
+    structure InsuranceType {
+        string name
+    }
+    
+    structure MoneyAmount {
+        float amount,
+        Currency currency
+    }
+    
+    structure InsuranceOptionsEntity<entity> {
+        long id<identifier>,
+        date startDate,
+        InsuranceType insuranceType,
+        MoneyAmount deductible
+    }
+    
+    structure RequestStatus {}
+    
+    structure RequestStatusChange<entity> {
+        long id<identifier>,
+        date ^date,
+        RequestStatus status
+    }
+    
+    structure CustomerId {
+        long serialVersionUID,
+        string id
+    }
+    
+    structure InsuranceQuoteRequestAggregateRoot<entity> {
+        long id<identifier>,
+        date ^date,
+        string policyId,
+        StatusHistory statusHistory,
+        CustomerInfoEntity customerInfo,
+        InsuranceOptionsEntity insuranceOptions,
+        InsuranceQuoteEntity insuranceQuote
+    }
+    
+    structure InsuranceQuoteEntity<entity> {
+        long id<identifier>,
+        date expirationDate,
+        MoneyAmount insurancePremium,
+        MoneyAmount policyLimit
+    }
+    
+    structure CustomerInfoEntity<entity> {
+        long id<identifier>,
+        string firstname,
+        string lastname,
+        CustomerId customerId,
+        Address contactAddress,
+        Address billingAddress
+    }
+    
+    structure UserLoginEntity<entity> {
+        long id<identifier>,
+        string authorities,
+        string email,
+        string password,
+        CustomerId customerId
+    }
+    
+    structure Address<entity> {
+        long id<identifier>,
+        string streetAddress,
+        string postalCode,
+        string city
+    }
+    
+    structure UserResponseDto {
+        string email,
+        string customerId
+    }
+    
+    structure AuthenticationRequestDto {
+        string email,
+        string password
+    }
+    
+    structure AuthenticationResponseDto {
+        string email,
+        string token
+    }
+    
+    structure SignupRequestDto {
+        string email,
+        string password
+    }
+    
+    structure RequestStatusChangeDto {
+        date ^date,
+        string status
+    }
+    
+    structure AddressDto {
+        string streetAddress,
+        string postalCode,
+        string city
+    }
+    
+    structure CustomerInfoDto {
+        string customerId,
+        string firstname,
+        string lastname,
+        AddressDto contactAddress,
+        AddressDto billingAddress
+    }
+    
+    structure MoneyAmountDto {
+        float amount,
+        string currency
+    }
+    
+    structure InsuranceOptionsDto {
+        date startDate,
+        string insuranceType,
+        MoneyAmountDto deductible
+    }
+    
+    structure InsuranceQuoteDto {
+        date expirationDate,
+        MoneyAmountDto insurancePremium,
+        MoneyAmountDto policyLimit
+    }
+    
+    structure InsuranceQuoteRequestDto {
+        long id,
+        date ^date,
+        string policyId,
+        StatusHistoryList StatusHistoryList,
+        CustomerInfoDto customerInfo,
+        InsuranceOptionsDto insuranceOptions,
+        InsuranceQuoteDto insuranceQuote
+    }
+    
+    structure InsuranceQuoteResponseDto {
+        string status,
+        date expirationDate,
+        MoneyAmountDto insurancePremium,
+        MoneyAmountDto policyLimit
+    }
+    
+    structure CustomerProfileDto {
+        string firstname,
+        string lastname,
+        date birthday,
+        string email,
+        string phoneNumber,
+        AddressDto currentAddress,
+        MoveHistoryList MoveHistoryList
+    }
+    
+    structure CustomerDto {
+        string customerId,
+        CustomerProfileDto customerProfile
+    }
+    
+    structure CustomerRegistrationRequestDto {
+        string firstname,
+        string lastname,
+        date birthday,
+        string city,
+        string streetAddress,
+        string postalCode,
+        string phoneNumber
+    }
+    
+    structure CitiesResponseDto {
+        string CitiesList
+    }
+    
+    collection StatusHistoryList { unspecified }
+    
+    collection InsuranceQuoteRequestDtoList { unspecified }
+    
+    collection MoveHistoryList { unspecified }
+    
+    collection CitiesList { unspecified }
+    
+    structure Currency {
+        unspecified currency
+    }
+    
+    structure StatusHistory {
+        unspecified statusHistory
+    }
+}

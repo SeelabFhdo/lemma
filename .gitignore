@@ -49,3 +49,13 @@ de.fhdo.lemma.service.openapi.tests/lib/*
 de.fhdo.lemma.service.openapi.tests/test-model-gen/*
 .vscode
 *.code-workspace
+
+**/xtend-gen/
+**/src-gen/
+
+# Eclipse projects created when browsing the regression test models
+de.fhdo.lemma.reconstruction/test/**/.project
+
+# Output of de.fhdo.lemma.reconstruction/tools/reconstruct.sh
+.headless/
+.headless-src/

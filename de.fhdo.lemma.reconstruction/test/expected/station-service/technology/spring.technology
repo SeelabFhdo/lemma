@@ -1,0 +1,426 @@
+technology javaWithSpring {
+    types {
+        primitive type Boolean based on boolean default;
+        primitive type Byte based on byte default;
+        primitive type Character based on char default;
+        primitive type Date based on date default;
+        primitive type Double based on double default;
+        primitive type Float based on float default;
+        primitive type Integer based on int default;
+        primitive type Long based on long default;
+        primitive type Object based on unspecified default;
+        primitive type Short based on short default;
+        primitive type String based on string default;
+        primitive type Authentication based on string;
+        primitive type AuthenticationException based on string;
+        primitive type BigDecimal based on double;
+        primitive type Currency based on string;
+        primitive type HttpServletRequest based on string;
+        primitive type ResponseEntityErrorCode based on string;
+        primitive type ResponseEntityNoContent based on string;
+        primitive type XMLGregorianCalendar based on date;
+
+        structure type Message;
+        structure type Optional;
+        structure type ResponseEntity;
+
+        collection type Array;
+        collection type Collection;
+        collection type GrantedAuthorities;
+        collection type Multimap;
+        collection type ResponseEntities;
+        collection type Set;
+
+        compatibility matrix {
+            Float -> BigDecimal;
+            String -> Currency;
+        }
+    }
+
+    protocols {
+        sync rest data formats "application/json"
+            default with format "application/json";
+        sync soap data formats "application/xml"
+            default with format "application/xml";
+        async amqp data formats "application/json"
+            default with format "application/json";
+    }
+
+    service aspects {
+        aspect ActiveMqConfiguration<singleval> for microservices {
+            string user<mandatory>;
+            string password<mandatory>;
+        }
+        aspect AdminClientUrl<singleval> for microservices {
+            string url<mandatory>;
+        }
+        aspect AllowBeanDefinitionOverriding<singleval> for microservices {
+            boolean value = true;
+        }
+        aspect ApplicationName<singleval> for microservices {
+            string value <mandatory>;
+        }
+        aspect AttributeOverrideColumn for fields {
+            string name <mandatory>;
+            string column <mandatory>;
+        }
+        aspect Autowired<singleval> for fields;
+
+        aspect CommonsRequestLoggingFilter<singleval> for microservices {
+            string value<mandatory>;
+        }
+        aspect Constant<singleval> for fields;
+        aspect CustomProperty for microservices {
+            string name <mandatory>;
+            string value <mandatory>;
+        }
+
+        aspect DatasourceConfiguration<singleval> for microservices {
+            string url;
+            string username;
+            string password;
+            string driverClassName;
+        }
+        aspect DecimalMax<singleval> for fields {
+            string value <mandatory>;
+            boolean inclusive = false;
+        }
+        aspect DecimalMin<singleval> for fields {
+            string value <mandatory>;
+        }
+        aspect DeleteMapping<singleval> for operations;
+
+        aspect Email<singleval> for fields;
+        aspect Embedded<singleval> for fields;
+        aspect Enumerated<singleval> for fields {
+            string enumType;
+        }
+        aspect EnumerationMethod for types {
+            string javaCode<mandatory>;
+        }
+
+        aspect FeignClient<singleval> for interfaces {
+            string name<mandatory>;
+            string url<mandatory>;
+            string configuration<mandatory>;
+        }
+        aspect Future for fields;
+
+        aspect GeneratedValue<singleval> for fields;
+        aspect GetMapping<singleval> for operations;
+
+        aspect HibernateConfiguration<singleval> for microservices {
+            string ddlAuto;
+        }
+
+        aspect JacksonConfiguration<singleval> for microservices {
+            boolean INDENT_OUTPUT;
+            string defaultPropertyInclusion;
+        }
+        aspect JsonFormat<singleval> for fields {
+            string pattern <mandatory>;
+        }
+        aspect JsonIgnore<singleval> for fields;
+        aspect JsonProperty<singleval> for fields {
+            string name;
+        }
+        aspect JsonUnwrapped<singleval> for fields;
+
+        aspect Management for microservices {
+            string property<mandatory>;
+            string value<mandatory>;
+        }
+        aspect MessageMapping<singleval> for operations {
+            string value <mandatory>;
+        }
+
+        aspect OneToMany<singleval> for fields {
+            string cascade = "ALL";
+            string fetch;
+        }
+        aspect OneToOne<singleval> for fields {
+            string cascade = "ALL";
+        }
+
+        aspect Past<singleval> for fields;
+        aspect PatchMapping<singleval> for operations;
+        aspect PathVariable<singleval> for parameters {
+            selector(exchange_pattern = in);
+        }
+        aspect PostMapping<singleval> for operations;
+        aspect Port<singleval> for microservices {
+            int portNumber<mandatory>;
+        }
+        aspect PreAuthorize<singleval> for operations {
+            string value<mandatory>;
+        }
+        aspect PutMapping<singleval> for operations;
+
+        aspect RequestBody<singleval> for parameters {
+            selector(exchange_pattern = in);
+        }
+        aspect RequestParam<singleval> for parameters {
+            selector(exchange_pattern = in);
+            string value;
+            string defaultValue = "";
+        }
+        aspect RequestPayload<singleval> for parameters;
+        aspect ResourceSupport<singleval> for types;
+        aspect ResponsePayload<singleval> for operations;
+        aspect ResponseStatus<singleval> for parameters {
+            selector(exchange_pattern = out);
+            string status <mandatory>;
+        }
+
+        aspect static<singleval> for domainOperations;
+        aspect SendTo<singleval> for operations {
+            string value <mandatory>;
+        }
+        // Transport a service uses to call the other services of the system, as
+        // the reconstruction observed it: plaintext, tls, mixed or unresolved.
+        // A fact about the channel, not a finding about it - deciding the smell
+        // Non-Secured Service-to-Service Communications additionally needs what
+        // the callee accepts and whether a service mesh protects the channel.
+        aspect ServiceCommunicationTransport<singleval> for microservices {
+            string transport <mandatory>;
+        }
+
+        // One port the service itself answers on, and whether that port uses
+        // TLS. The other half of Non-Secured Service-to-Service Communications:
+        // a plaintext call matters because the callee accepts plaintext.
+        //
+        // Deliberately not <singleval>, so that it may be applied once per
+        // connector: Spring configures a main connector and, where
+        // management.server.port is set, a second one, and the two may differ
+        // in whether they use TLS. checkUniqueAspects of the Service DSL
+        // forbids repeating a single-valued aspect, which would make the second
+        // connector unrepresentable.
+        //
+        // No property is <mandatory>. A database written by an older
+        // reconstruction then yields a model with fewer values rather than a
+        // generation that fails, and the value that matters - tlsEnabled - is
+        // reported whenever it was reconstructed.
+        // ^protocol and, below, ^technology: both are keywords of the DSLs, so
+        // the declaration needs the caret as the generated application does.
+        aspect ServerEndpoint for microservices {
+            string connector;
+            string port;
+            string ^protocol;
+            boolean tlsEnabled;
+            string clientAuth;
+        }
+
+        // One outgoing call of a service, and the transport it uses.
+        //
+        // ServiceCommunicationTransport above says what a service's calls use
+        // *together* - plaintext, tls, mixed or unresolved - which is enough to
+        // see that a service has a problem and not enough to see which link it
+        // is. A rule for Non-Secured Service-to-Service Communications judges a
+        // pair of services, so it needs the link.
+        //
+        // Not <singleval>, so that it may be applied once per call: a service
+        // that calls three others carries it three times, and
+        // checkUniqueAspects of the Service DSL forbids repeating an aspect
+        // that is single-valued.
+        //
+        // There is no join point for a required dependency - the Technology DSL
+        // offers types, fields, domainOperations, domainParameters,
+        // microservices, interfaces, operations and parameters - so a per-link
+        // fact can only be an aspect on the calling microservice that names its
+        // target. A rule joins target to the required entry itself.
+        aspect ServiceCall for microservices {
+            string target;
+            string targetKind;
+            string scheme;
+            string ^technology;
+        }
+
+        // One endpoint of another service that a client declares it addresses.
+        aspect ServiceCallEndpoint for microservices {
+            string target;
+            string verb;
+            string path;
+            string method;
+        }
+
+        // One queue a service produces to or consumes from, and whether the
+        // broker protects the channel.
+        //
+        // The asynchronous half of the interaction surface: the smell covers
+        // "each communication channel between any two microservices", and a
+        // queue is such a channel. Lakeside Mutual has eleven of them and three
+        // synchronous calls, so a rule that saw only the calls would miss most
+        // of the system's interactions.
+        //
+        // role says which end this service is. target is the service at the
+        // other end, absent where nothing in the system is at it.
+        //
+        // No file and no line, as ServerEndpoint carries no valueSource. The
+        // reconstruction records the path it was given, which is absolute for a
+        // real run - and a generated model has to be the same on every machine
+        // to be diffable and reproducible. The evidence stays in the database,
+        // where a finding can look it up.
+        aspect MessageChannel for microservices {
+            string role;
+            string queue;
+            string target;
+            string broker;
+            string scheme;
+            string transport;
+        }
+
+        // The gRPC endpoint a Node service serves, and whether it is protected.
+        //
+        // The Java services state their connectors in configuration, which
+        // ServerEndpoint above carries. A Node service states the address in
+        // configuration and the transport in the code that binds it, so the
+        // reconstruction reads the call - createInsecure or createSsl - by
+        // name. Without this declaration the fact was reconstructed and then
+        // dropped, because an aspect the model does not declare cannot be
+        // referred to: the Risk Management server of Lakeside Mutual appeared
+        // in the service models with no communication fact at all, and its two
+        // channels were judged by nothing.
+        //
+        // clientAuth is "need" where the server requires and verifies a client
+        // certificate, as it is on ServerEndpoint. transportSecurity is
+        // plaintext, tls or unresolved - the words of the client-side
+        // transport, so that one spelling is compared against everywhere.
+        //
+        // Not <singleval>: a service may bind more than one endpoint, and
+        // checkUniqueAspects would make the second one unrepresentable.
+        aspect GrpcServer for microservices {
+            string host;
+            string port;
+            string transportSecurity;
+            string clientAuth;
+        }
+
+        // One queue a Node service is configured for, and whether the channel
+        // to the broker is protected.
+        //
+        // The counterpart of MessageChannel for a service the Spring detectors
+        // do not see. Both ends of Lakeside Mutual's newpolicies queue are
+        // reconstructed, and only the producing end was in the models: the
+        // consumer is a Node service, reached over STOMP rather than over the
+        // broker's TCP connector, which is a second connector of the same
+        // broker and a channel of its own.
+        //
+        // credentialsConfigured says that the broker is authenticated, never
+        // with what: the architecture information is that a credential exists,
+        // and its value is a secret.
+        //
+        // Not <singleval>, for a service configured for several queues.
+        aspect MessageQueue for microservices {
+            string broker;
+            string host;
+            string port;
+            string queue;
+            string scheme;
+            string credentialsConfigured;
+            string transportSecurity;
+        }
+
+        aspect Table<singleval> for types {
+            string name;
+        }
+
+        aspect UserDetails<singleval> for types, domainParameters;
+
+        aspect Valid<singleval> for fields, parameters;
+        aspect Value<singleval> for fields {
+            string value <mandatory>;
+        }
+
+        aspect XmlAccessorType<singleval> for types {
+            string value = "FIELD";
+        }
+        aspect XmlElement<singleval> for fields {
+            boolean required = false;
+        }
+        aspect XmlEnum<singleval> for types;
+        aspect XmlEnumValue<singleval> for fields {
+            string value<mandatory>;
+        }
+        aspect XmlRootElement<singleval> for types {
+            string name;
+        }
+        aspect XmlType<singleval> for types {
+            string name = "";
+            string propOrder;
+        }
+    }
+
+    infrastructure technologies {
+        SpringBootAdmin {
+            // An environment can only be referenced once it is declared here.
+            // These are the base images the reconstruction reads from the
+            // Dockerfile of Lakeside Mutual's monitoring service. The openjdk
+            // ones remain because a model reconstructed before that image was
+            // withdrawn from Docker Hub is still a valid model.
+            operation environments = "spring-boot-admin" default,
+                "openjdk:21-slim-buster",
+                "eclipse-temurin:21-jdk",
+                "eclipse-temurin:21-jre",
+                "openjdk:11-jdk-slim";
+
+            service properties {
+                string applicationName<singleval>;
+                int port<singleval>;
+                boolean enableAutoConfiguration<singleval>;
+                string eurekaClientServiceUrlDefaultZone<singleval>;
+                boolean eurekaInstancePreferIpAddress<singleval>;
+            }
+        }
+
+        // Service discovery. The properties follow the Eureka technology model
+        // of LEMMA's own examples.
+        Eureka {
+            operation environments = "openjdk:11-jdk-slim" default,
+                "openjdk:21-slim-buster";
+
+            service properties {
+                string hostname;
+                int port;
+                string imageType;
+                string mavenGroupId;
+                string mavenArtifactId;
+                string mavenVersion;
+                string mavenName;
+                string programmingLanguage;
+            }
+        }
+
+        // API gateway. Beside the properties of a service discovery it carries
+        // the address of the registry it reads its routes from.
+        Zuul {
+            operation environments = "openjdk:11-jdk-slim" default,
+                "openjdk:21-slim-buster";
+
+            service properties {
+                string hostname;
+                int port;
+                string imageType;
+                string mavenGroupId;
+                string mavenArtifactId;
+                string mavenVersion;
+                string mavenName;
+                string eurekaUri;
+                string programmingLanguage;
+            }
+        }
+
+        // Reverse proxy. Declared because the reconstruction recognises one in
+        // Lakeside Mutual and an infrastructure node needs a technology; the
+        // properties are the ones a proxy is configured with, not taken from an
+        // example of LEMMA. Rename or remove it if the vocabulary should differ.
+        Proxy {
+            operation environments = "nginx" default;
+
+            service properties {
+                string hostname;
+                int port;
+                string imageType;
+            }
+        }
+    }
+}

@@ -1,0 +1,12 @@
+context RiskManagement {
+    structure TriggerRequest {}
+    
+    structure TriggerReply {
+        Report report,
+        int progress
+    }
+    
+    structure Report {
+        string csv
+    }
+}

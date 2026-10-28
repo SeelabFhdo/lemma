@@ -1,0 +1,70 @@
+import technology from "../technology/spring.technology" as javaWithSpring
+import datatypes from "../domain/CustomerManagement.data" as CustomerManagement
+import microservices from "CustomerCore.services" as CustomerCore
+
+@technology(javaWithSpring)
+@javaWithSpring::_aspects.ServiceCall(target = "CustomerCore", targetKind = "SERVICE", scheme = "http", ^technology = "Feign")
+@javaWithSpring::_aspects.ServiceCallEndpoint(target = "CustomerCore", verb = "GetMapping", path = "/customers", method = "getCustomers")
+@javaWithSpring::_aspects.ServiceCallEndpoint(target = "CustomerCore", verb = "PutMapping", path = "/customers/{customerId}", method = "updateCustomer")
+@javaWithSpring::_aspects.ServiceCallEndpoint(target = "CustomerCore", verb = "GetMapping", path = "/customers/{ids}", method = "getCustomer")
+@javaWithSpring::_aspects.ServiceCommunicationTransport(transport = "plaintext")
+@javaWithSpring::_aspects.ServerEndpoint(connector = "server", port = "8100", ^protocol = "http", tlsEnabled = false)
+public functional microservice com.lakesidemutual.customermanagement.CustomerManagement {
+    required operations {
+        CustomerCore::com.lakesidemutual.customercore.CustomerCore.CustomerInformationHolder.getCustomer,
+        CustomerCore::com.lakesidemutual.customercore.CustomerCore.CustomerInformationHolder.getCustomers,
+        CustomerCore::com.lakesidemutual.customercore.CustomerCore.CustomerInformationHolder.updateCustomer
+    }
+
+    @endpoints(javaWithSpring::_protocols.rest:"/notifications";)
+    interface NotificationInformationHolder {
+        @javaWithSpring::_aspects.GetMapping
+        getNotifications(
+            sync out notificationDtoList : CustomerManagement::CustomerManagement.NotificationDtoList
+        );
+    }
+
+    @endpoints(javaWithSpring::_protocols.rest:"/interaction-logs";)
+    interface InteractionLogInformationHolder {
+        @endpoints(javaWithSpring::_protocols.rest:"/{customerId}";)
+        @javaWithSpring::_aspects.GetMapping
+        getInteractionLog(
+            @javaWithSpring::_aspects.PathVariable sync in customerId : CustomerManagement::CustomerManagement.CustomerId,
+            sync out interactionLogAggregateRoot : CustomerManagement::CustomerManagement.InteractionLogAggregateRoot
+        );
+
+        @endpoints(javaWithSpring::_protocols.rest:"/{customerId}";)
+        @javaWithSpring::_aspects.PatchMapping
+        acknowledgeInteractions(
+            @javaWithSpring::_aspects.PathVariable sync in customerId : CustomerManagement::CustomerManagement.CustomerId,
+            @javaWithSpring::_aspects.Valid @javaWithSpring::_aspects.RequestBody sync in interactionAcknowledgementDto : CustomerManagement::CustomerManagement.InteractionAcknowledgementDto,
+            sync out interactionLogAggregateRoot : CustomerManagement::CustomerManagement.InteractionLogAggregateRoot
+        );
+    }
+
+    @endpoints(javaWithSpring::_protocols.rest:"/customers";)
+    interface CustomerInformationHolder {
+        @javaWithSpring::_aspects.GetMapping
+        getCustomers(
+            @javaWithSpring::_aspects.RequestParam(value = "filter", defaultValue = "") sync in filter : string,
+            @javaWithSpring::_aspects.RequestParam(value = "limit", defaultValue = "10") sync in limit : int,
+            @javaWithSpring::_aspects.RequestParam(value = "offset", defaultValue = "0") sync in offset : int,
+            sync out paginatedCustomerResponseDto : CustomerManagement::CustomerManagement.PaginatedCustomerResponseDto
+        );
+
+        @endpoints(javaWithSpring::_protocols.rest:"/{customerId}";)
+        @javaWithSpring::_aspects.GetMapping
+        getCustomer(
+            @javaWithSpring::_aspects.PathVariable sync in customerId : CustomerManagement::CustomerManagement.CustomerId,
+            sync out customerDto : CustomerManagement::CustomerManagement.CustomerDto
+        );
+
+        @endpoints(javaWithSpring::_protocols.rest:"/{customerId}";)
+        @javaWithSpring::_aspects.PutMapping
+        updateCustomer(
+            @javaWithSpring::_aspects.PathVariable sync in customerId : CustomerManagement::CustomerManagement.CustomerId,
+            @javaWithSpring::_aspects.Valid @javaWithSpring::_aspects.RequestBody sync in customerProfile : CustomerManagement::CustomerManagement.CustomerProfileDto,
+            sync out customerDto : CustomerManagement::CustomerManagement.CustomerDto
+        );
+    }
+}

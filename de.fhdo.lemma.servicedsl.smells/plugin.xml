@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="4.15"?>
+<plugin>
+    <extension point="org.eclipse.ui.commands">
+        <category
+              id="de.fhdo.lemma.servicedsl.smells.commands.category"
+              name="LEMMA Security Smells">
+        </category>
+        <command
+              categoryId="de.fhdo.lemma.servicedsl.smells.commands.category"
+              id="de.fhdo.lemma.servicedsl.smells.commands.detect"
+              name="Detect security smells">
+        </command>
+    </extension>
+    <extension point="org.eclipse.ui.handlers">
+        <handler
+              class="de.fhdo.lemma.servicedsl.smells.DetectSmellsHandler"
+              commandId="de.fhdo.lemma.servicedsl.smells.commands.detect">
+        </handler>
+    </extension>
+    <extension point="org.eclipse.ui.menus">
+        <menuContribution
+              locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+            <command
+                  commandId="de.fhdo.lemma.servicedsl.smells.commands.detect"
+                  id="de.fhdo.lemma.servicedsl.smells.menus.detect"
+                  label="Detect security smells">
+                <visibleWhen checkEnabled="false">
+                    <iterate ifEmpty="false" operator="and">
+                        <adapt type="org.eclipse.core.resources.IFile">
+                            <test
+                                  property="org.eclipse.core.resources.extension"
+                                  value="services">
+                            </test>
+                        </adapt>
+                    </iterate>
+                </visibleWhen>
+            </command>
+        </menuContribution>
+    </extension>
+</plugin>

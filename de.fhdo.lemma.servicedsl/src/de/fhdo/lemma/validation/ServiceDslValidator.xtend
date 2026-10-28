@@ -42,12 +42,18 @@ import de.fhdo.lemma.utils.LemmaUtils
 import de.fhdo.lemma.service.ApiOperationComment
 import de.fhdo.lemma.service.ApiParameterComment
 import de.fhdo.lemma.data.PrimitiveUnspecified
+// Composed so that the security smell rule stays out of this bundle: it lives
+// in de.fhdo.lemma.servicedsl.smells.validation, which requires only the
+// metamodels and therefore cycles with nothing.
+import de.fhdo.lemma.servicedsl.smells.validation.NonSecuredCommunicationValidator
+import org.eclipse.xtext.validation.ComposedChecks
 
 /**
  * This class contains custom validation rules for service models.
  *
  * @author <a href="mailto:florian.rademacher@fh-dortmund.de">Florian Rademacher</a>
  */
+@ComposedChecks(validators = #[NonSecuredCommunicationValidator])
 class ServiceDslValidator extends AbstractServiceDslValidator {
     @Inject
     ServiceDslQualifiedNameProvider nameProvider

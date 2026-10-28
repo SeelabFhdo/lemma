@@ -1,0 +1,73 @@
+import technology from "tech.technology" as tech
+
+// Plaintext call to a service that accepts plaintext: the smell.
+@technology(tech)
+@tech::_aspects.ServiceCall(target = "Callee", targetKind = "SERVICE", scheme = "http", technology = "RestTemplate")
+public functional microservice com.example.PlaintextCaller {
+    interface Trigger {
+        run(sync out ok : boolean);
+    }
+}
+
+// TLS call to a service that accepts only TLS: secured.
+@technology(tech)
+@tech::_aspects.ServiceCall(target = "SecuredCallee", targetKind = "SERVICE", scheme = "https", technology = "RestTemplate")
+public functional microservice com.example.TlsCaller {
+    interface Trigger {
+        run(sync out ok : boolean);
+    }
+}
+
+// TLS call to a service that also answers on a plaintext connector: still the
+// smell, because the callee accepts plaintext.
+@technology(tech)
+@tech::_aspects.ServiceCall(target = "MixedCallee", targetKind = "SERVICE", scheme = "https", technology = "RestTemplate")
+public functional microservice com.example.TlsCallerToMixed {
+    interface Trigger {
+        run(sync out ok : boolean);
+    }
+}
+
+// A call to a third party is not this smell.
+@technology(tech)
+@tech::_aspects.ServiceCall(target = "payments.example.com", targetKind = "EXTERNAL", scheme = "http", technology = "RestTemplate")
+public functional microservice com.example.ExternalCaller {
+    interface Trigger {
+        run(sync out ok : boolean);
+    }
+}
+
+// A scheme the reconstruction could not determine: undecided, not secure.
+@technology(tech)
+@tech::_aspects.ServiceCall(target = "Callee", targetKind = "SERVICE", scheme = "unresolved", technology = "Feign")
+public functional microservice com.example.UnknownSchemeCaller {
+    interface Trigger {
+        run(sync out ok : boolean);
+    }
+}
+
+@technology(tech)
+@tech::_aspects.ServerEndpoint(connector = "server", port = "8080", protocol = "http", tlsEnabled = false)
+public functional microservice com.example.Callee {
+    interface Served {
+        serve(sync out ok : boolean);
+    }
+}
+
+@technology(tech)
+@tech::_aspects.ServerEndpoint(connector = "server", port = "8443", protocol = "https", tlsEnabled = true, clientAuth = "need")
+public functional microservice com.example.SecuredCallee {
+    interface Served {
+        serve(sync out ok : boolean);
+    }
+}
+
+// A TLS main connector and a plaintext management connector.
+@technology(tech)
+@tech::_aspects.ServerEndpoint(connector = "server", port = "8443", protocol = "https", tlsEnabled = true)
+@tech::_aspects.ServerEndpoint(connector = "management", port = "9001", protocol = "http", tlsEnabled = false)
+public functional microservice com.example.MixedCallee {
+    interface Served {
+        serve(sync out ok : boolean);
+    }
+}

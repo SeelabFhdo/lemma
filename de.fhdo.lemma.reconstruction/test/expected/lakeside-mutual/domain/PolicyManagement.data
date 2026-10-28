@@ -1,0 +1,264 @@
+context PolicyManagement {
+    structure InsuranceType {
+        string name
+    }
+    
+    structure MoneyAmount {
+        float amount,
+        Currency currency
+    }
+    
+    structure InsuranceOptionsEntity<entity> {
+        long id<identifier>,
+        date startDate,
+        InsuranceType insuranceType,
+        MoneyAmount deductible
+    }
+    
+    structure RequestStatus {}
+    
+    structure RequestStatusChange<entity> {
+        long id<identifier>,
+        date ^date,
+        RequestStatus status
+    }
+    
+    structure CustomerId {
+        long serialVersionUID,
+        string id
+    }
+    
+    structure InsuranceQuoteRequestAggregateRoot<entity> {
+        long id<identifier>,
+        date ^date,
+        string policyId,
+        StatusHistory statusHistory,
+        CustomerInfoEntity customerInfo,
+        InsuranceOptionsEntity insuranceOptions,
+        InsuranceQuoteEntity insuranceQuote
+    }
+    
+    structure Address<entity> {
+        long id<identifier>,
+        string streetAddress,
+        string postalCode,
+        string city
+    }
+    
+    structure InsuranceQuoteEntity<entity> {
+        long id<identifier>,
+        date expirationDate,
+        MoneyAmount insurancePremium,
+        MoneyAmount policyLimit
+    }
+    
+    structure CustomerInfoEntity<entity> {
+        long id<identifier>,
+        string firstname,
+        string lastname,
+        CustomerId customerId,
+        Address contactAddress,
+        Address billingAddress
+    }
+    
+    structure PolicyId {
+        long serialVersionUID,
+        string id
+    }
+    
+    structure PolicyPeriod {
+        date startDate,
+        date endDate
+    }
+    
+    structure PolicyType {
+        string name
+    }
+    
+    structure PolicyAggregateRoot<entity> {
+        string FIELD_CREATION_DATE,
+        date creationDate,
+        PolicyId id<identifier>,
+        CustomerId customerId,
+        PolicyPeriod policyPeriod,
+        PolicyType policyType,
+        MoneyAmount deductible,
+        MoneyAmount policyLimit,
+        MoneyAmount insurancePremium,
+        InsuringAgreementEntity insuringAgreement
+    }
+    
+    structure InsuringAgreementItem<entity> {
+        long id<identifier>,
+        string title,
+        string description
+    }
+    
+    structure InsuringAgreementEntity<entity> {
+        long id<identifier>,
+        AgreementItems agreementItems
+    }
+    
+    structure RequestStatusChangeDto {
+        date ^date,
+        string status
+    }
+    
+    structure AddressDto {
+        string streetAddress,
+        string postalCode,
+        string city
+    }
+    
+    structure CustomerInfoDto {
+        string customerId,
+        string firstname,
+        string lastname,
+        AddressDto contactAddress,
+        AddressDto billingAddress
+    }
+    
+    structure MoneyAmountDto {
+        float amount,
+        string currency
+    }
+    
+    structure InsuranceOptionsDto {
+        date startDate,
+        string insuranceType,
+        MoneyAmountDto deductible
+    }
+    
+    structure InsuranceQuoteDto {
+        date expirationDate,
+        MoneyAmountDto insurancePremium,
+        MoneyAmountDto policyLimit
+    }
+    
+    structure InsuranceQuoteRequestDto {
+        long id,
+        date ^date,
+        string policyId,
+        StatusHistoryList StatusHistoryList,
+        CustomerInfoDto customerInfo,
+        InsuranceOptionsDto insuranceOptions,
+        InsuranceQuoteDto insuranceQuote
+    }
+    
+    structure InsuranceQuoteResponseDto {
+        string status,
+        date expirationDate,
+        MoneyAmountDto insurancePremium,
+        MoneyAmountDto policyLimit
+    }
+    
+    structure RiskFactorRequestDto {
+        date birthday,
+        string postalCode
+    }
+    
+    structure RiskFactorResponseDto {
+        int riskFactor
+    }
+    
+    structure CustomerProfileDto {
+        string firstname,
+        string lastname,
+        date birthday,
+        string email,
+        string phoneNumber,
+        AddressDto currentAddress,
+        MoveHistoryList MoveHistoryList
+    }
+    
+    structure CustomerDto {
+        string customerId,
+        CustomerProfileDto customerProfile
+    }
+    
+    structure PaginatedCustomerResponseDto {
+        string filter,
+        int limit,
+        int offset,
+        int size,
+        CustomersList CustomersList
+    }
+    
+    structure CustomerIdDto {
+        string id
+    }
+    
+    structure PolicyPeriodDto {
+        date startDate,
+        date endDate
+    }
+    
+    structure InsuringAgreementItemDto {
+        string title,
+        string description
+    }
+    
+    structure InsuringAgreementDto {
+        AgreementItemsList AgreementItemsList
+    }
+    
+    structure PolicyDto {
+        string policyId,
+        date creationDate,
+        string policyType,
+        string expandable,
+        Customer customer,
+        PolicyPeriodDto policyPeriod,
+        MoneyAmountDto deductible,
+        MoneyAmountDto policyLimit,
+        MoneyAmountDto insurancePremium,
+        InsuringAgreementDto insuringAgreement
+    }
+    
+    structure CreatePolicyRequestDto {
+        string customerId,
+        string policyType,
+        PolicyPeriodDto policyPeriod,
+        MoneyAmountDto deductible,
+        MoneyAmountDto policyLimit,
+        MoneyAmountDto insurancePremium,
+        InsuringAgreementDto insuringAgreement
+    }
+    
+    structure PaginatedPolicyResponseDto {
+        int limit,
+        int offset,
+        int size,
+        PoliciesList PoliciesList
+    }
+    
+    collection StatusHistoryList { unspecified }
+    
+    collection InsuranceQuoteRequestDtoList { unspecified }
+    
+    collection MoveHistoryList { unspecified }
+    
+    collection CustomersList { unspecified }
+    
+    collection AgreementItemsList { unspecified }
+    
+    collection PolicyDtoList { unspecified }
+    
+    collection PoliciesList { unspecified }
+    
+    structure Currency {
+        unspecified currency
+    }
+    
+    structure StatusHistory {
+        unspecified statusHistory
+    }
+    
+    structure AgreementItems {
+        unspecified agreementItems
+    }
+    
+    structure Customer {
+        unspecified customer
+    }
+}

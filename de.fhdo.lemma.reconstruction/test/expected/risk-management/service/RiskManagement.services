@@ -1,0 +1,14 @@
+import technology from "../technology/spring.technology" as javaWithSpring
+import datatypes from "../domain/RiskManagement.data" as RiskManagement
+
+@technology(javaWithSpring)
+@javaWithSpring::_aspects.GrpcServer(host = "0.0.0.0", port = "50051", transportSecurity = "plaintext")
+@javaWithSpring::_aspects.MessageQueue(broker = "activemq", host = "localhost", port = "61613", queue = "newpolicies", scheme = "stomp", credentialsConfigured = "true", transportSecurity = "plaintext")
+public functional microservice riskmanagement.RiskManagement {
+    interface RiskManagement {
+        Trigger(
+            sync in triggerRequest : RiskManagement::RiskManagement.TriggerRequest,
+            async out triggerReply : RiskManagement::RiskManagement.TriggerReply
+        );
+    }
+}

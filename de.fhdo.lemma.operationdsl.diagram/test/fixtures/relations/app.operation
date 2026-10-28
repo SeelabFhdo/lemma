@@ -1,0 +1,19 @@
+import technology from "../tech.technology" as Tech
+import microservices from "../svc.services" as Svc
+import nodes from "infra.operation" as Infra
+
+// Mirrors Cache's "used by nodes": the same relation stated from the other end,
+// in another file. It must be drawn once.
+@technology(Tech)
+container AppContainer
+deployment technology
+	Tech::_deployment.Docker
+with operation environment "openjdk:11-jdk-slim"
+deploys
+	Svc::com.example.Shop
+depends on nodes
+	Infra::Cache {
+	default values {
+		port = 8080
+	}
+}

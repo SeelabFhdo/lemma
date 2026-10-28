@@ -7,6 +7,7 @@ Bundle-SymbolicName: de.fhdo.lemma.data.datadsl;singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: de.fhdo.lemma.data.datadsl.metamodel,
  org.eclipse.xtext,
+ slf4j.api,
  org.eclipse.xtext.xbase,
  org.eclipse.equinox.common;bundle-version="3.14.100",
  org.eclipse.xtext.xbase.lib;bundle-version="2.25.0",

@@ -1,0 +1,57 @@
+import microservices from "provider.services" as provider
+
+// Requires the name that is a dot-boundary prefix of another. Only the longest
+// match resolves it: "com.example.orders.Order" is also a valid prefix here.
+public functional microservice com.example.callers.LongestWins {
+    required operations {
+        provider::com.example.orders.Order.History.Queries.find
+    }
+
+    interface Trigger {
+        run(
+            sync out result : string
+        );
+    }
+}
+
+// Requires a microservice that is not declared, but whose name extends a
+// declared one without a dot between. A match that does not end on a dot
+// resolves this onto "com.example.orders.Order".
+public functional microservice com.example.callers.NeedsBoundary {
+    required operations {
+        provider::com.example.orders.OrderArchive.Queries.find
+    }
+
+    interface Trigger {
+        run(
+            sync out result : string
+        );
+    }
+}
+
+// Requires a microservice the provider does not declare at all. A name taken
+// from the end of the written form would report this as resolved.
+public functional microservice com.example.callers.WrongName {
+    required operations {
+        provider::com.example.orders.Nonexistent.Queries.find
+    }
+
+    interface Trigger {
+        run(
+            sync out result : string
+        );
+    }
+}
+
+// Requires through an alias that no import declares.
+public functional microservice com.example.callers.WrongAlias {
+    required microservices {
+        missing::com.example.orders.Order
+    }
+
+    interface Trigger {
+        run(
+            sync out result : string
+        );
+    }
+}

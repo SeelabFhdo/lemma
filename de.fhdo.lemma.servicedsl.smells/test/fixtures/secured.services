@@ -1,0 +1,76 @@
+import technology from "tech.technology" as tech
+
+// A system with nothing to resolve.
+//
+// Every sample system available to this project is plaintext throughout -
+// eleven services across Lakeside Mutual and park-and-charge, not one of them
+// with a TLS connector - so the case where the detector must find nothing
+// exists only here. Without it, "no findings" and "the detector is broken"
+// look exactly alike.
+//
+// Three channels, none of them a finding, and deliberately not all alike:
+// one mutually authenticated, one encrypted but not mutual, one over a TLS
+// broker. The middle one is the interesting one, because it is where §3.7 is
+// resolved and §3.8 Unauthenticated traffic begins.
+
+// --- a mutually authenticated call: protected ---------------------------
+
+@technology(tech)
+@tech::_aspects.ServiceCall(target = "MutualTlsService", targetKind = "SERVICE", scheme = "https", technology = "RestTemplate")
+public functional microservice com.example.MutualCaller {
+    interface Trigger {
+        run(sync out ok : boolean);
+    }
+}
+
+@technology(tech)
+@tech::_aspects.ServerEndpoint(connector = "server", port = "8443", protocol = "https", tlsEnabled = true, clientAuth = "need")
+public functional microservice com.example.MutualTlsService {
+    interface Serve {
+        handle(sync out ok : boolean);
+    }
+}
+
+// --- TLS without client authentication: protected, but not mutual -------
+//
+// clientAuth is absent, which is Spring's "none": the channel is encrypted
+// and neither peer is authenticated. Not a §3.7 finding - TLS does secure
+// the channel - and not the refactoring §3.7 prescribes either.
+
+@technology(tech)
+@tech::_aspects.ServiceCall(target = "OneWayTlsService", targetKind = "SERVICE", scheme = "https", technology = "Feign")
+public functional microservice com.example.OneWayCaller {
+    interface Trigger {
+        run(sync out ok : boolean);
+    }
+}
+
+@technology(tech)
+@tech::_aspects.ServerEndpoint(connector = "server", port = "8444", protocol = "https", tlsEnabled = true)
+public functional microservice com.example.OneWayTlsService {
+    interface Serve {
+        handle(sync out ok : boolean);
+    }
+}
+
+// --- a queue over a TLS broker: protected -------------------------------
+//
+// A MessageChannel carries no client-authentication fact, so mutuality is
+// not assessable for a queue and must not be guessed at. This one is
+// protected, full stop.
+
+@technology(tech)
+@tech::_aspects.MessageChannel(role = "producer", queue = "secure-orders", target = "SecureConsumer", broker = "activemq", scheme = "ssl", transport = "tls")
+public functional microservice com.example.SecureProducer {
+    interface Trigger {
+        run(sync out ok : boolean);
+    }
+}
+
+@technology(tech)
+@tech::_aspects.MessageChannel(role = "consumer", queue = "secure-orders", target = "SecureProducer", broker = "activemq", scheme = "ssl", transport = "tls")
+public functional microservice com.example.SecureConsumer {
+    interface Consume {
+        handle(sync out ok : boolean);
+    }
+}

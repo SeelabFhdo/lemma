@@ -1,0 +1,68 @@
+import technology from "tech.technology" as tech
+
+// A gRPC endpoint bound without TLS: the smell, judged from the server's end
+// because the peer need not be a service the reconstruction knows.
+@technology(tech)
+@tech::_aspects.GrpcServer(host = "0.0.0.0", port = "50051", transportSecurity = "plaintext")
+public functional microservice com.example.PlaintextListener {
+    interface Served {
+        serve(sync out ok : boolean);
+    }
+}
+
+// Encrypted, and nobody is authenticated: not a §3.7 finding, and not the
+// refactoring §3.7 prescribes either.
+@technology(tech)
+@tech::_aspects.GrpcServer(host = "0.0.0.0", port = "50052", transportSecurity = "tls")
+public functional microservice com.example.EncryptedListener {
+    interface Served {
+        serve(sync out ok : boolean);
+    }
+}
+
+// Mutual TLS: secured.
+@technology(tech)
+@tech::_aspects.GrpcServer(host = "0.0.0.0", port = "50053", transportSecurity = "tls", clientAuth = "need")
+public functional microservice com.example.MutualListener {
+    interface Served {
+        serve(sync out ok : boolean);
+    }
+}
+
+// The sources do not say how the endpoint is bound: undecided, not secure.
+@technology(tech)
+@tech::_aspects.GrpcServer(host = "0.0.0.0", port = "50054", transportSecurity = "unresolved")
+public functional microservice com.example.UnknownListener {
+    interface Served {
+        serve(sync out ok : boolean);
+    }
+}
+
+// A plaintext leg to the broker over STOMP. Its own finding and its own cause:
+// a broker offers one connector per transport, so securing the producers' TCP
+// connector leaves this one open.
+@technology(tech)
+@tech::_aspects.MessageQueue(broker = "activemq", host = "broker", port = "61613", queue = "orders", scheme = "stomp", credentialsConfigured = "true", transportSecurity = "plaintext")
+public functional microservice com.example.PlaintextConsumer {
+    interface Trigger {
+        run(sync out ok : boolean);
+    }
+}
+
+// The same leg, protected.
+@technology(tech)
+@tech::_aspects.MessageQueue(broker = "activemq", host = "broker", port = "61614", queue = "reports", scheme = "stomp+ssl", credentialsConfigured = "true", transportSecurity = "tls")
+public functional microservice com.example.SecuredConsumer {
+    interface Trigger {
+        run(sync out ok : boolean);
+    }
+}
+
+// A service the models say nothing about: not judged, and not protected
+// either. Reported so that the gap is visible in the report.
+@technology(tech)
+public functional microservice com.example.Silent {
+    interface Trigger {
+        run(sync out ok : boolean);
+    }
+}

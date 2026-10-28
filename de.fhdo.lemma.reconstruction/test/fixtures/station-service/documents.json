@@ -1,0 +1,1078 @@
+{
+  "context": [
+    {
+      "collections": [
+        {
+          "complex_field_type": null,
+          "data": [],
+          "name": "RouteList",
+          "primitive_field_type": {
+            "name": "Long"
+          },
+          "qualified_name": "de.dmsa.parkandcharge.station.RouteList"
+        },
+        {
+          "complex_field_type": {
+            "class_type": "COLLECTION",
+            "name": "ProcessedEvent",
+            "qualified_name": "de.dmsa.parkandcharge.station.domain.ProcessedEvent"
+          },
+          "data": [],
+          "name": "EventsList",
+          "primitive_field_type": null,
+          "qualified_name": "de.dmsa.parkandcharge.station.EventsList"
+        },
+        {
+          "complex_field_type": {
+            "class_type": "COLLECTION",
+            "name": "StationResponseList",
+            "qualified_name": "de.dmsa.parkandcharge.station.web.StationResponse"
+          },
+          "data": [],
+          "name": "StationResponseList",
+          "primitive_field_type": null,
+          "qualified_name": "de.dmsa.parkandcharge.station.web.StationResponse"
+        },
+        {
+          "complex_field_type": {
+            "class_type": "COLLECTION",
+            "name": "LongList",
+            "qualified_name": "de.dmsa.parkandcharge.station.StationService.LongList"
+          },
+          "data": [],
+          "name": "LongList",
+          "primitive_field_type": null,
+          "qualified_name": "de.dmsa.parkandcharge.station.StationService.LongList"
+        }
+      ],
+      "data": [],
+      "data_structures": [
+        {
+          "data": [
+            {
+              "name": "Entity",
+              "values": {}
+            }
+          ],
+          "fields": [
+            {
+              "complex_field_type": null,
+              "data": [
+                {
+                  "name": "Identifier",
+                  "values": {}
+                }
+              ],
+              "name": "eventId",
+              "primitive_field_type": {
+                "name": "string"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "eventType",
+              "primitive_field_type": {
+                "name": "string"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "processedAt",
+              "primitive_field_type": {
+                "name": "instant"
+              }
+            }
+          ],
+          "name": "ProcessedEvent",
+          "qualified_name": "de.dmsa.parkandcharge.station.StationService.ProcessedEvent"
+        },
+        {
+          "data": [],
+          "fields": [],
+          "name": "ConnectorType",
+          "qualified_name": "de.dmsa.parkandcharge.station.StationService.ConnectorType"
+        },
+        {
+          "data": [
+            {
+              "name": "Entity",
+              "values": {}
+            }
+          ],
+          "fields": [
+            {
+              "complex_field_type": null,
+              "data": [
+                {
+                  "name": "Identifier",
+                  "values": {}
+                }
+              ],
+              "name": "id",
+              "primitive_field_type": {
+                "name": "long"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "ownerId",
+              "primitive_field_type": {
+                "name": "long"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "name",
+              "primitive_field_type": {
+                "name": "string"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "description",
+              "primitive_field_type": {
+                "name": "string"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "street",
+              "primitive_field_type": {
+                "name": "string"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "zipCode",
+              "primitive_field_type": {
+                "name": "string"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "city",
+              "primitive_field_type": {
+                "name": "string"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "latitude",
+              "primitive_field_type": {
+                "name": "double"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "longitude",
+              "primitive_field_type": {
+                "name": "double"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "powerKw",
+              "primitive_field_type": {
+                "name": "bigdecimal"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "active",
+              "primitive_field_type": {
+                "name": "boolean"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "inUse",
+              "primitive_field_type": {
+                "name": "boolean"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "activeBookingId",
+              "primitive_field_type": {
+                "name": "long"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "inUseUntil",
+              "primitive_field_type": {
+                "name": "instant"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "createdAt",
+              "primitive_field_type": {
+                "name": "instant"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "updatedAt",
+              "primitive_field_type": {
+                "name": "instant"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "RouteList",
+              "primitive_field_type": {
+                "name": "Long"
+              }
+            },
+            {
+              "complex_field_type": {
+                "class_type": "DATA_STRUCTURE",
+                "name": "ProcessedEvent",
+                "qualified_name": "de.dmsa.parkandcharge.station.domain.ProcessedEvent"
+              },
+              "data": [],
+              "name": "hallo",
+              "primitive_field_type": null
+            },
+            {
+              "complex_field_type": {
+                "class_type": "COLLECTION",
+                "name": "ProcessedEvent",
+                "qualified_name": "de.dmsa.parkandcharge.station.domain.ProcessedEvent"
+              },
+              "data": [],
+              "name": "EventsList",
+              "primitive_field_type": null
+            },
+            {
+              "complex_field_type": {
+                "class_type": "DATA_STRUCTURE",
+                "name": "ConnectorType",
+                "qualified_name": "de.dmsa.parkandcharge.station.domain.ConnectorType"
+              },
+              "data": [],
+              "name": "connectorType",
+              "primitive_field_type": null
+            }
+          ],
+          "name": "ChargingStation",
+          "qualified_name": "de.dmsa.parkandcharge.station.StationService.ChargingStation"
+        },
+        {
+          "data": [],
+          "fields": [
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "BOOKING_STARTED",
+              "primitive_field_type": {
+                "name": "string"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "BOOKING_COMPLETED",
+              "primitive_field_type": {
+                "name": "string"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "BOOKING_CANCELLED",
+              "primitive_field_type": {
+                "name": "string"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "eventId",
+              "primitive_field_type": {
+                "name": "string"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "eventType",
+              "primitive_field_type": {
+                "name": "string"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "occurredAt",
+              "primitive_field_type": {
+                "name": "instant"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "bookingId",
+              "primitive_field_type": {
+                "name": "long"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "stationId",
+              "primitive_field_type": {
+                "name": "long"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "startTime",
+              "primitive_field_type": {
+                "name": "instant"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "endTime",
+              "primitive_field_type": {
+                "name": "instant"
+              }
+            }
+          ],
+          "name": "BookingEventMessage",
+          "qualified_name": "de.dmsa.parkandcharge.station.StationService.BookingEventMessage"
+        },
+        {
+          "data": [],
+          "fields": [
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "ownerId",
+              "primitive_field_type": {
+                "name": "long"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "name",
+              "primitive_field_type": {
+                "name": "string"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "description",
+              "primitive_field_type": {
+                "name": "string"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "street",
+              "primitive_field_type": {
+                "name": "string"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "zipCode",
+              "primitive_field_type": {
+                "name": "string"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "city",
+              "primitive_field_type": {
+                "name": "string"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "latitude",
+              "primitive_field_type": {
+                "name": "double"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "longitude",
+              "primitive_field_type": {
+                "name": "double"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "powerKw",
+              "primitive_field_type": {
+                "name": "bigdecimal"
+              }
+            },
+            {
+              "complex_field_type": {
+                "class_type": "DATA_STRUCTURE",
+                "name": "ConnectorType",
+                "qualified_name": "de.dmsa.parkandcharge.station.domain.ConnectorType"
+              },
+              "data": [],
+              "name": "connectorType",
+              "primitive_field_type": null
+            }
+          ],
+          "name": "CreateStationRequest",
+          "qualified_name": "de.dmsa.parkandcharge.station.StationService.CreateStationRequest"
+        },
+        {
+          "data": [],
+          "fields": [
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "id",
+              "primitive_field_type": {
+                "name": "long"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "ownerId",
+              "primitive_field_type": {
+                "name": "long"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "name",
+              "primitive_field_type": {
+                "name": "string"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "description",
+              "primitive_field_type": {
+                "name": "string"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "street",
+              "primitive_field_type": {
+                "name": "string"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "zipCode",
+              "primitive_field_type": {
+                "name": "string"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "city",
+              "primitive_field_type": {
+                "name": "string"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "latitude",
+              "primitive_field_type": {
+                "name": "double"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "longitude",
+              "primitive_field_type": {
+                "name": "double"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "powerKw",
+              "primitive_field_type": {
+                "name": "bigdecimal"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "active",
+              "primitive_field_type": {
+                "name": "boolean"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "inUse",
+              "primitive_field_type": {
+                "name": "boolean"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "activeBookingId",
+              "primitive_field_type": {
+                "name": "long"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "inUseUntil",
+              "primitive_field_type": {
+                "name": "instant"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "createdAt",
+              "primitive_field_type": {
+                "name": "instant"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "updatedAt",
+              "primitive_field_type": {
+                "name": "instant"
+              }
+            },
+            {
+              "complex_field_type": {
+                "class_type": "DATA_STRUCTURE",
+                "name": "ConnectorType",
+                "qualified_name": "de.dmsa.parkandcharge.station.domain.ConnectorType"
+              },
+              "data": [],
+              "name": "connectorType",
+              "primitive_field_type": null
+            }
+          ],
+          "name": "StationResponse",
+          "qualified_name": "de.dmsa.parkandcharge.station.StationService.StationResponse"
+        },
+        {
+          "data": [],
+          "fields": [
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "stationId",
+              "primitive_field_type": {
+                "name": "long"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "name",
+              "primitive_field_type": {
+                "name": "string"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "inUse",
+              "primitive_field_type": {
+                "name": "boolean"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "activeBookingId",
+              "primitive_field_type": {
+                "name": "long"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "inUseUntil",
+              "primitive_field_type": {
+                "name": "instant"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "asOf",
+              "primitive_field_type": {
+                "name": "instant"
+              }
+            }
+          ],
+          "name": "StationStatusResponse",
+          "qualified_name": "de.dmsa.parkandcharge.station.StationService.StationStatusResponse"
+        },
+        {
+          "data": [],
+          "fields": [
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "name",
+              "primitive_field_type": {
+                "name": "string"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "description",
+              "primitive_field_type": {
+                "name": "string"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "street",
+              "primitive_field_type": {
+                "name": "string"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "zipCode",
+              "primitive_field_type": {
+                "name": "string"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "city",
+              "primitive_field_type": {
+                "name": "string"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "latitude",
+              "primitive_field_type": {
+                "name": "double"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "longitude",
+              "primitive_field_type": {
+                "name": "double"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "powerKw",
+              "primitive_field_type": {
+                "name": "bigdecimal"
+              }
+            },
+            {
+              "complex_field_type": null,
+              "data": [],
+              "name": "active",
+              "primitive_field_type": {
+                "name": "boolean"
+              }
+            },
+            {
+              "complex_field_type": {
+                "class_type": "DATA_STRUCTURE",
+                "name": "ConnectorType",
+                "qualified_name": "de.dmsa.parkandcharge.station.domain.ConnectorType"
+              },
+              "data": [],
+              "name": "connectorType",
+              "primitive_field_type": null
+            }
+          ],
+          "name": "UpdateStationRequest",
+          "qualified_name": "de.dmsa.parkandcharge.station.StationService.UpdateStationRequest"
+        }
+      ],
+      "enums": [],
+      "name": "StationService",
+      "qualified_name": "de.dmsa.parkandcharge.station.StationService"
+    }
+  ],
+  "microservice": [
+    {
+      "data": [
+        {
+          "name": "public",
+          "values": {}
+        },
+        {
+          "name": "functional",
+          "values": {}
+        }
+      ],
+      "interfaces": [
+        {
+          "data": [],
+          "name": "StationEvent",
+          "operations": [
+            {
+              "data": [
+                {
+                  "name": "PostMapping",
+                  "values": {}
+                }
+              ],
+              "name": "receive",
+              "parameters": [
+                {
+                  "communication_type": "Synchronous",
+                  "complex_parameter_type": {
+                    "class_type": "DATA_STRUCTURE",
+                    "name": "BookingEventMessage",
+                    "qualified_name": "de.dmsa.parkandcharge.station.StationService.BookingEventMessage"
+                  },
+                  "data": [],
+                  "exchange_pattern": "In",
+                  "name": "event",
+                  "primitive_parameter_type": null
+                }
+              ]
+            }
+          ],
+          "qualified_name": "de.dmsa.parkandcharge.station.StationService.StationEvent"
+        },
+        {
+          "data": [],
+          "name": "Station",
+          "operations": [
+            {
+              "data": [
+                {
+                  "name": "PostMapping",
+                  "values": {}
+                }
+              ],
+              "name": "create",
+              "parameters": [
+                {
+                  "communication_type": "Synchronous",
+                  "complex_parameter_type": {
+                    "class_type": "DATA_STRUCTURE",
+                    "name": "CreateStationRequest",
+                    "qualified_name": "de.dmsa.parkandcharge.station.StationService.CreateStationRequest"
+                  },
+                  "data": [],
+                  "exchange_pattern": "In",
+                  "name": "request",
+                  "primitive_parameter_type": null
+                },
+                {
+                  "communication_type": "Synchronous",
+                  "complex_parameter_type": {
+                    "class_type": "DATA_STRUCTURE",
+                    "name": "StationResponse",
+                    "qualified_name": "de.dmsa.parkandcharge.station.StationService.StationResponse"
+                  },
+                  "data": [
+                    {
+                      "name": "ResponseEntity",
+                      "values": {}
+                    }
+                  ],
+                  "exchange_pattern": "Out",
+                  "name": "StationResponse",
+                  "primitive_parameter_type": null
+                }
+              ]
+            },
+            {
+              "data": [
+                {
+                  "name": "GetMapping",
+                  "values": {}
+                }
+              ],
+              "name": "list",
+              "parameters": [
+                {
+                  "communication_type": "Synchronous",
+                  "complex_parameter_type": null,
+                  "data": [],
+                  "exchange_pattern": "In",
+                  "name": "ownerId",
+                  "primitive_parameter_type": {
+                    "name": "Long"
+                  }
+                },
+                {
+                  "communication_type": "Synchronous",
+                  "complex_parameter_type": null,
+                  "data": [],
+                  "exchange_pattern": "In",
+                  "name": "city",
+                  "primitive_parameter_type": {
+                    "name": "String"
+                  }
+                },
+                {
+                  "communication_type": "Synchronous",
+                  "complex_parameter_type": {
+                    "class_type": "DATA_STRUCTURE",
+                    "name": "ConnectorType",
+                    "qualified_name": "de.dmsa.parkandcharge.station.StationService.ConnectorType"
+                  },
+                  "data": [],
+                  "exchange_pattern": "In",
+                  "name": "connectorType",
+                  "primitive_parameter_type": null
+                },
+                {
+                  "communication_type": "Synchronous",
+                  "complex_parameter_type": null,
+                  "data": [],
+                  "exchange_pattern": "In",
+                  "name": "activeOnly",
+                  "primitive_parameter_type": {
+                    "name": "boolean"
+                  }
+                },
+                {
+                  "communication_type": "Synchronous",
+                  "complex_parameter_type": {
+                    "class_type": "COLLECTION",
+                    "name": "StationResponseList",
+                    "qualified_name": "de.dmsa.parkandcharge.station.StationService.StationResponseList"
+                  },
+                  "data": [],
+                  "exchange_pattern": "Out",
+                  "name": "List",
+                  "primitive_parameter_type": null
+                }
+              ]
+            },
+            {
+              "data": [
+                {
+                  "name": "GetMapping",
+                  "values": {}
+                }
+              ],
+              "name": "byIds",
+              "parameters": [
+                {
+                  "communication_type": "Synchronous",
+                  "complex_parameter_type": {
+                    "class_type": "COLLECTION",
+                    "name": "LongList",
+                    "qualified_name": "de.dmsa.parkandcharge.station.StationService.LongList"
+                  },
+                  "data": [],
+                  "exchange_pattern": "In",
+                  "name": "ids",
+                  "primitive_parameter_type": null
+                },
+                {
+                  "communication_type": "Synchronous",
+                  "complex_parameter_type": {
+                    "class_type": "COLLECTION",
+                    "name": "StationResponseList",
+                    "qualified_name": "de.dmsa.parkandcharge.station.StationService.StationResponseList"
+                  },
+                  "data": [],
+                  "exchange_pattern": "Out",
+                  "name": "List",
+                  "primitive_parameter_type": null
+                }
+              ]
+            },
+            {
+              "data": [
+                {
+                  "name": "GetMapping",
+                  "values": {}
+                }
+              ],
+              "name": "get",
+              "parameters": [
+                {
+                  "communication_type": "Synchronous",
+                  "complex_parameter_type": null,
+                  "data": [],
+                  "exchange_pattern": "In",
+                  "name": "id",
+                  "primitive_parameter_type": {
+                    "name": "Long"
+                  }
+                },
+                {
+                  "communication_type": "Synchronous",
+                  "complex_parameter_type": {
+                    "class_type": "DATA_STRUCTURE",
+                    "name": "StationResponse",
+                    "qualified_name": "de.dmsa.parkandcharge.station.StationService.StationResponse"
+                  },
+                  "data": [],
+                  "exchange_pattern": "Out",
+                  "name": "StationResponse",
+                  "primitive_parameter_type": null
+                }
+              ]
+            },
+            {
+              "data": [
+                {
+                  "name": "GetMapping",
+                  "values": {}
+                }
+              ],
+              "name": "status",
+              "parameters": [
+                {
+                  "communication_type": "Synchronous",
+                  "complex_parameter_type": null,
+                  "data": [],
+                  "exchange_pattern": "In",
+                  "name": "id",
+                  "primitive_parameter_type": {
+                    "name": "Long"
+                  }
+                },
+                {
+                  "communication_type": "Synchronous",
+                  "complex_parameter_type": {
+                    "class_type": "DATA_STRUCTURE",
+                    "name": "StationStatusResponse",
+                    "qualified_name": "de.dmsa.parkandcharge.station.StationService.StationStatusResponse"
+                  },
+                  "data": [],
+                  "exchange_pattern": "Out",
+                  "name": "StationStatusResponse",
+                  "primitive_parameter_type": null
+                }
+              ]
+            },
+            {
+              "data": [
+                {
+                  "name": "PutMapping",
+                  "values": {}
+                }
+              ],
+              "name": "update",
+              "parameters": [
+                {
+                  "communication_type": "Synchronous",
+                  "complex_parameter_type": null,
+                  "data": [],
+                  "exchange_pattern": "In",
+                  "name": "id",
+                  "primitive_parameter_type": {
+                    "name": "Long"
+                  }
+                },
+                {
+                  "communication_type": "Synchronous",
+                  "complex_parameter_type": {
+                    "class_type": "DATA_STRUCTURE",
+                    "name": "UpdateStationRequest",
+                    "qualified_name": "de.dmsa.parkandcharge.station.StationService.UpdateStationRequest"
+                  },
+                  "data": [],
+                  "exchange_pattern": "In",
+                  "name": "request",
+                  "primitive_parameter_type": null
+                },
+                {
+                  "communication_type": "Synchronous",
+                  "complex_parameter_type": {
+                    "class_type": "DATA_STRUCTURE",
+                    "name": "StationResponse",
+                    "qualified_name": "de.dmsa.parkandcharge.station.StationService.StationResponse"
+                  },
+                  "data": [],
+                  "exchange_pattern": "Out",
+                  "name": "StationResponse",
+                  "primitive_parameter_type": null
+                }
+              ]
+            },
+            {
+              "data": [
+                {
+                  "name": "DeleteMapping",
+                  "values": {}
+                }
+              ],
+              "name": "delete",
+              "parameters": [
+                {
+                  "communication_type": "Synchronous",
+                  "complex_parameter_type": null,
+                  "data": [],
+                  "exchange_pattern": "In",
+                  "name": "id",
+                  "primitive_parameter_type": {
+                    "name": "Long"
+                  }
+                }
+              ]
+            }
+          ],
+          "qualified_name": "de.dmsa.parkandcharge.station.StationService.Station"
+        }
+      ],
+      "name": "StationService",
+      "qualified_name": "de.dmsa.parkandcharge.station.StationService"
+    }
+  ]
+}

@@ -300,7 +300,7 @@ final class Shared {
                     val bytes = Hex.decodeHex(
                         LemmaUtils.removePrefix(avroValue, "\\\\u", false)
                     )
-                    lemmaValue.numericValue = new BigDecimal(Byte.toUnsignedInt(bytes.last))
+                    lemmaValue.numericValue = new BigDecimal(Byte.toUnsignedInt(bytes.lastOrNull))
                     if (!lemmaValue.isInClosedSet(BigDecimal.ZERO, new BigDecimal(255)))
                         throw new IllegalArgumentException("Not an unsigned byte value")
                 } catch (Exception ex) {

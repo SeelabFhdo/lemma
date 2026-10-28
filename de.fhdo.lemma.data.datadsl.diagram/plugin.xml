@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="4.15"?>
+<plugin>
+    <extension point="org.eclipse.ui.commands">
+        <category
+              id="de.fhdo.lemma.data.datadsl.diagram.commands.category"
+              name="LEMMA Data Model Diagrams">
+        </category>
+        <command
+              categoryId="de.fhdo.lemma.data.datadsl.diagram.commands.category"
+              id="de.fhdo.lemma.data.datadsl.diagram.commands.generateDiagram"
+              name="Generate data model diagram">
+        </command>
+    </extension>
+    <extension point="org.eclipse.ui.handlers">
+        <handler
+              class="de.fhdo.lemma.data.datadsl.diagram.GenerateDataModelDiagramHandler"
+              commandId="de.fhdo.lemma.data.datadsl.diagram.commands.generateDiagram">
+        </handler>
+    </extension>
+    <extension point="org.eclipse.ui.menus">
+        <menuContribution
+              locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+            <command
+                  commandId="de.fhdo.lemma.data.datadsl.diagram.commands.generateDiagram"
+                  id="de.fhdo.lemma.data.datadsl.diagram.menus.generateDiagram"
+                  label="Generate PlantUML diagram">
+                <!-- Offered only on a selection that is entirely data models, so
+                     the entry does not appear where it would do nothing. -->
+                <visibleWhen checkEnabled="false">
+                    <iterate ifEmpty="false" operator="and">
+                        <adapt type="org.eclipse.core.resources.IFile">
+                            <test
+                                  property="org.eclipse.core.resources.extension"
+                                  value="data">
+                            </test>
+                        </adapt>
+                    </iterate>
+                </visibleWhen>
+            </command>
+        </menuContribution>
+    </extension>
+</plugin>

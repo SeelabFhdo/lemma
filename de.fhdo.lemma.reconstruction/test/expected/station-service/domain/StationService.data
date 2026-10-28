@@ -1,0 +1,108 @@
+context StationService {
+    structure ProcessedEvent<entity> {
+        string eventId<identifier>,
+        string eventType,
+        date processedAt
+    }
+    
+    structure ConnectorType {}
+    
+    structure ChargingStation<entity> {
+        long id<identifier>,
+        long ownerId,
+        string name,
+        string description,
+        string street,
+        string zipCode,
+        string city,
+        double latitude,
+        double longitude,
+        float powerKw,
+        boolean active,
+        boolean inUse,
+        long activeBookingId,
+        date inUseUntil,
+        date createdAt,
+        date updatedAt,
+        long RouteList,
+        ProcessedEvent hallo,
+        EventsList EventsList,
+        ConnectorType connectorType
+    }
+    
+    structure BookingEventMessage {
+        string BOOKING_STARTED,
+        string BOOKING_COMPLETED,
+        string BOOKING_CANCELLED,
+        string eventId,
+        string eventType,
+        date occurredAt,
+        long bookingId,
+        long stationId,
+        date startTime,
+        date endTime
+    }
+    
+    structure CreateStationRequest {
+        long ownerId,
+        string name,
+        string description,
+        string street,
+        string zipCode,
+        string city,
+        double latitude,
+        double longitude,
+        float powerKw,
+        ConnectorType connectorType
+    }
+    
+    structure StationResponse {
+        long id,
+        long ownerId,
+        string name,
+        string description,
+        string street,
+        string zipCode,
+        string city,
+        double latitude,
+        double longitude,
+        float powerKw,
+        boolean active,
+        boolean inUse,
+        long activeBookingId,
+        date inUseUntil,
+        date createdAt,
+        date updatedAt,
+        ConnectorType connectorType
+    }
+    
+    structure StationStatusResponse {
+        long stationId,
+        string name,
+        boolean inUse,
+        long activeBookingId,
+        date inUseUntil,
+        date asOf
+    }
+    
+    structure UpdateStationRequest {
+        string name,
+        string description,
+        string street,
+        string zipCode,
+        string city,
+        double latitude,
+        double longitude,
+        float powerKw,
+        boolean active,
+        ConnectorType connectorType
+    }
+    
+    collection RouteList { unspecified }
+    
+    collection EventsList { unspecified }
+    
+    collection StationResponseList { unspecified }
+    
+    collection LongList { unspecified }
+}

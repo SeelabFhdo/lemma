@@ -90,6 +90,16 @@
             name="Syntax Coloring">
             <keywordReference id="de.fhdo.lemma.ui.keyword_ServiceDsl"/>
         </page>
+        <!-- Not built through the Xtext extension factory: this page is not an
+             Xtext language preference, it configures the security-smell
+             refactoring, so it needs no injector. -->
+        <page
+            category="de.fhdo.lemma.ServiceDsl"
+            class="de.fhdo.lemma.ui.quickfix.SmellRefactoringPreferencePage"
+            id="de.fhdo.lemma.ServiceDsl.smellRefactoring"
+            name="Security Smell Refactoring">
+            <keywordReference id="de.fhdo.lemma.ui.keyword_ServiceDsl"/>
+        </page>
         <page
             category="de.fhdo.lemma.ServiceDsl"
             class="de.fhdo.lemma.ui.ServiceDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
@@ -406,5 +416,36 @@
             extension="services"
             type="text">
         </fileTypes>
+    </extension>
+    <extension point="org.eclipse.core.runtime.preferences">
+        <initializer class="de.fhdo.lemma.ui.quickfix.SmellRefactoringPreferenceDefaults"/>
+    </extension>
+    <!-- Reviewing a proposal made earlier, from the menu. The quickfix offers
+         the review when a job finishes; this is how an older one is reached. -->
+    <extension point="org.eclipse.ui.commands">
+        <command
+            id="de.fhdo.lemma.servicedsl.ui.reviewProposal"
+            name="Review a Refactoring Proposal"
+            categoryId="org.eclipse.ui.category.window"/>
+    </extension>
+    <extension point="org.eclipse.ui.handlers">
+        <handler
+            commandId="de.fhdo.lemma.servicedsl.ui.reviewProposal"
+            class="de.fhdo.lemma.ui.quickfix.ReviewProposalHandler"/>
+    </extension>
+    <!-- Contributed INTO the existing LEMMA menu, which
+         de.fhdo.lemma.eclipse.ui defines as lemmaMenu. Declaring another menu
+         labelled "LEMMA" here produced two of them in the menu bar: a label is
+         not an identity, so Eclipse had no reason to merge them. -->
+    <extension point="org.eclipse.ui.menus">
+        <menuContribution
+                locationURI="menu:de.fhdo.lemma.eclipse.ui.lemmaMenu?after=additions">
+            <menu id="de.fhdo.lemma.servicedsl.ui.menu.smells" label="Security Smells">
+                <command
+                    commandId="de.fhdo.lemma.servicedsl.ui.reviewProposal"
+                    label="Review a Proposal..."
+                    style="push"/>
+            </menu>
+        </menuContribution>
     </extension>
 </plugin>

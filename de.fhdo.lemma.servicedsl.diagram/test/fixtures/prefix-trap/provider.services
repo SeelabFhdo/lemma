@@ -1,0 +1,34 @@
+// Three microservices whose qualified names overlap, so that resolving a
+// dependency isolates two separate decisions:
+//
+//   Order            and OrderHistory  share a textual prefix with no dot
+//                                      between - a match that does not end on
+//                                      a dot confuses them
+//   Order            and Order.History one name is a dot-boundary prefix of the
+//                                      other - only the longest match is right
+public functional microservice com.example.orders.Order {
+    interface Queries {
+        find(
+            sync in id : string,
+            sync out result : string
+        );
+    }
+}
+
+public functional microservice com.example.orders.OrderHistory {
+    interface Queries {
+        find(
+            sync in id : string,
+            sync out result : string
+        );
+    }
+}
+
+public functional microservice com.example.orders.Order.History {
+    interface Queries {
+        find(
+            sync in id : string,
+            sync out result : string
+        );
+    }
+}

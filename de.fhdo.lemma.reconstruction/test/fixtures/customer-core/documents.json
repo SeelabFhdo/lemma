@@ -1,0 +1,1045 @@
+{
+  "context": [
+    {
+      "name": "CustomerCore",
+      "qualified_name": "com.lakesidemutual.customercore.CustomerCore",
+      "data_structures": [
+        {
+          "name": "CustomerProfileEntity",
+          "qualified_name": "com.lakesidemutual.customercore.CustomerCore.CustomerProfileEntity",
+          "data": [
+            {
+              "name": "Entity",
+              "values": {}
+            }
+          ],
+          "fields": [
+            {
+              "name": "serialVersionUID",
+              "primitive_field_type": {
+                "name": "long"
+              },
+              "complex_field_type": null,
+              "data": []
+            },
+            {
+              "name": "id",
+              "primitive_field_type": {
+                "name": "long"
+              },
+              "complex_field_type": null,
+              "data": [
+                {
+                  "name": "Identifier",
+                  "values": {}
+                }
+              ]
+            },
+            {
+              "name": "firstname",
+              "primitive_field_type": {
+                "name": "string"
+              },
+              "complex_field_type": null,
+              "data": []
+            },
+            {
+              "name": "lastname",
+              "primitive_field_type": {
+                "name": "string"
+              },
+              "complex_field_type": null,
+              "data": []
+            },
+            {
+              "name": "birthday",
+              "primitive_field_type": {
+                "name": "date"
+              },
+              "complex_field_type": null,
+              "data": []
+            },
+            {
+              "name": "email",
+              "primitive_field_type": {
+                "name": "string"
+              },
+              "complex_field_type": null,
+              "data": []
+            },
+            {
+              "name": "phoneNumber",
+              "primitive_field_type": {
+                "name": "string"
+              },
+              "complex_field_type": null,
+              "data": []
+            },
+            {
+              "name": "currentAddress",
+              "primitive_field_type": null,
+              "complex_field_type": {
+                "name": "Address",
+                "qualified_name": "com.lakesidemutual.customercore.domain.customer.Address",
+                "class_type": "DATA_STRUCTURE"
+              },
+              "data": []
+            },
+            {
+              "name": "moveHistory",
+              "primitive_field_type": null,
+              "complex_field_type": {
+                "name": "java.util.Collection",
+                "qualified_name": "Collection",
+                "class_type": "UNSPECIFIED"
+              },
+              "data": []
+            }
+          ]
+        },
+        {
+          "name": "Address",
+          "qualified_name": "com.lakesidemutual.customercore.CustomerCore.Address",
+          "data": [
+            {
+              "name": "Entity",
+              "values": {}
+            }
+          ],
+          "fields": [
+            {
+              "name": "id",
+              "primitive_field_type": {
+                "name": "long"
+              },
+              "complex_field_type": null,
+              "data": [
+                {
+                  "name": "Identifier",
+                  "values": {}
+                }
+              ]
+            },
+            {
+              "name": "streetAddress",
+              "primitive_field_type": {
+                "name": "string"
+              },
+              "complex_field_type": null,
+              "data": []
+            },
+            {
+              "name": "postalCode",
+              "primitive_field_type": {
+                "name": "string"
+              },
+              "complex_field_type": null,
+              "data": []
+            },
+            {
+              "name": "city",
+              "primitive_field_type": {
+                "name": "string"
+              },
+              "complex_field_type": null,
+              "data": []
+            }
+          ]
+        },
+        {
+          "name": "CustomerId",
+          "qualified_name": "com.lakesidemutual.customercore.CustomerCore.CustomerId",
+          "data": [],
+          "fields": [
+            {
+              "name": "serialVersionUID",
+              "primitive_field_type": {
+                "name": "long"
+              },
+              "complex_field_type": null,
+              "data": []
+            },
+            {
+              "name": "id",
+              "primitive_field_type": {
+                "name": "string"
+              },
+              "complex_field_type": null,
+              "data": []
+            }
+          ]
+        },
+        {
+          "name": "CustomerAggregateRoot",
+          "qualified_name": "com.lakesidemutual.customercore.CustomerCore.CustomerAggregateRoot",
+          "data": [
+            {
+              "name": "Entity",
+              "values": {}
+            }
+          ],
+          "fields": [
+            {
+              "name": "id",
+              "primitive_field_type": null,
+              "complex_field_type": {
+                "name": "CustomerId",
+                "qualified_name": "com.lakesidemutual.customercore.domain.customer.CustomerId",
+                "class_type": "DATA_STRUCTURE"
+              },
+              "data": [
+                {
+                  "name": "Identifier",
+                  "values": {}
+                }
+              ]
+            },
+            {
+              "name": "customerProfile",
+              "primitive_field_type": null,
+              "complex_field_type": {
+                "name": "CustomerProfileEntity",
+                "qualified_name": "com.lakesidemutual.customercore.domain.customer.CustomerProfileEntity",
+                "class_type": "DATA_STRUCTURE"
+              },
+              "data": []
+            }
+          ]
+        },
+        {
+          "name": "CustomerResponseDto",
+          "qualified_name": "com.lakesidemutual.customercore.CustomerCore.CustomerResponseDto",
+          "data": [],
+          "fields": [
+            {
+              "name": "customerId",
+              "primitive_field_type": {
+                "name": "string"
+              },
+              "complex_field_type": null,
+              "data": []
+            },
+            {
+              "name": "firstname",
+              "primitive_field_type": {
+                "name": "string"
+              },
+              "complex_field_type": null,
+              "data": []
+            },
+            {
+              "name": "lastname",
+              "primitive_field_type": {
+                "name": "string"
+              },
+              "complex_field_type": null,
+              "data": []
+            },
+            {
+              "name": "birthday",
+              "primitive_field_type": {
+                "name": "date"
+              },
+              "complex_field_type": null,
+              "data": []
+            },
+            {
+              "name": "streetAddress",
+              "primitive_field_type": {
+                "name": "string"
+              },
+              "complex_field_type": null,
+              "data": []
+            },
+            {
+              "name": "postalCode",
+              "primitive_field_type": {
+                "name": "string"
+              },
+              "complex_field_type": null,
+              "data": []
+            },
+            {
+              "name": "city",
+              "primitive_field_type": {
+                "name": "string"
+              },
+              "complex_field_type": null,
+              "data": []
+            },
+            {
+              "name": "email",
+              "primitive_field_type": {
+                "name": "string"
+              },
+              "complex_field_type": null,
+              "data": []
+            },
+            {
+              "name": "phoneNumber",
+              "primitive_field_type": {
+                "name": "string"
+              },
+              "complex_field_type": null,
+              "data": []
+            },
+            {
+              "name": "moveHistory",
+              "primitive_field_type": null,
+              "complex_field_type": {
+                "name": "java.util.Collection",
+                "qualified_name": "Collection",
+                "class_type": "UNSPECIFIED"
+              },
+              "data": []
+            }
+          ]
+        },
+        {
+          "name": "PaginatedCustomerResponseDto",
+          "qualified_name": "com.lakesidemutual.customercore.CustomerCore.PaginatedCustomerResponseDto",
+          "data": [],
+          "fields": [
+            {
+              "name": "filter",
+              "primitive_field_type": {
+                "name": "string"
+              },
+              "complex_field_type": null,
+              "data": []
+            },
+            {
+              "name": "limit",
+              "primitive_field_type": {
+                "name": "int"
+              },
+              "complex_field_type": null,
+              "data": []
+            },
+            {
+              "name": "offset",
+              "primitive_field_type": {
+                "name": "int"
+              },
+              "complex_field_type": null,
+              "data": []
+            },
+            {
+              "name": "size",
+              "primitive_field_type": {
+                "name": "int"
+              },
+              "complex_field_type": null,
+              "data": []
+            },
+            {
+              "name": "CustomersList",
+              "primitive_field_type": null,
+              "complex_field_type": {
+                "name": "CustomerResponseDto",
+                "qualified_name": "com.lakesidemutual.customercore.interfaces.dtos.customer.CustomerResponseDto",
+                "class_type": "COLLECTION"
+              },
+              "data": []
+            }
+          ]
+        },
+        {
+          "name": "CustomersResponseDto",
+          "qualified_name": "com.lakesidemutual.customercore.CustomerCore.CustomersResponseDto",
+          "data": [],
+          "fields": [
+            {
+              "name": "CustomersList",
+              "primitive_field_type": null,
+              "complex_field_type": {
+                "name": "CustomerResponseDto",
+                "qualified_name": "com.lakesidemutual.customercore.interfaces.dtos.customer.CustomerResponseDto",
+                "class_type": "COLLECTION"
+              },
+              "data": []
+            }
+          ]
+        },
+        {
+          "name": "CustomerProfileUpdateRequestDto",
+          "qualified_name": "com.lakesidemutual.customercore.CustomerCore.CustomerProfileUpdateRequestDto",
+          "data": [],
+          "fields": [
+            {
+              "name": "firstname",
+              "primitive_field_type": {
+                "name": "string"
+              },
+              "complex_field_type": null,
+              "data": []
+            },
+            {
+              "name": "lastname",
+              "primitive_field_type": {
+                "name": "string"
+              },
+              "complex_field_type": null,
+              "data": []
+            },
+            {
+              "name": "birthday",
+              "primitive_field_type": {
+                "name": "date"
+              },
+              "complex_field_type": null,
+              "data": []
+            },
+            {
+              "name": "streetAddress",
+              "primitive_field_type": {
+                "name": "string"
+              },
+              "complex_field_type": null,
+              "data": []
+            },
+            {
+              "name": "postalCode",
+              "primitive_field_type": {
+                "name": "string"
+              },
+              "complex_field_type": null,
+              "data": []
+            },
+            {
+              "name": "city",
+              "primitive_field_type": {
+                "name": "string"
+              },
+              "complex_field_type": null,
+              "data": []
+            },
+            {
+              "name": "email",
+              "primitive_field_type": {
+                "name": "string"
+              },
+              "complex_field_type": null,
+              "data": []
+            },
+            {
+              "name": "phoneNumber",
+              "primitive_field_type": {
+                "name": "string"
+              },
+              "complex_field_type": null,
+              "data": []
+            }
+          ]
+        },
+        {
+          "name": "AddressDto",
+          "qualified_name": "com.lakesidemutual.customercore.CustomerCore.AddressDto",
+          "data": [],
+          "fields": [
+            {
+              "name": "streetAddress",
+              "primitive_field_type": {
+                "name": "string"
+              },
+              "complex_field_type": null,
+              "data": []
+            },
+            {
+              "name": "postalCode",
+              "primitive_field_type": {
+                "name": "string"
+              },
+              "complex_field_type": null,
+              "data": []
+            },
+            {
+              "name": "city",
+              "primitive_field_type": {
+                "name": "string"
+              },
+              "complex_field_type": null,
+              "data": []
+            }
+          ]
+        },
+        {
+          "name": "CitiesResponseDto",
+          "qualified_name": "com.lakesidemutual.customercore.CustomerCore.CitiesResponseDto",
+          "data": [],
+          "fields": [
+            {
+              "name": "CitiesList",
+              "primitive_field_type": {
+                "name": "String"
+              },
+              "complex_field_type": null,
+              "data": []
+            }
+          ]
+        }
+      ],
+      "collections": [
+        {
+          "name": "CustomersList",
+          "qualified_name": "com.lakesidemutual.customercore.CustomersList",
+          "primitive_field_type": null,
+          "complex_field_type": {
+            "name": "CustomerResponseDto",
+            "qualified_name": "com.lakesidemutual.customercore.interfaces.dtos.customer.CustomerResponseDto",
+            "class_type": "COLLECTION"
+          },
+          "data": []
+        },
+        {
+          "name": "CitiesList",
+          "qualified_name": "com.lakesidemutual.customercore.CitiesList",
+          "primitive_field_type": {
+            "name": "String"
+          },
+          "complex_field_type": null,
+          "data": []
+        }
+      ],
+      "enums": [],
+      "data": []
+    }
+  ],
+  "microservice": [
+    {
+      "qualified_name": "com.lakesidemutual.customercore.CustomerCore",
+      "name": "CustomerCore",
+      "data": [
+        {
+          "name": "public",
+          "values": {}
+        },
+        {
+          "name": "functional",
+          "values": {}
+        }
+      ],
+      "interfaces": [
+        {
+          "qualified_name": "com.lakesidemutual.customercore.CustomerCore.CustomerInformationHolder",
+          "name": "CustomerInformationHolder",
+          "data": [
+            {
+              "name": "Endpoint",
+              "values": {
+                "address": "/customers"
+              }
+            }
+          ],
+          "operations": [
+            {
+              "name": "getCustomers",
+              "data": [
+                {
+                  "name": "GetMapping",
+                  "values": {}
+                }
+              ],
+              "parameters": [
+                {
+                  "name": "filter",
+                  "communication_type": "Synchronous",
+                  "exchange_pattern": "In",
+                  "primitive_parameter_type": {
+                    "name": "String"
+                  },
+                  "complex_parameter_type": null,
+                  "data": [
+                    {
+                      "name": "RequestParam",
+                      "values": {
+                        "value": "filter",
+                        "required": "false",
+                        "defaultValue": ""
+                      }
+                    }
+                  ]
+                },
+                {
+                  "name": "limit",
+                  "communication_type": "Synchronous",
+                  "exchange_pattern": "In",
+                  "primitive_parameter_type": {
+                    "name": "Integer"
+                  },
+                  "complex_parameter_type": null,
+                  "data": [
+                    {
+                      "name": "RequestParam",
+                      "values": {
+                        "value": "limit",
+                        "required": "false",
+                        "defaultValue": "10"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "name": "offset",
+                  "communication_type": "Synchronous",
+                  "exchange_pattern": "In",
+                  "primitive_parameter_type": {
+                    "name": "Integer"
+                  },
+                  "complex_parameter_type": null,
+                  "data": [
+                    {
+                      "name": "RequestParam",
+                      "values": {
+                        "value": "offset",
+                        "required": "false",
+                        "defaultValue": "0"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "name": "fields",
+                  "communication_type": "Synchronous",
+                  "exchange_pattern": "In",
+                  "primitive_parameter_type": {
+                    "name": "String"
+                  },
+                  "complex_parameter_type": null,
+                  "data": [
+                    {
+                      "name": "RequestParam",
+                      "values": {
+                        "value": "fields",
+                        "required": "false",
+                        "defaultValue": ""
+                      }
+                    }
+                  ]
+                },
+                {
+                  "name": "PaginatedCustomerResponseDto",
+                  "communication_type": "Synchronous",
+                  "exchange_pattern": "Out",
+                  "primitive_parameter_type": null,
+                  "complex_parameter_type": {
+                    "name": "PaginatedCustomerResponseDto",
+                    "qualified_name": "com.lakesidemutual.customercore.CustomerCore.PaginatedCustomerResponseDto",
+                    "class_type": "DATA_STRUCTURE"
+                  },
+                  "data": [
+                    {
+                      "name": "ResponseEntity",
+                      "values": {}
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "getCustomer",
+              "data": [
+                {
+                  "name": "GetMapping",
+                  "values": {}
+                },
+                {
+                  "name": "Endpoint",
+                  "values": {
+                    "address": "/{ids}"
+                  }
+                }
+              ],
+              "parameters": [
+                {
+                  "name": "ids",
+                  "communication_type": "Synchronous",
+                  "exchange_pattern": "In",
+                  "primitive_parameter_type": {
+                    "name": "String"
+                  },
+                  "complex_parameter_type": null,
+                  "data": [
+                    {
+                      "name": "PathVariable",
+                      "values": {}
+                    }
+                  ]
+                },
+                {
+                  "name": "fields",
+                  "communication_type": "Synchronous",
+                  "exchange_pattern": "In",
+                  "primitive_parameter_type": {
+                    "name": "String"
+                  },
+                  "complex_parameter_type": null,
+                  "data": [
+                    {
+                      "name": "RequestParam",
+                      "values": {
+                        "value": "fields",
+                        "required": "false",
+                        "defaultValue": ""
+                      }
+                    }
+                  ]
+                },
+                {
+                  "name": "CustomersResponseDto",
+                  "communication_type": "Synchronous",
+                  "exchange_pattern": "Out",
+                  "primitive_parameter_type": null,
+                  "complex_parameter_type": {
+                    "name": "CustomersResponseDto",
+                    "qualified_name": "com.lakesidemutual.customercore.CustomerCore.CustomersResponseDto",
+                    "class_type": "DATA_STRUCTURE"
+                  },
+                  "data": [
+                    {
+                      "name": "ResponseEntity",
+                      "values": {}
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "updateCustomer",
+              "data": [
+                {
+                  "name": "PutMapping",
+                  "values": {}
+                },
+                {
+                  "name": "Endpoint",
+                  "values": {
+                    "address": "/{customerId}"
+                  }
+                }
+              ],
+              "parameters": [
+                {
+                  "name": "customerId",
+                  "communication_type": "Synchronous",
+                  "exchange_pattern": "In",
+                  "primitive_parameter_type": null,
+                  "complex_parameter_type": {
+                    "name": "CustomerId",
+                    "qualified_name": "com.lakesidemutual.customercore.CustomerCore.CustomerId",
+                    "class_type": "DATA_STRUCTURE"
+                  },
+                  "data": [
+                    {
+                      "name": "PathVariable",
+                      "values": {}
+                    }
+                  ]
+                },
+                {
+                  "name": "requestDto",
+                  "communication_type": "Synchronous",
+                  "exchange_pattern": "In",
+                  "primitive_parameter_type": null,
+                  "complex_parameter_type": {
+                    "name": "CustomerProfileUpdateRequestDto",
+                    "qualified_name": "com.lakesidemutual.customercore.CustomerCore.CustomerProfileUpdateRequestDto",
+                    "class_type": "DATA_STRUCTURE"
+                  },
+                  "data": [
+                    {
+                      "name": "Valid",
+                      "values": {}
+                    },
+                    {
+                      "name": "RequestBody",
+                      "values": {}
+                    }
+                  ]
+                },
+                {
+                  "name": "CustomerResponseDto",
+                  "communication_type": "Synchronous",
+                  "exchange_pattern": "Out",
+                  "primitive_parameter_type": null,
+                  "complex_parameter_type": {
+                    "name": "CustomerResponseDto",
+                    "qualified_name": "com.lakesidemutual.customercore.CustomerCore.CustomerResponseDto",
+                    "class_type": "DATA_STRUCTURE"
+                  },
+                  "data": [
+                    {
+                      "name": "ResponseEntity",
+                      "values": {}
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "changeAddress",
+              "data": [
+                {
+                  "name": "PutMapping",
+                  "values": {}
+                },
+                {
+                  "name": "Endpoint",
+                  "values": {
+                    "address": "/{customerId}/address"
+                  }
+                }
+              ],
+              "parameters": [
+                {
+                  "name": "customerId",
+                  "communication_type": "Synchronous",
+                  "exchange_pattern": "In",
+                  "primitive_parameter_type": null,
+                  "complex_parameter_type": {
+                    "name": "CustomerId",
+                    "qualified_name": "com.lakesidemutual.customercore.CustomerCore.CustomerId",
+                    "class_type": "DATA_STRUCTURE"
+                  },
+                  "data": [
+                    {
+                      "name": "PathVariable",
+                      "values": {}
+                    }
+                  ]
+                },
+                {
+                  "name": "requestDto",
+                  "communication_type": "Synchronous",
+                  "exchange_pattern": "In",
+                  "primitive_parameter_type": null,
+                  "complex_parameter_type": {
+                    "name": "AddressDto",
+                    "qualified_name": "com.lakesidemutual.customercore.CustomerCore.AddressDto",
+                    "class_type": "DATA_STRUCTURE"
+                  },
+                  "data": [
+                    {
+                      "name": "Valid",
+                      "values": {}
+                    },
+                    {
+                      "name": "RequestBody",
+                      "values": {}
+                    }
+                  ]
+                },
+                {
+                  "name": "AddressDto",
+                  "communication_type": "Synchronous",
+                  "exchange_pattern": "Out",
+                  "primitive_parameter_type": null,
+                  "complex_parameter_type": {
+                    "name": "AddressDto",
+                    "qualified_name": "com.lakesidemutual.customercore.CustomerCore.AddressDto",
+                    "class_type": "DATA_STRUCTURE"
+                  },
+                  "data": [
+                    {
+                      "name": "ResponseEntity",
+                      "values": {}
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "createCustomer",
+              "data": [
+                {
+                  "name": "PostMapping",
+                  "values": {}
+                }
+              ],
+              "parameters": [
+                {
+                  "name": "requestDto",
+                  "communication_type": "Synchronous",
+                  "exchange_pattern": "In",
+                  "primitive_parameter_type": null,
+                  "complex_parameter_type": {
+                    "name": "CustomerProfileUpdateRequestDto",
+                    "qualified_name": "com.lakesidemutual.customercore.CustomerCore.CustomerProfileUpdateRequestDto",
+                    "class_type": "DATA_STRUCTURE"
+                  },
+                  "data": [
+                    {
+                      "name": "Valid",
+                      "values": {}
+                    },
+                    {
+                      "name": "RequestBody",
+                      "values": {}
+                    }
+                  ]
+                },
+                {
+                  "name": "CustomerResponseDto",
+                  "communication_type": "Synchronous",
+                  "exchange_pattern": "Out",
+                  "primitive_parameter_type": null,
+                  "complex_parameter_type": {
+                    "name": "CustomerResponseDto",
+                    "qualified_name": "com.lakesidemutual.customercore.CustomerCore.CustomerResponseDto",
+                    "class_type": "DATA_STRUCTURE"
+                  },
+                  "data": [
+                    {
+                      "name": "ResponseEntity",
+                      "values": {}
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "qualified_name": "com.lakesidemutual.customercore.CustomerCore.CityReferenceDataHolder",
+          "name": "CityReferenceDataHolder",
+          "data": [
+            {
+              "name": "Endpoint",
+              "values": {
+                "address": "/cities"
+              }
+            }
+          ],
+          "operations": [
+            {
+              "name": "getCitiesForPostalCode",
+              "data": [
+                {
+                  "name": "GetMapping",
+                  "values": {}
+                },
+                {
+                  "name": "Endpoint",
+                  "values": {
+                    "address": "/{postalCode}"
+                  }
+                }
+              ],
+              "parameters": [
+                {
+                  "name": "postalCode",
+                  "communication_type": "Synchronous",
+                  "exchange_pattern": "In",
+                  "primitive_parameter_type": {
+                    "name": "String"
+                  },
+                  "complex_parameter_type": null,
+                  "data": [
+                    {
+                      "name": "PathVariable",
+                      "values": {}
+                    }
+                  ]
+                },
+                {
+                  "name": "CitiesResponseDto",
+                  "communication_type": "Synchronous",
+                  "exchange_pattern": "Out",
+                  "primitive_parameter_type": null,
+                  "complex_parameter_type": {
+                    "name": "CitiesResponseDto",
+                    "qualified_name": "com.lakesidemutual.customercore.CustomerCore.CitiesResponseDto",
+                    "class_type": "DATA_STRUCTURE"
+                  },
+                  "data": [
+                    {
+                      "name": "ResponseEntity",
+                      "values": {}
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "qualified_name": "com.lakesidemutual.customercore.CustomerCore.OldCustomerInformationHolder",
+          "name": "OldCustomerInformationHolder",
+          "data": [
+            {
+              "name": "Endpoint",
+              "values": {
+                "address": "getCustomers"
+              }
+            }
+          ],
+          "operations": [
+            {
+              "name": "getCustomer",
+              "data": [
+                {
+                  "name": "GetMapping",
+                  "values": {}
+                },
+                {
+                  "name": "Endpoint",
+                  "values": {
+                    "address": "/{ids}"
+                  }
+                }
+              ],
+              "parameters": [
+                {
+                  "name": "ids",
+                  "communication_type": "Synchronous",
+                  "exchange_pattern": "In",
+                  "primitive_parameter_type": {
+                    "name": "String"
+                  },
+                  "complex_parameter_type": null,
+                  "data": [
+                    {
+                      "name": "PathVariable",
+                      "values": {}
+                    }
+                  ]
+                },
+                {
+                  "name": "fields",
+                  "communication_type": "Synchronous",
+                  "exchange_pattern": "In",
+                  "primitive_parameter_type": {
+                    "name": "String"
+                  },
+                  "complex_parameter_type": null,
+                  "data": [
+                    {
+                      "name": "RequestParam",
+                      "values": {
+                        "value": "fields",
+                        "required": "false",
+                        "defaultValue": ""
+                      }
+                    }
+                  ]
+                },
+                {
+                  "name": "ResponseEntity",
+                  "communication_type": "Synchronous",
+                  "exchange_pattern": "Out",
+                  "primitive_parameter_type": null,
+                  "complex_parameter_type": {
+                    "name": "ResponseEntity",
+                    "qualified_name": "UnknownContext.ResponseEntity",
+                    "class_type": "UNSPECIFIED"
+                  },
+                  "data": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

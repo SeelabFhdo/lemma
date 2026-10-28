@@ -1,0 +1,5 @@
+{
+  "name": "lemma-smell-refactoring",
+  "version": "0.1.0",
+  "description": "Refactorings that resolve the microservice security smells of Ponce et al. (2022), one skill per smell, as applied by LEMMA's smell detection."
+}

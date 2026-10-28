@@ -1,0 +1,85 @@
+// Shapes the reconstructed models do not contain, so that the generator is
+// checked on them too. The technology import need not resolve: an aspect is a
+// cross-reference and is read from the parse tree either way.
+import technology from "../technology/spring.technology" as tech
+
+public functional microservice com.example.shapes.Shapes {
+    @endpoints(tech::_protocols.rest:"/shapes";)
+    interface Verbs {
+        @tech::_aspects.GetMapping
+        read(
+            sync in id : string,
+            sync out result : string
+        );
+
+        // RequestMapping carries its verb in a property rather than in its
+        // name, so the diagram must not claim one.
+        @tech::_aspects.RequestMapping(value = "/any", method = "PATCH")
+        any(
+            sync in id : string,
+            sync out result : string
+        );
+
+        // No aspect at all: no verb to show.
+        plain(
+            sync in id : string,
+            sync out result : string
+        );
+    }
+
+    interface Results {
+        // Nothing outgoing.
+        notify(
+            sync in message : string
+        );
+
+        // More than one outgoing value, which LEMMA allows.
+        split(
+            sync in id : string,
+            sync out first : string,
+            sync out second : int
+        );
+
+        // A fault is not the result.
+        risky(
+            sync in id : string,
+            sync out result : string,
+            sync out fault problem : string
+        );
+
+        // Asynchronous, as a streaming rpc is.
+        stream(
+            sync in id : string,
+            async out chunk : string
+        );
+
+        // Optional parameter.
+        search(
+            sync in filter ? : string,
+            sync out result : string
+        );
+    }
+
+    // noimpl, which LEMMA forbids requiring.
+    noimpl interface Planned {
+        later(
+            sync out result : string
+        );
+    }
+
+    // An interface of a name another microservice of this model also uses.
+    interface Shared {
+        here(
+            sync out result : string
+        );
+    }
+}
+
+// Not public and not functional, so the package says so.
+internal utility microservice com.example.shapes.Helper {
+    interface Shared {
+        there(
+            sync out result : string
+        );
+    }
+}

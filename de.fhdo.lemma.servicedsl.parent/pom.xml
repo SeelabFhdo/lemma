@@ -13,6 +13,9 @@
         <module>../de.fhdo.lemma.servicedsl</module>
         <module>../de.fhdo.lemma.servicedsl.ide</module>
         <module>../de.fhdo.lemma.servicedsl.extractor</module>
+        <module>../de.fhdo.lemma.servicedsl.diagram</module>
+        <module>../de.fhdo.lemma.servicedsl.smells.validation</module>
+        <module>../de.fhdo.lemma.servicedsl.smells</module>
         <!--
             Exclude unnecessary UI from build, which also prevents transitive dependencies to
             other UI projects.

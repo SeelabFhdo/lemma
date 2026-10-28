@@ -1,0 +1,29 @@
+// Two microservices whose qualified names end the same way. A reference by
+// that ending alone names neither, and resolving it to one would be a guess.
+public functional microservice de.fhdo.first.Registry version v01 {
+    interface Lookup {
+        find(
+            sync out ok : boolean
+        );
+    }
+}
+
+public functional microservice de.fhdo.second.Registry version v01 {
+    interface Lookup {
+        find(
+            sync out ok : boolean
+        );
+    }
+}
+
+public functional microservice de.fhdo.Caller version v01 {
+    required microservices {
+        Registry
+    }
+
+    interface Trigger {
+        run(
+            sync out ok : boolean
+        );
+    }
+}

@@ -1,0 +1,43 @@
+import technology from "../tech.technology" as Tech
+import microservices from "../svc.services" as Svc
+import nodes from "app.operation" as App
+
+// "used by services" names a microservice, not a node. No model of the
+// repository uses it, so it is exercised here: the service is an artifact of
+// AppContainer, which is therefore the other end of the relation.
+@technology(Tech)
+Database is Tech::_infrastructure.Postgres
+used by services
+	Svc::com.example.Shop {
+	default values {
+		port = 5432
+	}
+}
+
+// Stated only from this end, as Broker is in charging-station-management.
+@technology(Tech)
+Cache is Tech::_infrastructure.Redis
+used by nodes
+	App::AppContainer {
+}
+
+// Names a node the imported model does not declare.
+@technology(Tech)
+MissingTarget is Tech::_infrastructure.Thing
+depends on nodes
+	App::NotThere {
+}
+
+// Names an alias no import declares.
+@technology(Tech)
+MissingAlias is Tech::_infrastructure.Thing
+depends on nodes
+	nosuch::Whatever {
+}
+
+// Names a service no container of the models read deploys.
+@technology(Tech)
+Unused is Tech::_infrastructure.Thing
+used by services
+	Svc::com.example.Absent {
+}

@@ -12,6 +12,8 @@
         <module>../de.fhdo.lemma.operationdsl.metamodel</module>
         <module>../de.fhdo.lemma.operationdsl</module>
         <module>../de.fhdo.lemma.operationdsl.ide</module>
+        <module>../de.fhdo.lemma.operationdsl.extractor</module>
+        <module>../de.fhdo.lemma.operationdsl.diagram</module>
         <!--
             Exclude unnecessary UI from build, which also prevents transitive dependencies to
             other UI projects.
